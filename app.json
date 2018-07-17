@@ -15,7 +15,11 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        /* glyph font */
+        "font-awesome",
+        /* extra packages */
+        "sencha-charts",
+        "calendar"
     ],
     /**
      * The relative path to the application's markup file (html, jsp, asp, etc.).

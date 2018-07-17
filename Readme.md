@@ -4,7 +4,7 @@
 
 - Using ExtJS 6.5.3 because 6.6.x seems currently incompatible with Themer
 - Custom theme `breeze-material` created with themer based on Material theme
-- Repo has `/ext` ignored; will need to use `sencha workspace init` to install framework, or copy contents of Ext 6.5.3 to project
+- Repo has `/ext` ignored; will need to use `sencha workspace install` to install framework, or copy contents of Ext 6.5.3 to project
     - Expects premium addons for 6.5.3 to be in `/ext/packages`
 
 ## Default Project Readme
