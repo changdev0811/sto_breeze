@@ -1,0 +1,13 @@
+// Style overrides for main nav side menu treelist
+.main-nav-side-menu {
+    font-weight: bold;
+    // smaller subitems
+    .x-treelist-container {
+        .x-treelist-item-icon {
+            font-size: 80%;
+        }
+        .x-treelist-item-text {
+            font-size: 80%;
+        }
+    }
+}
