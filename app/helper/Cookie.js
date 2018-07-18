@@ -3,7 +3,7 @@
      * Cookie-related helper functions.
      * (Mostly cookie wrapping functions from old homemade.js)
      */
-    Ext.define('Breeze.app.helper.Cookie', {
+    Ext.define('Breeze.helper.Cookie', {
 
         statics: {
             /**

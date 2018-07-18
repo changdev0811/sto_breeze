@@ -1,7 +1,7 @@
-Ext.define('Breeze.app.helper.Auth', {
+Ext.define('Breeze.helper.Auth', {
 
     requires: [
-        'Breeze.app.helper.Cookie'
+        'Breeze.helper.Cookie'
     ],
 
     statics: {
@@ -9,7 +9,7 @@ Ext.define('Breeze.app.helper.Auth', {
          * Create/update auth related cookies
          */
         setCookies: function(pass, cust, emp){
-            var c = Breeze.app.helper.Cookie;
+            var c = Breeze.helper.Cookie;
             c.bake('STOPASS', pass, 7);
             c.bake('STOCUST', cust, 7);
             c.bake('STOEMP', emp, 7);
@@ -19,7 +19,7 @@ Ext.define('Breeze.app.helper.Auth', {
          * Get 3 auth-related cookies
          */
         getCookies: function() {
-            var c = Breeze.app.helper.Cookie;
+            var c = Breeze.helper.Cookie;
             return {
                 pass:   c.get('STOPASS'),
                 cust:   c.get('STOCUST'),
@@ -31,7 +31,7 @@ Ext.define('Breeze.app.helper.Auth', {
          * rewrite cookies with new expirations
          */
         reloadCookies: function(minutes){
-            var c = Breeze.app.helper.Cookie;
+            var c = Breeze.helper.Cookie;
             var old = this.getCookies();
             c.bake('STOPASS', old.pass, minutes);
             c.bake('STOCUST', old.cust, minutes);
@@ -44,7 +44,7 @@ Ext.define('Breeze.app.helper.Auth', {
          * @return {Boolean} True if authorized, false otherwise
          */
         isAuthorized: function(forceReload){
-            var cookies = Breeze.app.helper.Cookie;
+            var cookies = Breeze.helper.Cookie;
             var vals = this.getCookies();
             var okay = (
                 vals.pass !== null &&
