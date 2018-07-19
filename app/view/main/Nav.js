@@ -48,7 +48,6 @@ Ext.define('Breeze.view.main.Nav', {
                             style: '',
                             userCls: 'main-nav-company-name',
                             html: 'Company Name'
-
                         },
                         {
                             xtype: 'component',
