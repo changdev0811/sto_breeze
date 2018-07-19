@@ -1,6 +1,6 @@
 Ext.define('Breeze.view.main.Nav', {
     extend: 'Ext.Container',
-    alias: 'widget.main.Nav',
+    alias: 'widget.main.nav',
 
     requires: [
         'Breeze.view.main.NavModel',
@@ -40,8 +40,9 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'container',
                     layout: 'vbox',
-                    minWidth: '150px',
-                    flex: 1,
+                    // minWidth: '150px',
+                    width: 'auto',
+                    // flex: 1,
                     style: 'background-color: red',
                     items: [
                         {
@@ -68,6 +69,7 @@ Ext.define('Breeze.view.main.Nav', {
                         {
                             // Side navigation menu tree
                             xtype: 'treelist',
+                            micro: false,
                             flex: 3,
                             userCls: 'main-nav-side-menu',
                             reference: 'navSideMenuTree',

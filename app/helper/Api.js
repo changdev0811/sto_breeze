@@ -11,7 +11,9 @@
             // API Request paths
             apiPaths: {
                 punch: '../STOServe/PunchService.asmx/',
-                api: '../STOServe/Service1.asmx/'
+                api: '../STOServe/Service1.asmx/',
+                // pulled from sti_namespace, used in STOLogin view
+                login: 'http://192.168.0.4/sto/STOServe/Service1.asmx/'
             },
 
             /**
