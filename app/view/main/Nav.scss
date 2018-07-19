@@ -2,6 +2,11 @@
 .main-nav-side-menu {
     font-weight: bold;
     // smaller subitems
+    .x-treelist-item-expander{
+        //display:none;
+
+    }
+
     .x-treelist-container {
         .x-treelist-item-icon {
             font-size: 80%;
@@ -11,3 +16,15 @@
         }
     }
 }
+
+.main-nav-header{
+    background-color: $base-color;
+}
+
+.main-nav-side-bar{
+    background-color: $base-color;
+}
+
+
+
+

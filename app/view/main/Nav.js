@@ -22,7 +22,8 @@ Ext.define('Breeze.view.main.Nav', {
     items: [
         {
             xtype: 'container',
-            style: 'background-color: blue',
+            userCls:'main-nav-header',
+            height:'60pt',
             layout: 'hbox',
             items: [
                 {
@@ -43,7 +44,7 @@ Ext.define('Breeze.view.main.Nav', {
                     // minWidth: '150px',
                     width: 'auto',
                     // flex: 1,
-                    style: 'background-color: red',
+                    userCls:'main-nav-side-bar',
                     items: [
                         {
                             xtype: 'container',
@@ -72,6 +73,7 @@ Ext.define('Breeze.view.main.Nav', {
                             micro: false,
                             flex: 3,
                             userCls: 'main-nav-side-menu',
+                            ui: 'SideNav',
                             reference: 'navSideMenuTree',
                             store: {
                                 root: {
