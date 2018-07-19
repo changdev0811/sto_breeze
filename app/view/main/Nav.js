@@ -60,6 +60,8 @@ Ext.define('Breeze.view.main.Nav', {
                 },
                 {
                     xtype: 'button',
+                    ui:'mainNavUserButton',
+                    userCls:'main-nav-user-button',
                     buttonType: 'icon',
                     iconCls: 'x-fa fa-user',
                     text: ''

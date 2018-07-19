@@ -30,14 +30,14 @@
     text-align: right;
     font-size: 16pt;
     font-weight: 600;
-    line-height: 32pt;
-    text-align: bottom;
+    padding-top:14pt;
 }
 .main-nav-user-name {
     color:#ffffff;
     text-align: right;
     font-size: 12pt;
     font-weight: 400;
+    padding-bottom:10pt;
 }
 
 
@@ -51,4 +51,12 @@
     //background-color: $base-color-green;
 }
 
+
+.main-nav-user-button {
+
+    .x-icon-el {
+        width:32pt;
+        height:32pt;
+    }
+}
 
