@@ -1,6 +1,6 @@
 Ext.define('Breeze.view.auth.Login', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.auth.Login',
+    alias: 'widget.auth.login',
     xtype: 'login-form',
 
     requires: [
@@ -10,9 +10,7 @@ Ext.define('Breeze.view.auth.Login', {
         'Ext.Button'
     ],
 
-    // viewModel: {
-    //     type: 'myformpanel'
-    // },
+    controller: 'auth.login',
 
     layout: 'vbox',
 
@@ -24,7 +22,7 @@ Ext.define('Breeze.view.auth.Login', {
             items: [
                 {
                     xtype: 'textfield',
-                    itemId: 'companyField',
+                    id: 'companyField',
                     name: 'loginCode',
                     errorTarget: 'under',
                     label: 'Company Code',
@@ -34,7 +32,7 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'textfield',
-                    itemId: 'usernameField',
+                    id: 'usernameField',
                     errorTarget: 'under',
                     label: 'Username',
                     // labelMinWidth: '110px',
@@ -42,7 +40,7 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'textfield',
-                    itemId: 'passwordField',
+                    id: 'passwordField',
                     name: 'loginPassword',
                     errorTarget: 'under',
                     label: 'Password',
@@ -52,7 +50,8 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'checkbox',
-                    label: 'Remember Me'
+                    label: 'Remember Me',
+                    id: 'rememberMeField'
                 },
                 {
                     xtype: 'container',
@@ -63,10 +62,12 @@ Ext.define('Breeze.view.auth.Login', {
                         },
                         {
                             xtype: 'button',
-                            itemId: 'loginButton',
                             ui: 'action',
                             docked: 'right',
-                            text: 'Login'
+                            text: 'Login',
+                            listeners: {
+                                tap: 'onLoginButtonTap'
+                            }
                         }
                     ]
                 }
