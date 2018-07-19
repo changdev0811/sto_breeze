@@ -8,7 +8,9 @@ Ext.define('Breeze.view.main.Nav', {
         'Ext.menu.Menu',
         'Ext.menu.Item',
         'Ext.list.Tree',
-        'Ext.Toolbar'
+        'Ext.Toolbar',
+        'Ext.Img',
+        'Ext.Button'
     ],
 
     viewModel: {
@@ -23,13 +25,48 @@ Ext.define('Breeze.view.main.Nav', {
         {
             xtype: 'container',
             userCls:'main-nav-header',
-            height:'60pt',
+            height:'64pt',
             layout: 'hbox',
+
             items: [
                 {
-                    xtype: 'component',
-                    html: 'title'
+                    xtype: 'image',
+                    reference: 'Logo',
+                    height: '64pt',
+                    width: '170pt',
+                    selfAlign: '',
+                    src: 'resources/img/breeze_logo.svg'
+                },
+                {
+                    xtype: 'container',
+                    flex: 1,
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'component',
+                            flex: 1,
+                            style: '',
+                            userCls: 'main-nav-company-name',
+                            html: 'Company Name'
+
+                        },
+                        {
+                            xtype: 'component',
+                            flex: 1,
+                            style: '',
+                            userCls: 'main-nav-user-name',
+                            html: 'First M. Last'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'button',
+                    buttonType: 'icon',
+                    iconCls: 'x-fa fa-user',
+                    text: ''
                 }
+
+
             ]
 
         },
@@ -51,6 +88,8 @@ Ext.define('Breeze.view.main.Nav', {
                             reference: 'navPunchClock',
                             flex: 1,
                             layout: 'hbox',
+                            height:'128pt',
+                            userCls:'main-nav-punch-clock',
                             items: [
                                 {
                                     xtype: 'component',
@@ -78,7 +117,10 @@ Ext.define('Breeze.view.main.Nav', {
                             store: {
                                 root: {
                                     children: [
-                                        {
+                                        /*{
+                                            text: 'Dashboard', leaf: true,
+                                            iconCls: 'x-fa fa-tachometer'
+                                        },*/ {
                                             text: 'Personal',
                                             iconCls: 'x-fa fa-user',
                                             children: [
