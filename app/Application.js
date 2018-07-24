@@ -33,7 +33,11 @@ Ext.define('Breeze.Application', {
 
     launch: function(){
         console.log("Launched");
-        if(Breeze.helper.Auth.isAuthorized()){
+        
+        // TODO: Removing testing check when out of dev
+        var testing = true; // (should be removed later)
+
+        if(Breeze.helper.Auth.isAuthorized() || testing){
             this.viewport.add(Ext.create('Breeze.view.main.Nav'));
         } else {
             this.viewport.add(Ext.create('Breeze.view.auth.Login'));
