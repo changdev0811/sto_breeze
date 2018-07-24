@@ -144,7 +144,10 @@ Ext.define('Breeze.view.main.Nav', {
                             singleExpand:true,
                             selectOnExpander:true,
                             reference: 'navSideMenuTree',
-                            bind: '{personalNav}'
+                            bind: '{personalNav}',
+                            listeners: {
+                                selectionchange: 'onSideNavSelect'
+                            }
                         }
                     ]
                 },

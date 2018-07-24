@@ -38,7 +38,9 @@ Ext.define('Breeze.Application', {
         var testing = true; // (should be removed later)
 
         if(Breeze.helper.Auth.isAuthorized() || testing){
-            this.viewport.add(Ext.create('Breeze.view.main.Nav'));
+            this.viewport.add(Ext.create('Breeze.view.main.Nav', {
+                //data: {mode: 'supervisor'}
+            }));
         } else {
             this.viewport.add(Ext.create('Breeze.view.auth.Login'));
         }
