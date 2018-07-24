@@ -8,6 +8,12 @@ Ext.define('Breeze.Application', {
 
     name: 'Breeze',
 
+    controllers: ['Breeze.controller.Overseer'],
+
+    requires: [
+        'Breeze.helper.Auth'
+    ],
+
     quickTips: false,
     platformConfig: {
         desktop: {
@@ -23,5 +29,14 @@ Ext.define('Breeze.Application', {
                 }
             }
         );
+    },
+
+    launch: function(){
+        console.log("Launched");
+        if(Breeze.helper.Auth.isAuthorized()){
+            this.viewport.add(Ext.create('Breeze.view.main.Nav'));
+        } else {
+            this.viewport.add(Ext.create('Breeze.view.auth.Login'));
+        }
     }
 });

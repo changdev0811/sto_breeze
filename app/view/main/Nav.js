@@ -19,8 +19,7 @@ Ext.define('Breeze.view.main.Nav', {
         type: 'main.nav'
     },
     controller: 'main.nav',
-
-
+    
     layout: 'vbox',
 
     items: [

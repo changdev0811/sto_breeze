@@ -7,7 +7,8 @@
         alias: 'controller.main.nav',
 
         requires: [
-            'Ext.route.Route'
+            'Ext.route.Route',
+            'Breeze.helper.Auth'
         ],
 
         // Routes
@@ -28,7 +29,14 @@
         },
 
         onPersonalEmployeeInfoRoute: function(){
-
+            var empId = 0;
+            this.changeContent(
+                Ext.create('Breeze.view.employee.Information', {
+                    data: {
+                        employeeId: empId  
+                    }
+                })
+            );
         },
 
         onPersonalFYIRoute: function() {
