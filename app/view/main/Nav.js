@@ -5,6 +5,8 @@ Ext.define('Breeze.view.main.Nav', {
     requires: [
         'Breeze.view.main.NavModel',
         'Breeze.view.main.NavController',
+        'Breeze.view.main.tko.AnalogClock',
+        'Breeze.view.main.tko.DigitalClock',
         'Ext.menu.Menu',
         'Ext.menu.Item',
         'Ext.list.Tree',
@@ -101,11 +103,19 @@ Ext.define('Breeze.view.main.Nav', {
                         {
                             xtype: 'container',
                             reference: 'navPunchClock',
-                            flex: 1,
                             layout: 'hbox',
                             height:'128pt',
                             userCls:'main-nav-punch-clock',
                             items: [
+                                {
+                                    xtype:'main.tko.digitalClock',
+                                    clockedIn:false
+
+                                },{
+                                    xtype:'main.tko.analogClock',
+
+                                }
+                                /*
                                 {
                                     xtype: 'component',
                                     itemId: 'dateTime',
@@ -119,8 +129,10 @@ Ext.define('Breeze.view.main.Nav', {
                                     xtype: 'component',
                                     itemId: 'clock'
                                 }
+                                */
                             ]
                         },
+
                         {
                             // Side navigation menu tree
                             xtype: 'treelist',

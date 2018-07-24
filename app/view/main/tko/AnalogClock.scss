@@ -1,15 +1,13 @@
+.tko-analog-clock, .tko-analog-clock:after{
+	width:64pt; height:64pt;
+}
 .tko-analog-clock {
 	position: relative;
-	width:100pt; height:100pt;
 	border-radius: 50%;
 	border: solid 2pt white;
 }
 .tko-analog-clock:after{
 	position:absolute;
-	display: block;
-	width:100pt; height:100pt;
-	color:white;
-	text-align: center;
 }
 .tko-analog-clock-min, .tko-analog-clock-hrs, .tko-analog-clock-sec {
 	position: absolute;
