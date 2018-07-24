@@ -20,6 +20,10 @@ Ext.define('Breeze.view.employee.Information', {
             flex: 1,
             items: [
                 // containers with title and items containing body
+                {
+                    xtype: 'container',
+                    title: 'Employee'
+                }
             ]
         }
     ]
