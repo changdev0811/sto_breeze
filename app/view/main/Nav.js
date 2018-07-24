@@ -96,6 +96,7 @@ Ext.define('Breeze.view.main.Nav', {
                     xtype: 'container',
                     layout: 'vbox',
                     minWidth: '256pt',
+                    maxWidth: '256pt',
                     width: 'auto',
                     // flex: 1,
                     userCls:'main-nav-side-bar',
@@ -104,15 +105,16 @@ Ext.define('Breeze.view.main.Nav', {
                             xtype: 'container',
                             reference: 'navPunchClock',
                             layout: 'hbox',
-                            height:'128pt',
+                            height:'120pt',
                             userCls:'main-nav-punch-clock',
                             items: [
                                 {
-                                    xtype:'main.tko.digitalClock',
-                                    clockedIn:false
+                                    xtype:'main.tko.analogClock'
 
                                 },{
-                                    xtype:'main.tko.analogClock',
+                                    
+                                    xtype:'main.tko.digitalClock',
+                                    clockedIn:false
 
                                 }
                                 /*
