@@ -95,7 +95,7 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'container',
                     layout: 'vbox',
-                    // minWidth: '150px',
+                    minWidth: '256pt',
                     width: 'auto',
                     // flex: 1,
                     userCls:'main-nav-side-bar',
@@ -140,6 +140,10 @@ Ext.define('Breeze.view.main.Nav', {
                             flex: 3,
                             userCls: 'main-nav-side-menu',
                             ui: 'SideNav',
+                            expanderFirst:false,
+                            expanderOnly:false,
+                            singleExpand:true,
+                            selectOnExpander:true,
                             reference: 'navSideMenuTree',
                             store: {
                                 root: {
