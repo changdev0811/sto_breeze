@@ -1,0 +1,17 @@
+.tko-digital-clock {
+	position: relative;
+	width:100pt; height:100pt;
+	color:white;
+}
+.tko-digital-clock-date > sup {
+	font-size: 50%;
+
+}
+.tko-digital-clock-time > sub {
+	font-size: 50%;
+	vertical-align: baseline;
+}
+
+.tko-digital-clock-inout {
+
+}
