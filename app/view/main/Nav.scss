@@ -1,13 +1,62 @@
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
-    font-weight: bold;
+    //font-weight: bold;
     // smaller subitems
+    .x-treelist-item-expander{
+        //display:none;
+    }
+
     .x-treelist-container {
+        margin-left: -25pt;
         .x-treelist-item-icon {
-            font-size: 80%;
+            font-size: 12pt;
+            margin-top:-10pt;
         }
         .x-treelist-item-text {
-            font-size: 80%;
+            font-size: 14pt;
+            line-height:30pt;
+            margin-left:49.5pt;
+
         }
     }
 }
+
+.main-nav-header{
+    background-color: $base-color;
+}
+
+.main-nav-company-name {
+    color:#ffffff;
+    text-align: right;
+    font-size: 16pt;
+    font-weight: 600;
+    padding-top:14pt;
+}
+.main-nav-user-name {
+    color:#ffffff;
+    text-align: right;
+    font-size: 12pt;
+    font-weight: 400;
+    padding-bottom:10pt;
+}
+
+
+
+.main-nav-side-bar{
+    background-color: $base-color;
+}
+
+.main-nav-punch-clock{
+    background-color: $confirm-color;
+    //background-color: $base-color-green;
+}
+
+
+.main-nav-user-button {
+
+    .x-icon-el {
+        width:32pt;
+        height:32pt;
+    }
+}
+
