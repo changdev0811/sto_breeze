@@ -1,0 +1,34 @@
+{
+    "d": {
+        "__type": "Repository.Entities.DepartmentList",
+        "Rows": [
+            {
+                "Id": 1002,
+                "Name": "Extra Department",
+                "Description": "",
+                "SupervisorIds": null,
+                "Supervisors": null,
+                "EmployeeIds": null,
+                "Employees": null
+            },
+            {
+                "Id": 1003,
+                "Name": "New Department",
+                "Description": "",
+                "SupervisorIds": null,
+                "Supervisors": null,
+                "EmployeeIds": null,
+                "Employees": null
+            },
+            {
+                "Id": 1001,
+                "Name": "Test Department",
+                "Description": "Default Department",
+                "SupervisorIds": null,
+                "Supervisors": null,
+                "EmployeeIds": null,
+                "Employees": null
+            }
+        ]
+    }
+}

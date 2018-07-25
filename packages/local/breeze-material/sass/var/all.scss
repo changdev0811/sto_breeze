@@ -1,0 +1,66 @@
+// View specific variables
+
+
+/* ===[Colors]=== */
+
+/*---------------------------------
+--How to use scope map--
+
+Use the 'map-get' SASS function to retrieve a property.
+ Example:
+
+ button {
+     background-color: map-get($employee-info-colors, 'base');
+     // same as background-color: $scoped-employee-info-base;
+     & :hover {
+         background-color: map-get($employee-info-colors, 'accent-light');
+         // same as background-color: $scoped-employee-info-accent-light;
+     }
+ }
+-------------------------------*/
+/*-------------------------
+--Naming--
+
+Specific colors:
+$scoped-<scope-name>-<part>
+ Parts:
+    - base (base color)
+    - light (light accent color)
+    - medium (medium accent color)
+    - dark (dark accent color)
+    - text-base (text color for base bg)
+    - text-light (text color for accent light bg)
+    - text-medium (text color for accent medium bg)
+    - text-dark (text color for accent dark bg)
+
+Maps:
+Colors:         $<scope-name>-colors (base, light, medium, dark)
+Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
+-------------------------------------*/
+
+// ==== Employee Info View ===
+
+// specific colors
+$scoped-employee-info-base: #498DC6;
+$scoped-employee-info-light: #C0D8EB;
+$scoped-employee-info-medium: #6DAFFF;
+$scoped-employee-info-dark: $scoped-employee-info-base;
+
+$scoped-employee-info-text-base: #ffffff;
+$scoped-employee-info-text-light: $scoped-employee-info-base;
+$scoped-employee-info-text-medium: $scoped-employee-info-base;
+$scoped-employee-info-text-dark: $scoped-employee-info-text-base;
+
+// scope map
+$employee-info-colors: (
+    base: $scoped-employee-info-base,
+    light: $scoped-employee-info-light,
+    medium: $scoped-employee-info-medium,
+    dark: $scoped-employee-info-base
+);
+$employee-info-text-colors: (
+    base: $scoped-employee-info-text-base,
+    light:$scoped-employee-info-text-light,
+    medium: $scoped-employee-info-text-medium,
+    dark: $scoped-employee-info-text-dark
+);
