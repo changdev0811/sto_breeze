@@ -131,7 +131,15 @@ Ext.define('Breeze.view.main.Nav', {
                                 */
                             ]
                         },
-
+                        {
+                            xtype: 'main.menuCollapseButton',
+                            ui: 'mainNavCollapseButton',
+                            collapsed: false,
+                            height: '2em',
+                            listeners: {
+                                tap: 'onSideNavToggle'
+                            }
+                        },
                         {
                             // Side navigation menu tree
                             xtype: 'treelist',
@@ -143,6 +151,7 @@ Ext.define('Breeze.view.main.Nav', {
                             expanderOnly:false,
                             singleExpand:true,
                             selectOnExpander:true,
+                            floatLeafItems: false,
                             reference: 'navSideMenuTree',
                             bind: '{personalNav}',
                             listeners: {

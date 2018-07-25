@@ -29,6 +29,14 @@
 
         // Event Handlers
 
+        onSideNavToggle: function(button, e, eOpts){
+            var collapsed = !button.getCollapsed()
+            button.setCollapsed(collapsed);
+            if(collapsed !== this.lookup('navSideMenuTree').micro){
+                this.lookup('navSideMenuTree').setMicro(collapsed);
+            }
+        },
+
         /**
          * Handle side nav tree item selection changing
          */
