@@ -17,7 +17,7 @@ Ext.define('Breeze.view.employee.Information', {
     items: [
         {
             xtype: 'tabpanel',
-            ui: 'employee-info-tabs',
+            // TODO: Create Themer UI Override and reference here
             flex: 1,
             items: [
                 // containers with title and items containing body
