@@ -28,9 +28,9 @@
             request: function(api, service, params, sync, successHandler, failureHandler){
                 var reqParams = params;
                 var authCookies = Breeze.helper.Auth.getCookies();
-                reqParams.cust_id = defVal(regParams.cust_id, authCookies.cust);
-                reqParams.emp_id = defVal(regParams.emp_id, authCookies.emp);
-                reqParams.hashcookie = defVal(regParams.hashcookie, authCookies.pass);
+                reqParams.cust_id = defVal(reqParams.cust_id, authCookies.cust);
+                reqParams.emp_id = defVal(reqParams.emp_id, authCookies.emp);
+                reqParams.hashcookie = defVal(reqParams.hashcookie, authCookies.pass);
                 var sync = defVal(sync, true);
                 var successHandler = defVal(successHandler, function(a,b){});
                 var failureHandler = defVal(failureHandler, function(a,b){});

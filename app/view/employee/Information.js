@@ -23,6 +23,18 @@ Ext.define('Breeze.view.employee.Information', {
                 {
                     xtype: 'container',
                     title: 'Employee'
+                },
+                {
+                    xtype: 'container',
+                    title: 'Company'
+                },
+                {
+                    xtype: 'container',
+                    title: 'Schedule'
+                },
+                {
+                    xtype: 'container',
+                    title: 'Security'
                 }
             ]
         }

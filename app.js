@@ -14,5 +14,6 @@ Ext.application({
     ],
 
     // The name of the initial view to create.
-    mainView: 'Breeze.view.main.Nav'
+    // mainView: 'Breeze.view.main.Nav',
+
 });

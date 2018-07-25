@@ -20,7 +20,6 @@ Ext.define('Breeze.view.main.Nav', {
     },
     controller: 'main.nav',
 
-
     layout: 'vbox',
 
     items: [
@@ -134,7 +133,15 @@ Ext.define('Breeze.view.main.Nav', {
                                 */
                             ]
                         },
-
+                        {
+                            xtype: 'main.menuCollapseButton',
+                            ui: 'mainNavCollapseButton',
+                            collapsed: false,
+                            height: '2em',
+                            listeners: {
+                                tap: 'onSideNavToggle'
+                            }
+                        },
                         {
                             // Side navigation menu tree
                             xtype: 'treelist',
@@ -146,43 +153,11 @@ Ext.define('Breeze.view.main.Nav', {
                             expanderOnly:false,
                             singleExpand:true,
                             selectOnExpander:true,
+                            floatLeafItems: false,
                             reference: 'navSideMenuTree',
-                            store: {
-                                root: {
-                                    children: [
-                                        /*{
-                                            text: 'Dashboard', leaf: true,
-                                            iconCls: 'x-fa fa-tachometer'
-                                        },*/ {
-                                            text: 'Personal',
-                                            iconCls: 'x-fa fa-user',
-                                            children: [
-                                                {
-                                                    text: 'Calendar', leaf: true,
-                                                    iconCls: 'x-fa fa-calendar'
-                                                }, {
-                                                    text: 'Employee Information', leaf: true,
-                                                    iconCls: 'x-fa fa-id-card-o'
-                                                }, {
-                                                    text: 'FYI', leaf: true,
-                                                    iconCls: 'x-fa fa-table'
-                                                }, {
-                                                    text: 'Year at a Glance', leaf: true,
-                                                    iconCls: 'x-fa fa-eye'
-                                                }
-                                            ]
-                                        }, {
-                                            text: 'My Requests', leaf: true,
-                                            iconCls: 'x-fa fa-retweet'
-                                        },  {
-                                            text: 'Reports', leaf: true,
-                                            iconCls: 'x-fa fa-bar-chart'
-                                        },  {
-                                            text: 'Help', leaf: true,
-                                            iconCls: 'x-fa fa-question-circle'
-                                        }
-                                    ]
-                                }
+                            bind: '{personalNav}',
+                            listeners: {
+                                selectionchange: 'onSideNavSelect'
                             }
                         }
                     ]
@@ -190,8 +165,10 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'container',
                     flex: 3,
+                    padding: '6 6 6 6',
                     reference: 'contentContainer',
-                    scrollable: 'vertical'
+                    scrollable: 'vertical',
+                    layout: 'fit'
                 }
             ]
         }

@@ -8,6 +8,12 @@ Ext.define('Breeze.Application', {
 
     name: 'Breeze',
 
+    controllers: ['Breeze.controller.Overseer'],
+
+    requires: [
+        'Breeze.helper.Auth'
+    ],
+
     quickTips: false,
     platformConfig: {
         desktop: {
@@ -23,5 +29,20 @@ Ext.define('Breeze.Application', {
                 }
             }
         );
+    },
+
+    launch: function(){
+        console.log("Launched");
+        
+        // TODO: Removing testing check when out of dev
+        var testing = true; // (should be removed later)
+
+        if(Breeze.helper.Auth.isAuthorized() || testing){
+            this.viewport.add(Ext.create('Breeze.view.main.Nav', {
+                //data: {mode: 'supervisor'}
+            }));
+        } else {
+            this.viewport.add(Ext.create('Breeze.view.auth.Login'));
+        }
     }
 });

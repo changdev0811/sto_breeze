@@ -7,8 +7,14 @@
         alias: 'controller.main.nav',
 
         requires: [
-            'Ext.route.Route'
+            'Ext.route.Route',
+            'Breeze.helper.Auth',
+            'Breeze.helper.routing.TreeRouter'
         ],
+
+        init: function(component){
+            this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
+        },
 
         // Routes
         routes: {
@@ -16,9 +22,29 @@
             'personal/employee_info': 'onPersonalEmployeeInfoRoute',
             'personal/fyi': 'onPersonalFyiRoute',
             'personal/year_at_a_glance': 'onPersonalYaagRoute',
-            'personal/work_time_records': 'onPersonalWtrRoute',
+            'personal/worktime_records': 'onPersonalWtrRoute',
             'personal/calendar': 'onPersonalCalendarRoute',
             'download/punch_station': 'onDownloadPunchStationRoute'
+        },
+
+        // Event Handlers
+
+        onSideNavToggle: function(button, e, eOpts){
+            var collapsed = !button.getCollapsed()
+            button.setCollapsed(collapsed);
+            if(collapsed !== this.lookup('navSideMenuTree').micro){
+                this.lookup('navSideMenuTree').setMicro(collapsed);
+            }
+        },
+
+        /**
+         * Handle side nav tree item selection changing
+         */
+        onSideNavSelect: function(tree, tRecord, eOpst){
+            console.log("Side nav menu item selection changed!");
+            var r = this.router.resolve(tRecord, true);
+            console.log("Route result: " + r);
+            this.router.resolve(tRecord);
         },
 
         // Route change handlers
@@ -28,18 +54,23 @@
         },
 
         onPersonalEmployeeInfoRoute: function(){
+            // var auth = Breeze.helper.Auth.getCookies();
+            this.changeContent(
+                Ext.create('Breeze.view.employee.Information')
+            );
+        },
+
+        onPersonalFyiRoute: function() {
+            this.changeContent(
+                Ext.create('Breeze.view.employee.Fyi')
+            );
+        },
+
+        onPersonalYaagRoute: function(){
 
         },
 
-        onPersonalFYIRoute: function() {
-            
-        },
-
-        onPersonalYAAGRoute: function(){
-
-        },
-
-        onPersonalWTRRoute: function(){
+        onPersonalWtrRoute: function(){
 
         },
 

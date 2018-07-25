@@ -12,17 +12,39 @@
 Ext.define('Breeze.controller.Overseer', {
     extend: 'Ext.app.Controller',
 
-    /*
+    requires: [
+        'Breeze.helper.Auth'
+    ],
+
+    views: [
+        'Breeze.view.main.Nav',
+        'Breeze.view.auth.Login'
+    ],
+
+    models: [
+        'Breeze.model.employee.Fyi'
+    ],
+
+/*
     models: [],
     stores: [],
 
     init: function() {
 
     },
-s
+    
+    init: function () {
+       this.control({
+           'viewport': {
+               render: this.onViewportRendered
+            }
+        });
+    },
+
     onViewportRendered: function(params){
         // Check if user is logged in, handle both possibilities
-    }
-    */
+        console.log("Overseer viewport rendered.");
+    },
+*/
 
 });
