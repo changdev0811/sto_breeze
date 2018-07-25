@@ -112,7 +112,7 @@
                 var api = Breeze.helper.Api;
                 return new Promise(function(resolve, reject){
                     api.request(
-                        '','resources/api_dummy/getFYI.json',
+                        '','resources/dummy_api/getFYI/default.json',
                         {
                             'employee_id': employeeId,
                             'recyear': year,

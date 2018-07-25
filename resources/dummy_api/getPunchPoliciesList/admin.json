@@ -1,0 +1,19 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Punch_Policies",
+        "Rows": [
+            {
+                "ID": 563,
+                "Name": "-Default Exempt Policy-"
+            },
+            {
+                "ID": 564,
+                "Name": "-Default Non-Exempt Policy-"
+            },
+            {
+                "ID": 770,
+                "Name": "-New Policy-"
+            }
+        ]
+    }
+}
