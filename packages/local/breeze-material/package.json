@@ -356,6 +356,25 @@
                     "tooltip": "<b>Alert Color</b><br/>#DC5E71",
                     "rgba": "rgba(220, 94, 113, 1)",
                     "hex": "#DC5E71"
+                },
+                {
+                    "s": 0,
+                    "h": 0,
+                    "v": 0,
+                    "a": 0,
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "id": "fbf261d4-3932-4c52-8604-7fb32aa9a8b5",
+                    "variable": "",
+                    "displayName": "",
+                    "transparent": false,
+                    "sass": "",
+                    "order": 4,
+                    "base": true,
+                    "tooltip": "#000000",
+                    "rgba": "rgba(0, 0, 0, 0)",
+                    "hex": "#000000"
                 }
             ]
         }
