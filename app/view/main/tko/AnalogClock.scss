@@ -1,45 +1,27 @@
-.tko-analog-clock, .tko-analog-clock:after{
-	width:64pt; height:64pt;
-	margin:27pt 0pt 15pt 15pt;
-
+.tko-analog-clock{
+	width:50pt; height:50pt;
+	margin:9pt 0pt 5pt 5pt;
 }
 .tko-analog-clock {
 	position: relative;
 	border-radius: 50%;
 	border: solid 2pt white;
 }
-.tko-analog-clock:after{
-	position:absolute;
-}
 .tko-analog-clock-min, .tko-analog-clock-hrs, .tko-analog-clock-sec {
 	position: absolute;
-	width:100%; height:100%;
-	transform-origin: center center;
-}
-.tko-analog-clock-hrs:after, .tko-analog-clock-min:after, .tko-analog-clock-sec:after {
-	position: absolute;
-	content:' ';
 	transform-origin: center bottom;
-	background: white;
+	background-color: #ffffff;
 	bottom:50%;
 }
-.tko-analog-clock-min:after {
+.tko-analog-clock-min {
 	height: 40%; width: 2pt;
 	left:calc(50% - 1pt);
-	animation:tkoAnalogClockAni 3600s infinite linear;
 }
-.tko-analog-clock-hrs:after {
+.tko-analog-clock-hrs {
 	height: 30%; width: 3pt;
-	left:calc(50% - 2pt);
-	animation:tkoAnalogClockAni 216000s infinite linear;
+	left:calc(50% - 1.5pt);
 }
-.tko-analog-clock-sec:after {
+.tko-analog-clock-sec {
 	height: 45%; width: 1pt;
 	left:calc(50% - 0.5pt);
-	animation:tkoAnalogClockAni 60s infinite linear;
-}
-@keyframes tkoAnalogClockAni {
-   100% {
-      transform:rotateZ(360deg);
-   }
 }
