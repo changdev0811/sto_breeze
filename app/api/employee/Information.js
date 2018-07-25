@@ -6,5 +6,9 @@
  * @alias Breeze.api.employee.Information
  */
 Ext.define('Breeze.api.employee.Information', {
-    extend: 'Breeze.api.Base'
+    extend: 'Breeze.api.Base',
+
+    // TODO: Implement
+    getEmployeeInfo: function(){},
+    addNewEmployee: function(){}
 });
