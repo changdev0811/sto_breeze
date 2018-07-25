@@ -94,9 +94,9 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'container',
                     layout: 'vbox',
-                    minWidth: '256pt',
-                    maxWidth: '256pt',
-                    width: 'auto',
+                    minWidth: '200pt',
+                    maxWidth: '200pt',
+                    //width: 'auto',
                     // flex: 1,
                     userCls:'main-nav-side-bar',
                     items: [
@@ -104,7 +104,7 @@ Ext.define('Breeze.view.main.Nav', {
                             xtype: 'container',
                             reference: 'navPunchClock',
                             layout: 'hbox',
-                            height:'120pt',
+                            height:'70pt',
                             userCls:'main-nav-punch-clock',
                             items: [
                                 {
@@ -113,7 +113,8 @@ Ext.define('Breeze.view.main.Nav', {
                                 },{
                                     
                                     xtype:'main.tko.digitalClock',
-                                    clockedIn:false
+                                    clockedIn:false,
+                                    abbreviated:false
 
                                 }
                                 /*
