@@ -17,6 +17,7 @@ Ext.define('Breeze.view.employee.Information', {
     items: [
         {
             xtype: 'tabpanel',
+            ui: 'employee-info-tabs',
             flex: 1,
             items: [
                 // containers with title and items containing body
