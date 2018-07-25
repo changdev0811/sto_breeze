@@ -21,6 +21,10 @@ Ext.define('Breeze.controller.Overseer', {
         'Breeze.view.auth.Login'
     ],
 
+    models: [
+        'Breeze.model.employee.Fyi'
+    ],
+
 /*
     models: [],
     stores: [],
