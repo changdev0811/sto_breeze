@@ -1,7 +1,4 @@
-// View specific variables
-
-
-/* ===[Colors]=== */
+// ========Scoped color sets============
 
 /*---------------------------------
 --How to use scope map--
@@ -38,7 +35,7 @@ Colors:         $<scope-name>-colors (base, light, medium, dark)
 Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 -------------------------------------*/
 
-// ==== Employee Info View ===
+// ====[Employee Info View]====
 
 // specific colors
 $scoped-employee-info-base: #498DC6;
