@@ -1,7 +1,19 @@
 // Field element class
 .employee-info-general-field {
     padding: 2pt;
-    & > label {
-        color: #ffffff;
+}
+
+.employee-info-general-field.x-focused {
+    label {
+        span {
+            color: white;
+        }
     }
 }
+
+// .employee-info-general-field .x-focused {
+//     color: red;
+//     & > label > .x-label-text-el {
+//         color: #ffffff;
+//     }
+// }
