@@ -10,7 +10,8 @@ Ext.define('Breeze.view.employee.Information', {
 
     requires: [
         'Ext.tab.Panel',
-        'Breeze.view.employee.information.General'
+        'Breeze.view.employee.information.General',
+        'Breeze.view.employee.information.Company'
     ],
 
     layout: 'vbox',
@@ -34,13 +35,20 @@ Ext.define('Breeze.view.employee.Information', {
                     title: 'Employee',
                     items: [
                         {
-                            xtype: 'employee.information.general'
+                            xtype: 'employee.information.general',
+                            userCls: 'employee-info-tab-form'
                         }
                     ]
                 },
                 {
                     xtype: 'container',
-                    title: 'Company'
+                    title: 'Company',
+                    items: [
+                        {
+                            xtype: 'employee.information.company',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
