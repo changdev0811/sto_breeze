@@ -1,0 +1,7 @@
+// Field element class
+.employee-info-general-field {
+    padding: 2pt;
+    & > label {
+        color: #ffffff;
+    }
+}

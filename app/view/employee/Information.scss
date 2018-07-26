@@ -1,1 +1,4 @@
-.employee-info-tab-container
+.employee-info-tab-container {
+    background-color: map-get($employee-info-colors, 'base');
+    color: map-get($employee-info-text-colors, 'base');
+}
