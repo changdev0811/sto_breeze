@@ -9,7 +9,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             xtype: 'fieldset',
             userCls: 'employee-info-fieldset',
             layout: 'hbox',
-            title: 'Name',
+            // title: 'Name',
             defaults: {
                 flex: 1,
                 xtype: 'textfield',
@@ -18,16 +18,76 @@ Ext.define('Breeze.view.employee.information.Company', {
             },
             items: [
                 {
-                    name: 'first_name2',
-                    label: 'First'
+                    xtype: 'datefield',
+                    name: 'date_of_hire',
+                    label: 'Hire Date',
                 },
                 {
-                    name: 'middle_name2',
-                    label: 'Middle'
+                    xtype: 'datefield',
+                    name: 'date_of_termination',
+                    label: 'Termination Date',
                 },
                 {
-                    name: 'last_name2',
-                    label: 'Last'
+                    name: 'customer_employee_id',
+                    label: 'Employee #'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset',
+            layout: 'hbox',
+            defaults: {
+                flex: 1,
+                xtype: 'textfield',
+                userCls: 'employee-info-general-field',
+                ui: 'employeeinfo-textfield'
+            },
+            items: [
+                {
+                    xtype: 'selectfield',
+                    name: 'department',
+                    label: 'Department'
+                },
+                {
+                    name: 'badge_id',
+                    label: 'Badge #'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset',
+            layout: 'hbox',
+            defaults: {
+                flex: 1,
+                xtype: 'textfield',
+                userCls: 'employee-info-general-field',
+                ui: 'employeeinfo-textfield'
+            },
+            items: [
+                {
+                    name: 'comp_rate',
+                    xtype: 'numberfield',
+                    minValue: 0, decimals: 2,
+                    label: 'Compensation'
+                },
+                {
+                    xtype: 'selectfield',
+                    label: 'Compensation Frequency',
+                    name: 'comp_per',
+                    options: [
+                        {text: 'Hourly', value: 'Hourly'},
+                        {text: 'Daily', value: 'Daily'},
+                        {text: 'Weekly', value: 'Weekly'},
+                        {text: 'Bi-Weekly', value: 'Bi-Weekly'},
+                        {text: 'Monthly', value: 'Monthly'},
+                        {text: 'Annually', value: 'Annually'}
+                    ]
+                },
+                {
+                    name: 'payroll',
+                    label: 'Payroll #'
                 }
             ]
         }

@@ -35,7 +35,7 @@ Ext.define('Breeze.view.employee.information.General', {
             xtype: 'fieldset',
             userCls: 'employee-info-fieldset',
             layout: 'hbox',
-            title: 'Name',
+            // title: 'Name',
             defaults: {
                 flex: 1,
                 xtype: 'textfield',
@@ -49,8 +49,10 @@ Ext.define('Breeze.view.employee.information.General', {
                 },
                 {
                     xtype: 'datefield',
-                    name: 'birth_date',
-                    label: 'Birth Date'
+                    name: 'date_of_birth',
+                    label: 'Birth Date',
+                    //msgTarget
+                    //invalidText
                 },
                 {
                     xtype: 'selectfield',

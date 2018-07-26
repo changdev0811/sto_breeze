@@ -11,7 +11,8 @@ Ext.define('Breeze.view.employee.Information', {
     requires: [
         'Ext.tab.Panel',
         'Breeze.view.employee.information.General',
-        'Breeze.view.employee.information.Company'
+        'Breeze.view.employee.information.Company',
+        'Breeze.view.employee.information.Schedule'
     ],
 
     layout: 'vbox',
@@ -52,7 +53,13 @@ Ext.define('Breeze.view.employee.Information', {
                 },
                 {
                     xtype: 'container',
-                    title: 'Schedule'
+                    title: 'Schedule',
+                    items: [
+                        {
+                            xtype: 'employee.information.schedule',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
