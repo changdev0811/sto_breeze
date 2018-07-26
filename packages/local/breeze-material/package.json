@@ -375,6 +375,25 @@
                     "tooltip": "#000000",
                     "rgba": "rgba(0, 0, 0, 0)",
                     "hex": "#000000"
+                },
+                {
+                    "a": 0.7294117647058824,
+                    "v": 1,
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "h": 0,
+                    "s": 0,
+                    "id": "1cdeb341-e1f1-424a-9b87-79c18bd161e8",
+                    "variable": "",
+                    "displayName": "",
+                    "transparent": false,
+                    "sass": "",
+                    "order": 4,
+                    "base": true,
+                    "tooltip": "#FFFFFF",
+                    "rgba": "rgba(255, 255, 255, 0.7294117647058824)",
+                    "hex": "#FFFFFF"
                 }
             ]
         }

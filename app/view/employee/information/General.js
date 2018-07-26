@@ -7,13 +7,14 @@ Ext.define('Breeze.view.employee.information.General', {
     items: [
         {
             xtype: 'fieldset',
+            userCls: 'employee-info-fieldset',
             layout: 'hbox',
             title: 'Name',
             defaults: {
                 flex: 1,
                 xtype: 'textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeInfoTextField'
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
@@ -27,6 +28,39 @@ Ext.define('Breeze.view.employee.information.General', {
                 {
                     name: 'last_name',
                     label: 'Last'
+                }
+            ]
+        },
+        {
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset',
+            layout: 'hbox',
+            title: 'Name',
+            defaults: {
+                flex: 1,
+                xtype: 'textfield',
+                userCls: 'employee-info-general-field',
+                ui: 'employeeinfo-textfield'
+            },
+            items: [
+                {
+                    name: 'ssn',
+                    label: 'SSN'
+                },
+                {
+                    xtype: 'datefield',
+                    name: 'birth_date',
+                    label: 'Birth Date'
+                },
+                {
+                    xtype: 'selectfield',
+                    name: 'gender',
+                    label: 'Gender',
+                    options: [
+                        {text: 'Male', value: 'male'},
+                        {text: 'Female', value: 'female'},
+                        {text: 'Other', value: 'other'}
+                    ]
                 }
             ]
         }

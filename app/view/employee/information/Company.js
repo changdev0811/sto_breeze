@@ -7,13 +7,14 @@ Ext.define('Breeze.view.employee.information.Company', {
     items: [
         {
             xtype: 'fieldset',
+            userCls: 'employee-info-fieldset',
             layout: 'hbox',
             title: 'Name',
             defaults: {
                 flex: 1,
                 xtype: 'textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeInfoBaseTextField'
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {

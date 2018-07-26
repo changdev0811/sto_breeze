@@ -1,8 +1,44 @@
+$ei-form-padding: 8pt 8pt 8pt 8pt;
+$ei-field-padding: 4pt 4pt 4pt 4pt;
 .employee-info-tab-container {
     background-color: map-get($employee-info-colors, 'base');
     color: map-get($employee-info-text-colors, 'base');
 }
 
-.employee-info-tab-form {
-    color: white;
+// Fieldset text coloring
+
+.employee-info-fieldset {
+    padding: $ei-form-padding;
+    .x-form-fieldset-title {
+        color: #ffffff;
+    }
+}
+
+// Field spacing and label text coloring
+
+.employee-info-general-field {
+    padding: $ei-field-padding;
+    // label styling when hovering above field
+    // regular, non-focused hovering
+    .x-label-el { 
+        .x-label-text-el { 
+            color: map-get($employee-info-colors, 'light');
+        }
+    }
+    // focused hovering label
+    &.x-focused {
+        .x-label-el {
+            .x-label-text-el {
+                color: #ffffff;
+            }
+        }
+    }
+    // label styling when shown inside field
+    &.x-label-inside {
+        .x-label-el {
+            .x-label-text-el {
+                color: map-get($employee-info-colors, 'light');
+            }
+        }
+    }
 }
