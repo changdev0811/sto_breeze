@@ -17,9 +17,14 @@ Ext.define('Breeze.view.employee.Information', {
 
     layout: 'vbox',
 
+    userCls: 'employee-info-outer-container',
+
     items: [
         {
             xtype: 'tabpanel',
+            layout: {
+                animation: 'fade'
+            },
             // TODO: Create Themer UI Override and reference here
             ui: 'employeeInfoTabs',
             tabBar: {

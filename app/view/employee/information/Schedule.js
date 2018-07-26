@@ -24,6 +24,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     items: [
                         {
                             xtype: 'grid',
+                            height: '200px',
                             ui: 'employeeinfo-shift-grid',
                             columns: [
                                 {
