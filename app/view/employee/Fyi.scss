@@ -7,7 +7,8 @@
 
 
 @include field-ui(
-    $label-color: #ffffff !important,
+    $label-color: map-get($root-text-colors,'base'),
+    $focused-label-color: map-get($root-text-colors,'light'),
     $ui: 'fyi-display-field'
 );
 
