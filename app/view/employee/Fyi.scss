@@ -2,9 +2,30 @@
     padding: 16pt 16pt 16pt 16pt;
     background-color: $base-color;
     color: #ffffff;
-
 }
 
-.employee-fyi-fields {
-    color: #ffffff;
-}
+
+
+@include field-ui(
+    $label-color: #ffffff !important,
+    $ui: 'fyi-display-field'
+);
+
+@include field-ui(
+    $label-color: #ffffff !important,
+    $focused-label-color: map-get($root-text-colors,'dark'),
+    $input-color: #ffffff,
+    $ui: 'darkbase-textfield'
+);
+
+// @include datetrigger-ui(
+//     $ui: 'dark-textfield',
+//     $icon-color: #ffffff,
+
+// )
+
+
+@include displayfield-ui(
+    $input-color: #ffffff,
+    $ui: 'fyi-display-field'
+);

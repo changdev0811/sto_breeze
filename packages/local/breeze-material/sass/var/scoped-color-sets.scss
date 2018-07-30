@@ -37,9 +37,22 @@ Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 
 // ====[Base (root) Set]====
 $scoped-root-base: #2D415A;
+$scoped-root-light: #4ea5ff;
 
 $scoped-root-text-base: #B8BFC9
 $scoped-root-text-light: #ffffff;
+$scoped-root-text-dark: $scoped-root-light;
+
+$root-colors: (
+    base: $scoped-root-base-light,
+    light: $scoped-root-light
+);
+
+$root-text-colors: (
+    base: $scoped-root-text-base,
+    light: $scoped-root-text-light,
+    dark: $scoped-root-text-dark
+);
 
 // ====[Employee Info View]====
 

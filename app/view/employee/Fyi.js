@@ -26,11 +26,11 @@ Ext.define('Breeze.view.employee.Fyi',{
     items: [
         {
             xtype: 'container',
+            // ui: 'dark-form-container',
             layout: 'vbox',
             // flex: 1,
             defaults: {
                 xtype: 'displayfield',
-                ui: 'employeefyi-display',
                 flex: 1
             },
             items: [
@@ -39,6 +39,7 @@ Ext.define('Breeze.view.employee.Fyi',{
                     layout: 'hbox',
                     defaults: {
                         xtype: 'displayfield',
+                        ui: 'fyi-display-field',
                         flex: 1
                     },
                     items: [   
@@ -55,6 +56,7 @@ Ext.define('Breeze.view.employee.Fyi',{
                 },
                 {
                     label: 'Hire Date',
+                    ui: 'fyi-display-field',
                     bind: { value: '{hideDate}' }
                 }
             ]
@@ -64,6 +66,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'datefield',
+                    ui: 'darkbase-textfield',
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     picker: {
