@@ -12,10 +12,10 @@
 );
 
 @include field-ui(
-    $label-color: #ffffff !important,
-    $focused-label-color: map-get($root-text-colors,'dark'),
-    $input-color: #ffffff,
-    $ui: 'darkbase-textfield'
+    $label-color: map-get($root-text-colors,'base'),
+    $focused-label-color: map-get($root-text-colors,'light'),
+    // $input-color: #ffffff,
+    $ui: 'dark-textfield'
 );
 
 // @include datetrigger-ui(

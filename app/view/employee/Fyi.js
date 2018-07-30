@@ -66,7 +66,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'datefield',
-                    ui: 'darkbase-textfield',
+                    ui: 'dark-textfield',
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     picker: {

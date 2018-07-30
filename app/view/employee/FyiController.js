@@ -19,11 +19,15 @@ Ext.define('Breeze.view.employee.FyiController', {
             '07/25/2018',
             true
         ).then(function(data){
-            console.log("Loaded FYI Test");
-            var vm = me.getViewModel();
-            vm.setStores({employee_fyi: data.store});
-            vm.setData(data.data);
-            me.lookup('fyiDataList').setStore(data.store);
+            if(typeof data !== 'undefined'){
+                console.log("Loaded FYI Test");
+                var vm = me.getViewModel();
+                vm.setStores({employee_fyi: data.store});
+                vm.setData(data.data);
+                me.lookup('fyiDataList').setStore(data.store);
+            } else {
+                console.log("Error loading FYI data");
+            }
         }).catch(function(err){
             console.log("FYI Error");
         });
