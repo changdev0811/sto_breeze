@@ -81,7 +81,8 @@ Ext.define('Breeze.view.employee.Fyi',{
             itemConfig: {
                 xtype: 'employee.fyi.accrualItem'
             },
-            reference: 'fyiDataList'
+            reference: 'fyiDataList',
+            ui: 'employeefyi-accrual-list'
             // store: [
             //     {
             //         CatDesc: 'Test',
