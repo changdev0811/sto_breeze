@@ -1,0 +1,32 @@
+.employee-fyi-container {
+    padding: 16pt 16pt 16pt 16pt;
+    background-color: $base-color;
+    color: #ffffff;
+}
+
+
+
+@include field-ui(
+    $label-color: map-get($root-text-colors,'base'),
+    $focused-label-color: map-get($root-text-colors,'light'),
+    $ui: 'fyi-display-field'
+);
+
+@include field-ui(
+    $label-color: map-get($root-text-colors,'base'),
+    $focused-label-color: map-get($root-text-colors,'light'),
+    // $input-color: #ffffff,
+    $ui: 'dark-textfield'
+);
+
+// @include datetrigger-ui(
+//     $ui: 'dark-textfield',
+//     $icon-color: #ffffff,
+
+// )
+
+
+@include displayfield-ui(
+    $input-color: #ffffff,
+    $ui: 'fyi-display-field'
+);

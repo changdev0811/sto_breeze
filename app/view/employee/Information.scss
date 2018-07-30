@@ -1,1 +1,51 @@
-.employee-info-tab-container
+$ei-padding-base: 4pt;
+$ei-form-padding: ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2);
+$ei-field-padding: $ei-padding-base $ei-padding-base $ei-padding-base $ei-padding-base;
+$ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4);
+.employee-info-outer-container {
+    background-color: map-get($employee-info-colors, 'base');
+    padding: $ei-outer-padding;
+}
+
+.employee-info-tab-container {
+    background-color: map-get($employee-info-colors, 'base');
+    color: map-get($employee-info-text-colors, 'base');
+}
+
+// Fieldset text coloring
+
+.employee-info-fieldset {
+    padding: $ei-form-padding;
+    .x-form-fieldset-title {
+        color: #ffffff;
+    }
+}
+
+// Field spacing and label text coloring
+
+.employee-info-general-field {
+    padding: $ei-field-padding;
+    // label styling when hovering above field
+    // regular, non-focused hovering
+    .x-label-el { 
+        .x-label-text-el { 
+            color: map-get($employee-info-colors, 'light');
+        }
+    }
+    // focused hovering label
+    &.x-focused {
+        .x-label-el {
+            .x-label-text-el {
+                color: #ffffff;
+            }
+        }
+    }
+    // label styling when shown inside field
+    &.x-label-inside {
+        .x-label-el {
+            .x-label-text-el {
+                color: map-get($employee-info-colors, 'light');
+            }
+        }
+    }
+}

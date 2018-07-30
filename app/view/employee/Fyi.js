@@ -4,12 +4,11 @@
  */
 Ext.define('Breeze.view.employee.Fyi',{
     extend: 'Ext.Container',
-    alias: 'widget.employee.fyi',
-
+    
     requires: [
         'Breeze.view.employee.FyiController',
         'Breeze.view.employee.FyiModel',
-        'Breeze.view.employee.fyi.Grid',
+        'Breeze.view.employee.fyi.AccrualItem',
         'Ext.field.Display',
         'Ext.field.Date',
         'Ext.picker.Date'
@@ -22,52 +21,52 @@ Ext.define('Breeze.view.employee.Fyi',{
 
     layout: 'vbox',
 
+    userCls: 'employee-fyi-container',
+
     items: [
-        
-        // info panel at top
         {
             xtype: 'container',
-            flex: 1,
+            // ui: 'dark-form-container',
             layout: 'vbox',
+            // flex: 1,
+            defaults: {
+                xtype: 'displayfield',
+                flex: 1
+            },
             items: [
                 {
-                    xtype: 'displayfield',
-                    label: 'Employee Name',
-                    bind: {
-                        value: '{employeeName}'
+                    xtype: 'container',
+                    layout: 'hbox',
+                    defaults: {
+                        xtype: 'displayfield',
+                        ui: 'fyi-display-field',
+                        flex: 1
                     },
-                    flex: 1
+                    items: [   
+                        {  
+                            label: 'Employee Name',
+                            flex: 1,
+                            bind: { value: '{employeeName}' }
+                        },
+                        {
+                            label: 'Department',
+                            bind: { value: '{departmentName}' }
+                        },
+                    ]
                 },
                 {
-                    xtype: 'displayfield',
-                    label: 'Department',
-                    bind: {
-                        value: '{departmentName}'
-                    },
-                    flex: 1
-                },
-                {
-                    xtype: 'displayfield',
                     label: 'Hire Date',
-                    bind: {
-                        value: '{hireDate}'
-                    },
-                    flex: 1
-                }/*,
-                {
-                    xtype: 'displayfield',
-                    label: 'Points',
-                    value: '2018/01/01',
-                    flex: 1
-                }*/
+                    ui: 'fyi-display-field',
+                    bind: { value: '{hideDate}' }
+                }
             ]
         },
-        //{ xtype: 'form', items: [
         {
             xtype: 'container',
             items: [
                 {
                     xtype: 'datefield',
+                    ui: 'dark-textfield',
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     picker: {
@@ -77,36 +76,32 @@ Ext.define('Breeze.view.employee.Fyi',{
                     value: Ext.util.Format.date(new Date(), 'm/d/y')
                 }
             ]
-        }, {
-            xtype: 'container',
+        },
+        {
+            xtype: 'list',
             flex: 3,
-            scrollable: false,
-            layout: 'box',
-            items: [
-                {
-                    xtype: 'employee.fyi.grid',
-                    width: '100%', height: '100%',
-                    reference: 'fyiGrid'
-                }
-            ]
-            // xtype: 'employee.fyi.grid',
-            // reference: 'fyiGrid'
-        }, {
-            xtype: 'container',
-            items: [
-                {
-                    xtype: 'checkbox',
-                    // docked: 'left',
-                    name: 'scheduled_checkbox',
-                    label: 'Show Scheduled recorded time',
-                    labelAlign: 'right',
-                    labelWidth: 'auto'
-                }
-            ]
+            layout: 'vbox',
+            itemConfig: {
+                xtype: 'employee.fyi.accrualItem'
+            },
+            reference: 'fyiDataList',
+            ui: 'employeefyi-accrual-list'
+            // store: [
+            //     {
+            //         CatDesc: 'Test',
+            //         CatColor: "rgb(79,128,49)",
+            //         CatRecorded: 5.0,
+            //         CatAllowed: 10.0
+            //     },
+            //     {
+            //         CatDesc: 'Test2',
+            //         CatColor: "rgb(250,128,49)",
+            //         CatRecorded: 9.0,
+            //         CatAllowed: 10.0
+            //     }
+            // ]
+
         }
-        // ]}
     ]
-
-
 
 });

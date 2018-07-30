@@ -56,7 +56,8 @@
         onPersonalEmployeeInfoRoute: function(){
             // var auth = Breeze.helper.Auth.getCookies();
             this.changeContent(
-                Ext.create('Breeze.view.employee.Information')
+                // Ext.create('Breeze.view.employee.Information')
+                { xtype: 'employee.information' }
             );
         },
 

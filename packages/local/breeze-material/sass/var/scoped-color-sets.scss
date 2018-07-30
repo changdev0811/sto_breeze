@@ -1,7 +1,4 @@
-// View specific variables
-
-
-/* ===[Colors]=== */
+// ========Scoped color sets============
 
 /*---------------------------------
 --How to use scope map--
@@ -38,13 +35,32 @@ Colors:         $<scope-name>-colors (base, light, medium, dark)
 Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 -------------------------------------*/
 
-// ==== Employee Info View ===
+// ====[Base (root) Set]====
+$scoped-root-base: #2D415A;
+$scoped-root-light: #4ea5ff;
+
+$scoped-root-text-base: #B8BFC9;
+$scoped-root-text-light: #ffffff;
+$scoped-root-text-dark: $scoped-root-light;
+
+$root-colors: (
+    base: $scoped-root-base,
+    light: $scoped-root-light
+);
+
+$root-text-colors: (
+    base: $scoped-root-text-base,
+    light: $scoped-root-text-light,
+    dark: $scoped-root-text-dark
+);
+
+// ====[Employee Info View]====
 
 // specific colors
 $scoped-employee-info-base: #498DC6;
 $scoped-employee-info-light: #C0D8EB;
-$scoped-employee-info-medium: #6DAFFF;
-$scoped-employee-info-dark: $scoped-employee-info-base;
+$scoped-employee-info-medium: #bed9ed;
+$scoped-employee-info-dark: #6DAFFF;
 
 $scoped-employee-info-text-base: #ffffff;
 $scoped-employee-info-text-light: $scoped-employee-info-base;

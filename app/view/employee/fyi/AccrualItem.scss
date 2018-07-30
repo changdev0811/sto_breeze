@@ -1,0 +1,28 @@
+// Style rules for employee.fyi.AccrualItem component
+
+$fyi-accrual-val-over: mix(#fff, $alert-color, 65%);
+$fyi-accrual-background-color: $base-color;
+$fyi-accrual-color: #ffffff;
+
+.employee-fyi-accrual-value-label {
+    //
+}
+
+// style for x of y label when value exceeds allowed
+.employee-fyi-accrual-value-label-over {
+    & div {
+    color: $fyi-accrual-val-over;
+    }
+}
+
+// Style for widget.employee.fyi.accrualItem item
+@include listitem-ui(
+    $background-color: $fyi-accrual-background-color,
+    $color: $fyi-accrual-color,
+    $hovered-background-color: $fyi-accrual-background-color !important,
+    $hovered-color: $fyi-accrual-color !important,
+    $selected-background-color: $fyi-accrual-background-color !important,
+    $selected-color: $fyi-accrual-color !important,
+    $pressed-background-color: $fyi-accrual-background-color !important,
+    $ui: 'fyi-accrual-item'
+);

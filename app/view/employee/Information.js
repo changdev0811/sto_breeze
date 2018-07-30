@@ -9,33 +9,73 @@ Ext.define('Breeze.view.employee.Information', {
     alias: 'widget.employee.information',
 
     requires: [
-        'Ext.tab.Panel'
+        'Ext.tab.Panel',
+        'Breeze.view.employee.information.General',
+        'Breeze.view.employee.information.Company',
+        'Breeze.view.employee.information.Schedule',
+        'Breeze.view.employee.InformationController'
     ],
 
     layout: 'vbox',
 
+    controller: 'employee.fyi',
+
+    userCls: 'employee-info-outer-container',
+
     items: [
         {
             xtype: 'tabpanel',
+            layout: {
+                animation: 'fade'
+            },
             // TODO: Create Themer UI Override and reference here
+            ui: 'employeeInfoTabs',
+            tabBar: {
+                defaultTabUI: 'employeeInfoTabs'
+            },
             flex: 1,
+            defaults: {
+                userCls: 'employee-info-tab-container'
+            },
             items: [
                 // containers with title and items containing body
                 {
                     xtype: 'container',
-                    title: 'Employee'
+                    title: 'Employee',
+                    items: [
+                        {
+                            xtype: 'employee.information.general',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
-                    title: 'Company'
+                    title: 'Company',
+                    items: [
+                        {
+                            xtype: 'employee.information.company',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
-                    title: 'Schedule'
+                    title: 'Schedule',
+                    items: [
+                        {
+                            xtype: 'employee.information.schedule',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     title: 'Security'
+                },
+                {
+                    xtype: 'container',
+                    title: 'Punch Policy'
                 }
             ]
         }

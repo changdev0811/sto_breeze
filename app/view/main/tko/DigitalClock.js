@@ -49,8 +49,8 @@ Ext.define('Breeze.view.main.tko.DigitalClock', {
 	},
 
 	updateInout:function(){
-		console.log("[updateInout]");
-		console.log(this.getClockedIn());
+		// console.log("[updateInout]");
+		// console.log(this.getClockedIn());
 		var io = ["&#10003; Clocked In", "&times; Clocked Out"][(this.config.clockedIn)? 0 : 1];
 		this.el.select('.tko-digital-clock-inout').elements[0].innerHTML = io;
 	}

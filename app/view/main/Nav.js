@@ -32,7 +32,7 @@ Ext.define('Breeze.view.main.Nav', {
             items: [
                 {
                     xtype: 'image',
-                    reference: 'Logo',
+                    reference: 'navHeaderLogo',
                     height: '64pt',
                     width: '170pt',
                     selfAlign: '',
@@ -48,14 +48,16 @@ Ext.define('Breeze.view.main.Nav', {
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-company-name',
-                            html: 'Company Name'
+                            html: 'Company Name',
+                            reference: 'navHeaderCompanyName'
                         },
                         {
                             xtype: 'component',
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-user-name',
-                            html: 'First M. Last'
+                            html: 'First M. Last',
+                            reference: 'navHeaderUserName'
                         }
                     ]
                 },
