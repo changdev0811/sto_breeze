@@ -25,27 +25,10 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 
 .employee-info-general-field {
     padding: $ei-field-padding;
-    // label styling when hovering above field
-    // regular, non-focused hovering
-    .x-label-el { 
-        .x-label-text-el { 
-            color: map-get($employee-info-colors, 'light');
-        }
-    }
-    // focused hovering label
-    &.x-focused {
-        .x-label-el {
-            .x-label-text-el {
-                color: #ffffff;
-            }
-        }
-    }
-    // label styling when shown inside field
-    &.x-label-inside {
-        .x-label-el {
-            .x-label-text-el {
-                color: map-get($employee-info-colors, 'light');
-            }
-        }
-    }
 }
+
+@include field-ui(
+    $label-color: map-get($employee-info-text-colors, 'light'),
+    $focused-label-color: #ffffff,
+    $ui: 'employeeinfo-textfield'
+);

@@ -18,6 +18,10 @@ Ext.define('Breeze.view.employee.Fyi',{
         type: 'employee.fyi'
     },
     controller: 'employee.fyi',
+    
+    listeners: {
+        initialize: 'onInitialize'
+    },
 
     layout: 'vbox',
 

@@ -20,7 +20,9 @@
         routes: {
             'home': 'onHomeRoute',
             'personal/employee_info': 'onPersonalEmployeeInfoRoute',
-            'personal/fyi': 'onPersonalFyiRoute',
+            'personal/fyi': {
+                action: 'onPersonalFyiRoute',
+            },
             'personal/year_at_a_glance': 'onPersonalYaagRoute',
             'personal/worktime_records': 'onPersonalWtrRoute',
             'personal/calendar': 'onPersonalCalendarRoute',
@@ -55,9 +57,11 @@
 
         onPersonalEmployeeInfoRoute: function(){
             // var auth = Breeze.helper.Auth.getCookies();
+            var info = Ext.create('Breeze.view.employee.Information');
             this.changeContent(
                 // Ext.create('Breeze.view.employee.Information')
-                { xtype: 'employee.information' }
+                // { xtype: 'employee.information' }
+                info
             );
         },
 
