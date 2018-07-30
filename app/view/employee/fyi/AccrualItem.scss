@@ -1,0 +1,14 @@
+// Style rules for employee.fyi.AccrualItem component
+
+$fyi-accrual-val-over: mix(#fff, $alert-color, 65%);
+
+.employee-fyi-accrual-value-label {
+    //
+}
+
+// style for x of y label when value exceeds allowed
+.employee-fyi-accrual-value-label-over {
+    & div {
+    color: $fyi-accrual-val-over;
+    }
+}

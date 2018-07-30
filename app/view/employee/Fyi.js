@@ -81,20 +81,21 @@ Ext.define('Breeze.view.employee.Fyi',{
             itemConfig: {
                 xtype: 'employee.fyi.accrualItem'
             },
-            store: [
-                {
-                    CatDesc: 'Test',
-                    CatColor: "rgb(79,128,49)",
-                    CatRecorded: 5.0,
-                    CatAllowed: 10.0
-                },
-                {
-                    CatDesc: 'Test2',
-                    CatColor: "rgb(250,128,49)",
-                    CatRecorded: 9.0,
-                    CatAllowed: 10.0
-                }
-            ]
+            reference: 'fyiDataList'
+            // store: [
+            //     {
+            //         CatDesc: 'Test',
+            //         CatColor: "rgb(79,128,49)",
+            //         CatRecorded: 5.0,
+            //         CatAllowed: 10.0
+            //     },
+            //     {
+            //         CatDesc: 'Test2',
+            //         CatColor: "rgb(250,128,49)",
+            //         CatRecorded: 9.0,
+            //         CatAllowed: 10.0
+            //     }
+            // ]
 
         }
     ]

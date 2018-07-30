@@ -12,10 +12,13 @@ Ext.define('Breeze.view.employee.Information', {
         'Ext.tab.Panel',
         'Breeze.view.employee.information.General',
         'Breeze.view.employee.information.Company',
-        'Breeze.view.employee.information.Schedule'
+        'Breeze.view.employee.information.Schedule',
+        'Breeze.view.employee.InformationController'
     ],
 
     layout: 'vbox',
+
+    controller: 'employee.fyi',
 
     userCls: 'employee-info-outer-container',
 
