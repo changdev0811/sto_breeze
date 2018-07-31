@@ -19,15 +19,19 @@ Ext.define('Breeze.view.employee.information.General', {
             items: [
                 {
                     name: 'first_name',
-                    label: 'First'
+                    label: 'First',
+                    id: 'firstName',
+                    bind: '{info.FirstName}'
                 },
                 {
                     name: 'middle_name',
-                    label: 'Middle'
+                    label: 'Middle',
+                    bind: '{info.MiddleName}'
                 },
                 {
                     name: 'last_name',
-                    label: 'Last'
+                    label: 'Last',
+                    bind: '{info.LastName}'
                 }
             ]
         },
@@ -45,12 +49,14 @@ Ext.define('Breeze.view.employee.information.General', {
             items: [
                 {
                     name: 'ssn',
-                    label: 'SSN'
+                    label: 'SSN',
+                    bind: '{info.SSN}'
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_birth',
                     label: 'Birth Date',
+                    bind: '{info.BirthDate}'
                     //msgTarget
                     //invalidText
                 },
@@ -58,11 +64,10 @@ Ext.define('Breeze.view.employee.information.General', {
                     xtype: 'selectfield',
                     name: 'gender',
                     label: 'Gender',
-                    options: [
-                        {text: 'Male', value: 'male'},
-                        {text: 'Female', value: 'female'},
-                        {text: 'Other', value: 'other'}
-                    ]
+                    store: 'GenderOptions',
+                    bind: '{info.Gender}',
+                    displayField: 'Description',
+                    valueField: 'ID'
                 }
             ]
         }

@@ -6,8 +6,8 @@ Ext.define('Breeze.view.employee.information.Schedule', {
 
     items: [
         {
-            xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            xtype: 'container',
+            // userCls: 'employee-info-fieldset',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
@@ -29,11 +29,19 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
-                                    text: 'Start'
+                                    ui: 'employeeinfo-shift-grid',
+                                    text: 'Start',
+                                    dataIndex: 'StartTime'
+                                },
+                                {
+                                    xtype: 'templatecolumn',
+                                    tpl: ['-']
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    text: 'Stop'
+                                    ui: 'employeeinfo-shift-grid',
+                                    text: 'Stop',
+                                    dataIndex: 'StopTime'
                                 }
                             ]
                         }
@@ -52,29 +60,69 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'startup_settings',
                             label: 'Accrual Policy',
+                            reference: 'accrualPolicy',
+                            bind: '{info.StartUpSettings}',
+                            displayField: 'Name',
+                            valueField: 'ID'
                         },
                         {
                             name: 'default_project',
                             label: 'Default Project',
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
-                            title: 'Exempt Status',
-                            defaults: { 
-                                xtype: 'radiofield',
-                                ui: 'employeeinfo-radio'
-                            },
-                            items: [{
-                                label: 'Exempt',
-                                name: 'exempt_status',
-                                value: 138
-                            },{
-                                label: 'Non-Exempt',
-                                name: 'exempt_status',
-                                value: 139
-                            }]
+                            bind: '{info.DefaultProject}',
+                            reference: 'defaultProject',
+                            displayField: 'Name',
+                            valueField: 'ID'
+                        }
+                    ]
+                }
+            ]
+        },
 
+        {
+            xtype: 'container',
+            layout: 'hbox',
+            items: [
+                {
+                    flex: 1,
+                    xtype: 'fieldset',
+                    userCls: 'employee-info-fieldset',
+                    title: 'Exempt Status',
+                    reference: 'exemptStatus',
+                    defaults: { 
+                        xtype: 'radiofield',
+                        ui: 'employeeinfo-radio'
+                    },
+                    items: [
+                        {
+                            label: 'Exempt',
+                            name: 'exempt_status',
+                            value: 138
+                        },{
+                            label: 'Non-Exempt',
+                            name: 'exempt_status',
+                            value: 139
+                        }
+                    ]
+                },
+                {
+                    flex: 1,
+                    xtype: 'fieldset',
+                    userCls: 'employee-info-fieldset',
+                    title: 'Recording Mode',
+                    reference: 'recordingMode',
+                    defaults: { 
+                        xtype: 'radiofield',
+                        ui: 'employeeinfo-radio'
+                    },
+                    items: [
+                        {
+                            label: 'Days',
+                            name: 'recording_mode',
+                            value: 20
+                        },{
+                            label: 'Hours',
+                            name: 'recording_mode',
+                            value: 21
                         }
                     ]
                 }

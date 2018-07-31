@@ -10,6 +10,12 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 .employee-info-tab-container {
     background-color: map-get($employee-info-colors, 'base');
     color: map-get($employee-info-text-colors, 'base');
+    // padding-left: 256px;
+}
+
+
+.employee-info-container {
+    padding: $ei-form-padding;
 }
 
 // Fieldset text coloring
@@ -21,14 +27,60 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     }
 }
 
+.employee-info-sidebar {
+    width: 128pt;
+    margin: 8pt 8pt 8pt 8pt;
+    padding-top: 48pt;
+}
+
+.employee-info-profile-picture {
+    border-radius: 50% 50% 50% 50%;
+    border: 3pt solid white;
+}
+
+.employee-info-fieldset-bordered {
+    @extend .employee-info-fieldset;
+    border: 1pt solid #ffffff;
+}
+
 // Field spacing and label text coloring
 
 .employee-info-general-field {
     padding: $ei-field-padding;
 }
 
+// Used in PunchPolicy subview to align text with fields
+.employee-info-inline-label {
+    line-height: 1.5em;
+}
+
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,
     $ui: 'employeeinfo-textfield'
+);
+
+@include field-ui(
+    $label-color: #ffffff,
+    $focused-label-color: #ffffff,
+    $ui: 'employeeinfo-checkbox'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $box-label-color: #ffffff,
+    $ui: 'employeeinfo-checkbox'
+);
+
+@include field-ui(
+    $label-color: #ffffff,
+    // $label-color: map-get($employee-info-text-colors, 'light'),
+    $focused-label-color: #ffffff,
+    $ui: 'employeeinfo-radio'
+);
+
+@include radiofield-ui(
+    $box-label-color: #ffffff,
+    $ui: 'employeeinfo-radio'
 );

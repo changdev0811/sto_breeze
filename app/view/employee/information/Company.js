@@ -21,15 +21,18 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'datefield',
                     name: 'date_of_hire',
                     label: 'Hire Date',
+                    bind: '{hireDate}'
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_termination',
                     label: 'Termination Date',
+                    bind: '{info.TerminationDate}'
                 },
                 {
                     name: 'customer_employee_id',
-                    label: 'Employee #'
+                    label: 'Employee #',
+                    bind: '{info.EmployeeNumber}'
                 }
             ]
         },
@@ -47,11 +50,16 @@ Ext.define('Breeze.view.employee.information.Company', {
                 {
                     xtype: 'selectfield',
                     name: 'department',
-                    label: 'Department'
+                    label: 'Department',
+                    displayField: 'Name',
+                    valueField: 'Id',
+                    reference: 'departments',
+                    bind: '{info.Department}',
                 },
                 {
                     name: 'badge_id',
-                    label: 'Badge #'
+                    label: 'Badge #',
+                    bind: '{info.Badge}'
                 }
             ]
         },
@@ -70,24 +78,22 @@ Ext.define('Breeze.view.employee.information.Company', {
                     name: 'comp_rate',
                     xtype: 'numberfield',
                     minValue: 0, decimals: 2,
-                    label: 'Compensation'
+                    label: 'Compensation',
+                    bind: '{info.CompRate}'
                 },
                 {
                     xtype: 'selectfield',
                     label: 'Compensation Frequency',
                     name: 'comp_per',
-                    options: [
-                        {text: 'Hourly', value: 'Hourly'},
-                        {text: 'Daily', value: 'Daily'},
-                        {text: 'Weekly', value: 'Weekly'},
-                        {text: 'Bi-Weekly', value: 'Bi-Weekly'},
-                        {text: 'Monthly', value: 'Monthly'},
-                        {text: 'Annually', value: 'Annually'}
-                    ]
+                    store: 'CompensationOptions',
+                    bind: '{info.CompPer}',
+                    displayField: 'Description',
+                    valueField: 'ID'
                 },
                 {
                     name: 'payroll',
-                    label: 'Payroll #'
+                    label: 'Payroll #',
+                    bind: '{info.Payroll}'
                 }
             ]
         }

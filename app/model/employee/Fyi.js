@@ -1,7 +1,6 @@
 /**
  * FYI Information model (ported from model.FYIInfo)
  * @class Fyi
- * @namespace Breeze.model.employee
  * @alias Breeze.model.employee.Fyi
  */
 Ext.define('Breeze.model.employee.Fyi', {

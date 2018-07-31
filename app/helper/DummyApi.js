@@ -14,6 +14,10 @@ Ext.define('Breeze.helper.DummyApi', {
         dummyPath: 'resources/dummy_api/',
 
         // clones of API
+        url: function(action, special){
+            var special = (typeof special == 'undefined')? 'default' : special;
+            return [this.dummyPath,action,'/',[special,'.json'].join('')].join('');
+        },
         request: function(api, service, params, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(api,service,params,sync,successHandler,failureHandler);
         },

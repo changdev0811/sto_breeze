@@ -14,6 +14,14 @@ Ext.define('Breeze.Application', {
         'Breeze.helper.Auth'
     ],
 
+    stores: [
+        'Breeze.store.company.DepartmentList',
+        'Breeze.store.option.UserTypes',
+        'Breeze.store.option.Genders',
+        'Breeze.store.option.Compensation',
+        'Breeze.store.employee.PunchRoundingIncrements'
+    ],
+
     quickTips: false,
     platformConfig: {
         desktop: {
@@ -36,7 +44,9 @@ Ext.define('Breeze.Application', {
         
         // TODO: Removing testing check when out of dev
         var testing = true; // (should be removed later)
-
+        if(testing){
+            Breeze.helper.Auth.setCookies("1","2","3");
+        }
         if(Breeze.helper.Auth.isAuthorized() || testing){
             this.viewport.add(Ext.create('Breeze.view.main.Nav', {
                 //data: {mode: 'supervisor'}

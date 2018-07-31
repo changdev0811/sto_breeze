@@ -1,7 +1,6 @@
 /**
  * Employee Information View
  * @class Information
- * @namespace Breeze.view.employee
  * @alias Breeze.view.employee.Information
  */
 Ext.define('Breeze.view.employee.Information', {
@@ -17,7 +16,11 @@ Ext.define('Breeze.view.employee.Information', {
         'Breeze.view.employee.InformationController'
     ],
 
-    layout: 'vbox',
+    layout: 'hbox',
+
+    viewModel: {
+        type: 'employee.information'
+    },
 
     controller: 'employee.information',
     listeners: {
@@ -28,6 +31,11 @@ Ext.define('Breeze.view.employee.Information', {
 
     items: [
         {
+            xtype: 'employee.information.sidebar',
+            userCls: 'employee-info-sidebar'
+        },        
+        {
+            flex: 3,
             xtype: 'tabpanel',
             layout: {
                 animation: 'fade'
@@ -37,7 +45,7 @@ Ext.define('Breeze.view.employee.Information', {
             tabBar: {
                 defaultTabUI: 'employeeInfoTabs'
             },
-            flex: 1,
+            // flex: 1,
             defaults: {
                 userCls: 'employee-info-tab-container'
             },
@@ -45,46 +53,71 @@ Ext.define('Breeze.view.employee.Information', {
                 // containers with title and items containing body
                 {
                     xtype: 'container',
-                    itemId: 'employeeTab',
+                    reference: 'employeeTab',
                     title: 'Employee',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.general',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.general',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
-                    itemId: 'companyTab',
+                    id: 'companyTab',
                     title: 'Company',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.company',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.company',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     itemId: 'scheduleTab',
                     title: 'Schedule',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.schedule',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.schedule',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     itemId: 'securityTab',
-                    title: 'Security'
+                    title: 'Security',
+                    items: [
+                        {
+                            xtype: 'employee.information.security',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     reference: 'punchTab',
-                    title: 'Punch Policy'
+                    title: 'Punch Policy',
+                    layout: 'vbox',
+                    // xtype: 'employee.information.punchpolicy',
+                    items: [
+                        {
+                            xtype: 'selectfield',
+                            name: 'punch_policy',
+                            reference: 'punchPolicy',
+                            displayField: 'Name',
+                            label: 'Punch Policy',
+                            valueField: 'ID',
+                            bind: '{punchPolicy.policy_id}',
+                            userCls: 'employee-info-general-field',
+                            ui: 'employeeinfo-textfield'
+                        },
+                        {
+                            xtype: 'employee.information.punchpolicy',
+                            flex: 1
+                        }
+                    ]
                 }
             ]
         }
