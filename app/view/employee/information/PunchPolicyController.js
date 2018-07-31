@@ -38,7 +38,98 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
     },
 
 
+	onOvertime1Change: function(c, newV, oldV, eOpts){
+		this.updateOvertime(1,newV);
+	},
+	onOvertime2Change: function(c, newV, oldV, eOpts){
+		this.updateOvertime(2,newV);
+	},
+	onOvertime3Change: function(c, newV, oldV, eOpts){
+		this.updateOvertime(3,newV);
+	},
+	onOvertime4Change: function(c, newV, oldV, eOpts){
+		this.updateOvertime(4,newV);
+	},
+
     // == Helper Methods ==
+
+	/**
+	 * Update overtime check row for level with value
+	 * @param {Number} index Overtime row to update
+	 * @param {Boolean} value Whether checked or not
+	 */
+	updateOvertime: function(index, value){
+		var tab = this.lookup('overtimeTab');
+
+		var ot1Check = tab.down('[name="overtime_opt1"]');
+		var ot1Day = tab.down('[name="overtime_day1"]');
+		var ot1Week = tab.down('[name="overtime_week1"]');
+		var ot1Rate = tab.down('[name="overtime_rate1"]');
+
+		var ot2Check = tab.down('[name="overtime_opt2"]');
+		var ot2Day = tab.down('[name="overtime_day2"]');
+		var ot2Week = tab.down('[name="overtime_week2"]');
+		var ot2Rate = tab.down('[name="overtime_rate2"]');
+
+		var ot3Check = tab.down('[name="overtime_opt3"]');
+		var ot3Day = tab.down('[name="overtime_day3"]');
+		var ot3Week = tab.down('[name="overtime_week3"]');
+		var ot3Rate = tab.down('[name="overtime_rate3"]');
+
+		var ot4Check = tab.down('[name="overtime_opt4"]');
+		var ot4Day = tab.down('[name="overtime_day4"]');
+		var ot4Week = tab.down('[name="overtime_week4"]');
+		var ot4Rate = tab.down('[name="overtime_rate4"]');
+
+		var toggle = function(state, items){
+			items.forEach(function(i){
+				i.setVisibility(state);
+			})
+		};
+
+		if(index == 4){
+			toggle(value, [ot4Day, ot4Week, ot4Rate]);
+		}
+		if(index == 3){
+			toggle(value, [ot3Day, ot3Week, ot3Rate]);
+			if(value){ot4Check.setDisabled(false);}
+			if(!value){
+				toggle(false, [ot4Day, ot4Week, ot4Rate]);
+				ot4Check.setValue(false);
+				ot4Check.setDisabled(true);
+				
+			}
+		}
+		if(index == 2){
+			toggle(value, [ot2Day, ot2Week, ot2Rate]);
+			if(value){ot3Check.setDisabled(false);}
+			if(!value){
+				toggle(false, [ot3Day, ot3Week, ot4Rate]);
+				toggle(false, [ot4Day, ot4Week, ot4Rate]);
+				ot3Check.setValue(false);
+				ot3Check.setDisabled(true);
+				ot4Check.setValue(false);
+				ot4Check.setDisabled(true);
+				
+			}
+		}
+		if(index == 1){
+			toggle(value, [ot1Day, ot1Week, ot1Rate]);
+			if(value){ot2Check.setDisabled(false);}
+			if(!value){
+				toggle(false, [ot2Day, ot2Week, ot2Rate]);
+				toggle(false, [ot3Day, ot3Week, ot3Rate]);
+				toggle(false, [ot4Day, ot4Week, ot4Rate]);
+				ot2Check.setValue(false);
+				ot2Check.setDisabled(true);
+				ot3Check.setValue(false);
+				ot3Check.setDisabled(true);
+				ot4Check.setValue(false);
+				ot4Check.setDisabled(true);
+			}
+		}
+
+	},
 
     /**
      * Refresh displayed 'rounding' preview text

@@ -28,7 +28,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
                 var recordingMode = vm.get('info.RecordingMode');
                 c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
-
+                me.loadShiftSegments(vm);
             });
         });
     },
@@ -43,7 +43,12 @@ Ext.define('Breeze.view.employee.InformationController', {
         vm.setStores({
             departments: Ext.create('Breeze.store.company.DepartmentList'),
             scheduleList: Ext.create('Breeze.store.employee.ScheduleList'),
-            projectList: Ext.create('Breeze.store.company.FlatProjectList')
+            projectList: Ext.create('Breeze.store.company.FlatProjectList'),
+            shiftSegments: Ext.create('Ext.data.Store', {
+                autoLoad: true,
+                model: 'Breeze.model.accrual.ShiftSegment',
+                storeId: 'shiftSegments'
+            })
         });
 
         vm.getStore('departments').load({callback: function(r,o,success){
@@ -78,5 +83,26 @@ Ext.define('Breeze.view.employee.InformationController', {
         }).catch(function(err){
             console.log("Employee Info Error");
         });
+    },
+
+    /**
+     * Load data into ShiftSegment store
+     * @param {Object} vm ViewModel reference
+     */
+    loadShiftSegments: function(vm){
+        var shiftSegments = vm.getStore('shiftSegments');
+        var shiftStartTimes = vm.get('info.ShiftStartTimes');
+        var shiftStopTimes = vm.get('info.ShiftStopTimes');
+        var data = [];
+        for(var i=0;i < shiftStartTimes.length && i < shiftStopTimes.length; i ++){
+            data.push({
+                StartTime: shiftStartTimes[i].replace(' ',''),
+                StopTime: shiftStopTimes[i].replace(' ',''),
+                StartMin: vm.get('info.ShiftStartSegments')[i],
+                StopMin: vm.get('info.ShiftStopSegments')[i]
+            });
+        }
+        shiftSegments.setData(data);
+        this.lookup('shiftSegmentGrid').setStore(shiftSegments);
     }
 });

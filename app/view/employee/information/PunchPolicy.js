@@ -90,6 +90,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt1}'
+                                            },
+                                            listeners: {
+                                                change: 'onOvertime1Change'
                                             }
                                             
                                         },
@@ -130,7 +133,13 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt2',
                                             label: 'Overtime 2',
-                                            ui: 'employeeinfo-checkbox'
+                                            ui: 'employeeinfo-checkbox',
+                                            bind: {
+                                                checked: '{info.pucnPolicy.Ot_Opt2}'
+                                            },
+                                            listeners: {
+                                                change: 'onOvertime2Change'
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
@@ -172,6 +181,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt3}'
+                                            },
+                                            listeners: {
+                                                change: 'onOvertime3Change'
                                             }
                                             
                                         },
@@ -215,6 +227,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt4}'
+                                            },
+                                            listeners: {
+                                                change: 'onOvertime4Change'
                                             }
                                             
                                         },
