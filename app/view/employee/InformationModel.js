@@ -5,12 +5,19 @@ Ext.define('Breeze.view.employee.InformationModel', {
     data: {
         employeeName: 'X',
         departmentName: 'X',
-        hireDate: 'X',
         points: ''
     },
 
     stores: {
 
+    },
+
+    formulas: {
+        hireDate: function(get){
+            return Ext.util.Format.date(
+                get('info.HireDate'), "m/d/Y"
+            );
+        }
     }
 
 });

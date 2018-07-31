@@ -49,7 +49,7 @@ Ext.define('Breeze.view.employee.Information', {
                 // containers with title and items containing body
                 {
                     xtype: 'container',
-                    itemId: 'employeeTab',
+                    reference: 'employeeTab',
                     title: 'Employee',
                     items: [
                         {
@@ -60,7 +60,7 @@ Ext.define('Breeze.view.employee.Information', {
                 },
                 {
                     xtype: 'container',
-                    itemId: 'companyTab',
+                    id: 'companyTab',
                     title: 'Company',
                     items: [
                         {

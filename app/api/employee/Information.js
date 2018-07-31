@@ -27,7 +27,7 @@ Ext.define('Breeze.api.employee.Information', {
                     //     'Ext.data.Store', {
                     //         model: 'Breeze.model.employee.Information',
                     //         id: storeId,
-                    //         data: [respJson.Employee],
+                    //         data: [respJson.employee],
                     //         proxy: {
                     //             type: 'memory',
                     //             reader: {
@@ -36,11 +36,11 @@ Ext.define('Breeze.api.employee.Information', {
                     //         }
                     //     }
                     // );
-                    var store = Ext.create(
-                        'Breeze.model.employee.Information',
-                        { data: respJson.Employee }
-                    );
-                    resolve(store);
+                    // var store = Ext.create(
+                    //     'Breeze.model.employee.Information',
+                    //     { data: respJson.Employee }
+                    // );
+                    resolve(respJson.employee);
                 }, 
                 function(response) {
                     reject(response);

@@ -20,16 +20,23 @@ Ext.define('Breeze.view.employee.information.Security', {
             items: [
                 {
                     name: 'user_name',
-                    label: 'User Name'
+                    label: 'User Name',
+                    bind: '{info.Username}'
                 },
                 {
                     name: 'user_type',
-                    label: 'User Type'
+                    xtype: 'selectfield',
+                    label: 'User Type',
+                    bind: '{info.LoginType}',
+                    store: 'UserTypeOptions',
+                    displayField: 'Description',
+                    valueField: 'ID'
                 },
                 {
                     xtype: 'emailfield',
                     name: 'email',
                     label: 'Email',
+                    bind: '{info.Email}',
                     // TODO: Email validation regex
                     /* regex: */
                     invalidText: 'Invalid email address'

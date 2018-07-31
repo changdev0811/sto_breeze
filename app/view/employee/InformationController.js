@@ -22,6 +22,10 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
     },
 
+    /**
+     * Load needed stores
+     * @param {Function} callback Callback function passed success bool
+     */
     loadStores: function(callback){
         var vm = this.getViewModel();
         
@@ -44,10 +48,14 @@ Ext.define('Breeze.view.employee.InformationController', {
         ).then(function(data){
             console.log("Loaded Employee Data Test");
             var vm = me.getViewModel();
-            vm.setData({employee_info: data});
+            vm.set('info',data);
             // vm.setData(data.data);
         }).catch(function(err){
             console.log("Employee Info Error");
         });
+    },
+
+    displayFormData: function(c,vm){
+        //c.queryById('firstName').setValue()
     }
 });
