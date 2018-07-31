@@ -37,3 +37,15 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $focused-label-color: #ffffff,
     $ui: 'employeeinfo-textfield'
 );
+
+@include field-ui(
+    $label-color: #ffffff,
+    // $label-color: map-get($employee-info-text-colors, 'light'),
+    $focused-label-color: #ffffff,
+    $ui: 'employeeinfo-radio'
+);
+
+@include radiofield-ui(
+    $box-label-color: #ffffff,
+    $ui: 'employeeinfo-radio'
+);

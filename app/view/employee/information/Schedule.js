@@ -6,8 +6,8 @@ Ext.define('Breeze.view.employee.information.Schedule', {
 
     items: [
         {
-            xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            xtype: 'container',
+            // userCls: 'employee-info-fieldset',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
@@ -29,10 +29,12 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
+                                    ui: 'employeeinfo-shift-grid',
                                     text: 'Start'
                                 },
                                 {
                                     xtype: 'gridcolumn',
+                                    ui: 'employeeinfo-shift-grid',
                                     text: 'Stop'
                                 }
                             ]
@@ -56,25 +58,55 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'default_project',
                             label: 'Default Project',
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
-                            title: 'Exempt Status',
-                            defaults: { 
-                                xtype: 'radiofield',
-                                ui: 'employeeinfo-radio'
-                            },
-                            items: [{
-                                label: 'Exempt',
-                                name: 'exempt_status',
-                                value: 138
-                            },{
-                                label: 'Non-Exempt',
-                                name: 'exempt_status',
-                                value: 139
-                            }]
+                        }
+                    ]
+                }
+            ]
+        },
 
+        {
+            xtype: 'container',
+            layout: 'hbox',
+            items: [
+                {
+                    flex: 1,
+                    xtype: 'fieldset',
+                    userCls: 'employee-info-fieldset',
+                    title: 'Exempt Status',
+                    defaults: { 
+                        xtype: 'radiofield',
+                        ui: 'employeeinfo-radio'
+                    },
+                    items: [
+                        {
+                            label: 'Exempt',
+                            name: 'exempt_status',
+                            value: 138
+                        },{
+                            label: 'Non-Exempt',
+                            name: 'exempt_status',
+                            value: 139
+                        }
+                    ]
+                },
+                {
+                    flex: 1,
+                    xtype: 'fieldset',
+                    userCls: 'employee-info-fieldset',
+                    title: 'Recording Mode',
+                    defaults: { 
+                        xtype: 'radiofield',
+                        ui: 'employeeinfo-radio'
+                    },
+                    items: [
+                        {
+                            label: 'Days',
+                            name: 'recording_mode',
+                            value: 20
+                        },{
+                            label: 'Hours',
+                            name: 'recording_mode',
+                            value: 21
                         }
                     ]
                 }
