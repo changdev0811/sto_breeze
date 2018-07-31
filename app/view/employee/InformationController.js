@@ -6,7 +6,8 @@ Ext.define('Breeze.view.employee.InformationController', {
     alias: 'controller.employee.information',
 
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
+        'Breeze.model.accrual.ShiftSegment'
     ],
 
     onInit: function(component, eOpts){
@@ -45,7 +46,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             scheduleList: Ext.create('Breeze.store.employee.ScheduleList'),
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
             shiftSegments: Ext.create('Ext.data.Store', {
-                autoLoad: true,
+                // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
                 storeId: 'shiftSegments'
             })
