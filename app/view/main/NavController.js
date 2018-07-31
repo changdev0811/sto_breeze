@@ -19,7 +19,9 @@
         // Routes
         routes: {
             'home': 'onHomeRoute',
-            'personal/employee_info': 'onPersonalEmployeeInfoRoute',
+            'personal/info': {
+                action: 'onPersonalEmployeeInfoRoute'
+            },
             'personal/fyi': {
                 action: 'onPersonalFyiRoute',
             },
@@ -57,11 +59,11 @@
 
         onPersonalEmployeeInfoRoute: function(){
             // var auth = Breeze.helper.Auth.getCookies();
-            var info = Ext.create('Breeze.view.employee.Information');
+            // var info = Ext.create('Breeze.view.employee.Information');
             this.changeContent(
-                // Ext.create('Breeze.view.employee.Information')
+                Ext.create('Breeze.view.employee.Information')
                 // { xtype: 'employee.information' }
-                info
+                // info
             );
         },
 
@@ -98,9 +100,14 @@
             var modalMode = defVal(modalMode, false);
 
             var container = this.lookup('contentContainer');
-            container.removeAll();
+            
             if(newContent && newContent !== null){
-                container.add(newContent);
+            //     container.add(newContent);
+                var old = container.getActiveItem();
+                container.setActiveItem(newContent);
+                if(old !== null){
+                    container.remove(old);
+                }
             }
 
             if(modalMode){

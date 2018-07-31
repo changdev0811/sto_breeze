@@ -25,7 +25,7 @@ Ext.define('Breeze.view.main.Nav', {
     items: [
         {
             xtype: 'container',
-            userCls:'main-nav-header',
+            userCls: 'main-nav-header',
             height:'64pt',
             layout: 'hbox',
 
@@ -166,12 +166,13 @@ Ext.define('Breeze.view.main.Nav', {
                     ]
                 },
                 {
-                    xtype: 'container',
+                    xtype: 'navigationview',
                     flex: 3,
                     padding: '6 6 6 6',
                     reference: 'contentContainer',
                     scrollable: 'vertical',
-                    layout: 'fit'
+                    navigationBar: false
+                    // layout: 'fit'
                 }
             ]
         }

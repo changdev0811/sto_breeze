@@ -27,7 +27,7 @@ Ext.define('Breeze.view.main.NavModel', {
                             }, {
                                 text: 'Employee Information', leaf: true,
                                 iconCls: 'x-fa fa-id-card-o',
-                                routeRef: 'personal/employee_info'
+                                routeRef: 'personal/info'
                             }, {
                                 text: 'FYI', leaf: true,
                                 iconCls: 'x-fa fa-table',

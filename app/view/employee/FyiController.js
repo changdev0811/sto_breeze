@@ -9,7 +9,7 @@ Ext.define('Breeze.view.employee.FyiController', {
         'Breeze.api.Employee'
     ],
 
-    onInitialize: function(component, eOpts){
+    onInit: function(component, eOpts){
         console.log("FYI Controller Init");
         this.apiClass = Ext.create('Breeze.api.Employee');
         var me = this;

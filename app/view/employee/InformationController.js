@@ -9,8 +9,8 @@ Ext.define('Breeze.view.employee.InformationController', {
         'Breeze.api.Employee'
     ],
 
-    init: function(component, eOpts){
-    //     console.log("FYI Controller Init");
+    onInit: function(component, eOpts){
+        console.log("Employee Info Controller Init");
     //     this.apiClass = Ext.create('Breeze.api.Employee');
     //     var me = this;
     //    this.apiClass.fyi.getFYI(
@@ -27,6 +27,12 @@ Ext.define('Breeze.view.employee.InformationController', {
     //     }).catch(function(err){
     //         console.log("FYI Error");
     //     });
+        // this.lookup('securityTab').add(
+        //     { 
+        //         xtype: 'employee.information.security',
+        //         userCls: 'employee-info-tab-form'
+        //     }
+        // );
 
     }
 });

@@ -10,15 +10,19 @@ Ext.define('Breeze.view.employee.Information', {
 
     requires: [
         'Ext.tab.Panel',
-        'Breeze.view.employee.information.General',
-        'Breeze.view.employee.information.Company',
-        'Breeze.view.employee.information.Schedule',
+        // 'Breeze.view.employee.information.General',
+        // 'Breeze.view.employee.information.Company',
+        // 'Breeze.view.employee.information.Schedule',
+        // 'Breeze.view.employee.information.Security',
         'Breeze.view.employee.InformationController'
     ],
 
     layout: 'vbox',
 
-    controller: 'employee.fyi',
+    controller: 'employee.information',
+    listeners: {
+        initialize: 'onInit'
+    },
 
     userCls: 'employee-info-outer-container',
 
@@ -41,43 +45,48 @@ Ext.define('Breeze.view.employee.Information', {
                 // containers with title and items containing body
                 {
                     xtype: 'container',
+                    itemId: 'employeeTab',
                     title: 'Employee',
-                    items: [
-                        {
-                            xtype: 'employee.information.general',
-                            userCls: 'employee-info-tab-form'
-                        }
-                    ]
+                    // items: [
+                    //     {
+                    //         xtype: 'employee.information.general',
+                    //         userCls: 'employee-info-tab-form'
+                    //     }
+                    // ]
                 },
                 {
                     xtype: 'container',
+                    itemId: 'companyTab',
                     title: 'Company',
-                    items: [
-                        {
-                            xtype: 'employee.information.company',
-                            userCls: 'employee-info-tab-form'
-                        }
-                    ]
+                    // items: [
+                    //     {
+                    //         xtype: 'employee.information.company',
+                    //         userCls: 'employee-info-tab-form'
+                    //     }
+                    // ]
                 },
                 {
                     xtype: 'container',
+                    itemId: 'scheduleTab',
                     title: 'Schedule',
-                    items: [
-                        {
-                            xtype: 'employee.information.schedule',
-                            userCls: 'employee-info-tab-form'
-                        }
-                    ]
+                    // items: [
+                    //     {
+                    //         xtype: 'employee.information.schedule',
+                    //         userCls: 'employee-info-tab-form'
+                    //     }
+                    // ]
                 },
                 {
                     xtype: 'container',
+                    itemId: 'securityTab',
                     title: 'Security'
                 },
                 {
                     xtype: 'container',
+                    reference: 'punchTab',
                     title: 'Punch Policy'
                 }
             ]
         }
     ]
-})
+});
