@@ -25,12 +25,22 @@ Ext.define('Breeze.view.employee.information.Security', {
                 {
                     name: 'user_type',
                     label: 'User Type'
+                },
+                {
+                    xtype: 'emailfield',
+                    name: 'email',
+                    label: 'Email',
+                    // TODO: Email validation regex
+                    /* regex: */
+                    invalidText: 'Invalid email address'
                 }
             ]  
         },
         {
             xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            ui: 'employeeinfo-fieldpanel',
+            userCls: 'employee-info-fieldset-bordered',
+            // userCls: 'employee-info-fieldpanel',
             layout: 'hbox',
             title: 'Change Password',
             defaults: {
@@ -49,6 +59,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     name: 'password',
                     xtype: 'passwordfield',
                     label: 'New Password'
+                    // Changing password requires new and new confirm pass
                 },
                 {
                     name: 'confirm_new_password',

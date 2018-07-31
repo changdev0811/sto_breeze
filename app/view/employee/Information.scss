@@ -21,6 +21,11 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     }
 }
 
+.employee-info-fieldset-bordered {
+    @extend .employee-info-fieldset;
+    border: 1pt solid #ffffff;
+}
+
 // Field spacing and label text coloring
 
 .employee-info-general-field {
