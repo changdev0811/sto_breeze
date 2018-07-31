@@ -18,7 +18,8 @@ Ext.define('Breeze.Application', {
         'Breeze.store.company.DepartmentList',
         'Breeze.store.option.UserTypes',
         'Breeze.store.option.Genders',
-        'Breeze.store.option.Compensation'
+        'Breeze.store.option.Compensation',
+        'Breeze.store.employee.PunchRoundingIncrements'
     ],
 
     quickTips: false,

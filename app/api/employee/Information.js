@@ -20,7 +20,7 @@ Ext.define('Breeze.api.employee.Information', {
                 {
                     'employee_id': employeeId
                 },
-                false,
+                true,
                 function (response) {
                     var respJson = api.decodeJsonResponse(response);
                     // var store = Ext.create(
@@ -40,7 +40,10 @@ Ext.define('Breeze.api.employee.Information', {
                     //     'Breeze.model.employee.Information',
                     //     { data: respJson.Employee }
                     // );
-                    resolve(respJson.employee);
+                    resolve({
+                        employee: respJson.employee,
+                        punchPolicy: respJson.punchPolicy
+                    });
                 }, 
                 function(response) {
                     reject(response);

@@ -1,7 +1,6 @@
 /**
  * Employee Information View
  * @class Information
- * @namespace Breeze.view.employee
  * @alias Breeze.view.employee.Information
  */
 Ext.define('Breeze.view.employee.Information', {
@@ -99,7 +98,26 @@ Ext.define('Breeze.view.employee.Information', {
                 {
                     xtype: 'container',
                     reference: 'punchTab',
-                    title: 'Punch Policy'
+                    title: 'Punch Policy',
+                    layout: 'vbox',
+                    // xtype: 'employee.information.punchpolicy',
+                    items: [
+                        {
+                            xtype: 'selectfield',
+                            name: 'punch_policy',
+                            reference: 'punchPolicy',
+                            displayField: 'Name',
+                            label: 'Punch Policy',
+                            valueField: 'ID',
+                            bind: '{punchPolicy.policy_id}',
+                            userCls: 'employee-info-general-field',
+                            ui: 'employeeinfo-textfield'
+                        },
+                        {
+                            xtype: 'employee.information.punchpolicy',
+                            flex: 1
+                        }
+                    ]
                 }
             ]
         }

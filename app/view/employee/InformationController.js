@@ -70,7 +70,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         ).then(function(data){
             console.log("Loaded Employee Data Test");
             var vm = me.getViewModel();
-            vm.set('info',data);
+            var info = data.employee;
+            info.punchPolicy = data.punchPolicy;
+            vm.set('info',info);
             callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
