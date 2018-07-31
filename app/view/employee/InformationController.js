@@ -11,28 +11,43 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     onInit: function(component, eOpts){
         console.log("Employee Info Controller Init");
-    //     this.apiClass = Ext.create('Breeze.api.Employee');
-    //     var me = this;
-    //    this.apiClass.fyi.getFYI(
-    //         '1',
-    //         '1999',
-    //         '07/25/2018',
-    //         true
-    //     ).then(function(data){
-    //         console.log("Loaded FYI Test");
-    //         var vm = me.getViewModel();
-    //         vm.setStores({employee_fyi: data.store});
-    //         vm.setData(data.data);
-    //         me.lookup('fyiGrid').setStore(data.store);
-    //     }).catch(function(err){
-    //         console.log("FYI Error");
-    //     });
-        // this.lookup('securityTab').add(
-        //     { 
-        //         xtype: 'employee.information.security',
-        //         userCls: 'employee-info-tab-form'
-        //     }
-        // );
+        this.apiClass = Ext.create('Breeze.api.Employee');
+        var vm = this.getViewModel();
+        var me = this;
+        var comp = component;
 
+        this.loadStores(function(pass){
+            comp.lookup('departments').setStore(vm.getStore('departments'));
+            me.loadEmployeeInfo(component);
+        });
+    },
+
+    loadStores: function(callback){
+        var vm = this.getViewModel();
+        
+        vm.setStores({
+            departments: Ext.create('Breeze.store.company.DepartmentList')
+        });
+
+        vm.getStore('departments').load({callback: function(r,o,success){
+            if(success){
+                callback(true);
+            }
+        }});
+    },
+
+    loadEmployeeInfo: function(component){
+        var me = this;
+        var empId = component.getData().employee;
+        this.apiClass.information.getEmployeeInfo(
+            empId
+        ).then(function(data){
+            console.log("Loaded Employee Data Test");
+            var vm = me.getViewModel();
+            vm.setData({employee_info: data});
+            // vm.setData(data.data);
+        }).catch(function(err){
+            console.log("Employee Info Error");
+        });
     }
 });

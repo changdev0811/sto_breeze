@@ -17,6 +17,15 @@
             },
 
             /**
+             * Return action attached to apiPaths.api base as url
+             * @param {String} action API Action String
+             * @return {String} full api url
+             */
+            url: function(action){
+                return [this.apiPaths.api,action].join('');
+            },
+
+            /**
              * Generic AJAX API request
              * @param {String} api API Path url
              * @param {String} service Service name

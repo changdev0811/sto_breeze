@@ -30,12 +30,18 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                 {
                                     xtype: 'gridcolumn',
                                     ui: 'employeeinfo-shift-grid',
-                                    text: 'Start'
+                                    text: 'Start',
+                                    dataIndex: 'StartTime'
+                                },
+                                {
+                                    xtype: 'templatecolumn',
+                                    tpl: ['-']
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     ui: 'employeeinfo-shift-grid',
-                                    text: 'Stop'
+                                    text: 'Stop',
+                                    dataIndex: 'StopTime'
                                 }
                             ]
                         }

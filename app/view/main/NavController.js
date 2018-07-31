@@ -61,7 +61,9 @@
             // var auth = Breeze.helper.Auth.getCookies();
             // var info = Ext.create('Breeze.view.employee.Information');
             this.changeContent(
-                Ext.create('Breeze.view.employee.Information')
+                Ext.create('Breeze.view.employee.Information', {
+                    data: { employee: undefined }
+                })
                 // { xtype: 'employee.information' }
                 // info
             );
@@ -105,7 +107,7 @@
             //     container.add(newContent);
                 var old = container.getActiveItem();
                 container.setActiveItem(newContent);
-                if(old !== null){
+                if(typeof old !== 'undefined'){
                     container.remove(old);
                 }
             }

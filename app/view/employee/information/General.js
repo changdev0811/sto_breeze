@@ -19,7 +19,11 @@ Ext.define('Breeze.view.employee.information.General', {
             items: [
                 {
                     name: 'first_name',
-                    label: 'First'
+                    label: 'First',
+                    itemId: 'firstName',
+                    bind: {
+                        value: '{employee_info.FirstName}'
+                    }
                 },
                 {
                     name: 'middle_name',

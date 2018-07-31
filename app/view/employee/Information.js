@@ -19,6 +19,10 @@ Ext.define('Breeze.view.employee.Information', {
 
     layout: 'vbox',
 
+    viewModel: {
+        type: 'employee.information'
+    },
+
     controller: 'employee.information',
     listeners: {
         initialize: 'onInit'

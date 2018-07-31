@@ -47,7 +47,10 @@ Ext.define('Breeze.view.employee.information.Company', {
                 {
                     xtype: 'selectfield',
                     name: 'department',
-                    label: 'Department'
+                    label: 'Department',
+                    displayField: 'Name',
+                    valueField: 'Name',
+                    reference: 'departments'
                 },
                 {
                     name: 'badge_id',
