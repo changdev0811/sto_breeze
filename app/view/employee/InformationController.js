@@ -78,9 +78,5 @@ Ext.define('Breeze.view.employee.InformationController', {
         }).catch(function(err){
             console.log("Employee Info Error");
         });
-    },
-
-    displayFormData: function(c,vm){
-        //c.queryById('firstName').setValue()
     }
 });

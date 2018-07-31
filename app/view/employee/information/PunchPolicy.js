@@ -7,6 +7,12 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.punchpolicy',
 
+    requires: [
+        'Breeze.view.employee.information.PunchPolicyController'
+    ],
+
+    controller: 'employee.information.punchpolicy',
+
     layout: 'vbox',
     userCls: 'employee-info-outer-container',
     items: [
@@ -26,6 +32,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
             items: [
                 {
                     title: 'Overtime',
+                    reference: 'overtimeTab',
                     xtype: 'container',
                     items: [
                         {
@@ -253,6 +260,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                 },
                 {
                     title: 'Rounding Rules',
+                    reference: 'roundingTab',
                     xtype: 'container',
                     items: [
                         {
@@ -278,17 +286,16 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         {
                                             xtype: 'selectfield',
                                             store: 'PunchRoundingIncrements',
-                                            name: 'round_increment',
+                                            name: 'rounding_inc',
                                             displayField: 'name',
                                             // label: 'Round punch to nearest increment of',
                                             valueField: 'value',
                                             // flex: 1,
-                                            bind: '{info.punchPolicy.Round_Increment}'
-                                        },
-                                        // {
-                                        //     xtype: 'label',
-                                        //     html: 'minute increment'
-                                        // }
+                                            bind: '{info.punchPolicy.Round_Increment}',
+                                            listeners: {
+                                                change: 'onRoundingIncChange'
+                                            }
+                                        }
                                     ]
                                 },
                                 {
@@ -311,14 +318,42 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'rounding_off',
                                             // label: 'Minute(s)',
                                             inline: true,
-                                            
-                                            bind: '{info.punchPolicy.Round_Offset}'
+                                            bind: '{info.punchPolicy.Round_Offset}',
+                                            listeners: {
+                                                change: 'onRoundingOffChange'
+                                            }
                                         },
                                         {
                                             xtype: 'label',
                                             html: 'minute(s)',
                                             style: 'line-height: 1.5em'
                                         }
+                                    ]
+                                },
+                                {
+                                    flex: 1,
+                                    xtype: 'fieldset',
+                                    layout: 'vbox',
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'component',
+                                            reference: 'roundPrev1',
+                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                        },
+                                        {
+                                            xtype: 'component',
+                                            reference: 'roundPrev2',
+                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                        },
+                                        {
+                                            xtype: 'component',
+                                            reference: 'roundPrev3',
+                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                        },
                                     ]
                                 }
                             ]
