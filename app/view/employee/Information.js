@@ -47,39 +47,45 @@ Ext.define('Breeze.view.employee.Information', {
                     xtype: 'container',
                     itemId: 'employeeTab',
                     title: 'Employee',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.general',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.general',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     itemId: 'companyTab',
                     title: 'Company',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.company',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.company',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     itemId: 'scheduleTab',
                     title: 'Schedule',
-                    // items: [
-                    //     {
-                    //         xtype: 'employee.information.schedule',
-                    //         userCls: 'employee-info-tab-form'
-                    //     }
-                    // ]
+                    items: [
+                        {
+                            xtype: 'employee.information.schedule',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
                     itemId: 'securityTab',
-                    title: 'Security'
+                    title: 'Security',
+                    items: [
+                        {
+                            xtype: 'employee.information.security',
+                            userCls: 'employee-info-tab-form'
+                        }
+                    ]
                 },
                 {
                     xtype: 'container',
