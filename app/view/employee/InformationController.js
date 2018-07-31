@@ -17,8 +17,19 @@ Ext.define('Breeze.view.employee.InformationController', {
         var comp = component;
 
         this.loadStores(function(pass){
+            // Provide loaded stores to form fields needing them
             comp.lookup('departments').setStore(vm.getStore('departments'));
-            me.loadEmployeeInfo(component);
+            comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
+            comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
+            me.loadEmployeeInfo(component, function(c){
+                // == After Employee Info loads ==
+                // Assign check fields after info loaded
+                var exemptStatus = vm.get('info.ExemptStatus');
+                c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
+                var recordingMode = vm.get('info.RecordingMode');
+                c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
+
+            });
         });
     },
 
@@ -30,17 +41,28 @@ Ext.define('Breeze.view.employee.InformationController', {
         var vm = this.getViewModel();
         
         vm.setStores({
-            departments: Ext.create('Breeze.store.company.DepartmentList')
+            departments: Ext.create('Breeze.store.company.DepartmentList'),
+            scheduleList: Ext.create('Breeze.store.employee.ScheduleList'),
+            projectList: Ext.create('Breeze.store.company.FlatProjectList')
         });
 
         vm.getStore('departments').load({callback: function(r,o,success){
             if(success){
-                callback(true);
+                vm.getStore('scheduleList').load({callback: function(r,o,success){
+                    if(success){
+                        vm.getStore('projectList').load({callback: function(r,o,success){
+                            if(success){
+                                callback(true);
+                            }
+                        }});
+                    }
+                }});
             }
         }});
     },
 
-    loadEmployeeInfo: function(component){
+    loadEmployeeInfo: function(component, callback){
+        var callback = (typeof callback == 'undefined')? function(){} : callback;
         var me = this;
         var empId = component.getData().employee;
         this.apiClass.information.getEmployeeInfo(
@@ -49,6 +71,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             console.log("Loaded Employee Data Test");
             var vm = me.getViewModel();
             vm.set('info',data);
+            callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
             console.log("Employee Info Error");

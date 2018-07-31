@@ -1,14 +1,14 @@
 /**
- * Employee Schedule List Store
- * @class ScheduleList
- * @alias Breeze.store.employee.ScheduleList
+ * Flat Project List Store
+ * @class FlatProjectList
+ * @alias Breeze.store.company.FlatProjectList
  */
-Ext.define('Breeze.store.employee.ScheduleList', {
+Ext.define('Breeze.store.company.FlatProjectList', {
     extend: 'Ext.data.Store',
     requires: ['Breeze.helper.Auth'],
-    model: 'Breeze.model.employee.Schedule',
+    model: 'Breeze.model.company.Department',
     autoLoad: false,
-    alias: 'store.employee.schedulelist',
+    alias: 'store.company.flatprojectlist',
 
     listeners: {
         beforeload: function() {
@@ -22,8 +22,8 @@ Ext.define('Breeze.store.employee.ScheduleList', {
     proxy: {
         type: 'ajax',
         // TODO: Add API URL
-        url: Breeze.helper.DummyApi.url('getAccrualPoliciesList'),
-        // url: Breeze.helper.Api.url('getAccrualPoliciesList'),
+        url: Breeze.helper.DummyApi.url('getFlatProjectList'),
+        // url: Breeze.helper.Api.url('getFlatProjectList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {
             create: 'POST',

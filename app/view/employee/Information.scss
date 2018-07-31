@@ -10,7 +10,9 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 .employee-info-tab-container {
     background-color: map-get($employee-info-colors, 'base');
     color: map-get($employee-info-text-colors, 'base');
+    // padding-left: 256px;
 }
+
 
 // Fieldset text coloring
 
@@ -19,6 +21,17 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     .x-form-fieldset-title {
         color: #ffffff;
     }
+}
+
+.employee-info-sidebar {
+    width: 128pt;
+    margin: 8pt 8pt 8pt 8pt;
+    padding-top: 48pt;
+}
+
+.employee-info-profile-picture {
+    border-radius: 50% 50% 50% 50%;
+    border: 3pt solid white;
 }
 
 .employee-info-fieldset-bordered {

@@ -17,7 +17,7 @@ Ext.define('Breeze.view.employee.Information', {
         'Breeze.view.employee.InformationController'
     ],
 
-    layout: 'vbox',
+    layout: 'hbox',
 
     viewModel: {
         type: 'employee.information'
@@ -32,6 +32,11 @@ Ext.define('Breeze.view.employee.Information', {
 
     items: [
         {
+            xtype: 'employee.information.sidebar',
+            userCls: 'employee-info-sidebar'
+        },        
+        {
+            flex: 3,
             xtype: 'tabpanel',
             layout: {
                 animation: 'fade'
@@ -41,7 +46,7 @@ Ext.define('Breeze.view.employee.Information', {
             tabBar: {
                 defaultTabUI: 'employeeInfoTabs'
             },
-            flex: 1,
+            // flex: 1,
             defaults: {
                 userCls: 'employee-info-tab-container'
             },

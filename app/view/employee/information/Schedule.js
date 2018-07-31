@@ -60,10 +60,18 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'startup_settings',
                             label: 'Accrual Policy',
+                            reference: 'accrualPolicy',
+                            bind: '{info.StartUpSettings}',
+                            displayField: 'Name',
+                            valueField: 'ID'
                         },
                         {
                             name: 'default_project',
                             label: 'Default Project',
+                            bind: '{info.DefaultProject}',
+                            reference: 'defaultProject',
+                            displayField: 'Name',
+                            valueField: 'ID'
                         }
                     ]
                 }
@@ -79,6 +87,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     xtype: 'fieldset',
                     userCls: 'employee-info-fieldset',
                     title: 'Exempt Status',
+                    reference: 'exemptStatus',
                     defaults: { 
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio'
@@ -100,6 +109,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     xtype: 'fieldset',
                     userCls: 'employee-info-fieldset',
                     title: 'Recording Mode',
+                    reference: 'recordingMode',
                     defaults: { 
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio'
