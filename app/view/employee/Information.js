@@ -43,7 +43,8 @@ Ext.define('Breeze.view.employee.Information', {
             // TODO: Create Themer UI Override and reference here
             ui: 'employeeInfoTabs',
             tabBar: {
-                defaultTabUI: 'employeeInfoTabs'
+                defaultTabUI: 'employeeInfoTabs',
+                shadow: false
             },
             // flex: 1,
             defaults: {

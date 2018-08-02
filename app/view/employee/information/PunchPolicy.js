@@ -25,6 +25,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
             ui: 'employeeInfoTabs',
             tabBar: {
                 defaultTabUI: 'employeeInfoTabs',
+                shadow: false
             },
             defaults: {
                 userCls: 'employee-info-tab-container'

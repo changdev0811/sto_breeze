@@ -27,10 +27,15 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     }
 }
 
+// Profile image
+
 .employee-info-sidebar {
     width: 128pt;
-    margin: 8pt 8pt 8pt 8pt;
-    padding-top: 48pt;
+    margin: {
+        top: 0pt;
+        left: 0pt;
+        right: 8pt;
+    }
 }
 
 .employee-info-profile-picture {

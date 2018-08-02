@@ -39,7 +39,9 @@ Ext.define('Breeze.view.employee.information.Security', {
                     bind: '{info.Email}',
                     // TODO: Email validation regex
                     /* regex: */
-                    invalidText: 'Invalid email address'
+                    invalidText: 'Invalid email address',
+                    validators: Ext.create('Ext.data.validator.Email', 
+                    {message: 'Invalid email address'})
                 }
             ]  
         },
