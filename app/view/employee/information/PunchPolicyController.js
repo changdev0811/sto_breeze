@@ -95,7 +95,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 			if(value){ot4Check.setDisabled(false);}
 			if(!value){
 				toggle(false, [ot4Day, ot4Week, ot4Rate]);
-				ot4Check.setValue(false);
+				ot4Check.setChecked(false);
 				ot4Check.setDisabled(true);
 				
 			}
@@ -106,9 +106,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 			if(!value){
 				toggle(false, [ot3Day, ot3Week, ot4Rate]);
 				toggle(false, [ot4Day, ot4Week, ot4Rate]);
-				ot3Check.setValue(false);
+				ot3Check.setChecked(false);
 				ot3Check.setDisabled(true);
-				ot4Check.setValue(false);
+				ot4Check.setChecked(false);
 				ot4Check.setDisabled(true);
 				
 			}
@@ -120,11 +120,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 				toggle(false, [ot2Day, ot2Week, ot2Rate]);
 				toggle(false, [ot3Day, ot3Week, ot3Rate]);
 				toggle(false, [ot4Day, ot4Week, ot4Rate]);
-				ot2Check.setValue(false);
+				ot2Check.setChecked(false);
 				ot2Check.setDisabled(true);
-				ot3Check.setValue(false);
+				ot3Check.setChecked(false);
 				ot3Check.setDisabled(true);
-				ot4Check.setValue(false);
+				ot4Check.setChecked(false);
 				ot4Check.setDisabled(true);
 			}
 		}

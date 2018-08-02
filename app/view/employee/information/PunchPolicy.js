@@ -30,6 +30,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                 userCls: 'employee-info-tab-container'
             },
             items: [
+                //========[Overtime Tab]===========
                 {
                     title: 'Overtime',
                     reference: 'overtimeTab',
@@ -45,6 +46,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                 flex: 1
                             },
                             items: [
+                                // Header Labels
                                 {
                                     defaults: {
                                         xtype: 'container',
@@ -88,6 +90,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'overtime_opt1',
                                             label: 'Overtime 1',
                                             ui: 'employeeinfo-checkbox',
+                                            bodyAlign: 'stretch',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt1}'
                                             },
@@ -133,6 +136,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt2',
                                             label: 'Overtime 2',
+                                            bodyAlign: 'stretch',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.pucnPolicy.Ot_Opt2}'
@@ -177,6 +181,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt3',
+                                            bodyAlign: 'stretch',
                                             label: 'Overtime 3',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
@@ -223,6 +228,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt4',
+                                            bodyAlign: 'stretch',
                                             label: 'Overtime 4',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
@@ -273,6 +279,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                     ]
 
                 },
+                //========[Rounding Rules Tab]===========
                 {
                     title: 'Rounding Rules',
                     reference: 'roundingTab',
@@ -375,9 +382,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                         }
                     ]
                 },
+                //========[Punch Options Tab]===========
                 {
                     title: 'Punch Options'
                 },
+                //========[Deductions Tab]===========
                 {
                     title: 'Deductions'
                 }
