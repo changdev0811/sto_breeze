@@ -1,6 +1,15 @@
+/**
+ * Employee Information > General Tab View
+ * @class General
+ * @alias Breeze.view.employee.information.General
+ */
 Ext.define('Breeze.view.employee.information.General', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.general',
+
+    requires: [
+        'Breeze.widget.field.Text'
+    ],
 
     layout: 'vbox',
 
@@ -12,7 +21,7 @@ Ext.define('Breeze.view.employee.information.General', {
             title: 'Name',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },
@@ -42,7 +51,7 @@ Ext.define('Breeze.view.employee.information.General', {
             // title: 'Name',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },

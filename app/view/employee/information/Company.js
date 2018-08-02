@@ -12,7 +12,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             // title: 'Name',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },
@@ -42,7 +42,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             layout: 'hbox',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },
@@ -69,7 +69,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             layout: 'hbox',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },

@@ -13,7 +13,7 @@ Ext.define('Breeze.view.employee.information.Security', {
             title: 'Login Information',
             defaults: {
                 flex: 1,
-                xtype: 'textfield',
+                xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield'
             },
@@ -33,7 +33,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     valueField: 'ID'
                 },
                 {
-                    xtype: 'emailfield',
+                    xtype: 'breeze-email',
                     name: 'email',
                     label: 'Email',
                     bind: '{info.Email}',
