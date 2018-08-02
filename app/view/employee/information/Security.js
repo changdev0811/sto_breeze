@@ -2,6 +2,8 @@ Ext.define('Breeze.view.employee.information.Security', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.security',
 
+    controller: 'employee.information.security',
+
     layout: 'vbox',
 
     items: [
@@ -62,18 +64,22 @@ Ext.define('Breeze.view.employee.information.Security', {
                 {
                     name: 'old_password',
                     label: 'Current Password',
-                    xtype: 'passwordfield'
+                    xtype: 'breeze-password',
+                    listeners: {
+                        // make password fields required when value is entered
+                        change: 'updatePasswordRequirement'
+                    }
                 },
                 {
                     name: 'password',
-                    xtype: 'passwordfield',
+                    xtype: 'breeze-password',
                     label: 'New Password'
                     // Changing password requires new and new confirm pass
                 },
                 {
                     name: 'confirm_new_password',
                     label: 'Confirm',
-                    xtype: 'passwordfield',
+                    xtype: 'breeze-password',
                     
                 }
             ]  
