@@ -19,7 +19,7 @@ Ext.define('Breeze.model.record.WorkTime', {
         { name: 'Project', type: 'string' },
         { name: 'Project_ID', type: 'integer' },
         { name: 'In_Punch', reference: 'record.Punch' },
-        { name: 'Out_Punch', type: 'record.Punch' },
+        { name: 'Out_Punch', reference: 'record.Punch' },
         { name: 'RowClass', type: 'string' },
         { name: 'Photo', type: 'string' },
         { name: 'Deduction', reference: 'record.Deduction' },
