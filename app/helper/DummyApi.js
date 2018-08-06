@@ -24,7 +24,7 @@ Ext.define('Breeze.helper.DummyApi', {
         // Wrapped version of serviceRequest that targets dummy JSON data
         serviceRequest: function(service, params, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(
-                '', [this.dummyPath, service, 'default.json'].join('/'), 
+                '', [[this.dummyPath, service].join(''), 'default.json'].join('/'), 
                 params, sync, successHandler, failureHandler
             );
         },

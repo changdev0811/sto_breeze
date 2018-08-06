@@ -1,3 +1,8 @@
+/**
+ * FYI View Accrual item detail list item with progress bar, category name, and value labels
+ * @class AccrualItem
+ * @alias Breeze.view.employee.fyi.AccrualItem
+ */
 Ext.define('Breeze.view.employee.fyi.AccrualItem', {
     alias: 'widget.employee.fyi.accrualItem',
     extend: 'Ext.dataview.ListItem',
@@ -27,6 +32,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         {
             xtype: 'progress',
             ui: 'employeefyi-progress',
+            userCls: 'employee-fyi-accrual-item-over',
             reference: 'bar',
             value: 0.5
             
@@ -47,6 +53,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         var bar = this.lookup('bar');
         
         if(recorded.value <= allowed.value){
+            this.lookup('bar').setUi(['employeefyi-progress']);
             // record <= allowed
             // % is recorded / allowed
             // set bar value
@@ -60,12 +67,14 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
             // recorded > allowed
             // % is allowed / recorded
             bar.setValue(allowed.value/recorded.value);
+            // bar.setValue(recorded.value/allowed.value);
             this.lookup('usage').setUserCls('employee-fyi-accrual-value-label-over');
+            this.lookup('bar').setUi(['employeefyi-progress','employeefyi-progress-overlimit']);
         }
         
-        bar.setValue(
-            parseFloat(record.get('CatRecorded'))/parseFloat(record.get('CatAllowed'))
-        );
+        // bar.setValue(
+        //     parseFloat(record.get('CatRecorded'))/parseFloat(record.get('CatAllowed'))
+        // );
         bar.el.child('.x-progress-bar', true).style.backgroundColor = record.get('CatColor');
         bar.el.child('.x-progress-bar', true).style.backgroundImage = 'none';
     },

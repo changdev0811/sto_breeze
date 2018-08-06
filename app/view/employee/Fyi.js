@@ -60,7 +60,7 @@ Ext.define('Breeze.view.employee.Fyi',{
                 {
                     label: 'Hire Date',
                     ui: 'fyi-display-field',
-                    bind: { value: '{hideDate}' }
+                    bind: { value: '{hireDate}' }
                 }
             ]
         },
@@ -72,11 +72,14 @@ Ext.define('Breeze.view.employee.Fyi',{
                     ui: 'dark-textfield',
                     name: 'viewdate_field',
                     label: 'FYI View as of',
+                    reference: 'viewDate',
                     picker: {
                         xtype: 'datepicker',
                         title: 'Select Date'
                     },
-                    value: Ext.util.Format.date(new Date(), 'm/d/y')
+                    listeners: {
+                        change: 'onViewDateChanged'
+                    }
                 }
             ]
         },
@@ -104,6 +107,23 @@ Ext.define('Breeze.view.employee.Fyi',{
             //     }
             // ]
 
+        },
+        {
+            xtype: 'container',
+            items: [
+                {
+                    xtype: 'checkbox',
+                    ui: 'employeeinfo-checkbox',
+                    label: 'Show scheduled recorded time',
+                    labelAlign: 'right',
+                    reference: 'showScheduled',
+                    inline: true,
+                    labelWidth: 'auto',
+                    listeners: {
+                        change: 'onShowScheduledChanged'
+                    }
+                }
+            ]
         }
     ]
 
