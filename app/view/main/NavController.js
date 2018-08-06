@@ -18,7 +18,7 @@
 
         // Routes
         routes: {
-            'home': 'onHomeRoute',
+            'personal': 'onHomeRoute',
             'personal/info': {
                 action: 'onPersonalEmployeeInfoRoute'
             },
@@ -54,7 +54,11 @@
         // Route change handlers
 
         onHomeRoute: function() {
-
+            this.changeContent(
+                Ext.create('Breeze.view.dashboard.Personal', {
+                    data: { employee: undefined }
+                })
+            );
         },
 
         onPersonalEmployeeInfoRoute: function(){
