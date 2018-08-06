@@ -26,16 +26,37 @@ Ext.define('Breeze.view.employee.FyiController', {
     },
 
     /**
+     * Handles view date change event, triggering refresh of displayed data
+     * if value has changed
+     */
+    onViewDateChanged: function(cmp, newVal, oldVal, eOpts){
+        if(newVal !== oldVal){
+            this.displayData(this);
+        }
+    },
+
+    /**
+     * Handles show scheduled checkbox change event, triggering refresh of
+     * displayed data if value has changed
+     */
+    onShowScheduledChanged: function(cmp, newVal, oldVal, eOpts){
+        if(newVal !== oldVal){
+            this.displayData(this);
+        }
+    },
+
+    /**
      * Display FYI data after making API call, storing result in view model store
      * @param {Object} me Reference to controller context
      */
     displayData: function(me){
-        var viewDate = this.lookup('viewDate').getValue();
+        var viewDate = me.lookup('viewDate').getValue();
+        var showScheduled = me.lookup('showScheduled').getChecked();
         me.apiClass.fyi.getFYI(
             me.empId,
             viewDate.getFullYear(),
             Ext.util.Format.date(viewDate, 'm/d/Y'),
-            true
+            showScheduled
         ).then(function(data){
             if(typeof data !== 'undefined'){
                 console.log("Loaded FYI Test");

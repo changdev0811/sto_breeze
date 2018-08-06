@@ -76,6 +76,9 @@ Ext.define('Breeze.view.employee.Fyi',{
                     picker: {
                         xtype: 'datepicker',
                         title: 'Select Date'
+                    },
+                    listeners: {
+                        change: 'onViewDateChanged'
                     }
                 }
             ]
@@ -104,6 +107,23 @@ Ext.define('Breeze.view.employee.Fyi',{
             //     }
             // ]
 
+        },
+        {
+            xtype: 'container',
+            items: [
+                {
+                    xtype: 'checkbox',
+                    ui: 'employeeinfo-checkbox',
+                    label: 'Show scheduled recorded time',
+                    labelAlign: 'right',
+                    reference: 'showScheduled',
+                    inline: true,
+                    labelWidth: 'auto',
+                    listeners: {
+                        change: 'onShowScheduledChanged'
+                    }
+                }
+            ]
         }
     ]
 
