@@ -1,6 +1,11 @@
-Ext.define('Breeze.store.employee.PunchRoundingIncrements', {
+/**
+ * Store containing Punch Pounding increment values used by Employee Info
+ * @class PunchRoundingIncrements
+ * @alias Breeze.store.employee.static.PunchRoundingIncrements
+ */
+Ext.define('Breeze.store.employee.static.PunchRoundingIncrements', {
     extend: 'Ext.data.Store',
-    alias: 'store.employee.punchroundingincrements',
+    alias: 'store.employee.static.punchroundingincrements',
     autoLoad: true,
     storeId: 'PunchRoundingIncrements',
     fields: ['name', 'value'],
