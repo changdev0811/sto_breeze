@@ -80,7 +80,11 @@
         },
 
         onPersonalWtrRoute: function(){
-
+            this.changeContent(
+                Ext.create('Breeze.view.employee.WorkTimeRecords', {
+                    data: { employee: undefined }
+                })
+            );
         },
 
         onPersonalCalendarRoute: function(){

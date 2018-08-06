@@ -80,3 +80,19 @@ $employee-info-text-colors: (
     medium: $scoped-employee-info-text-medium,
     dark: $scoped-employee-info-text-dark
 );
+
+// ====[WorkTime Records]====
+
+// colors
+$scoped-wtr-base: $base-color;
+
+// text
+$scoped-wtr-text-base: #ffffff;
+
+$wtr-colors: (
+    base: $scoped-wtr-base
+);
+
+$wtr-text-colors: (
+    base: $scoped-wtr-text-base
+);
