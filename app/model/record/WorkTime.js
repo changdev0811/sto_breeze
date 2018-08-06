@@ -23,7 +23,10 @@ Ext.define('Breeze.model.record.WorkTime', {
         { name: 'RowClass', type: 'string' },
         { name: 'Photo', type: 'string' },
         { name: 'Deduction', reference: 'record.Deduction' },
-        { name: 'AbsenceCode', type: 'string' }
+        { name: 'AbsenceCode', type: 'string' },
+        { name: 'Total_Time_Hours', calculate: function(data){
+            return Breeze.helper.Time.minutesToHours(data.Total_Time);
+        }}
     ],
     belongsTo: 'record.TimeSheet'
 });

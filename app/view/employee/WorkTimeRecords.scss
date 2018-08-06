@@ -1,0 +1,24 @@
+// Work Time Records view Styles and Overrides
+
+/**
+ UI Style 'wtr-small' for Date panel widget
+*/
+@include datepanel-ui(
+    $ui: 'wtr-small',
+    $cell-spacing: 2pt,
+    $cell-width: 1.5em,
+    $cell-height: 1.5em,
+    $focused-cell-outline-width: 0,
+    $focused-cell-outline-style: none,
+    $header-font-size: 10pt
+);
+
+@include panel-ui(
+    $ui: 'wtr-panel',
+    $body-background-color: map-get($wtr-colors,'base'),
+    $body-color: map-get($wtr-text-colors,'base') !important
+);
+
+.wtr-content {
+    color: map-get($wtr-text-colors,'base');
+}
