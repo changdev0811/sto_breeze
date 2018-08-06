@@ -22,6 +22,11 @@ Ext.define('Breeze.view.main.NavModel', {
                         routeAct: false,
                         children: [
                             {
+                                text: 'Download PunchStation', leaf: true,
+                                iconCls: 'x-fa fa-cloud-download',
+                                routeRef: 'download/punch_station'
+                            },
+                            {
                                 text: 'Calendar', leaf: true,
                                 iconCls: 'x-fa fa-calendar'
                             }, {
