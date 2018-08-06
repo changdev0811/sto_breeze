@@ -35,25 +35,33 @@
                 {
                     "shiftSegVal": 540,
                     "shiftSegStr": " 9:00AM"
+                },
+                {
+                    "shiftSegVal": 541,
+                    "shiftSegStr": " 10:00AM"
                 }
             ],
             "ShiftSegComboStopTimes": [
                 {
                     "shiftSegVal": 1260,
                     "shiftSegStr": " 9:00PM"
+                },
+                {
+                    "shiftSegVal": 1261,
+                    "shiftSegStr": " 10:00PM"
                 }
             ],
             "ShiftStartTimes": [
-                " 9:00AM"
+                " 9:00AM", " 10:00AM" 
             ],
             "ShiftStopTimes": [
-                " 9:00PM"
+                " 9:00PM", " 10:00PM"
             ],
             "ShiftStartSegments": [
-                540
+                540, 541
             ],
             "ShiftStopSegments": [
-                1260
+                1260, 1261
             ],
             "PhotoFlag": false,
             "Photo": "app/resources/EmployeePhotos/default_man.png",

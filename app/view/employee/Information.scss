@@ -89,3 +89,15 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $box-label-color: #ffffff,
     $ui: 'employeeinfo-radio'
 );
+
+
+@include dataview-ui(
+
+    $background-color :  #498DC6,
+    $ui: 'employeeinfo-shift-grid'
+
+);
+
+
+
+
