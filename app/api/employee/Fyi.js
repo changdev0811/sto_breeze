@@ -19,6 +19,8 @@ Ext.define('Breeze.api.employee.Fyi', {
         *      or rejecting with error
         */
     getFYI: function (employeeId, year, day, scheduled, storeId) {
+        var authInfo = this.auth.getCookies();
+        var employeeId = this.defVal(employeeId, authInfo.emp);
         var scheduled = this.defVal(scheduled, false);
         var storeId = this.defVal(storeId, 'employee_fyi');
         var year = this.defVal(year, (new Date()).getFullYear());
@@ -32,7 +34,7 @@ Ext.define('Breeze.api.employee.Fyi', {
                     'activeDay': day,
                     'showScheduled': scheduled
                 },
-                false,
+                true,
                 function (response) {
                     var respJson = api.decodeJsonResponse(response);
                     var store = Ext.create(
