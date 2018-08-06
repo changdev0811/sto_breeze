@@ -15,6 +15,13 @@ $fyi-accrual-color: #ffffff;
     }
 }
 
+/* When progress bar background needs to be red to indicate over allowed amount,
+   add the ui style 'employeefyi-progress-overlimit' */
+@include progress-ui (
+    $background-color: #ff0000,
+    $ui: 'employeefyi-progress-overlimit'
+);
+
 // Style for widget.employee.fyi.accrualItem item
 @include listitem-ui(
     $background-color: $fyi-accrual-background-color,

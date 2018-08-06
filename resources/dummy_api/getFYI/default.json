@@ -23,8 +23,8 @@
                 "CatAbbr": "V",
                 "CalType": "Calendar",
                 "CatRecorded": "21.00",
-                "CatAllowed": "0.00",
-                "CatRemaining": "-21.00",
+                "CatAllowed": "5.00",
+                "CatRemaining": "-16.00",
                 "IsAllowed": true
             },
             {
@@ -33,9 +33,9 @@
                 "CatDesc": "Personal",
                 "CatAbbr": "P",
                 "CalType": "Calendar",
-                "CatRecorded": "0.00",
-                "CatAllowed": "0.00",
-                "CatRemaining": "0.00",
+                "CatRecorded": "3.00",
+                "CatAllowed": "7.00",
+                "CatRemaining": "4.00",
                 "IsAllowed": true
             },
             {
@@ -44,9 +44,9 @@
                 "CatDesc": "Jury",
                 "CatAbbr": "J",
                 "CalType": "Calendar",
-                "CatRecorded": "24.00",
-                "CatAllowed": "--",
-                "CatRemaining": "--",
+                "CatRecorded": "8.00",
+                "CatAllowed": "7.00",
+                "CatRemaining": "-1.00",
                 "IsAllowed": false
             },
             {
@@ -67,7 +67,7 @@
                 "CatAbbr": "T",
                 "CalType": "Calendar",
                 "CatRecorded": "9.00",
-                "CatAllowed": "--",
+                "CatAllowed": "3.00",
                 "CatRemaining": "--",
                 "IsAllowed": false
             },
