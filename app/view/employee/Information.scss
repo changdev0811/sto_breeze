@@ -1,4 +1,4 @@
-$ei-padding-base: 4pt;
+$ei-padding-base: 6pt;
 $ei-form-padding: ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2);
 $ei-field-padding: $ei-padding-base $ei-padding-base $ei-padding-base $ei-padding-base;
 $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4);
@@ -62,12 +62,19 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,
+    $label-font-size: 14pt,
+    $ui: 'employeeinfo-textfield'
+);
+
+@include textfield-ui(
+    $input-font-size: 12pt,
     $ui: 'employeeinfo-textfield'
 );
 
 @include field-ui(
     $label-color: #ffffff,
     $focused-label-color: #ffffff,
+    $label-font-size: 14pt,
     $ui: 'employeeinfo-checkbox'
 );
 
@@ -82,6 +89,7 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $label-color: #ffffff,
     // $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,
+    $label-font-size: 14pt,
     $ui: 'employeeinfo-radio'
 );
 
@@ -89,3 +97,15 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $box-label-color: #ffffff,
     $ui: 'employeeinfo-radio'
 );
+
+@include dataview-ui(
+    $background-color :  #498DC6,
+    $ui: 'employeeinfo-shift-grid'
+);
+
+
+
+
+
+
+
