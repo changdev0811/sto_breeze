@@ -16,6 +16,13 @@ Ext.define('Breeze.api.Employee', {
         this.workTimeRecords = Ext.create('Breeze.api.employee.WorkTimeRecords');
     },
 
+    /**
+     * TODO: Port homemade.js/getEmpAccess function
+     */
+    getAccess: function(){
+
+    },
+
     // References to specific scopes
     fyi: null,
     information: null,

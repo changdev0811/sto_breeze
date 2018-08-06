@@ -40,6 +40,7 @@ Ext.define('Breeze.helper.Auth', {
 
         /**
          * Check authorization cookies, optionally reloading if not okay
+         * (Ported from homemade.js/auth)
          * @param {Boolean} forceReload if true, reload if invalid cookies (default false)
          * @return {Boolean} True if authorized, false otherwise
          */
