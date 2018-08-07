@@ -513,7 +513,74 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                 },
                 //========[Deductions Tab]===========
                 {
-                    title: 'Deductions'
+                    title: 'Deductions',
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'employee-info-fieldset',
+                            title: 'Automatic Deductions',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Punch Out for lunch'
+                                        },
+                                        {
+                                            xtype: 'component',
+                                            flex: 1,
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    userCls: 'employee-info-general-field',
+
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'float',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'Automaticly subtract',
+                                        },
+                                        {
+                                            xtype: 'selectfield',
+                                            maxWidth:'6em',
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'minutes if employee works a ',
+                                        },
+                                        {
+                                            xtype: 'selectfield',
+                                            maxWidth:'6em',
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'hour shift',
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+
                 }
             ]
         }
