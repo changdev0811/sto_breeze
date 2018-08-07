@@ -92,15 +92,16 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     reference: 'exemptStatus',
                     defaults: { 
                         xtype: 'radiofield',
-                        ui: 'employeeinfo-radio'
+                        ui: 'employeeinfo-radio',
+                        bodyAlign:'stretch'
                     },
                     items: [
                         {
-                            label: 'Exempt',
+                            boxLabel: 'Exempt',
                             name: 'exempt_status',
                             value: 138
                         },{
-                            label: 'Non-Exempt',
+                            boxLabel: 'Non-Exempt',
                             name: 'exempt_status',
                             value: 139
                         }
@@ -114,15 +115,16 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     reference: 'recordingMode',
                     defaults: { 
                         xtype: 'radiofield',
-                        ui: 'employeeinfo-radio'
+                        ui: 'employeeinfo-radio',
+                        bodyAlign:'stretch'
                     },
                     items: [
                         {
-                            label: 'Days',
+                            boxLabel: 'Days',
                             name: 'recording_mode',
                             value: 20
                         },{
-                            label: 'Hours',
+                            boxLabel: 'Hours',
                             name: 'recording_mode',
                             value: 21
                         }

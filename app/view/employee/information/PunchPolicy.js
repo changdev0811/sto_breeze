@@ -84,12 +84,13 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         flex: 1,
                                         userCls: 'employee-info-general-field',
                                         ui: 'employeeinfo-textfield'
+
                                     },
                                     items: [
                                         {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt1',
-                                            label: 'Overtime 1',
+                                            boxLabel: 'Overtime 1',
                                             labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bodyAlign: 'stretch',
@@ -137,7 +138,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt2',
-                                            label: 'Overtime 2',
+                                            boxLabel: 'Overtime 2',
                                             labelWidth: 'auto',
                                             bodyAlign: 'stretch',
                                             ui: 'employeeinfo-checkbox',
@@ -185,7 +186,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt3',
                                             bodyAlign: 'stretch',
-                                            label: 'Overtime 3',
+                                            boxLabel: 'Overtime 3',
                                             labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
@@ -233,7 +234,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt4',
                                             bodyAlign: 'stretch',
-                                            label: 'Overtime 4',
+                                            boxLabel: 'Overtime 4',
                                             labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
@@ -446,6 +447,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         },
                                         {
                                             xtype: 'selectfield',
+                                            name: 'auto_close_shift'
                                         },
                                         {
                                             xtype: 'label',
@@ -555,25 +557,27 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         {
                                             xtype: 'label',
                                             userCls: 'employeeinfo-label',
-                                            html: 'Automaticly subtract',
+                                            html: 'Automaticly subtract ',
                                         },
                                         {
                                             xtype: 'selectfield',
                                             maxWidth:'6em',
+                                            name: 'lunch_minutes'
                                         },
                                         {
                                             xtype: 'label',
                                             userCls: 'employeeinfo-label',
-                                            html: 'minutes if employee works a ',
+                                            html: ' minutes if employee works a '
                                         },
                                         {
                                             xtype: 'selectfield',
                                             maxWidth:'6em',
+                                            name: 'lunch_seg'
                                         },
                                         {
                                             xtype: 'label',
-                                            userCls: 'employeeinfo-label',
-                                            html: 'hour shift',
+                                            userCls: ' employeeinfo-label',
+                                            html: 'hour shift'
                                         }
                                     ]
                                 }

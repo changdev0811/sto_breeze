@@ -82,9 +82,7 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: #ffffff,
-
     $box-label-font-size: 14pt,
-
     $ui: 'employeeinfo-checkbox'
 );
 
@@ -107,6 +105,7 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 
 @include radiofield-ui(
     $box-label-color: #ffffff,
+    $box-label-font-size: 14pt,
     $ui: 'employeeinfo-radio'
 );
 
