@@ -11,7 +11,7 @@
  */
 Ext.define('Breeze.store.accrual.static.NewRate', {
     extend: 'Ext.data.Store',
-    model: 'Breeze.data.TypeOption',
+    model: 'Breeze.model.data.TypeOption',
     alias: 'store.accrual.static.newrate',
     storeId: 'accrualNewRate',
     
