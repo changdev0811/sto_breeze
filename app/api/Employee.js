@@ -16,15 +16,31 @@ Ext.define('Breeze.api.Employee', {
         this.workTimeRecords = Ext.create('Breeze.api.employee.WorkTimeRecords');
     },
 
-    /**
-     * TODO: Port homemade.js/getEmpAccess function
-     */
-    getAccess: function(){
-
-    },
-
     // References to specific scopes
     fyi: null,
     information: null,
-    workTimeRecords: null
+    workTimeRecords: null,
+
+    // Class API methods
+
+    /**
+     * Get employee access level
+     * (Port homemade.js/getEmpAccessLogin function)
+     * @return {Promise} promise resolving to numerical access level, or rejecting with error
+     */
+    getAccess: function(){
+        var auth = this.auth;
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest('getAccess', 
+                {},
+                function(res, req){
+                    resolve(api.decodeJsonResponse(res).level);
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
+    }
 });
