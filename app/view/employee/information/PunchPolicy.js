@@ -90,6 +90,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt1',
                                             label: 'Overtime 1',
+                                            labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bodyAlign: 'stretch',
                                             bind: {
@@ -137,6 +138,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'checkbox',
                                             name: 'overtime_opt2',
                                             label: 'Overtime 2',
+                                            labelWidth: 'auto',
                                             bodyAlign: 'stretch',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
@@ -184,6 +186,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'overtime_opt3',
                                             bodyAlign: 'stretch',
                                             label: 'Overtime 3',
+                                            labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt3}'
@@ -231,6 +234,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'overtime_opt4',
                                             bodyAlign: 'stretch',
                                             label: 'Overtime 4',
+                                            labelWidth: 'auto',
                                             ui: 'employeeinfo-checkbox',
                                             bind: {
                                                 checked: '{info.punchPolicy.Ot_Opt4}'
@@ -303,8 +307,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     items: [
                                         {
                                             xtype: 'label',
+                                            userCls: 'employeeinfo-label',
                                             html: 'Round punch to nearest',
-                                            style: 'line-height: 1.5em'
                                         },
                                         {
                                             xtype: 'selectfield',
@@ -318,6 +322,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             listeners: {
                                                 change: 'onRoundingIncChange'
                                             }
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'minute(s)',
                                         }
                                     ]
                                 },
@@ -332,8 +341,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     items: [
                                         {
                                             xtype: 'label',
+                                            userCls: 'employeeinfo-label',
                                             html: 'Offset rounding by',
-                                            style: 'line-height: 1.5em'
                                         },
                                         {
                                             xtype: 'spinnerfield',
@@ -348,14 +357,14 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                         },
                                         {
                                             xtype: 'label',
+                                            userCls: 'employeeinfo-label',
                                             html: 'minute(s)',
-                                            style: 'line-height: 1.5em'
                                         }
                                     ]
                                 },
                                 {
                                     flex: 1,
-                                    xtype: 'fieldset',
+                                    xtype: 'container',
                                     layout: 'vbox',
                                     defaults: {
                                         userCls: 'employee-info-general-field',
@@ -364,16 +373,19 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     items: [
                                         {
                                             xtype: 'component',
+                                            userCls: 'employeeinfo-label',
                                             reference: 'roundPrev1',
                                             html: 'Punches between 7 and 8 am round to 8 AM'
                                         },
                                         {
                                             xtype: 'component',
+                                            userCls: 'employeeinfo-label',
                                             reference: 'roundPrev2',
                                             html: 'Punches between 7 and 8 am round to 8 AM'
                                         },
                                         {
                                             xtype: 'component',
+                                            userCls: 'employeeinfo-label',
                                             reference: 'roundPrev3',
                                             html: 'Punches between 7 and 8 am round to 8 AM'
                                         },
@@ -385,7 +397,119 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                 },
                 //========[Punch Options Tab]===========
                 {
-                    title: 'Punch Options'
+                    title: 'Punch Options',
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'employee-info-fieldset',
+                            title: 'Punch Options',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Allow Regular Punch In/Out'
+                                        },
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Allow Quick Punch In/Out'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    userCls: 'employee-info-general-field',
+
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'Maximum shift length',
+                                        },
+                                        {
+                                            xtype: 'selectfield',
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            userCls: 'employeeinfo-label',
+                                            html: 'hour(s)',
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'employee-info-fieldset',
+                            title: 'Other',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Can adjust time records'
+                                        },
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Can add notes to punches'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    defaults: {
+                                        userCls: 'employee-info-general-field',
+                                        ui: 'employeeinfo-textfield'
+                                    },
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'employeeinfo-checkbox',
+                                            bodyAlign:'stretch',
+                                            flex: 1,
+                                            boxLabel: 'Can use time sheets'
+                                        },
+                                        {
+                                           xtype: 'component',
+                                           flex: 1
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+
                 },
                 //========[Deductions Tab]===========
                 {
