@@ -20,7 +20,7 @@ Ext.define('Breeze.api.Company', {
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'getIsSupport', 
-                {}, true, 
+                {}, true, true,
                 function(result){
                     resolve(api.decodeJsonResponse(result).level)
                 },

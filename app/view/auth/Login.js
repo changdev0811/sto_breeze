@@ -1,5 +1,5 @@
 Ext.define('Breeze.view.auth.Login', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.Container',
     alias: 'widget.auth.login',
     xtype: 'login-form',
 
@@ -13,10 +13,12 @@ Ext.define('Breeze.view.auth.Login', {
     controller: 'auth.login',
 
     layout: 'vbox',
+    userCls: 'login',
 
     items: [
         {
             xtype: 'fieldset',
+            userCls: 'login-fieldset',
             itemId: 'loginFormFieldSet',
             title: 'Log In',
             items: [
@@ -32,7 +34,7 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'textfield',
-                    id: 'usernameField',
+                    name: 'loginUsername',
                     errorTarget: 'under',
                     label: 'Username',
                     // labelMinWidth: '110px',
@@ -40,7 +42,6 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'textfield',
-                    id: 'passwordField',
                     name: 'loginPassword',
                     errorTarget: 'under',
                     label: 'Password',
@@ -50,7 +51,7 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'checkbox',
-                    label: 'Remember Me',
+                    boxLabel: 'Remember Me',
                     id: 'rememberMeField'
                 },
                 {

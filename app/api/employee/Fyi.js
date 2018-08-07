@@ -36,6 +36,7 @@ Ext.define('Breeze.api.employee.Fyi', {
                     'showScheduled': scheduled
                 },
                 true,
+                true,
                 function (response) {
                     var respJson = api.decodeJsonResponse(response);
                     var store = Ext.create(

@@ -13,8 +13,8 @@ Ext.define('Breeze.api.Base', {
 
     // Helper aliases
     // TODO: Replace DummyApi ref with Api when done testing
-    // api: Breeze.helper.Api,
-    api: Breeze.helper.DummyApi,
+    api: Breeze.helper.Api,
+    // api: Breeze.helper.DummyApi,
     cookie: Breeze.helper.Cookie,
     auth: Breeze.helper.Auth,
     /**

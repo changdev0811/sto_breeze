@@ -1,0 +1,17 @@
+// Styles for auth/Login
+
+.login {
+    background-color: map-get($root-colors, 'base') !important;
+    color: map-get($root-text-colors, 'base');
+}
+
+.login-fieldset {
+    // background-color: map-get($root-colors, 'base');
+    // color: map-get($root-text-colors, 'base');
+    padding: 12pt 12pt 12pt 12pt;
+    margin: 12pt 12pt 12pt 12pt;
+    background-color: #ffffff;
+    // .x-form-fieldset-title {
+    //     color: #ffffff;
+    // }
+}

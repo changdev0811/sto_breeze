@@ -38,6 +38,7 @@ Ext.define('Breeze.api.Employee', {
             api.serviceRequest('getAccess', 
                 {},
                 true,
+                true,
                 function(res, req){
                     if(reloadCookies){
                         auth.reloadCookies(-1);
