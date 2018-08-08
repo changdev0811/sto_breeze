@@ -60,6 +60,11 @@ Ext.define('Breeze.view.employee.information.Company', {
                     name: 'badge_id',
                     label: 'Badge #',
                     bind: '{info.Badge}'
+                },
+                {
+                    name: 'payroll',
+                    label: 'Payroll #',
+                    bind: '{info.Payroll}'
                 }
             ]
         },
@@ -89,11 +94,6 @@ Ext.define('Breeze.view.employee.information.Company', {
                     bind: '{info.CompPer}',
                     displayField: 'Description',
                     valueField: 'ID'
-                },
-                {
-                    name: 'payroll',
-                    label: 'Payroll #',
-                    bind: '{info.Payroll}'
                 }
             ]
         }
