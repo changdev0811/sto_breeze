@@ -1,26 +1,50 @@
 // Style rules for employee.fyi.AccrualItem component
 
-$fyi-accrual-val-over: mix(#fff, $alert-color, 65%);
+// Color for text when over allowed value
+$fyi-accrual-val-over: lighten($alert-color, 15%);
 $fyi-accrual-background-color: $base-color;
 $fyi-accrual-color: #ffffff;
 
-.employee-fyi-accrual-value-label {
-    //
-}
 
-// style for x of y label when value exceeds allowed
+// Style applied to x of y (accrual value) label
+// when value exceeds allowed
 .employee-fyi-accrual-value-label-over {
     & div {
-    color: $fyi-accrual-val-over;
+        color: $fyi-accrual-val-over;
     }
 }
+
+/* Progress bar box shadow */
+.employee-fyi-accrual-value-shadow {
+    box-shadow: 0pt 3pt 3pt rgba(0,0,0,0.33);
+}
+
+
+// Override min height for progress bar UI
+@include progress-ui (
+    $min-height: 6pt,
+    $ui: 'employeefyi-progress'
+);
 
 /* When progress bar background needs to be red to indicate over allowed amount,
    add the ui style 'employeefyi-progress-overlimit' */
 @include progress-ui (
-    $background-color: #ff0000,
+    // $background-color: #ff0000,
+    $background-color: rgba(207, 76, 74, .25),
     $ui: 'employeefyi-progress-overlimit'
 );
+
+@keyframes employeefyi-progress-pulse {
+    0% { background-color: rgba(207, 76, 74, 0.25); }
+    50% { background-color: rgba(207, 76, 74, 1); }
+    100% { background-color: rgba(207, 76, 74, 0.25); }
+}
+
+// Using ui-extend mixin to add extra style rules to employeefyi-progress-overlimit
+@include ui-extend(progress, 'employeefyi-progress-overlimit'){
+    animation: employeefyi-progress-pulse 60s infinite linear;
+}
+
 
 // Style for widget.employee.fyi.accrualItem item
 @include listitem-ui(

@@ -25,7 +25,8 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 },
                 {
                     xtype: 'component',
-                    reference: 'usage'
+                    reference: 'usage',
+                    style: 'font-weight: 600'
                 }
             ]
         },
@@ -33,7 +34,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
             xtype: 'progress',
             ui: 'employeefyi-progress',
             userCls: 'employee-fyi-accrual-item-over',
+            shadowCls: 'employee-fyi-accrual-value-shadow',
             reference: 'bar',
+            shadow: true,
             value: 0.5
             
         }
@@ -51,7 +54,8 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         );
 
         var bar = this.lookup('bar');
-        
+        var catColor = record.get('CatColor');
+
         if(recorded.value <= allowed.value){
             this.lookup('bar').setUi(['employeefyi-progress']);
             // record <= allowed
@@ -63,6 +67,11 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 bar.setValue(recorded.value/allowed.value);
             }
             this.lookup('usage').setUserCls('');
+            if(typeof catColor !== 'undefined'){
+                var bgColor = Ext.util.Color.fromString(catColor);
+                bgColor.a = 0.25;
+                bar.el.setStyle('background-color',bgColor.toString());
+            }
         } else {
             // recorded > allowed
             // % is allowed / recorded
@@ -75,7 +84,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         // bar.setValue(
         //     parseFloat(record.get('CatRecorded'))/parseFloat(record.get('CatAllowed'))
         // );
-        bar.el.child('.x-progress-bar', true).style.backgroundColor = record.get('CatColor');
+        if(typeof catColor !== 'undefined'){
+            bar.el.child('.x-progress-bar', true).style.backgroundColor = catColor;
+        }
         bar.el.child('.x-progress-bar', true).style.backgroundImage = 'none';
     },
 

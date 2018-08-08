@@ -1,0 +1,18 @@
+/**
+ Mixins aiding in defining extra style properties on top of
+ UI component classes created using ExtJS mixins
+*/
+
+/**
+    Add extra style rules to UI type.
+
+    adds body styles to .x-xtype-ui
+
+    @param $xtype Component type (e.g. progress)
+    @param $ui UI string name
+*/
+@mixin ui-extend($xtype,$ui){
+    .x-#{$xtype}-#{$ui} {
+        @content;
+    }
+}

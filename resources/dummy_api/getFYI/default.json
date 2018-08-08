@@ -7,7 +7,7 @@
         "Rows": [
             {
                 "CatID": 1001,
-                "CatColor": "rgb(79,128,49)",
+                "CatColor": "rgb(153, 255, 204)",
                 "CatDesc": "Illness",
                 "CatAbbr": "I",
                 "CalType": "Calendar",
@@ -18,7 +18,7 @@
             },
             {
                 "CatID": 1002,
-                "CatColor": "rgb(0,117,173)",
+                "CatColor": "rgb(255, 255, 153)",
                 "CatDesc": "Vacation",
                 "CatAbbr": "V",
                 "CalType": "Calendar",
@@ -29,7 +29,7 @@
             },
             {
                 "CatID": 1003,
-                "CatColor": "rgb(20,73,107)",
+                "CatColor": "rgb(51, 153, 255)",
                 "CatDesc": "Personal",
                 "CatAbbr": "P",
                 "CalType": "Calendar",
@@ -40,7 +40,7 @@
             },
             {
                 "CatID": 1005,
-                "CatColor": "rgb(255,255,0)",
+                "CatColor": "rgb(153, 153, 204)",
                 "CatDesc": "Jury",
                 "CatAbbr": "J",
                 "CalType": "Calendar",
@@ -51,35 +51,35 @@
             },
             {
                 "CatID": 1010,
-                "CatColor": "rgb(0,128,255)",
+                "CatColor": "rgb(153, 204, 255)",
                 "CatDesc": "Bereavement",
                 "CatAbbr": "B",
                 "CalType": "Calendar",
-                "CatRecorded": "0.00",
-                "CatAllowed": "--",
-                "CatRemaining": "--",
+                "CatRecorded": "1.00",
+                "CatAllowed": "3.00",
+                "CatRemaining": "2.00",
                 "IsAllowed": false
             },
             {
                 "CatID": 1013,
-                "CatColor": "rgb(0,128,128)",
+                "CatColor": "rgb(153, 153, 153)",
                 "CatDesc": "Training",
                 "CatAbbr": "T",
                 "CalType": "Calendar",
                 "CatRecorded": "9.00",
                 "CatAllowed": "3.00",
-                "CatRemaining": "--",
+                "CatRemaining": "-6.00",
                 "IsAllowed": false
             },
             {
                 "CatID": 1024,
-                "CatColor": "rgb(219,50,44)",
+                "CatColor": "rgb(255, 153, 153)",
                 "CatDesc": "Holiday",
                 "CatAbbr": "H",
                 "CalType": "Calendar",
-                "CatRecorded": "13.50",
-                "CatAllowed": "--",
-                "CatRemaining": "--",
+                "CatRecorded": "20.00",
+                "CatAllowed": "15.00",
+                "CatRemaining": "-5.00",
                 "IsAllowed": false
             }
         ],
