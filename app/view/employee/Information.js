@@ -76,7 +76,7 @@ Ext.define('Breeze.view.employee.Information', {
                 },
                 {
                     xtype: 'container',
-                    itemId: 'scheduleTab',
+                    reference: 'scheduleTab',
                     title: 'Schedule',
                     items: [
                         {

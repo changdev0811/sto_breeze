@@ -21,7 +21,9 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Provide loaded stores to form fields needing them
             comp.lookup('departments').setStore(vm.getStore('departments'));
             comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
+            // comp.down('[name="startup_settings"]').setStore(vm.getStore('scheduleList'));
             comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
+            // comp.down('[name="default_project"]').setStore(vm.getStore('projectList'));
             comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
             me.loadEmployeeInfo(component, function(c){
                 // == After Employee Info loads ==
