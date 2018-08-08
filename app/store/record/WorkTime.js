@@ -14,7 +14,7 @@ Ext.define('Breeze.store.record.WorkTime', {
 	proxy: {
 		type: 'ajax', // Because it's a cross-domain request
         // url : '../STOServe/Service1.asmx/GetWorkTimeViewForRange',
-        url : Breeze.helper.DummyApi.url('GetWorkTimeViewForRange'),
+        url : Breeze.helper.Store.api.url('GetWorkTimeViewForRange'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {
 			create : 'POST',

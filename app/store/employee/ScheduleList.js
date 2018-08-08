@@ -22,7 +22,7 @@ Ext.define('Breeze.store.employee.ScheduleList', {
     proxy: {
         type: 'ajax',
         // TODO: Add API URL
-        url: Breeze.helper.DummyApi.url('getAccrualPoliciesList'),
+        url: Breeze.helper.Store.api.url('getAccrualPoliciesList'),
         // url: Breeze.helper.Api.url('getAccrualPoliciesList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {

@@ -26,7 +26,7 @@ Ext.define('Breeze.store.company.DepartmentList', {
     proxy: {
         type: 'ajax',
         // TODO: Add API URL
-        url: Breeze.helper.DummyApi.url('getDepartmentList'),
+        url: Breeze.helper.Store.api.url('getDepartmentList'),
         // url: Breeze.helper.Api.url('getDepartmentList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {
