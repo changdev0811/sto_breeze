@@ -55,13 +55,26 @@ Ext.define('Breeze.auth.LoginController', {
 
         console.group('Login');
         me.api.preLogin(creds.loginCode).then(function(r){
-            console.info('PreLogin Resolved: ', r);
             if(r.success){
+                console.info('PreLogin Resolved: Successful');
                 me.api.login(
                     r.url, creds.loginCode, 
                     creds.loginUsername, creds.loginPassword
                 ).then(function(r){
-                    console.info('Login Resolved: ', r);
+                    console.info('Login Resolved; success: ', r.success);
+                    if(r.success){
+                        // If need to show renewal message
+                        if(r.renewal){
+                            // renewal message
+                            // r.renewalMessage
+                        } else {
+                            // good to continue directly
+                        }
+                    } else {
+                        // unsuccessful
+                        // r.detail.reason
+                        // r.detail.message
+                    }
                 }).catch(function(e){
                     console.warn('Login Rejected: ', e);
                 });

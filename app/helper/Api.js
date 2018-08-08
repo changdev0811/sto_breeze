@@ -58,7 +58,7 @@
                     },
                     sto: true,
                     url: api + service,
-                    params: reqParams,
+                    params: JSON.stringify(reqParams),
                     success: successHandler,
                     failure: failureHandler
                 });

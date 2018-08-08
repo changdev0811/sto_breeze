@@ -56,7 +56,7 @@ Ext.define('Breeze.api.Auth', {
         var auth = this.auth;
         return new Promise(function(resolve, reject){
             api.request(
-                url, 'login', 
+                url, 'STOServe/Service1.asmx/login', 
                 parameters,
                 false,
                 true,
