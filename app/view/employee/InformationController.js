@@ -22,6 +22,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             comp.lookup('departments').setStore(vm.getStore('departments'));
             comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
             comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
+            comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
             me.loadEmployeeInfo(component, function(c){
                 // == After Employee Info loads ==
                 // Assign check fields after info loaded
@@ -45,6 +46,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             departments: Ext.create('Breeze.store.company.DepartmentList'),
             scheduleList: Ext.create('Breeze.store.employee.ScheduleList'),
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
+            punchPolicies: Ext.create('Breeze.store.record.PunchPolicies'),
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
@@ -52,13 +54,20 @@ Ext.define('Breeze.view.employee.InformationController', {
             })
         });
 
+
         vm.getStore('departments').load({callback: function(r,o,success){
             if(success){
                 vm.getStore('scheduleList').load({callback: function(r,o,success){
                     if(success){
                         vm.getStore('projectList').load({callback: function(r,o,success){
                             if(success){
-                                callback(true);
+                                vm.getStore('punchPolicies').load({callback: function(r,o,success){
+                                    if(success){
+                                        callback(true);
+                                    } else {
+                                        console.warn('Failed to load punch policies');
+                                    }
+                                }});
                             }
                         }});
                     }

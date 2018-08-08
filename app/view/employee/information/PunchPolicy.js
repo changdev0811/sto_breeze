@@ -420,7 +420,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'allow_punch_regular',
                                             bodyAlign:'stretch',
                                             flex: 1,
-                                            boxLabel: 'Allow Regular Punch In/Out'
+                                            boxLabel: 'Allow Regular Punch In/Out',
+                                            bind: {
+                                                checked: '{info.punchPolicy.Allow_RegularPunch}'
+                                            }
                                         },
                                         {
                                             xtype: 'checkbox',
@@ -428,7 +431,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'allow_punch_quick',
                                             bodyAlign:'stretch',
                                             flex: 1,
-                                            boxLabel: 'Allow Quick Punch In/Out'
+                                            boxLabel: 'Allow Quick Punch In/Out',
+                                            bind: {
+                                                checked: '{info.punchPolicy.Allow_QuickPunch}'
+                                            }
                                         }
                                     ]
                                 },
@@ -448,8 +454,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             html: 'Maximum shift length',
                                         },
                                         {
-                                            xtype: 'selectfield',
-                                            name: 'auto_close_shift'
+                                            xtype: 'spinnerfield',
+                                            name: 'auto_close_shift',
+                                            minValue: 0, maxValue: 24, value: 1,
+                                            bind: '{info.punchPolicy.Auto_Close_Shift}'
                                         },
                                         {
                                             xtype: 'label',
@@ -480,21 +488,30 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             ui: 'employeeinfo-checkbox',
                                             name: 'can_adjust_punches',
                                             bodyAlign:'stretch',
-                                            boxLabel: 'Can adjust time records'
+                                            boxLabel: 'Can adjust time records',
+                                            bind: {
+                                                checked: '{info.punchPolicy.Can_Adjust_Punches}'
+                                            }
                                         },
                                         {
                                             xtype: 'checkbox',
                                             ui: 'employeeinfo-checkbox',
                                             name: 'can_add_notes',
                                             bodyAlign:'stretch',
-                                            boxLabel: 'Can add notes to punches'
+                                            boxLabel: 'Can add notes to punches',
+                                            bind: {
+                                                checked: '{info.punchPolicy.Can_Add_Notes}'
+                                            }
                                         },
                                         {
                                             xtype: 'checkbox',
                                             ui: 'employeeinfo-checkbox',
                                             name: 'can_use_timesheets',
                                             bodyAlign:'stretch',
-                                            boxLabel: 'Can use time sheets'
+                                            boxLabel: 'Can use time sheets',
+                                            bind: {
+                                                checked: '{info.punchPolicy.Can_Use_TimeSheets}'
+                                            }
                                         },
                                         {
                                             xtype: 'checkbox',
@@ -587,7 +604,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'lunch_minutes',
                                             minValue: 0, maxValue: 999,
                                             decimals: 0, label: null,
-                                            inline: true
+                                            inline: true,
+                                            disabled: true
                                         },
                                         {
                                             xtype: 'label',
@@ -598,7 +616,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'spinnerfield',
                                             maxWidth:'6em',
                                             name: 'lunch_seg',
-                                            minValue: 0, maxValue: 24, decimals: 0
+                                            minValue: 0, maxValue: 24, decimals: 0,
+                                            disabled: true
                                         },
                                         {
                                             xtype: 'label',
