@@ -5,8 +5,10 @@ Ext.define('Breeze.view.main.NavModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.main.nav',
 
-    mode: 'personal',
-    context: -1,
+    data: {
+        mode: 'personal',
+        context: -1
+    },
 
     stores: {
         personalNav: {
@@ -19,7 +21,8 @@ Ext.define('Breeze.view.main.NavModel', {
                     },*/ {
                         text: 'Personal',
                         iconCls: 'x-fa fa-user',
-                        routeAct: false,
+                        // routeAct: false,
+                        routeRef: 'personal',
                         children: [
                             {
                                 text: 'Download PunchStation', leaf: true,
