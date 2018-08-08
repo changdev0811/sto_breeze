@@ -19,5 +19,37 @@ Ext.define('Breeze.api.Employee', {
     // References to specific scopes
     fyi: null,
     information: null,
-    workTimeRecords: null
+    workTimeRecords: null,
+
+    // Class API methods
+
+    /**
+     * Get employee access level
+     * (Port homemade.js/getEmpAccess and getEmpAccessLogin functions)
+     * @param {Boolean} reloadCookies If true, force auth cookie reload (functions
+     *  like original getEmpAccessLogin function) Default false
+     * @return {Promise} promise resolving to numerical access level, or rejecting with error
+     */
+    getAccess: function(reloadCookies){
+        var reloadCookies = this.defVal(reloadCookies,false);
+        var auth = this.auth;
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest('getAccess', 
+                {},
+                true,
+                true,
+                function(res, req){
+                    if(reloadCookies){
+                        auth.reloadCookies(-1);
+                    }
+                    resolve(api.decodeJsonResponse(res).level);
+                },
+                function(err){
+                    console.warn('Problem with API Employee.getAccess', err);
+                    reject(err);
+                }
+            );
+        });
+    }
 });

@@ -10,6 +10,7 @@ Ext.define('Breeze.api.employee.Fyi', {
 
     /**
         * getFYI API Call (ported from old FYI view)
+        * @todo TODO: Consider relocating ajax logic to reside inside a store
         * @param {String} employeeId Employee ID
         * @param {Number} year Recorded year
         * @param {String} day Active day (m/d/y)
@@ -34,6 +35,7 @@ Ext.define('Breeze.api.employee.Fyi', {
                     'activeDay': day,
                     'showScheduled': scheduled
                 },
+                true,
                 true,
                 function (response) {
                     var respJson = api.decodeJsonResponse(response);

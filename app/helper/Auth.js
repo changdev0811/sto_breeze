@@ -40,6 +40,7 @@ Ext.define('Breeze.helper.Auth', {
 
         /**
          * Check authorization cookies, optionally reloading if not okay
+         * (Ported from homemade.js/auth)
          * @param {Boolean} forceReload if true, reload if invalid cookies (default false)
          * @return {Boolean} True if authorized, false otherwise
          */
@@ -59,8 +60,30 @@ Ext.define('Breeze.helper.Auth', {
         }
     },
 
+
+    /**
+     * Verify cookie authentication using isAuthenticated call
+     * Ported from homemade.js/checkAuthentication
+     * @param {Boolean} forceReload if True, reload window when authentication
+     */
     authenticate: function(forceReload){
         // TODO: Implement 'checkAuthentication' from 'homemade.js'
+        var api = Breeze.helper.Api;
+        var auth = this;
+        Breeze.helper.Api.serviceRequest(
+            'isAuthenticated', {}, true, function(response){
+                var resp = api.decodeJsonResponse(response);
+                if(!resp.success){
+                    auth.reloadCookies(-234);
+                    Breeze.helper.Cookie.bake(
+                        'STOTimeout', 'Not Authenticated', 60
+                    );
+                    if(forceReload){
+                        window.location.reload();
+                    }
+                }
+            }
+        )
     }
 
 });

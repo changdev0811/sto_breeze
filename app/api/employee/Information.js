@@ -21,6 +21,7 @@ Ext.define('Breeze.api.employee.Information', {
                     'employee_id': employeeId
                 },
                 true,
+                true,
                 function (response) {
                     var respJson = api.decodeJsonResponse(response);
                     // var store = Ext.create(

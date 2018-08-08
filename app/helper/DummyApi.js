@@ -11,6 +11,14 @@ Ext.define('Breeze.helper.DummyApi', {
     ],
 
     statics: {
+        apiPaths: {
+            punch: 'resources/dummy_api/',
+            // api: '../STOServe/Service1.asmx/',
+            api: 'resources/dummy_api/',
+            // pulled from sti_namespace, used in STOLogin view
+            login: 'resources/dummy_api/'
+        },
+        
         dummyPath: 'resources/dummy_api/',
 
         // clones of API
@@ -18,14 +26,14 @@ Ext.define('Breeze.helper.DummyApi', {
             var special = (typeof special == 'undefined')? 'default' : special;
             return [this.dummyPath,action,'/',[special,'.json'].join('')].join('');
         },
-        request: function(api, service, params, sync, successHandler, failureHandler){
-            return Breeze.helper.Api.request(api,service,params,sync,successHandler,failureHandler);
+        request: function(api, service, params, cookieParams, sync, successHandler, failureHandler){
+            return Breeze.helper.Api.request(api,service,params, cookieParams, sync,successHandler,failureHandler);
         },
         // Wrapped version of serviceRequest that targets dummy JSON data
-        serviceRequest: function(service, params, sync, successHandler, failureHandler){
+        serviceRequest: function(service, params, cookieParams, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(
                 '', [[this.dummyPath, service].join(''), 'default.json'].join('/'), 
-                params, sync, successHandler, failureHandler
+                params, cookieParams, sync, successHandler, failureHandler
             );
         },
         decodeJsonResponse: function(result){
