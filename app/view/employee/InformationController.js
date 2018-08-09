@@ -38,7 +38,6 @@ Ext.define('Breeze.view.employee.InformationController', {
                     var recordingMode = vm.get('info.RecordingMode');
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
-                    me.collectCompanyLists();
                     me.applyCompanyConfig();
                 });
             });
@@ -186,18 +185,21 @@ Ext.define('Breeze.view.employee.InformationController', {
         var config = Ext.getStore('CompanyConfig').getAt(0);
     },
 
-    collectCompanyLists: function(){
-        var vm = this.getViewModel();
+    // collectCompanyLists: function(){
+    //     var vm = this.getViewModel();
 
-        var supervisorIds = vm.get('info.SupervisorIds');
-        var supervisors = vm.getStore('supervisors').queryRecordsBy(
-            function(rec){
-                return supervisorIds.includes(rec.id + '');
-            }
-        );
-        // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
-        vm.set('lists.supervisors.data', supervisors);
-    }
+    //     var supervisorIds = vm.get('info.SupervisorIds');
+    //     var supervisors = vm.getStore('supervisors').queryRecordsBy(
+    //         function(rec){
+    //             return supervisorIds.includes(rec.id + '');
+    //         }
+    //     );
+    //     // vm.getStore('supervisors').filterBy(function(record){
+    //     //     return supervisorIds.includes(record.id + '');
+    //     // });
+    //     // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
+    //     vm.set('lists.supervisors.data', supervisors);
+    // }
 
 
 });

@@ -69,6 +69,23 @@ Ext.define('Breeze.view.employee.InformationModel', {
         },
         overtime_week4: function(get){
             return (get('info.punchPolicy.Ot_Week4')/60/60);
+        },
+        /**
+         * Formula returning filtered selection of supervisors based on supervisor
+         * IDs defined in employee info data object
+         */
+        companySupervisors: {
+            bind: {
+                store: '{supervisors}',
+                ids: '{info.SupervisorIds}'
+            },
+            get: function(data){
+                return data.store.queryRecordsBy(
+                    function(rec){
+                        return data.ids.includes(rec.id);
+                    }
+                );
+            }
         }
         
     }
