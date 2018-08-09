@@ -73,6 +73,7 @@ $ei-field-font-size: 12pt;
     line-height: 1.5em;
 }
 
+
 @include displayfield-ui(
     $input-font-size: $ei-field-font-size,
     $ui: 'employeeinfo-displayfield'

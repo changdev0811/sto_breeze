@@ -16,23 +16,14 @@ Ext.define('Breeze.view.employee.InformationModel', {
         // When true, fields will be read-only
         readOnly: true,
         // Misc config settings from company config
-        config: {
+        companyConfig: {
             
         },
-        // ==[Company tab list data]
+        // ==[Company tab list visibility ]
         lists: {
-            supervisors: {
-                enabled: true,
-                // data: undefined
-            },
-            employees: {
-                enabled: true,
-                // data: undefined
-            },
-            departments: {
-                enabled: true,
-                // data: undefined
-            }
+            supervisors: true,
+            employees: true,
+            departments: true,
         }
     },
 

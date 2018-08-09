@@ -143,7 +143,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             layout: 'fit',
                             bind: {
                                 // Hide tab when not enabled
-                                hidden: '{!lists.supervisors.enabled}'
+                                hidden: '{!lists.supervisors}'
                             },
                             userCls: 'employee-info-roletab-container',
                             items: [
@@ -160,6 +160,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     sortable: false,
                                     columnMenu: null,
                                     ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
                                     reference: 'supervisorsListGrid',
                                     columns: [
                                         {
@@ -180,22 +181,28 @@ Ext.define('Breeze.view.employee.information.Company', {
                         {
                             xtype: 'container',
                             title: 'Employees',
-                            layout: 'vbox',
+                            layout: 'fit',
                             bind: {
                                 // Hide tab when not enabled
-                                hidden: '{!lists.employees.enabled}'
+                                hidden: '{!lists.employees}'
                             },
+                            userCls: 'employee-info-roletab-container',
                             items: [
-                                // ===[Employees list grid]==
+                                // ===[Supervisor list grid]==
                                 {
+                                    flex: 1,
                                     xtype: 'grid',
                                     height: '100%',
+                                    minHeight: '5em',
                                     width: '100%',
                                     layout: 'hbox',
                                     columnResize: false,
                                     hideHeaders: true,
                                     sortable: false,
                                     columnMenu: null,
+                                    title: 'Supervised Employees',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
                                     reference: 'employeesListGrid',
                                     columns: [
                                         {
@@ -203,12 +210,65 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             flex: 1,
                                             text: 'Name',
                                             dataIndex: 'displayName',
-                                            menuDisabled: true
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
                                         }
-                                    ]
+                                    ],
+                                    bind: '{companySupervisors}'
                                 }
                             ]
-                        }
+                               
+                        },
+                        // ===[Departments tab]==
+                        {
+                            xtype: 'container',
+                            title: 'Departments',
+                            layout: 'fit',
+                            bind: {
+                                // Hide tab when not enabled
+                                hidden: '{!lists.departments}'
+                            },
+                            userCls: 'employee-info-roletab-container',
+                            items: [
+                                // ===[Departments list grid]==
+                                {
+                                    flex: 1,
+                                    xtype: 'grid',
+                                    height: '100%',
+                                    minHeight: '5em',
+                                    width: '100%',
+                                    layout: 'hbox',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: null,
+                                    title: 'Supervised Employees',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
+                                    reference: 'employeesListGrid',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Name',
+                                            dataIndex: 'displayName',
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Permission',
+                                            dataIndex: 'displayName',
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
+                                        }
+                                    ],
+                                    bind: '{companySupervisors}'
+                                }
+                            ]
+                               
+                        },
                     ]
                 }
             ]

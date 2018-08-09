@@ -61,6 +61,8 @@ $scoped-employee-info-base: #498DC6;
 $scoped-employee-info-light: #C0D8EB;
 $scoped-employee-info-medium: #bed9ed;
 $scoped-employee-info-dark: #6DAFFF;
+$scoped-employee-info-row-dark: #70a5d2;
+$scoped-employee-info-row-light: #96bede;
 
 $scoped-employee-info-text-base: #ffffff;
 $scoped-employee-info-text-light: $scoped-employee-info-light;
@@ -72,7 +74,9 @@ $employee-info-colors: (
     base: $scoped-employee-info-base,
     light: $scoped-employee-info-light,
     medium: $scoped-employee-info-medium,
-    dark: $scoped-employee-info-base
+    dark: $scoped-employee-info-base,
+    row-dark: $scoped-employee-info-row-dark,
+    row-light: $scoped-employee-info-row-light
 );
 $employee-info-text-colors: (
     base: $scoped-employee-info-text-base,
