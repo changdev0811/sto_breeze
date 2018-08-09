@@ -8,11 +8,14 @@ Ext.define('Breeze.view.employee.workTime.Record', {
     alias: 'widget.employee.worktime.record',
 
     layout: 'vbox',
+    userCls: 'employee-worktime-records-grid',
 
     items: [
         {
             reference: 'workTimeRecordGrid',
             xtype: 'grid',
+            ui: 'employee-worktime-records-grid',
+            userCls: 'employee-worktime-records-grid',
             height: '100%', width: '100%',
             flex: 1,
             layout: 'hbox',
