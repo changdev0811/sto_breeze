@@ -32,6 +32,15 @@ $ei-field-font-size: 12pt;
     }
 }
 
+.employee-info-container {
+    padding: {
+        left: $ei-padding-base * 2;
+        right: $ei-padding-base * 2;
+        top: 3pt;
+        bottom: 3pt;
+    }
+}
+
 // Profile image
 
 .employee-info-sidebar {

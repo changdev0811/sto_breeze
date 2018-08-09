@@ -6,8 +6,8 @@ Ext.define('Breeze.view.employee.information.Company', {
 
     items: [
         {
-            xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            xtype: 'container',
+            userCls: 'employee-info-container',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
@@ -37,8 +37,8 @@ Ext.define('Breeze.view.employee.information.Company', {
             ]
         },
         {
-            xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            xtype: 'container',
+            userCls: 'employee-info-container',
             layout: 'hbox',
             defaults: {
                 flex: 1,
@@ -69,8 +69,8 @@ Ext.define('Breeze.view.employee.information.Company', {
             ]
         },
         {
-            xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            xtype: 'container',
+            userCls: 'employee-info-container',
             layout: 'hbox',
             defaults: {
                 flex: 1,
@@ -94,6 +94,24 @@ Ext.define('Breeze.view.employee.information.Company', {
                     bind: '{info.CompPer}',
                     displayField: 'Description',
                     valueField: 'ID'
+                }
+            ]
+        },
+        {
+            xtype: 'container',
+            userCls: 'employee-info-container',
+            layout: 'hbox',
+            defaults: {
+                flex: 1,
+                xtype: 'breeze-textfield',
+                userCls: 'employee-info-general-field',
+                ui: 'employeeinfo-textfield'
+            },
+            items: [
+                {
+                    xtype: 'displayfield',
+                    label: 'Layoff Status',
+                    bind: '{info.LayoffStatus}'
                 }
             ]
         }

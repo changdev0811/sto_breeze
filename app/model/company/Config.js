@@ -61,6 +61,6 @@ Ext.define('Breeze.model.company.Config', {
         { name: 'EnableExternalPunches', type: 'boolean' },
         { name: 'StateLessPunching', type: 'boolean' },
         { name: 'TimeZone_ID', type: 'string' },
-        { name: 'Captions', reference: 'model.company.captions' }
+        { name: 'Captions', reference: 'model.company.config.captions' }
     ]
 });
