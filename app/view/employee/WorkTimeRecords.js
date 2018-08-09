@@ -115,7 +115,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             layout: 'fit',
                             items: [
                                 {
-                                    xtype: 'employee.worktime.record'
+                                    xtype: 'employee.worktime.record',
                                 }
                             ]
                         },

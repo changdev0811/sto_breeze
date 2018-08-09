@@ -22,3 +22,7 @@
 .wtr-content {
     color: map-get($wtr-text-colors,'base');
 }
+
+.employee-worktime-records-grid {
+    background-color:map-get($wtr-colors,'base'); 
+}
