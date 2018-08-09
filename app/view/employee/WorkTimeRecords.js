@@ -103,6 +103,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                 },
                 {
                     xtype: 'tabpanel',
+
+                    ui: 'dark-tabbar',
+                    tabBar: {
+                        defaultTabUI: 'dark-tabbar',
+                        shadow: false
+                    },
+
+                    
                     reference: 'wtrContentTabs',
                     flex: 3,
                     defaults: {
