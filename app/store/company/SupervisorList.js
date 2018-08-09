@@ -12,6 +12,7 @@ Ext.define('Breeze.store.company.SupervisorList', {
     listeners: {
         beforeload: function () {
             this.provideAuthCookieToProxy();
+            this.useJsonParams();
             this.getProxy().extraParams.super_admin_only = 0;
         }
     },

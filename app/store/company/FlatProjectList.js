@@ -12,6 +12,7 @@ Ext.define('Breeze.store.company.FlatProjectList', {
     listeners: {
         beforeload: function() {
             this.provideAuthCookieToProxy();
+            this.useJsonParams();
         }
     },
 

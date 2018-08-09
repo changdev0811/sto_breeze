@@ -12,6 +12,7 @@ Ext.define('Breeze.store.company.Config', {
 	listeners: {
 		beforeload: function() {
 			this.provideAuthCookieToProxy();
+			this.useJsonParams();
 		},
 		// load: function() {
 		// 	//Set the logo
@@ -48,7 +49,7 @@ Ext.define('Breeze.store.company.Config', {
 	proxy: {
 		type: 'ajax', // Because it's a cross-domain request
 		url : Breeze.helper.Store.api.url('getCompanyConfig'),
-		headers: { 'Content-Type': 'application/json;' },
+		headers: { 'Content-Type': 'application/json;', 'Access-Control-Allow-Origin': '*' },
 		actionMethods: {
 			create : 'POST',
 			read   : 'POST',

@@ -11,6 +11,7 @@ Ext.define('Breeze.store.company.SecurityRoleList', {
     listeners: {
         beforeload: function () {
             this.provideAuthCookieToProxy();
+            this.useJsonParams();
         }
     },
     proxy: {
