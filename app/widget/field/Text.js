@@ -30,9 +30,11 @@ Ext.define('Breeze.widget.field.Text', {
      */
     onFocusEnter: function(event){
         var me = this;
-        this.setClearable(true);
-        this.syncEmptyState();
-        me.callParent([event]);
+        if(this.getEditable()){
+            this.setClearable(true);
+            this.syncEmptyState();
+            me.callParent([event]);
+        }
     },
     /**
      * Override widget's default focus leave handler, causing it

@@ -17,22 +17,77 @@ Ext.define('Breeze.view.employee.InformationController', {
         var me = this;
         var comp = component;
 
-        this.loadStores(function(pass){
-            // Provide loaded stores to form fields needing them
-            comp.lookup('departments').setStore(vm.getStore('departments'));
-            comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
-            // comp.down('[name="startup_settings"]').setStore(vm.getStore('scheduleList'));
-            comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
-            // comp.down('[name="default_project"]').setStore(vm.getStore('projectList'));
-            comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
-            me.loadEmployeeInfo(component, function(c){
-                // == After Employee Info loads ==
-                // Assign check fields after info loaded
-                var exemptStatus = vm.get('info.ExemptStatus');
-                c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
-                var recordingMode = vm.get('info.RecordingMode');
-                c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
-                me.loadShiftSegments(vm);
+        if(typeof component.getData().employee !== 'undefined'){
+            this.empId = component.getData().employee;
+            vm.set('employeeId', this.empId);
+        }
+
+        this.checkAccess().then(function(){
+            me.loadStores(function(pass){
+                // Provide loaded stores to form fields needing them
+                comp.lookup('departments').setStore(vm.getStore('departments'));
+                comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
+                comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
+                comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
+                me.loadEmployeeInfo(component, function(c){
+                    // == After Employee Info loads ==
+                    // Assign check fields after info loaded
+                    var exemptStatus = vm.get('info.ExemptStatus');
+                    c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
+                    var recordingMode = vm.get('info.RecordingMode');
+                    c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
+                    me.loadShiftSegments(vm);
+                    me.applyCompanyConfig();
+                });
+            });
+        }).catch(function(err){
+            console.warn('Employee Info Loading failed: ', err);
+        });
+        
+    },
+
+    /**
+     * Check user access and employee security rights
+     * @return {Promise} Promise resolving with no params, or rejecting with error
+     */
+    checkAccess: function(){
+        var me = this;
+        var vm = this.getViewModel();
+        return new Promise( function(resolve, reject) {
+            me.apiClass.getAccess().then(
+                function(level){
+                    vm.set('accessLevel', level);
+
+                    // Set id to use for requesting security rights
+                    var rightsCheckId = vm.get('employeeId')
+                    if(vm.get('employeeId') == 'mew'){
+                        // New employee, use id of 0
+                        rightsCheckId = 0;
+                    }
+                    me.apiClass.getSecurityRights(rightsCheckId).then(
+                        function(rights){
+                            // Set read only state based on super admin, new record, or employee rights
+                            if(
+                                vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
+                                vm.get('employeeId') == 'new' ||
+                                (rights.Edit_Employee)
+                            ) {
+                                vm.set('readOnly', false);
+                            } else {
+                                vm.set('readOnly', true);
+                            }
+                            resolve();
+                        }
+                    ).catch(
+                        function(err){
+                            console.warn('Error getting security rights: ', err);
+                            reject(err);
+                        }
+                    )
+                }
+            ).catch(function(err){
+                console.warn('Check access error: ', err);
+                reject(err);
             });
         });
     },
@@ -46,7 +101,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         
         vm.setStores({
             departments: Ext.create('Breeze.store.company.DepartmentList'),
-            scheduleList: Ext.create('Breeze.store.employee.ScheduleList'),
+            scheduleList: Ext.create('Breeze.store.accrual.ScheduleList'),
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
             punchPolicies: Ext.create('Breeze.store.record.PunchPolicies'),
             shiftSegments: Ext.create('Ext.data.Store', {
@@ -56,7 +111,9 @@ Ext.define('Breeze.view.employee.InformationController', {
             })
         });
 
-
+        vm.getStore('departments').getProxy().extraParams.excludeterminated = 0;
+        vm.getStore('departments').getProxy().extraParams.includeUserDept = vm.get('readOnly');
+        
         vm.getStore('departments').load({callback: function(r,o,success){
             if(success){
                 vm.getStore('scheduleList').load({callback: function(r,o,success){
@@ -81,9 +138,8 @@ Ext.define('Breeze.view.employee.InformationController', {
     loadEmployeeInfo: function(component, callback){
         var callback = (typeof callback == 'undefined')? function(){} : callback;
         var me = this;
-        var empId = component.getData().employee;
         this.apiClass.information.getEmployeeInfo(
-            empId
+            me.empId
         ).then(function(data){
             console.log("Loaded Employee Data Test");
             var vm = me.getViewModel();
@@ -116,5 +172,14 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
         shiftSegments.setData(data);
         this.lookup('shiftSegmentGrid').setStore(shiftSegments);
+    },
+
+    /**
+     * Apply settings retrieved from Company Config store
+     */
+    applyCompanyConfig: function(){
+        var config = Ext.getStore('CompanyConfig').getAt(0);
     }
+
+
 });

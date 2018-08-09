@@ -1,14 +1,14 @@
 /**
  * Employee Schedule List Store
  * @class ScheduleList
- * @alias Breeze.store.employee.ScheduleList
+ * @alias Breeze.store.accrual.ScheduleList
  */
-Ext.define('Breeze.store.employee.ScheduleList', {
+Ext.define('Breeze.store.accrual.ScheduleList', {
     extend: 'Ext.data.Store',
     requires: ['Breeze.helper.Auth'],
-    model: 'Breeze.model.employee.Schedule',
+    model: 'Breeze.model.accrual.Schedule',
     autoLoad: false,
-    alias: 'store.employee.schedulelist',
+    alias: 'store.accrual.schedulelist',
 
     listeners: {
         beforeload: function() {

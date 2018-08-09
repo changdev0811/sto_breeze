@@ -19,7 +19,8 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.UserTypes',
         'Breeze.store.option.Genders',
         'Breeze.store.option.Compensation',
-        'Breeze.store.employee.static.PunchRoundingIncrements'
+        'Breeze.store.employee.static.PunchRoundingIncrements',
+        'Breeze.store.company.Config'
     ],
 
     quickTips: false,
@@ -48,6 +49,7 @@ Ext.define('Breeze.Application', {
             Breeze.helper.Auth.setCookies("1","2","3");
         }
         if(Breeze.helper.Auth.isAuthorized() || testing){
+            Ext.getStore('CompanyConfig').load();
             this.viewport.add(Ext.create('Breeze.view.main.Nav', {
                 //data: {mode: 'supervisor'}
             }));

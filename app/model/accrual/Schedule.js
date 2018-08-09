@@ -1,9 +1,9 @@
 /**
  * Employee Schedule Model (ported from model.Schedule)
  * @class Schedule
- * @alias Breeze.model.employee.Schedule
+ * @alias Breeze.model.accrual.Schedule
  */
-Ext.define('Breeze.model.employee.Schedule', {
+Ext.define('Breeze.model.accrual.Schedule', {
     extend: 'Breeze.model.Base',
     fields: [
         {name: 'ID',				type: 'integer'	},
