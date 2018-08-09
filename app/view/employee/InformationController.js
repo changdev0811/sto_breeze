@@ -38,7 +38,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                     var recordingMode = vm.get('info.RecordingMode');
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
-                    me.collectCompanyAssociations();
+                    me.collectCompanyLists();
                     me.applyCompanyConfig();
                 });
             });
@@ -186,7 +186,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         var config = Ext.getStore('CompanyConfig').getAt(0);
     },
 
-    collectCompanyAssociations: function(){
+    collectCompanyLists: function(){
         var vm = this.getViewModel();
 
         var supervisorIds = vm.get('info.SupervisorIds');
@@ -195,8 +195,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                 return supervisorIds.includes(rec.id + '');
             }
         );
-        this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
-        vm.set('lists.supervisors', supervisors);
+        // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
+        vm.set('lists.supervisors.data', supervisors);
     }
 
 

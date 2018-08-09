@@ -115,67 +115,88 @@ Ext.define('Breeze.view.employee.information.Company', {
                 }
             ]
         },
+        // Container for list tabs
         {
             xtype: 'container',
-            userCls: 'employee-info-outer-container',
-            layout: 'hbox',
+            flex: 1,
+            layout: 'vbox',
             items: [
+                // List tab panel
                 {
                     xtype: 'tabpanel',
                     layout: {
                         animation: 'fade'
                     },
-                    flex: 3,
                     ui: 'employeeinfo-small-tabs',
-                    tabBar: {
-                        defaultTabUI: 'employeeinfo-small-tabs',
-                        shadow: false
-                    },
-                    defaults: {
-                        userCls: 'employee-info-roletab-container'
-                    },
+                    // tabBar: {
+                    //     defaultTabUI: 'employeeinfo-small-tabs',
+                    //     shadow: 'false'
+                    // },
+                    flex: 1,
                     items: [
+                        // ===[Supervisors tab]==
                         {
                             xtype: 'container',
                             title: 'Supervisors',
-                            reference: 'supervisorsTab',
                             layout: 'vbox',
+                            bind: {
+                                // Hide tab when not enabled
+                                hidden: '{!lists.supervisors.enabled}'
+                            },
                             items: [
+                                // ===[Supervisor list grid]==
                                 {
-                                    xtype: 'container',
-                                    height: '300px',
-                                    items: [
+                                    flex: 1,
+                                    xtype: 'grid',
+                                    height: '100%',
+                                    minHeight: '5em',
+                                    width: '100%',
+                                    layout: 'hbox',
+                                    columnResize: false,
+                                    // hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: null,
+                                    reference: 'supervisorsListGrid',
+                                    columns: [
                                         {
-                                            reference: 'supervisorsGrid',
-                                            xtype: 'grid',
-                                            infinite: true,
-                                            ui: 'employeeinfo-shift-grid',
-                                            layout: 'hbox',
-                                            striped: false,
-                                            sortable: false,
-                                            columnResize: false,
-                                            columnMenu: null,
-                                            height: '300px',
-                                            columns: [
-                                                {
-                                                    xtype: 'gridcolumn',
-                                                    ui: 'employeeinfo-shift-grid',
-                                                    dataIndex: 'DisplayName',
-                                                    menuDisabled: true,
-                                                    flex: 1
-                                                },
-                                                // {
-                                                //     ui: 'employeeinfo-shift-grid',
-                                                //     cell: {
-                                                //         tools: [{
-                                                //             type: 'close',
-                                                //             ui: 'employeeinfo-tool-delete',
-                                                //             zone: 'end'
-                                                            
-                                                //         }]
-                                                //     }
-                                                // }
-                                            ]
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Name',
+                                            dataIndex: 'displayName',
+                                            menuDisabled: true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        // ===[Employees tab]==
+                        {
+                            xtype: 'container',
+                            title: 'Employees',
+                            layout: 'vbox',
+                            bind: {
+                                // Hide tab when not enabled
+                                hidden: '{!lists.employees.enabled}'
+                            },
+                            items: [
+                                // ===[Employees list grid]==
+                                {
+                                    xtype: 'grid',
+                                    height: '100%',
+                                    width: '100%',
+                                    layout: 'hbox',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: null,
+                                    reference: 'employeesListGrid',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Name',
+                                            dataIndex: 'displayName',
+                                            menuDisabled: true
                                         }
                                     ]
                                 }
@@ -185,84 +206,5 @@ Ext.define('Breeze.view.employee.information.Company', {
                 }
             ]
         }
-
-        // // == Role listing tabbar set ==
-        // {
-        //     xtype: 'tabpanel',
-        //     flex: 1,
-        //     // tabBarPosition: 'bottom',
-        //     layout: {
-        //         animation: 'fade'
-        //     },
-        //     ui: 'employeeinfo-small-tabs',
-        //     tabBar: {
-        //         defaultTabUI: 'employeeinfo-small-tabs ',
-        //         shadow: false
-        //     },
-        //     defaults: {
-        //         userCls: 'employee-info-roletab-container',
-        //         xtype: 'container'
-        //     },
-        //     items: [
-        //         {
-        //             title: 'Supervisors',
-        //             reference: 'supervisorsTab',
-        //             height: '200px',
-        //             items: [
-        //                 {   
-        //                     flex: 1,
-        //                     title: 'Supervisors',
-        //                     reference: 'supervisorsGrid',
-        //                     xtype: 'grid',
-        //                     // infinite: true,
-        //                     ui: 'employeeinfo-shift-grid',
-        //                     layout: 'fit',
-        //                     striped: false,
-        //                     sortable: false,
-        //                     columnResize: false,
-        //                     columnMenu: null,
-        //                     height: '150px',
-        //                     columns: [
-        //                         {
-        //                             xtype: 'gridcolumn',
-        //                             ui: 'employeeinfo-shift-grid',
-        //                             dataIndex: 'DisplayName',
-        //                             menuDisabled: true,
-        //                             flex: 1
-        //                         },
-        //                         // {
-        //                         //     ui: 'employeeinfo-shift-grid',
-        //                         //     cell: {
-        //                         //         tools: [{
-        //                         //             type: 'close',
-        //                         //             ui: 'employeeinfo-tool-delete',
-        //                         //             zone: 'end'
-                                            
-        //                         //         }]
-        //                         //     }
-        //                         // }
-        //                     ]
-        //                 }
-                        
-                
-        //             ]
-        //         },
-        //         {
-        //             title: "Employees",
-        //             reference: 'employeesTab',
-        //             items: [
-        //                 {
-        //                     xtype: 'component',
-        //                     html: "BLAH"
-        //                 }
-        //             ]
-        //         },
-        //         {
-        //             title: 'Departments',
-        //             reference: 'departmentsTab'
-        //         }
-        //     ]
-        // }
-         
     ]
 });

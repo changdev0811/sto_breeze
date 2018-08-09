@@ -1,3 +1,9 @@
+/**
+ * Top level View Model class for Employee Information
+ * @class InformationModel
+ * @alias Breeze.view.employee.InformationModel
+ * @view Breeze.view.employee.Information
+ */
 Ext.define('Breeze.view.employee.InformationModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.employee.information',
@@ -9,11 +15,24 @@ Ext.define('Breeze.view.employee.InformationModel', {
         points: '',
         // When true, fields will be read-only
         readOnly: true,
+        // Misc config settings from company config
         config: {
             
         },
+        // ==[Company tab list data]
         lists: {
-            
+            supervisors: {
+                enabled: true,
+                // data: undefined
+            },
+            employees: {
+                enabled: true,
+                // data: undefined
+            },
+            departments: {
+                enabled: true,
+                // data: undefined
+            }
         }
     },
 

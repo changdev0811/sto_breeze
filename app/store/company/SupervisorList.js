@@ -5,9 +5,10 @@
  */
 Ext.define('Breeze.store.company.SupervisorList', {
     extend: 'Breeze.store.Base',
+    alias: 'store.company.supervisorlist',
     model: 'Breeze.model.data.Person',
     autoLoad: false,
-    storeId: 'SupervisorList',
+    // storeId: 'SupervisorList',
     listeners: {
         beforeload: function () {
             this.provideAuthCookieToProxy();
