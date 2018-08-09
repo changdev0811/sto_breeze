@@ -114,6 +114,155 @@ Ext.define('Breeze.view.employee.information.Company', {
                     bind: '{info.LayoffStatus}'
                 }
             ]
+        },
+        {
+            xtype: 'container',
+            userCls: 'employee-info-outer-container',
+            layout: 'hbox',
+            items: [
+                {
+                    xtype: 'tabpanel',
+                    layout: {
+                        animation: 'fade'
+                    },
+                    flex: 3,
+                    ui: 'employeeinfo-small-tabs',
+                    tabBar: {
+                        defaultTabUI: 'employeeinfo-small-tabs',
+                        shadow: false
+                    },
+                    defaults: {
+                        userCls: 'employee-info-roletab-container'
+                    },
+                    items: [
+                        {
+                            xtype: 'container',
+                            title: 'Supervisors',
+                            reference: 'supervisorsTab',
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    height: '300px',
+                                    items: [
+                                        {
+                                            reference: 'supervisorsGrid',
+                                            xtype: 'grid',
+                                            infinite: true,
+                                            ui: 'employeeinfo-shift-grid',
+                                            layout: 'hbox',
+                                            striped: false,
+                                            sortable: false,
+                                            columnResize: false,
+                                            columnMenu: null,
+                                            height: '300px',
+                                            columns: [
+                                                {
+                                                    xtype: 'gridcolumn',
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    dataIndex: 'DisplayName',
+                                                    menuDisabled: true,
+                                                    flex: 1
+                                                },
+                                                // {
+                                                //     ui: 'employeeinfo-shift-grid',
+                                                //     cell: {
+                                                //         tools: [{
+                                                //             type: 'close',
+                                                //             ui: 'employeeinfo-tool-delete',
+                                                //             zone: 'end'
+                                                            
+                                                //         }]
+                                                //     }
+                                                // }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
+
+        // // == Role listing tabbar set ==
+        // {
+        //     xtype: 'tabpanel',
+        //     flex: 1,
+        //     // tabBarPosition: 'bottom',
+        //     layout: {
+        //         animation: 'fade'
+        //     },
+        //     ui: 'employeeinfo-small-tabs',
+        //     tabBar: {
+        //         defaultTabUI: 'employeeinfo-small-tabs ',
+        //         shadow: false
+        //     },
+        //     defaults: {
+        //         userCls: 'employee-info-roletab-container',
+        //         xtype: 'container'
+        //     },
+        //     items: [
+        //         {
+        //             title: 'Supervisors',
+        //             reference: 'supervisorsTab',
+        //             height: '200px',
+        //             items: [
+        //                 {   
+        //                     flex: 1,
+        //                     title: 'Supervisors',
+        //                     reference: 'supervisorsGrid',
+        //                     xtype: 'grid',
+        //                     // infinite: true,
+        //                     ui: 'employeeinfo-shift-grid',
+        //                     layout: 'fit',
+        //                     striped: false,
+        //                     sortable: false,
+        //                     columnResize: false,
+        //                     columnMenu: null,
+        //                     height: '150px',
+        //                     columns: [
+        //                         {
+        //                             xtype: 'gridcolumn',
+        //                             ui: 'employeeinfo-shift-grid',
+        //                             dataIndex: 'DisplayName',
+        //                             menuDisabled: true,
+        //                             flex: 1
+        //                         },
+        //                         // {
+        //                         //     ui: 'employeeinfo-shift-grid',
+        //                         //     cell: {
+        //                         //         tools: [{
+        //                         //             type: 'close',
+        //                         //             ui: 'employeeinfo-tool-delete',
+        //                         //             zone: 'end'
+                                            
+        //                         //         }]
+        //                         //     }
+        //                         // }
+        //                     ]
+        //                 }
+                        
+                
+        //             ]
+        //         },
+        //         {
+        //             title: "Employees",
+        //             reference: 'employeesTab',
+        //             items: [
+        //                 {
+        //                     xtype: 'component',
+        //                     html: "BLAH"
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             title: 'Departments',
+        //             reference: 'departmentsTab'
+        //         }
+        //     ]
+        // }
+         
     ]
 });

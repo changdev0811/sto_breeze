@@ -11,6 +11,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
         readOnly: true,
         config: {
             
+        },
+        lists: {
+            
         }
     },
 

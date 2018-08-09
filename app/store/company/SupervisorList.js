@@ -1,13 +1,16 @@
-Ext.define('Softtime.store.SupervisorList', {
+/**
+ * Supervisor List
+ * @class SupervisorList
+ * @alias Breeze.store.company.SupervisorList
+ */
+Ext.define('Breeze.store.company.SupervisorList', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.Person',
     autoLoad: false,
-    storeId: 'Supervisors',
+    storeId: 'SupervisorList',
     listeners: {
         beforeload: function () {
-            this.getProxy().extraParams.cust_id = Ext.util.Cookies.get('STOCUST');
-            this.getProxy().extraParams.emp_id = Ext.util.Cookies.get('STOEMP');
-            this.getProxy().extraParams.hashcookie = Ext.util.Cookies.get('STOPASS');
+            this.provideAuthCookieToProxy();
             this.getProxy().extraParams.super_admin_only = 0;
         }
     },
@@ -23,7 +26,7 @@ Ext.define('Softtime.store.SupervisorList', {
         },
         reader: {
             type: 'json',
-            root: 'd.Rows'
+            rootProperty: 'd.Rows'
         },
         // Don't want proxy to include these params in request
         pageParam: undefined,

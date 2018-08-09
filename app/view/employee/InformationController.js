@@ -29,6 +29,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
+
                 me.loadEmployeeInfo(component, function(c){
                     // == After Employee Info loads ==
                     // Assign check fields after info loaded
@@ -37,6 +38,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                     var recordingMode = vm.get('info.RecordingMode');
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
+                    me.collectCompanyAssociations();
                     me.applyCompanyConfig();
                 });
             });
@@ -104,12 +106,15 @@ Ext.define('Breeze.view.employee.InformationController', {
             scheduleList: Ext.create('Breeze.store.accrual.ScheduleList'),
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
             punchPolicies: Ext.create('Breeze.store.record.PunchPolicies'),
+            supervisors: Ext.create('Breeze.store.company.SupervisorList', { autoLoad: true }),
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
                 storeId: 'shiftSegments'
             })
         });
+
+        // vm.getStore('supervisors').load();
 
         vm.getStore('departments').getProxy().extraParams.excludeterminated = 0;
         vm.getStore('departments').getProxy().extraParams.includeUserDept = vm.get('readOnly');
@@ -179,6 +184,19 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     applyCompanyConfig: function(){
         var config = Ext.getStore('CompanyConfig').getAt(0);
+    },
+
+    collectCompanyAssociations: function(){
+        var vm = this.getViewModel();
+
+        var supervisorIds = vm.get('info.SupervisorIds');
+        var supervisors = vm.getStore('supervisors').queryRecordsBy(
+            function(rec){
+                return supervisorIds.includes(rec.id + '');
+            }
+        );
+        this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
+        vm.set('lists.supervisors', supervisors);
     }
 
 
