@@ -76,7 +76,7 @@ Ext.define('Breeze.view.employee.Information', {
                 },
                 {
                     xtype: 'container',
-                    itemId: 'scheduleTab',
+                    reference: 'scheduleTab',
                     title: 'Schedule',
                     items: [
                         {
@@ -112,7 +112,9 @@ Ext.define('Breeze.view.employee.Information', {
                             valueField: 'ID',
                             bind: '{punchPolicy.policy_id}',
                             userCls: 'employee-info-general-field',
-                            ui: 'employeeinfo-textfield'
+                            ui: 'employeeinfo-textfield',
+                            required: true,
+                            bind: '{info.punchPolicy.policy_id}'
                         },
                         {
                             xtype: 'employee.information.punchpolicy',

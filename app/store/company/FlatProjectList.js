@@ -22,7 +22,7 @@ Ext.define('Breeze.store.company.FlatProjectList', {
     proxy: {
         type: 'ajax',
         // TODO: Add API URL
-        url: Breeze.helper.DummyApi.url('getFlatProjectList'),
+        url: Breeze.helper.Store.api.url('getFlatProjectList'),
         // url: Breeze.helper.Api.url('getFlatProjectList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {

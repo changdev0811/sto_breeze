@@ -23,6 +23,13 @@ Ext.define('Breeze.api.Employee', {
 
     // Class API methods
 
+    statics: {
+        // Access level constants, as returned by getAccess
+        accessLevel: {
+            SUPER_ADMIN: 15
+        }
+    },
+
     /**
      * Get employee access level
      * (Port homemade.js/getEmpAccess and getEmpAccessLogin functions)
@@ -50,6 +57,32 @@ Ext.define('Breeze.api.Employee', {
                     reject(err);
                 }
             );
+        });
+    },
+
+    /**
+     * Get security role / security rights for employee
+     * (Ported from homemade.js/getSecurityRightsForEmployee)
+     * @param {String} employee_id Employee ID
+     * @return {Promise} promise resolving with api response or rejecting with error
+     */
+    getSecurityRights: function(employee_id){
+        var api = this.api;
+        var me = this;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'getSecRightsForEmployee',
+                { employee_id: employee_id },
+                true,
+                true,
+                function(res, req){
+                    resolve(api.decodeJsonResponse(res));
+                },
+                function(err){
+                    // console.warn('Problem with API Employee.getSecurityRights', err)
+                    reject(err);
+                }
+            )
         });
     }
 });

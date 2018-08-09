@@ -2,6 +2,10 @@ $ei-padding-base: 6pt;
 $ei-form-padding: ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2) ($ei-padding-base*2);
 $ei-field-padding: $ei-padding-base $ei-padding-base $ei-padding-base $ei-padding-base;
 $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4);
+
+$ei-head-font-size: 14pt;
+$ei-field-font-size: 12pt;
+
 .employee-info-outer-container {
     background-color: map-get($employee-info-colors, 'base');
     padding: $ei-outer-padding;
@@ -24,6 +28,16 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     padding: $ei-form-padding;
     .x-form-fieldset-title {
         color: #ffffff;
+        font-size: $ei-head-font-size;
+    }
+}
+
+.employee-info-container {
+    padding: {
+        left: $ei-padding-base * 2;
+        right: $ei-padding-base * 2;
+        top: 3pt;
+        bottom: 3pt;
     }
 }
 
@@ -62,19 +76,19 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,
-    $label-font-size: 14pt,
+    $label-font-size: $ei-head-font-size,
     $ui: 'employeeinfo-textfield'
 );
 
 @include textfield-ui(
-    $input-font-size: 12pt,
+    $input-font-size: $ei-field-font-size,
     $ui: 'employeeinfo-textfield'
 );
 
 @include field-ui(
     $label-color: #ffffff,
     $focused-label-color: #ffffff,
-    $label-font-size: 14pt,    
+    $label-font-size: $ei-head-font-size,    
     $ui: 'employeeinfo-checkbox'
 );
 
@@ -82,7 +96,7 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: #ffffff,
-    $box-label-font-size: 14pt,
+    $box-label-font-size: $ei-field-font-size,
     $ui: 'employeeinfo-checkbox'
 );
 
@@ -90,33 +104,36 @@ $ei-outer-padding: ($ei-padding-base*4) ($ei-padding-base*4) ($ei-padding-base*4
     $label-color: #ffffff,
     // $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,
-    $label-font-size: 14pt,
+    $label-font-size: $ei-head-font-size,
     $ui: 'employeeinfo-radio'
 );
-
-
-
 
 .employeeinfo-label{
     line-height: 3em;
-    font-size: 14pt;
+    font-size: $ei-field-font-size;
 }
-
 
 @include radiofield-ui(
     $box-label-color: #ffffff,
-    $box-label-font-size: 14pt,
+    $box-label-font-size: $ei-field-font-size,
     $ui: 'employeeinfo-radio'
 );
+
+// grids
 
 @include dataview-ui(
     $background-color :  #498DC6,
     $ui: 'employeeinfo-shift-grid'
 );
 
+.employee-info-grid {
+    border: 1pt solid #ffffff;
+}
 
-
-
-
+@include tool-ui(
+    $ui: 'employeeinfo-tool-delete',
+    $color: map-get($employee-info-text-colors, 'base'),
+    $hovered-color: $alert-color
+);
 
 

@@ -2,6 +2,10 @@ Ext.define('Breeze.view.employee.information.Schedule', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.schedule',
 
+    requires: [
+        'Ext.grid.plugin.CellEditing'
+    ],
+
     layout: 'vbox',
 
     items: [
@@ -27,24 +31,56 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             height: '200px',
                             ui: 'employeeinfo-shift-grid',
                             reference: 'shiftSegmentGrid',
+                            userCls: 'employee-info-grid',
                             striped: true,
+                            sortable: false,
+                            columnResize: false,
+                            columnMenu: null,
+                            layout: 'hbox',
+                            // Plugin allowing editability
+                            plugins: [
+                                {
+                                    pluginId: 'shiftEdit',
+                                    type: 'gridcellediting'
+                                }
+                            ],
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
                                     ui: 'employeeinfo-shift-grid',
+                                    align: 'center',
                                     text: 'Start',
-                                    dataIndex: 'StartTime'
+                                    dataIndex: 'StartTime',
+                                    menuDisabled: true,
+                                    flex: 1
                                 },
                                 {
                                     xtype: 'templatecolumn',
-                                    tpl: ['-']
+                                    tpl: ['-'],
+                                    align: 'center',
+                                    width: '2em',
+                                    menuDisabled: true
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     ui: 'employeeinfo-shift-grid',
+                                    align: 'center',
                                     text: 'Stop',
-                                    dataIndex: 'StopTime'
-                                }
+                                    dataIndex: 'StopTime',
+                                    menuDisabled: true,
+                                    flex: 1
+                                },
+                                // {
+                                //     ui: 'employeeinfo-shift-grid',
+                                //     cell: {
+                                //         tools: [{
+                                //             type: 'close',
+                                //             ui: 'employeeinfo-tool-delete',
+                                //             zone: 'end'
+                                            
+                                //         }]
+                                //     }
+                                // }
                             ]
                         }
                     ]
@@ -62,10 +98,11 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'startup_settings',
                             label: 'Accrual Policy',
-                            reference: 'accrualPolicy',
                             bind: '{info.StartUpSettings}',
+                            reference: 'accrualPolicy',
                             displayField: 'Name',
-                            valueField: 'ID'
+                            valueField: 'ID',
+                            required: true
                         },
                         {
                             name: 'default_project',

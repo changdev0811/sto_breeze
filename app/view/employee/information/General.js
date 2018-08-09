@@ -23,24 +23,30 @@ Ext.define('Breeze.view.employee.information.General', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-textfield',
+                bind: {
+                    // make fields readonly when view model has readOnly set to true 
+                    editable: '{!readOnly}'
+                }
             },
             items: [
                 {
                     name: 'first_name',
                     label: 'First',
                     id: 'firstName',
-                    bind: '{info.FirstName}'
+                    bind: {
+                        value: '{info.FirstName}'
+                    }
                 },
                 {
                     name: 'middle_name',
                     label: 'Middle',
-                    bind: '{info.MiddleName}'
+                    bind: { value: '{info.MiddleName}' }
                 },
                 {
                     name: 'last_name',
                     label: 'Last',
-                    bind: '{info.LastName}'
+                    bind: { value: '{info.LastName}' }
                 }
             ]
         },

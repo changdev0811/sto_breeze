@@ -20,7 +20,8 @@
         routes: {
             'personal': 'onHomeRoute',
             'personal/info': {
-                action: 'onPersonalEmployeeInfoRoute'
+                action: 'onPersonalEmployeeInfoRoute',
+                name: 'personal_info'
             },
             'personal/fyi': {
                 action: 'onPersonalFyiRoute',

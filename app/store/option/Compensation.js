@@ -16,7 +16,7 @@ Ext.define('Breeze.store.option.Compensation', {
 	},
 	proxy: {
 		type: 'ajax',
-        url : Breeze.helper.DummyApi.url('typeOptionCodeList','3'),
+        url : Breeze.helper.Store.api.url('typeOptionCodeList','3'),
         // url : Breeze.helper.Api.url('typeOptionCodeList'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {

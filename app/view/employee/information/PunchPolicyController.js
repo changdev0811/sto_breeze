@@ -9,6 +9,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 
     // == Event Handlers ==
 
+	// -- Rounding Rules --
+
     /**
      * Handles change event fired by rounding_inc select field
      * Updates rounding preview, and restricts min/max
@@ -37,6 +39,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
         this.refreshRoundingPreview();
     },
 
+	// -- Overtime --
 
 	onOvertime1Change: function(c, newV, oldV, eOpts){
 		this.updateOvertime(1,newV);
@@ -50,6 +53,19 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 	onOvertime4Change: function(c, newV, oldV, eOpts){
 		this.updateOvertime(4,newV);
 	},
+
+	// -- Deductions --
+
+	/**
+	 * Toggle whether deduction lunch spinners are enabled based on checkbox
+	 */
+	onPunchForLunchChange: function(c, newV, oldV, eOpts){
+		var deductions = this.lookup('deductionsTab');
+		deductions.down('[name="lunch_seg"]').setDisabled(!newV);
+		deductions.down('[name="lunch_minutes"]').setDisabled(!newV);
+	},
+
+
 
     // == Helper Methods ==
 

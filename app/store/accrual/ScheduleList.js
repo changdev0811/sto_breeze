@@ -1,14 +1,14 @@
 /**
  * Employee Schedule List Store
  * @class ScheduleList
- * @alias Breeze.store.employee.ScheduleList
+ * @alias Breeze.store.accrual.ScheduleList
  */
-Ext.define('Breeze.store.employee.ScheduleList', {
+Ext.define('Breeze.store.accrual.ScheduleList', {
     extend: 'Ext.data.Store',
     requires: ['Breeze.helper.Auth'],
-    model: 'Breeze.model.employee.Schedule',
+    model: 'Breeze.model.accrual.Schedule',
     autoLoad: false,
-    alias: 'store.employee.schedulelist',
+    alias: 'store.accrual.schedulelist',
 
     listeners: {
         beforeload: function() {
@@ -22,7 +22,7 @@ Ext.define('Breeze.store.employee.ScheduleList', {
     proxy: {
         type: 'ajax',
         // TODO: Add API URL
-        url: Breeze.helper.DummyApi.url('getAccrualPoliciesList'),
+        url: Breeze.helper.Store.api.url('getAccrualPoliciesList'),
         // url: Breeze.helper.Api.url('getAccrualPoliciesList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {
