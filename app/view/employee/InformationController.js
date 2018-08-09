@@ -42,6 +42,10 @@ Ext.define('Breeze.view.employee.InformationController', {
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
                     me.applyCompanyConfig();
+                    if(vm.get('info.LoginType') == 13){
+                        vm.set('lists.employees.enabled', false);
+                        vm.set('lists.departments.enabled', false);
+                    }
                 });
             });
         }).catch(function(err){
