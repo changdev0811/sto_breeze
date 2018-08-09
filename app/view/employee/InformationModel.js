@@ -21,9 +21,18 @@ Ext.define('Breeze.view.employee.InformationModel', {
         },
         // ==[Company tab list visibility ]
         lists: {
-            supervisors: true,
-            employees: true,
-            departments: true,
+            supervisors: {
+                enabled: true,
+                readonly: true
+            },
+            employees: {
+                enabled: true,
+                readonly: true
+            },
+            departments: {
+                enabled: true,
+                readonly: true
+            },
         }
     },
 
@@ -65,7 +74,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * Formula returning filtered selection of supervisors based on supervisor
          * IDs defined in employee info data object
          */
-        companySupervisors: {
+        companySupervisorsList: {
             bind: {
                 store: '{supervisors}',
                 ids: '{info.SupervisorIds}'
@@ -76,6 +85,47 @@ Ext.define('Breeze.view.employee.InformationModel', {
                         return data.ids.includes(rec.id);
                     }
                 );
+            }
+        },
+
+        companyEmployeesList: {
+            bind: {
+                store: '{employees}',
+                ids: '{info.SupervisedEmpIds}'
+            },
+            get: function(data){
+                return data.store.queryRecordsBy(
+                    function(rec){
+                        return data.ids.includes(rec.id);
+                    }
+                )
+            }
+        },
+
+        // companyDepartmentsList: {
+        //     bind: {
+        //         store: '{departments}',
+        //         ids: '{info.SupervisedDeptIds}'
+        //     },
+        //     get: function(data){
+        //         return data.store.queryRecordsBy(function(rec){return data.ids.includes(rec.id);});
+        //     }
+        // },
+
+        companyDepartmentsList: {
+            bind: {
+                deptStore: '{departments}',
+                roleStore: '{securityRoles}',
+                deptIds: '{info.SupervisedDeptIds}',
+                roleIds: '{info.DeptRoleIds}'
+            },
+            get: function(data){
+                return data.deptIds.map(function(v,idx){
+                    return {
+                        displayName: data.deptStore.findRecord('Id', v).get('Name'),
+                        role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
+                    }
+                });
             }
         }
         

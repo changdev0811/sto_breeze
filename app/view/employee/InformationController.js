@@ -7,7 +7,10 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     requires: [
         'Breeze.api.Employee',
-        'Breeze.model.accrual.ShiftSegment'
+        'Breeze.model.accrual.ShiftSegment',
+        'Breeze.store.company.EmployeeList',
+        'Breeze.store.company.SupervisorList',
+        'Breeze.store.company.FlatProjectList'
     ],
 
     onInit: function(component, eOpts){
@@ -106,6 +109,8 @@ Ext.define('Breeze.view.employee.InformationController', {
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
             punchPolicies: Ext.create('Breeze.store.record.PunchPolicies'),
             supervisors: Ext.create('Breeze.store.company.SupervisorList', { autoLoad: true }),
+            employees: Ext.create('Breeze.store.company.EmployeeList', {autoLoad: true}),
+            securityRoles: Ext.create('Breeze.store.company.SecurityRoleList', {autoLoad: true}),
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',

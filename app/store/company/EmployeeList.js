@@ -11,7 +11,8 @@ Ext.define('Breeze.store.company.EmployeeList', {
 	listeners: {
 		beforeload : function () {
 			this.provideAuthCookieToProxy();
-            this.getProxy().extraParams.super_admin_only = 0;
+
+			//excludeterminated
 		}
 	},
 	proxy: {
