@@ -15,10 +15,10 @@ Ext.define('Breeze.Application', {
     ],
 
     stores: [
-    //     'Breeze.store.option.UserTypes',
-    //     'Breeze.store.option.Genders',
-    //     'Breeze.store.option.Compensation',
-    //     'Breeze.store.employee.static.PunchRoundingIncrements',
+        'Breeze.store.option.UserTypes',
+        'Breeze.store.option.Genders',
+        'Breeze.store.option.Compensation',
+        'Breeze.store.employee.static.PunchRoundingIncrements',
         'Breeze.store.company.Config'
     ],
 

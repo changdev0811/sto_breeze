@@ -112,6 +112,68 @@ Ext.define('Breeze.api.Auth', {
                 }
             )
         });
+    },
+
+    /**
+     * Change user login credentials
+     * 
+     * Ported from view/EditCredentials.js
+     * 
+     * @todo TODO: Finish implementing Breeze.helper.Auth.refreshTimeout and update method
+     * @param {String} empId Employee ID
+     * @param {String} username Employee's username
+     * @param {String} oldPass Old password
+     * @param {String} newPass New password
+     * @return {Promise} Promise resolving with success: true, username = val or success: false err = val
+     *  Rejecting with error object
+     */
+    changeCredentials: function(empId, username, oldPass, newPass){
+        var api = this.api;
+        var auth = this.auth;
+        var cookie = Breeze.helper.Cookie;
+        if(oldPass !== ''){
+            // md5 hash old password
+            oldPass = send(oldPass);
+        }
+        return new Promise(function(resolve, reject){
+            api.serviceRequest('changeLoginCredentials', {
+                    employee_id: empId,
+                    username: username,
+                    password: newPass,
+                    oldpass: oldPass
+                }, true, true,
+                function(resp){
+                    var r = api.decodeJsonResponse(resp);
+                    if(r.success){
+                        var t = r.err.split("__");
+                        var authCookie = auth.getCookies();
+                        if(t[1]==authCookie.emp){
+                            cookie.bake('STOPASS', t[0], 10); // update cookie password
+                            // TODO: Implement refreshTimeout in Auth helper
+                            // auth.refreshTimeout()
+                        }
+
+                        // resolve with username value returned
+                        resolve({
+                            success: true,
+                            username: username
+                        });
+
+                    } else {
+                        // Failed, resolve with success = false and err attribute
+                        resolve({
+                            success: false,
+                            err: r.err
+                        });
+                    }
+                },
+                function(err){
+                    // Failed entirely, reject with error object
+                    reject(err);
+                }
+            );
+        });
+
     }
 
 
