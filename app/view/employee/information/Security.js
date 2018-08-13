@@ -48,7 +48,8 @@ Ext.define('Breeze.view.employee.information.Security', {
             ]  
         },
         {
-            xtype: 'fieldset',
+            // xtype: 'fieldset',
+            xtype: 'formpanel',
             ui: 'employeeinfo-fieldpanel',
             userCls: 'employee-info-fieldset-bordered',
             // userCls: 'employee-info-fieldpanel',
@@ -64,17 +65,17 @@ Ext.define('Breeze.view.employee.information.Security', {
                 {
                     name: 'old_password',
                     label: 'Current Password',
-                    xtype: 'breeze-password',
-                    listeners: {
-                        // make password fields required when value is entered
-                        change: 'updatePasswordRequirement'
-                    }
+                    xtype: 'breeze-password'
                 },
                 {
                     name: 'password',
                     xtype: 'breeze-password',
-                    label: 'New Password'
+                    label: 'New Password',
                     // Changing password requires new and new confirm pass
+                    listeners: {
+                        // make password fields required when value is entered
+                        change: 'updatePasswordRequirement'
+                    }
                 },
                 {
                     name: 'confirm_new_password',
