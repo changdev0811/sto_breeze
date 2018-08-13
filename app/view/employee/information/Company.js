@@ -134,6 +134,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                         defaultTabUI: 'employeeinfo-small-tabs',
                         shadow: 'false'
                     },
+                    reference: 'companyListTabs',
                     flex: 1,
                     items: [
                         // ===[Supervisors tab]==
@@ -146,6 +147,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                 hidden: '{!lists.supervisors.enabled}'
                             },
                             userCls: 'employee-info-roletab-container',
+                            itemId: 'supervisorsTab',
                             items: [
                                 // ===[Supervisor list grid]==
                                 {
@@ -183,6 +185,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             xtype: 'container',
                             title: 'Employees',
                             layout: 'fit',
+                            itemId: 'employeesTab',
                             bind: {
                                 // Hide tab when not enabled
                                 hidden: '{!lists.employees.enabled}'
@@ -225,6 +228,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             xtype: 'container',
                             title: 'Departments',
                             layout: 'fit',
+                            itemId: 'departmentsTab',
                             bind: {
                                 // Hide tab when not enabled
                                 hidden: '{!lists.departments.enabled}'

@@ -4,98 +4,102 @@
         "employee": {
             "__type": "Repository.Entities.Employee",
             "_TerminationDate": null,
-            "_HireDate": "\/Date(1530489600000)\/",
+            "_HireDate": "\/Date(1527552000000)\/",
             "TerminationDate": "",
             "CustomerID": 991012,
-            "ID": 5006,
-            "RecordingMode": 20,
+            "ID": 5003,
+            "RecordingMode": 21,
             "Shift_Hours": null,
-            "FirstName": "Super",
-            "MiddleName": "D",
-            "LastName": "Visor",
-            "HireDate": "7/2/2018 12:00:00 AM",
+            "FirstName": "Wade",
+            "MiddleName": "",
+            "LastName": "Harkins",
+            "HireDate": "5/29/2018 12:00:00 AM",
             "DepartmentName": "Test Department",
             "StartUpSettings": 1001,
             "Department": 1001,
-            "PunchPolicy": 564,
+            "PunchPolicy": 563,
             "DefaultProject": 0,
             "DisplayName": null,
-            "BirthDate": "",
+            "BirthDate": "05/01/2018",
             "Email": "",
             "Notes": "",
-            "SSN": "",
+            "SSN": "3",
             "ExemptStatus": 139,
             "Gender": 11,
-            "EmployeeNumber": "",
-            "Payroll": "",
-            "Badge": "",
-            "CompRate": 0.00,
+            "EmployeeNumber": "2",
+            "Payroll": "2",
+            "Badge": "2",
+            "CompRate": 100000.00,
             "CompPer": 5,
             "ShiftSegComboStartTimes": [
                 {
                     "shiftSegVal": 540,
                     "shiftSegStr": " 9:00AM"
+                },
+                {
+                    "shiftSegVal": 541,
+                    "shiftSegStr": " 10:00AM"
                 }
             ],
             "ShiftSegComboStopTimes": [
                 {
                     "shiftSegVal": 1260,
                     "shiftSegStr": " 9:00PM"
+                },
+                {
+                    "shiftSegVal": 1261,
+                    "shiftSegStr": " 10:00PM"
                 }
             ],
             "ShiftStartTimes": [
-                " 9:00AM"
+                " 9:00AM", " 10:00AM" 
             ],
             "ShiftStopTimes": [
-                " 9:00PM"
+                " 9:00PM", " 10:00PM"
             ],
             "ShiftStartSegments": [
-                540
+                540, 541
             ],
             "ShiftStopSegments": [
-                1260
+                1260, 1261
             ],
             "PhotoFlag": false,
             "Photo": "app/resources/EmployeePhotos/default_man.png",
-            "Username": "supervisor",
-            "LoginType": 14,
+            "Username": "venturewade",
+            "LoginType": 13,
             "Supervisors": [
+                "Employee, Menial",
                 "Venture, Admin"
             ],
             "SupervisorIds": [
+                5005,
                 5001
             ],
             "SupervisorDeptsIds": [
+                "1001",
                 "1001,1002"
             ],
             "SupervisorTerms": [
+                0,
                 0
             ],
             "SupervisedEmps": [],
             "SupervisedEmpIds": [],
             "SupervisedEmpDeptsIds": [],
             "SupervisedEmpTerms": [],
-            "SupervisedDepts": [
-                "Test Department"
-            ],
-            "SupervisedDeptIds": [
-                1001
-            ],
-            "DeptRoles": [
-                "Full Supervisor"
-            ],
-            "DeptRoleIds": [
-                1003
-            ],
+            "SupervisedDepts": [],
+            "SupervisedDeptIds": [],
+            "DeptRoles": [],
+            "DeptRoleIds": [],
             "ViewSSN": 1,
             "ViewComp": 1,
             "LayoffStatus": "Active",
             "LayoffDate": null,
             "WorkRecords": null,
             "shiftHours": 12,
-            "displayName": "Visor, Super D.",
-            "firstLast": "Super Visor",
-            "possessiveFirstLast": "Super Visor\u0027s"
+            "displayName": "Harkins, Wade",
+            "firstLast": "Wade Harkins",
+            "possessiveFirstLast": "Wade Harkins\u0027"
         },
         "punchPolicy": {
             "__type": "Repository.Entities.Punch_Policy_Info",

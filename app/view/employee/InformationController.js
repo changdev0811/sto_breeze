@@ -42,10 +42,12 @@ Ext.define('Breeze.view.employee.InformationController', {
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
                     me.applyCompanyConfig();
-                    if(vm.get('info.LoginType') == 13){
-                        vm.set('lists.employees.enabled', false);
-                        vm.set('lists.departments.enabled', false);
-                    }
+                    // if(vm.get('info.LoginType') == 13){
+                    //     vm.set('lists.employees.enabled', false);
+                    //     vm.set('lists.departments.enabled', false);
+                    //     var companyLists = c.lookupReference('companuListTabs');
+                    // }
+                    me.toggleCompanyLists(c);
                 });
             });
         }).catch(function(err){
@@ -210,5 +212,22 @@ Ext.define('Breeze.view.employee.InformationController', {
     //     vm.set('lists.supervisors.data', supervisors);
     // }
 
+    /**
+     * Toggle visibility of company tab lists based on login type
+     * @param {Object} ctx Component context
+     */
+    toggleCompanyLists: function(ctx){
+        var me = this;
+        var vm = me.getViewModel();
+        if(vm.get('info.LoginType') == Breeze.api.Employee.accessLevel.EMPLOYEE){
+            vm.set('lists.employees.enabled', false);
+            vm.set('lists.departments.enabled', false);
+            var listTab = ctx.lookupReference('companyListTabs');
+            var empTab = listTab.getComponent('employeesTab');
+            var depTab = listTab.getComponent('departmentsTab');
+            listTab.remove(empTab);
+            listTab.remove(depTab);
+        }
+    }
 
 });
