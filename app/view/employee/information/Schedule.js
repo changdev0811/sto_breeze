@@ -52,7 +52,10 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                     text: 'Start',
                                     dataIndex: 'StartTime',
                                     menuDisabled: true,
-                                    flex: 1
+                                    flex: 1,
+                                    /*
+                                    bind: { editable: '{!readOnly}' }
+                                    */
                                 },
                                 {
                                     xtype: 'templatecolumn',
@@ -130,7 +133,10 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     defaults: { 
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio',
-                        bodyAlign:'stretch'
+                        bodyAlign:'stretch',
+                        bind: {
+                            disabled: '{!readOnly}'
+                        }
                     },
                     items: [
                         {
@@ -153,7 +159,10 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     defaults: { 
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio',
-                        bodyAlign:'stretch'
+                        bodyAlign:'stretch',
+                         bind: {
+                            disabled: '{!readOnly}'
+                        }
                     },
                     items: [
                         {

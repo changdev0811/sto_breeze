@@ -17,19 +17,24 @@ Ext.define('Breeze.view.employee.information.Security', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-textfield',
+                bind: {
+                    // make fields readonly when view model has readOnly set to true 
+                    editable: '{!readOnly}',
+                    readOnly: '{readOnly}'
+                }
             },
             items: [
                 {
                     name: 'user_name',
                     label: 'User Name',
-                    bind: '{info.Username}'
+                    bind: { value: '{info.Username}' }
                 },
                 {
                     name: 'user_type',
                     xtype: 'selectfield',
                     label: 'User Type',
-                    bind: '{info.LoginType}',
+                    bind: { value: '{info.LoginType}' }, 
                     store: 'UserTypeOptions',
                     displayField: 'Description',
                     valueField: 'ID'
@@ -38,7 +43,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     xtype: 'breeze-email',
                     name: 'email',
                     label: 'Email',
-                    bind: '{info.Email}',
+                    bind: { value: '{info.Email}' }, 
                     // TODO: Email validation regex
                     /* regex: */
                     invalidText: 'Invalid email address',
@@ -48,8 +53,8 @@ Ext.define('Breeze.view.employee.information.Security', {
             ]  
         },
         {
-            // xtype: 'fieldset',
-            xtype: 'formpanel',
+            xtype: 'fieldset',
+            // xtype: 'formpanel',
             ui: 'employeeinfo-fieldpanel',
             userCls: 'employee-info-fieldset-bordered',
             // userCls: 'employee-info-fieldpanel',
