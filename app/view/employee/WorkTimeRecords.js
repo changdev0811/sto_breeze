@@ -36,7 +36,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                     items: [
                         {
                             xtype: 'panel.minicalendar',
-                            ui: 'wtr-small',
+                            ui: 'minicalendar',//'wtr-small',,
                             collapsed: true,
                             flex: 1,
                             width: '100%'
