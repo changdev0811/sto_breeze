@@ -73,6 +73,19 @@ $ei-field-font-size: 12pt;
     line-height: 1.5em;
 }
 
+
+@include displayfield-ui(
+    $input-font-size: $ei-field-font-size,
+    $ui: 'employeeinfo-displayfield'
+);
+
+@include field-ui(
+    $label-color: map-get($employee-info-text-colors, 'light'),
+    $focused-label-color: #ffffff,
+    $label-font-size: $ei-head-font-size,
+    $ui: 'employeeinfo-displayfield'
+);
+
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),
     $focused-label-color: #ffffff,

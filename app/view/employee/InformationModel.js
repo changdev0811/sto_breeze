@@ -16,23 +16,23 @@ Ext.define('Breeze.view.employee.InformationModel', {
         // When true, fields will be read-only
         readOnly: true,
         // Misc config settings from company config
-        config: {
+        companyConfig: {
             
         },
-        // ==[Company tab list data]
+        // ==[Company tab list visibility ]
         lists: {
             supervisors: {
                 enabled: true,
-                // data: undefined
+                readonly: true
             },
             employees: {
                 enabled: true,
-                // data: undefined
+                readonly: true
             },
             departments: {
                 enabled: true,
-                // data: undefined
-            }
+                readonly: true
+            },
         }
     },
 
@@ -69,6 +69,64 @@ Ext.define('Breeze.view.employee.InformationModel', {
         },
         overtime_week4: function(get){
             return (get('info.punchPolicy.Ot_Week4')/60/60);
+        },
+        /**
+         * Formula returning filtered selection of supervisors based on supervisor
+         * IDs defined in employee info data object
+         */
+        companySupervisorsList: {
+            bind: {
+                store: '{supervisors}',
+                ids: '{info.SupervisorIds}'
+            },
+            get: function(data){
+                return data.store.queryRecordsBy(
+                    function(rec){
+                        return data.ids.includes(rec.id);
+                    }
+                );
+            }
+        },
+
+        companyEmployeesList: {
+            bind: {
+                store: '{employees}',
+                ids: '{info.SupervisedEmpIds}'
+            },
+            get: function(data){
+                return data.store.queryRecordsBy(
+                    function(rec){
+                        return data.ids.includes(rec.id);
+                    }
+                )
+            }
+        },
+
+        // companyDepartmentsList: {
+        //     bind: {
+        //         store: '{departments}',
+        //         ids: '{info.SupervisedDeptIds}'
+        //     },
+        //     get: function(data){
+        //         return data.store.queryRecordsBy(function(rec){return data.ids.includes(rec.id);});
+        //     }
+        // },
+
+        companyDepartmentsList: {
+            bind: {
+                deptStore: '{departments}',
+                roleStore: '{securityRoles}',
+                deptIds: '{info.SupervisedDeptIds}',
+                roleIds: '{info.DeptRoleIds}'
+            },
+            get: function(data){
+                return data.deptIds.map(function(v,idx){
+                    return {
+                        displayName: data.deptStore.findRecord('Id', v).get('Name'),
+                        role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
+                    }
+                });
+            }
         }
         
     }

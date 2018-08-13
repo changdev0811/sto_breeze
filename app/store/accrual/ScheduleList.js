@@ -4,18 +4,15 @@
  * @alias Breeze.store.accrual.ScheduleList
  */
 Ext.define('Breeze.store.accrual.ScheduleList', {
-    extend: 'Ext.data.Store',
-    requires: ['Breeze.helper.Auth'],
+    extend: 'Breeze.store.Base',
     model: 'Breeze.model.accrual.Schedule',
     autoLoad: false,
     alias: 'store.accrual.schedulelist',
 
     listeners: {
         beforeload: function() {
-            var extras = Breeze.helper.Auth.getCookies();
-            this.getProxy().extraParams.cust_id = extras.cust;
-            this.getProxy().extraParams.emp_id = extras.emp;
-            this.getProxy().extraParams.hashcookie = extras.pass;
+            this.provideAuthCookieToProxy();
+            this.useJsonParams();
         }
     },
 

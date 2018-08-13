@@ -105,11 +105,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-displayfield'
             },
             items: [
                 {
                     xtype: 'displayfield',
+                    ui: 'employeeinfo-displayfield',
                     label: 'Layoff Status',
                     bind: '{info.LayoffStatus}'
                 }
@@ -127,22 +128,26 @@ Ext.define('Breeze.view.employee.information.Company', {
                     layout: {
                         animation: 'fade'
                     },
+                    tabBarPosition: 'bottom',
                     ui: 'employeeinfo-small-tabs',
-                    // tabBar: {
-                    //     defaultTabUI: 'employeeinfo-small-tabs',
-                    //     shadow: 'false'
-                    // },
+                    tabBar: {
+                        defaultTabUI: 'employeeinfo-small-tabs',
+                        shadow: 'false'
+                    },
+                    reference: 'companyListTabs',
                     flex: 1,
                     items: [
                         // ===[Supervisors tab]==
                         {
                             xtype: 'container',
                             title: 'Supervisors',
-                            layout: 'vbox',
+                            layout: 'fit',
                             bind: {
                                 // Hide tab when not enabled
                                 hidden: '{!lists.supervisors.enabled}'
                             },
+                            userCls: 'employee-info-roletab-container',
+                            itemId: 'supervisorsTab',
                             items: [
                                 // ===[Supervisor list grid]==
                                 {
@@ -153,42 +158,55 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     width: '100%',
                                     layout: 'hbox',
                                     columnResize: false,
-                                    // hideHeaders: true,
+                                    hideHeaders: true,
                                     sortable: false,
                                     columnMenu: null,
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
                                     reference: 'supervisorsListGrid',
+                                    title: 'Supervisors',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
                                             flex: 1,
                                             text: 'Name',
                                             dataIndex: 'displayName',
-                                            menuDisabled: true
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
                                         }
-                                    ]
+                                    ],
+                                    bind: '{companySupervisorsList}'
                                 }
                             ]
+                               
                         },
                         // ===[Employees tab]==
                         {
                             xtype: 'container',
                             title: 'Employees',
-                            layout: 'vbox',
+                            layout: 'fit',
+                            itemId: 'employeesTab',
                             bind: {
                                 // Hide tab when not enabled
                                 hidden: '{!lists.employees.enabled}'
                             },
+                            userCls: 'employee-info-roletab-container',
                             items: [
-                                // ===[Employees list grid]==
+                                // ===[Supervisor list grid]==
                                 {
+                                    flex: 1,
                                     xtype: 'grid',
                                     height: '100%',
+                                    minHeight: '5em',
                                     width: '100%',
                                     layout: 'hbox',
                                     columnResize: false,
                                     hideHeaders: true,
                                     sortable: false,
                                     columnMenu: null,
+                                    title: 'Supervised Employees',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
                                     reference: 'employeesListGrid',
                                     columns: [
                                         {
@@ -196,12 +214,66 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             flex: 1,
                                             text: 'Name',
                                             dataIndex: 'displayName',
-                                            menuDisabled: true
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
                                         }
-                                    ]
+                                    ],
+                                    bind: '{companyEmployeesList}'
                                 }
                             ]
-                        }
+                               
+                        },
+                        // ===[Departments tab]==
+                        {
+                            xtype: 'container',
+                            title: 'Departments',
+                            layout: 'fit',
+                            itemId: 'departmentsTab',
+                            bind: {
+                                // Hide tab when not enabled
+                                hidden: '{!lists.departments.enabled}'
+                            },
+                            userCls: 'employee-info-roletab-container',
+                            items: [
+                                // ===[Departments list grid]==
+                                {
+                                    flex: 1,
+                                    xtype: 'grid',
+                                    height: '100%',
+                                    minHeight: '5em',
+                                    width: '100%',
+                                    layout: 'hbox',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: null,
+                                    title: 'Supervised Departments',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employee-info-grid',
+                                    reference: 'departmentsListGrid',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Department Name',
+                                            dataIndex: 'displayName',
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            flex: 1,
+                                            text: 'Role',
+                                            dataIndex: 'role',
+                                            menuDisabled: true,
+                                            ui: 'employeeinfo-shift-grid'
+                                        }
+                                    ],
+                                    bind: '{companyDepartmentsList}'
+                                }
+                            ]
+                               
+                        },
                     ]
                 }
             ]

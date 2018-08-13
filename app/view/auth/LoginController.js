@@ -69,6 +69,7 @@ Ext.define('Breeze.auth.LoginController', {
                             // r.renewalMessage
                         } else {
                             // good to continue directly
+                            window.location.reload();
                         }
                     } else {
                         // unsuccessful

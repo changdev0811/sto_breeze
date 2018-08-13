@@ -7,7 +7,10 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     requires: [
         'Breeze.api.Employee',
-        'Breeze.model.accrual.ShiftSegment'
+        'Breeze.model.accrual.ShiftSegment',
+        'Breeze.store.company.EmployeeList',
+        'Breeze.store.company.SupervisorList',
+        'Breeze.store.company.FlatProjectList'
     ],
 
     onInit: function(component, eOpts){
@@ -38,8 +41,13 @@ Ext.define('Breeze.view.employee.InformationController', {
                     var recordingMode = vm.get('info.RecordingMode');
                     c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
-                    me.collectCompanyLists();
                     me.applyCompanyConfig();
+                    // if(vm.get('info.LoginType') == 13){
+                    //     vm.set('lists.employees.enabled', false);
+                    //     vm.set('lists.departments.enabled', false);
+                    //     var companyLists = c.lookupReference('companuListTabs');
+                    // }
+                    me.toggleCompanyLists(c);
                 });
             });
         }).catch(function(err){
@@ -107,6 +115,8 @@ Ext.define('Breeze.view.employee.InformationController', {
             projectList: Ext.create('Breeze.store.company.FlatProjectList'),
             punchPolicies: Ext.create('Breeze.store.record.PunchPolicies'),
             supervisors: Ext.create('Breeze.store.company.SupervisorList', { autoLoad: true }),
+            employees: Ext.create('Breeze.store.company.EmployeeList', {autoLoad: true}),
+            securityRoles: Ext.create('Breeze.store.company.SecurityRoleList', {autoLoad: true}),
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
@@ -186,18 +196,38 @@ Ext.define('Breeze.view.employee.InformationController', {
         var config = Ext.getStore('CompanyConfig').getAt(0);
     },
 
-    collectCompanyLists: function(){
-        var vm = this.getViewModel();
+    // collectCompanyLists: function(){
+    //     var vm = this.getViewModel();
 
-        var supervisorIds = vm.get('info.SupervisorIds');
-        var supervisors = vm.getStore('supervisors').queryRecordsBy(
-            function(rec){
-                return supervisorIds.includes(rec.id + '');
-            }
-        );
-        // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
-        vm.set('lists.supervisors.data', supervisors);
+    //     var supervisorIds = vm.get('info.SupervisorIds');
+    //     var supervisors = vm.getStore('supervisors').queryRecordsBy(
+    //         function(rec){
+    //             return supervisorIds.includes(rec.id + '');
+    //         }
+    //     );
+    //     // vm.getStore('supervisors').filterBy(function(record){
+    //     //     return supervisorIds.includes(record.id + '');
+    //     // });
+    //     // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
+    //     vm.set('lists.supervisors.data', supervisors);
+    // }
+
+    /**
+     * Toggle visibility of company tab lists based on login type
+     * @param {Object} ctx Component context
+     */
+    toggleCompanyLists: function(ctx){
+        var me = this;
+        var vm = me.getViewModel();
+        if(vm.get('info.LoginType') == Breeze.api.Employee.accessLevel.EMPLOYEE){
+            vm.set('lists.employees.enabled', false);
+            vm.set('lists.departments.enabled', false);
+            var listTab = ctx.lookupReference('companyListTabs');
+            var empTab = listTab.getComponent('employeesTab');
+            var depTab = listTab.getComponent('departmentsTab');
+            listTab.remove(empTab);
+            listTab.remove(depTab);
+        }
     }
-
 
 });

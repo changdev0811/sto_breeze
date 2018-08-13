@@ -67,6 +67,7 @@ Ext.define('Breeze.view.employee.Information', {
                     xtype: 'container',
                     id: 'companyTab',
                     title: 'Company',
+                    layout: 'fit',
                     items: [
                         {
                             xtype: 'employee.information.company',

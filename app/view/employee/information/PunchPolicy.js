@@ -439,7 +439,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'fieldset',
                                     userCls: 'employee-info-general-field',
 
                                     defaults: {
@@ -581,7 +581,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'fieldset',
                                     userCls: 'employee-info-general-field',
 
                                     defaults: {

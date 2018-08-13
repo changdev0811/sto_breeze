@@ -6,6 +6,15 @@
         extend: 'Ext.app.ViewController',
         alias: 'controller.main.nav',
 
+        stores: [
+            'Breeze.store.option.UserTypes',
+            'Breeze.store.option.Genders',
+            'Breeze.store.option.Compensation',
+            'Breeze.store.employee.static.PunchRoundingIncrements',
+            'Breeze.store.company.Config'
+        ],
+    
+
         requires: [
             'Ext.route.Route',
             'Breeze.helper.Auth',

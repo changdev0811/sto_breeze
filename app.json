@@ -6,6 +6,16 @@
     "toolkit": "modern",
     "theme": "breeze-material",
     /**
+     * Force JS output to be ES5 compatible (revisit in future)
+     * Idea is to allow using ES6 compatible syntax, but testing doesn't seem to indicate
+     * these conventions are being converted (particularly lambda functions)
+     */
+    "language": {
+        "js": {
+            "output": "ES5"
+        }
+    },
+    /**
      * The list of required packages (with optional versions; default is "latest").
      *
      * For example,
@@ -195,6 +205,12 @@
      *
      */
     "js": [
+        {
+            /**
+            * Include lib/md5.js (need to confirm how this is getting included, inline or just copied)
+            */
+            "path": "lib/md5.js"
+        },
         {
             "path": "${framework.dir}/build/ext-modern-all-debug.js"
         },

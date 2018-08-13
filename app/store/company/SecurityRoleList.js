@@ -1,27 +1,23 @@
 /**
- * Flat Project List Store
- * @class FlatProjectList
- * @alias Breeze.store.company.FlatProjectList
+ * Store for Security Role List for Company (from ./SecurityRoleList)
+ * @class SecurityRoleList
+ * @alias Breeze.store.company.SecurityRoleList
  */
-Ext.define('Breeze.store.company.FlatProjectList', {
+Ext.define('Breeze.store.company.SecurityRoleList', {
     extend: 'Breeze.store.Base',
-    model: 'Breeze.model.company.Department',
+    model: 'Breeze.model.data.SecurityRoleOption',
+    alias: 'store.company.securityrolelist',
     autoLoad: false,
-    alias: 'store.company.flatprojectlist',
-
     listeners: {
-        beforeload: function() {
+        beforeload: function () {
             this.provideAuthCookieToProxy();
             this.useJsonParams();
         }
     },
-
     proxy: {
         type: 'ajax',
-        // TODO: Add API URL
-        url: Breeze.helper.Store.api.url('getFlatProjectList'),
-        // url: Breeze.helper.Api.url('getFlatProjectList'),
-        headers: { 'Content-Type': 'application/json' },
+        url: Breeze.helper.Store.api.url('getSecurityRoleList'),
+        headers: { 'Content-Type': 'application/json;' },
         actionMethods: {
             create: 'POST',
             read: 'POST',
@@ -32,6 +28,7 @@ Ext.define('Breeze.store.company.FlatProjectList', {
             type: 'json',
             rootProperty: 'd.Rows'
         },
+        // Don't want proxy to include these params in request
         pageParam: undefined,
         startParam: undefined
     }

@@ -12,8 +12,19 @@ Ext.define('Breeze.store.Base', {
      */
     provideAuthCookieToProxy: function(){
         var extras = Breeze.helper.Auth.getCookies();
-        this.getProxy().extraParams.cust_id = extras.cust;
-        this.getProxy().extraParams.emp_id = extras.emp;
-        this.getProxy().extraParams.hashcookie = extras.pass;
+        // this.getProxy().extraParams.cust_id = extras.cust;
+        // this.getProxy().extraParams.emp_id = extras.emp;
+        // this.getProxy().extraParams.hashcookie = extras.pass;
+        this.getProxy().setExtraParams({
+            cust_id: extras.cust,
+            emp_id: extras.emp,
+            hashcookie: extras.pass
+        });
+    },
+    /**
+     * Have proxy send parameters as JSON
+     */
+    useJsonParams: function(){
+        this.getProxy().setParamsAsJson(true);
     }
 });

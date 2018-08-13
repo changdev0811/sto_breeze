@@ -26,7 +26,9 @@ Ext.define('Breeze.api.Employee', {
     statics: {
         // Access level constants, as returned by getAccess
         accessLevel: {
-            SUPER_ADMIN: 15
+            SUPER_ADMIN: 15,
+            SUPERVISOR: 14,
+            EMPLOYEE: 13
         }
     },
 
