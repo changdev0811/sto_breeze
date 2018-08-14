@@ -1,0 +1,39 @@
+.employee-calendar-container {
+    padding: 16pt 16pt 16pt 16pt;
+    background-color: map-get($calendar-colors, 'base');
+    color: map-get($calendar-text-colors, 'base');
+}
+
+
+@include toolbar-ui (
+    $ui: 'employee-calendar',
+
+    $background-color: map-get($calendar-colors, 'base'),
+    $color : #ff0000,
+);
+
+@include panel-ui (
+    $ui: 'employee-calendar',
+
+    $background-color: map-get($calendar-colors, 'base'),
+    $border-color: #ff0000,
+    $border-style: solid,
+    $border-width: 10px,
+);
+
+@include calendar-weeks-ui (
+    $ui: 'employee-calendar',
+
+
+
+    $background-color: map-get($calendar-colors, 'base'),
+    $selection-background-color: map-get($calendar-colors, 'medium'),
+    $selection-opacity: 1,
+    $day-border-width: 1px,
+    $day-border-color : map-get($calendar-colors, 'medium'),
+    $day-background-color: map-get($calendar-colors, 'base'),
+    $day-number-font-size : 14pt,
+    $day-number-color: #ffffff,
+    $day-number-outside-color: map-get($calendar-colors, 'medium'),
+);
+
