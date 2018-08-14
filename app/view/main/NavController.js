@@ -104,7 +104,11 @@
         },
 
         onPersonalCalendarRoute: function(){
-
+            this.changeContent(
+                Ext.create('Breeze.view.employee.Calendar', {
+                    data: { employee: undefined }
+                })
+            );
         },
 
         onDownloadPunchStationRoute: function(){
