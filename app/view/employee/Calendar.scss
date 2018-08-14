@@ -4,7 +4,7 @@
     color: map-get($calendar-text-colors, 'base');
 }
 
-
+/*
 @include toolbar-ui (
     $ui: 'employee-calendar',
 
@@ -20,6 +20,7 @@
     $border-style: solid,
     $border-width: 10px,
 );
+*/
 
 @include calendar-weeks-ui (
     $ui: 'employee-calendar',

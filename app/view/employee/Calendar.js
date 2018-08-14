@@ -28,11 +28,7 @@ Ext.define('Breeze.view.employee.Calendar',{
             flex: 1,
             ui: 'employee-calendar',
             compact: true,
-            toolbar: {
-                ui: 'employee-calendar',
-            },
             views:{
-
                 month:{
                     xtype: 'calendar-month',
                     view:{
