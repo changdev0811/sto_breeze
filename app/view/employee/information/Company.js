@@ -4,6 +4,14 @@ Ext.define('Breeze.view.employee.information.Company', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         {
             xtype: 'container',
@@ -15,11 +23,11 @@ Ext.define('Breeze.view.employee.information.Company', {
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
+                // bind: {
+                //     // make fields readonly when view model has readOnly set to true 
+                //     editable: '{!readOnly}',
+                //     readOnly: '{readOnly}'
+                // }
             },
             items: [
                 {
@@ -49,12 +57,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
@@ -87,11 +90,6 @@ Ext.define('Breeze.view.employee.information.Company', {
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
             },
             items: [
                 {

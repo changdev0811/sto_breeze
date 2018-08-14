@@ -86,6 +86,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                             } else {
                                 vm.set('readOnly', true);
                             }
+
+                            // handle rights
                             resolve();
                         }
                     ).catch(
@@ -120,7 +122,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
-                storeId: 'shiftSegments'
+                // storeId: 'shiftSegments'
             })
         });
 

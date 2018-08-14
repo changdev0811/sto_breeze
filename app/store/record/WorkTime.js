@@ -1,14 +1,13 @@
 Ext.define('Breeze.store.record.WorkTime', {
-	extend: 'Ext.data.Store',
+	extend: 'Breeze.store.Base',
 	model: 'Breeze.model.record.WorkTime',
 	autoLoad: false,
 	root: 'd.Records',
 	storeId: 'WorkTimeViewStore',
 	listeners: {
 		beforeload: function() {
-			this.getProxy().extraParams.cust_id=Ext.util.Cookies.get('STOCUST');
-			this.getProxy().extraParams.emp_id=Ext.util.Cookies.get('STOEMP');
-			this.getProxy().extraParams.hashcookie=Ext.util.Cookies.get('STOPASS');
+			this.provideAuthCookieToProxy();
+            this.useJsonParams();
 		}
 	},
 	proxy: {

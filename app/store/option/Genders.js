@@ -4,13 +4,14 @@
  * @alias Breeze.store.option.Genders
  */
 Ext.define('Breeze.store.option.Genders', {
-    extend: 'Ext.data.Store',
+    extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.TypeOption',
     alias: 'store.option.genders',
     storeId: 'GenderOptions',
     autoLoad: true,
     listeners: {
 		beforeload : function () {
+            this.useJsonParams();
 			this.getProxy().extraParams.code_type_id = 4;
 		}
 	},

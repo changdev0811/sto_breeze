@@ -31,6 +31,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                 userCls: 'employee-info-tab-container'
             },
             items: [
+                // TODO: Finish implementing read only respect
                 //========[Overtime Tab]===========
                 {
                     title: 'Overtime',
@@ -83,12 +84,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     defaults: {
                                         flex: 1,
                                         userCls: 'employee-info-general-field',
-                                        ui: 'employeeinfo-textfield'
-
+                                        ui: 'employeeinfo-textfield',
                                     },
                                     items: [
                                         {
-                                            xtype: 'checkbox',
+                                            xtype: 'breeze-checkbox',
                                             name: 'overtime_opt1',
                                             boxLabel: 'Overtime 1',
                                             labelWidth: 'auto',
@@ -109,7 +109,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             minValue: 0,
                                             maxValue: 24,
                                             // bind: '{info.punchPolicy.Ot_Day1}'
-                                            bind: '{overtime_day1}'
+                                            bind: {
+                                                value: '{overtime_day1}' 
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
@@ -118,13 +120,17 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             minValue: 0,
                                             maxValue: 168,
                                             // bind: '{info.punchPolicy.Ot_Week1}'
-                                            bind: '{overtime_week1}'
+                                            bind: { 
+                                                value: '{overtime_week1}' 
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
                                             name: 'overtime_rate1',
                                             decimals: 2,
-                                            bind: '{info.punchPolicy.Ot_Rate1}'
+                                            bind: { 
+                                                value: '{info.punchPolicy.Ot_Rate1}' 
+                                            }
                                         }
                                     ]    
                                 },
@@ -156,7 +162,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             minValue: 0,
                                             maxValue: 24,
                                             // bind: '{info.punchPolicy.Ot_Day1}'
-                                            bind: '{overtime_day2}'
+                                            bind: {
+                                                value: '{overtime_day2}'
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
@@ -165,7 +173,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             minValue: 0,
                                             maxValue: 168,
                                             // bind: '{info.punchPolicy.Ot_Week1}'
-                                            bind: '{overtime_week2}'
+                                            bind: {
+                                                value: '{overtime_week2}'
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',

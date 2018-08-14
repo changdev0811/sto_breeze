@@ -4,15 +4,35 @@ Ext.define('Breeze.helper.Auth', {
         'Breeze.helper.Cookie'
     ],
 
+    /*
+    
+    STOPASS     SecureHashCookie
+    STOCUST     SecureCustId
+    STOEMP      SecureEmpId
+    */
+
     statics: {
+        
+        /**
+         * Constant cookie field names
+         */
+        fields: {
+            // pass: 'SecureHashCookie',
+            // cust: 'SecureCustId',
+            // emp: 'SecureEmpId',
+            pass: 'STOPASS',
+            cust: 'STOCUST',
+            emp: 'STOEMP'
+        },
+
         /**
          * Create/update auth related cookies
          */
         setCookies: function(pass, cust, emp){
             var c = Breeze.helper.Cookie;
-            c.bake('STOPASS', pass, 7);
-            c.bake('STOCUST', cust, 7);
-            c.bake('STOEMP', emp, 7);
+            c.bake(this.fields.pass, pass, 7);
+            c.bake(this.fields.cust, cust, 7);
+            c.bake(this.fields.emp, emp, 7);
         },
 
         /**
@@ -21,9 +41,9 @@ Ext.define('Breeze.helper.Auth', {
         getCookies: function() {
             var c = Breeze.helper.Cookie;
             return {
-                pass:   c.get('STOPASS'),
-                cust:   c.get('STOCUST'),
-                emp:    c.get('STOEMP')
+                pass:   c.get(this.fields.pass),
+                cust:   c.get(this.fields.emp),
+                emp:    c.get(this.fields.emp)
             };
         },
 
@@ -33,9 +53,9 @@ Ext.define('Breeze.helper.Auth', {
         reloadCookies: function(minutes){
             var c = Breeze.helper.Cookie;
             var old = this.getCookies();
-            c.bake('STOPASS', old.pass, minutes);
-            c.bake('STOCUST', old.cust, minutes);
-            c.bake('STOEMP', old.emp, minutes);
+            c.bake(this.fields.pass, old.pass, minutes);
+            c.bake(this.fields.cust, old.cust, minutes);
+            c.bake(this.fields.emp, old.emp, minutes);
         },
 
         /**

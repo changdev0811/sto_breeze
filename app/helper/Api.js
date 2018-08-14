@@ -28,6 +28,7 @@
 
             /**
              * Generic AJAX API request
+             * @todo TODO: Revisit and decide on keeping/tossing cookieParams
              * @param {String} api API Path url
              * @param {String} service Service name
              * @param {Object} params Parameters
@@ -66,8 +67,11 @@
 
             /**
              * Punch API AJAX Request (ported from old homemade.js 'PunchAjax')
+             * @todo TODO: Revisit and decide on keeping/tossing cookieParams
              * @param {String} service Service name
              * @param {Object} params Parameters
+             * @param {boolean} cookieParams If true, cookie auth params are included in request params
+             *  Default true
              * @param {Boolean} sync Enable/disable sync (default true)
              * @param {Function} successHandler Success function
              * @param {Function} failureHandler Failure function
@@ -78,6 +82,7 @@
 
             /**
              * Common service API AJAX Request (ported from old homemade.js 'Ajax')
+             * @todo TODO: Revisit and decide on keeping/tossing cookieParams
              * @param {String} service Service name
              * @param {Object} params Parameters
              * @param {boolean} cookieParams If true, cookie auth params are included in request params

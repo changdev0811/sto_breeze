@@ -6,6 +6,14 @@ Ext.define('Breeze.view.employee.information.Security', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         
         {
@@ -17,12 +25,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
@@ -60,6 +63,7 @@ Ext.define('Breeze.view.employee.information.Security', {
             // userCls: 'employee-info-fieldpanel',
             layout: 'hbox',
             title: 'Change Password',
+            ignoreReadOnly: true,
             defaults: {
                 flex: 1,
                 xtype: 'textfield',

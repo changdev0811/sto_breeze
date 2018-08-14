@@ -8,6 +8,14 @@ Ext.define('Breeze.view.employee.information.Schedule', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         {
             xtype: 'container',
@@ -101,7 +109,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'startup_settings',
                             label: 'Accrual Policy',
-                            bind: '{info.StartUpSettings}',
+                            bind: { value: '{info.StartUpSettings}' },
                             reference: 'accrualPolicy',
                             displayField: 'Name',
                             valueField: 'ID',
@@ -110,7 +118,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'default_project',
                             label: 'Default Project',
-                            bind: '{info.DefaultProject}',
+                            bind: { value: '{info.DefaultProject}' },
                             reference: 'defaultProject',
                             displayField: 'Name',
                             valueField: 'ID'
@@ -134,9 +142,6 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio',
                         bodyAlign:'stretch',
-                        bind: {
-                            disabled: '{!readOnly}'
-                        }
                     },
                     items: [
                         {
@@ -159,10 +164,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     defaults: { 
                         xtype: 'radiofield',
                         ui: 'employeeinfo-radio',
-                        bodyAlign:'stretch',
-                         bind: {
-                            disabled: '{!readOnly}'
-                        }
+                        bodyAlign:'stretch'
                     },
                     items: [
                         {

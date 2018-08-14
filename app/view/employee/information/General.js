@@ -13,6 +13,14 @@ Ext.define('Breeze.view.employee.information.General', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         {
             xtype: 'fieldset',
@@ -23,12 +31,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
@@ -61,11 +64,11 @@ Ext.define('Breeze.view.employee.information.General', {
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
                 ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}',
-                    readOnly: '{readOnly}'
-                }
+                // bind: {
+                //     // make fields readonly when view model has readOnly set to true 
+                //     editable: '{!readOnly}',
+                //     readOnly: '{readOnly}'
+                // }
             },
             items: [
                 {
