@@ -74,7 +74,20 @@ Ext.define('Breeze.view.employee.information.General', {
                 {
                     name: 'ssn',
                     label: 'SSN',
-                    bind: { value: '{info.SSN}' }
+                    reference: 'ssnPlain',
+                    bind: { 
+                        value: '{info.SSN}',
+                        hidden: '{!perms.ssn}'
+                    }
+                },
+                {
+                    label: 'SSN',
+                    reference: 'ssnHidden',
+                    value: '(hidden)',
+                    readOnly: true,
+                    bind: {
+                        hidden: '{perms.ssn}'
+                    }
                 },
                 {
                     xtype: 'datefield',

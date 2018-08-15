@@ -35,11 +35,25 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
 
     privates: {
 
+		/**
+		 * Build binding expression string
+		 * @param {boolean} inverted If true, bind expression value is negated
+		 * @return {String} bind expression (config 'expression' wrapped in { })
+		 */
     	expressionString: function(inverted){
     		return ['{', (inverted)? '!' : '', this.config.expression, '}'].join('');
     	},
 
+		/**
+		 * Apply readonly bindings to field, provided it doesn't have attribute
+		 * `ignoreReadOnly` set to truthy value
+		 * @param {Object} field Field/Component to apply binding to
+		 */
     	propagateToField: function(field){
+			// Don't bind because field has ignoreReadOnly set to true
+			if(field.ignoreReadOnly){
+				return null;
+			}
     		// console.group('Binding to field ' + field.xtype);
     		if(this.fieldTypes.disabled.includes(field.xtype)){
     			// console.info('Starting bind: ', field.getBind());

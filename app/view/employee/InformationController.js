@@ -86,6 +86,20 @@ Ext.define('Breeze.view.employee.InformationController', {
                                 vm.set('readOnly', true);
                             }
 
+                            // Set field-specific visibility values
+                            vm.set('perms.ssn', rights.View_SSN);
+                            vm.set('perms.compensation', rights.View_Compensation);
+
+                            // remove hidden fields so they can't be pilfered with inspect
+                            if(!vm.get('perms.ssn')){
+                                var ssnPlain = me.view.lookup('ssnPlain');
+                                ssnPlain.parent.remove(ssnPlain);
+                            }
+                            if(!vm.get('perms.compensation')){
+                                var compPlain = me.view.lookup('compensationPlain');
+                                compPlain.parent.remove(compPlain);
+                            }
+
                             // handle rights
                             resolve();
                         }

@@ -15,6 +15,11 @@ Ext.define('Breeze.view.employee.InformationModel', {
         points: '',
         // When true, fields will be read-only
         readOnly: true,
+        // Recieves emp role permission settings
+        perms: {
+            ssn: false, // is SSN shown?
+            compensation: false // is compensation shown?
+        },
         // Misc config settings from company config
         companyConfig: {
             

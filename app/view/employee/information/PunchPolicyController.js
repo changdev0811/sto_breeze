@@ -48,6 +48,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 
 	// -- Overtime --
 
+	// TODO: Clean up logic used to toggle overtime enabled/visibility
+
 	onOvertime1Change: function(c, newV, oldV, eOpts){
 		this.updateOvertime(1,newV);
 	},

@@ -1,7 +1,9 @@
 /**
  * Employee Information View > Punch Policies Tab
  * @class PunchPolicy
- * @alias Breeze.view.employee.information.PunchPolicy
+ * @namespace Breeze.view.employee.information.PunchPolicy
+ * @alias widget.employee.information.punchpolicy
+ * @todo TODO: Clean up logic used to display/hide overtime punch policies
  */
 Ext.define('Breeze.view.employee.information.PunchPolicy', {
     extend: 'Ext.Container',
