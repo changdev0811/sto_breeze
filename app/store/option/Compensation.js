@@ -4,13 +4,14 @@
  * @alias Breeze.store.option.Compensation
  */
 Ext.define('Breeze.store.option.Compensation', {
-    extend: 'Ext.data.Store',
+    extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.TypeOption',
     alias: 'store.option.compensation',
     storeId: 'CompensationOptions',
     autoLoad: true,
     listeners: {
 		beforeload : function () {
+            this.useJsonParams();
 			this.getProxy().extraParams.code_type_id = 3;
 		}
 	},

@@ -13,6 +13,14 @@ Ext.define('Breeze.view.employee.information.General', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         {
             xtype: 'fieldset',
@@ -23,11 +31,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield',
-                bind: {
-                    // make fields readonly when view model has readOnly set to true 
-                    editable: '{!readOnly}'
-                }
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
@@ -59,19 +63,39 @@ Ext.define('Breeze.view.employee.information.General', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-textfield',
+                // bind: {
+                //     // make fields readonly when view model has readOnly set to true 
+                //     editable: '{!readOnly}',
+                //     readOnly: '{readOnly}'
+                // }
             },
             items: [
                 {
                     name: 'ssn',
                     label: 'SSN',
-                    bind: '{info.SSN}'
+                    reference: 'ssnPlain',
+                    autoHideInputMask: true,
+                    inputMask: '999-99-9999',
+                    bind: { 
+                        value: '{info.SSN}',
+                        hidden: '{!perms.ssn}'
+                    }
+                },
+                {
+                    label: 'SSN',
+                    reference: 'ssnHidden',
+                    value: '(hidden)',
+                    readOnly: true,
+                    bind: {
+                        hidden: '{perms.ssn}'
+                    }
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_birth',
                     label: 'Birth Date',
-                    bind: '{info.BirthDate}'
+                    bind: { value: '{info.BirthDate}' }
                     //msgTarget
                     //invalidText
                 },
@@ -80,7 +104,7 @@ Ext.define('Breeze.view.employee.information.General', {
                     name: 'gender',
                     label: 'Gender',
                     store: 'GenderOptions',
-                    bind: '{info.Gender}',
+                    bind: { value: '{info.Gender}' },
                     displayField: 'Description',
                     valueField: 'ID'
                 }

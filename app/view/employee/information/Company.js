@@ -4,6 +4,14 @@ Ext.define('Breeze.view.employee.information.Company', {
 
     layout: 'vbox',
 
+    plugins: {
+        readOnlyPlug: {
+            type: 'breeze.form.readonly',
+            recursive: true,
+            expression: 'readOnly'
+        }
+    },
+
     items: [
         {
             xtype: 'container',
@@ -14,25 +22,30 @@ Ext.define('Breeze.view.employee.information.Company', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-textfield',
+                // bind: {
+                //     // make fields readonly when view model has readOnly set to true 
+                //     editable: '{!readOnly}',
+                //     readOnly: '{readOnly}'
+                // }
             },
             items: [
                 {
                     xtype: 'datefield',
                     name: 'date_of_hire',
                     label: 'Hire Date',
-                    bind: '{hireDate}'
+                    bind: { value: '{hireDate}' }
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_termination',
                     label: 'Termination Date',
-                    bind: '{info.TerminationDate}'
+                    bind: { value: '{info.TerminationDate}' }
                 },
                 {
                     name: 'customer_employee_id',
                     label: 'Employee #',
-                    bind: '{info.EmployeeNumber}'
+                    bind: { value: '{info.EmployeeNumber}' }
                 }
             ]
         },
@@ -54,17 +67,17 @@ Ext.define('Breeze.view.employee.information.Company', {
                     displayField: 'Name',
                     valueField: 'Id',
                     reference: 'departments',
-                    bind: '{info.Department}',
+                    bind: { value: '{info.Department}' }, 
                 },
                 {
                     name: 'badge_id',
                     label: 'Badge #',
-                    bind: '{info.Badge}'
+                    bind: { value: '{info.Badge}' }
                 },
                 {
                     name: 'payroll',
                     label: 'Payroll #',
-                    bind: '{info.Payroll}'
+                    bind: { value: '{info.Payroll}' }
                 }
             ]
         },
@@ -76,7 +89,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                ui: 'employeeinfo-textfield',
             },
             items: [
                 {
@@ -84,14 +97,29 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'numberfield',
                     minValue: 0, decimals: 2,
                     label: 'Compensation',
-                    bind: '{info.CompRate}'
+                    reference: 'compensationPlain',
+                    bind: { 
+                        value: '{info.CompRate}',
+                        hidden: '{!perms.compensation}'
+                    }
+                },
+                {
+                    xtype: 'breeze-textfield',
+                    label: 'Compensation',
+                    value: '(Hidden)',
+                    readOnly: true,
+                    // ignoreReadOnly: true, // tell ReadOnly plugin to bypass this field
+                    reference: 'compensationHidden',
+                    bind: {
+                        hidden: '{perms.compensation}'
+                    }
                 },
                 {
                     xtype: 'selectfield',
                     label: 'Compensation Frequency',
                     name: 'comp_per',
                     store: 'CompensationOptions',
-                    bind: '{info.CompPer}',
+                    bind: { value: '{info.CompPer}' },
                     displayField: 'Description',
                     valueField: 'ID'
                 }

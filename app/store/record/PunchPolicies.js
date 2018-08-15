@@ -4,17 +4,15 @@
  * @alias Breeze.store.record.PunchPolicies
  */
 Ext.define('Breeze.store.record.PunchPolicies', {
-	extend: 'Ext.data.Store',
+	extend: 'Breeze.store.Base',
 	model: 'Breeze.model.record.PunchPolicy',
 	autoLoad: false,
     // storeId: 'PunchPolicyList',
     alias: 'store.record.punchpolicies',
 	listeners: {
 		beforeload : function () {
-			var extras = Breeze.helper.Auth.getCookies();
-            this.getProxy().extraParams.cust_id = extras.cust;
-            this.getProxy().extraParams.emp_id = extras.emp;
-            this.getProxy().extraParams.hashcookie = extras.pass;
+            this.provideAuthCookieToProxy();
+            this.useJsonParams();
 		}
 	},
 	proxy: {

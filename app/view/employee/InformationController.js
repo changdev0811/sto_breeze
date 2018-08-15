@@ -20,6 +20,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         var me = this;
         var comp = component;
 
+        // remember id of user doing viewing
+        vm.set('viewerId', Breeze.helper.Auth.getCookies().emp);
+
         if(typeof component.getData().employee !== 'undefined'){
             this.empId = component.getData().employee;
             vm.set('employeeId', this.empId);
@@ -32,7 +35,6 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
-
                 me.loadEmployeeInfo(component, function(c){
                     // == After Employee Info loads ==
                     // Assign check fields after info loaded
@@ -86,6 +88,22 @@ Ext.define('Breeze.view.employee.InformationController', {
                             } else {
                                 vm.set('readOnly', true);
                             }
+
+                            // Set field-specific visibility values
+                            vm.set('perms.ssn', rights.View_SSN);
+                            vm.set('perms.compensation', rights.View_Compensation);
+
+                            // remove hidden fields so they can't be pilfered with inspect
+                            if(!vm.get('perms.ssn')){
+                                var ssnPlain = me.view.lookup('ssnPlain');
+                                ssnPlain.parent.remove(ssnPlain);
+                            }
+                            if(!vm.get('perms.compensation')){
+                                var compPlain = me.view.lookup('compensationPlain');
+                                compPlain.parent.remove(compPlain);
+                            }
+
+                            // handle rights
                             resolve();
                         }
                     ).catch(
@@ -120,7 +138,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             shiftSegments: Ext.create('Ext.data.Store', {
                 // autoLoad: true,
                 model: 'Breeze.model.accrual.ShiftSegment',
-                storeId: 'shiftSegments'
+                // storeId: 'shiftSegments'
             })
         });
 

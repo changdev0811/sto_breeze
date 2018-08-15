@@ -15,6 +15,11 @@ Ext.define('Breeze.view.employee.InformationModel', {
         points: '',
         // When true, fields will be read-only
         readOnly: true,
+        // Recieves emp role permission settings
+        perms: {
+            ssn: false, // is SSN shown?
+            compensation: false // is compensation shown?
+        },
         // Misc config settings from company config
         companyConfig: {
             
@@ -114,16 +119,20 @@ Ext.define('Breeze.view.employee.InformationModel', {
 
         companyDepartmentsList: {
             bind: {
-                deptStore: '{departments}',
-                roleStore: '{securityRoles}',
+                // deptStore: '{departments}',
+                // roleStore: '{securityRoles}',
                 deptIds: '{info.SupervisedDeptIds}',
-                roleIds: '{info.DeptRoleIds}'
+                deptNames: '{info.SupervisedDepts}',
+                roleIds: '{info.DeptRoleIds}',
+                roleNames: '{info.DeptRoles}'
             },
             get: function(data){
                 return data.deptIds.map(function(v,idx){
                     return {
-                        displayName: data.deptStore.findRecord('Id', v).get('Name'),
-                        role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
+                        // displayName: data.deptStore.findRecord('Id', v).get('Name'),
+                        // role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
+                        displayName: data.deptNames[idx],
+                        role: data.roleNames[idx]
                     }
                 });
             }

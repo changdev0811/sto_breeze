@@ -9,6 +9,13 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 
     // == Event Handlers ==
 
+	onInit: function(comp, eOpts){
+		this.lookup('otCheck1').setChecked(false);
+		this.lookup('otCheck2').setChecked(false);
+		this.lookup('otCheck3').setChecked(false);
+		this.lookup('otCheck4').setChecked(false);
+	},
+
 	// -- Rounding Rules --
 
     /**
@@ -40,6 +47,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
     },
 
 	// -- Overtime --
+
+	// TODO: Clean up logic used to toggle overtime enabled/visibility
 
 	onOvertime1Change: function(c, newV, oldV, eOpts){
 		this.updateOvertime(1,newV);

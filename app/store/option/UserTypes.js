@@ -4,13 +4,15 @@
  * @alias Breeze.store.option.UserTypes
  */
 Ext.define('Breeze.store.option.UserTypes', {
-    extend: 'Ext.data.Store',
+    extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.TypeOption',
     alias: 'store.option.usertypes',
     storeId: 'UserTypeOptions',
     autoLoad: true,
     listeners: {
 		beforeload : function () {
+			// this.provideAuthCookieToProxy();
+			this.useJsonParams();
 			this.getProxy().extraParams.code_type_id = 5;
 		}
 	},

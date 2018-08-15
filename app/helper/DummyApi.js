@@ -18,13 +18,28 @@ Ext.define('Breeze.helper.DummyApi', {
             // pulled from sti_namespace, used in STOLogin view
             login: 'resources/dummy_api/'
         },
+
+        resPath: 'resources/dummy_api/',
+        railsPath: 'http://0.0.0.0:3000/STOServe/Service1.asmx/',
         
-        dummyPath: 'resources/dummy_api/',
+        useResources: true,
+
+        dummyPath: function(){
+            if(this.useResources){
+                return this.resPath;
+            } else {
+                return this.railsPath;
+            }
+        },
 
         // clones of API
         url: function(action, special){
             var special = (typeof special == 'undefined')? 'default' : special;
-            return [this.dummyPath,action,'/',[special,'.json'].join('')].join('');
+            if(this.useResources){
+                return [this.dummyPath(),action,'/',[special,'.json'].join('')].join('');
+            } else {
+                return [this.dummyPath(),action].join('');
+            }
         },
         request: function(api, service, params, cookieParams, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(api,service,params, cookieParams, sync,successHandler,failureHandler);
@@ -32,7 +47,7 @@ Ext.define('Breeze.helper.DummyApi', {
         // Wrapped version of serviceRequest that targets dummy JSON data
         serviceRequest: function(service, params, cookieParams, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(
-                '', [[this.dummyPath, service].join(''), 'default.json'].join('/'), 
+                '', [[this.dummyPath(), service].join(''), (this.useResources)? '/default.json' : ''].join(''), 
                 params, cookieParams, sync, successHandler, failureHandler
             );
         },
