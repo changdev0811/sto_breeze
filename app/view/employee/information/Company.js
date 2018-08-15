@@ -97,7 +97,22 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'numberfield',
                     minValue: 0, decimals: 2,
                     label: 'Compensation',
-                    bind: { value: '{info.CompRate}' }
+                    reference: 'compensationPlain',
+                    bind: { 
+                        value: '{info.CompRate}',
+                        hidden: '{!perms.compensation}'
+                    }
+                },
+                {
+                    xtype: 'breeze-textfield',
+                    label: 'Compensation',
+                    value: '(Hidden)',
+                    readOnly: true,
+                    // ignoreReadOnly: true, // tell ReadOnly plugin to bypass this field
+                    reference: 'compensationHidden',
+                    bind: {
+                        hidden: '{perms.compensation}'
+                    }
                 },
                 {
                     xtype: 'selectfield',

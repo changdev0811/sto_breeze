@@ -61,7 +61,7 @@ Ext.define('Breeze.view.employee.information.Security', {
             ui: 'employeeinfo-fieldpanel',
             userCls: 'employee-info-fieldset-bordered',
             // userCls: 'employee-info-fieldpanel',
-            layout: 'hbox',
+            layout: 'vbox',
             title: 'Change Password',
             ignoreReadOnly: true,
             defaults: {
@@ -71,28 +71,59 @@ Ext.define('Breeze.view.employee.information.Security', {
                 ui: 'employeeinfo-textfield'
             },
             items: [
-                {
-                    name: 'old_password',
-                    label: 'Current Password',
-                    xtype: 'breeze-password'
+                { 
+                    xtype: 'container',
+                    layout: 'hbox',
+                    defaults: {
+                        flex: 1,
+                        userCls: 'employee-info-general-field',
+                        ui: 'employeeinfo-textfield'
+                    },
+                    items: [
+                        {
+                            name: 'old_password',
+                            label: 'Current Password',
+                            xtype: 'breeze-password'
+                        },
+                        {
+                            name: 'password',
+                            xtype: 'breeze-password',
+                            label: 'New Password',
+                            // Changing password requires new and new confirm pass
+                            listeners: {
+                                // make password fields required when value is entered
+                                change: 'updatePasswordRequirement'
+                            }
+                        },
+                        {
+                            name: 'confirm_new_password',
+                            label: 'Confirm',
+                            xtype: 'breeze-password',
+                        }
+                    ]
                 },
                 {
-                    name: 'password',
-                    xtype: 'breeze-password',
-                    label: 'New Password',
-                    // Changing password requires new and new confirm pass
-                    listeners: {
-                        // make password fields required when value is entered
-                        change: 'updatePasswordRequirement'
-                    }
-                },
-                {
-                    name: 'confirm_new_password',
-                    label: 'Confirm',
-                    xtype: 'breeze-password',
-                    
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    defaults: {
+                        xtype: 'button'
+                    },
+                    items: [
+                        {
+                            text: 'Reset',
+                            ui: 'decline'
+                        },
+                        {
+                            ui: 'action',
+                            text: "Change Password"
+                        }
+                    ]
+
                 }
-            ]  
+            ]
         }
     ]
 });

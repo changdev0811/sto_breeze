@@ -50,11 +50,7 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
 		 * @param {Object} field Field/Component to apply binding to
 		 */
     	propagateToField: function(field){
-			// Don't bind because field has ignoreReadOnly set to true
-			if(field.ignoreReadOnly){
-				return null;
-			}
-    		// console.group('Binding to field ' + field.xtype);
+			// console.group('Binding to field ' + field.xtype);
     		if(this.fieldTypes.disabled.includes(field.xtype)){
     			// console.info('Starting bind: ', field.getBind());
     			// var bind = field.getBind();
@@ -83,7 +79,9 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     	},
 
     	propagateBinding: function(root){
-    		this.propagateToField(root);
+    		if(!root.ignoreReadOnly){
+				this.propagateToField(root);
+			}
     		if(typeof root.getItems !== 'undefined' && this.config.recursive && !root.ignoreReadOnly){
     			var items = root.getItems().items;
     			for(var i = 0; i < items.length; i++){

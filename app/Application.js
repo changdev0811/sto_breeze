@@ -45,7 +45,7 @@ Ext.define('Breeze.Application', {
         // TODO: Removing testing check when out of dev
         var testing = true; // (should be removed later)
         if(testing){
-            Breeze.helper.Auth.setCookies("1","2","3");
+            Breeze.helper.Auth.setCookies("1","2","5001");
         }
         if(Breeze.helper.Auth.isAuthorized() || testing){
             // Ext.getStore('CompanyConfig').load();
