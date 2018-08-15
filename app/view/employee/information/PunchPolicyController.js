@@ -9,6 +9,13 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 
     // == Event Handlers ==
 
+	onInit: function(comp, eOpts){
+		this.lookup('otCheck1').setChecked(false);
+		this.lookup('otCheck2').setChecked(false);
+		this.lookup('otCheck3').setChecked(false);
+		this.lookup('otCheck4').setChecked(false);
+	},
+
 	// -- Rounding Rules --
 
     /**

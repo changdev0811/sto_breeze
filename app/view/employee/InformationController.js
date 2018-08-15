@@ -32,7 +32,6 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
-
                 me.loadEmployeeInfo(component, function(c){
                     // == After Employee Info loads ==
                     // Assign check fields after info loaded

@@ -20,13 +20,16 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
             'emailfield', 'passwordfield', 'textareafield', 'urlfield', 'selectfield'
     	],
     	disabled: [
-            'checkbox', 'checkboxfield', 'radio', 'radiofield', 'breeze-checkbox', 
-            'breeze-checkfield', 'togglefield', 'sliderfield'
-    	]
+            'checkbox', 'checkboxfield', 'radio', 'radiofield', 
+             'togglefield', 'sliderfield'
+		],
+		readOnly: [
+			'breeze-checkbox', 'breeze-checkfield',
+		]
     },
 
     init: function(host){
-    	console.info('Readonly plugin initialized for ', host);
+    	// console.info('Readonly plugin initialized for ', host);
     	this.propagateBinding(host);
     },
 
@@ -53,8 +56,16 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
                 field.getBind();
     			field.setBind({readOnly: this.expressionString(), editable: this.expressionString(true)});
     			// console.info('Post update bind: ', field.getBind());
+			}
+			if(this.fieldTypes.readOnly.includes(field.xtype)){
+    			// console.info('Starting bind: ', field.getBind());
+    			// bind.editable = this.expressionString(true);
+                // console.info(this.expressionString());
+                field.getBind();
+    			field.setBind({readOnly: this.expressionString()});
+    			// console.info('Post update bind: ', field.getBind());
     		}
-    		console.groupEnd();
+    		// console.groupEnd();
     	},
 
     	propagateBinding: function(root){
