@@ -60,7 +60,7 @@ Ext.define('Breeze.view.employee.information.Security', {
             // xtype: 'formpanel',
             ui: 'employeeinfo-fieldpanel',
             userCls: 'employee-info-fieldset-bordered',
-            // userCls: 'employee-info-fieldpanel',
+            reference: 'securityChangePassword',
             layout: 'vbox',
             title: 'Change Password',
             ignoreReadOnly: true,
@@ -83,7 +83,10 @@ Ext.define('Breeze.view.employee.information.Security', {
                         {
                             name: 'old_password',
                             label: 'Current Password',
-                            xtype: 'breeze-password'
+                            xtype: 'breeze-password',
+                            listeners: {
+                                change: 'checkChangeReady'
+                            }
                         },
                         {
                             name: 'password',
@@ -99,6 +102,9 @@ Ext.define('Breeze.view.employee.information.Security', {
                             name: 'confirm_new_password',
                             label: 'Confirm',
                             xtype: 'breeze-password',
+                            listeners: {
+                                change: 'checkChangeReady'
+                            }
                         }
                     ]
                 },
@@ -114,14 +120,21 @@ Ext.define('Breeze.view.employee.information.Security', {
                     items: [
                         {
                             text: 'Reset',
-                            ui: 'decline'
+                            listeners: {
+                                tap: 'onResetChangePasswordTap'
+                            }
                         },
                         {
                             ui: 'action',
-                            text: "Change Password"
+                            reference: 'changePasswordButton',
+                            text: 'Change Password',
+                            disabled: true,
+                            listeners: {
+                                tap: 'onChangePasswordTap'
+                            }
+
                         }
                     ]
-
                 }
             ]
         }

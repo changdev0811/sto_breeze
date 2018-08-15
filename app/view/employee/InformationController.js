@@ -20,6 +20,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         var me = this;
         var comp = component;
 
+        // remember id of user doing viewing
+        vm.set('viewerId', Breeze.helper.Auth.getCookies().emp);
+
         if(typeof component.getData().employee !== 'undefined'){
             this.empId = component.getData().employee;
             vm.set('employeeId', this.empId);
