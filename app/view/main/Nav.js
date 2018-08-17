@@ -137,7 +137,7 @@ Ext.define('Breeze.view.main.Nav', {
                             ]
                         },
                         {
-                            xtype: 'main.menuCollapseButton',
+                            xtype: 'breeze.navbar.collapsebutton',
                             ui: 'mainNavCollapseButton',
                             collapsed: false,
                             height: '2em',
@@ -147,9 +147,9 @@ Ext.define('Breeze.view.main.Nav', {
                         },
                         {
                             // Side navigation menu tree
-                            xtype: 'breeze.list.navtree',
+                            xtype: 'breeze.navbar.navtree',
                             defaults: {
-                                xtype: 'breeze.list.navtreeitem'
+                                xtype: 'breeze.navbar.navtreeitem'
                             },
                             micro: false,
                             flex: 3,

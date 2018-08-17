@@ -2,14 +2,14 @@
  * Extended version of Ext.list.Tree with specific functionality 
  * for SideNav
  * @class NavTree
- * @namespace Breeze.widget.list.NavTree
- * @alias widget.breeze.list.navtree
+ * @namespace Breeze.widget.navBar.NavTree
+ * @alias widget.breeze.navbar.navtree
  * @extends Ext.list.Tree
- * @xtype breeze-treelist
+ * @xtype breeze-navtree
  */
-Ext.define('Breeze.widget.list.NavTree', {
+Ext.define('Breeze.widget.navBar.NavTree', {
     extend: 'Ext.list.Tree',
-    alias: 'widget.breeze.list.navtree',
+    alias: 'widget.breeze.navbar.navtree',
     xtype: 'breeze-treelist',
 
 
@@ -20,7 +20,7 @@ Ext.define('Breeze.widget.list.NavTree', {
      */
     getExpandedSelection: function(){
         var selected = this.getSelection();
-        if(selected.isLeaf()){
+        if(selected && selected.isLeaf()){
             selected = selected.parentNode;
         }
         if(selected && selected.isExpanded()){

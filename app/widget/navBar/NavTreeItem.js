@@ -1,14 +1,14 @@
 /**
  * Override for default list tree item, enhanced for side nav use
  * @class NavTreeItem
- * @namespace Breeze.widget.list.NavTreeItem
- * @alias widget.breeze.list.navtreeitem
+ * @namespace Breeze.widget.navBar.NavTreeItem
+ * @alias widget.breeze.navbar.navtreeitem
  * @extends Ext.list.TreeItem
  * @xtype breeze-navtreeitem
  */
-Ext.define('Breeze.widget.list.NavTreeItem', {
+Ext.define('Breeze.widget.navBar.NavTreeItem', {
     extend: 'Ext.list.TreeItem',
-    alias: 'widget.breeze.list.navtreeitem',
+    alias: 'widget.breeze.navbar.navtreeitem',
     xtype: 'breeze-navtreeitem',
 
     // Name of extra item attribute field

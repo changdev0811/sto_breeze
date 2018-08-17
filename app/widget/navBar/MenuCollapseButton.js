@@ -1,6 +1,6 @@
-Ext.define('Breeze.view.main.MenuCollapseButton', {
+Ext.define('Breeze.widget.navBar.CollapseButton', {
     extend: 'Ext.Button',
-    alias: 'widget.main.menuCollapseButton',
+    alias: 'widget.breeze.navbar.collapsebutton',
     
     
     config: {
