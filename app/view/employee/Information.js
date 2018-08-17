@@ -115,7 +115,13 @@ Ext.define('Breeze.view.employee.Information', {
                             userCls: 'employee-info-general-field',
                             ui: 'employeeinfo-textfield',
                             required: true,
-                            bind: '{info.punchPolicy.policy_id}'
+                            bind: {
+                                value: '{info.punchPolicy.policy_id}',
+                                // manual binding since readonly plugin isn't applied here
+                                editable: '{!readOnly}',
+                                readOnly: '{readOnly}',
+                                disabled: '{readOnly}'
+                            }
                         },
                         {
                             xtype: 'employee.information.punchpolicy',

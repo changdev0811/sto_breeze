@@ -24,7 +24,7 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
              'togglefield', 'sliderfield'
 		],
 		readOnly: [
-			'breeze-checkbox', 'breeze-checkfield',
+			'breeze-checkbox', 'breeze-checkboxfield',
 		]
     },
 
