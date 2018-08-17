@@ -1,0 +1,18 @@
+/**
+    Styles for Breeze.widget.punch.PunchButton component
+*/
+.breeze-punch-punchclock{
+    background-color: $confirm-color;
+    //background-color: $base-color-green;
+}
+
+.breeze-punch-punchclock {
+    // Sizing for micro mode
+    &.micro {
+        height: auto;
+    }
+    // Sizing for full mode
+    &.full {
+        height: 70pt;
+    }
+}

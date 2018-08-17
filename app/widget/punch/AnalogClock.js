@@ -1,6 +1,15 @@
-Ext.define('Breeze.view.main.tko.AnalogClock', {
+/**
+ * Punch Analog Clock widget
+ * @class AnalogClock
+ * @namespace Breeze.widget.punch.AnalogClock
+ * @alias widget.breeze.punch.AnalogClock
+ * @extends Ext.Component
+ * @xtype breeze-analogclock
+ */
+Ext.define('Breeze.widget.punch.AnalogClock', {
     extend: 'Ext.Component',
-    alias:'widget.main.tko.analogClock',
+    alias:'widget.breeze.punch.analogclock',
+    xtype: 'breeze-analogclock',
     userCls:'tko-analog-clock',
     //html:"<div class='tko-analog-clock-min'></div><div class='tko-analog-clock-hrs'></div><div class='tko-analog-clock-sec'></div>",
     html:"<div class='tko-analog-clock-min'></div><div class='tko-analog-clock-hrs'></div>",

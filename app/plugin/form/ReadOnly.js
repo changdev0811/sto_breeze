@@ -9,6 +9,7 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     alias: 'plugin.breeze.form.readonly',
 
     config: {
+		active: true,
     	recursive: true,
     	expression: ''
     },
@@ -31,7 +32,13 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     init: function(host){
     	// console.info('Readonly plugin initialized for ', host);
     	this.propagateBinding(host);
-    },
+	},
+	
+	updateActive: function(newVal, oldVal){
+		if(newVal !== oldVal){
+			this.propagateBinding(this.getCmp());
+		}
+	},
 
     privates: {
 
@@ -79,10 +86,10 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     	},
 
     	propagateBinding: function(root){
-    		if(!root.ignoreReadOnly){
+    		if(!root.ignoreReadOnly && this.getActive()){
 				this.propagateToField(root);
 			}
-    		if(typeof root.getItems !== 'undefined' && this.config.recursive && !root.ignoreReadOnly){
+    		if(typeof root.getItems !== 'undefined' && this.config.recursive && !root.ignoreReadOnly && this.getActive()){
     			var items = root.getItems().items;
     			for(var i = 0; i < items.length; i++){
     				this.propagateBinding(items[i]);

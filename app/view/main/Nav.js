@@ -5,11 +5,11 @@ Ext.define('Breeze.view.main.Nav', {
     requires: [
         'Breeze.view.main.NavModel',
         'Breeze.view.main.NavController',
-        'Breeze.view.main.tko.AnalogClock',
-        'Breeze.view.main.tko.DigitalClock',
+        'Breeze.widget.punch.AnalogClock',
+        'Breeze.widget.punch.DigitalClock',
         'Ext.menu.Menu',
         'Ext.menu.Item',
-        'Ext.list.Tree',
+        'Breeze.widget.navBar.NavTree',
         'Ext.Toolbar',
         'Ext.Img',
         'Ext.Button'
@@ -94,47 +94,18 @@ Ext.define('Breeze.view.main.Nav', {
             layout: 'hbox',
             items: [
                 {
+
                     xtype: 'container',
                     layout: 'vbox',
-                    minWidth: '200pt',
-                    maxWidth: '200pt',
+                    // minWidth: '200pt',
+                    // maxWidth: '200pt',
                     //width: 'auto',
                     // flex: 1,
-                    userCls:'main-nav-side-bar',
+                    userCls:['main-nav-side-bar'],
                     items: [
                         {
-                            xtype: 'container',
+                            xtype: 'breeze-punchbutton',
                             reference: 'navPunchClock',
-                            layout: 'hbox',
-                            height:'70pt',
-                            userCls:'main-nav-punch-clock',
-                            items: [
-                                {
-                                    xtype:'main.tko.analogClock'
-
-                                },{
-                                    
-                                    xtype:'main.tko.digitalClock',
-                                    clockedIn:false,
-                                    abbreviated:false
-
-                                }
-                                /*
-                                {
-                                    xtype: 'component',
-                                    itemId: 'dateTime',
-                                    bind: {
-                                        html: 
-                                            '<h3>{punchDate}</h3><hr>' +
-                                            '<h4>{punchTime}</h4><hr>' +
-                                            '<h5>{punchStatus}</h5>'
-                                    }
-                                }, {
-                                    xtype: 'component',
-                                    itemId: 'clock'
-                                }
-                                */
-                            ]
                         },
                         {
                             xtype: 'breeze.navbar.collapsebutton',
@@ -153,7 +124,7 @@ Ext.define('Breeze.view.main.Nav', {
                             },
                             micro: false,
                             flex: 3,
-                            userCls: 'main-nav-side-menu',
+                            userCls: ['main-nav-side-menu','normal'],
                             ui: 'SideNav',
                             expanderFirst:false,
                             expanderOnly:false,

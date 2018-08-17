@@ -1,5 +1,13 @@
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
+    &.micro {
+        width: 70pt;
+    }
+    &.normal {
+        // minWidth: 200pt;
+        // maxWidth: 200pt;
+        width: 200pt;
+    }
     //font-weight: bold;
     // smaller subitems
     .x-treelist-item-expander{
@@ -45,12 +53,6 @@
 .main-nav-side-bar{
     background-color: $base-color;
 }
-
-.main-nav-punch-clock{
-    background-color: $confirm-color;
-    //background-color: $base-color-green;
-}
-
 
 .main-nav-user-button {
 

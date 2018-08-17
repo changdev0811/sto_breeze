@@ -43,18 +43,21 @@
 
         // Event Handlers
 
+        /**
+         * Handles user clicking on sidebar toggle button
+         */
         onSideNavToggle: function(button, e, eOpts){
-            var collapsed = !button.getCollapsed()
+            var collapsed = !button.getCollapsed();
             button.setCollapsed(collapsed);
             var navTree = this.lookup('navSideMenuTree');
+            // update layout of punch clock
+            this.lookup('navPunchClock').setMicro(collapsed);
+            // If button's collapsed state isn't the same as
+            // the nav tree's micro property, update the navtree
             if(collapsed !== navTree.micro){
-                // if(collapsed){
-                //     var expanded = navTree.getExpandedSelection();
-                //     if(expanded == null){
-                //         console.info('Going to micro with no ')
-                //     }
-                // }
                 navTree.setMicro(collapsed);
+                navTree.toggleCls('normal', !collapsed);
+                navTree.toggleCls('micro', collapsed);
                 navTree.setStore(
                     (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
                     this.getViewModel().getStore('personalNav')

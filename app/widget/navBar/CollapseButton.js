@@ -1,3 +1,8 @@
+/**
+ * Custom button that has a 'collapse' property
+ * For use with NavTree
+ * @class 
+ */
 Ext.define('Breeze.widget.navBar.CollapseButton', {
     extend: 'Ext.Button',
     alias: 'widget.breeze.navbar.collapsebutton',
