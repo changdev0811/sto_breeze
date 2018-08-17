@@ -46,8 +46,19 @@
         onSideNavToggle: function(button, e, eOpts){
             var collapsed = !button.getCollapsed()
             button.setCollapsed(collapsed);
-            if(collapsed !== this.lookup('navSideMenuTree').micro){
-                this.lookup('navSideMenuTree').setMicro(collapsed);
+            var navTree = this.lookup('navSideMenuTree');
+            if(collapsed !== navTree.micro){
+                // if(collapsed){
+                //     var expanded = navTree.getExpandedSelection();
+                //     if(expanded == null){
+                //         console.info('Going to micro with no ')
+                //     }
+                // }
+                navTree.setMicro(collapsed);
+                navTree.setStore(
+                    (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
+                    this.getViewModel().getStore('personalNav')
+                );
             }
         },
 
@@ -72,6 +83,7 @@
         },
 
         onPersonalEmployeeInfoRoute: function(){
+            console.info('Employee Info Route');
             // var auth = Breeze.helper.Auth.getCookies();
             // var info = Ext.create('Breeze.view.employee.Information');
             this.changeContent(

@@ -147,7 +147,10 @@ Ext.define('Breeze.view.main.Nav', {
                         },
                         {
                             // Side navigation menu tree
-                            xtype: 'treelist',
+                            xtype: 'breeze.list.navtree',
+                            defaults: {
+                                xtype: 'breeze.list.navtreeitem'
+                            },
                             micro: false,
                             flex: 3,
                             userCls: 'main-nav-side-menu',
