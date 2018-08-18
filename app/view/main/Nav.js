@@ -66,7 +66,7 @@ Ext.define('Breeze.view.main.Nav', {
                     ui:'mainNavUserButton',
                     userCls:'main-nav-user-button',
                     buttonType: 'icon',
-                    iconCls: 'x-fa fa-user',
+                    iconCls: 'x-fas fa-user',
                     text: '',
                     menu:{
                         xtype: 'menu',
@@ -74,12 +74,12 @@ Ext.define('Breeze.view.main.Nav', {
                             {
                                xtype: 'menuitem',
                                text:'User Preferences',
-                            //    iconCls:'x-fa fa-user-cog',
-                               icon: 'resources/icons/user-cog.svg'
+                               iconCls:'x-fas fa-user-cog',
+                            //    icon: 'resources/icons/user-cog.svg'
                             }, {
                                xtype: 'menuitem',
                                text:'Sign Out',
-                               iconCls:'x-fa fa-sign-out',
+                               iconCls:'x-fas fa-sign-out',
                                handler: 'onMenuSignOut'
                             }
                         ]

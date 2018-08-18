@@ -17,59 +17,59 @@ Ext.define('Breeze.view.main.NavModel', {
                 children: [
                     /*{
                         text: 'Dashboard', leaf: true,
-                        iconCls: 'x-fa fa-tachometer'
+                        iconCls: 'x-fas fa-tachometer'
                     },*/ {
                         text: 'Personal',
-                        iconCls: 'x-fa fa-user',
+                        iconCls: 'x-fas fa-user',
                         // routeAct: false,
                         routeRef: 'personal',
                         id: 'personal',
                         children: [
                             {
                                 text: 'Download PunchStation', leaf: true,
-                                iconCls: 'x-fa fa-cloud-download',
+                                iconCls: 'x-fas fa-cloud-download-alt',
                                 routeRef: 'download/punch_station',
                                 id: 'personal'
                             },
                             {
                                 text: 'Calendar', leaf: true,
-                                iconCls: 'x-fa fa-calendar',
+                                iconCls: 'x-fas fa-calendar',
                                 id: 'personal'
                             }, {
                                 text: 'Employee Information', leaf: true,
-                                iconCls: 'x-fa fa-id-card-o',
+                                iconCls: 'x-fas fa-id-card-o',
                                 routeRef: 'personal/info',
                                 id: 'personal'
                             }, {
                                 text: 'FYI', leaf: true,
-                                iconCls: 'x-fa fa-table',
+                                iconCls: 'x-fas fa-table',
                                 routeRef: 'personal/fyi',
                                 id: 'personal'
                             }, {
                                 text: 'Year at a Glance', leaf: true,
-                                iconCls: 'x-fa fa-eye',
+                                iconCls: 'x-fas fa-eye',
                                 routeRef: 'personal/year_at_a_glance',
                                 id: 'personal'
                             }, {
                                 text: 'WorkTime Records', leaf: true,
-                                iconCls: 'x-fa fa-calendar-check-o',
+                                iconCls: 'x-fas fa-calendar-check-o',
                                 routeRef: 'personal/worktime_records',
                                 id: 'personal'
                             }
                         ]
                     }, {
                         text: 'My Requests', leaf: true,
-                        iconCls: 'x-fa fa-retweet',
+                        iconCls: 'x-fas fa-retweet',
                         routeRef: 'personal/requests',
                         id: 'myRequests'
                     },  {
                         text: 'Reports', leaf: true,
-                        iconCls: 'x-fa fa-bar-chart',
+                        iconCls: 'x-fas fa-bar-chart',
                         routeRef: 'personal/reports',
                         id: 'reports'
                     },  {
                         text: 'Help', leaf: true,
-                        iconCls: 'x-fa fa-question-circle',
+                        iconCls: 'x-fas fa-question-circle',
                         routeRef: 'help',
                         id: 'help'
                     }
@@ -82,18 +82,18 @@ Ext.define('Breeze.view.main.NavModel', {
                 children: [
                     /*{
                         text: 'Dashboard', leaf: true,
-                        iconCls: 'x-fa fa-tachometer'
+                        iconCls: 'x-fas fa-tachometer'
                     },*/ 
                     {
                         text: 'Personal',
-                        iconCls: 'x-fa fa-user',
+                        iconCls: 'x-fas fa-user',
                         // routeAct: false,
                         routeRef: 'personal',
                         id: 'personal'
                     },
                     {
                         text: 'Download PunchStation', //leaf: true,
-                        iconCls: 'x-fa fa-cloud-download',
+                        iconCls: 'x-fas fa-cloud-download',
                         routeRef: 'download/punch_station',
                         id: 'personal',
                         extra: {
@@ -103,7 +103,7 @@ Ext.define('Breeze.view.main.NavModel', {
                     },
                     {
                         text: 'Calendar', leaf: true,
-                        iconCls: 'x-fa fa-calendar',
+                        iconCls: 'x-fas fa-calendar',
                         id: 'personal',
                         extra: {
                             parent: 'personal',
@@ -111,7 +111,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         }
                     }, {
                         text: 'Employee Information', leaf: true,
-                        iconCls: 'x-fa fa-id-card-o',
+                        iconCls: 'x-fas fa-id-card-o',
                         routeRef: 'personal/info',
                         id: 'personal',
                         extra: {
@@ -120,7 +120,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         }
                     }, {
                         text: 'FYI', leaf: true,
-                        iconCls: 'x-fa fa-table',
+                        iconCls: 'x-fas fa-table',
                         routeRef: 'personal/fyi',
                         id: 'personal',
                         extra: {
@@ -129,7 +129,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         }
                     }, {
                         text: 'Year at a Glance', leaf: true,
-                        iconCls: 'x-fa fa-eye',
+                        iconCls: 'x-fas fa-eye',
                         routeRef: 'personal/year_at_a_glance',
                         id: 'personal',
                         extra: {
@@ -138,7 +138,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         }
                     }, {
                         text: 'WorkTime Records', leaf: true,
-                        iconCls: 'x-fa fa-calendar-check-o',
+                        iconCls: 'x-fas fa-calendar-check-o',
                         routeRef: 'personal/worktime_records',
                         id: 'personal',
                         extra: {
@@ -147,17 +147,17 @@ Ext.define('Breeze.view.main.NavModel', {
                         }
                     }, {
                         text: 'My Requests', leaf: true,
-                        iconCls: 'x-fa fa-retweet',
+                        iconCls: 'x-fas fa-retweet',
                         routeRef: 'personal/requests',
                         id: 'myRequests'
                     },  {
                         text: 'Reports', leaf: true,
-                        iconCls: 'x-fa fa-bar-chart',
+                        iconCls: 'x-fas fa-bar-chart',
                         routeRef: 'personal/reports',
                         id: 'reports'
                     },  {
                         text: 'Help', leaf: true,
-                        iconCls: 'x-fa fa-question-circle',
+                        iconCls: 'x-fas fa-question-circle',
                         routeRef: 'help',
                         id: 'help'
                     }

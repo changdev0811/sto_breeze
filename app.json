@@ -26,7 +26,8 @@
      */
     "requires": [
         /* glyph font */
-        "font-awesome",
+        // "font-awesome",
+        "font-awesome-52",
         /* extra packages */
         "sencha-charts",
         "calendar"
