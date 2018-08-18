@@ -18,11 +18,13 @@
         requires: [
             'Ext.route.Route',
             'Breeze.helper.Auth',
-            'Breeze.helper.routing.TreeRouter'
+            'Breeze.helper.routing.TreeRouter',
+            'Breeze.api.Auth'
         ],
 
         init: function(component){
             this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
+            this.apiClass = Ext.create('Breeze.api.Auth');
         },
 
         // Routes
@@ -73,6 +75,13 @@
             var r = this.router.resolve(tRecord, true);
             console.log("Route result: " + r);
             this.router.resolve(tRecord);
+        },
+
+        /**
+         * Handle 'Sign Out' menu item click
+         */
+        onMenuSignOut: function(c, e, eOpts){
+            this.apiClass.logout();
         },
 
         // Route change handlers

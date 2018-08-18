@@ -74,11 +74,13 @@ Ext.define('Breeze.view.main.Nav', {
                             {
                                xtype: 'menuitem',
                                text:'User Preferences',
-                               iconCls:'x-fa fa-user-cog' 
+                            //    iconCls:'x-fa fa-user-cog',
+                               icon: 'resources/icons/user-cog.svg'
                             }, {
                                xtype: 'menuitem',
                                text:'Sign Out',
-                               iconCls:'x-fa fa-sign-out' 
+                               iconCls:'x-fa fa-sign-out',
+                               handler: 'onMenuSignOut'
                             }
                         ]
                     }
@@ -145,7 +147,10 @@ Ext.define('Breeze.view.main.Nav', {
                     margin: '6 6 6 6',
                     reference: 'contentContainer',
                     scrollable: 'vertical',
-                    navigationBar: false
+                    navigationBar: false,
+                    layout: {
+                        animation: 'fade'
+                    }
                     // layout: 'fit'
                 }
             ]
