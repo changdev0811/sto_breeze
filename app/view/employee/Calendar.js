@@ -9,7 +9,9 @@ Ext.define('Breeze.view.employee.Calendar',{
         'Ext.calendar.panel.Month',
         'Ext.Toolbar',
         'Ext.Button',
-        'Ext.Component'
+        'Ext.Component',
+        'Ext.dataview.List',
+        'Ext.XTemplate'
     ],
     
     //viewModel: {
@@ -55,7 +57,7 @@ Ext.define('Breeze.view.employee.Calendar',{
             xtype: 'calendar',
             userCls: 'employee-calendar',
             label: 'Month',
-            flex: 1,
+            flex: 4,
             ui: 'employee-calendar',
             compact: true,
             titleBar: {
@@ -75,7 +77,27 @@ Ext.define('Breeze.view.employee.Calendar',{
 
 
             }
+        },
+
+        {
+            xtype: 'list',
+            ui:'calendar-legend',
+            userCls:'legend' ,
+            flex:1,
+            layout: 'vbox',
+            itemConfig: {
+                ui:'calendar-legend'
+            },
+            itemTpl:'<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{color}"></div>{title}</div>',
+
+            store: [
+                { title: 'Item 1', color:'rgb(255,0,0,1)'  },
+                { title: 'Item 2', color:'rgb(255,255,0,1)'},
+                { title: 'Item 3', color:'rgb(0,255,0,1)'  },
+                { title: 'Item 4', color:'rgb(0,255,255,1)'}
+            ]
         }
+
     ]
 
 });
