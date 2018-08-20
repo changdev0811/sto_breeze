@@ -51,21 +51,27 @@ Ext.define('Breeze.view.main.Nav', {
                     flex: 1,
                     layout: 'vbox',
                     items: [
+                        // Company Name
                         {
                             xtype: 'component',
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-company-name',
-                            html: 'Company Name',
-                            reference: 'navHeaderCompanyName'
+                            reference: 'navHeaderCompanyName',
+                            bind: {
+                                html: '{header.business}'
+                            }
                         },
+                        // User Name
                         {
                             xtype: 'component',
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-user-name',
-                            html: 'First M. Last',
-                            reference: 'navHeaderUserName'
+                            reference: 'navHeaderUserName',
+                            bind: {
+                                html: '{header.fullname}'
+                            }
                         }
                     ]
                 },

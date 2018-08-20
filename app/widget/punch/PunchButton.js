@@ -65,6 +65,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
         this.getComponent('digitalClock').setClockedIn(newVal);
         this.toggleCls('in', newVal);
         this.toggleCls('out', !newVal);
+
     },
 
     items: [
@@ -82,24 +83,23 @@ Ext.define('Breeze.widget.punch.PunchButton', {
             itemId: 'menuButton',
             docked: 'right',
             menuAlign: 'tr',
-            ui: 'punchclock-button',
+            ui: ['punchclock-button', 'punchclock-button-sm'],
             arrow: false,
             iconCls: 'x-fas fa-angle-right',
             menu: {
                 xtype: 'menu',
-                ui: 'punch-punchclock-button',
                 floated: true,
-                itemId: 'punchPopupMenu',
+                reference: 'punchPopupMenu',
                 defaults: { xtype: 'menuitem' },
                 items: [
                     { 
                         text: 'Clock In',
                         icon: 'resources/icons/clock-in.svg',
-                        iconCls: 'x-fas'
-
+                        itemId: 'mnuClockIn'
                     }, {
                         text: 'Clock Out',
-                        icon: 'resources/icons/clock-out.svg'
+                        icon: 'resources/icons/clock-out.svg',
+                        itemId: 'mnuClockOut'
                     }
                 ]
             }

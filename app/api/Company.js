@@ -4,7 +4,7 @@
  * @todo TODO: Decide if a Company scope is needed
  * @class Company
  * @alias Breeze.api.Company
- * @see Breeze.api.Base
+ * @extends Breeze.api.Base
  */
 Ext.define('Breeze.api.Company', {
     extend: 'Breeze.api.Base',

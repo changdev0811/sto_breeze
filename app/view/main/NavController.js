@@ -26,12 +26,29 @@
             'Ext.route.Route',
             'Breeze.helper.Auth',
             'Breeze.helper.routing.TreeRouter',
-            'Breeze.api.Auth'
+            'Breeze.api.Auth',
+            'Breeze.api.Common',
         ],
 
         init: function(component){
             this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
             this.apiClass = Ext.create('Breeze.api.Auth');
+            this.commonClass = Ext.create('Breeze.api.Common');
+            this.loadHeader();
+        },
+
+        /**
+         * Load data displayed in app header
+         */
+        loadHeader: function(){
+            var me = this;
+            this.commonClass.getHeaderInfo().then(
+                function(data){
+                    me.getViewModel().set('header', data);
+                }
+            ).catch(function(err){
+                console.warn('Failed to load header info', err);
+            });
         },
 
         // Routes

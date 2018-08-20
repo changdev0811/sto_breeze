@@ -57,3 +57,8 @@
 //     $color: map-get($punchclock-text-colors, 'base')
 // );
 
+@include button-ui(
+    $ui: 'punchclock-button-sm',
+    $arrow-font-size: 10pt,
+    $icon-font-size: 10pt
+);

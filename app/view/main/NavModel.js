@@ -13,7 +13,12 @@ Ext.define('Breeze.view.main.NavModel', {
 
     data: {
         mode: 'personal',
-        context: -1
+        context: -1,
+        currentEmployee: {},
+        header: {
+            fullname: 'Full Name',
+            business: 'Company Name'
+        }
     },
 
     stores: {
@@ -105,7 +110,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     },
                     {
@@ -115,7 +120,7 @@ Ext.define('Breeze.view.main.NavModel', {
 						routeRef: 'personal/calendar',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'Employee Information', leaf: true,
@@ -124,7 +129,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'FYI', leaf: true,
@@ -133,7 +138,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'Year at a Glance', leaf: true,
@@ -142,7 +147,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'WorkTime Records', leaf: true,
@@ -151,7 +156,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'My Requests', leaf: true,

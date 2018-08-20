@@ -8,7 +8,12 @@
 Ext.define('Breeze.api.employee.Information', {
     extend: 'Breeze.api.Base',
 
-    // TODO: Implement
+    /**
+     * Gets employee info
+     * @api getEmployeeInfo
+     * @param {String} employeeId ID of employee
+     * @param {String} storeId name of store to load into
+     */
     getEmployeeInfo: function(employeeId, storeId){
         var authInfo = this.auth.getCookies();
         var employeeId = this.defVal(employeeId, authInfo.emp);
@@ -52,6 +57,50 @@ Ext.define('Breeze.api.employee.Information', {
             )
         });
     },
+
+    /**
+     * Get current employee info
+     * @api getCurrentEmployeeInfo
+     * @param {boolean} resolveDefaultProject If true, make secondary ajax
+     *  call to getProjectByID if response's DefaultProject isn't null 
+     *  (default true)
+     * @return {Promise} Promise resolving with response (object) or rejecting 
+     *  with error
+     */
+    getCurrentInfo: function(resolveDefaultProject){
+        // var authInfo = this.auth.getCookies();
+        var resolveDefaultProject = this.defVal(resolveDefaultProject, true);
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'getCurrentEmployeeInfo',
+                {},
+                true, true,
+                function(response){
+                    var info = api.decodeJsonResponse(response);
+                    if(info.DefaultProject !== null && resolveDefaultProject){
+                        var prjApi = Ext.create('Breeze.api.company.Project');
+                        prjApi.getById(info.DefaultProject).then(
+                            function(r){
+                                info.defaultProjectCode = r;
+                            }
+                        ).catch(function(err){
+                            console.warn('Got error from getProjectById: ', err);
+                            info.defaultProjectCode = "";
+                        });
+                    } else {
+                        info.defaultProjectCode = "";
+                    }
+                    resolve(info);
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        })
+    },
+
+    // TODO: Implement addNewEmployee
     addNewEmployee: function(){},
     
 });
