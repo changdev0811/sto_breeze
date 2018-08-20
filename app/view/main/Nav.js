@@ -99,8 +99,6 @@ Ext.define('Breeze.view.main.Nav', {
                         ]
                     }
                 }
-
-
             ]
 
         },
@@ -122,7 +120,17 @@ Ext.define('Breeze.view.main.Nav', {
                         {
                             xtype: 'breeze-punchbutton',
                             reference: 'navPunchClock',
-                            
+                            bind: {
+                                hidden: '{!hasKron || (!canQuickPunch && !canPunch)}',
+                                allowed: {
+                                    quick: '{canQuickPunch}',
+                                    regular: '{canPunch}'
+                                },
+                                clockedIn: '{isClockedIn}'
+                            },
+                            listeners: {
+                                punch: 'onPunch'
+                            }
                         },
                         {
                             xtype: 'breeze.navbar.collapsebutton',

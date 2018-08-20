@@ -1,5 +1,10 @@
 /**
  * Punch Button component used in Nav
+ * 
+ * Has one listenable event, 'punch' which gives 
+ *  function(comp, quick, kind) with quick as a bool indicating 
+ *  if quick punch and kind as kind ('in', 'out', 'regular').
+ * 
  * @class PunchButton
  * @namespace Breeze.widget.punch.PunchButton
  * @alias widget.breeze.punch.punchbutton
@@ -14,7 +19,13 @@ Ext.define('Breeze.widget.punch.PunchButton', {
 
     config: {
         micro: false,
-        clockedIn: false
+        clockedIn: false,
+        allowed: {
+            // Allow quick punches (clock in/out menu items)
+            quick: true,
+            // Allow regular punch (punch window menu item)
+            regular: true
+        }
     },
 
     // === Style Class / Layout Constants ===
@@ -66,8 +77,42 @@ Ext.define('Breeze.widget.punch.PunchButton', {
         this.toggleCls('in', newVal);
         this.toggleCls('out', !newVal);
         var menu = this.getComponent('menuButton').getMenu();
-        menu.getComponent('mnuClockIn').setHidden(newVal);
-        menu.getComponent('mnuClockOut').setHidden(!newVal);
+        menu.getComponent('mnuClockIn').setHidden(newVal || !this.getAllowed().quick);
+        menu.getComponent('mnuClockOut').setHidden(!newVal || !this.getAllowed().quick);
+        console.info('Clocked in? ', newVal);
+    },
+
+    /**
+     * Handle the value of allowed getting changed
+     */
+    updateAllowed: function(newVal, oldVal){
+        var menu = this.getComponent('menuButton').getMenu();
+        menu.getComponent('mnuClockIn').setHidden(
+            this.getClockedIn() || !newVal.quick
+        );
+        menu.getComponent('mnuClockOut').setHidden(
+            !this.getClockedIn() || !newVal.quick
+        );
+        menu.getComponent('mnuPunchWindow').setHidden(
+            !newVal.regular
+        );
+    },
+
+    /**
+     * Attach event listeners
+     */
+    afterRender: function(){
+        var me = this;
+        var menu = me.getComponent('menuButton').getMenu();
+        menu.getComponent('mnuClockIn').setHandler(function(c,e,eOpts){
+            me.fireEvent('punch', me, true, 'in', eOpts);
+        });
+        menu.getComponent('mnuClockOut').setHandler(function(c,e,eOpts){
+            me.fireEvent('punch', me, true, 'out', eOpts);
+        });
+        menu.getComponent('mnuPunchWindow').setHandler(function(c,e,eOpts){
+            me.fireEvent('punch', me, false, 'regular', eOpts);
+        });
     },
 
     items: [
@@ -103,7 +148,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
                         itemId: 'mnuClockOut'
                     }, {
                         text: 'Punch Window',
-                        itemId: 'menuPunchWindow',
+                        itemId: 'mnuPunchWindow',
                         disabled: true
                     }
                 ]

@@ -13,6 +13,7 @@
         extend: 'Ext.app.ViewController',
         alias: 'controller.main.nav',
 
+        // TODO: Determine if this actually does anything
         stores: [
             'Breeze.store.option.UserTypes',
             'Breeze.store.option.Genders',
@@ -21,7 +22,6 @@
             'Breeze.store.company.Config'
         ],
     
-
         requires: [
             'Ext.route.Route',
             'Breeze.helper.Auth',
@@ -31,6 +31,22 @@
             'Breeze.api.Punch'
         ],
 
+        // Routes
+        routes: {
+            'personal': 'onHomeRoute',
+            'personal/info': {
+                action: 'onPersonalEmployeeInfoRoute',
+                name: 'personal_info'
+            },
+            'personal/fyi': {
+                action: 'onPersonalFyiRoute',
+            },
+            'personal/year_at_a_glance': 'onPersonalYaagRoute',
+            'personal/worktime_records': 'onPersonalWtrRoute',
+            'personal/calendar': 'onPersonalCalendarRoute',
+            'download/punch_station': 'onDownloadPunchStationRoute'
+        },
+
         init: function(component){
             this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
             this.apiClass = Ext.create('Breeze.api.Auth');
@@ -38,6 +54,7 @@
             this.punchClass = Ext.create('Breeze.api.Punch');
             this.loadEmployee();
             this.loadPunchSettings();
+            this.updateAttendanceStatus();
         },
 
         /**
@@ -54,13 +71,16 @@
             });
             this.empClass.getDefaultProjectCode().then(
                 function(code){
-                    me.getViewModel().set('defaultProjectCode', code);
+                    me.getViewModel().set('punch.defaultProjectCode', code);
                 }
             ).catch(function(err){
                 console.warn('Unable to get default project code', err);
             });
         },
 
+        /**
+         * Load punch related settings
+         */
         loadPunchSettings: function(){
             var me = this;
             this.punchClass.getCurrentPolicy().then(
@@ -71,20 +91,13 @@
             )
         },
 
-        // Routes
-        routes: {
-            'personal': 'onHomeRoute',
-            'personal/info': {
-                action: 'onPersonalEmployeeInfoRoute',
-                name: 'personal_info'
-            },
-            'personal/fyi': {
-                action: 'onPersonalFyiRoute',
-            },
-            'personal/year_at_a_glance': 'onPersonalYaagRoute',
-            'personal/worktime_records': 'onPersonalWtrRoute',
-            'personal/calendar': 'onPersonalCalendarRoute',
-            'download/punch_station': 'onDownloadPunchStationRoute'
+        updateAttendanceStatus: function(){
+            var vm = this.getViewModel();
+            this.punchClass.getAttendanceStatus().then(
+                function(resp){
+                    vm.set('punch.status', resp);
+                }
+            );
         },
 
         // Event Handlers
@@ -108,6 +121,25 @@
                     (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
                     this.getViewModel().getStore('personalNav')
                 );
+            }
+        },
+
+        /**
+         * Handle punch clock events
+         * @param {Object} cmp Punch clock button component
+         * @param {Boolean} quick If punch is a quick punch or not
+         * @param {String} kind Kind of punch ('in', 'out', or 'regular')
+         */
+        onPunch: function(cmp, quick, kind){
+            if(quick){
+                if(kind == 'in'){
+                    console.info('Punch in');
+                }
+                if(kind == 'out'){
+                    console.info('Punch out');
+                }
+            } else {
+                console.info('Regular punch');
             }
         },
 

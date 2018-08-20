@@ -11,6 +11,8 @@ Ext.define('Breeze.view.main.NavModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.main.nav',
 
+    requires: ['Breeze.api.Punch'],
+
     data: {
         mode: 'personal',
         context: -1,
@@ -24,7 +26,10 @@ Ext.define('Breeze.view.main.NavModel', {
         punch: {
             defaultProjectCode: null,
             status: 0,
-            policy: {}
+            policy: {
+                hasTimeKron: false,
+                info: {}
+            }
         }
     },
 
@@ -193,6 +198,28 @@ Ext.define('Breeze.view.main.NavModel', {
     },
 
     formulas: {
-        
+        hasKron: function(get){
+            return (
+                get('punch.policy.hasTimeKron')
+            );
+        },
+
+        // Can user do punch in/out without needing details?
+        canQuickPunch: function(get){
+            return (
+                get('punch.policy.info.Allow_QuickPunch')
+            );
+        },
+        // Can user do detailed punch?
+        canPunch: function(get){
+            return (
+                get('punch.policy.info.Allow_RegularPunch')
+            );
+        },
+        isClockedIn: function(get){
+            return (
+                get('punch.status') == Breeze.api.Punch.status.IN
+            );
+        }
     }
 });

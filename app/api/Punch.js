@@ -72,7 +72,9 @@ Ext.define('Breeze.api.Punch', {
                 { employee_id: employeeId },
                 true, true,
                 function(resp){
-
+                    resolve(
+                        api.decodeJsonResponse(resp).Status
+                    );
                 },
                 function(err){
                     reject(err);
