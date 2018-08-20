@@ -167,7 +167,7 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'navigationview',
                     flex: 3,
-                    margin: '6 6 6 6',
+                    userCls: 'main-content',
                     reference: 'contentContainer',
                     scrollable: 'vertical',
                     navigationBar: false,
