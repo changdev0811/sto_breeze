@@ -41,7 +41,7 @@ Ext.define('Breeze.view.main.NavModel', {
                                 text: 'Calendar', leaf: true,
                                 iconCls: 'x-fas fa-calendar',
                                 id: 'personal',
-								routeRef: 'personal/calendar
+								routeRef: 'personal/calendar'
                             }, {
                                 text: 'Employee Information', leaf: true,
                                 iconCls: 'x-fas fa-id-card-o',
