@@ -113,7 +113,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'checkbox',
-                    ui: ['employeeinfo-checkbox','fyi-field'],
+                    ui: 'employeeinfo-checkbox',
                     label: 'Show scheduled recorded time',
                     labelAlign: 'right',
                     reference: 'showScheduled',
