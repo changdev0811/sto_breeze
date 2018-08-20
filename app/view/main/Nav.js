@@ -122,6 +122,7 @@ Ext.define('Breeze.view.main.Nav', {
                         {
                             xtype: 'breeze-punchbutton',
                             reference: 'navPunchClock',
+                            
                         },
                         {
                             xtype: 'breeze.navbar.collapsebutton',

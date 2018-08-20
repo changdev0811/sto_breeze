@@ -15,13 +15,23 @@ Ext.define('Breeze.view.main.NavModel', {
         mode: 'personal',
         context: -1,
         currentEmployee: {},
+        // header info
         header: {
             fullname: 'Full Name',
             business: 'Company Name'
+        },
+        // punch related
+        punch: {
+            defaultProjectCode: null,
+            status: 0,
+            policy: {}
         }
     },
 
     stores: {
+        /**
+         * Navigation items (expanded) for personal mode
+         */
         personalNav: {
             type: 'tree',
             root: {
@@ -88,6 +98,9 @@ Ext.define('Breeze.view.main.NavModel', {
                 ]
             }
         },
+        /**
+         * Navigation items (micro) for personal mode
+         */
         personalNavMicro: {
             type: 'tree',
             root: {
@@ -177,5 +190,9 @@ Ext.define('Breeze.view.main.NavModel', {
                 ]
             }
         }
+    },
+
+    formulas: {
+        
     }
 });

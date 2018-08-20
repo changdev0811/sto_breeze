@@ -27,28 +27,48 @@
             'Breeze.helper.Auth',
             'Breeze.helper.routing.TreeRouter',
             'Breeze.api.Auth',
-            'Breeze.api.Common',
+            'Breeze.api.Employee',
+            'Breeze.api.Punch'
         ],
 
         init: function(component){
             this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
             this.apiClass = Ext.create('Breeze.api.Auth');
-            this.commonClass = Ext.create('Breeze.api.Common');
-            this.loadHeader();
+            this.empClass = Ext.create('Breeze.api.Employee');
+            this.punchClass = Ext.create('Breeze.api.Punch');
+            this.loadEmployee();
+            this.loadPunchSettings();
         },
 
         /**
-         * Load data displayed in app header
+         * Load nav-related employee info
          */
-        loadHeader: function(){
+        loadEmployee: function(){
             var me = this;
-            this.commonClass.getHeaderInfo().then(
+            this.empClass.getHeaderInfo().then(
                 function(data){
                     me.getViewModel().set('header', data);
                 }
             ).catch(function(err){
                 console.warn('Failed to load header info', err);
             });
+            this.empClass.getDefaultProjectCode().then(
+                function(code){
+                    me.getViewModel().set('defaultProjectCode', code);
+                }
+            ).catch(function(err){
+                console.warn('Unable to get default project code', err);
+            });
+        },
+
+        loadPunchSettings: function(){
+            var me = this;
+            this.punchClass.getCurrentPolicy().then(
+                function(data){
+                    var vm = me.getViewModel();
+                    vm.set('punch.policy', data);
+                }
+            )
         },
 
         // Routes

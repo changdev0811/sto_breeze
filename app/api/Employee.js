@@ -65,6 +65,7 @@ Ext.define('Breeze.api.Employee', {
     /**
      * Get security role / security rights for employee
      * (Ported from homemade.js/getSecurityRightsForEmployee)
+     * @api getSecRightsForEmployee
      * @param {String} employee_id Employee ID
      * @return {Promise} promise resolving with api response or rejecting with error
      */
@@ -82,6 +83,58 @@ Ext.define('Breeze.api.Employee', {
                 },
                 function(err){
                     // console.warn('Problem with API Employee.getSecurityRights', err)
+                    reject(err);
+                }
+            )
+        });
+    },
+
+    /**
+     * Wraps old homemade businessInfo method
+     * Returns employee name and business name, using emp_info call
+     * @api emp_info
+     * @return {Promise} Promise resolving in data object, or rejecting with error
+     */
+    getHeaderInfo: function(){
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'emp_info',
+                {},
+                true, true,
+                function(resp){
+                    var data = api.decodeJsonResponse(resp);
+                    resolve(
+                        {
+                            fullname: data.fullname,
+                            business: data.business
+                        }
+                    );
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
+    },
+
+    /**
+     * Get default project code for current employee
+     * @api getCurrentEmployeeDefaultProjectCode
+     * @return {Promise} promise resolving with code or rejecting with error
+     */
+    getDefaultProjectCode: function(){
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'getCurrentEmployeeDefaultProjectCode',
+                {}, true, true,
+                function(resp){
+                    resolve(
+                        api.decodeJsonResponse(resp)
+                    );
+                },
+                function(err){
                     reject(err);
                 }
             )
