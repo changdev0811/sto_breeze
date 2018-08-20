@@ -1,6 +1,15 @@
-Ext.define('Breeze.view.main.tko.DigitalClock', {
+/**
+ * Punch Digital Clock widget
+ * @class DigitalClock
+ * @namespace Breeze.widget.punch.DigitalClock
+ * @alias widget.breeze.punch.digitalclock
+ * @extends Ext.Component
+ * @xtype breeze-digitalclock
+ */
+Ext.define('Breeze.widget.punch.DigitalClock', {
 	extend:'Ext.Component',
-	alias:'widget.main.tko.digitalClock',
+	alias:'widget.breeze.punch.digitalclock',
+	xtype: 'breeze-digitalclock',
 	config:{
 		clockedIn:false,
 		abbreviated:false

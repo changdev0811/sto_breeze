@@ -336,7 +336,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     ]    
                                 },
                                 {
-                                    xtype: 'breeze-checkboxfield',
+                                    xtype: 'breeze-checkbox',
                                     label: 'Deduct Daily Overtime from Weekly Overtime',
                                     name: 'subtract_DayOt',
                                     labelAlign: 'right',

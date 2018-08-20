@@ -1,3 +1,10 @@
+/**
+ * Primary controller class used for main navigation view and routing
+ * @class NavController
+ * @namespace Breeze.view.main.NavController
+ * @alias controller.main.nav
+ * @extends Ext.app.ViewController
+ */
 (function(){
     /**
      * View Controller for view.main.Nav
@@ -18,11 +25,13 @@
         requires: [
             'Ext.route.Route',
             'Breeze.helper.Auth',
-            'Breeze.helper.routing.TreeRouter'
+            'Breeze.helper.routing.TreeRouter',
+            'Breeze.api.Auth'
         ],
 
         init: function(component){
             this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
+            this.apiClass = Ext.create('Breeze.api.Auth');
         },
 
         // Routes
@@ -43,11 +52,25 @@
 
         // Event Handlers
 
+        /**
+         * Handles user clicking on sidebar toggle button
+         */
         onSideNavToggle: function(button, e, eOpts){
-            var collapsed = !button.getCollapsed()
+            var collapsed = !button.getCollapsed();
             button.setCollapsed(collapsed);
-            if(collapsed !== this.lookup('navSideMenuTree').micro){
-                this.lookup('navSideMenuTree').setMicro(collapsed);
+            var navTree = this.lookup('navSideMenuTree');
+            // update layout of punch clock
+            this.lookup('navPunchClock').setMicro(collapsed);
+            // If button's collapsed state isn't the same as
+            // the nav tree's micro property, update the navtree
+            if(collapsed !== navTree.micro){
+                navTree.setMicro(collapsed);
+                navTree.toggleCls('normal', !collapsed);
+                navTree.toggleCls('micro', collapsed);
+                navTree.setStore(
+                    (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
+                    this.getViewModel().getStore('personalNav')
+                );
             }
         },
 
@@ -61,6 +84,13 @@
             this.router.resolve(tRecord);
         },
 
+        /**
+         * Handle 'Sign Out' menu item click
+         */
+        onMenuSignOut: function(c, e, eOpts){
+            this.apiClass.logout();
+        },
+
         // Route change handlers
 
         onHomeRoute: function() {
@@ -72,6 +102,7 @@
         },
 
         onPersonalEmployeeInfoRoute: function(){
+            console.info('Employee Info Route');
             // var auth = Breeze.helper.Auth.getCookies();
             // var info = Ext.create('Breeze.view.employee.Information');
             this.changeContent(

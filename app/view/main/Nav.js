@@ -1,3 +1,11 @@
+/**
+ * Main navigation view, containing header bar, nav sidebar
+ * and content panel
+ * @class Nav
+ * @namespace Breeze.view.main.Nav
+ * @alias widget.main.nav
+ * @extends Ext.Container
+ */
 Ext.define('Breeze.view.main.Nav', {
     extend: 'Ext.Container',
     alias: 'widget.main.nav',
@@ -5,11 +13,11 @@ Ext.define('Breeze.view.main.Nav', {
     requires: [
         'Breeze.view.main.NavModel',
         'Breeze.view.main.NavController',
-        'Breeze.view.main.tko.AnalogClock',
-        'Breeze.view.main.tko.DigitalClock',
+        'Breeze.widget.punch.AnalogClock',
+        'Breeze.widget.punch.DigitalClock',
         'Ext.menu.Menu',
         'Ext.menu.Item',
-        'Ext.list.Tree',
+        'Breeze.widget.navBar.NavTree',
         'Ext.Toolbar',
         'Ext.Img',
         'Ext.Button'
@@ -66,7 +74,7 @@ Ext.define('Breeze.view.main.Nav', {
                     ui:'mainNavUserButton',
                     userCls:'main-nav-user-button',
                     buttonType: 'icon',
-                    iconCls: 'x-fa fa-user',
+                    iconCls: 'x-fas fa-user',
                     text: '',
                     menu:{
                         xtype: 'menu',
@@ -74,11 +82,13 @@ Ext.define('Breeze.view.main.Nav', {
                             {
                                xtype: 'menuitem',
                                text:'User Preferences',
-                               iconCls:'x-fa fa-user-cog' 
+                               iconCls:'x-fas fa-user-cog',
+                            //    icon: 'resources/icons/user-cog.svg'
                             }, {
                                xtype: 'menuitem',
                                text:'Sign Out',
-                               iconCls:'x-fa fa-sign-out' 
+                               iconCls:'x-fas fa-sign-out',
+                               handler: 'onMenuSignOut'
                             }
                         ]
                     }
@@ -94,50 +104,21 @@ Ext.define('Breeze.view.main.Nav', {
             layout: 'hbox',
             items: [
                 {
+
                     xtype: 'container',
                     layout: 'vbox',
-                    minWidth: '200pt',
-                    maxWidth: '200pt',
+                    // minWidth: '200pt',
+                    // maxWidth: '200pt',
                     //width: 'auto',
                     // flex: 1,
-                    userCls:'main-nav-side-bar',
+                    userCls:['main-nav-side-bar'],
                     items: [
                         {
-                            xtype: 'container',
+                            xtype: 'breeze-punchbutton',
                             reference: 'navPunchClock',
-                            layout: 'hbox',
-                            height:'70pt',
-                            userCls:'main-nav-punch-clock',
-                            items: [
-                                {
-                                    xtype:'main.tko.analogClock'
-
-                                },{
-                                    
-                                    xtype:'main.tko.digitalClock',
-                                    clockedIn:false,
-                                    abbreviated:false
-
-                                }
-                                /*
-                                {
-                                    xtype: 'component',
-                                    itemId: 'dateTime',
-                                    bind: {
-                                        html: 
-                                            '<h3>{punchDate}</h3><hr>' +
-                                            '<h4>{punchTime}</h4><hr>' +
-                                            '<h5>{punchStatus}</h5>'
-                                    }
-                                }, {
-                                    xtype: 'component',
-                                    itemId: 'clock'
-                                }
-                                */
-                            ]
                         },
                         {
-                            xtype: 'main.menuCollapseButton',
+                            xtype: 'breeze.navbar.collapsebutton',
                             ui: 'mainNavCollapseButton',
                             collapsed: false,
                             height: '2em',
@@ -147,10 +128,13 @@ Ext.define('Breeze.view.main.Nav', {
                         },
                         {
                             // Side navigation menu tree
-                            xtype: 'treelist',
+                            xtype: 'breeze.navbar.navtree',
+                            defaults: {
+                                xtype: 'breeze.navbar.navtreeitem'
+                            },
                             micro: false,
                             flex: 3,
-                            userCls: 'main-nav-side-menu',
+                            userCls: ['main-nav-side-menu','normal'],
                             ui: 'SideNav',
                             expanderFirst:false,
                             expanderOnly:false,
@@ -171,7 +155,10 @@ Ext.define('Breeze.view.main.Nav', {
                     margin: '6 6 6 6',
                     reference: 'contentContainer',
                     scrollable: 'vertical',
-                    navigationBar: false
+                    navigationBar: false,
+                    layout: {
+                        animation: 'fade'
+                    }
                     // layout: 'fit'
                 }
             ]

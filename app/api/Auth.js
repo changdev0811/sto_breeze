@@ -174,6 +174,24 @@ Ext.define('Breeze.api.Auth', {
             );
         });
 
+    },
+
+    /**
+     * Log out current user, clearing cookies and reloading page
+     */
+    logout: function(){
+        var api = this.api;
+        var auth = this.auth;
+        api.serviceRequest('logOut', {}, 
+            false, true,
+            function(){
+                auth.reloadCookies(-234);
+                window.location.reload();
+            },
+            function(){
+                console.warn('Logout error');
+            }
+        );
     }
 
 
