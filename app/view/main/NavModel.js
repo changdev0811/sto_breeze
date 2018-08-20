@@ -1,5 +1,11 @@
 /**
  * View Model for Nav view
+ * Contains stores used to populate navigation sidebar, which also
+ * include routing and micro mode styling data
+ * @class NavModel
+ * @namespace Breeze.view.main.NavModel
+ * @alias viewmodel.main.nav
+ * @extends Ext.app.ViewModel
  */
 Ext.define('Breeze.view.main.NavModel', {
     extend: 'Ext.app.ViewModel',

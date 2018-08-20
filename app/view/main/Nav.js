@@ -1,3 +1,11 @@
+/**
+ * Main navigation view, containing header bar, nav sidebar
+ * and content panel
+ * @class Nav
+ * @namespace Breeze.view.main.Nav
+ * @alias widget.main.nav
+ * @extends Ext.Container
+ */
 Ext.define('Breeze.view.main.Nav', {
     extend: 'Ext.Container',
     alias: 'widget.main.nav',

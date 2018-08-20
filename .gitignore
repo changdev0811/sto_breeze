@@ -5,3 +5,4 @@ modern.json*
 .sencha
 /ext
 /sass
+sencha-error-*.log

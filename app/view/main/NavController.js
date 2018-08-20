@@ -1,3 +1,10 @@
+/**
+ * Primary controller class used for main navigation view and routing
+ * @class NavController
+ * @namespace Breeze.view.main.NavController
+ * @alias controller.main.nav
+ * @extends Ext.app.ViewController
+ */
 (function(){
     /**
      * View Controller for view.main.Nav

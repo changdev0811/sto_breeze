@@ -100,3 +100,37 @@ $wtr-colors: (
 $wtr-text-colors: (
     base: $scoped-wtr-text-base
 );
+
+// ====[Punch Clock Button[===
+
+$scoped-punchclock-in:     $confirm-color;
+$scoped-punchclock-out:    $alert-color;
+// use punched in as base, just for consistency
+$scoped-punchclock-base:        $scoped-punchclock-in;
+
+$scoped-punchclock-text-base:   #ffffff;
+$scoped-punchclock-text-in:     $scoped-punchclock-text-base;
+$scoped-punchclock-text-out:    $scoped-punchclock-text-base;
+
+$punchclock-colors: (
+    base: $scoped-punchclock-base,
+    in: $scoped-punchclock-in,
+    out: $scoped-punchclock-out
+);
+$punchclock-text-colors: (
+    base: $scoped-punchclock-text-base,
+    in: $scoped-punchclock-text-in,
+    out: $scoped-punchclock-text-out
+);
+
+// ====[Transparency Colors]====
+
+$scoped-transparent-hover: inherit;
+$scoped-transparent-focus: rgba(17,17,17,0.06);
+$scoped-transparent-pressed: rgba(17,17,17,0.3);
+
+$transparent-colors: (
+    hover: $scoped-transparent-hover,
+    focus: $scoped-transparent-focus,
+    pressed: $scoped-transparent-pressed
+);

@@ -22,7 +22,7 @@ Ext.define('Breeze.helper.DummyApi', {
         resPath: 'resources/dummy_api/',
         railsPath: 'http://0.0.0.0:3000/STOServe/Service1.asmx/',
         
-        useResources: true,
+        useResources: false,
 
         dummyPath: function(){
             if(this.useResources){
