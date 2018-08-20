@@ -5,7 +5,7 @@
  */
 Ext.define('Breeze.store.company.FlatProjectList', {
     extend: 'Breeze.store.Base',
-    model: 'Breeze.model.company.Department',
+    model: 'Breeze.model.company.Project',
     autoLoad: false,
     alias: 'store.company.flatprojectlist',
 

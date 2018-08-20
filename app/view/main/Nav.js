@@ -51,21 +51,27 @@ Ext.define('Breeze.view.main.Nav', {
                     flex: 1,
                     layout: 'vbox',
                     items: [
+                        // Company Name
                         {
                             xtype: 'component',
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-company-name',
-                            html: 'Company Name',
-                            reference: 'navHeaderCompanyName'
+                            reference: 'navHeaderCompanyName',
+                            bind: {
+                                html: '{header.business}'
+                            }
                         },
+                        // User Name
                         {
                             xtype: 'component',
                             flex: 1,
                             style: '',
                             userCls: 'main-nav-user-name',
-                            html: 'First M. Last',
-                            reference: 'navHeaderUserName'
+                            reference: 'navHeaderUserName',
+                            bind: {
+                                html: '{header.fullname}'
+                            }
                         }
                     ]
                 },
@@ -93,8 +99,6 @@ Ext.define('Breeze.view.main.Nav', {
                         ]
                     }
                 }
-
-
             ]
 
         },
@@ -116,6 +120,17 @@ Ext.define('Breeze.view.main.Nav', {
                         {
                             xtype: 'breeze-punchbutton',
                             reference: 'navPunchClock',
+                            bind: {
+                                hidden: '{!hasKron || (!canQuickPunch && !canPunch)}',
+                                allowed: {
+                                    quick: '{canQuickPunch}',
+                                    regular: '{canPunch}'
+                                },
+                                clockedIn: '{isClockedIn}'
+                            },
+                            listeners: {
+                                punch: 'onPunch'
+                            }
                         },
                         {
                             xtype: 'breeze.navbar.collapsebutton',
@@ -152,7 +167,7 @@ Ext.define('Breeze.view.main.Nav', {
                 {
                     xtype: 'navigationview',
                     flex: 3,
-                    margin: '6 6 6 6',
+                    userCls: 'main-content',
                     reference: 'contentContainer',
                     scrollable: 'vertical',
                     navigationBar: false,

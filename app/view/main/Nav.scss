@@ -3,8 +3,13 @@
  * Classes and UI overrides in this sheet should be specific to items
  * that appear within the Breeze.view.main.Nav view or its children
  */
+
+// Edge margin size for content pane
+$content-edge: 12pt;
+
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
+    margin-left: 8pt;
     &.micro {
         width: 70pt;
     }
@@ -26,10 +31,10 @@
             margin-top:-10pt;
         }
         .x-treelist-item-text {
-            font-size: 14pt;
+            font-size: 12pt;
             line-height:30pt;
-            margin-left:49.5pt;
-
+            // margin-left:49.5pt;
+            margin-left:36pt;
         }
     }
 }
@@ -53,8 +58,6 @@
     padding-bottom:10pt;
 }
 
-
-
 .main-nav-side-bar{
     background-color: $base-color;
 }
@@ -65,5 +68,10 @@
         width:32pt;
         height:32pt;
     }
+}
+
+// Content panel
+.main-content {
+    margin: $content-edge $content-edge $content-edge $content-edge;
 }
 

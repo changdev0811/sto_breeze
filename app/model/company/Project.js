@@ -7,11 +7,11 @@ Ext.define('Breeze.model.company.Project', {
     extend: 'Breeze.model.Base',
     alias: 'model.company.project',
 
-    requires: [
-        'Ext.data.field.Field'
-    ],
+    // requires: [
+    //     'Ext.data.field.Field'
+    // ],
 
-    idProperty: 'path',
+    // idProperty: 'path',
     fields: [
         {
             name: 'Name'

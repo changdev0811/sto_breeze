@@ -13,6 +13,7 @@
         extend: 'Ext.app.ViewController',
         alias: 'controller.main.nav',
 
+        // TODO: Determine if this actually does anything
         stores: [
             'Breeze.store.option.UserTypes',
             'Breeze.store.option.Genders',
@@ -21,18 +22,14 @@
             'Breeze.store.company.Config'
         ],
     
-
         requires: [
             'Ext.route.Route',
             'Breeze.helper.Auth',
             'Breeze.helper.routing.TreeRouter',
-            'Breeze.api.Auth'
+            'Breeze.api.Auth',
+            'Breeze.api.Employee',
+            'Breeze.api.Punch'
         ],
-
-        init: function(component){
-            this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
-            this.apiClass = Ext.create('Breeze.api.Auth');
-        },
 
         // Routes
         routes: {
@@ -48,6 +45,59 @@
             'personal/worktime_records': 'onPersonalWtrRoute',
             'personal/calendar': 'onPersonalCalendarRoute',
             'download/punch_station': 'onDownloadPunchStationRoute'
+        },
+
+        init: function(component){
+            this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
+            this.apiClass = Ext.create('Breeze.api.Auth');
+            this.empClass = Ext.create('Breeze.api.Employee');
+            this.punchClass = Ext.create('Breeze.api.Punch');
+            this.loadEmployee();
+            this.loadPunchSettings();
+            this.updateAttendanceStatus();
+        },
+
+        /**
+         * Load nav-related employee info
+         */
+        loadEmployee: function(){
+            var me = this;
+            this.empClass.getHeaderInfo().then(
+                function(data){
+                    me.getViewModel().set('header', data);
+                }
+            ).catch(function(err){
+                console.warn('Failed to load header info', err);
+            });
+            this.empClass.getDefaultProjectCode().then(
+                function(code){
+                    me.getViewModel().set('punch.defaultProjectCode', code);
+                }
+            ).catch(function(err){
+                console.warn('Unable to get default project code', err);
+            });
+        },
+
+        /**
+         * Load punch related settings
+         */
+        loadPunchSettings: function(){
+            var me = this;
+            this.punchClass.getCurrentPolicy().then(
+                function(data){
+                    var vm = me.getViewModel();
+                    vm.set('punch.policy', data);
+                }
+            )
+        },
+
+        updateAttendanceStatus: function(){
+            var vm = this.getViewModel();
+            this.punchClass.getAttendanceStatus().then(
+                function(resp){
+                    vm.set('punch.status', resp);
+                }
+            );
         },
 
         // Event Handlers
@@ -71,6 +121,25 @@
                     (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
                     this.getViewModel().getStore('personalNav')
                 );
+            }
+        },
+
+        /**
+         * Handle punch clock events
+         * @param {Object} cmp Punch clock button component
+         * @param {Boolean} quick If punch is a quick punch or not
+         * @param {String} kind Kind of punch ('in', 'out', or 'regular')
+         */
+        onPunch: function(cmp, quick, kind){
+            if(quick){
+                if(kind == 'in'){
+                    console.info('Punch in');
+                }
+                if(kind == 'out'){
+                    console.info('Punch out');
+                }
+            } else {
+                console.info('Regular punch');
             }
         },
 

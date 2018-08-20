@@ -11,12 +11,32 @@ Ext.define('Breeze.view.main.NavModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.main.nav',
 
+    requires: ['Breeze.api.Punch'],
+
     data: {
         mode: 'personal',
-        context: -1
+        context: -1,
+        currentEmployee: {},
+        // header info
+        header: {
+            fullname: 'Full Name',
+            business: 'Company Name'
+        },
+        // punch related
+        punch: {
+            defaultProjectCode: null,
+            status: 0,
+            policy: {
+                hasTimeKron: false,
+                info: {}
+            }
+        }
     },
 
     stores: {
+        /**
+         * Navigation items (expanded) for personal mode
+         */
         personalNav: {
             type: 'tree',
             root: {
@@ -83,6 +103,9 @@ Ext.define('Breeze.view.main.NavModel', {
                 ]
             }
         },
+        /**
+         * Navigation items (micro) for personal mode
+         */
         personalNavMicro: {
             type: 'tree',
             root: {
@@ -105,7 +128,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     },
                     {
@@ -115,7 +138,7 @@ Ext.define('Breeze.view.main.NavModel', {
 						routeRef: 'personal/calendar',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'Employee Information', leaf: true,
@@ -124,7 +147,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'FYI', leaf: true,
@@ -133,7 +156,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'Year at a Glance', leaf: true,
@@ -142,7 +165,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'WorkTime Records', leaf: true,
@@ -151,7 +174,7 @@ Ext.define('Breeze.view.main.NavModel', {
                         id: 'personal',
                         extra: {
                             parent: 'personal',
-                            size: '14pt'
+                            size: '12pt'
                         }
                     }, {
                         text: 'My Requests', leaf: true,
@@ -171,6 +194,32 @@ Ext.define('Breeze.view.main.NavModel', {
                     }
                 ]
             }
+        }
+    },
+
+    formulas: {
+        hasKron: function(get){
+            return (
+                get('punch.policy.hasTimeKron')
+            );
+        },
+
+        // Can user do punch in/out without needing details?
+        canQuickPunch: function(get){
+            return (
+                get('punch.policy.info.Allow_QuickPunch')
+            );
+        },
+        // Can user do detailed punch?
+        canPunch: function(get){
+            return (
+                get('punch.policy.info.Allow_RegularPunch')
+            );
+        },
+        isClockedIn: function(get){
+            return (
+                get('punch.status') == Breeze.api.Punch.status.IN
+            );
         }
     }
 });

@@ -69,7 +69,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'datefield',
-                    ui: 'dark-textfield',
+                    ui: ['dark-textfield','fyi-field'],
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     reference: 'viewDate',
@@ -113,7 +113,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'checkbox',
-                    ui: 'employeeinfo-checkbox',
+                    ui: ['employeeinfo-checkbox','fyi-field'],
                     label: 'Show scheduled recorded time',
                     labelAlign: 'right',
                     reference: 'showScheduled',

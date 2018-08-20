@@ -26,7 +26,23 @@
 // )
 
 
+@include field-ui(
+    $label-font-size: 14pt,
+    $ui: 'fyi-display-field'
+);
+
+@include field-ui(
+    $label-font-size: 14pt,
+    $ui: 'fyi-field'
+);
+
+@include textfield-ui(
+    $ui: 'fyi-field',
+    $input-font-size: 12pt
+);
+
 @include displayfield-ui(
     $input-color: #ffffff,
-    $ui: 'fyi-display-field'
+    $input-font-size: 12pt,
+    $ui: 'fyi-display-field',
 );
