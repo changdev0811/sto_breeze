@@ -8,6 +8,18 @@ Ext.define('Breeze.view.dashboard.PersonalModel', {
 
     stores: {
         // 'employee_fyi': null
+    },
+
+    formulas: {
+        fullName: function(get){
+            return (
+                [
+                    get('employeeInfo.FirstName'),
+                    get('employeeInfo.MiddleName'),
+                    get('employeeInfo.LastName')
+                ].join(' ')
+            );
+        },
     }
 
 });
