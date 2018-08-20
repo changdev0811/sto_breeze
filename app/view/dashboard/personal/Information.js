@@ -4,27 +4,34 @@
  * @alias Breeze.view.dashboard.personal.Information
  */
 Ext.define('Breeze.view.dashboard.personal.Information', {
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.dashboard.personal.information',
 
+    layout: 'fit',
 
-    layout: 'hbox',
+    title: 'Employee Info',
+
+    tools: [
+        {
+            iconCls: 'x-fas fa-angle-right'
+        }
+    ],
 
     items: [
-        // image
         {
-            xtype: 'container'
-        },
-        {
-            xtype: 'container',
+            xtype: 'list',
+            height: '200px',
+            flex: 1,
             layout: 'vbox',
-            items: [
-                {
-                    xtype: 'component',
-                    html: 'Employee Name'
-                }
-            ]
-        }
+            itemConfig: {
+                xtype: 'employee.fyi.accrualItem'
+            },
+            reference: 'fyiDashList',
+            ui: 'employeefyi-accrual-list',
+            bind: {
+                store: '{fyi}'
+            }
+        },
     ]
 
 });
