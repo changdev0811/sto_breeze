@@ -54,6 +54,27 @@ $root-text-colors: (
     dark: $scoped-root-text-dark
 );
 
+
+// ====[Base (root) Set]====
+$scoped-calendar-base: #2C9E85;
+$scoped-calendar-medium: #5BB09D;
+$scoped-calendar-light: #84C4B6;
+
+$scoped-calendar-text-base: #ffffff;
+$scoped-calendar-text-light: #84C4B6;
+
+$calendar-colors: (
+    base:  $scoped-calendar-base,
+    medium: $scoped-calendar-medium,
+    light: $scoped-calendar-light
+);
+
+$calendar-text-colors: (
+    base:  $scoped-calendar-text-base,
+    light: $scoped-calendar-text-light,
+);
+
+
 // ====[Employee Info View]====
 
 // specific colors

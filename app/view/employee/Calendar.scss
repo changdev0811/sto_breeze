@@ -1,0 +1,84 @@
+.legend-item-dot{
+    position: relative;
+    display: inline-block;
+    width:14pt; height:14pt;
+    margin:0pt; padding:0pt;
+    border-radius: 50%;
+    border:solid 1px black;
+}
+
+.legend-item-dot{
+    position: relative;
+    display: inline-block;
+    font-size: 14pt;
+    margin:0pt; padding:0pt;
+    color: black;
+}
+
+
+.legend {
+    border:solid 2px #ffffff;
+}
+
+
+@include dataview-ui(
+    $ui: 'calendar-legend',
+    
+);
+
+
+@include listitem-ui(
+    $ui: 'calendar-legend',
+    $background-color : #ff0000
+
+);
+
+
+.employee-calendar-container {
+    padding: 16pt 16pt 16pt 16pt;
+    background-color: map-get($calendar-colors, 'base');
+    color: map-get($calendar-text-colors, 'base');
+}
+
+.employee-calendar {
+    margin:0px -3px -2px -2px !important;
+}
+
+
+
+
+@include toolbar-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'base'),
+    $color : #ffffff,
+    $font-size: 16pt
+);
+
+
+
+
+
+@include calendar-header-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'medium'),
+    $color : #ffffff,
+    $font-size: 12pt,
+    $font-weight: 600,
+    $cell-border-color: map-get($calendar-colors, 'medium'),
+    $cell-border-style: none,
+    $cell-border-width: 0px
+);
+
+@include calendar-weeks-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'base'),
+    $selection-background-color: map-get($calendar-colors, 'medium'),
+    $selection-opacity: 1,
+    $day-border-width: 1px,
+    $day-border-color : map-get($calendar-colors, 'medium'),
+    $day-background-color: map-get($calendar-colors, 'base'),
+    $day-number-font-size : 14pt,
+    $day-number-color: #ffffff,
+    $day-number-outside-color: map-get($calendar-colors, 'light'),
+);
+
