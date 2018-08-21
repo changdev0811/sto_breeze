@@ -79,15 +79,21 @@ Ext.define('Breeze.view.employee.Calendar',{
         },
 
         {
-            xtype: 'list',
+            xtype: 'dataview',
             ui:'calendar-legend',
+            inline: true,
             userCls:'legend' ,
             flex:1,
-            layout: 'vbox',
-            itemConfig: {
-                ui:'calendar-legend'
+            padding: '8pt 8pt 8pt 8pt',
+            layout: {
+                type: 'hbox',
+                wrap: true
             },
-            itemTpl:'<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{color}"></div>{title}</div>',
+            itemConfig: {
+                ui:'calendar-legend',
+                width: '33%'
+            },
+            itemTpl: '<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{color}"></div>{title}</div>',
 
             store: [
                 { title: 'Illness',     color:'rgb(153, 255, 204,1)'    },

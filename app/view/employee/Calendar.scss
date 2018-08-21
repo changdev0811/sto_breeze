@@ -13,6 +13,9 @@
     font-size: 12pt;
     margin:0pt; padding:0pt;
     color: white;
+    width: 12em;
+    line-height: 16pt;
+    vertical-align: middle;
 }
 
 
@@ -24,9 +27,16 @@
 
 @include dataview-ui(
     $ui: 'calendar-legend',
-    
+    $background-color: map-get($calendar-colors, 'base')
 );
 
+@include dataitem-ui(
+    $ui: 'calendar-legend',
+    $background-color: map-get($calendar-colors, 'base'),
+    $line-height: 16pt,
+    $padding: 2pt 1pt 2pt 1pt
+
+);
 
 @include listitem-ui(
     $ui: 'calendar-legend',
