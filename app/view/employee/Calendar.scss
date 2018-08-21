@@ -45,7 +45,16 @@
     margin:0px -3px -2px -2px !important;
 }
 
-
+// Turn off bottom border on calendar, add userCls: 'employee-calendar-noedge'
+.employee-calendar-noedge {
+    table.x-calendar-table {
+        & > tbody > tr.x-calendar-weeks-row:last-child {
+            .x-calendar-weeks-cell {
+                border-bottom: 0px;
+            }
+        }
+    }
+}
 
 
 @include toolbar-ui (

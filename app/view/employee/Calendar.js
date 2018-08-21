@@ -55,7 +55,7 @@ Ext.define('Breeze.view.employee.Calendar',{
 
         {
             xtype: 'calendar',
-            userCls: 'employee-calendar',
+            userCls: ['employee-calendar','employee-calendar-noedge'],
             label: 'Month',
             flex: 4,
             ui: 'employee-calendar',
