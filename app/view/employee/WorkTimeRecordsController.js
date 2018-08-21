@@ -20,7 +20,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     loadWorkTimeRecords: function(){
         var me = this;
         this.api.workTimeRecords.getWorkTimeRecordsForRange(
-            '5003',
+            this.api.auth.getCookies().emp,
             '2018-07-01T00:00:00',
             '2018-07-07T00:00:00',
             'workTimeRecordStore'

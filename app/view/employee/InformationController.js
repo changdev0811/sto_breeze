@@ -7,10 +7,12 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     requires: [
         'Breeze.api.Employee',
-        'Breeze.model.accrual.ShiftSegment',
-        'Breeze.store.company.EmployeeList',
-        'Breeze.store.company.SupervisorList',
-        'Breeze.store.company.FlatProjectList'
+        // 'Breeze.model.accrual.ShiftSegment',
+        // 'Breeze.store.accrual.ScheduleList',
+        // 'Breeze.store.company.EmployeeList',
+        // 'Breeze.store.company.SupervisorList',
+        // 'Breeze.store.company.FlatProjectList',
+        // 'Breeze.store.record.PunchPolicies'
     ],
 
     onInit: function(component, eOpts){
@@ -25,6 +27,9 @@ Ext.define('Breeze.view.employee.InformationController', {
 
         if(typeof component.getData().employee !== 'undefined'){
             this.empId = component.getData().employee;
+            vm.set('employeeId', this.empId);
+        } else {
+            this.empId = this.apiClass.auth.getCookies().emp;
             vm.set('employeeId', this.empId);
         }
 

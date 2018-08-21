@@ -1,0 +1,25 @@
+/**
+ * Breeze.view.dashboard.personal.Information Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.dashboard.personal.Information view or its children
+ */
+
+ @include panel-ui(
+     $ui: 'employee-info-dashboard',
+     $background-color: map-get($employee-info-colors, 'base'),
+     $header-background-color: map-get($employee-info-colors, 'base'),
+     $body-background-color: map-get($employee-info-colors, 'base'),
+     $body-color: map-get($employee-info-text-colors, 'base'),
+ );
+
+ @include displayfield-ui(
+    $input-color: #ffffff,
+    $input-font-size: 12pt,
+    $ui: 'employeeinfo-display',
+);
+
+ .employee-info-dashboard-picture {
+    border-radius: 50% 50% 50% 50%;
+    border: 3pt solid white;
+}
+ 

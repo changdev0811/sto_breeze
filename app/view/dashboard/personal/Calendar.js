@@ -4,6 +4,8 @@
  * @alias Breeze.view.dashboard.personal.Calendar
  */
 Ext.define('Breeze.view.dashboard.personal.Calendar', {
-    extend: 'Ext.Container',
-    alias: 'widget.dashboard.personal.calendar'
+    extend: 'Ext.Panel',
+    alias: 'widget.dashboard.personal.calendar',
+
+    title: 'Calendar'
 });
