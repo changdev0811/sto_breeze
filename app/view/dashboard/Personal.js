@@ -29,6 +29,9 @@ Ext.define('Breeze.view.dashboard.Personal', {
         },
         {
             xtype: 'dashboard.personal.information'
+        },
+        {
+            xtype: 'dashboard.personal.calendar'
         }
     ]
 });
