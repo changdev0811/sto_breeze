@@ -91,10 +91,14 @@ Ext.define('Breeze.view.employee.Calendar',{
             itemTpl:'<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{color}"></div>{title}</div>',
 
             store: [
-                { title: 'Item 1', color:'rgb(255,0,0,1)'  },
-                { title: 'Item 2', color:'rgb(255,255,0,1)'},
-                { title: 'Item 3', color:'rgb(0,255,0,1)'  },
-                { title: 'Item 4', color:'rgb(0,255,255,1)'}
+                { title: 'Illness',     color:'rgb(153, 255, 204,1)'    },
+                { title: 'Vacation',    color:'rgb(255, 255, 153,1)'    },
+                { title: 'Personal',    color:'rgb(51, 153, 255,1)'     },
+                { title: 'Jury',        color:'rgb(153, 153, 204,1)'    },
+                { title: 'Bereavement', color:'rgb(153, 204, 255,1)'    },
+                { title: 'Holiday',     color:'rgb(255, 153, 15,1)'     },
+                { title: 'Training',    color:'rgb(153, 153, 153, 1)'   }
+                
             ]
         }
 
