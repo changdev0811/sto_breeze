@@ -1,6 +1,6 @@
 /**
- * Employee FYI View
- * @class Breeze.view.employee.Fyi
+ * Employee Calendar view
+ * @class CalendarBreeze.view.employee.Calendar
  */
 Ext.define('Breeze.view.employee.Calendar',{
     extend: 'Ext.Container',
@@ -27,31 +27,6 @@ Ext.define('Breeze.view.employee.Calendar',{
     userCls: 'employee-calendar-container',
 
     items: [
-        {
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'employee-calendar',
-            layout: {
-                type: 'hbox',
-                pack: 'center'
-            },
-            items: [
-                {
-                    xtype: 'button',
-                    ui: "calendarMonthSelectionButton",
-                    iconCls: 'x-fa fa-angle-left'
-                },
-                {
-                    xtype: 'component',
-                    html: 'Month Year'
-                },
-                {
-                    xtype: 'button',
-                    ui: "calendarMonthSelectionButton",
-                    iconCls: 'x-fa fa-angle-right'
-                }
-            ]
-        },
 
         {
             xtype: 'calendar',
@@ -60,9 +35,33 @@ Ext.define('Breeze.view.employee.Calendar',{
             flex: 4,
             ui: 'employee-calendar',
             compact: true,
+            compactOptions: {
+                switcherPosition: null,
+                switcher: null,
+                createButtonPosition: null,
+                createButton: null,
+                menuButton: null,
+            },
+            switcher: {},
             titleBar: {
                 ui:'employee-calendar', 
-                shadow: false
+                shadow: false,
+                items: [
+                    {
+                        xtype: 'button',
+                        iconCls: 'x-fa fa-angle-left',
+                        ui: "calendarMonthSelectionButton",
+                        weight: '-5',
+                        tooltop: 'Previous',
+                    },
+                    {
+                        xtype: 'button',
+                        ui: "calendarMonthSelectionButton",
+                        iconCls: 'x-fa fa-angle-right',
+                        weight: 105,
+                        tooltip: 'Next'
+                    }
+                ]
             },
             views:{
                 month:{
