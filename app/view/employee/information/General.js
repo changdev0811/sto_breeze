@@ -75,8 +75,8 @@ Ext.define('Breeze.view.employee.information.General', {
                     name: 'ssn',
                     label: 'SSN',
                     reference: 'ssnPlain',
-                    autoHideInputMask: true,
-                    inputMask: '999-99-9999',
+                    // autoHideInputMask: true,
+                    // inputMask: '999-99-9999',
                     bind: { 
                         value: '{info.SSN}',
                         hidden: '{!perms.ssn}'

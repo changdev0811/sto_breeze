@@ -7,7 +7,9 @@
 Ext.define('Breeze.api.Employee', {
     extend: 'Breeze.api.Base',
     requires: [
-        'Breeze.api.employee.Fyi'
+        'Breeze.api.employee.Fyi',
+        'Breeze.api.employee.Information',
+        'Breeze.api.employee.WorkTimeRecords'
     ],
 
     constructor: function(){
@@ -93,14 +95,16 @@ Ext.define('Breeze.api.Employee', {
      * Wraps old homemade businessInfo method
      * Returns employee name and business name, using emp_info call
      * @api emp_info
+     * @param {String} employeeId ID of employee to lookup, if undefined uses auth cookie
      * @return {Promise} Promise resolving in data object, or rejecting with error
      */
-    getHeaderInfo: function(){
+    getHeaderInfo: function(employeeId){
+        var employeeId = this.defVal(employeeId, this.auth.getCookies().emp);
         var api = this.api;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'emp_info',
-                {},
+                {lookup: employeeId},
                 true, true,
                 function(resp){
                     var data = api.decodeJsonResponse(resp);

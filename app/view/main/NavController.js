@@ -28,7 +28,8 @@
             'Breeze.helper.routing.TreeRouter',
             'Breeze.api.Auth',
             'Breeze.api.Employee',
-            'Breeze.api.Punch'
+            'Breeze.api.Punch',
+            'Breeze.view.employee.Information'
         ],
 
         // Routes
@@ -174,13 +175,14 @@
             console.info('Employee Info Route');
             // var auth = Breeze.helper.Auth.getCookies();
             // var info = Ext.create('Breeze.view.employee.Information');
-            this.changeContent(
-                Ext.create('Breeze.view.employee.Information', {
-                    data: { employee: undefined }
-                })
-                // { xtype: 'employee.information' }
-                // info
-            );
+            console.info('Created employee info view instance: ', info);
+            var info = Ext.create('Breeze.view.employee.Information', {
+                data: { employee: undefined }
+            });
+            this.changeContent(info);
+            // { xtype: 'employee.information' }
+            // info
+            console.info('Employee Info Route Set');
         },
 
         onPersonalFyiRoute: function() {
