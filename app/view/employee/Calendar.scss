@@ -1,23 +1,24 @@
 .legend-item-dot{
     position: relative;
     display: inline-block;
-    width:14pt; height:14pt;
-    margin:0pt; padding:0pt;
+    width:12pt; height:12pt;
+    margin:0pt 5pt 0pt 0pt; padding:0pt;
     border-radius: 50%;
-    border:solid 1px black;
+    box-shadow: 0pt 2pt 5pt rgba(0,0,0,.33);
 }
 
-.legend-item-dot{
+.legend-item-label{
     position: relative;
     display: inline-block;
-    font-size: 14pt;
+    font-size: 12pt;
     margin:0pt; padding:0pt;
-    color: black;
+    color: white;
 }
 
 
 .legend {
-    border:solid 2px #ffffff;
+    margin:20pt 0pt 0pt 0pt;
+    border:solid 1px map-get($calendar-colors, 'medium');
 }
 
 
@@ -29,7 +30,7 @@
 
 @include listitem-ui(
     $ui: 'calendar-legend',
-    $background-color : #ff0000
+    $background-color: map-get($calendar-colors, 'base')
 
 );
 
