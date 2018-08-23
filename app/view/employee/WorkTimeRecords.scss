@@ -19,8 +19,31 @@
     $body-color: map-get($wtr-text-colors,'base') !important
 );
 
+
+
+@include field-ui(
+    $label-font-size: $ei-field-font-size,
+    $label-color: map-get($wtr-text-colors,'base'),
+    $label-width: 88pt,
+    $ui: 'dark-textfield'
+);
+
+@include displayfield-ui(
+    $input-font-size: $ei-field-font-size,
+    $input-color: map-get($wtr-text-colors,'base'),
+    $ui: 'dark-textfield'
+);
+
+
+
+
+
 .wtr-content {
-    color: map-get($wtr-text-colors,'base');
+    padding: $ei-form-padding;
+    .x-form-fieldset-title {
+        color: map-get($wtr-text-colors,'base');
+        font-size: $ei-head-font-size;
+    }
 }
 
 .employee-worktime-records-grid {

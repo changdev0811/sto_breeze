@@ -31,7 +31,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                     id: 'wtrSideBar',
                     reference: 'wtrSideBar',
                     xtype: 'container',
-                    flex: 1,
+                    //flex: 1,
+                    width: '220pt',
                     layout: 'vbox',
                     items: [
                         {
@@ -39,7 +40,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             ui: 'minicalendar',//'wtr-small',,
                             collapsed: true,
                             flex: 1,
-                            width: '100%'
+                            width: '100%',
+                            margin: '0pt 10pt 0pt 10pt' 
                         },
                         {
                             xtype: 'fieldset',
@@ -112,7 +114,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
 
                     
                     reference: 'wtrContentTabs',
-                    flex: 3,
+                    flex: 1,
+                    margin: '0pt 10pt 0pt 0pt', 
+
                     defaults: {
                         xtype: 'container'
                     },
