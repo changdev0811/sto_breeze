@@ -42,7 +42,7 @@ Ext.define('Breeze.helper.Auth', {
             var c = Breeze.helper.Cookie;
             return {
                 pass:   c.get(this.fields.pass),
-                cust:   c.get(this.fields.emp),
+                cust:   c.get(this.fields.cust),
                 emp:    c.get(this.fields.emp)
             };
         },

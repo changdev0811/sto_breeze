@@ -78,7 +78,7 @@ Ext.define('Breeze.view.auth.Login', {
                 {
                     text: 'Login',
                     ui: 'action',
-                    // handler: 'onLoginButtonTap'
+                    handler: 'onLoginButtonTap'
                 },
                 {
                     xtype: 'button',
