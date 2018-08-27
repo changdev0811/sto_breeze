@@ -114,10 +114,16 @@ Ext.define('Breeze.api.Punch', {
                     data.lng = loc.coords.longitude;
                     data.acc = loc.coords.accuracy;        
                 });
+
+                var params = {
+                    punchData: data,
+                    // not sure if this is used, but required by call
+                    Async: false
+                };
                 
                 api.serviceRequest(
                     'SubmitPunch',
-                    data,
+                    params,
                     true, true,
                     function(resp){
                         resolve(api.decodeJsonResponse(resp));
@@ -127,10 +133,17 @@ Ext.define('Breeze.api.Punch', {
                     }
                 );
             } else {
+                
+                var params = {
+                    punchData: data,
+                    // not sure if this is used, but required by call
+                    Async: false
+                };
+
                 // No geolocation info
                 api.serviceRequest(
                     'SubmitPunch',
-                    data,
+                    params,
                     true, true,
                     function(resp){
                         resolve(api.decodeJsonResponse(resp));

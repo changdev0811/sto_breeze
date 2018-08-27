@@ -29,7 +29,8 @@
             'Breeze.api.Auth',
             'Breeze.api.Employee',
             'Breeze.api.Punch',
-            'Breeze.view.employee.Information'
+            'Breeze.view.employee.Information',
+            'Ext.Toast'
         ],
 
         // Routes
@@ -110,19 +111,21 @@
             var collapsed = !button.getCollapsed();
             button.setCollapsed(collapsed);
             var navTree = this.lookup('navSideMenuTree');
+            var sideBar = this.lookup('navSideBar');
             // update layout of punch clock
             this.lookup('navPunchClock').setMicro(collapsed);
             // If button's collapsed state isn't the same as
             // the nav tree's micro property, update the navtree
-            if(collapsed !== navTree.micro){
-                navTree.setMicro(collapsed);
+            // if(collapsed !== navTree.micro){
+                // navTree.setMicro(collapsed);
                 navTree.toggleCls('normal', !collapsed);
                 navTree.toggleCls('micro', collapsed);
-                navTree.setStore(
-                    (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
-                    this.getViewModel().getStore('personalNav')
-                );
-            }
+                sideBar.toggleCls('micro', collapsed);
+                // navTree.setStore(
+                //     (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
+                //     this.getViewModel().getStore('personalNav')
+                // );
+            // }
         },
 
         /**
@@ -132,14 +135,26 @@
          * @param {String} kind Kind of punch ('in', 'out', or 'regular')
          */
         onPunch: function(cmp, quick, kind){
+            var vm = this.getViewModel();
+            var projectCode = vm.get('punch.defaultProjectCode');
+            var me = this;
             if(quick){
-                if(kind == 'in'){
-                    console.info('Punch in');
-                }
-                if(kind == 'out'){
-                    console.info('Punch out');
-                }
+                console.info('Punching ' + kind);
+                me.punchClass.submit(projectCode).then(
+                    function(resp){
+                        if(resp.success){
+                            Ext.toast('Successfully punched ' + kind);
+                            me.updateAttendanceStatus();
+                        } else {
+                            Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
+                        }
+                    }
+                ).catch(function(err){
+                    console.warn('Caught error submitting punch: ', err);
+                    Ext.toast('Error submitting punch', 1024);
+                });
             } else {
+                // TODO: Implement regular punch view
                 console.info('Regular punch');
             }
         },

@@ -10,6 +10,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             xtype: 'image',
             height: '128pt',
             src: 'resources/img/thing.png',
+            reference: 'infoProfilePicture',
             userCls: 'employee-info-profile-picture'
         }
     ]
