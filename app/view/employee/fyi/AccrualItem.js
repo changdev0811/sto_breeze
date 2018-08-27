@@ -21,12 +21,13 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 {
                     xtype: 'component',
                     flex: 1,
-                    reference: 'categoryName'
+                    reference: 'categoryName',
+                    userCls: 'employee-fyi-accrual-item-layout'
                 },
                 {
                     xtype: 'component',
                     reference: 'usage',
-                    style: 'font-weight: 600'
+                    userCls: 'employee-fyi-accrual-item-layout'
                 }
             ]
         },
@@ -37,6 +38,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
             shadowCls: 'employee-fyi-accrual-value-shadow',
             reference: 'bar',
             shadow: true,
+            style: 'margin-bottom:-10pt; padding:0pt;',
             value: 0.5
             
         }
@@ -50,40 +52,34 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
 
         // set label
         this.lookup('usage').setHtml(
-            [recorded.text,'of',allowed.text].join(' ')
+            [recorded.text,'used of ',allowed.text, 'allowed hrs.'].join(' ')
         );
 
         var bar = this.lookup('bar');
         var catColor = record.get('CatColor');
 
-        if(recorded.value <= allowed.value){
-            this.lookup('bar').setUi(['employeefyi-progress']);
-            // record <= allowed
-            // % is recorded / allowed
-            // set bar value
-            if(allowed.value == 0.0){
-                bar.setValue(0.0);
-            } else {
-                bar.setValue(recorded.value/allowed.value);
-            }
-            this.lookup('usage').setUserCls('');
-            if(typeof catColor !== 'undefined'){
-                var bgColor = Ext.util.Color.fromString(catColor);
-                bgColor.a = 0.25;
-                bar.el.setStyle('background-color',bgColor.toString());
-            }
+        this.lookup('bar').setUi(['employeefyi-progress']);
+
+        // set bar value
+        if(allowed.value == 0.0){
+            bar.setValue(0.0);
         } else {
-            // recorded > allowed
-            // % is allowed / recorded
-            bar.setValue(allowed.value/recorded.value);
-            // bar.setValue(recorded.value/allowed.value);
-            this.lookup('usage').setUserCls('employee-fyi-accrual-value-label-over');
-            this.lookup('bar').setUi(['employeefyi-progress','employeefyi-progress-overlimit']);
+            bar.setValue(recorded.value/allowed.value);
+        }
+
+        this.lookup('usage').setUserCls('');
+        if(typeof catColor !== 'undefined'){
+            var bgColor = Ext.util.Color.fromString(catColor);
+            bgColor.a = 0.25;
+            bar.el.setStyle('background-color',bgColor.toString());
+        }
+
+        if(recorded.value <= allowed.value){
+            this.lookup('usage').toggleCls('employee-fyi-accrual-value-label-over',false);
+        } else {
+            this.lookup('usage').toggleCls('employee-fyi-accrual-value-label-over', true);
         }
         
-        // bar.setValue(
-        //     parseFloat(record.get('CatRecorded'))/parseFloat(record.get('CatAllowed'))
-        // );
         if(typeof catColor !== 'undefined'){
             bar.el.child('.x-progress-bar', true).style.backgroundColor = catColor;
         }

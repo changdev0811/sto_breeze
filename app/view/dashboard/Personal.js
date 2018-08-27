@@ -24,12 +24,15 @@ Ext.define('Breeze.view.dashboard.Personal', {
     layout: 'vbox',
 
     items: [
-        {
-            xtype: 'dashboard.personal.fyi'
-        },
+
         {
             xtype: 'dashboard.personal.information'
         },
+    
+        {
+            xtype: 'dashboard.personal.fyi'
+        },
+
         {
             xtype: 'dashboard.personal.calendar'
         }

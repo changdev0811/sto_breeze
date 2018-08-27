@@ -5,13 +5,20 @@ $fyi-accrual-val-over: lighten($alert-color, 15%);
 $fyi-accrual-background-color: $base-color;
 $fyi-accrual-color: #ffffff;
 
-
 // Style applied to x of y (accrual value) label
 // when value exceeds allowed
 .employee-fyi-accrual-value-label-over {
     & div {
         color: $fyi-accrual-val-over;
     }
+
+}
+
+.employee-fyi-accrual-item-layout{
+    font-weight: 400; 
+    font-size:12pt; 
+    margin:0pt 0pt 3pt 0pt; 
+    line-height:16pt;
 }
 
 /* Progress bar box shadow */
