@@ -9,6 +9,7 @@ $content-edge: 12pt;
 
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
+    overflow-y: auto;
     margin-left: 8pt;
     &.micro {
         width: 70pt;
@@ -60,6 +61,10 @@ $content-edge: 12pt;
 
 .main-nav-side-bar{
     background-color: $base-color;
+    // Width for side bar when 'micro' (collapsed)
+    &.micro {
+        width: 130px;
+    }
 }
 
 .main-nav-user-button {
@@ -74,4 +79,5 @@ $content-edge: 12pt;
 .main-content {
     margin: $content-edge $content-edge $content-edge $content-edge;
 }
+
 

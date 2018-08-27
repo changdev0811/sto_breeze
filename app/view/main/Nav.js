@@ -115,6 +115,7 @@ Ext.define('Breeze.view.main.Nav', {
                     // maxWidth: '200pt',
                     //width: 'auto',
                     // flex: 1,
+                    reference: 'navSideBar',
                     userCls:['main-nav-side-bar'],
                     items: [
                         {
