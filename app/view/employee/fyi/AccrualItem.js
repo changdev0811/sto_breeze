@@ -27,7 +27,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 {
                     xtype: 'component',
                     reference: 'usage',
-                    userCls: 'employee-fyi-accrual-item-layout'
+                    //userCls: ['employee-fyi-accrual-item-layout', 'employee-fyi-accrual-item-usage']
                 }
             ]
         },
@@ -52,7 +52,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
 
         // set label
         this.lookup('usage').setHtml(
-            [recorded.text,'used of ',allowed.text, 'allowed hrs.'].join(' ')
+            ['Allowed: ', allowed.text,' hr. | Used: ',recorded.text, ' | Remaining: ', remaining.text ].join('')
+            //['Allowed: ', allowed.text,' hr. Used: ',recorded.text, ' hr. Remaining: ', remaining.text, ' hr'  ].join('')
+            //[recorded.text,' used of ',allowed.text, ' allowed hrs. (', remaining.text, ' remaining)'  ].join('')
         );
 
         var bar = this.lookup('bar');
@@ -75,9 +77,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
 
         if(recorded.value <= allowed.value){
-            this.lookup('usage').toggleCls('employee-fyi-accrual-value-label-over',false);
+            this.lookup('usage').setUserCls('employee-fyi-accrual-item-layout');
         } else {
-            this.lookup('usage').toggleCls('employee-fyi-accrual-value-label-over', true);
+            this.lookup('usage').setUserCls('employee-fyi-accrual-value-label-over employee-fyi-accrual-item-layout');
         }
         
         if(typeof catColor !== 'undefined'){
