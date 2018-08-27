@@ -9,10 +9,25 @@ $content-edge: 12pt;
 
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
-    overflow-y: auto;
+    // overflow-y: auto;
     margin-left: 8pt;
     &.micro {
         width: 70pt;
+        // Style for treelist container in micro mode (container of subitems)
+        .x-treelist-container {
+            .x-treelist-item-text {
+                // Hide 'micro' mode text
+                width: 0px;
+            }
+        }
+        // Style for tree list container (root) in micro mode
+        .x-treelist-root-container {
+            .x-treelist-item-text {
+                // Make 'micro' mode items text width 0 to hide
+                width: 0px;
+
+            }
+        }
     }
     &.normal {
         // minWidth: 200pt;

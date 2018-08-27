@@ -134,34 +134,42 @@ Ext.define('Breeze.view.main.Nav', {
                             }
                         },
                         {
-                            xtype: 'breeze.navbar.collapsebutton',
-                            ui: 'mainNavCollapseButton',
-                            collapsed: false,
-                            height: '2em',
-                            listeners: {
-                                tap: 'onSideNavToggle'
-                            }
-                        },
-                        {
-                            // Side navigation menu tree
-                            xtype: 'breeze.navbar.navtree',
-                            defaults: {
-                                xtype: 'breeze.navbar.navtreeitem'
-                            },
-                            micro: false,
-                            flex: 3,
-                            userCls: ['main-nav-side-menu','normal'],
-                            ui: 'SideNav',
-                            expanderFirst:false,
-                            expanderOnly:false,
-                            singleExpand:true,
-                            selectOnExpander:true,
-                            floatLeafItems: false,
-                            reference: 'navSideMenuTree',
-                            bind: '{personalNav}',
-                            listeners: {
-                                selectionchange: 'onSideNavSelect'
-                            }
+                            xtype: 'container',
+                            flex: 1,
+                            scrollable: 'y',
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'breeze.navbar.collapsebutton',
+                                    ui: 'mainNavCollapseButton',
+                                    collapsed: false,
+                                    height: '2em',
+                                    listeners: {
+                                        tap: 'onSideNavToggle'
+                                    }
+                                },
+                                {
+                                    // Side navigation menu tree
+                                    xtype: 'breeze.navbar.navtree',
+                                    defaults: {
+                                        xtype: 'breeze.navbar.navtreeitem'
+                                    },
+                                    micro: false,
+                                    // flex: 3,
+                                    userCls: ['main-nav-side-menu','normal'],
+                                    ui: 'SideNav',
+                                    expanderFirst:false,
+                                    expanderOnly:false,
+                                    singleExpand:true,
+                                    selectOnExpander:true,
+                                    floatLeafItems: false,
+                                    reference: 'navSideMenuTree',
+                                    bind: '{personalNav}',
+                                    listeners: {
+                                        selectionchange: 'onSideNavSelect'
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },

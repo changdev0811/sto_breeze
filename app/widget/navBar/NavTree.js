@@ -42,6 +42,37 @@ Ext.define('Breeze.widget.navBar.NavTree', {
         } else {
             return null;
         }
+    },
+
+    privates: {
+        onClick: function(e){
+            var item = e.getTarget('[data-recordId]'),
+                id;
+            console.info('navtree onclick');
+            if (item) {
+                id = item.getAttribute('data-recordId');
+                item = this.itemMap[id];
+                if (item) {
+                    item.onClick(e);
+                }
+            }
+        },
+        onToolStripClick: function(e) {
+            var item = e.getTarget('[data-recordId]'),
+                id;
+            console.info('toolstrip click');
+            if (item) {
+                id = item.getAttribute('data-recordId');
+                item = this.itemMap[id];
+                if (item) {
+                    if (item === this.activeFloater) {
+                        this.unfloatAll();
+                    } else {
+                        this.floatItem(item, false);
+                    }
+                }
+            }
+        },
     }
 
 });

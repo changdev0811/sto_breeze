@@ -177,7 +177,7 @@ Ext.define('Breeze.view.main.NavModel', {
                             size: '12pt'
                         }
                     }, {
-                        text: 'My Requests', leaf: true,
+                        // text: 'My Requests', leaf: true,
                         iconCls: 'x-fas fa-retweet',
                         routeRef: 'personal/requests',
                         id: 'myRequests'

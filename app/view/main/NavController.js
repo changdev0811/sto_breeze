@@ -116,16 +116,16 @@
             this.lookup('navPunchClock').setMicro(collapsed);
             // If button's collapsed state isn't the same as
             // the nav tree's micro property, update the navtree
-            if(collapsed !== navTree.micro){
-                navTree.setMicro(collapsed);
+            // if(collapsed !== navTree.micro){
+                // navTree.setMicro(collapsed);
                 navTree.toggleCls('normal', !collapsed);
                 navTree.toggleCls('micro', collapsed);
                 sideBar.toggleCls('micro', collapsed);
-                navTree.setStore(
-                    (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
-                    this.getViewModel().getStore('personalNav')
-                );
-            }
+                // navTree.setStore(
+                //     (collapsed)? this.getViewModel().getStore('personalNavMicro') : 
+                //     this.getViewModel().getStore('personalNav')
+                // );
+            // }
         },
 
         /**
