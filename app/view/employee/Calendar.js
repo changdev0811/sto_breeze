@@ -69,9 +69,14 @@ Ext.define('Breeze.view.employee.Calendar',{
                         iconCls: 'x-fa fa-angle-right',
                         weight: 105,
                         tooltip: 'Next',
-                        reference: 'nextMonthButton'
+                        handler: function(c){
+                            c.getParent().getParent().getParent().navigate(1,Ext.Date.MONTH);
+                        }
                     }
                 ]
+            },
+            bind: {
+                store: '{calendar}'
             },
             views:{
                 month:{
