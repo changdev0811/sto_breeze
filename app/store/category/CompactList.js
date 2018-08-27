@@ -4,7 +4,7 @@
  * @class CompactList
  * @namespace Breeze.store.category.CompactList
  */
-Ext.define('Breeze.store.DepartmentList', {
+Ext.define('Breeze.store.category.CompactList', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.category.Compact',
     autoLoad: false,

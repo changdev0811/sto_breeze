@@ -19,7 +19,7 @@ Ext.define('Breeze.model.category.Detail', {
         { name: 'Picture_Abbreviated', type: 'string' },
         { name: 'isAllowed', type: 'boolean' },
         { name: 'isActive', type: 'boolean' },
-        { name: 'minUse_Amount', type: 'decimal' },
+        { name: 'minUse_Amount', type: 'number' },
         { name: 'minUse_Unit', type: 'integer' },
         { name: 'minUse_waitDays', type: 'integer' },
         { name: 'ShowName', type: 'boolean' },
