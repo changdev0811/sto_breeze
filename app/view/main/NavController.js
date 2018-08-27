@@ -214,7 +214,10 @@
         },
 
         onDownloadPunchStationRoute: function(){
-            // TODO: open link to punch station download in new tab
+            // TODO: open link to punch station download in new tab (add correct url)
+            console.info('Downloading punchstation');
+            // window.open("https://tko.softtimeonline.com/STO/PunchStation/setup.exe");
+            window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
         },
 
         // Content functions
