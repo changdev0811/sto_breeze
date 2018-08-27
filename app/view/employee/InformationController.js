@@ -55,6 +55,9 @@ Ext.define('Breeze.view.employee.InformationController', {
                     //     var companyLists = c.lookupReference('companuListTabs');
                     // }
                     me.toggleCompanyLists(c);
+                    // TODO: Implement correct loading of employee's profile picture
+                    // c.lookup('infoProfilePicture').setSrc(vm.get('info.Photo'))
+                    c.lookup('infoProfilePicture').setSrc('resources/photos/default_user.png');
                 });
             });
         }).catch(function(err){
