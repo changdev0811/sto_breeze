@@ -17,7 +17,8 @@ Ext.define('Breeze.view.auth.Login', {
 
     items: [
         {
-            xtype: 'fieldset',
+            // xtype: 'fieldset',
+            xtype: 'formpanel',
             userCls: 'login-fieldset',
             itemId: 'loginFormFieldSet',
             title: 'Log In',
@@ -54,24 +55,35 @@ Ext.define('Breeze.view.auth.Login', {
                     boxLabel: 'Remember Me',
                     id: 'rememberMeField'
                 },
+                // {
+                //     xtype: 'container',
+                //     items: [
+                //         {
+                //             xtype: 'button',
+                //             text: 'Forgot Password?'
+                //         },
+                //         {
+                //             xtype: 'button',
+                //             ui: 'action',
+                //             docked: 'right',
+                //             text: 'Login',
+                //             listeners: {
+                //                 tap: 'onLoginButtonTap'
+                //             }
+                //         }
+                //     ]
+                // }
+            ],
+            buttons: [
                 {
-                    xtype: 'container',
-                    items: [
-                        {
-                            xtype: 'button',
-                            text: 'Forgot Password?'
-                        },
-                        {
-                            xtype: 'button',
-                            ui: 'action',
-                            docked: 'right',
-                            text: 'Login',
-                            listeners: {
-                                tap: 'onLoginButtonTap'
-                            }
-                        }
-                    ]
-                }
+                    text: 'Login',
+                    ui: 'action',
+                    // handler: 'onLoginButtonTap'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Forgot Password?'
+                },
             ]
         }
     ]
