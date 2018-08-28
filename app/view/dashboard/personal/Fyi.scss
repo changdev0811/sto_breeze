@@ -5,10 +5,15 @@
  */
 
 
-
+@include panel-ui(
+    $ui: 'employee-fyi-dashboard',
+    $background-color: map-get($root-colors, 'base'),
+    $header-background-color: map-get($root-colors, 'base'),
+    $body-background-color: map-get($root-colors, 'base')
+);
 
  .employee-fyi-dashboard {
-    height:auto; 
+    // height:auto; 
     margin:14pt 7pt 0pt 0pt;
 }
  
