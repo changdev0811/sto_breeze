@@ -4,8 +4,11 @@
  */
 Ext.define('Breeze.store.calendar.Calendar', {
     extend: 'Ext.calendar.store.Calendars',
-
-    requires: ['Breeze.store.calendar.Events'],
+    alias: 'store.calendar.Calendar',
+    requires: [
+        'Breeze.store.calendar.Events',
+        'Ext.calendar.model.Calendar'
+    ],
 
     constructor: function(cfg){
         var me = this;

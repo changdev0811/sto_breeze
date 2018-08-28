@@ -35,6 +35,7 @@
 
         // Routes
         routes: {
+            '': 'onHomeRoute',
             'personal': 'onHomeRoute',
             'personal/info': {
                 action: 'onPersonalEmployeeInfoRoute',
