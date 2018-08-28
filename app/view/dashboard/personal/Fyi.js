@@ -7,6 +7,9 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
     extend: 'Ext.Panel',
     alias: 'widget.dashboard.personal.fyi',
 
+    userCls:'employee-fyi-dashboard',
+    ui: 'employee-fyi-dashboard',
+
     layout: 'fit',
 
     title: 'FYI',
@@ -20,7 +23,6 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
     items: [
         {
             xtype: 'list',
-            height: '200px',
             flex: 1,
             layout: 'vbox',
             itemConfig: {
