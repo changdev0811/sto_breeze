@@ -10,7 +10,8 @@ Ext.define('Breeze.view.employee.CalendarController', {
     alias: 'controller.employee.calendar',
 
     requires: [
-        'Breeze.store.category.CompactList'
+        'Breeze.store.category.CompactList',
+        'Breeze.model.calendar.Event'
     ],
 
     /**
@@ -21,7 +22,8 @@ Ext.define('Breeze.view.employee.CalendarController', {
         // var vm = this.getViewModel();
         console.info('Calendar controller initialized');
         this.loadCategories();
-        this.lookup('calendarPanel').setNextButton(this.lookup('nextMonthButton'));
+        // this.loadCalendar();
+        console.info('Loaded stuff');
     },
 
 
@@ -35,12 +37,49 @@ Ext.define('Breeze.view.employee.CalendarController', {
                 loadOpts: { callback: function(success,a,b){
                     if(success){
                         console.info('Categories loaded successfully');
+                        me.loadCalendar();
                     } else {
                         console.warn('Failed to load categories');
                     }
                 }}
             }
         )
+    },
+
+    loadCalendar: function(){
+        var me = this;
+        var vm = this.getViewModel();
+
+        // var calStore = Ext.create('Ext.calendar.store.Calendars',
+        //     {
+        //         autoLoad: true,
+        //         eventStoreDefaults: {
+        //             model: 'Breeze.model.calendar.Event',
+        //             proxy: {
+        //                 type: 'ajax',
+        //                 url: 'resources/calendar/absences.json'
+        //             }
+        //         },
+        //         data: [
+        //             {
+        //                 "id": 1,
+        //                 "title": "Default"
+        //             }
+        //         ]
+        //     }
+        // );
+
+        var calStore = Ext.create('Breeze.store.calendar.Calendar',
+            {
+                autoLoad: true,
+                categories: vm.getStore('categories')
+            }
+        );
+
+
+        vm.setStores({calendar: calStore});
+
+
     },
 
     // === [Event Handlers] ===
