@@ -2,6 +2,7 @@ Ext.define('Breeze.view.auth.Login', {
     extend: 'Ext.Container',
     alias: 'widget.auth.login',
     xtype: 'login-form',
+    scrollable: true,
 
     requires: [
         'Ext.form.FieldSet',
@@ -22,6 +23,9 @@ Ext.define('Breeze.view.auth.Login', {
             userCls: 'login-fieldset',
             itemId: 'loginFormFieldSet',
             title: 'Log In',
+            defaults:{
+                ui: 'login-fieldset',
+            },
             items: [
                 {
                     xtype: 'textfield',
@@ -52,6 +56,7 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'checkbox',
+                    ui:'login-checkbox',
                     boxLabel: 'Remember Me',
                     id: 'rememberMeField'
                 },
