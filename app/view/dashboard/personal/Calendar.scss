@@ -1,0 +1,19 @@
+/**
+ * Breeze.view.dashboard.personal.Calendar Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.dashboard.personal.Calendar view or its children
+ */
+
+ @include panel-ui(
+     $ui: 'employee-calendar-dashboard',
+     $background-color: map-get($calendar-colors, 'base'),
+     $header-background-color: map-get($calendar-colors, 'base'),
+     $body-background-color: map-get($calendar-colors, 'base'),
+     $body-color: map-get($calendar-colors, 'base')
+ );
+
+ .employee-calendar-dashboard {
+    height:auto; 
+    margin:14pt 0pt 0pt 7pt;
+}
+ 
