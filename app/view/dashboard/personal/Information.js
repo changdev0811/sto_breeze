@@ -34,7 +34,9 @@ Ext.define('Breeze.view.dashboard.personal.Information', {
                    margin: '0pt 8pt 8pt 8pt 8pt',
                    height: '96pt',
                    width: '96pt',
-                   src: 'resources/img/thing.png',
+                   bind: {
+                       src: '{profileImage}'
+                   },
                    userCls: 'employee-info-dashboard-picture'
                },
                {

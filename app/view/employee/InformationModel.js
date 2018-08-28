@@ -136,6 +136,14 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     }
                 });
             }
+        },
+
+        profileImage: function(get){
+            if(get('info.PhotoFlag')){
+                return get('info.Photo');
+            } else {
+                return 'resources/photos/default_user.png'
+            }
         }
         
     }
