@@ -26,15 +26,31 @@ Ext.define('Breeze.view.dashboard.Personal', {
     items: [
 
         {
-            xtype: 'dashboard.personal.information'
+            
+            xtype: 'dashboard.personal.information',
+            
+
         },
     
         {
-            xtype: 'dashboard.personal.fyi'
-        },
+            xtype: 'container',
+            flex: 1,
+            layout: 'hbox',
+            items: [
+                {
+                    xtype: 'dashboard.personal.fyi',
+                    flex: 1
+                },
 
-        {
-            xtype: 'dashboard.personal.calendar'
+                {
+                    xtype: 'dashboard.personal.calendar',
+                    flex: 1
+
+                }
+            ]
         }
+
+
+
     ]
 });

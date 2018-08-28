@@ -7,6 +7,8 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
     extend: 'Ext.Panel',
     alias: 'widget.dashboard.personal.fyi',
 
+    userCls:'employee-fyi-dashboard',
+
     layout: 'fit',
 
     title: 'FYI',
