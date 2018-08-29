@@ -76,11 +76,12 @@ Ext.define('Breeze.api.Auth', {
                             renewalMessage: renewal.message
                         });
                     } else {
+                        console.info('Login unsuccessful: ', r);
                         var errorDetail = {
                             reason: null,
                             message: ''
                         };
-                        if(r.err == "Terminated Employeees Cannot Login"){
+                        if(r.err == "Terminated Employees Cannot Login"){
                             errorDetail.reason = "terminated";
                             errorDetail.message = r.err;
                         } else if(r.err == "Subscription Expired.") {
@@ -101,10 +102,11 @@ Ext.define('Breeze.api.Auth', {
                                 }
                             }
                         }
-                        resolve({
-                            success: false,
-                            detail: errorDetail
-                        });
+                        // resolve({
+                        //     success: false,
+                        //     detail: errorDetail
+                        // });
+                        reject(errorDetail);
                     }
                 },
                 function(err){

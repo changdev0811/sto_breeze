@@ -1,0 +1,29 @@
+/*
+    Styles for Message widget
+*/
+
+@mixin msg-style($baseColor){
+    background-color: lighten($baseColor, 25%);
+    border: 1pt solid darken($base-color, 5%);
+    font-size: 12pt;
+    & .x-fa, & .x-fas {
+        color: $baseColor;
+        padding: 2pt 4pt 2pt 0pt;
+    };
+    padding: 4pt 8pt 4pt 8pt
+};
+
+$msg-warn-base: #ffe400;
+
+.msg-info {
+    @include msg-style($confirm-color);
+}
+
+.msg-error {
+    @include msg-style($alert-color);
+}
+
+.msg-warn {
+    @include msg-style($msg-warn-base);
+}
+

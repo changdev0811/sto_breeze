@@ -1,7 +1,8 @@
 /**
  * View Controller for Login view
  * @class LoginController
- * @alias Breeze.auth.LoginController
+ * @namespace Breeze.auth.LoginController
+ * @alias controller.auth.login
  */
 Ext.define('Breeze.auth.LoginController', {
     extend: 'Ext.app.ViewController',
@@ -19,7 +20,9 @@ Ext.define('Breeze.auth.LoginController', {
 
     onLoginButtonTap: function(button, e, eOpts){
         console.log('Login button pressed!');
-        this.loginRequest();
+        if(this.validateForm()){
+            this.loginRequest();
+        }
     },
 
     loginRequest: function(){
@@ -71,13 +74,17 @@ Ext.define('Breeze.auth.LoginController', {
                             // good to continue directly
                             window.location.reload();
                         }
-                    } else {
-                        // unsuccessful
-                        // r.detail.reason
-                        // r.detail.message
-                    }
+                    } 
                 }).catch(function(e){
                     console.warn('Login Rejected: ', e);
+                    switch(e.reason){
+                        case 'terminated':
+                            me.updateMessage(true, 'error', e.message);
+                        break;
+                        default: 
+                            me.updateMessage(true, 'error', 'Unspecified error (' + e.message + ')');
+                        break;
+                    }
                 });
             } else {
                 console.warn('PreLogin Resolved, returned failure');
@@ -88,6 +95,33 @@ Ext.define('Breeze.auth.LoginController', {
         
         console.groupEnd();
         // TODO: Ask chad, etc about login process, see if necessary to make two requests, one getting a 'true url'
+    },
+
+    validateForm: function(){
+        var form = this.lookup('loginForm');
+        var valid = form.validate();
+        console.info('Valid form?', valid);
+        if(valid){
+            this.lookup('message').setHidden(true);
+        }
+        return valid;
+    },
+
+    /**
+     * Update visibility and content of login form message box
+     * @param {Boolean} shown If true, message is made visible
+     * @param {String} state Updates message state, if shown is true
+     * @param {String} message Updates message state, if shown is true
+     */
+    updateMessage: function(shown, state, message){
+        var message = this.lookup('message');
+        if(!shown){
+            message.setHidden(true);
+        } else {
+            message.setState(state);
+            message.setMessage(message);
+            message.setHidden(false);
+        }
     }
 
 })
