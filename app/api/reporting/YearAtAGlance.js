@@ -115,8 +115,8 @@ Ext.define('Breeze.api.reporting.YearAtAGlance', {
                 me.createTemporaryTableName('YAAG')
             ).then(function(r){
                 me.createReportStore(reportKind, {"Rows": params}).then(
-                    function(records, op){
-                        resolve(records[0].get('CurrentPageContent'));
+                    function(store){
+                        resolve(store.getAt(0).get('CurrentPageContent'));
                     }
                 ).catch(
                     function(err){
