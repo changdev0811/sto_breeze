@@ -1,7 +1,8 @@
 /**
  * View Controller for Login view
  * @class LoginController
- * @alias Breeze.auth.LoginController
+ * @namespace Breeze.auth.LoginController
+ * @alias controller.auth.login
  */
 Ext.define('Breeze.auth.LoginController', {
     extend: 'Ext.app.ViewController',
@@ -19,7 +20,9 @@ Ext.define('Breeze.auth.LoginController', {
 
     onLoginButtonTap: function(button, e, eOpts){
         console.log('Login button pressed!');
-        this.loginRequest();
+        if(this.validateForm()){
+            this.loginRequest();
+        }
     },
 
     loginRequest: function(){
@@ -71,23 +74,66 @@ Ext.define('Breeze.auth.LoginController', {
                             // good to continue directly
                             window.location.reload();
                         }
-                    } else {
-                        // unsuccessful
-                        // r.detail.reason
-                        // r.detail.message
-                    }
+                    } 
                 }).catch(function(e){
                     console.warn('Login Rejected: ', e);
+                    switch(e.reason){
+                        case 'terminated':
+                            me.updateMessage(true, 'error', e.message);
+                        break;
+                        case 'expired':
+                            me.updateMessage(true, 'warn', e.message);
+                        break;
+                        case 'showEula':
+                        // TODO: Implement displaying EULA and submitting confirmation of acceptance for super admin
+                            me.updateMessage(true, 'info', 'Placeholder for asking SA to accept EULA');
+                        break;
+                        case 'eula':
+                            me.updateMessage(true, 'warn', e.message);
+                        break;
+                        default: 
+                            me.updateMessage(true, 'error', 'Login Rejected!');
+                        break;
+                    }
                 });
             } else {
                 console.warn('PreLogin Resolved, returned failure');
+                me.updateMessage(true, 'error', 'Please ensure your Company Code is correct');
             }
         }).catch(function(e){
             console.warn('PreLogin Rejected: ', e);
+            me.updateMessage(true, 'error', 'Please ensure your Company Code is correct');
         });
         
         console.groupEnd();
         // TODO: Ask chad, etc about login process, see if necessary to make two requests, one getting a 'true url'
+    },
+
+    validateForm: function(){
+        var form = this.lookup('loginForm');
+        var valid = form.validate();
+        console.info('Valid form?', valid);
+        if(valid){
+            this.lookup('message').setHidden(true);
+        }
+        return valid;
+    },
+
+    /**
+     * Update visibility and content of login form message box
+     * @param {Boolean} shown If true, message is made visible
+     * @param {String} state Updates message state, if shown is true
+     * @param {String} message Updates message state, if shown is true
+     */
+    updateMessage: function(shown, state, message){
+        var messageCtl = this.lookup('message');
+        if(!shown){
+            messageCtl.setHidden(true);
+        } else {
+            messageCtl.setState(state);
+            messageCtl.setMessage(message);
+            messageCtl.setHidden(false);
+        }
     }
 
 })

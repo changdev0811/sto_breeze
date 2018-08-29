@@ -22,6 +22,8 @@ Ext.define('Breeze.Application', {
         'Breeze.store.company.Config'
     ],
 
+    defaultToken: 'home',
+
     quickTips: false,
     platformConfig: {
         desktop: {
@@ -43,7 +45,7 @@ Ext.define('Breeze.Application', {
         console.log("Launched");
         
         // TODO: Removing testing check when out of dev
-        var testing = true; // (should be removed later)
+        var testing = false; // (should be removed later)
         if(testing){
             Breeze.helper.Auth.setCookies("1","2","5003");
         }

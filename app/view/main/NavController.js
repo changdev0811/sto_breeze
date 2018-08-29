@@ -35,7 +35,6 @@
 
         // Routes
         routes: {
-            '': 'onHomeRoute',
             'personal': 'onHomeRoute',
             'personal/info': {
                 action: 'onPersonalEmployeeInfoRoute',
@@ -47,7 +46,8 @@
             'personal/year_at_a_glance': 'onPersonalYaagRoute',
             'personal/worktime_records': 'onPersonalWtrRoute',
             'personal/calendar': 'onPersonalCalendarRoute',
-            'download/punch_station': 'onDownloadPunchStationRoute'
+            'download/punch_station': 'onDownloadPunchStationRoute',
+            'home': 'onHomeRoute'
         },
 
         init: function(component){

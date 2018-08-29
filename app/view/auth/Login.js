@@ -23,22 +23,24 @@ Ext.define('Breeze.view.auth.Login', {
             userCls: 'login-fieldset',
             itemId: 'loginFormFieldSet',
             title: 'Log In',
+            reference: 'loginForm',
             defaults:{
                 ui: 'login-fieldset',
             },
             items: [
                 {
                     xtype: 'textfield',
-                    id: 'companyField',
+                    itemId: 'companyCode',
                     name: 'loginCode',
                     errorTarget: 'under',
                     label: 'Company Code',
                     // labelMinWidth: '110px',
                     labelWidth: 'auto',
-                    required: true
+                    required: true,
                 },
                 {
                     xtype: 'textfield',
+                    itemId: 'username',
                     name: 'loginUsername',
                     errorTarget: 'under',
                     label: 'Username',
@@ -60,24 +62,13 @@ Ext.define('Breeze.view.auth.Login', {
                     boxLabel: 'Remember Me',
                     id: 'rememberMeField'
                 },
-                // {
-                //     xtype: 'container',
-                //     items: [
-                //         {
-                //             xtype: 'button',
-                //             text: 'Forgot Password?'
-                //         },
-                //         {
-                //             xtype: 'button',
-                //             ui: 'action',
-                //             docked: 'right',
-                //             text: 'Login',
-                //             listeners: {
-                //                 tap: 'onLoginButtonTap'
-                //             }
-                //         }
-                //     ]
-                // }
+                {
+                    xtype: 'breeze-message',
+                    state: 'error',
+                    message: 'Test message',
+                    hidden: true,
+                    reference: 'message'
+                }    
             ],
             buttons: [
                 {
