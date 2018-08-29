@@ -16,8 +16,23 @@ Ext.define('Breeze.auth.LoginController', {
 
     init: function(c){
         this.api = Ext.create('Breeze.api.Auth');
+        this.checkForRemembered();
     },
 
+    checkForRemembered: function(){
+        var cc = Breeze.helper.Cookie.get('COMPANYCODE');
+        var un = Breeze.helper.Cookie.get('USERNAME');
+        if(cc !== null){
+            this.view.down('[name="loginCode"]').setValue(cc);
+        }
+        if(un !== null){
+            this.view.down('[name="loginUsername"]').setValue(un);
+        }
+    },
+
+    /**
+     * Attempt to fill in company code and username if available from 'remember me' being checked
+     */
     onLoginButtonTap: function(button, e, eOpts){
         console.log('Login button pressed!');
         if(this.validateForm()){
@@ -25,6 +40,9 @@ Ext.define('Breeze.auth.LoginController', {
         }
     },
 
+    /**
+     * Process login request
+     */
     loginRequest: function(){
         var c = Breeze.helper.Cookie;
 
@@ -38,7 +56,7 @@ Ext.define('Breeze.auth.LoginController', {
             loginPassword: this.view.down('[name="loginPassword"]').getValue()
         };
 
-        if(remember.checked){
+        if(remember.getChecked()){
             // remember password
             c.bake('COMPANYCODE', creds.loginCode, 9999);
             c.bake('USERNAME', creds.loginUsername, 9999);
