@@ -20,6 +20,13 @@ Ext.define('Breeze.view.dashboard.PersonalModel', {
                 ].join(' ')
             );
         },
+        profileImage: function(get){
+            if(get('employeeInfo.PhotoFlag')){
+                return get('employeeInfo.Photo');
+            } else {
+                return 'resources/photos/default_user.png'
+            }
+        }
     }
 
 });
