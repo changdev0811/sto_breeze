@@ -13,7 +13,7 @@ Ext.define('Breeze.api.reporting.YearAtAGlance', {
     // },
 
     statics: {
-        createAjaxCall: 'createYAAGReportTempTable',
+        ajaxCall: 'createYAAGReportTempTable',
         report: 'EmployeeYearAtAGlance'
     },
 
@@ -47,7 +47,7 @@ Ext.define('Breeze.api.reporting.YearAtAGlance', {
         
         var me = this;
         if(cfg.isLoaded()){
-            return this.generate(cfg);
+            return this.generate(cfg.getAt(0));
         } else {
             return new Promise(function(resolve, reject){
                 cfg.load(function(r,op,success){
@@ -104,14 +104,17 @@ Ext.define('Breeze.api.reporting.YearAtAGlance', {
 
         var me = this;
 
+        var ajaxCall = this.statics().ajaxCall;
+        var reportKind = this.statics().report;
+
         /* Build and return the almighty promise of promises so process can
             return it directly or return in via pass-through */
         return new Promise(function(resolve, reject){
             me.createTemporaryTable(
-                me.statics.createAjaxCall,
+                ajaxCall,
                 me.createTemporaryTableName('YAAG')
             ).then(function(r){
-                me.createReportStore('YAAGReport', me.statics.report, {"Rows": params}).then(
+                me.createReportStore(reportKind, {"Rows": params}).then(
                     function(records, op){
                         resolve(records[0].get('CurrentPageContent'));
                     }

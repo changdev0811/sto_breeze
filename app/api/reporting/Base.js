@@ -22,9 +22,9 @@ Ext.define('Breeze.api.reporting.Base', {
     /**
      * Function that initiates generation process and calls generate when ready
      * 
-     * Should be overridden in extending class
-     * @param {Function} callback Function to execute with results on generation completion.
-     *  Passed along to generate along with config param or object
+     * Should return a promise, wrapping or passing through promise output from generate
+     * 
+     * Should be overridden in extending classt
      */
     process: function(callback){
 
@@ -32,6 +32,8 @@ Ext.define('Breeze.api.reporting.Base', {
 
     /**
      * Function that executes generation process, called by process
+     * 
+     * Should return a promise resolving in generated report data
      * 
      * Should be overridden in extending class
      */
@@ -58,17 +60,21 @@ Ext.define('Breeze.api.reporting.Base', {
     createTemporaryTable: function(method, name){
         var api = this.api;
         return new Promise(function(resolve, reject){
-            api.serviceRequest(method), {
-                tablename: name
-            },
-            true, true,
-            function(r){
-                resolve(r);
-            },
-            function(err){
-                console.warn('Create temporary table failed: ', err);
-                reject(err);
-            }
+            api.serviceRequest(
+                method, 
+                {
+                    tablename: name
+                },
+                true, true,
+                function(r){
+                    console.info('createTemporaryTable going to resolve', r);
+                    resolve(r);
+                },
+                function(err){
+                    console.warn('Create temporary table failed: ', err);
+                    reject(err);
+                }
+            );
         });
     },
 
@@ -100,7 +106,7 @@ Ext.define('Breeze.api.reporting.Base', {
         var format = (options && options['format'])? options.format : 'PDF';
         var page = (options && options['page'])? options.page : 1;
         var storeParams = (options && options['id'])? { storeId: options.id } : {};
-        var store = Ext.create(this.statics.store, storeParams);
+        var store = Ext.create(this.statics().store, storeParams);
         var extras = store.getProxy().extraParams;
         extras.myFormat = format;
         extras.page = page;
