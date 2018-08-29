@@ -91,7 +91,7 @@ Ext.define('Breeze.api.Auth', {
                             var t = r.err.split("__");
                             auth.setCookies(t[0],t[1],t[2]);
                             if(t[3] == "ShowEULA"){
-                                if(t[4] == 15){
+                                if(t[4] == "15"){
                                     // super admin, so need to show EULA
                                     errorDetail.reason = "showEula";
                                 } else {

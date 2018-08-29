@@ -81,16 +81,28 @@ Ext.define('Breeze.auth.LoginController', {
                         case 'terminated':
                             me.updateMessage(true, 'error', e.message);
                         break;
+                        case 'expired':
+                            me.updateMessage(true, 'warn', e.message);
+                        break;
+                        case 'showEula':
+                        // TODO: Implement displaying EULA and submitting confirmation of acceptance for super admin
+                            me.updateMessage(true, 'info', 'Placeholder for asking SA to accept EULA');
+                        break;
+                        case 'eula':
+                            me.updateMessage(true, 'warn', e.message);
+                        break;
                         default: 
-                            me.updateMessage(true, 'error', 'Unspecified error (' + e.message + ')');
+                            me.updateMessage(true, 'error', 'Login Rejected!');
                         break;
                     }
                 });
             } else {
                 console.warn('PreLogin Resolved, returned failure');
+                me.updateMessage(true, 'error', 'Please ensure your Company Code is correct');
             }
         }).catch(function(e){
             console.warn('PreLogin Rejected: ', e);
+            me.updateMessage(true, 'error', 'Please ensure your Company Code is correct');
         });
         
         console.groupEnd();
@@ -114,13 +126,13 @@ Ext.define('Breeze.auth.LoginController', {
      * @param {String} message Updates message state, if shown is true
      */
     updateMessage: function(shown, state, message){
-        var message = this.lookup('message');
+        var messageCtl = this.lookup('message');
         if(!shown){
-            message.setHidden(true);
+            messageCtl.setHidden(true);
         } else {
-            message.setState(state);
-            message.setMessage(message);
-            message.setHidden(false);
+            messageCtl.setState(state);
+            messageCtl.setMessage(message);
+            messageCtl.setHidden(false);
         }
     }
 

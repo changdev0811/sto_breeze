@@ -32,6 +32,12 @@ Ext.define('Breeze.widget.field.Message', {
         }
     },
 
+    tpl: new Ext.XTemplate(
+        '<div class="{stateClass}">',
+        '<span class="{stateIcon}"></span>',
+        '<span>{message}</span>'
+    ),
+
 
     updateState: function(newVal, oldVal){
         this.refreshContent();
@@ -44,10 +50,12 @@ Ext.define('Breeze.widget.field.Message', {
     privates: {
         refreshContent: function(){
             var state = this.states[this.getState()];
-            var html = "<div class='" + state.userCls + "'>" +
-                "<span class='" + state.icon + "'></span>" +
-                "<span>" + this.getMessage() + "<span>";
-            this.setHtml(html);
+
+            this.setData({
+                stateClass: state.userCls, 
+                stateIcon: state.icon,
+                message: this.getMessage()
+            });
         }
     }
 
