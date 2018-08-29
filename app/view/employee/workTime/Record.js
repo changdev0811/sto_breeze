@@ -23,9 +23,30 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 xtype: 'gridrow'
             },
             sortable: false,
-            plugins: [
-                { type: 'rowexpander' }
-            ],
+            plugins: {
+                // { type: 'rowexpander' }
+                rowexpander: true
+            },
+            itemConfig: {
+                body: {
+                    userCls: 'wtr-grid-no-spacer',
+                    tpl: [
+                        '<div class="wtr-record-punch-body">',
+                        '<div class="wtr-record-inpanel">',
+                        '<div><span>IN Punch</span><br/><div class="wtr-icon in"></div></div>',
+                        '<div style="padding-left: 4pt"><label>Date:</label> {In_Punch.processed_time}</br>',
+                        '<label>Time:</label> {In_Punch.Punch_Time}</br>',
+                        '</div></div>',
+                        '<div class="wtr-record-outpanel">',
+                        '<div><span>OUT Punch</span><br/><div class="wtr-icon out"></div></div>',
+                        '<div style="padding-left: 4pt"><label>Date:</label> {In_Punch.processed_time}</br>',
+                        '<label>Time:</label> {In_Punch.Punch_Time}</br>',
+                        '</div></div>',
+                        '</div>',
+                        '</div>'
+                    ]
+                }
+            },
             bind: '{workTimeRecords}',
             columns: [
                 {

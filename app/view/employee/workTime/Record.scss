@@ -1,0 +1,70 @@
+/*
+    Styles for WTR Record View
+*/
+
+// Expanded row punch in / punch out panels
+
+$wtr-record-panel-padding: 4pt;
+
+// Murder that damn spacer that gets tossed into the grid body
+.wtr-grid-no-spacer {
+    display: flex;
+    flex-direction: column;
+    & > .x-spacer-el {
+        display: none;
+        width: 0; height: 0;
+    }
+    & > .x-content-el {
+        padding: 0;
+    }
+}
+
+.wtr-record-punch-body {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+    flex-direction: row;
+    background-color: yellow;
+}
+
+.wtr-record-inpanel {
+    background-color: $confirm-color;
+    padding: $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding;
+    margin: 0;
+    display: flex;
+    flex: 1 1 auto;
+    & > .labels {
+        padding: 0 0 0 4pt;
+    }
+}
+
+.wtr-record-outpanel {
+    background-color: $alert-color;
+    padding: $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding;
+    margin: 0;
+    display: flex;
+    flex: 1 1 auto;
+    & .labels {
+        @include .wtr-record-punch-labels
+    }
+}
+
+.wtr-record-punch-labels {
+    padding-left: 4pt;
+}
+
+// in/out icons
+.wtr-icon {
+    width: 28pt;
+    height: 28pt;
+    margin: 2pt;
+    background-repeat: no-repeat;
+    &.in {
+        background-image: url(get-resource-path('icons/clock-in.svg'));
+        background-size: contain;
+    }
+    &.out {
+        background-image: url(get-resource-path('icons/clock-out.svg'));
+        background-size: contain;
+    }
+}
