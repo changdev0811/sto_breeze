@@ -18,7 +18,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
 
     layout: 'fit',
 
-    title: 'John Doe\'s WorkTimeRecords (2-2-2018) - (2-2-2018)',
+    title: {
+        bind: {
+            data: {
+                name: '{employeeName}'
+            }
+        },
+        tpl: 'Work Time Records for {name} (2-2-2018) - (2-2-2018)'
+    },
 
     ui: 'wtr-panel',
 
