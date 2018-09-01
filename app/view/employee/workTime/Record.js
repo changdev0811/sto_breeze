@@ -124,10 +124,12 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             items: [
                 {
                     xtype: 'checkbox',
-                    label: 'Show Punches',
-                    labelAlign: 'right',
+                    boxLabel: 'Show Punches',
+                    // labelAlign: 'right',
                     inline: true,
-                    labelWidth: 'auto'
+                    // labelWidth: 'auto',
+                    ui: 'dark-checkbox'
+
                 }
             ]
         }

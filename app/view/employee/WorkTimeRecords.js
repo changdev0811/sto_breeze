@@ -135,7 +135,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             reference: 'wtrTimeSheetTab',
                             title: 'Time Sheet View',
                             items: [
-
+                                {
+                                    xtype: 'employee.worktime.sheet'
+                                }
                             ]
                         }
                     ]
