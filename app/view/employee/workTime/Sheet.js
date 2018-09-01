@@ -29,32 +29,32 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
             //     rowexpander: true
             // },
             
-            bind: '{workTimeSheets}',
+            bind: '{timeSheetRecords}',
             columns: [
                 {
                     xtype: 'gridcolumn',
                     flex: 2,
                     // formatter: 'date("m/d/Y")',
-                    // dataIndex: 'Record_Date',
+                    dataIndex: 'Project_ID',
                     text: 'Project'
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Day 1',
-                    // dataIndex: 'Start_Time'
+                    dataIndex: 'Day1Hours'
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Day 2',
-                    // dataIndex: 'Start_Time'
+                    dataIndex: 'Day2Hours'
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Day 3',
-                    // dataIndex: 'Start_Time'
+                    dataIndex: 'Day3Hours'
                 },
                 {
                     xtype: 'gridcolumn',

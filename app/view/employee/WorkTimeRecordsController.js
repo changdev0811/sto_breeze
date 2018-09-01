@@ -18,6 +18,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.companyApi = Ext.create('Breeze.api.Company');
         this.loadProjects();
         this.loadWorkTimeRecords();
+        this.loadTimeSheetRecords();
     },
     
 
@@ -47,6 +48,22 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             me.getViewModel().set('workTimeRecords', store);
             console.info('WorkTimeRecord loaded');
+        });
+    },
+
+    loadTimeSheetRecords: function(){
+        var me = this;
+        this.api.workTimeRecords.getTimeSheetForRange(
+            this.api.auth.getCookies().emp,
+            '2018-07-01T00:00:00',
+            '2018-07-07T00:00:00',
+            'workTimeSheetStore'
+        ).then(function(store){
+            // me.getViewModel().setStores({workTimeRecords: store});
+            // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
+            me.getViewModel().set('timeSheetRecords', store);
+            // me.getViewModel().setStores({timeSheetRecords: store});
+            console.info('TimeSheet View loaded');
         });
     }
 

@@ -32,7 +32,7 @@ Ext.define('Breeze.store.record.timeSheet.View', {
         },
         reader: {
             type: 'json',
-            rootProperty: 'd.d'
+            rootProperty: 'd.Records'
         },
         pageParam: undefined,
         startParam: undefined

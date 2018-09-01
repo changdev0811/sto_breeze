@@ -41,5 +41,40 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
                 }
             });
         });
+    },
+
+    /**
+     * Wraps AJAX proxy in TimeSheet view record store to return a promise, and
+     * to accept request parameters
+     * @param {String} lookupId ID of user to lookup records for
+     * @param {String} startTime Start date to get records for
+     * @param {String} endTime Ending date to get records for
+     * @param {String} storeId Optional name of created store, default is 'TimeSheetViewRecords'
+     * @return {Promise} Promise wrapped around load callback, returning store on
+     *  resolve, and nothing on reject
+     */
+    getTimeSheetForRange: function(lookupId, startTime, endTime, storeId){
+        var storeId = this.defVal(storeId,'TimeSheetViewRecords');
+        var me = this;
+        return new Promise(function(resolve, reject){
+            var store = Ext.create('Breeze.store.record.timeSheet.View', {
+                storeId: storeId,
+                // groupField: 'Employee_Id'
+            });
+            store.load({
+                params: {
+                    lookup_id: lookupId,
+                    start_time: startTime,
+                    end_time: endTime
+                },
+                callback: function(records, options, success){
+                    if(success){
+                        resolve(store);
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
     }
 });
