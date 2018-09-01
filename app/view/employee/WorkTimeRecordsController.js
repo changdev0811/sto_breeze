@@ -2,21 +2,39 @@
  * WorkTime Records view Controller
  *
  * @class WorkTimeRecordsController
- * @alias Breeze.view.employee.WorkTimeRecordsController
+ * @namespace Breeze.view.employee.WorkTimeRecordsController
  */
 Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.employee.worktimerecords',
     
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
+        'Breeze.api.Company'
     ],
 
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
+        this.companyApi = Ext.create('Breeze.api.Company');
+        this.loadProjects();
         this.loadWorkTimeRecords();
     },
     
+
+    /**
+     * Load flat projects list into view model
+     */
+    loadProjects: function(){
+        var me = this;
+        this.companyApi.project.flatList().then(
+            function(store){
+                me.getViewModel().setStores({projects: store});
+            }
+        ).catch(function(e){
+            console.warn('Failed to load projects list');
+        })
+    },
+
     loadWorkTimeRecords: function(){
         var me = this;
         this.api.workTimeRecords.getWorkTimeRecordsForRange(

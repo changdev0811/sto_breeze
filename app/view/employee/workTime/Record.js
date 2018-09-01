@@ -96,13 +96,29 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time IN',
-                    dataIndex: 'Start_Time'
+                    // dataIndex: 'Start_Time'
+                    tpl: [
+                        '{[this.formatted(values.Start_Time)]}',
+                        {
+                            formatted: function(v){
+                                return v.toLocaleTimeString();
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time OUT',
-                    dataIndex: 'End_Time'
+                    // dataIndex: 'End_Time'
+                    tpl: [
+                        '{[this.formatted(values.End_Time)]}',
+                        {
+                            formatted: function(v){
+                                return v.toLocaleTimeString();
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',

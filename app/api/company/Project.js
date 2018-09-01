@@ -3,10 +3,10 @@
  * @class Project
  * @namespace Breeze.api.company.Project
  * @alias Breeze.api.company.Project
- * @extends Breeze.api.Company
+ * @extends Breeze.api.Base
  */
 Ext.define('Breeze.api.company.Project', {
-    extend: 'Breeze.api.Company',
+    extend: 'Breeze.api.Base',
     
     /**
      * Get project by ID
@@ -29,6 +29,25 @@ Ext.define('Breeze.api.company.Project', {
                 }
             )
         })
+    },
+
+    /**
+     * Get flat list of projects
+     * @api getFlatProjectList
+     * @return {Promise} promise resolving with flat project list store or rejecting with error records
+     */
+    flatList: function(){
+        var me = this;
+        return new Promise(function(resolve, reject){
+            var store = Ext.create('Breeze.store.company.FlatProjectList');
+            store.load(function(r,o,success){
+                if(success){
+                    resolve(store);
+                } else {
+                    reject(r);
+                }
+            });
+        });
     }
 
 });
