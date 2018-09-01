@@ -11,6 +11,7 @@ Ext.define('Breeze.model.record.Punch', {
         { name: 'Employee_ID', type: 'string' },
         { name: 'Employee_Name', type: 'string' },
         { name: 'Punch_Time', type: 'date', dateFormat: 'MS' },
+        { name: 'processed_time', type: 'date', dateFormat: 'MS' },
         { name: 'Badge_Number', type: 'integer' },
         { name: 'project_code', type: 'string' },
         { name: 'lat', type: 'integer' },

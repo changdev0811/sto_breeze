@@ -1,12 +1,65 @@
-/*
-    Styles for WTR Record View
+/**
+    Styles / Classes for Employee WorkTime Records SubView
 */
 
-// Expanded row punch in / punch out panels
+// ==[Variables]==
+$employee-wtr-records-body-padding: 4pt;
+// icon display size, w/o padding
+$employee-wtr-records-icon-size: 28pt;
+// total width/height of icon w/ padding
+$employee-wtr-records-icon-total-size: 32px; 
+// ==[Mixins for WTR records]==
 
-$wtr-record-panel-padding: 4pt;
+// record body label mixin
+@mixin wtr-body-label {
+    padding: {
+        top: 0;
+        left: $employee-wtr-records-body-padding;
+        bottom: 0;
+        right: 0;
+    }
+}
 
-// Murder that damn spacer that gets tossed into the grid body
+// base mixin for row body punch-in/out columns
+@mixin wtr-body-panel($bgcolor) {
+    background-color: $bgcolor;
+    padding: {
+        top: $employee-wtr-records-body-padding;
+        left: $employee-wtr-records-body-padding;
+        bottom: $employee-wtr-records-body-padding;
+        right: $employee-wtr-records-body-padding;
+    }
+    margin: 0;
+    display: flex;
+    flex: 1 1 auto;
+    // label styling
+    & .lbl {
+        @include wtr-body-label;
+        & label {
+            font-weight: bold;
+        }
+    }
+
+    //icon classes
+    & .icon {
+        width: $employee-wtr-records-icon-size;
+        height: $employee-wtr-records-icon-size;
+        margin: ($employee-wtr-records-icon-total-size - $employee-wtr-records-icon-size);
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 75%;
+        // clock in icon
+        &.in {
+            background-image: url(get-resource-path('icons/clock-in-light.svg'));
+        }
+        // clock out icon
+        &.out {
+            background-image: url(get-resource-path('icons/clock-out-light.svg'));
+        }
+    }
+}
+
+// Murder that annoying spacer that gets tossed into the grid body
 .wtr-grid-no-spacer {
     display: flex;
     flex-direction: column;
@@ -19,52 +72,19 @@ $wtr-record-panel-padding: 4pt;
     }
 }
 
-.wtr-record-punch-body {
+// Body cell of work time records expanded row
+.employee-wtr-records-rowbody {
     display: flex;
-    width: 100%;
     flex: 1 1 auto;
     flex-direction: row;
+    width: 100%;
     background-color: yellow;
-}
-
-.wtr-record-inpanel {
-    background-color: $confirm-color;
-    padding: $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding;
-    margin: 0;
-    display: flex;
-    flex: 1 1 auto;
-    & > .labels {
-        padding: 0 0 0 4pt;
+    // punch in body panel
+    & > .punch-in {
+       @include wtr-body-panel($confirm-color);
     }
-}
-
-.wtr-record-outpanel {
-    background-color: $alert-color;
-    padding: $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding $wtr-record-panel-padding;
-    margin: 0;
-    display: flex;
-    flex: 1 1 auto;
-    & .labels {
-        @include .wtr-record-punch-labels
-    }
-}
-
-.wtr-record-punch-labels {
-    padding-left: 4pt;
-}
-
-// in/out icons
-.wtr-icon {
-    width: 28pt;
-    height: 28pt;
-    margin: 2pt;
-    background-repeat: no-repeat;
-    &.in {
-        background-image: url(get-resource-path('icons/clock-in.svg'));
-        background-size: contain;
-    }
-    &.out {
-        background-image: url(get-resource-path('icons/clock-out.svg'));
-        background-size: contain;
+    // punch out body panel
+    & > .punch-out {
+        @include wtr-body-panel($alert-color);
     }
 }
