@@ -108,20 +108,17 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
          * Collects the week surrounding a date
          */
         collectWeek: function(date){
-            console.group('Week Collection');
-            console.info('Date: ', date);
+            // console.group('Week Collection');
+            // console.info('Date: ', date);
             var weekDay = date.getDay();
-            var weekStart = date.getDate() - weekDay;
-            var weekEnd = date.getDate() + (6 - weekDay);
-            var workingDate = new Date(date);
+            var weekStart = moment(date).add(-weekDay, 'days').toDate();
+            var weekEnd = moment(date).add(6 - weekDay, 'days').toDate();
             var days = [];
-            console.info('Week Start: ', weekStart, ' Week End: ', weekEnd);
-            console.info('Working Date: ', workingDate);
-            for(var d = weekStart; d < weekEnd + 1; d++){
-                workingDate.setDate(d);
-                days.push(new Date(workingDate));
+            // console.info('Week Start: ', weekStart, ' Week End: ', weekEnd);
+            for(var i=0;i<7;i++){
+                days.push(moment(weekStart).add(i,'days').toDate());
             }
-            console.groupEnd();
+            // console.groupEnd();
             return days;
         }
     }

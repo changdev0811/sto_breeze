@@ -105,15 +105,23 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     // ===[Event Handlers]===
 
     onWeekChange: function(comp, x, eOpts){
-        console.group('Selected week change handler');
-        console.info('Selected week changed');
-        console.info('Week:', comp.getSelectedWeek());
-        console.groupEnd();
+        // console.group('Selected week change handler');
+        // console.info('Selected week changed');
+        // console.info('Week:', comp.getSelectedWeek());
+        // console.groupEnd();
 
         var week = comp.getSelectedWeek();
         var vm = this.getViewModel();
         vm.set('startDate', week.start);
         vm.set('endDate', week.end);
+
+        var days = comp.getSelectedDates();
+        var names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        for(var i=0;i<days.length;i++){
+            var prop = "sheetDayLabels.day".concat(i+1);
+            var val = [names[i],'<br/>',Breeze.helper.Time.shortDate(days[i])].join('');
+            vm.set(prop,val);
+        }
     }
 
     // ===[Display Logic]===
