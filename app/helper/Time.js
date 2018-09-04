@@ -17,6 +17,20 @@ Ext.define('Breeze.helper.Time', {
             return [hrs,min].join(':')
         },
         /**
+         * Return short date string format of date (MM/DD/YYYY)
+         * @param {Date} date Source date object
+         * @param {String} sep Optional separator character (default is '/')
+         * @return {String} Short formatted date string
+         */
+        shortDate: function(date, sep){
+            var sep = (typeof sep == 'undefined')? '/' : sep;
+            return [
+                date.getMonth() + 1,
+                date.getDate(),
+                date.getFullYear()
+            ].join(sep);
+        },
+        /**
          * Minutes class, ported over from homemmade.js
          * @todo TODO: Document Minutes or break into smaller static helper functions
          */

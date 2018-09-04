@@ -8,9 +8,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.employee.worktimerecords',
 
-    // requires: [
-    //     'Breeze.helper.Time'
-    // ],
+    requires: [
+        'Breeze.helper.Time'
+    ],
 
     data: {
         employeeId: undefined,
@@ -45,6 +45,23 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
     // }
 
     formulas: {
+        titleDateStart: function(get){
+            var startDate = get('startDate');
+            console.info('titleDateStart');
+            if(typeof startDate !== "object"){
+                return '';
+            } else {
+                return Breeze.helper.Time.shortDate(startDate,'-');
+            }
+        },
+        titleDateEnd: function(get){
+            var endDate = get('endDate');
+            if(typeof endDate !== "object"){
+                return '';
+            } else {
+                return Breeze.helper.Time.shortDate(endDate,'-');
+            }
+        },
         glanceRegularHours: function(get){
             var t = get('atAGlance.regular');
             t = (t == null)? 0 : t;

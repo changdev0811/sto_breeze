@@ -21,10 +21,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     title: {
         bind: {
             data: {
+                finish: '{titleDateEnd}',
+                start: '{titleDateStart}',
                 name: '{employeeName}'
             }
         },
-        tpl: 'Work Time Records for {name} (2-2-2018) - (2-2-2018)'
+        // tpl: 'Work Time Records for {name}'// ({startDate} - {[parent.titleDateEnd]})'
+        tpl: 'Work Time Records for {name} ({start} - {finish})'
     },
 
     ui: 'wtr-panel',
@@ -48,7 +51,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             collapsed: true,
                             flex: 1,
                             width: '100%',
-                            margin: '0pt 10pt 0pt 10pt' 
+                            margin: '0pt 10pt 0pt 10pt',
+                            listeners: {
+                                change: 'onWeekChange'
+                            }
                         },
                         {
                             xtype: 'fieldset',

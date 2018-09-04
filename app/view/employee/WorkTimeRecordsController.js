@@ -16,7 +16,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
-        this.getViewModel().set('employee', component.getData().employee);
+        this.getViewModel().set('employeeId', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
@@ -39,10 +39,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         })
     },
 
+    /**
+     * Load at a glance data from payroll
+     */
     loadAtAGlance: function(){
         var me = this;
         var vm = me.getViewModel();
-        var lookupId = me.getViewModel().get('employee');
+        var lookupId = me.getViewModel().get('employeeId');
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
             lookupId,
@@ -59,6 +62,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         });
     },
 
+    /**
+     * Load work time record data store
+     */
     loadWorkTimeRecords: function(){
         var me = this;
         // TODO: Add live date data for ajax call in place of dummy dates
@@ -76,6 +82,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         });
     },
 
+    /**
+     * Load time sheet record store
+     */
     loadTimeSheetRecords: function(){
         var me = this;
         // TODO: Add live date data for ajax call in place of dummy dates
@@ -94,6 +103,18 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     },
 
     // ===[Event Handlers]===
+
+    onWeekChange: function(comp, x, eOpts){
+        console.group('Selected week change handler');
+        console.info('Selected week changed');
+        console.info('Week:', comp.getSelectedWeek());
+        console.groupEnd();
+
+        var week = comp.getSelectedWeek();
+        var vm = this.getViewModel();
+        vm.set('startDate', week.start);
+        vm.set('endDate', week.end);
+    }
 
     // ===[Display Logic]===
 });
