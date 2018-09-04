@@ -34,7 +34,20 @@
     $ui: 'dark-textfield'
 );
 
+@include field-ui(
+    $label-color: #ffffff,
+    $focused-label-color: #ffffff,
+    $label-font-size: $ei-head-font-size,    
+    $ui: 'dark-checkbox'
+);
 
+@include checkboxfield-ui(
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $box-label-color: #ffffff,
+    $box-label-font-size: $ei-field-font-size,
+    $ui: 'dark-checkbox'
+);
 
 
 
@@ -49,3 +62,8 @@
 .employee-worktime-records-grid {
     background-color:map-get($wtr-colors,'base'); 
 }
+
+@include gridcolumn-ui(
+    $ui: 'employee-worktime-records-grid',
+    $font-size: 10pt
+);

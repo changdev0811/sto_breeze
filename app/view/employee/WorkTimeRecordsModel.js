@@ -12,7 +12,17 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
         startDate: undefined,
         endDate: undefined,
         showPunches: false,
-        workTimeRecords: null
+        workTimeRecords: null,
+        // Labels for columns in time sheet view, updated when selected dates change
+        sheetDayLabels: {
+            day1: 'Day 1',
+            day2: 'Day 2',
+            day3: 'Day 3',
+            day4: 'Day 4',
+            day5: 'Day 5',
+            day6: 'Day 6',
+            day7: 'Day 7'
+        }
     }
 
     // stores: {
