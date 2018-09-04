@@ -14,7 +14,7 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         hideOutside: false,
         selectedDates: []
     },
-    
+
     initialize: function(){
         var me = this;
         this.showFooter = false;
@@ -22,6 +22,16 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         me.getHeader().hide();
     },
 
+
+    /**
+     * Change selected dates by providing an array of dates
+     * representing the week to select; first date of week will be
+     * passed on to the value attribute
+     * @param {Array} week Array of days in week to apply
+     */
+    changeSelectedDates: function(week){
+        this.setValue(week[0]);
+    },
 
     updateValue: function(value, oldValue) {
         var me = this,
