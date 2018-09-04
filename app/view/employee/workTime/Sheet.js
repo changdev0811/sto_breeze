@@ -111,16 +111,53 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 }
             ]
         },
+        // ===[Approve/Deny Button Container]===
         {
             xtype: 'container',
+            layout: {
+                type: 'hbox',
+                pack: 'end'
+            },
             items: [
                 {
-                    xtype: 'checkbox',
-                    boxLabel: 'Show Punches',
-                    // labelAlign: 'right',
-                    ui: 'dark-checkbox',
-                    inline: true,
-                    // labelWidth: 'auto'
+                    xtype: 'button',
+                    text: 'Approve',
+                    ui: 'confirm wtr-button',
+                    menu: {
+                        xtype: 'menu',
+                        items: [
+                            {
+                                xtype: 'menuitem',
+                                text: 'Approve',
+                                itemId: 'mnuApproveRegular'
+                            },
+                            {
+                                xtype: 'menuitem',
+                                text: 'Approve w/ Note',
+                                itemId: 'mnuApproveWithNote'
+                            }
+                        ]
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Deny',
+                    ui: 'decline wtr-button',
+                    menu: {
+                        xtype: 'menu',
+                        items: [
+                            {
+                                xtype: 'menuitem',
+                                text: 'Deny',
+                                itemId: 'mnuDenyRegular'
+                            },
+                            {
+                                xtype: 'menuitem',
+                                text: 'Deny w/ Note',
+                                itemId: 'mnuDenyWithNote'
+                            }
+                        ]
+                    }
                 }
             ]
         }

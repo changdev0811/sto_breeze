@@ -12,7 +12,10 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         autoConfirm: true,
         headerLength: 1,
         hideOutside: false,
-        selectedDates: []
+        // Array of selected dates
+        selectedDates: [],
+        // Object containing start and end date of selected week
+        selectedWeek: {start: null, end: null}
     },
 
     initialize: function(){
@@ -33,6 +36,23 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         this.setValue(week[0]);
     },
 
+    /**
+     * Changes value of selectedWeek when selectedDates property changes.
+     * Doesn't affect the value of selected dates
+     * @param {Object} value New selectedDates value
+     * @param {Object} oldValue Old selectedDates value
+     */
+    updateSelectedDates: function(value, oldValue){
+        this.setSelectedWeek({
+            start: value[0],
+            end: value[6]
+        });
+        console.info(this.getSelectedWeek());
+    },
+
+    /**
+     * Override updateValue handler to enable full week selection
+     */
     updateValue: function(value, oldValue) {
         var me = this,
             handler = me.getHandler(),
@@ -84,16 +104,24 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
     },
 
     privates: {
+        /**
+         * Collects the week surrounding a date
+         */
         collectWeek: function(date){
+            console.group('Week Collection');
+            console.info('Date: ', date);
             var weekDay = date.getDay();
             var weekStart = date.getDate() - weekDay;
             var weekEnd = date.getDate() + (6 - weekDay);
             var workingDate = new Date(date);
             var days = [];
+            console.info('Week Start: ', weekStart, ' Week End: ', weekEnd);
+            console.info('Working Date: ', workingDate);
             for(var d = weekStart; d < weekEnd + 1; d++){
                 workingDate.setDate(d);
                 days.push(new Date(workingDate));
             }
+            console.groupEnd();
             return days;
         }
     }

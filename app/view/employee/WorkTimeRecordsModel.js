@@ -1,7 +1,8 @@
 /**
  * View Model for WorkTimeRecords view
  * @class WorkTimeRecordsModel
- * @alias Breeze.view.employee.WorkTimeRecordsModel
+ * @namespace Breeze.view.employee.WorkTimeRecordsModel
+ * @alias viewmodel.employee.worktimerecords
  */
 Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
     extend: 'Ext.app.ViewModel',
@@ -23,11 +24,12 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             day6: 'Day 6',
             day7: 'Day 7'
         }
-    }
+    },
 
     // stores: {
     //     workTimeRecords: {
     //         type: 'Breeze.store.record.WorkTime'
     //     }
     // }
+
 });

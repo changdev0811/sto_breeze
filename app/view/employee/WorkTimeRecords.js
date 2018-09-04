@@ -53,10 +53,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                         {
                             xtype: 'fieldset',
                             userCls: 'wtr-content',
+                            width: '100%',
                             flex: 2,
                             defaults: {
                                 labelAlign: 'left',
-                                ui: 'dark-textfield'
+                                ui: 'dark-textfield dark-textfield-sm',
+                                labelWidth: 'auto',
+                                width: '100%',
+                                bodyAlign: 'end'
                             },
                             layout: 'vbox',
                             title: 'Time at a Glance',
