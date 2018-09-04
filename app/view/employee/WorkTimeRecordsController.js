@@ -119,7 +119,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         var names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         for(var i=0;i<days.length;i++){
             var prop = "sheetDayLabels.day".concat(i+1);
-            var val = [names[i],'<br/>',Breeze.helper.Time.shortDate(days[i])].join('');
+            var val = [names[i],'<br/>', days[i].getMonth() + 1, '/', days[i].getDate()].join('');
             vm.set(prop,val);
         }
     }

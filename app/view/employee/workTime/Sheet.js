@@ -25,7 +25,7 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 xtype: 'gridrow'
             },
             sortable: false,
-            columnLines: true,
+            // columnLines: true,
             // plugins: {
             //     // { type: 'rowexpander' }
             //     rowexpander: true
