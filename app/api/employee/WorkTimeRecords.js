@@ -84,7 +84,7 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
      * @param {String} lookupId ID of user to lookup records for
      * @param {String|Date} startDate Start date to get records for
      * @param {String|Date} endDate Ending date to get records for
-     * @return {Promise} Promise resolving in Array of hour record objects or rejecting with error
+     * @return {Promise} Promise resolving in Object mapping regular, and ot1-ot4 values, or rejecting with error
      */
     getEmployeePayrollHours: function(lookupId, startDate, endDate) {
         var me = this;
@@ -101,7 +101,35 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
                 },
                 true, true,
                 function(resp){
-                    return api.decodeJsonResponse(resp).Records[0].Hour_Records;
+                    var response = {
+                        regular: null,
+                        ot1: null,
+                        ot2: null,
+                        ot3: null,
+                        ot4: null
+                    };
+                    var records = api.decodeJsonResponse(resp).records[0].Hour_Records;
+                    for(var i = 0; i < records.length; i++){
+                        var rec = records[i];
+                        switch(rec.Hours_Code){
+                            case "REG":
+                                response.regular = rec.Hours_Amount;
+                            break;
+                            case "OT1":
+                                response.ot1 = rec.Hours_Amount;
+                            break;
+                            case "OT2":
+                                response.ot2 = rec.Hours_Amount;
+                            break;
+                            case "OT3":
+                                response.ot3 = rec.Hours_Amount;
+                            break;
+                            case "OT4":
+                                response.ot4 = rec.Hours_Amount;
+                            break;
+                        }
+                    }
+                    resolve(response);
                 },
                 function(err){
                     reject(err);

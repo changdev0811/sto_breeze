@@ -19,7 +19,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.getViewModel().set('employee', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
-        // this.loadTimeSheetRecords();
+        this.loadAtAGlance();
     },
     
     // ===[Data Loading]===
@@ -41,6 +41,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     loadAtAGlance: function(){
         var me = this;
+        var vm = me.getViewModel();
         var lookupId = me.getViewModel().get('employee');
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
@@ -48,7 +49,11 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             '2018-07-01T00:00:00',
             '2018-07-07T00:00:00'
         ).then(function(data){
-
+           vm.set('atAGlance.regular', data.regular);
+           vm.set('atAGlance.ot1',data.ot1);
+           vm.set('atAGlance.ot2',data.ot2);
+           vm.set('atAGlance.ot3',data.ot3);
+           vm.set('atAGlance.ot4',data.ot4);
         }).catch(function(err){
             console.warn('Error getting employee payroll information: ', err);
         });

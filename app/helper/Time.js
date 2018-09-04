@@ -18,6 +18,7 @@ Ext.define('Breeze.helper.Time', {
         },
         /**
          * Minutes class, ported over from homemmade.js
+         * @todo TODO: Document Minutes or break into smaller static helper functions
          */
         Minutes: function(minutes,HHMM) {
             this.minutes = minutes;

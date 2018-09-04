@@ -8,6 +8,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.employee.worktimerecords',
 
+    // requires: [
+    //     'Breeze.helper.Time'
+    // ],
+
     data: {
         employeeId: undefined,
         startDate: undefined,
@@ -26,26 +30,11 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
         },
         // at a glance data
         atAGlance: {
-            regular: {
-                show: true,
-                value: 0
-            },
-            ot1: {
-                show: false,
-                value: 0
-            },
-            ot2: {
-                show: false,
-                value: 0
-            },
-            ot3: {
-                show: false,
-                value: 0
-            },
-            ot4: {
-                show: false,
-                value: 0
-            }
+            regular: 0,
+            ot1: null,
+            ot2: null,
+            ot3: null,
+            ot4: null
         }
     },
 
@@ -55,4 +44,43 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
     //     }
     // }
 
+    formulas: {
+        glanceRegularHours: function(get){
+            var t = get('atAGlance.regular');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        glanceOt1Hours: function(get){
+            var t = get('atAGlance.ot1');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        glanceOt2Hours: function(get){
+            var t = get('atAGlance.ot2');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        glanceOt3Hours: function(get){
+            var t = get('atAGlance.ot3');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        glanceOt4Hours: function(get){
+            var t = get('atAGlance.ot4');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        glanceTotalHours: function(get){
+            var t = 
+                get('atAGlance.regular') + get('atAGlance.ot1') +
+                get('atAGlance.ot2') + get('atAGlance.ot3') +
+                get('atAGlance.ot4');
+            t = (t == null)? 0 : t;
+            return t.toFixed(2);
+        },
+        showOt1Hours: function(get){ return (get('atAGlance.ot1') !== null); },
+        showOt2Hours: function(get){ return (get('atAGlance.ot2') !== null); },
+        showOt3Hours: function(get){ return (get('atAGlance.ot3') !== null); },
+        showOt4Hours: function(get){ return (get('atAGlance.ot4') !== null); }
+    }
 });
