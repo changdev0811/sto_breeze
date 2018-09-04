@@ -212,6 +212,14 @@
             */
             "path": "lib/md5.js"
         },
+        // Include moment.js lib
+        {
+            "path": "lib/moment.min.js"
+        },
+        // Include moment w/ locales lib
+        {
+            "path": "lib/moment-with-locales.min.js"
+        },
         {
             "path": "${framework.dir}/build/ext-modern-all-debug.js"
         },

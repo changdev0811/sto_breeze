@@ -21,10 +21,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     title: {
         bind: {
             data: {
+                finish: '{titleDateEnd}',
+                start: '{titleDateStart}',
                 name: '{employeeName}'
             }
         },
-        tpl: 'Work Time Records for {name} (2-2-2018) - (2-2-2018)'
+        // tpl: 'Work Time Records for {name}'// ({startDate} - {[parent.titleDateEnd]})'
+        tpl: 'Work Time Records for {name} ({start} - {finish})'
     },
 
     ui: 'wtr-panel',
@@ -48,63 +51,81 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             collapsed: true,
                             flex: 1,
                             width: '100%',
-                            margin: '0pt 10pt 0pt 10pt' 
+                            margin: '0pt 10pt 0pt 10pt',
+                            listeners: {
+                                change: 'onWeekChange'
+                            }
                         },
                         {
                             xtype: 'fieldset',
                             userCls: 'wtr-content',
+                            width: '100%',
                             flex: 2,
                             defaults: {
                                 labelAlign: 'left',
-                                ui: 'dark-textfield'
+                                ui: 'dark-textfield dark-textfield-sm',
+                                labelWidth: 'auto',
+                                width: '100%',
+                                bodyAlign: 'end'
                             },
+                            reference: 'timeAtAGlanceFields',
                             layout: 'vbox',
                             title: 'Time at a Glance',
                             items: [
                                 {
                                     xtype: 'displayfield',
-                                    id: 'regularHours',
-                                    name: 'reg_hours',
+                                    itemId: 'regular',
                                     label: 'Regular Hours:',
-                                    value: '20.00'
+                                    bind: {
+                                        value: '{glanceRegularHours}'
+                                    }
                                 },
                                 {
                                     xtype: 'displayfield',
-                                    id: 'ot1Hours',
-                                    name: 'ot1_hours',
+                                    itemId: 'ot1',
                                     label: 'OT1 Hours:',
-                                    value: '20.00'
+                                    bind: {
+                                        value: '{glanceOt1Hours}',
+                                        hidden: '{!showOt1Hours}'
+                                    }
                                 },
                                 {
                                     xtype: 'displayfield',
-                                    id: 'ot2Hours',
-                                    name: 'ot2_hours',
+                                    itemId: 'ot2',
                                     label: 'OT2 Hours:',
-                                    value: '20.00'
+                                    bind: {
+                                        value: '{glanceOt2Hours}',
+                                        hidden: '{!showOt2Hours}'
+                                    }
                                 },
                                 {
                                     xtype: 'displayfield',
-                                    id: 'ot3Hours',
-                                    name: 'ot3_hours',
+                                    itemId: 'ot3',
                                     label: 'OT3 Hours:',
-                                    value: '20.00'
+                                    bind: {
+                                        value: '{glanceOt3Hours}',
+                                        hidden: '{!showOt3Hours}'
+                                    }
                                 },
                                 {
                                     xtype: 'displayfield',
-                                    id: 'ot4Hours',
-                                    name: 'ot4_hours',
+                                    itemId: 'ot4',
                                     label: 'OT4 Hours:',
-                                    value: '20.00'
+                                    bind: {
+                                        value: '{glanceOt4Hours}',
+                                        hidden: '{!showOt4Hours}'
+                                    }
                                 },
                                 {
                                     xtype: 'menuseparator'
                                 },
                                 {
                                     xtype: 'displayfield',
-                                    id: 'totalHours',
-                                    name: 'total_hours',
                                     label: 'Total Hours:',
-                                    value: '20:00'
+                                    itemId: 'total',
+                                    bind: {
+                                        value: '{glanceTotalHours}'
+                                    }
                                 }
                             ]
                         }

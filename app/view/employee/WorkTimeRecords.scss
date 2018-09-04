@@ -19,12 +19,13 @@
     $body-color: map-get($wtr-text-colors,'base') !important
 );
 
-
+$wtr-side-head-font-size: 14pt;
+$wtr-side-body-font-size: 12pt;
 
 @include field-ui(
     $label-font-size: $ei-field-font-size,
     $label-color: map-get($wtr-text-colors,'base'),
-    $label-width: 88pt,
+    // $label-width: 88pt,
     $ui: 'dark-textfield'
 );
 
@@ -49,8 +50,6 @@
     $ui: 'dark-checkbox'
 );
 
-
-
 .wtr-content {
     padding: $ei-form-padding;
     .x-form-fieldset-title {
@@ -66,4 +65,18 @@
 @include gridcolumn-ui(
     $ui: 'employee-worktime-records-grid',
     $font-size: 10pt
+);
+
+// --Adjustments to time at a glance labels in side--
+// Adjust color, sizing of label
+@include field-ui(
+    $label-font-size: $wtr-side-body-font-size,
+    $label-color: map-get($root-text-colors,'base'),
+    // $label-width: 88pt,
+    $ui: 'dark-textfield-sm'
+);
+
+@include button-ui(
+    $ui: 'wtr-button',
+    $font-size: $wtr-side-body-font-size
 );

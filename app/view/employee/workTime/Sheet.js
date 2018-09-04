@@ -25,7 +25,7 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 xtype: 'gridrow'
             },
             sortable: false,
-            columnLines: true,
+            // columnLines: true,
             // plugins: {
             //     // { type: 'rowexpander' }
             //     rowexpander: true
@@ -41,12 +41,27 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                     // formatter: 'date("m/d/Y")',
                     // dataIndex: 'Project_ID',
                     text: 'Project',
+                    dataIndex: 'AbsenceName',
+                    // tpl: [
+                    //     '{[this.projectName(values.Project_ID)]}',
+                    //     {
+                    //         projectName: function(v){
+                    //             console.info('Project name method');
+                    //             return v;
+                    //         }
+                    //     }
+                    // ]
+                },
+                {
+                    xtype: 'gridcolumn',
+                    flex: 1,
+                    bind: { text: '{sheetDayLabels.day1}' },
+                    // dataIndex: 'Day1HHMM',
                     tpl: [
-                        '{[this.projectName(values.Project_ID)]}',
+                        '{[this.format(values.Day1Minutes)]}',
                         {
-                            projectName: function(v){
-                                console.info('Project name method');
-                                return v;
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
                             }
                         }
                     ]
@@ -54,47 +69,82 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
-                    bind: { text: '{sheetDayLabels.day1}' },
-                    // dataIndex: 'Day1HHMM',
-                    tpl: '{Day1Hours}:{Day1Minutes}'
-                },
-                {
-                    xtype: 'gridcolumn',
-                    flex: 1,
                     bind: { text: '{sheetDayLabels.day2}' },
                     // dataIndex: 'Day2Hours'
-                    tpl: '{Day2Hours}:{Day2Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day2Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     bind: { text: '{sheetDayLabels.day3}' },
                     // dataIndex: 'Day3Hours'
-                    tpl: '{Day3Hours}:{Day3Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day3Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     bind: { text: '{sheetDayLabels.day4}' },
-                    tpl: '{Day4Hours}:{Day4Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day4Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     bind: { text: '{sheetDayLabels.day5}' },
-                    tpl: '{Day5Hours}:{Day5Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day5Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     bind: { text: '{sheetDayLabels.day6}' },
-                    tpl: '{Day6Hours}:{Day6Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day6Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     bind: { text: '{sheetDayLabels.day7}' },
-                    tpl: '{Day7Hours}:{Day7Minutes}'
+                    tpl: [
+                        '{[this.format(values.Day7Minutes)]}',
+                        {
+                            format: function(v){
+                                return Breeze.helper.Time.minutesToHours(v);
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'gridcolumn',
@@ -105,22 +155,59 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
-                    text: 'Prog. Hrs',
+                    text: 'Project<br/>Totals',
                     dataIndex: 'ProjTotal'
 
                 }
             ]
         },
+        // ===[Approve/Deny Button Container]===
         {
             xtype: 'container',
+            layout: {
+                type: 'hbox',
+                pack: 'end'
+            },
             items: [
                 {
-                    xtype: 'checkbox',
-                    boxLabel: 'Show Punches',
-                    // labelAlign: 'right',
-                    ui: 'dark-checkbox',
-                    inline: true,
-                    // labelWidth: 'auto'
+                    xtype: 'button',
+                    text: 'Approve',
+                    ui: 'confirm wtr-button',
+                    menu: {
+                        xtype: 'menu',
+                        items: [
+                            {
+                                xtype: 'menuitem',
+                                text: 'Approve',
+                                itemId: 'mnuApproveRegular'
+                            },
+                            {
+                                xtype: 'menuitem',
+                                text: 'Approve w/ Note',
+                                itemId: 'mnuApproveWithNote'
+                            }
+                        ]
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Deny',
+                    ui: 'decline wtr-button',
+                    menu: {
+                        xtype: 'menu',
+                        items: [
+                            {
+                                xtype: 'menuitem',
+                                text: 'Deny',
+                                itemId: 'mnuDenyRegular'
+                            },
+                            {
+                                xtype: 'menuitem',
+                                text: 'Deny w/ Note',
+                                itemId: 'mnuDenyWithNote'
+                            }
+                        ]
+                    }
                 }
             ]
         }

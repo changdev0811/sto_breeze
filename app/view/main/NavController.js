@@ -65,6 +65,7 @@
          */
         loadEmployee: function(){
             var me = this;
+            me.getViewModel().set('userId', this.apiClass.auth.getCookies().emp);
             this.empClass.getHeaderInfo().then(
                 function(data){
                     me.getViewModel().set('header', data);
@@ -214,9 +215,10 @@
         },
 
         onPersonalWtrRoute: function(){
+            var emp = this.getViewModel().get('userId');
             this.changeContent(
                 Ext.create('Breeze.view.employee.WorkTimeRecords', {
-                    data: { employee: undefined }
+                    data: { employee: emp }
                 })
             );
         },
