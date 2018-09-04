@@ -23,6 +23,29 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             day5: 'Day 5',
             day6: 'Day 6',
             day7: 'Day 7'
+        },
+        // at a glance data
+        atAGlance: {
+            regular: {
+                show: true,
+                value: 0
+            },
+            ot1: {
+                show: false,
+                value: 0
+            },
+            ot2: {
+                show: false,
+                value: 0
+            },
+            ot3: {
+                show: false,
+                value: 0
+            },
+            ot4: {
+                show: false,
+                value: 0
+            }
         }
     },
 

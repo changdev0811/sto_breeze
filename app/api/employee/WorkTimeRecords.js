@@ -76,5 +76,37 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
                 }
             });
         });
+    },
+
+    /**
+     * Get payroll stats for displaying in side panel of WTR
+     * @api getEmployeePayroll
+     * @param {String} lookupId ID of user to lookup records for
+     * @param {String|Date} startDate Start date to get records for
+     * @param {String|Date} endDate Ending date to get records for
+     * @return {Promise} Promise resolving in Array of hour record objects or rejecting with error
+     */
+    getEmployeePayrollHours: function(lookupId, startDate, endDate) {
+        var me = this;
+        var api = me.api;
+        startDate = (typeof startDate == "object")? startDate.toISOString() : startDate;
+        endDate = (typeof endDate == "object")? endDate.toISOString() : endDate;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'getEmployeePayroll',
+                {
+                    sdate: startDate,
+                    edate: endDate,
+                    lookup_id: lookupId
+                },
+                true, true,
+                function(resp){
+                    return api.decodeJsonResponse(resp).Records[0].Hour_Records;
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     }
 });

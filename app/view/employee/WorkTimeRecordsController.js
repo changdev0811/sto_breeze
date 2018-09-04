@@ -16,12 +16,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
+        this.getViewModel().set('employee', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
         // this.loadTimeSheetRecords();
     },
     
-
+    // ===[Data Loading]===
+    
     /**
      * Load flat projects list into view model
      */
@@ -37,8 +39,24 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         })
     },
 
+    loadAtAGlance: function(){
+        var me = this;
+        var lookupId = me.getViewModel().get('employee');
+        // TODO: Add live date data for ajax call in place of dummy dates
+        this.api.workTimeRecords.getEmployeePayrollHours(
+            lookupId,
+            '2018-07-01T00:00:00',
+            '2018-07-07T00:00:00'
+        ).then(function(data){
+
+        }).catch(function(err){
+            console.warn('Error getting employee payroll information: ', err);
+        });
+    },
+
     loadWorkTimeRecords: function(){
         var me = this;
+        // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getWorkTimeRecordsForRange(
             this.api.auth.getCookies().emp,
             '2018-07-01T00:00:00',
@@ -55,6 +73,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     loadTimeSheetRecords: function(){
         var me = this;
+        // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getTimeSheetForRange(
             this.api.auth.getCookies().emp,
             '2018-07-01T00:00:00',
@@ -67,6 +86,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             me.getViewModel().setStores({timeSheetRecords: store});
             console.info('TimeSheet View loaded');
         });
-    }
+    },
 
+    // ===[Event Handlers]===
+
+    // ===[Display Logic]===
 });
