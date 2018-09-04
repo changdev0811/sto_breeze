@@ -11,9 +11,10 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         // showFooter: false
         autoConfirm: true,
         headerLength: 1,
-        hideOutside: false
-
+        hideOutside: false,
+        selectedDates: []
     },
+    
     initialize: function(){
         var me = this;
         this.showFooter = false;
@@ -61,6 +62,7 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
                     Ext.fly(cell).addCls(selectedCls);
                 }
             }
+            me.setSelectedDates(newWeek);
             me.setTitleByDate(value);
 
             me.fireEvent('change', me, value, oldValue);

@@ -47,7 +47,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
-            me.getViewModel().set('workTimeRecords', store);
+            me.getViewModel().setStores({workTimeRecords: store});
             me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
             console.info('WorkTimeRecord loaded');
         });

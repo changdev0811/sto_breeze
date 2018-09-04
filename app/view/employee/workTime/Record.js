@@ -30,6 +30,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             itemConfig: {
                 body: {
                     userCls: 'wtr-grid-no-spacer',
+                    // TODO: Handle display of deductions
                     tpl: [
                         '<div class="employee-wtr-records-rowbody">',
                             '<div class="punch-in">',
@@ -83,7 +84,9 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     ]
                 }
             },
-            bind: '{workTimeRecords}',
+            bind: {
+                store: '{workTimeRecords}'
+            },
             columns: [
                 {
                     xtype: 'gridcolumn',
