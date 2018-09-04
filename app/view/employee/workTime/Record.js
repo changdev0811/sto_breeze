@@ -90,11 +90,26 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             columns: [
                 {
                     xtype: 'gridcolumn',
+                    text: '',
+                    groupable: false,
+                    hideable: false,
+                    menu: null,
+                    menuDisabled: true,
+                    resizable: false,
+                    tpl: '<span style="padding:0;" class="{Photo}"></span>',
+                    cell: {
+                        encodeHtml: false
+                    },
+                    width: '4em',
+                },
+                {
+                    xtype: 'gridcolumn',
                     flex: 1,
                     formatter: 'date("m/d/Y")',
                     dataIndex: 'Record_Date',
                     text: 'Date'
                 },
+
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
@@ -132,7 +147,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 },
                 {
                     xtype: 'gridcolumn',
-                    flex: 3,
+                    flex: 2,
                     text: 'Project',
                     dataIndex: 'Project'
                 }
@@ -140,6 +155,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
         },
         {
             xtype: 'container',
+            layout: 'hbox',
             items: [
                 {
                     xtype: 'checkbox',
@@ -148,7 +164,56 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     inline: true,
                     // labelWidth: 'auto',
                     ui: 'dark-checkbox'
-
+                },
+                {
+                    xtype: 'container',
+                    flex: 1,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Approve',
+                            ui: 'confirm wtr-button',
+                            menu: {
+                                xtype: 'menu',
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Approve',
+                                        itemId: 'mnuApproveRegular'
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Approve w/ Note',
+                                        itemId: 'mnuApproveWithNote'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Deny',
+                            ui: 'decline wtr-button',
+                            menu: {
+                                xtype: 'menu',
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Deny',
+                                        itemId: 'mnuDenyRegular'
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Deny w/ Note',
+                                        itemId: 'mnuDenyWithNote'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
             ]
         }

@@ -149,7 +149,7 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
-                    text: 'WT Hrs',
+                    text: 'WT<br/>Hours',
                     dataIndex: 'WT_Hours'
                 },
                 {
