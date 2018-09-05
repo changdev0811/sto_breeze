@@ -122,7 +122,18 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             var val = [names[i],'<br/>', days[i].getMonth() + 1, '/', days[i].getDate()].join('');
             vm.set(prop,val);
         }
-    }
+    },
 
     // ===[Display Logic]===
+
+    showLocationPopup: function(rec){
+        var view = this.getView(),
+            dialog = this.dialog;
+
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            this.dialog = dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    }
 });
