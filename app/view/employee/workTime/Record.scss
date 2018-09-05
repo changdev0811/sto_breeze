@@ -40,6 +40,7 @@ $employee-wtr-records-icon-total-size: 32px;
         & label {
             font-weight: bold;
         }
+        width:calc(100% - 120pt);
     }
 
     //icon classes
@@ -58,11 +59,33 @@ $employee-wtr-records-icon-total-size: 32px;
         &.out {
             background-image: url(get-resource-path('icons/clock-out-light.svg'));
         }
+        // clock out icon
+        &.loc {
+            background-image: url(get-resource-path('icons/clock-out-light.svg'));
+            display:inline-block;
+            position: absolute;
+            bottom:0;
+            right:0;
+        }
+
+
+
     }
 
     & .iconlbl {
         font-size: 10pt;
         line-height: 16pt;
+    }
+
+    & .end {
+        display: flex;
+        position: relative;
+        width:60pt;
+        height:100%;
+    }
+    & .start {
+        position: relative;
+        width:60pt;
     }
 
 }
