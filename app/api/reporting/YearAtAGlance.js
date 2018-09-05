@@ -116,7 +116,7 @@ Ext.define('Breeze.api.reporting.YearAtAGlance', {
             ).then(function(r){
                 me.createReportStore(reportKind, {"Rows": params}).then(
                     function(store){
-                        resolve(store.getAt(0).get('CurrentPageContent'));
+                        resolve(store.getAt(0).get('CurrentPageURL'));
                     }
                 ).catch(
                     function(err){

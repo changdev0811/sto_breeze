@@ -11,6 +11,7 @@ Ext.define('Breeze.model.reporting.Object', {
     fields: [
         { name: 'CurrentPage', type: 'integer' },
         { name: 'CurrentPageContent', type: 'string' },
+        { name: 'CurrentPageURL', type: 'string'},
         { name: 'TotalPages', type: 'integer' }
     ]
 });
