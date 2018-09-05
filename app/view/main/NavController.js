@@ -29,6 +29,7 @@
             'Breeze.api.Auth',
             'Breeze.api.Employee',
             'Breeze.api.Punch',
+            'Breeze.api.reporting.YearAtAGlance',
             'Breeze.view.employee.Information',
             'Ext.Toast'
         ],
@@ -211,7 +212,18 @@
         },
 
         onPersonalYaagRoute: function(){
-
+            var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
+            yaag.process().then(
+                function(url){
+                    Ext.toast('Year at a Glance report successfully generated', 3000);
+                    window.open(url,'_blank');
+                }
+            ).catch(
+                function(err){
+                    console.warn('Error generating YAAG report: ', err);
+                    Ext.toast('Error generating Year at a Glance Report', 3000);
+                }
+            )
         },
 
         onPersonalWtrRoute: function(){
