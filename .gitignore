@@ -6,3 +6,4 @@ modern.json*
 /ext
 /sass
 sencha-error-*.log
+node_modules
