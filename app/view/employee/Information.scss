@@ -9,6 +9,7 @@ $ei-field-font-size: 14pt;
 .employee-info-outer-container {
     background-color: map-get($employee-info-colors, 'base');
     padding: $ei-outer-padding;
+    padding-top: 0px;
 }
 
 .employee-info-tab-container {

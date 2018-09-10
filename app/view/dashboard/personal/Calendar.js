@@ -8,5 +8,11 @@ Ext.define('Breeze.view.dashboard.personal.Calendar', {
     ui:'employee-calendar-dashboard',
     alias: 'widget.dashboard.personal.calendar',
     userCls:'employee-calendar-dashboard',
-    title: 'Calendar'
+    title: 'Calendar',
+
+    tools: [
+        {
+            iconCls: 'x-fas fa-angle-right'
+        }
+    ]
 });

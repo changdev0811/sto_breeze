@@ -4,7 +4,7 @@
  * @alias Breeze.view.employee.Information
  */
 Ext.define('Breeze.view.employee.Information', {
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.employee.information',
 
     requires: [
@@ -24,6 +24,18 @@ Ext.define('Breeze.view.employee.Information', {
         // 'Breeze.widget.field.Password',
     ],
 
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
+        },
+        {
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
+        }
+    ],
+    title: 'Employee Information',
+
     layout: 'hbox',
 
     viewModel: {
@@ -36,7 +48,7 @@ Ext.define('Breeze.view.employee.Information', {
     },
 
     userCls: 'employee-info-outer-container',
-
+    ui: 'employee-info-dashboard',
     items: [
         {
             xtype: 'employee.information.sidebar',

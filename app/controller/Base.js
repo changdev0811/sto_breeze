@@ -32,6 +32,23 @@ Ext.define('Breeze.controller.Base', {
                 vm.getStore(storeName).load();
             }
         }
+    },
+
+    //=== [Shared Tool Behaviors] ===
+    
+    /**
+     * Handle refresh tool button click
+     */
+    onRefreshTool: function(c, t, eOpts){
+        console.info('Refresh tool');
+        this.getView().refreshInnerState();
+    },
+
+    /**
+     * Handle print tool button click
+     */
+    onPrintTool: function(c, t, eOpts){
+        console.info('Print tool');
     }
     
 });
