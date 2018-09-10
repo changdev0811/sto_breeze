@@ -69,7 +69,7 @@ Ext.define('Breeze.view.employee.Fyi',{
             items: [
                 {
                     xtype: 'datefield',
-                    ui: ['dark-textfield','fyi-field'],
+                    ui: ['dark-textfield', 'fyi-field','fyi-textfield'],
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     reference: 'viewDate',
@@ -91,7 +91,7 @@ Ext.define('Breeze.view.employee.Fyi',{
                 xtype: 'employee.fyi.accrualItem'
             },
             reference: 'fyiDataList',
-            ui: 'employeefyi-accrual-list'
+            ui: 'fyi-accrual-list'
             // store: [
             //     {
             //         CatDesc: 'Test',

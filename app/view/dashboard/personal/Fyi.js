@@ -16,7 +16,8 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
 
     tools: [
         {
-            iconCls: 'x-fas fa-angle-right'
+            iconCls: 'x-fas fa-angle-right',
+            handler: 'onFyiNavClick'
         }
     ],
 
@@ -25,11 +26,11 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
             xtype: 'list',
             flex: 1,
             layout: 'vbox',
+            ui: 'fyi-accrual-list',
             itemConfig: {
                 xtype: 'employee.fyi.accrualItem'
             },
             reference: 'fyiDashList',
-            ui: 'employeefyi-accrual-list',
             bind: {
                 store: '{fyi}'
             }

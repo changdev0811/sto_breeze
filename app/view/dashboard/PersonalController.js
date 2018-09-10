@@ -45,6 +45,11 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
         ).catch(function(err){
             console.warn('Error getting employee info for dashboard', err);
         });
+    },
+
+    /*== Navigation button handlers ==*/
+    onFyiNavClick: function(){
+        this.redirectTo('personal/fyi');
     }
 
 });

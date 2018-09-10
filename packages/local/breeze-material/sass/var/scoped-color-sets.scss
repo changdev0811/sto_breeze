@@ -35,6 +35,13 @@ Colors:         $<scope-name>-colors (base, light, medium, dark)
 Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 -------------------------------------*/
 
+// ====[Panel Settings]====
+$panel-title-font-size: 18pt;
+
+
+
+
+
 // ====[Base (root) Set]====
 $scoped-root-base: #2D415A;
 $scoped-root-light: #4ea5ff;
@@ -105,6 +112,33 @@ $employee-info-text-colors: (
     medium: $scoped-employee-info-text-medium,
     dark: $scoped-employee-info-text-dark
 );
+
+
+
+
+
+// ====[Employee FYI View]====
+
+// specific colors
+$scoped-employee-fyi-base: #48657F;
+$scoped-employee-fyi-light: #A4B2C0;
+
+$scoped-employee-fyi-text-base: #ffffff;
+$scoped-employee-fyi-text-light: #A4B2C0;
+$scoped-employee-fyi-text-alert: #E98591;
+
+$employee-fyi-colors: (
+    base:  $scoped-employee-fyi-base,
+    light: $scoped-employee-fyi-light
+);
+
+$employee-fyi-text-colors: (
+    base:  $scoped-employee-fyi-text-base,
+    light: $scoped-employee-fyi-text-light,
+    alert: $scoped-employee-fyi-text-alert,
+);
+
+
 
 // ====[WorkTime Records]====
 

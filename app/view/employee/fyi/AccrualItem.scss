@@ -1,9 +1,9 @@
 // Style rules for employee.fyi.AccrualItem component
 
 // Color for text when over allowed value
-$fyi-accrual-val-over: lighten($alert-color, 15%);
-$fyi-accrual-background-color: $base-color;
-$fyi-accrual-color: #ffffff;
+$fyi-accrual-val-over: map-get($employee-fyi-text-colors,'alert');
+$fyi-accrual-background-color: map-get($employee-fyi-colors,'base');
+$fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
 
 // Style applied to x of y (accrual value) label
 // when value exceeds allowed
@@ -78,3 +78,10 @@ $fyi-accrual-color: #ffffff;
     $pressed-background-color: $fyi-accrual-background-color !important,
     $ui: 'fyi-accrual-item'
 );
+
+@include dataview-ui (
+    $ui: 'fyi-accrual-list',
+    $background-color: $fyi-accrual-background-color
+
+);
+
