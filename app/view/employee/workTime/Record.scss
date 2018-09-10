@@ -61,11 +61,12 @@ $employee-wtr-records-icon-total-size: 32px;
         }
         // clock out icon
         &.loc {
-            background-image: url(get-resource-path('icons/clock-out-light.svg'));
+            //background-image: url(get-resource-path('icons/clock-out-light.svg'));
             display:inline-block;
             position: absolute;
             bottom:0;
             right:0;
+            font-size: 18pt;
         }
 
 
