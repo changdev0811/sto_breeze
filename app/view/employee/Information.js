@@ -26,10 +26,12 @@ Ext.define('Breeze.view.employee.Information', {
 
     tools: [
         {
-            iconCls: 'x-fa fa-sync'  
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
         },
         {
-            iconCls: 'x-fa fa-print'
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
         }
     ],
     title: 'Employee Information',

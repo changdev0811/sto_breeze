@@ -1,8 +1,12 @@
 /**
  * Controller for Employee Information View
+ * @class InformationController
+ * @namespace Breeze.view.employee.InformationController
+ * @alias controller.employee.information
+ * @extends Breeze.controller.Base
  */
 Ext.define('Breeze.view.employee.InformationController', {
-    extend: 'Ext.app.ViewController',
+    extend: 'Breeze.controller.Base',
     alias: 'controller.employee.information',
 
     requires: [
