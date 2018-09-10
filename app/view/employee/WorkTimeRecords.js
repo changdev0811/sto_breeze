@@ -16,6 +16,15 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
         initialize: 'onInit'
     },
 
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync'  
+        },
+        {
+            iconCls: 'x-fa fa-print'
+        }
+    ],
+
     layout: 'fit',
 
     title: {
