@@ -1,30 +1,30 @@
 .employee-fyi-container {
     padding: 16pt 16pt 16pt 16pt;
-    background-color: $base-color;
-    max-width:500pt;
-    color: #ffffff;
+    background-color: map-get($employee-fyi-colors,'base');
+    max-width:600pt;
+    color: map-get($employee-fyi-text-colors,'base');
 }
 
 
 
 @include field-ui(
-    $label-color: map-get($root-text-colors,'base'),
-    $focused-label-color: map-get($root-text-colors,'light'),
+    $label-color: map-get($employee-fyi-text-colors,'light'),
+    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
     $ui: 'fyi-display-field'
 );
 
 @include field-ui(
-    $label-color: map-get($root-text-colors,'base'),
-    $focused-label-color: map-get($root-text-colors,'light'),
+    $label-color: map-get($employee-fyi-text-colors,'light') !important,
+    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
     // $input-color: #ffffff,
-    $ui: 'dark-textfield'
+    $ui: 'fyi-textfield'
 );
 
-// @include datetrigger-ui(
-//     $ui: 'dark-textfield',
-//     $icon-color: #ffffff,
-
-// )
+@include datetrigger-ui(
+    $ui: 'fyi-textfield',
+    $icon-color: map-get($employee-fyi-text-colors,'base'),
+    $hovered-icon-color : map-get($employee-fyi-text-colors,'light')
+);
 
 
 @include field-ui(
