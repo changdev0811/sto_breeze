@@ -16,7 +16,8 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
 
     tools: [
         {
-            iconCls: 'x-fas fa-angle-right'
+            iconCls: 'x-fas fa-angle-right',
+            handler: 'onFyiNavClick'
         }
     ],
 
