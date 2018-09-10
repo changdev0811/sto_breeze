@@ -12,12 +12,6 @@ Ext.define('Breeze.view.dashboard.personal.Calendar', {
 
     tools: [
         {
-            iconCls: 'x-fa fa-sync'  
-        },
-        {
-            iconCls: 'x-fa fa-print'
-        },
-        {
             iconCls: 'x-fas fa-angle-right'
         }
     ]
