@@ -18,6 +18,12 @@
     $ui: 'employeeinfo-display',
 );
 
+@include paneltitle-ui(
+    $ui: 'employee-info-dashboard',
+    $font-size: $panel-title-font-size
+);
+
+
  .employee-info-dashboard-picture {
     border-radius: 50% 50% 50% 50%;
     border: 3pt solid white;

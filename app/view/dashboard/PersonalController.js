@@ -50,6 +50,15 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
     /*== Navigation button handlers ==*/
     onFyiNavClick: function(){
         this.redirectTo('personal/fyi');
+    },
+    
+    onCalendarNavClick: function(){
+        this.redirectTo('personal/calendar');
+    },
+
+    onInfoNavClick: function(){
+        this.redirectTo('personal/info');
     }
+
 
 });
