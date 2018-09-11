@@ -5,7 +5,7 @@
  * @namespace Breeze.view.employee.WorkTimeRecordsController
  */
 Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
-    extend: 'Ext.app.ViewController',
+    extend: 'Breeze.controller.Base',
     alias: 'controller.employee.worktimerecords',
     
     requires: [
@@ -13,6 +13,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         'Breeze.api.Company'
     ],
 
+    /**
+     * Initialize component handler
+     */
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
@@ -20,6 +23,12 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
+
+        var weekSelect = this.lookup('weekSelector');
+        /*  Force week selector / mini calendar's selection to 
+            be a full week on load */
+        weekSelect.setValue(weekSelect.getValue());
+        
     },
     
     // ===[Data Loading]===

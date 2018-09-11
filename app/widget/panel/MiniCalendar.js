@@ -47,7 +47,7 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
             start: value[0],
             end: value[6]
         });
-        console.info(this.getSelectedWeek());
+        // console.info(this.getSelectedWeek());
     },
 
     /**
@@ -112,7 +112,7 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
             // console.info('Date: ', date);
             var weekDay = date.getDay();
             var weekStart = moment(date).add(-weekDay, 'days').toDate();
-            var weekEnd = moment(date).add(6 - weekDay, 'days').toDate();
+            // var weekEnd = moment(date).add(6 - weekDay, 'days').toDate();
             var days = [];
             // console.info('Week Start: ', weekStart, ' Week End: ', weekEnd);
             for(var i=0;i<7;i++){

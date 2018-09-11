@@ -38,14 +38,22 @@ Ext.define('Breeze.controller.Base', {
     
     /**
      * Handle refresh tool button click
+     * 
+     * Override in extending controllers to replace default behavior
      */
     onRefreshTool: function(c, t, eOpts){
         console.info('Refresh tool');
-        this.getView().refreshInnerState();
+        if(this.onInit){
+            this.onInit(this.getView());
+        } else {
+            console.warn('Default refresh tool handler (controller base) can\'t find onInit method');
+        }
     },
 
     /**
      * Handle print tool button click
+     * 
+     * Override in extending controllers to replace default behavior
      */
     onPrintTool: function(c, t, eOpts){
         console.info('Print tool');

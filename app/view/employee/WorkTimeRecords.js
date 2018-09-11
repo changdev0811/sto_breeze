@@ -16,16 +16,17 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
         initialize: 'onInit'
     },
 
+    //==[Start of Panel Setup/Styling]====
     tools: [
         {
-            iconCls: 'x-fa fa-sync'  
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
         },
         {
-            iconCls: 'x-fa fa-print'
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
         }
     ],
-
-    layout: 'fit',
 
     title: {
         bind: {
@@ -38,6 +39,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
         // tpl: 'Work Time Records for {name}'// ({startDate} - {[parent.titleDateEnd]})'
         tpl: 'Work Time Records for {name} ({start} - {finish})'
     },
+    //====[End of Panel Setup/Styling]==
+
+    layout: 'fit',
 
     ui: 'wtr-panel',
 
@@ -56,6 +60,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                     items: [
                         {
                             xtype: 'panel.minicalendar',
+                            reference: 'weekSelector',
                             ui: 'minicalendar',//'wtr-small',,
                             collapsed: true,
                             flex: 1,

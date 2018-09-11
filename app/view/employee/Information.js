@@ -23,7 +23,8 @@ Ext.define('Breeze.view.employee.Information', {
         // 'Breeze.widget.field.Email',
         // 'Breeze.widget.field.Password',
     ],
-
+    
+    //==[Start of Panel Setup/Styling]====
     tools: [
         {
             iconCls: 'x-fa fa-sync',
@@ -34,7 +35,10 @@ Ext.define('Breeze.view.employee.Information', {
             handler: 'onPrintTool'
         }
     ],
+
     title: 'Employee Information',
+    ui: 'employee-info-panel',
+    //====[End of Panel Setup/Styling]==
 
     layout: 'hbox',
 
@@ -48,7 +52,7 @@ Ext.define('Breeze.view.employee.Information', {
     },
 
     userCls: 'employee-info-outer-container',
-    ui: 'employee-info-dashboard',
+
     items: [
         {
             xtype: 'employee.information.sidebar',

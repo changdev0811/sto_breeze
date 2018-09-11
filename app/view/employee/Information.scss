@@ -150,4 +150,13 @@ $ei-field-font-size: 14pt;
     $hovered-color: $alert-color
 );
 
+//===[Panel version styling]==
+@include panel-ui(
+    $ui: 'employee-info-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+);
+
 

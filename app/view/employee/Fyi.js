@@ -3,7 +3,7 @@
  * @class Breeze.view.employee.Fyi
  */
 Ext.define('Breeze.view.employee.Fyi',{
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     
     requires: [
         'Breeze.view.employee.FyiController',
@@ -21,6 +21,22 @@ Ext.define('Breeze.view.employee.Fyi',{
     listeners: {
         initialize: 'onInit'
     },
+
+    //==[Start of Panel Setup/Styling]====
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
+        },
+        {
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
+        }
+    ],
+
+    title: 'FYI',
+    ui: 'employee-fyi-panel',
+    //====[End of Panel Setup/Styling]==
     
     layout: 'vbox',
 

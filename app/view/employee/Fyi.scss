@@ -1,5 +1,5 @@
 .employee-fyi-container {
-    padding: 16pt 16pt 16pt 16pt;
+    padding: 0pt 16pt 16pt 16pt;
     background-color: map-get($employee-fyi-colors,'base');
     max-width:600pt;
     color: map-get($employee-fyi-text-colors,'base');
@@ -46,4 +46,13 @@
     $input-color: #ffffff,
     $input-font-size: 12pt,
     $ui: 'fyi-display-field',
+);
+
+// == Panel Version Styling ==
+
+@include panel-ui(
+    $ui: 'employee-fyi-panel',
+    $background-color: map-get($employee-fyi-colors,'base'),
+    $header-background-color: map-get($employee-fyi-colors,'base'),
+    $body-background-color: map-get($employee-fyi-colors,'base'),
 );

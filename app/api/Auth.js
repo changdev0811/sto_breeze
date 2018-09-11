@@ -180,20 +180,55 @@ Ext.define('Breeze.api.Auth', {
 
     /**
      * Log out current user, clearing cookies and reloading page
+     * @param {Boolean} clearUrlHash Optional bool indicating whether URL hash
+     *  should be cleared on logout (default is false)
      */
-    logout: function(){
+    logout: function(clearUrlHash){
         var api = this.api;
         var auth = this.auth;
+        var clearUrlHash = (clearUrlHash)? clearUrlHash : false;
         api.serviceRequest('logOut', {}, 
             false, true,
             function(){
                 auth.reloadCookies(-234);
+                if(clearUrlHash){
+                    window.location.hash = '';
+                }
                 window.location.reload();
             },
             function(){
                 console.warn('Logout error');
             }
         );
+    },
+
+    /**
+     * Attempt to recover account with forgotten password.
+     * (Ported from STOLogin.js)
+     * @api ForgotPassword
+     * @param {String} customerCode Customer code (company code) from login form
+     * @param {String} username Username from login form
+     * @return {Promise} Promise resolving with Object indicatin success (success attr)
+     *  and providing a message (err attribute); Or, rejects with error object
+     */
+    recover: function(customerCode, username){
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest('ForgotPassword', 
+                {
+                    cust_code: customerCode,
+                    username: username
+                },
+                true, true,
+                function(resp){
+                    var r = api.decodeJsonResponse(resp);
+                    resolve(r);
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
     }
 
 
