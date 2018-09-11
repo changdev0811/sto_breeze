@@ -88,6 +88,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             me.getViewModel().setStores({workTimeRecords: store});
             me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
             console.info('WorkTimeRecord loaded');
+            
         });
     },
 
@@ -108,7 +109,28 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.getViewModel().set('timeSheetRecords', store);
             me.getViewModel().setStores({timeSheetRecords: store});
             console.info('TimeSheet View loaded');
+            /* TODO: Determine why the record punch location hook call
+                is only working when made after timesheet records are loaded,
+                instead of after work time records */
+            // attach event listeners for punch location map popups
+            me.hookRecordPunchLocations();
         });
+    },
+
+    hookRecordPunchLocations: function(){
+        console.info('Hooking record punch locations!');
+        // this.lookup('workTimeRecordGrid').el.query('a[data-action="location-out"]');
+        var anchors = this.lookup('workTimeRecordGrid').el.query('[data-action="map"]', false);
+        var me = this;
+        anchors.forEach(function(anchor){
+            // console.info('Hooking event to anchor ', anchor);
+            anchor.on({
+                click: function(e, node){
+                    // console.info('Was clicked!');
+                    me.showLocationPopup(node);
+                }
+            })
+        })
     },
 
     // ===[Event Handlers]===
@@ -135,7 +157,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     // ===[Display Logic]===
 
-    showLocationPopup: function(rec){
+    showLocationPopup: function(node){
+        console.info('Show location popup event handled!');
+
+        var kind = node.getAttribute('data-punch');
+        var recordId = parseInt(node.getAttribute('data-record'));
+
+        var record = this.getViewModel().get('workTimeRecords').getById(recordId);
+
         var view = this.getView(),
             dialog = this.dialog;
 
@@ -143,6 +172,27 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             dialog = Ext.apply({ ownerCmp: view }, view.dialog);
             this.dialog = dialog = Ext.create(dialog);
         }
+
+        var punchData = null;
+        if(kind == 'out'){
+            punchData = record.get('Out_Punch');
+        } else {
+            punchData = record.get('In_Punch');
+        }
+
+        console.info('Setting map:', punchData.lat, punchData.lng);
+        // Apply coordinates to map component
+        dialog.getComponent('map').setMapCenter({
+            latitude: punchData.lat, longitude: punchData.lng
+        });
+
+        // Apply display info to dialog's data object
+        dialog.getViewModel().setData({
+            date: punchData.processed_time,
+            lat: punchData.lat,
+            lng: punchData.lng
+        });
+
         dialog.show();
     }
 });

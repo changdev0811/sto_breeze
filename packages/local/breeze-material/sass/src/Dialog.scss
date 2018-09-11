@@ -1,0 +1,23 @@
+/** Themed Dialogs **/
+
+//==[Light Themed Dialog]==
+// ui: 'light-themed-dialog'
+
+@include dialog-ui(
+    $ui: 'light-themed-dialog',
+    $background-color: #ffffff,
+    $body-background-color: #ffffff,
+    $body-color: $scoped-root-base
+);
+
+@include paneltitle-ui(
+    $ui: 'light-themed-dialog',
+    // $background-color: $scoped-root-lighter,
+    $color: #ffffff,
+    $icon-color: #ffffff,
+);
+
+@include panel-ui(
+    $ui: 'light-themed-dialog',
+    $header-background-color: $scoped-root-lighter
+);
