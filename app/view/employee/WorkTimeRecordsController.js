@@ -76,11 +76,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      */
     loadWorkTimeRecords: function(){
         var me = this;
+        var vm = me.getViewModel();
+        var start = vm.get('startDate');
+        var end = vm.get('endDate');
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getWorkTimeRecordsForRange(
             this.api.auth.getCookies().emp,
-            '2018-07-01T00:00:00',
-            '2018-07-07T00:00:00',
+             // '2018-07-01T00:00:00',
+            // '2018-07-07T00:00:00',
+            start,
+            end,
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -88,7 +93,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             me.getViewModel().setStores({workTimeRecords: store});
             me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
             console.info('WorkTimeRecord loaded');
-            
         });
     },
 
@@ -97,11 +101,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      */
     loadTimeSheetRecords: function(){
         var me = this;
+        var vm = me.getViewModel();
+        var start = vm.get('startDate');
+        var end = vm.get('endDate');
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getTimeSheetForRange(
             this.api.auth.getCookies().emp,
-            '2018-07-01T00:00:00',
-            '2018-07-07T00:00:00',
+            // '2018-07-01T00:00:00',
+            // '2018-07-07T00:00:00',
+            start,
+            end,
             'workTimeSheetStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -117,6 +126,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         });
     },
 
+    /**
+     * Finds all location icons in punches and attaches event listeners
+     * to them that cause the map popup dialog to show when clicked
+     */
     hookRecordPunchLocations: function(){
         console.info('Hooking record punch locations!');
         // this.lookup('workTimeRecordGrid').el.query('a[data-action="location-out"]');
@@ -135,6 +148,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     // ===[Event Handlers]===
 
+    /**
+     * Handles event triggered by changing selected week in mini calendar
+     */
     onWeekChange: function(comp, x, eOpts){
         // console.group('Selected week change handler');
         // console.info('Selected week changed');
@@ -153,16 +169,34 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             var val = [names[i],'<br/>', days[i].getMonth() + 1, '/', days[i].getDate()].join('');
             vm.set(prop,val);
         }
+        this.loadWorkTimeRecords();
+        this.loadTimeSheetRecords();
+        this.loadAtAGlance();
     },
 
+    /**
+     * Hides map dialog when X tool is clicked
+     */
     onCloseDialog: function(dialog, e, eOpts){
         dialog.hide();
+    },
+
+    /**
+     * Handle state change of WTR 'show punches' checkbox
+     */
+    onShowPunches: function(cmp, e, eOpts){
+        console.info('Show punches checkbox toggled!');
+        var grid = this.lookup('workTimeRecordGrid');
+        for(var i=0;i<grid.getItemCount();i++){
+            var row = grid.getItemAt(i);
+            row.expand();
+        }
     },
 
     // ===[Display Logic]===
 
     showLocationPopup: function(node){
-        console.info('Show location popup event handled!');
+        // console.info('Show location popup event handled!');
 
         var kind = node.getAttribute('data-punch');
         var recordId = parseInt(node.getAttribute('data-record'));
@@ -190,6 +224,11 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             latitude: punchData.lat, longitude: punchData.lng
         });
 
+        // Add GPS location marker
+        dialog.getComponent('map').setMarkers([{
+            position: {lat: punchData.lat, lng: punchData.lng}
+        }]);
+
         // Apply display info to dialog's data object
         dialog.getViewModel().setData({
             date: punchData.processed_time,
@@ -198,5 +237,5 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         });
 
         dialog.show();
-    }
+    },
 });

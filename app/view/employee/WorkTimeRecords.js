@@ -95,6 +95,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                         latitude: 20,
                         longitude: 20
                     }
+                },
+                markerTemplate: {
+                    title: 'Punch Location'
                 }
             }
         ]
