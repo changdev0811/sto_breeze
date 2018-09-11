@@ -19,7 +19,9 @@ Ext.define('Breeze.view.dashboard.personal.Information', {
 
     tools: [
         {
-            iconCls: 'x-fas fa-angle-right'
+            iconCls: 'x-fas fa-angle-right',
+            handler: 'onInfoNavClick'
+
         }
     ],
 

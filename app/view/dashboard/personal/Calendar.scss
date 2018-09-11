@@ -12,6 +12,12 @@
      $body-color: map-get($calendar-colors, 'base')
  );
 
+@include paneltitle-ui(
+    $ui: 'employee-calendar-dashboard',
+    $font-size: $panel-title-font-size
+);
+
+
  .employee-calendar-dashboard {
     height:auto; 
     margin:14pt 0pt 0pt 7pt;
