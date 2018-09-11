@@ -72,7 +72,10 @@ Ext.define('Breeze.view.employee.CalendarController', {
         var calStore = Ext.create('Breeze.store.calendar.Calendar',
             {
                 autoLoad: true,
-                categories: vm.getStore('categories')
+                categories: vm.getStore('categories'),
+                startDate: (new Date()).toISOString(),
+                endDate: (new Date()).toISOString(),
+                lookup: '5003'
             }
         );
 

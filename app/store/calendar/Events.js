@@ -8,7 +8,8 @@ Ext.define('Breeze.store.calendar.Events', {
     alias: 'store.calendar.events',
 
     config: {
-        categoryId: null
+        eventType: null,
+        lookup: null
     },
 
     /**
@@ -37,15 +38,16 @@ Ext.define('Breeze.store.calendar.Events', {
 
     listeners: {
         beforeload: function() {
+            console.info('Before setting event params');
             this.provideAuthCookieToProxy();
             this.useJsonParams();
-            this.getProxy().extraParams.category_id = this.getCategoryId();
+            this.getProxy().extraParams.type = this.getEventType();
         }
     },
 
     proxy: {
         type: 'ajax',
-        url: Breeze.helper.Store.api.url('getCalendarEventsForCategory'),
+        url: Breeze.helper.Store.api.url('JSONCalendarEvents'),
         // url: Breeze.helper.Api.url('getDepartmentList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {
