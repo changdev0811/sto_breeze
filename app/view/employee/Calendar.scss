@@ -93,8 +93,26 @@
     $day-border-width: 1px,
     $day-border-color : map-get($calendar-colors, 'medium'),
     $day-background-color: map-get($calendar-colors, 'base'),
-    $day-number-font-size : 14pt,
+    $day-number-font-size: 14pt,
     $day-number-color: #ffffff,
-    $day-number-outside-color: map-get($calendar-colors, 'light'),
+    $day-number-outside-color: map-get($calendar-colors, 'light')
 );
 
+.employee-calendar-form {
+    width:100%;
+    max-width:500pt;
+    min-width: 200pt;
+}
+
+@include toolbar-ui  (
+    $background-color: #ffffff,
+    $ui: 'employee-calendar-form'
+
+);
+
+@include panel-ui (
+    $header-color: #000,
+    $header-background-color: #fff,
+    $toolbar-background-color: #f00,
+    $ui: 'employee-calendar-form'
+);

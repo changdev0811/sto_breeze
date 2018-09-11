@@ -80,6 +80,42 @@ Ext.define('Breeze.view.employee.Calendar',{
             },
             views:{
                 month:{
+                    addForm:{
+                        xtype:'breeze-calendar-form-add',
+                        userCls:'employee-calendar-form',
+                        ui:'employee-calendar-form',
+
+                        saveButton:{
+                            ui:'alt confirm'
+                        },
+                        cancelButton:{
+                            ui:'alt action'
+                        },
+                        toolbarUi:'employee-calendar-form'
+                    },
+
+
+
+                    editForm:{
+                        xtype:'breeze-calendar-form-edit',
+                        userCls:'employee-calendar-form',
+                        ui:'employee-calendar-form',
+                        saveButton:{
+                            ui:'alt confirm'
+                        },
+                        cancelButton:{
+                            ui:'alt action'
+                        },
+                        dropButton:{
+                            ui:'alt decline'
+                        },
+                        toolbarUi:'employee-calendar-form'
+
+
+
+
+                    },
+
                     xtype: 'calendar-month',
                     reference: 'calendarMonth',
                     dayHeader: {
