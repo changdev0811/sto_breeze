@@ -30,6 +30,9 @@ Ext.define('Breeze.store.reporting.BufferedReport', {
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
 			this.getProxy().extraParams.myFormat = this.getMyFormat();
+			this.getProxy().extraParams.myReport = this.getMyReport();
+			this.getProxy().extraParams.myParameters = this.getMyParameters();
+			this.getProxy().extraParams.page = this.getMyPage();
         }
     },
 
