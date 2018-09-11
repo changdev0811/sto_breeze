@@ -19,13 +19,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
+        var weekSelect = this.lookup('weekSelector');
         weekSelect.setValue(weekSelect.getValue());
         this.getViewModel().set('employeeId', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
 
-        var weekSelect = this.lookup('weekSelector');
         /*  Force week selector / mini calendar's selection to 
             be a full week on load */
 

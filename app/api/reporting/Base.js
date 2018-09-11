@@ -110,7 +110,9 @@ Ext.define('Breeze.api.reporting.Base', {
             myFormat: format,
             page: page,
             myReport: report,
-            myParameters: JSON.stringify(params)
+            myParameters: JSON.stringify(params),
+            offset: 240,
+            limit: 25
         });
         var store = Ext.create(this.statics().store, storeParams);
         return new Promise(function(resolve,reject){
