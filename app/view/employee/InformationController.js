@@ -259,10 +259,21 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     //===[Action Tool Handlers]===
     
+    /**
+     * Overridden handeler from refresh tool click
+     * (overrides Breeze.controller.Base.onRefreshTool)
+     */
     onRefreshTool: function(){
-        console.info('Refresh tool -- employee info');
-    }
-
-
+        // this.onInit(this.getView());
+        console.info('Refresh');
+        var parentComp = this.getView().getParent()
+        var employee = this.getViewModel().get('employeeId');
+        parentComp.remove(this.getView());
+        parentComp.setActiveItem(
+            Ext.create('Breeze.view.employee.Information', {
+                data: { employee: employee }
+            })
+        );
+    },
 
 });

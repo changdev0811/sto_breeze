@@ -25,6 +25,8 @@ Ext.define('Breeze.view.employee.FyiController', {
         this.displayData(me);
     },
 
+    //==[Event Handlers]==
+
     /**
      * Handles view date change event, triggering refresh of displayed data
      * if value has changed
@@ -44,6 +46,17 @@ Ext.define('Breeze.view.employee.FyiController', {
             this.displayData(this);
         }
     },
+
+    /**
+     * Override handler for refresh tool button click
+     * (overrides Breeze.controller.Base.onRefreshTool)
+     */
+    onRefreshTool: function(){
+        console.info('Hit refresh');
+        this.onInit(this.getView());
+    },
+
+    //==[Data Display]==
 
     /**
      * Display FYI data after making API call, storing result in view model store
