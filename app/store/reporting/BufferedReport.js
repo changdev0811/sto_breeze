@@ -22,7 +22,9 @@ Ext.define('Breeze.store.reporting.BufferedReport', {
 		myFormat: null,
 		myParameters: null,
 		page: null,
-		myReport: null
+		myReport: null,
+		offset: 0,
+		limit: 0
 	},
 
 	listeners: {
@@ -32,7 +34,10 @@ Ext.define('Breeze.store.reporting.BufferedReport', {
 			this.getProxy().extraParams.myFormat = this.getMyFormat();
 			this.getProxy().extraParams.myReport = this.getMyReport();
 			this.getProxy().extraParams.myParameters = this.getMyParameters();
-			this.getProxy().extraParams.page = this.getMyPage();
+			this.getProxy().extraParams.page = this.getPage();
+			this.getProxy().extraParams.offset = this.getOffset();
+			this.getProxy().extraParams.limit = this.getLimit();
+
         }
     },
 
