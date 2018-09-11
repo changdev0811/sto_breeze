@@ -7,6 +7,10 @@ Ext.define('Breeze.view.employee.workTime.Record', {
     extend: 'Ext.Container',
     alias: 'widget.employee.worktime.record',
 
+    requires: [
+        'Ext.grid.plugin.RowExpander'
+    ],
+
     layout: 'vbox',
     userCls: 'employee-worktime-records-grid',
 

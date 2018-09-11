@@ -19,6 +19,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
+        weekSelect.setValue(weekSelect.getValue());
         this.getViewModel().set('employeeId', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
@@ -27,7 +28,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         var weekSelect = this.lookup('weekSelector');
         /*  Force week selector / mini calendar's selection to 
             be a full week on load */
-        weekSelect.setValue(weekSelect.getValue());
+
         
     },
     
@@ -54,12 +55,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     loadAtAGlance: function(){
         var me = this;
         var vm = me.getViewModel();
+        var start = vm.get('startDate');
+        var end = vm.get('endDate');
         var lookupId = me.getViewModel().get('employeeId');
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
             lookupId,
-            '2018-07-01T00:00:00',
-            '2018-07-07T00:00:00'
+            start.toISOString(),
+            end.toISOString()
         ).then(function(data){
            vm.set('atAGlance.regular', data.regular);
            vm.set('atAGlance.ot1',data.ot1);
@@ -84,8 +87,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
              // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start,
-            end,
+            start.toISOString(),
+            end.toISOString(),
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -93,6 +96,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             me.getViewModel().setStores({workTimeRecords: store});
             me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
             console.info('WorkTimeRecord loaded');
+        }).catch(function(err){
+            console.warn('Failed loading work time records: ', err);
         });
     },
 
@@ -109,8 +114,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
             // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start,
-            end,
+            start.toISOString(),
+            end.toISOString(),
             'workTimeSheetStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -123,6 +128,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 instead of after work time records */
             // attach event listeners for punch location map popups
             me.hookRecordPunchLocations();
+        }).catch(function(err){
+            console.warn('Failed loading time sheet records: ', err);
         });
     },
 
