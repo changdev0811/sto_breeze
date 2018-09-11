@@ -44,7 +44,9 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                                     '<label>Notes:</label> {In_Punch.notes}<br/>',
                                 '</div>',
                                 '<div class="end">',
-                                    '<div class="icon loc x-fas fa-map-marked-alt"></div>',
+                                    '<tpl if="In_Punch.lat !== 0 &amp;&amp; In_Punch.lng !== 0">',
+                                    '<div data-action="map" data-punch="in" data-record="{ID}" class="icon loc x-fas fa-map-marked-alt"></div>',
+                                    '</tpl>',
                                 '</div>',
                             '</div>',
                             '<div class="punch-out">',
@@ -58,7 +60,9 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                                     '<label>Notes:</label> {Out_Punch.notes}<br/>',
                                 '</div>',
                                 '<div class="end">',
-                                    '<div class="icon loc x-fas fa-map-marked-alt"></div>',
+                                    '<tpl if="Out_Punch.lat !== 0 &amp;&amp; Out_Punch.lng !== 0">',
+                                    '<div data-action="map" data-punch="out" data-record="{ID}" class="icon loc x-fas fa-map-marked-alt"></div>',
+                                    '</tpl>',
                                 '</div>',
                             '</div>',
                         '</div>',
@@ -163,13 +167,24 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             xtype: 'container',
             layout: 'hbox',
             items: [
+                // {
+                //     xtype: 'checkbox',
+                //     boxLabel: 'Show Punches',
+                //     // labelAlign: 'right',
+                //     inline: true,
+                //     reference: 'wtrShowPunches',
+                //     ui: 'dark-checkbox',
+                //     listeners: {
+                //         change: 'onShowPunchesChange'
+                //     }
+                // },
                 {
-                    xtype: 'checkbox',
-                    boxLabel: 'Show Punches',
-                    // labelAlign: 'right',
-                    inline: true,
-                    // labelWidth: 'auto',
-                    ui: 'dark-checkbox'
+                    xtype: 'button',
+                    ui: 'plain wtr-button',
+                    text: 'Show Punches',
+                    listeners: {
+                        tap: 'onShowPunches'
+                    }
                 },
                 {
                     xtype: 'container',

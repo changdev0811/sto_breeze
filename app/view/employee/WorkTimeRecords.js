@@ -51,23 +51,53 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
 
     dialog: {
         xtype: 'dialog',
+        // ui: 'employee-worktime-map-dialog',
+
+        closeable: true,
+        ui: 'light-themed-dialog',
+        title: {
+            text: 'Punch Location',
+            ui: 'light-themed-dialog'
+        },
+
+        tools: [
+            {
+                iconCls: 'x-fa fa-times',
+                ui: 'light-themed-dialog',
+                handler: 'onCloseDialog'
+            }
+        ],
+
+        viewModel: {
+            data: {
+                date: '',
+                lat: 0,
+                lng: 0
+            }
+        },
 
         items: [
             {
                 xtype: 'component',
-                html: '<b>You were here</b>'
+                bind: {
+                    html: '<b>Employee punch location:</b>' + 
+                    '<ul><li>Latitude: {lat}</li>' +
+                    '<li>Longitude: {lng}</li></ul>'
+                }
             },
             {
                 xtype: 'google-map',
+                itemId: 'map',
                 width: '320px',
                 height: '320px',
-                bind: {
-                    mapOptions: {
-                        center: {
-                            latitude: 20,
-                            longitude: 20
-                        }
+                mapOptions: {
+                    center: {
+                        latitude: 20,
+                        longitude: 20
                     }
+                },
+                markerTemplate: {
+                    title: 'Punch Location'
                 }
             }
         ]

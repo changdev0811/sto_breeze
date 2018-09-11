@@ -67,8 +67,10 @@ $employee-wtr-records-icon-total-size: 32px;
             bottom:0;
             right:0;
             font-size: 18pt;
+            &:hover {
+                color: darken(#ffffff,5%);
+            }
         }
-
 
 
     }

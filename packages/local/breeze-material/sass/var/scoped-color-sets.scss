@@ -45,6 +45,7 @@ $panel-title-font-size: 18pt;
 // ====[Base (root) Set]====
 $scoped-root-base: #2D415A;
 $scoped-root-light: #4ea5ff;
+$scoped-root-lighter: #498DC6;
 
 $scoped-root-text-base: #B8BFC9;
 $scoped-root-text-light: #ffffff;
@@ -52,7 +53,8 @@ $scoped-root-text-dark: $scoped-root-light;
 
 $root-colors: (
     base: $scoped-root-base,
-    light: $scoped-root-light
+    light: $scoped-root-light,
+    lighter: $scoped-root-lighter
 );
 
 $root-text-colors: (
@@ -85,7 +87,7 @@ $calendar-text-colors: (
 // ====[Employee Info View]====
 
 // specific colors
-$scoped-employee-info-base: #498DC6;
+$scoped-employee-info-base: $scoped-root-lighter;
 $scoped-employee-info-light: #C0D8EB;
 $scoped-employee-info-medium: #bed9ed;
 $scoped-employee-info-dark: #6DAFFF;
@@ -114,9 +116,6 @@ $employee-info-text-colors: (
 );
 
 
-
-
-
 // ====[Employee FYI View]====
 
 // specific colors
@@ -137,7 +136,6 @@ $employee-fyi-text-colors: (
     light: $scoped-employee-fyi-text-light,
     alert: $scoped-employee-fyi-text-alert,
 );
-
 
 
 // ====[WorkTime Records]====

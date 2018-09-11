@@ -6,6 +6,7 @@
 Ext.define('Breeze.model.record.WorkTime', {
     extend: 'Breeze.model.Base',
     alias: 'model.record.worktime',
+    idProperty: 'ID',
     fields: [
         { name: 'Customer_ID', type: 'integer' },
         { name: 'ID', type: 'integer' },
