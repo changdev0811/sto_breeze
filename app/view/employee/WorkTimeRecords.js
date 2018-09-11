@@ -7,6 +7,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     extend: 'Ext.Panel',
     alias: 'widget.employee.worktimerecords',
     
+    requires: [
+        'Ext.ux.google.Map'
+    ],
+
     controller: 'employee.worktimerecords',
     viewModel: {
         type: 'employee.worktimerecords'
@@ -44,6 +48,30 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     layout: 'fit',
 
     ui: 'wtr-panel',
+
+    dialog: {
+        xtype: 'dialog',
+
+        items: [
+            {
+                xtype: 'component',
+                html: '<b>You were here</b>'
+            },
+            {
+                xtype: 'google-map',
+                width: '320px',
+                height: '320px',
+                bind: {
+                    mapOptions: {
+                        center: {
+                            latitude: 20,
+                            longitude: 20
+                        }
+                    }
+                }
+            }
+        ]
+    },
 
     items: [
         {
@@ -139,6 +167,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                                     itemId: 'total',
                                     bind: {
                                         value: '{glanceTotalHours}'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'dialog',
+                                    listeners: {
+                                        tap: 'showLocationPopup'
                                     }
                                 }
                             ]

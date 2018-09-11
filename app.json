@@ -30,7 +30,9 @@
         "font-awesome-52",
         /* extra packages */
         "sencha-charts",
-        "calendar"
+        "calendar",
+        /* map support */
+        "google"
     ],
     /**
      * The relative path to the application's markup file (html, jsp, asp, etc.).
