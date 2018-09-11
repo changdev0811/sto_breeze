@@ -61,6 +61,7 @@ Ext.define('Breeze.store.calendar.Calendar', {
                 "title": r.get('Category_Name'),
                 "startDate": start,
                 "endDate": end,
+                "color": r.get('Category_Color_HEX'),
                 "eventStore": {
                     // "type": "Breeze.store.calendar.Events",
                     "eventType": r.get('Category_Code'),

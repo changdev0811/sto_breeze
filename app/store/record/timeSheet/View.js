@@ -16,6 +16,9 @@ Ext.define('Breeze.store.record.timeSheet.View', {
         beforeload: function(){
             this.provideAuthCookieToProxy();
             this.useJsonParams();
+            // TODO: Figure out what offset should be
+			// workaround for offset error
+			this.getProxy().extraParams.offset = 0;
         }
     },
 

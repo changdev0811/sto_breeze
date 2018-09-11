@@ -1,6 +1,7 @@
 /**
  * Work Time Record Timesheet Store.
- * Ported from old TimeSheet
+ * Ported from old TimeSheet;
+ * TODO: Determine what this will be used for
  * @class TimeSheet
  * @namespace Breeze.store.record.TimeSheet
  * @alias store.record.timesheet
@@ -16,6 +17,9 @@ Ext.define('Breeze.store.record.TimeSheet', {
         beforeload: function(){
             this.provideAuthCookieToProxy();
             this.useJsonParams();
+            // TODO: Figure out what offset should be
+			// workaround for offset error
+			this.getProxy().extraParams.offset = 0;
         }
     },
 
