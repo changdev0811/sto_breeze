@@ -30,6 +30,8 @@ Ext.define('Breeze.auth.LoginController', {
         }
     },
 
+    //==[Event Handlers]==
+
     /**
      * Attempt to fill in company code and username if available from 'remember me' being checked
      */
@@ -39,6 +41,37 @@ Ext.define('Breeze.auth.LoginController', {
             this.loginRequest();
         }
     },
+
+    onForgotButtonTap: function(button, e, eOpts){
+        var creds = {
+            loginCode: this.view.down('[name="loginCode"]').getValue(),
+            loginUsername: this.view.down('[name="loginUsername"]').getValue()
+        };
+
+        if(
+            creds.loginCode == null || creds.loginUsername == null || 
+            creds.loginCode.length == 0 || creds.loginUsername.length == 0
+        ){
+            // Missing required fields
+            this.updateMessage(true, 'warn', 'Please enter Company Code and Username and try again.');
+        } else {
+            var me = this;
+            this.api.recover(creds.loginCode, creds.loginUsername).then(
+                function(resp){
+                    if(resp.success){
+                        me.updateMessage(true,'info', resp.err);
+                    } else {
+                        me.updateMessage(true, 'error', resp.err);
+                    }
+                }
+            ).catch(function(err){
+                console.warn('Encountered error response when trying to recover password: ', err);
+                me.updateMessage(true, 'error', 'Encountered unexpected error');
+            });
+        }
+    },
+
+    //==[Login/Form Methods]==
 
     /**
      * Process login request

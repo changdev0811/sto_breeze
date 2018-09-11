@@ -1,3 +1,9 @@
+/**
+ * Login view
+ * @class Login
+ * @namespace Breeze.view.auth.Login
+ * @alias widget.auth.login
+ */
 Ext.define('Breeze.view.auth.Login', {
     extend: 'Ext.Container',
     alias: 'widget.auth.login',
@@ -78,7 +84,8 @@ Ext.define('Breeze.view.auth.Login', {
                 },
                 {
                     xtype: 'button',
-                    text: 'Forgot Password?'
+                    text: 'Forgot Password?',
+                    handler: 'onForgotButtonTap'
                 },
             ]
         }
