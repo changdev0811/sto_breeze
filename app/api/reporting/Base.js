@@ -106,12 +106,13 @@ Ext.define('Breeze.api.reporting.Base', {
         var format = (options && options['format'])? options.format : 'PDF';
         var page = (options && options['page'])? options.page : 1;
         var storeParams = (options && options['id'])? { storeId: options.id } : {};
+        storeParams = Object.assign({}, storeParams, {
+            myFormat: format,
+            page: page,
+            myReport: report,
+            myParameters: JSON.stringify(params)
+        });
         var store = Ext.create(this.statics().store, storeParams);
-        var extras = store.getProxy().extraParams;
-        extras.myFormat = format;
-        extras.page = page;
-        extras.myReport = report;
-        extras.myParameters = JSON.stringify(params);
         return new Promise(function(resolve,reject){
             store.load(function(records,op,success){
                 if(success){

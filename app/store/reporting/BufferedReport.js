@@ -18,10 +18,18 @@ Ext.define('Breeze.store.reporting.BufferedReport', {
 	remoteGroup: false,
 	remoteSort: false,
 
+	config: {
+		myFormat: null,
+		myParameters: null,
+		page: null,
+		myReport: null
+	},
+
 	listeners: {
         beforeload: function() {
             this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			this.getProxy().extraParams.myFormat = this.getMyFormat();
         }
     },
 
