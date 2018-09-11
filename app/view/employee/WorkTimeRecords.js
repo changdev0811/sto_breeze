@@ -52,6 +52,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     dialog: {
         xtype: 'dialog',
         // ui: 'employee-worktime-map-dialog',
+
+        closeable: true,
         ui: 'light-themed-dialog',
         title: {
             text: 'Punch Location',
@@ -60,7 +62,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
 
         tools: [
             {
-                iconCls: 'x-fa x-window-close'
+                iconCls: 'x-fa fa-times',
+                ui: 'light-themed-dialog',
+                handler: 'onCloseDialog'
             }
         ],
 

@@ -155,6 +155,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         }
     },
 
+    onCloseDialog: function(dialog, e, eOpts){
+        dialog.hide();
+    },
+
     // ===[Display Logic]===
 
     showLocationPopup: function(node){
