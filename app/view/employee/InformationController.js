@@ -255,6 +255,14 @@ Ext.define('Breeze.view.employee.InformationController', {
             listTab.remove(empTab);
             listTab.remove(depTab);
         }
+    },
+
+    //===[Action Tool Handlers]===
+    
+    onRefreshTool: function(){
+        console.info('Refresh tool -- employee info');
     }
+
+
 
 });

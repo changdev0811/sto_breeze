@@ -2,7 +2,7 @@
  * Controller for Employee FYI View
  */
 Ext.define('Breeze.view.employee.FyiController', {
-    extend: 'Ext.app.ViewController',
+    extend: 'Breeze.controller.Base',
     alias: 'controller.employee.fyi',
 
     requires: [
