@@ -180,14 +180,20 @@ Ext.define('Breeze.api.Auth', {
 
     /**
      * Log out current user, clearing cookies and reloading page
+     * @param {Boolean} clearUrlHash Optional bool indicating whether URL hash
+     *  should be cleared on logout (default is false)
      */
-    logout: function(){
+    logout: function(clearUrlHash){
         var api = this.api;
         var auth = this.auth;
+        var clearUrlHash = (clearUrlHash)? clearUrlHash : false;
         api.serviceRequest('logOut', {}, 
             false, true,
             function(){
                 auth.reloadCookies(-234);
+                if(clearUrlHash){
+                    window.location.hash = '';
+                }
                 window.location.reload();
             },
             function(){

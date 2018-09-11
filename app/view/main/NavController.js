@@ -176,7 +176,7 @@
          * Handle 'Sign Out' menu item click
          */
         onMenuSignOut: function(c, e, eOpts){
-            this.apiClass.logout();
+            this.apiClass.logout(true);
         },
 
         // Route change handlers
