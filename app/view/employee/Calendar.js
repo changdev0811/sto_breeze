@@ -84,36 +84,31 @@ Ext.define('Breeze.view.employee.Calendar',{
                         xtype:'breeze-calendar-form-add',
                         userCls:'employee-calendar-form',
                         ui:'employee-calendar-form',
-
-                        saveButton:{
-                            ui:'alt confirm'
-                        },
-                        cancelButton:{
-                            ui:'alt action'
-                        },
+                        saveButton:       { ui:'alt confirm' },
+                        cancelButton:     { ui:'alt action' },
+                        startDateField:   { ui:'employee-calendar-form' },
+                        startTimeField:   { ui:'employee-calendar-form' },
+                        endDateField:     { ui:'employee-calendar-form' },
+                        endTimeField:     { ui:'employee-calendar-form' },
+                        allDayField:      { ui:'employee-calendar-form' },
+                        descriptionField: { ui:'employee-calendar-form' },
                         toolbarUi:'employee-calendar-form'
                     },
-
-
 
                     editForm:{
                         xtype:'breeze-calendar-form-edit',
                         userCls:'employee-calendar-form',
                         ui:'employee-calendar-form',
-                        saveButton:{
-                            ui:'alt confirm'
-                        },
-                        cancelButton:{
-                            ui:'alt action'
-                        },
-                        dropButton:{
-                            ui:'alt decline'
-                        },
+                        saveButton:       { ui:'alt confirm' },
+                        cancelButton:     { ui:'alt action' },
+                        dropButton:       { ui:'alt decline' },
+                        startDateField:   { ui:'employee-calendar-form' },
+                        startTimeField:   { ui:'employee-calendar-form' },
+                        endDateField:     { ui:'employee-calendar-form' },
+                        endTimeField:     { ui:'employee-calendar-form' },
+                        allDayField:      { ui:'employee-calendar-form' },
+                        descriptionField: { ui:'employee-calendar-form' },
                         toolbarUi:'employee-calendar-form'
-
-
-
-
                     },
 
                     xtype: 'calendar-month',

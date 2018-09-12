@@ -1,3 +1,8 @@
+$cal-head-font-size: 12pt;
+$cal-field-font-size: 14pt;
+
+
+
 .legend-item-dot{
     position: relative;
     display: inline-block;
@@ -116,3 +121,28 @@
     $toolbar-background-color: #f00,
     $ui: 'employee-calendar-form'
 );
+
+
+@include textfield-ui(
+    $input-font-size: $cal-field-font-size,
+    $ui: 'employee-calendar-form'
+);
+
+@include field-ui(
+    $label-color: #000,
+    $focused-label-color: #000,
+    $label-font-size: $cal-head-font-size,    
+    $ui: 'employee-calendar-form'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: #000,
+    $checked-checkbox-color: #000,
+    $box-label-color: #000,
+    $box-label-font-size: $cal-field-font-size,
+    $ui: 'employee-calendar-form'
+);
+
+
+
+
