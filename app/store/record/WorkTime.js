@@ -7,7 +7,10 @@ Ext.define('Breeze.store.record.WorkTime', {
 	listeners: {
 		beforeload: function() {
 			this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			// TODO: Figure out what offset should be
+			// workaround for offset error
+			this.getProxy().extraParams.offset = 0;
 		}
 	},
 	proxy: {

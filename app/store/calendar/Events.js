@@ -8,7 +8,10 @@ Ext.define('Breeze.store.calendar.Events', {
     alias: 'store.calendar.events',
 
     config: {
-        categoryId: null
+        eventType: null,
+        lookup: null,
+        startParam: 'start',
+        endParam: 'end'
     },
 
     /**
@@ -22,6 +25,8 @@ Ext.define('Breeze.store.calendar.Events', {
         // this.getProxy().extraParams.hashcookie = extras.pass;
         this.getProxy().setExtraParams({
             cust_id: extras.cust,
+            customer_id: parseInt(extras.cust),
+            employee_id: parseInt(extras.emp),
             emp_id: extras.emp,
             hashcookie: extras.pass
         });
@@ -37,15 +42,17 @@ Ext.define('Breeze.store.calendar.Events', {
 
     listeners: {
         beforeload: function() {
+            console.info('Before setting event params');
             this.provideAuthCookieToProxy();
             this.useJsonParams();
-            this.getProxy().extraParams.category_id = this.getCategoryId();
+            this.getProxy().extraParams.type = this.getEventType();
+            this.getProxy().extraParams.lookup = this.getLookup();
         }
     },
 
     proxy: {
         type: 'ajax',
-        url: Breeze.helper.Store.api.url('getCalendarEventsForCategory'),
+        url: Breeze.helper.Store.api.url('JSONCalendarEvents'),
         // url: Breeze.helper.Api.url('getDepartmentList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {

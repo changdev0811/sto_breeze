@@ -13,11 +13,11 @@ Ext.define('Breeze.model.calendar.Event', {
     // ],
 
     getDescription: function(){
-        return this.data.desc;
+        return this.data.durationDesc;
     },
 
     setDescription: function(description){
-        this.set('desc', description);
+        this.set('durationDesc', description);
     },
 
     // getStartDate: function(){
