@@ -98,7 +98,7 @@ Ext.define('Breeze.api.Punch', {
             now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()
         );
         var data = {
-            Punch_Time: utc,
+            Punch_Time: Breeze.helper.Time.stripISODate(utc.toISOString()),
             TimeZone_ID: this.statics.timeZoneId,
             Customer_ID: authCook.cust,
             Employee_ID: authCook.emp,
