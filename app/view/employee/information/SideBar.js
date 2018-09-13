@@ -14,6 +14,19 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             },
             reference: 'infoProfilePicture',
             userCls: 'employee-info-profile-picture'
+        },
+        {
+            xtype: 'button',
+            iconCls: 'x-fas fa-file-alt',
+            userCls:'employeeinfo-notes-button',        
+            ui:'employeeinfo-notes-button',  
+            listeners:{
+                tap:'onNotesButtonTap'
+            },
+            bind:{
+                hidden:'',
+            }
+
         }
     ]
 });
