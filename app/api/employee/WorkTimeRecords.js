@@ -89,8 +89,8 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
     getEmployeePayrollHours: function(lookupId, startDate, endDate) {
         var me = this;
         var api = me.api;
-        startDate = (typeof startDate == "object")? startDate.toISOString() : startDate;
-        endDate = (typeof endDate == "object")? endDate.toISOString() : endDate;
+        startDate = (typeof startDate == "object")? startDate.toUTCString() : startDate;
+        endDate = (typeof endDate == "object")? endDate.toUTCString() : endDate;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'getEmployeePayroll',
