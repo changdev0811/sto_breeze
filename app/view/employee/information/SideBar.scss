@@ -1,0 +1,24 @@
+
+.employeeinfo-notes-button {
+	position:absolute;
+	/* position based on a 128x128 user icon */
+	left:calc(128pt - 33pt); top:calc(128pt - 33pt);
+	width:auto; height:auto;
+	padding: 0pt; margin: 0pt;
+	filter: drop-shadow(0pt 1pt 2pt rgba(0,0,0,.66));
+}
+
+@include button-ui(
+	$color: #ffffff,
+	$icon-color: #ffffff,
+	$hovered-icon-color : #8ed9ed,
+	$focused-icon-color : #8ed9ed,
+	$pressed-icon-color : #bed9ed,
+	$disabled-icon-color : rgba(192, 216, 235, 0.8274509803921568),
+	$background-color : transparent,
+	$hovered-background-color : transparent,
+	$pressed-background-color : transparent,
+	$focused-background-color : transparent,
+	$icon-size : 30pt,
+	$ui: 'employeeinfo-notes-button'
+)
