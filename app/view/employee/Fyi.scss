@@ -45,7 +45,7 @@
 @include field-ui(
     $label-color: map-get($employee-fyi-text-colors,'light'),
     $focused-label-color: map-get($employee-fyi-text-colors,'light'),
-    $label-font-size: map-get($root-font-size, 'detail'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
     // $label-font-size: 12pt !important,
     $ui: 'fyi-display-field'
 );
