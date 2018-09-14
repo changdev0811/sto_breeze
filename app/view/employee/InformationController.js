@@ -276,4 +276,23 @@ Ext.define('Breeze.view.employee.InformationController', {
         );
     },
 
+    //===[Event Handlers]===
+
+    onNotesButtonTap: function(ref, x, eOpts){
+        console.info("[onNotesButtonTap]");
+        //notesDialog
+        var view = this.getView(),
+            dialog = this.lookup('notesDialog');
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+    onCloseNotesDialog: function(dialog, e, eOpts){
+        dialog.hide();
+    }
+
+
 });

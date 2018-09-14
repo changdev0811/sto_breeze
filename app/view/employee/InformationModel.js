@@ -75,6 +75,12 @@ Ext.define('Breeze.view.employee.InformationModel', {
         overtime_week4: function(get){
             return (get('info.punchPolicy.Ot_Week4')/60/60);
         },
+
+        hideNotesButton: function(get){
+            var notes = get('info.Notes');
+            return (typeof notes == 'undefined' || notes == null || notes === "") ? true : false;
+        },
+
         /**
          * Formula returning filtered selection of supervisors based on supervisor
          * IDs defined in employee info data object
