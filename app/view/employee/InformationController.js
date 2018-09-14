@@ -280,6 +280,14 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     onNotesButtonTap: function(ref, x, eOpts){
         console.info("[onNotesButtonTap]");
+        //notesDialog
+        var view = this.getView(),
+            dialog = this.lookup('notesDialog');
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
     }
 
 

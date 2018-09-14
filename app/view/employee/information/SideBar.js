@@ -19,14 +19,24 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             xtype: 'button',
             iconCls: 'x-fas fa-file-alt',
             userCls:'employeeinfo-notes-button',        
-            ui:'employeeinfo-notes-button',  
+            ui:'employeeinfo-notes-button', 
+            hidden:true, 
             listeners:{
                 tap:'onNotesButtonTap'
             },
             bind:{
-                hidden:'',
+                hidden:'{hideNotesButton}',
             }
 
+        },
+        {
+            xtype: 'dialog',
+            ui:'light-themed-dialog',
+            reference: 'notesDialog',
+            title:{
+                text:'Notes',
+                ui:'light-themed-dialog'
+            }
         }
     ]
 });
