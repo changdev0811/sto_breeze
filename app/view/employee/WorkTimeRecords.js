@@ -52,7 +52,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     dialog: {
         xtype: 'dialog',
         // ui: 'employee-worktime-map-dialog',
-
+        width:'400pt',
+        height:'400pt',
+        layout:'vbox',
         closeable: true,
         ui: 'light-themed-dialog',
         title: {
@@ -88,8 +90,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
             {
                 xtype: 'google-map',
                 itemId: 'map',
-                width: '320px',
-                height: '320px',
+                flex:2,
+                //width: '320px',
+                //height: '320px',
                 mapOptions: {
                     center: {
                         latitude: 20,
