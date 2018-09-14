@@ -214,6 +214,10 @@
             */
             "path": "lib/md5.js"
         },
+        // Include html2canvas lib
+        {
+            "path": "lib/html2canvas.min.js"
+        },
         // Include moment.js lib
         {
             "path": "lib/moment.min.js"
