@@ -214,10 +214,6 @@
             */
             "path": "lib/md5.js"
         },
-        // Extended UTC date casting lib
-        {
-            "path": "lib/timely.min.js"
-        },
         // Include moment.js lib
         {
             "path": "lib/moment.min.js"
