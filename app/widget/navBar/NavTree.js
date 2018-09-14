@@ -1,6 +1,10 @@
 /**
  * Extended version of Ext.list.Tree with specific functionality 
  * for SideNav
+ * 
+ * Config properties:
+ * - itemRouteDataAttribute - name of data attribue expected to contain associated route
+ * 
  * @class NavTree
  * @namespace Breeze.widget.navBar.NavTree
  * @alias widget.breeze.navbar.navtree
@@ -10,8 +14,12 @@
 Ext.define('Breeze.widget.navBar.NavTree', {
     extend: 'Ext.list.Tree',
     alias: 'widget.breeze.navbar.navtree',
-    xtype: 'breeze-treelist',
+    xtype: 'breeze-navtree',
 
+    config: {
+        /* Attribute used by getItemByRoute as route value */
+        itemRouteDataAttribute: 'routeRef'
+    },
 
     /**
      * Returns reference to selected item, if it is 
@@ -42,6 +50,27 @@ Ext.define('Breeze.widget.navBar.NavTree', {
         } else {
             return null;
         }
+    },
+
+
+    /**
+     * Attempt to look up a tree item by the route string associated with it.
+     * Relies on the config property itemRouteDataAttribute to know the name
+     * of the data attribute to compare to the given route.
+     * @param {String} route Route string to look for
+     * @return {Node|Object} Matched node, or null if no matching items found
+     */
+    getNodeByRoute: function(route){
+        var keys = Object.keys(this.itemMap);
+        var routeAttr = this.getItemRouteDataAttribute();
+        for(var i = 0; i < keys.length; i++){
+            var item = this.itemMap[keys[i]].getNode();
+            var data = item.getData();
+            if(data[routeAttr] && data[routeAttr] == route){
+                return item;
+            }
+        }
+        return null;
     },
 
     privates: {

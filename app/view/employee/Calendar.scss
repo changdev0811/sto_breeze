@@ -118,7 +118,6 @@ $cal-field-font-size: 14pt;
 @include panel-ui (
     $header-color: #000,
     $header-background-color: #fff,
-    $toolbar-background-color: #f00,
     $ui: 'employee-calendar-form'
 );
 

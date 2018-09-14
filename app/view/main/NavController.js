@@ -36,19 +36,37 @@
 
         // Routes
         routes: {
-            'personal': 'onHomeRoute',
+            'personal': {
+                action: 'onHomeRoute'
+            },
             'personal/info': {
                 action: 'onPersonalEmployeeInfoRoute',
-                name: 'personal_info'
+                name: 'personal_info',
+                before: 'beforeRoute'
             },
             'personal/fyi': {
                 action: 'onPersonalFyiRoute',
+                before: 'beforeRoute'
             },
-            'personal/year_at_a_glance': 'onPersonalYaagRoute',
-            'personal/worktime_records': 'onPersonalWtrRoute',
-            'personal/calendar': 'onPersonalCalendarRoute',
-            'download/punch_station': 'onDownloadPunchStationRoute',
-            'home': 'onHomeRoute'
+            'personal/year_at_a_glance': {
+                action: 'onPersonalYaagRoute',
+                before: 'beforeRoute'
+            },
+            'personal/worktime_records': {
+                action: 'onPersonalWtrRoute',
+                before: 'beforeRoute'
+            },
+            'personal/calendar': {
+                action: 'onPersonalCalendarRoute',
+                before: 'beforeRoute'
+            },
+            'download/punch_station': {
+                action: 'onDownloadPunchStationRoute',
+                before: 'beforeRoute'
+            },
+            'home': {
+                action: 'onHomeRoute'
+            }
         },
 
         init: function(component){
@@ -105,7 +123,7 @@
             );
         },
 
-        // Event Handlers
+        // ===[Event Handlers]===
 
         /**
          * Handles user clicking on sidebar toggle button
@@ -179,7 +197,17 @@
             this.apiClass.logout(true);
         },
 
-        // Route change handlers
+        // ===[Route change handlers]===
+
+        /**
+         * Triggered before route action is resolved
+         * Used to make sure navtree syncs its selected item
+         * with the url
+         */
+        beforeRoute: function(action){
+            this.syncNavToRoute(action.getUrlParams().input);
+            action.resume();
+        },
 
         onHomeRoute: function() {
             this.changeContent(
@@ -250,7 +278,7 @@
             window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
         },
 
-        // Content functions
+        // ===[Content functions]===
 
         /**
          * Swap contents of body content container
@@ -275,6 +303,17 @@
                 // TODO: Change what menus are shown / enabled
             }
 
+        },
+
+        syncNavToRoute: function(route){
+            var tree = this.lookup('navSideMenuTree');
+            if(route && route !== null){
+                var navNode = tree.getNodeByRoute(route);
+                if(navNode !== null && tree.getSelection() !== navNode){
+                    // Found a node with the given route, and it isn't currently selected
+                    tree.setSelection(navNode);
+                }
+            }
         }
 
 
