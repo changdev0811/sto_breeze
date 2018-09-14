@@ -16,7 +16,10 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
     items: [
         {
             xtype: 'container',
-            layout: 'hbox',
+            layout: {
+                type: 'hbox',
+                wrap: true
+            },
             items: [
                 {
                     xtype: 'component',
