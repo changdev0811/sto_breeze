@@ -30,6 +30,18 @@ Ext.define('Breeze.view.employee.Calendar',{
 
     title: 'Calendar',
 
+    //==[Start of Panel Setup/Styling]====
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
+        },
+        {
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
+        }
+    ],
+
     items: [
 
         {
