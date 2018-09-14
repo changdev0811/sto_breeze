@@ -101,7 +101,8 @@ Ext.define('Breeze.api.Punch', {
         // );
         var utc = now.toUTC({
             out: Date.UTC_OUT.STRING,
-            format: Date.UTC_FORMAT.UTC
+            format: Date.UTC_FORMAT.UTC,
+            forceZone: true
         });
         var data = {
             Punch_Time: utc,
