@@ -25,6 +25,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
+        this.attachListenerToRecordGrid();
 
         /*  Force week selector / mini calendar's selection to 
             be a full week on load */
@@ -50,7 +51,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     },
 
     /**
-     * Load at a glance data from payroll
+     * Load at a glance data from payroll. If unable to get employeeId from view model,
+     * aborts by returning null
      */
     loadAtAGlance: function(){
         var me = this;
@@ -58,6 +60,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         var start = vm.get('startDate');
         var end = vm.get('endDate');
         var lookupId = me.getViewModel().get('employeeId');
+        
+        /* Check if lookupId is null. Used to prevent erroneous call to loadAtAGlance
+        by week selector prior to availability of prerequisite data */
+        if(lookupId == null){
+            console.warn('loadAtAGlance Not ready to make getEmployeePayrollHours call; aborting');
+            return null;
+        }
+        
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
             lookupId,
@@ -123,37 +133,43 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.getViewModel().set('timeSheetRecords', store);
             me.getViewModel().setStores({timeSheetRecords: store});
             console.info('TimeSheet View loaded');
-            /* TODO: Determine why the record punch location hook call
-                is only working when made after timesheet records are loaded,
-                instead of after work time records */
-            // attach event listeners for punch location map popups
-            me.hookRecordPunchLocations();
         }).catch(function(err){
             console.warn('Failed loading time sheet records: ', err);
         });
     },
 
-    /**
-     * Finds all location icons in punches and attaches event listeners
-     * to them that cause the map popup dialog to show when clicked
-     */
-    hookRecordPunchLocations: function(){
-        console.info('Hooking record punch locations!');
-        // this.lookup('workTimeRecordGrid').el.query('a[data-action="location-out"]');
-        var anchors = this.lookup('workTimeRecordGrid').el.query('[data-action="map"]', false);
+    attachListenerToRecordGrid: function(){
+        console.info('Attaching listener to WTRecord grid for location/map popup');
         var me = this;
-        anchors.forEach(function(anchor){
-            // console.info('Hooking event to anchor ', anchor);
-            anchor.on({
-                click: function(e, node){
-                    // console.info('Was clicked!');
-                    me.showLocationPopup(node);
+        var grid = me.lookup('workTimeRecordGrid');
+        grid.el.on({
+            click: {
+                fn: function(event, target, caller){
+                    me.onRecordGridClick(event,target,caller);
+                },
+                options: {
+                    scope: me,
+                    preventDefault: false
                 }
-            })
-        })
+            }
+        });
     },
 
     // ===[Event Handlers]===
+
+    onRecordGridClick: function(eventObj, target, caller){
+        var me = this;
+        console.group('Record grid click handler');
+        console.info('Target: ', target);
+        console.info('Event: ', eventObj);
+        console.groupEnd();
+        if(target.dataset['action'] == 'map'){
+            me.showPunchLocationPopup({
+                kind: target.dataset['punch'],
+                id: parseInt(target.dataset['record'])
+            })
+        }
+    },
 
     /**
      * Handles event triggered by changing selected week in mini calendar
@@ -202,47 +218,52 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     // ===[Display Logic]===
 
-    showLocationPopup: function(node){
-        // console.info('Show location popup event handled!');
-
-        var kind = node.getAttribute('data-punch');
-        var recordId = parseInt(node.getAttribute('data-record'));
-
-        var record = this.getViewModel().get('workTimeRecords').getById(recordId);
-
-        var view = this.getView(),
+    /**
+     * Display punch location map popup dialog
+     * @param {Object} params Parameter object defining kind ('in'/'out') and id
+     *  of record
+     */
+    showPunchLocationPopup: function(params){
+        var record = this.getViewModel().get('workTimeRecords').
+            getById(params.id),
+            view = this.getView(),
             dialog = this.dialog;
-
-        if (!dialog) {
-            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+        
+        if(!dialog){
+            dialog = Ext.apply({ownerCmp: view}, view.dialog);
             this.dialog = dialog = Ext.create(dialog);
         }
 
-        var punchData = null;
-        if(kind == 'out'){
-            punchData = record.get('Out_Punch');
+        var pData = null,
+            // get reference to map component in dialog
+            mapCmp = dialog.getComponent('map');
+        
+        // Get appropriate punch data from record based on kind
+        if(params.kind == 'out'){
+            pData = record.get('Out_Punch');
         } else {
-            punchData = record.get('In_Punch');
+            pData = record.get('In_Punch');
         }
 
-        console.info('Setting map:', punchData.lat, punchData.lng);
-        // Apply coordinates to map component
-        dialog.getComponent('map').setMapCenter({
-            latitude: punchData.lat, longitude: punchData.lng
+        // Center map at punch GPS location
+        mapCmp.setMapCenter({
+            latitude: pData.lat, longitude: pData.lng
         });
 
-        // Add GPS location marker
-        dialog.getComponent('map').setMarkers([{
-            position: {lat: punchData.lat, lng: punchData.lng}
+        // Add marker to map at punch GPS location
+        mapCmp.setMarkers([{
+            position: { lat: pData.lat, lng: pData.lng }
         }]);
 
-        // Apply display info to dialog's data object
+        // Update description content data object attached to 
+        // dialog's data model
         dialog.getViewModel().setData({
-            date: punchData.processed_time,
-            lat: punchData.lat,
-            lng: punchData.lng
+            date: pData.processed_time,
+            lat: pData.lat,
+            lng: pData.lng
         });
 
+        // Show dialog
         dialog.show();
-    },
+    }
 });
