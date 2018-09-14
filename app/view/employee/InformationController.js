@@ -288,6 +288,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             dialog = Ext.create(dialog);
         }
         dialog.show();
+    },
+
+    onCloseNotesDialog: function(dialog, e, eOpts){
+        dialog.hide();
     }
 
 

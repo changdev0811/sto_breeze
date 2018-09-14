@@ -36,7 +36,30 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             title:{
                 text:'Notes',
                 ui:'light-themed-dialog'
-            }
+            },
+            tools: [
+                {
+                    iconCls: 'x-fa fa-times',
+                    ui: 'light-themed-dialog',
+                    handler: 'onCloseNotesDialog'
+                }
+            ],
+            items:[
+                {
+                    xtype:'component',
+                    scrollable:'y',
+                    userCls:'employeeinfo-notes-text',        
+                    bind:{
+                        html:'{info.Notes}',
+
+                    }
+                }
+
+            ]
+                
+            
+
         }
+
     ]
 });
