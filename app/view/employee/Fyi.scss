@@ -1,21 +1,21 @@
+/**
+ * Employee Fyi Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Employee Fyi view or its children
+ */
+
 .employee-fyi-container {
-    padding: 0pt 16pt 16pt 16pt;
+    // padding: 0pt 16pt 16pt 16pt;
     background-color: map-get($employee-fyi-colors,'base');
     max-width:600pt;
     color: map-get($employee-fyi-text-colors,'base');
 }
 
 
-
-@include field-ui(
-    $label-color: map-get($employee-fyi-text-colors,'light'),
-    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
-    $ui: 'fyi-display-field'
-);
-
 @include field-ui(
     $label-color: map-get($employee-fyi-text-colors,'light') !important,
     $focused-label-color: map-get($employee-fyi-text-colors,'light'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
     // $input-color: #ffffff,
     $ui: 'fyi-textfield'
 );
@@ -26,27 +26,30 @@
     $hovered-icon-color : map-get($employee-fyi-text-colors,'light')
 );
 
-
 @include field-ui(
-    $label-font-size: 14pt,
-    $ui: 'fyi-display-field'
-);
-
-@include field-ui(
-    $label-font-size: 14pt,
+    $label-font-size: map-get($root-font-sizes, 'detail'),
     $ui: 'fyi-field'
 );
 
 @include textfield-ui(
     $ui: 'fyi-field',
-    $input-font-size: 12pt
+    $input-font-size: map-get($root-font-sizes, 'base')
 );
 
 @include displayfield-ui(
     $input-color: #ffffff,
-    $input-font-size: 12pt,
+    $input-font-size: map-get($root-font-sizes, 'base'),
     $ui: 'fyi-display-field',
 );
+
+@include field-ui(
+    $label-color: map-get($employee-fyi-text-colors,'light'),
+    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
+    $label-font-size: map-get($root-font-size, 'detail'),
+    // $label-font-size: 12pt !important,
+    $ui: 'fyi-display-field'
+);
+
 
 // == Panel Version Styling ==
 
@@ -55,4 +58,5 @@
     $background-color: map-get($employee-fyi-colors,'base'),
     $header-background-color: map-get($employee-fyi-colors,'base'),
     $body-background-color: map-get($employee-fyi-colors,'base'),
+    $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );

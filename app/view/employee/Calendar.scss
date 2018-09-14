@@ -1,7 +1,22 @@
+/**
+ * Employee Calendar Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Employee Calendar view or its children
+ */
 $cal-head-font-size: 12pt;
 $cal-field-font-size: 14pt;
+$cal-body-padding: 4pt 16pt 16pt 16pt;
 
-
+// Panel UI style for calendar view's containing panel
+@include panel-ui(
+    $ui: 'employee-calendar-panel',
+    $background-color: map-get($calendar-colors, 'base'),
+    $header-background-color: map-get($calendar-colors, 'base'),
+    $body-background-color: map-get($calendar-colors, 'base'),
+    $body-color: map-get($calendar-text-colors, 'base'),
+    $body-padding: 4pt 16pt 16pt 16pt,
+    $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
 
 .legend-item-dot{
     position: relative;
@@ -51,18 +66,27 @@ $cal-field-font-size: 14pt;
 
 
 .employee-calendar-container {
-    padding: 16pt 16pt 16pt 16pt;
+    // padding: 16pt 16pt 16pt 16pt;
     background-color: map-get($calendar-colors, 'base');
     color: map-get($calendar-text-colors, 'base');
 }
 
-.employee-calendar {
-    margin:0px -3px -2px -2px !important;
-}
+
 
 // Turn off bottom border on calendar, add userCls: 'employee-calendar-noedge'
 .employee-calendar-noedge {
     table.x-calendar-table {
+        // turn of left and right edges of each row
+        & > tbody > tr.x-calendar-weeks-row {
+            & > .x-calendar-weeks-cell:first-child {
+                // turn off left border of first cell in row
+                border-left: 0px;
+            }
+            & > .x-calendar-weeks-cell:last-child {
+                // turn off right border of last cell in row
+                border-right: 0px;
+            }
+        }
         & > tbody > tr.x-calendar-weeks-row:last-child {
             .x-calendar-weeks-cell {
                 border-bottom: 0px;
