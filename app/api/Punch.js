@@ -93,12 +93,18 @@ Ext.define('Breeze.api.Punch', {
         var authCook = this.auth.getCookies();
         var now = new Date();
         var api = this.api;
-        var utc = new Date(
-            now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
-            now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()
-        );
+        // TODO: Determine if this is even necessary to go through making a new date
+        // using existing date and .getUTCxyz
+        // var utc = new Date(
+        //     now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+        //     now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()
+        // );
+        var utc = now.toUTC({
+            out: Date.UTC_OUT.STRING,
+            format: Date.UTC_FORMAT.UTC
+        });
         var data = {
-            Punch_Time: Breeze.helper.Time.stripISODate(utc.toISOString()),
+            Punch_Time: utc,
             TimeZone_ID: this.statics.timeZoneId,
             Customer_ID: authCook.cust,
             Employee_ID: authCook.emp,

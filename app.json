@@ -214,6 +214,10 @@
             */
             "path": "lib/md5.js"
         },
+        // Include timely.js lib
+        {
+            "path": "lib/timely.min.js"
+        },
         // Include moment.js lib
         {
             "path": "lib/moment.min.js"
