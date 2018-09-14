@@ -51,7 +51,7 @@ Ext.define('Breeze.view.employee.Information', {
         initialize: 'onInit'
     },
 
-    userCls: 'employee-info-outer-container',
+    // userCls: 'employee-info-outer-container',
 
     items: [
         {

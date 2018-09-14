@@ -3,7 +3,7 @@
  * @class CalendarBreeze.view.employee.Calendar
  */
 Ext.define('Breeze.view.employee.Calendar',{
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.employee.calendar',
     requires: [
         'Breeze.view.employee.CalendarController',
@@ -26,13 +26,15 @@ Ext.define('Breeze.view.employee.Calendar',{
     
     layout: 'vbox',
 
-    userCls: 'employee-calendar-container',
+    ui: 'employee-calendar-panel',
+
+    title: 'Calendar',
 
     items: [
 
         {
             xtype: 'calendar',
-            userCls: ['employee-calendar','employee-calendar-noedge'],
+            userCls: 'employee-calendar-noedge',
             label: 'Month',
             flex: 4,
             ui: 'employee-calendar',

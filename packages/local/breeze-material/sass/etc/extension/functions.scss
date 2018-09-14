@@ -1,0 +1,38 @@
+/**
+ Scoped helper functions
+*/
+
+//==[Scoped maps]==
+
+/**
+    Makes it possible and quick to use nested maps
+    @param {map} $map-variable Map to reference
+    @param {list} $path List of steps in path to resolve
+    @example
+        // with the following map
+        $sizes: (
+            button: (
+                width: 5pt,
+                height: 10pt
+            ),
+            div: (
+                width: 10pt,
+                height: 20pt
+            )
+        );
+        // get button.width
+        $button-width: map-path($sizes, "button" "width");
+*/
+@function map-path($map-variable, $path){
+    $value: "";
+    $map: $map-variable;
+    $path-length: length($path);
+    @if $path-length == 1 {
+        @return map-get($map-variable, $path);
+    } @else {
+        @for $i from 1 through ($path-length - 1) {
+            $map: map-get($map, nth($path, $i));
+        }
+        @return map-get($map, nth($path, $path-length));
+    }
+}
