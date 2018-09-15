@@ -97,14 +97,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
              // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start.toISOString(),
-            end.toISOString(),
+            start.toUTC({out: Date.UTC_OUT.STRING}),
+            end.toUTC({out: Date.UTC_OUT.STRING}),
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             me.getViewModel().setStores({workTimeRecords: store});
-            me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
+            if(store.getAt(0) && store.getAt(0).get('Employee_Name')){
+                me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
+            }
             console.info('WorkTimeRecord loaded');
         }).catch(function(err){
             console.warn('Failed loading work time records: ', err);
@@ -159,10 +161,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     onRecordGridClick: function(eventObj, target, caller){
         var me = this;
-        console.group('Record grid click handler');
-        console.info('Target: ', target);
-        console.info('Event: ', eventObj);
-        console.groupEnd();
+        // console.group('Record grid click handler');
+        // console.info('Target: ', target);
+        // console.info('Event: ', eventObj);
+        // console.groupEnd();
         if(target.dataset['action'] == 'map'){
             me.showPunchLocationPopup({
                 kind: target.dataset['punch'],
@@ -208,7 +210,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Handle state change of WTR 'show punches' checkbox
      */
     onShowPunches: function(cmp, e, eOpts){
-        console.info('Show punches checkbox toggled!');
+        // console.info('Show punches checkbox toggled!');
         var grid = this.lookup('workTimeRecordGrid');
         for(var i=0;i<grid.getItemCount();i++){
             var row = grid.getItemAt(i);

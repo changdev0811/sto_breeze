@@ -77,33 +77,41 @@ Ext.define('Breeze.helper.Auth', {
                 return false;
             }
             return okay;
-        }
-    },
+        },
 
-
-    /**
-     * Verify cookie authentication using isAuthenticated call
-     * Ported from homemade.js/checkAuthentication
-     * @param {Boolean} forceReload if True, reload window when authentication
-     */
-    authenticate: function(forceReload){
-        // TODO: Implement 'checkAuthentication' from 'homemade.js'
-        var api = Breeze.helper.Api;
-        var auth = this;
-        Breeze.helper.Api.serviceRequest(
-            'isAuthenticated', {}, true, function(response){
-                var resp = api.decodeJsonResponse(response);
-                if(!resp.success){
-                    auth.reloadCookies(-234);
-                    Breeze.helper.Cookie.bake(
-                        'STOTimeout', 'Not Authenticated', 60
-                    );
-                    if(forceReload){
-                        window.location.reload();
+        /**
+         * Verify cookie authentication using isAuthenticated call
+         * Ported from homemade.js/checkAuthentication
+         * @param {Boolean} forceReload if True, reload window when authentication
+         */
+        authenticate: function(forceReload){
+            // TODO: Implement 'checkAuthentication' from 'homemade.js'
+            var api = Breeze.helper.Api;
+            var auth = this;
+            Breeze.helper.Api.serviceRequest(
+                'isAuthenticated', {}, true, function(response){
+                    var resp = api.decodeJsonResponse(response);
+                    if(!resp.success){
+                        auth.reloadCookies(-234);
+                        Breeze.helper.Cookie.bake(
+                            'STOTimeout', 'Not Authenticated', 60
+                        );
+                        if(forceReload){
+                            window.location.reload();
+                        }
                     }
                 }
-            }
-        )
+            )
+        },
+
+        /**
+         * from homemade.js refreshTimeout
+         * @todo TODO: Implement refreshTimeout
+         */
+        refreshTimeout: function(){
+
+        }
+    
     }
 
 });
