@@ -57,6 +57,18 @@ Ext.define('Breeze.controller.Base', {
      */
     onPrintTool: function(c, t, eOpts){
         console.info('Print tool');
+        var me = this;
+        var el = me.getView().element.dom;
+
+        Breeze.helper.Printing.printElement(el).then(
+            function(win){
+                console.info('Print ok?', win);
+            }
+        ).catch(
+            function(err){
+                console.warn('Print failed: ', err);
+            }
+        )
     }
     
 });

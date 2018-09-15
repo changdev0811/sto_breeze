@@ -87,7 +87,4 @@ Ext.define('Breeze.view.employee.CalendarController', {
 
     // === [Event Handlers] ===
 
-    onNextMonth: function(c){
-        this.lookup('calendarPanel').getView().nextMonth(1);
-    }
 });
