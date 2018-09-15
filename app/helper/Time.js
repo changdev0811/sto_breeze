@@ -31,6 +31,20 @@ Ext.define('Breeze.helper.Time', {
             ].join(sep);
         },
         /**
+         * Return short UTC date string format of date (MM/DD/YYYY)
+         * @param {Date} date Source date object
+         * @param {String} sep Optional separator character (default is '/')
+         * @return {String} Short formatted date string
+         */
+        shortDateUTC: function(date, sep){
+            var sep = (typeof sep == 'undefined')? '/' : sep;
+            return [
+                date.getUTCMonth() + 1,
+                date.getUTCDate(),
+                date.getUTCFullYear()
+            ].join(sep);
+        },
+        /**
          * Minutes class, ported over from homemmade.js
          * @todo TODO: Document Minutes or break into smaller static helper functions
          */
