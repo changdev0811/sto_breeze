@@ -201,13 +201,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                                     bind: {
                                         value: '{glanceTotalHours}'
                                     }
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'dialog',
-                                    listeners: {
-                                        tap: 'showLocationPopup'
-                                    }
                                 }
                             ]
                         }

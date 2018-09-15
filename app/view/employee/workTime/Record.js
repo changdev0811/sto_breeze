@@ -53,6 +53,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                                     '</tpl>',
                                 '</div>',
                             '</div>',
+                            '<tpl if="End_Time !== null">',
                             '<div class="punch-out">',
                                 '<div class="start">',
                                     '<span class="iconlbl">OUT Punch</span><br/>',
@@ -69,6 +70,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                                     '</tpl>',
                                 '</div>',
                             '</div>',
+                            '</tpl>',
                         '</div>',
                          {
                              // Format date string to be short
@@ -80,8 +82,8 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                                  var dt = v.substr(0, v.indexOf(')')).substr(v.indexOf('(')+1);
                                  var d = new Date(parseInt(dt));
                                  return [
-                                     pad(d.getUTCMonth()),
-                                     pad(d.getUTCDay()),
+                                     pad(d.getUTCMonth() + 1),
+                                     pad(d.getUTCDate()),
                                      pad(d.getUTCFullYear())
                                  ].join('/');
                              },
