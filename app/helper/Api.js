@@ -41,7 +41,7 @@
             request: function(api, service, params, cookieParams, sync, successHandler, failureHandler){
                 if(cookieParams){
                     // If cookies are gone, force reload to ask for login
-                    Breeze.helper.Auth.authenticate(true);
+                    Breeze.helper.Auth.isAuthorized(true);
                 }
                 
                 var reqParams = params;

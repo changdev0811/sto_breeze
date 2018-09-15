@@ -89,7 +89,7 @@ Ext.define('Breeze.helper.Auth', {
             var api = Breeze.helper.Api;
             var auth = this;
             Breeze.helper.Api.serviceRequest(
-                'isAuthenticated', {}, true, function(response){
+                'isAuthenticated', {}, true, true, function(response){
                     var resp = api.decodeJsonResponse(response);
                     if(!resp.success){
                         auth.reloadCookies(-234);
