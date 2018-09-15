@@ -212,7 +212,13 @@
             /**
             * Include lib/md5.js (need to confirm how this is getting included, inline or just copied)
             */
-            "path": "lib/md5.js"
+            "path": "lib/md5.js",
+            "includeInBundle": true
+        },
+        // UTC Date extension lib Timely
+        {
+            "path": "lib/timely.js",
+            "includeInBundle": true
         },
         // Include html2canvas lib
         {

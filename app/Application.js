@@ -43,9 +43,6 @@ Ext.define('Breeze.Application', {
 
     launch: function(){
         console.log("Launched");
-        
-        // load 'embedded' libraries
-        Breeze.helper.libs.Timely.load();
 
         // TODO: Removing testing check when out of dev
         var testing = true; // (should be removed later)
