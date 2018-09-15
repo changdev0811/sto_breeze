@@ -27,7 +27,7 @@
 );
 
 @include field-ui(
-    $label-font-size: map-get($root-font-sizes, 'detail'),
+    $label-font-size: map-get($root-font-sizes, 'detail') !important,
     $ui: 'fyi-field'
 );
 
