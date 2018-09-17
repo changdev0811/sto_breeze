@@ -9,6 +9,10 @@
      $background-color: map-get($toast-colors, 'success')
  );
 
+//  @include ui-extend($xtype: 'toast', $ui: 'toast-info'){
+//      font-size: 14pt;
+//  }
+
  @include toast-ui(
      $ui: 'toast-warn',
      $background-color: map-get($toast-colors, 'warn')
