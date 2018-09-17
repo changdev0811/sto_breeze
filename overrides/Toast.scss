@@ -1,0 +1,24 @@
+/**
+ * Toast override Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Toast override component or its children
+ */
+
+ @include toast-ui(
+     $ui: 'toast-info',
+     $background-color: map-get($toast-colors, 'success')
+ );
+
+//  @include ui-extend($xtype: 'toast', $ui: 'toast-info'){
+//      font-size: 14pt;
+//  }
+
+ @include toast-ui(
+     $ui: 'toast-warn',
+     $background-color: map-get($toast-colors, 'warn')
+ );
+
+ @include toast-ui(
+     $ui: 'toast-error',
+     $background-color: map-get($toast-colors, 'error')
+ );

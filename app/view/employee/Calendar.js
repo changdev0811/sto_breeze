@@ -56,8 +56,8 @@ Ext.define('Breeze.view.employee.Calendar',{
                 switcherPosition: null,
                 switcher: null,
                 createButtonPosition: null,
-                createButton: null,
-                menuButton: {hidden: true},
+                createButton: {hidden: true, style: 'display: none'},
+                menuButton: {hidden: true, style: 'display: none'},
                 nextButton: {
                     text: 'i'
                 }
@@ -72,7 +72,6 @@ Ext.define('Breeze.view.employee.Calendar',{
                         iconCls: 'x-fa fa-angle-left',
                         ui: "calendarMonthSelectionButton",
                         weight: '-5',
-                        tooltop: 'Previous',
                         handler: function(c){
                             c.getParent().getParent().getParent().navigate(-1,Ext.Date.MONTH);
                         }
@@ -82,7 +81,6 @@ Ext.define('Breeze.view.employee.Calendar',{
                         ui: "calendarMonthSelectionButton",
                         iconCls: 'x-fa fa-angle-right',
                         weight: 105,
-                        tooltip: 'Next',
                         handler: function(c){
                             c.getParent().getParent().getParent().navigate(1,Ext.Date.MONTH);
                         }

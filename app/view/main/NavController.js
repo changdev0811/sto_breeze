@@ -164,15 +164,28 @@
                 me.punchClass.submit(projectCode).then(
                     function(resp){
                         if(resp.success){
-                            Ext.toast('Successfully punched ' + kind);
+                            Ext.toast({
+                                message: 'Successfully punched ' + kind,
+                                type: Ext.Toast.INFO,
+                                timeout: 10000
+                            });
                             me.updateAttendanceStatus();
                         } else {
                             Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
+                            Ext.toast({
+                                message: 'Error submitting punch:<br> ' + resp.err,
+                                type: Ext.Toast.ERROR,
+                                timeout: 10000
+                            });
                         }
                     }
                 ).catch(function(err){
                     console.warn('Caught error submitting punch: ', err);
-                    Ext.toast('Error submitting punch', 1024);
+                    Ext.toast({
+                        message: 'Error submitting punch',
+                        type: Ext.Toast.ERROR,
+                        timeout: 10000
+                    });
                 });
             } else {
                 // TODO: Implement regular punch view
@@ -243,13 +256,21 @@
             var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
             yaag.process().then(
                 function(url){
-                    Ext.toast('Year at a Glance report successfully generated', 3000);
+                    Ext.toast({
+                        message: 'Year at a Glance report successfully generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
                     window.open(url,'_blank');
                 }
             ).catch(
                 function(err){
                     console.warn('Error generating YAAG report: ', err);
-                    Ext.toast('Error generating Year at a Glance Report', 3000);
+                    Ext.toast({
+                        message: 'Error generating Year at a Glance Report', 
+                        timeout: 10000,
+                        type: Ext.Toast.ERROR
+                    });
                 }
             )
         },

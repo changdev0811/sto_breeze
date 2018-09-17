@@ -24,7 +24,7 @@ Ext.define('Breeze.widget.field.Message', {
         },
         error: {
             userCls: 'msg-error',
-            icon: 'x-fas fa-exclamation-circle'
+            icon: 'x-fas fa-times-circle'
         },
         warn: {
             userCls: 'msg-warn',
