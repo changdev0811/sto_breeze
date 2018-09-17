@@ -21,6 +21,7 @@ $fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
         margin:0pt 0pt 3pt 0pt; 
         line-height:16pt;
     }
+
 }
 
 .employee-fyi-accrual-item {
@@ -30,10 +31,18 @@ $fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
 
 .employee-fyi-accrual-item-layout {
     font-weight: 400; 
+    font-size:14pt; 
+    margin:0pt 0pt 3pt 0pt; 
+    line-height:16pt;
+}
+
+.employee-fyi-accrual-item-layout-info {
+    font-weight: 400; 
     font-size:12pt; 
     margin:0pt 0pt 3pt 0pt; 
     line-height:16pt;
 }
+
 
 /* Progress bar box shadow */
 .employee-fyi-accrual-value-shadow {

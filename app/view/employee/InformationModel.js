@@ -81,6 +81,15 @@ Ext.define('Breeze.view.employee.InformationModel', {
             return (typeof notes == 'undefined' || notes == null || notes === "") ? true : false;
         },
 
+        employeeNotes: function(get){
+            var notes = get('info.Notes');
+            if(notes == null || notes == ""){
+                return "No notes are currently recorded.";
+            } else {
+                return notes;
+            }
+        },
+
         /**
          * Formula returning filtered selection of supervisors based on supervisor
          * IDs defined in employee info data object

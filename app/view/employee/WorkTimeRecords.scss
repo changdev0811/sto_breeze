@@ -3,6 +3,12 @@
 /**
  UI Style 'wtr-small' for Date panel widget
 */
+
+@include paneltitle-ui(
+    $ui: 'wtr-panel',
+    $font-size: $panel-title-font-size
+);
+
 @include datepanel-ui(
     $ui: 'wtr-small',
     $cell-spacing: 2pt,

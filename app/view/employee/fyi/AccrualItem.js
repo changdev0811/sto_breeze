@@ -16,20 +16,17 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
     items: [
         {
             xtype: 'container',
-            layout: {
-                type: 'hbox',
-                wrap: true
-            },
+            layout: { type: 'vbox' },
             items: [
                 {
                     xtype: 'component',
-                    flex: 1,
                     reference: 'categoryName',
-                    userCls: 'employee-fyi-accrual-item-layout'
+                    userCls: 'employee-fyi-accrual-item-layout',
                 },
                 {
                     xtype: 'component',
                     reference: 'usage',
+                    //style:'font-size:12pt',
                     //userCls: ['employee-fyi-accrual-item-layout', 'employee-fyi-accrual-item-usage']
                 }
             ]
@@ -80,9 +77,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
 
         if(recorded.value <= allowed.value){
-            this.lookup('usage').setUserCls('employee-fyi-accrual-item-layout');
+            this.lookup('usage').setUserCls('employee-fyi-accrual-item-layout-info');
         } else {
-            this.lookup('usage').setUserCls('employee-fyi-accrual-value-label-over employee-fyi-accrual-item-layout');
+            this.lookup('usage').setUserCls('employee-fyi-accrual-value-label-over employee-fyi-accrual-item-layout-info');
         }
         
         if(typeof catColor !== 'undefined'){
