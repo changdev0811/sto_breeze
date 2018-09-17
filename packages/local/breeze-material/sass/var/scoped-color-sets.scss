@@ -181,3 +181,17 @@ $transparent-colors: (
     focus: $scoped-transparent-focus,
     pressed: $scoped-transparent-pressed
 );
+
+// ====[Message/Toast Colors]====
+
+$scoped-toast-success: $confirm-color;
+$scoped-toast-warn: #ed7827;
+$scoped-toast-error: $alert-color;
+
+$toast-colors: (
+    success: $scoped-toast-success,
+    warn: $scoped-toast-warn,
+    error: $scoped-toast-error
+);
+
+

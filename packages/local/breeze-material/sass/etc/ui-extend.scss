@@ -15,4 +15,22 @@
     .x-#{$xtype}-#{$ui} {
         @content;
     }
-}
+};
+
+/**
+    UI Mixin for toast extension
+*/
+@mixin toast-ui($ui, 
+    $background-color: $toast-background-color
+    ){
+    $xtype: toast;
+    .#{$prefix}#{$xtype}-#{$ui} {
+        .#{$prefix}#{$xtype}-#{$ui}-body-el {
+            background-color: $background-color !important
+        }
+    }
+    @include panel-ui(
+        $ui: $ui,
+        $background-color: $background-color
+    );
+};

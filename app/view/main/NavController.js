@@ -164,7 +164,11 @@
                 me.punchClass.submit(projectCode).then(
                     function(resp){
                         if(resp.success){
-                            Ext.toast('Successfully punched ' + kind);
+                            Ext.toast({
+                                message: 'Successfully punched ' + kind,
+                                type: Ext.Toast.INFO,
+                                timeout: 10000
+                            });
                             me.updateAttendanceStatus();
                         } else {
                             Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
