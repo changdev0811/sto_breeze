@@ -30,9 +30,9 @@ Ext.define('Breeze.helper.Auth', {
          */
         setCookies: function(pass, cust, emp){
             var c = Breeze.helper.Cookie;
-            c.bake(this.fields.pass, pass, 7);
-            c.bake(this.fields.cust, cust, 7);
-            c.bake(this.fields.emp, emp, 7);
+            c.bake(this.fields.pass, pass, 30);
+            c.bake(this.fields.cust, cust, 30);
+            c.bake(this.fields.emp, emp, 30);
         },
 
         /**

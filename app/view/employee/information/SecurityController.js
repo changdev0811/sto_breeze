@@ -58,12 +58,20 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
                 fields.password.clearValue();
                 fields.passwordConfirm.clearValue();
                 vm.set('info.UserName', resp.username);
-                Ext.toast('Password successfully updated');
+                Ext.toast('Password successfully updated', 10000);
             } else {
-                Ext.toast('Error: ' + resp.err);
+                Ext.toast({
+                    message: 'Error: ' + resp.err,
+                    timeout: 10000,
+                    type: Ext.Toast.ERROR
+                });
             }
         }).catch(function(err){
-            Ext.toast('Error: ' + err);
+            Ext.toast({
+                message: 'Error: ' + err,
+                timeout: 10000,
+                type: Ext.Toast.ERROR
+            });
         });
     },
 

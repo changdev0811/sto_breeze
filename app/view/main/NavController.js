@@ -256,12 +256,22 @@
             var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
             yaag.process().then(
                 function(url){
-                    Ext.toast({
-                        message: 'Year at a Glance report successfully generated',
-                        type: Ext.Toast.INFO,
-                        timeout: 10000
-                    });
-                    window.open(url,'_blank');
+                    if(typeof url == "string"){
+                        Ext.toast({
+                            message: 'Year at a Glance report successfully generated',
+                            type: Ext.Toast.INFO,
+                            timeout: 10000
+                        });
+                        window.open(url,'_blank');
+                    } else {
+                        if(url.Message){
+                            Ext.toast({
+                                message: 'Year at a Glance Error: <br>' + url.Message,
+                                type: Ext.Toast.ERROR,
+                                timeout: 10000
+                            });
+                        }
+                    }
                 }
             ).catch(
                 function(err){
