@@ -108,7 +108,8 @@ Ext.define('Breeze.view.employee.Fyi',{
                 xtype: 'employee.fyi.accrualItem'
             },
             reference: 'fyiDataList',
-            ui: 'fyi-accrual-list'
+            ui: 'fyi-accrual-list',
+            userCls: 'fyi-accrual-list'
         },
         {
             xtype: 'container',

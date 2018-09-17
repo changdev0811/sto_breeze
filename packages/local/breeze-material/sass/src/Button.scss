@@ -1,0 +1,8 @@
+// usage:
+@include ui-extend(
+    $xtype: 'button', // component type (what prefixes -ui in mixin name)
+    $ui: 'alt', // ui name, same as with other ui mixins
+) {
+    // any additional properties go here
+    min-width: 100pt;
+}

@@ -18,6 +18,11 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
 
+@include paneltitle-ui(
+    $ui: 'employee-calendar-panel',
+    $font-size: $panel-title-font-size
+);
+
 .legend-item-dot{
     position: relative;
     display: inline-block;
@@ -166,6 +171,11 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $ui: 'employee-calendar-form'
 );
 
+@include button-ui(
 
+    $ui: 'alt'
+)
 
-
+.cancel-button{
+    padding:0pt 5pt 0pt 5pt;
+}

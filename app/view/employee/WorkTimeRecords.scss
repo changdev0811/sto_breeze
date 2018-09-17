@@ -3,6 +3,12 @@
 /**
  UI Style 'wtr-small' for Date panel widget
 */
+
+@include paneltitle-ui(
+    $ui: 'wtr-panel',
+    $font-size: $panel-title-font-size
+);
+
 @include datepanel-ui(
     $ui: 'wtr-small',
     $cell-spacing: 2pt,
@@ -16,6 +22,7 @@
 @include panel-ui(
     $ui: 'wtr-panel',
     $body-background-color: map-get($wtr-colors,'base'),
+    $header-background-color: map-get($wtr-colors,'base') !important,
     $body-color: map-get($wtr-text-colors,'base') !important
 );
 
@@ -36,16 +43,16 @@ $wtr-side-body-font-size: 12pt;
 );
 
 @include field-ui(
-    $label-color: #ffffff,
-    $focused-label-color: #ffffff,
+    $label-color: map-get($wtr-text-colors,'base'),
+    $focused-label-color: map-get($wtr-text-colors,'base'),
     $label-font-size: $ei-head-font-size,    
     $ui: 'dark-checkbox'
 );
 
 @include checkboxfield-ui(
-    $checkbox-color: #ffffff,
-    $checked-checkbox-color: #ffffff,
-    $box-label-color: #ffffff,
+    $checkbox-color: map-get($wtr-text-colors,'base'),
+    $checked-checkbox-color: map-get($wtr-text-colors,'base'),
+    $box-label-color: map-get($wtr-text-colors,'base'),
     $box-label-font-size: $ei-field-font-size,
     $ui: 'dark-checkbox'
 );
@@ -71,7 +78,7 @@ $wtr-side-body-font-size: 12pt;
 // Adjust color, sizing of label
 @include field-ui(
     $label-font-size: $wtr-side-body-font-size,
-    $label-color: map-get($root-text-colors,'base'),
+    $label-color: map-get($wtr-text-colors,'light'),
     // $label-width: 88pt,
     $ui: 'dark-textfield-sm'
 );

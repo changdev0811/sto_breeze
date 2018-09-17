@@ -20,13 +20,13 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             iconCls: 'x-fas fa-file-alt',
             userCls:'employeeinfo-notes-button',        
             ui:'employeeinfo-notes-button', 
-            hidden:true, 
+            //hidden:true, 
             listeners:{
                 tap:'onNotesButtonTap'
             },
-            bind:{
-                hidden:'{hideNotesButton}',
-            }
+            //bind:{
+            //    hidden:'{hideNotesButton}',
+            //}
 
         },
         {
@@ -50,8 +50,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     scrollable:'y',
                     userCls:'employeeinfo-notes-text',        
                     bind:{
-                        html:'{info.Notes}',
-
+                        html:'{employeeNotes}',
                     }
                 }
 
