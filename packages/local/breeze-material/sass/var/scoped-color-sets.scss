@@ -135,17 +135,25 @@ $employee-fyi-text-colors: (
 // ====[WorkTime Records]====
 
 // colors
-$scoped-wtr-base: $base-color;
+//$scoped-wtr-base: $base-color;
+$scoped-wtr-base: #57576A;
+$scoped-wtr-medium: #81818F;
+$scoped-wtr-light: #ABABB5;
 
 // text
 $scoped-wtr-text-base: #ffffff;
+$scoped-wtr-text-light: #ABABB5;
 
 $wtr-colors: (
-    base: $scoped-wtr-base
+    base: $scoped-wtr-base,
+    medium: $scoped-wtr-medium,
+    light: $scoped-wtr-light
 );
 
 $wtr-text-colors: (
-    base: $scoped-wtr-text-base
+    base: $scoped-wtr-text-base,
+    light: $scoped-wtr-text-light
+
 );
 
 // ====[Punch Clock Button[===
