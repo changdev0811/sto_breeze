@@ -21,20 +21,32 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.companyApi = Ext.create('Breeze.api.Company');
         var weekSelect = this.lookup('weekSelector');
         weekSelect.setValue(weekSelect.getValue());
+        this.loadEmployee();
         this.getViewModel().set('employeeId', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
         this.attachListenerToRecordGrid();
 
+        console.info('WorkTimeRecords controller initialized');
         /*  Force week selector / mini calendar's selection to 
             be a full week on load */
-
-        
     },
     
     // ===[Data Loading]===
     
+    loadEmployee: function(){
+        var me = this;
+        var vm = me.getViewModel();
+        Ext.create('Breeze.api.Employee').getHeaderInfo().then(function(r){
+            vm.set('employeeName', r.fullname);
+        }).catch(
+            function(err){
+                console.warn('Error loading employee header info', err);
+            }
+        );
+    },
+
     /**
      * Load flat projects list into view model
      */
@@ -104,9 +116,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             me.getViewModel().setStores({workTimeRecords: store});
-            if(store.getAt(0) && store.getAt(0).get('Employee_Name')){
-                me.getViewModel().set('employeeName', store.getAt(0).get('Employee_Name'));
-            }
             console.info('WorkTimeRecord loaded');
         }).catch(function(err){
             console.warn('Failed loading work time records: ', err);

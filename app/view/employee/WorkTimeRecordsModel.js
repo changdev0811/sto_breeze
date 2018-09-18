@@ -14,6 +14,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
 
     data: {
         employeeId: undefined,
+        name: '',
         startDate: undefined,
         endDate: undefined,
         showPunches: false,

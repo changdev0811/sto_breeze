@@ -290,7 +290,8 @@
         },
 
         onPersonalWtrRoute: function(){
-            var emp = this.getViewModel().get('userId');
+            var vm = this.getViewModel();
+            var emp = vm.get('userId');
             this.changeContent(
                 Ext.create('Breeze.view.employee.WorkTimeRecords', {
                     data: { employee: emp }
