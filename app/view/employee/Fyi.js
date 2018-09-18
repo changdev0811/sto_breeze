@@ -56,6 +56,12 @@ Ext.define('Breeze.view.employee.Fyi',{
                 {
                     xtype: 'container',
                     layout: 'hbox',
+                    // Fixes firefox display bug caused by flex-basis defaulting to 0%
+                    flex: {
+                        grow: 1,
+                        shrink: 1,
+                        basis: 'auto'
+                    },
                     defaults: {
                         xtype: 'displayfield',
                         ui: 'fyi-display-field',
