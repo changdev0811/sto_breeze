@@ -58,7 +58,11 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
                 fields.password.clearValue();
                 fields.passwordConfirm.clearValue();
                 vm.set('info.UserName', resp.username);
-                Ext.toast('Password successfully updated', 10000);
+                Ext.toast({
+                    message: 'Password successfully updated', 
+                    timeout: 10000,
+                    type: Ext.Toast.SUCCESS
+                });
             } else {
                 Ext.toast({
                     message: 'Error: ' + resp.err,
