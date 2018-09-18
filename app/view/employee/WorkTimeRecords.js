@@ -112,7 +112,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
             layout: 'hbox',
             items: [
                 {
-                    id: 'wtrSideBar',
                     reference: 'wtrSideBar',
                     xtype: 'container',
                     //flex: 1,

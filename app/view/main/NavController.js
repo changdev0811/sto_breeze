@@ -74,6 +74,7 @@
             this.apiClass = Ext.create('Breeze.api.Auth');
             this.empClass = Ext.create('Breeze.api.Employee');
             this.punchClass = Ext.create('Breeze.api.Punch');
+            Ext.util.History.init();
             this.loadEmployee();
             this.loadPunchSettings();
             this.updateAttendanceStatus();
@@ -254,6 +255,7 @@
 
         onPersonalYaagRoute: function(){
             var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
+            var me = this;
             yaag.process().then(
                 function(url){
                     if(typeof url == "string"){
@@ -272,6 +274,7 @@
                             });
                         }
                     }
+                    Ext.util.History.back();
                 }
             ).catch(
                 function(err){
@@ -281,6 +284,7 @@
                         timeout: 10000,
                         type: Ext.Toast.ERROR
                     });
+                    Ext.util.History.back();
                 }
             )
         },
@@ -307,6 +311,7 @@
             console.info('Downloading punchstation');
             // window.open("https://tko.softtimeonline.com/STO/PunchStation/setup.exe");
             window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
+            Ext.util.History.back();
         },
 
         // ===[Content functions]===
