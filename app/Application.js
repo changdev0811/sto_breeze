@@ -45,7 +45,7 @@ Ext.define('Breeze.Application', {
         console.log("Launched");
 
         // TODO: Removing testing check when out of dev
-        var testing = false; // (should be removed later)
+        var testing = true; // (should be removed later)
         if(testing){
             Breeze.helper.Auth.setCookies("1","2","5003");
             Breeze.helper.Cookie.set('STOLI','True');
