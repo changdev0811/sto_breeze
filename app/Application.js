@@ -45,11 +45,12 @@ Ext.define('Breeze.Application', {
         console.log("Launched");
 
         // TODO: Removing testing check when out of dev
-        var testing = true; // (should be removed later)
+        var testing = false; // (should be removed later)
         if(testing){
             Breeze.helper.Auth.setCookies("1","2","5003");
+            Breeze.helper.Cookie.set('STOLI','True');
         }
-        if(Breeze.helper.Auth.isAuthorized() || testing){
+        if((Breeze.helper.Auth.isAuthorized() && Breeze.helper.Auth.isLoggedIn()) || testing){
             // Ext.getStore('CompanyConfig').load();
             this.viewport.add(Ext.create('Breeze.view.main.Nav', {
                 //data: {mode: 'supervisor'}
