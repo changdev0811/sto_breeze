@@ -52,7 +52,6 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 
 @include dataview-ui(
     $ui: 'calendar-legend',
-    $padding: 0pt 0pt 0pt 0pt,
     $background-color: map-get($calendar-colors, 'base')
 );
 
@@ -105,7 +104,6 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $ui: 'employee-calendar',
     $background-color: map-get($calendar-colors, 'base'),
     $color : #ffffff,
-    $margin: 0pt 0pt 0pt 0pt,
     $padding: 0pt 0pt 0pt 0pt,
     $font-size: 16pt
 );
@@ -130,9 +128,7 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $day-border-color : map-get($calendar-colors, 'medium'),
     $day-background-color: map-get($calendar-colors, 'base'),
     $day-number-font-size: 10pt,
-    $day-number-line-height: 10pt,
     $day-number-padding: 0pt 0pt 0pt 0pt,
-    $day-number-margin: 2pt 4pt 0pt 2pt,
     $day-number-color: #ffffff,
     $day-number-outside-color: map-get($calendar-colors, 'light')
 );
