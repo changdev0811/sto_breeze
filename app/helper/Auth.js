@@ -23,7 +23,7 @@ Ext.define('Breeze.helper.Auth', {
             pass: 'STOPASS',
             cust: 'STOCUST',
             emp: 'STOEMP',
-            loggedIn: 'STOLI'
+            loggedIn: 'STOX'
         },
 
         /**
@@ -53,7 +53,7 @@ Ext.define('Breeze.helper.Auth', {
          */
         isLoggedIn: function(){
             var c = Breeze.helper.Cookie;
-            return c.get(this.fields.loggedIn == 'True');
+            return c.get(this.fields.loggedIn == 'true');
         },
 
         /**
