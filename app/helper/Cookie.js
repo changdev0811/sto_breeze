@@ -11,15 +11,21 @@
              * @param name {String} cookie name
              * @param data {String} cookie data
              * @param lifeInMinutes {Number} life of cookie (in minutes; defaults
-             *  to 10 if undefined)
+             *  to 10 if undefined) If null, cookie is considered a session cookie
              */
             bake: function(name, data, lifeInMinutes){
                 var lifeInMinutes = defVal(lifeInMinutes, 10);
-                return Ext.util.Cookies.set(
-                    name, data, new Date(
-                        new Date().getTime() + (1000 * 60 * lifeInMinutes)
-                    )
-                );
+                if(lifeInMinutes == null){
+                    return Ext.util.Cookies.set(
+                        name, data
+                    );
+                } else {
+                    return Ext.util.Cookies.set(
+                        name, data, new Date(
+                            new Date().getTime() + (1000 * 60 * lifeInMinutes)
+                        )
+                    );
+                }
             },
 
             /**

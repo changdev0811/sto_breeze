@@ -70,7 +70,6 @@ Ext.define('Breeze.api.Auth', {
                             renewal.enabled = true;
                             renewal.message = t[3];
                         }
-                        Breeze.helper.Cookie.bake('STOX','true',null);
                         resolve({
                             success: true,
                             renewal: renewal.enabled,
