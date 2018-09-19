@@ -114,7 +114,8 @@ Ext.define('Breeze.api.Punch', {
         return new Promise(function(resolve, reject){
             // try adding geolocation info
             // TODO: Address geolocation needs for mobile version
-            if(navigator.geolocation){
+            // TODO: Re-enable GPS when security cert is fixed
+            if(false && navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(loc){
                     data.lat = loc.coords.latitude;
                     data.lng = loc.coords.longitude;

@@ -48,8 +48,9 @@ Ext.define('Breeze.Application', {
         var testing = true; // (should be removed later)
         if(testing){
             Breeze.helper.Auth.setCookies("1","2","5003");
+            Breeze.helper.Cookie.bake('STOLI','True',null);
         }
-        if(Breeze.helper.Auth.isAuthorized() || testing){
+        if((Breeze.helper.Auth.isAuthorized() && Breeze.helper.Auth.isLoggedIn()) || testing){
             // Ext.getStore('CompanyConfig').load();
             this.viewport.add(Ext.create('Breeze.view.main.Nav', {
                 //data: {mode: 'supervisor'}

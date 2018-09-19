@@ -22,7 +22,8 @@ Ext.define('Breeze.helper.Auth', {
             // emp: 'SecureEmpId',
             pass: 'STOPASS',
             cust: 'STOCUST',
-            emp: 'STOEMP'
+            emp: 'STOEMP',
+            loggedIn: 'STOLI'
         },
 
         /**
@@ -45,6 +46,14 @@ Ext.define('Breeze.helper.Auth', {
                 cust:   c.get(this.fields.cust),
                 emp:    c.get(this.fields.emp)
             };
+        },
+
+        /**
+         * Check if logged in cookie has been set
+         */
+        isLoggedIn: function(){
+            var c = Breeze.helper.Cookie;
+            return (c.get(this.fields.loggedIn)=='True');
         },
 
         /**
