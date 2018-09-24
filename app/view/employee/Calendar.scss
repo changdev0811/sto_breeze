@@ -26,7 +26,7 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 .legend-item-dot{
     position: relative;
     display: inline-block;
-    width:12pt; height:12pt;
+    width:10pt; height:10pt;
     margin:0pt 5pt 0pt 0pt; padding:0pt;
     border-radius: 50%;
     box-shadow: 0pt 2pt 5pt rgba(0,0,0,.33);
@@ -35,11 +35,11 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 .legend-item-label{
     position: relative;
     display: inline-block;
-    font-size: 12pt;
+    font-size: 10pt;
     margin:0pt; padding:0pt;
     color: white;
     width: 12em;
-    line-height: 16pt;
+    line-height: 14pt;
     vertical-align: middle;
 }
 
@@ -52,6 +52,7 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 
 @include dataview-ui(
     $ui: 'calendar-legend',
+    $padding: 0pt 0pt 0pt 0pt,
     $background-color: map-get($calendar-colors, 'base')
 );
 
@@ -104,6 +105,7 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $ui: 'employee-calendar',
     $background-color: map-get($calendar-colors, 'base'),
     $color : #ffffff,
+    $margin: 0pt 0pt 0pt 0pt,
     $padding: 0pt 0pt 0pt 0pt,
     $font-size: 16pt
 );
@@ -128,7 +130,9 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $day-border-color : map-get($calendar-colors, 'medium'),
     $day-background-color: map-get($calendar-colors, 'base'),
     $day-number-font-size: 10pt,
+    $day-number-line-height: 10pt,
     $day-number-padding: 0pt 0pt 0pt 0pt,
+    $day-number-margin: 2pt 4pt 0pt 2pt,
     $day-number-color: #ffffff,
     $day-number-outside-color: map-get($calendar-colors, 'light')
 );

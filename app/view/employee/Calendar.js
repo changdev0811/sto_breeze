@@ -48,7 +48,7 @@ Ext.define('Breeze.view.employee.Calendar',{
             xtype: 'calendar',
             userCls: 'employee-calendar-noedge',
             label: 'Month',
-            flex: 6,
+            flex: 1,
             ui: 'employee-calendar',
             reference: 'calendarPanel',
             compact: true,
@@ -142,10 +142,10 @@ Ext.define('Breeze.view.employee.Calendar',{
             ui:'calendar-legend',
             inline: true,
             userCls:'legend' ,
-            flex:1,
-            minWidth:'450pt',
-            minHeight:'60pt',
-            padding: '8pt 8pt 8pt 8pt',
+            /*flex:1,*/
+            minWidth:'614pt',
+            height:'45pt',
+            padding: '8pt 8pt 0pt 8pt',
             layout: {
                 type: 'hbox',
                 wrap: true
