@@ -1,0 +1,51 @@
+// =======[Scoped size sets]========
+
+/*
+    Globally referenced sizing variables and maps should be defined here.
+    - Font sizes
+    - Padding
+    - Margins
+    - Width / Height
+    - etc
+    E.g., default padding on views, etc. App can use to derive styles
+    for specific cases, or specifically scoped cases can be defined here
+    like they are in scoped-color-sets (see for reference)
+*/
+
+// ====[Font General]====
+// root font vars
+$scoped-root-font-size-base: 14pt;
+$scoped-root-font-size-detail: 12pt;
+
+//--[Root font sets]--
+$root-font-sizes: (
+    base: $scoped-root-font-size-base,
+    detail: $scoped-root-font-size-detail
+);
+
+// ====[Panels]====
+$panel-title-font-size: 18pt;
+
+// --[Root Panel variables]--
+
+// body base 
+$scoped-root-panel-body-padding-base: 16pt;
+
+// body specifics
+$scoped-root-panel-body-padding-weights: (
+    top: 0.25,
+    left: 1,
+    right: 1,
+    bottom: 1
+);
+
+// --[Root Panel Sets]--
+$root-panel-sizes: (
+    body: (
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: $scoped-root-panel-body-padding-weights
+        )
+    )
+);
+

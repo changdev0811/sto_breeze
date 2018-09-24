@@ -1,0 +1,96 @@
+// Style rules for employee.fyi.AccrualItem component
+
+// Color for text when over allowed value
+$fyi-accrual-val-over: map-get($employee-fyi-text-colors,'alert');
+$fyi-accrual-background-color: map-get($employee-fyi-colors,'base');
+$fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
+
+// Style applied to x of y (accrual value) label
+// when value exceeds allowed
+.employee-fyi-accrual-value-label-over {
+    & div {
+        color: $fyi-accrual-val-over;
+    }
+
+}
+
+.employee-fyi-accrual-item-usage {
+    div {
+        font-weight: 400; 
+        font-size:12pt; 
+        margin:0pt 0pt 3pt 0pt; 
+        line-height:16pt;
+    }
+
+}
+
+.employee-fyi-accrual-item {
+    padding:0pt 15px 0pt 0pt;
+}
+
+
+.employee-fyi-accrual-item-layout {
+    font-weight: 400; 
+    font-size:14pt; 
+    margin:0pt 0pt 3pt 0pt; 
+    line-height:16pt;
+}
+
+.employee-fyi-accrual-item-layout-info {
+    font-weight: 400; 
+    font-size:12pt; 
+    margin:0pt 0pt 3pt 0pt; 
+    line-height:16pt;
+}
+
+
+/* Progress bar box shadow */
+.employee-fyi-accrual-value-shadow {
+    box-shadow: 0pt 3pt 3pt rgba(0,0,0,0.33);
+}
+
+
+// Override min height for progress bar UI
+@include progress-ui (
+    $min-height: 6pt,
+    $ui: 'employeefyi-progress'
+);
+
+/* When progress bar background needs to be red to indicate over allowed amount,
+   add the ui style 'employeefyi-progress-overlimit' */
+@include progress-ui (
+    // $background-color: #ff0000,
+    $background-color: rgba(207, 76, 74, .25),
+    $ui: 'employeefyi-progress-overlimit'
+);
+
+@keyframes employeefyi-progress-pulse {
+    0% { background-color: rgba(207, 76, 74, 0.25); }
+    50% { background-color: rgba(207, 76, 74, 1); }
+    100% { background-color: rgba(207, 76, 74, 0.25); }
+}
+
+// Using ui-extend mixin to add extra style rules to employeefyi-progress-overlimit
+@include ui-extend(progress, 'employeefyi-progress-overlimit'){
+    animation: employeefyi-progress-pulse 60s infinite linear;
+}
+
+
+// Style for widget.employee.fyi.accrualItem item
+@include listitem-ui(
+    $background-color: $fyi-accrual-background-color,
+    $color: $fyi-accrual-color,
+    $hovered-background-color: $fyi-accrual-background-color !important,
+    $hovered-color: $fyi-accrual-color !important,
+    $selected-background-color: $fyi-accrual-background-color !important,
+    $selected-color: $fyi-accrual-color !important,
+    $pressed-background-color: $fyi-accrual-background-color !important,
+    $ui: 'fyi-accrual-item'
+);
+
+@include dataview-ui (
+    $ui: 'fyi-accrual-list',
+    $background-color: $fyi-accrual-background-color
+
+);
+

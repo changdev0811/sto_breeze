@@ -1,0 +1,124 @@
+/**
+    Styles / Classes for Employee WorkTime Records SubView
+*/
+
+// ==[Variables]==
+$employee-wtr-records-body-padding: 6pt;
+// icon display size, w/o padding
+$employee-wtr-records-icon-size: 28pt;
+// total width/height of icon w/ padding
+$employee-wtr-records-icon-total-size: 32px; 
+// ==[Mixins for WTR records]==
+
+// record body label mixin
+@mixin wtr-body-label {
+    padding: {
+        top: 0;
+        left: $employee-wtr-records-body-padding;
+        bottom: 0;
+        right: 0;
+    }
+    font-size: 12pt;
+    line-height: 16pt;
+}
+
+// base mixin for row body punch-in/out columns
+@mixin wtr-body-panel($bgcolor) {
+    background-color: $bgcolor;
+    padding: {
+        top: $employee-wtr-records-body-padding;
+        left: $employee-wtr-records-body-padding;
+        bottom: $employee-wtr-records-body-padding;
+        right: $employee-wtr-records-body-padding;
+    }
+    margin: 0;
+    display: flex;
+    flex: 1 1 auto;
+    // label styling
+    & .lbl {
+        @include wtr-body-label;
+        & label {
+            font-weight: bold;
+        }
+        width:calc(100% - 120pt);
+    }
+
+    //icon classes
+    & .icon {
+        width: $employee-wtr-records-icon-size;
+        height: $employee-wtr-records-icon-size;
+        margin: 0pt 5pt 0pt 5pt;
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 75%;
+        // clock in icon
+        &.in {
+            background-image: url(get-resource-path('icons/clock-in-light.svg'));
+        }
+        // clock out icon
+        &.out {
+            background-image: url(get-resource-path('icons/clock-out-light.svg'));
+        }
+        // clock out icon
+        &.loc {
+            //background-image: url(get-resource-path('icons/clock-out-light.svg'));
+            display:inline-block;
+            position: absolute;
+            bottom:0;
+            right:0;
+            font-size: 18pt;
+            &:hover {
+                color: darken(#ffffff,5%);
+            }
+        }
+
+
+    }
+
+    & .iconlbl {
+        font-size: 10pt;
+        line-height: 16pt;
+    }
+
+    & .end {
+        display: flex;
+        position: relative;
+        width:60pt;
+        height:100%;
+    }
+    & .start {
+        position: relative;
+        width:60pt;
+    }
+
+}
+
+// Murder that annoying spacer that gets tossed into the grid body
+.wtr-grid-no-spacer {
+    display: flex;
+    flex-direction: column;
+    & > .x-spacer-el {
+        display: none;
+        width: 0; height: 0;
+    }
+    & > .x-content-el {
+        padding: 0;
+    }
+}
+
+// Body cell of work time records expanded row
+.employee-wtr-records-rowbody {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    width: 100%;
+    background-color: yellow;
+    // punch in body panel
+    & > .punch-in {
+       @include wtr-body-panel($confirm-color);
+    }
+    // punch out body panel
+    & > .punch-out {
+        @include wtr-body-panel($alert-color);
+    }
+}

@@ -1,0 +1,186 @@
+/**
+ * Employee Calendar Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Employee Calendar view or its children
+ */
+$cal-head-font-size: 12pt;
+$cal-field-font-size: 14pt;
+$cal-body-padding: 4pt 16pt 16pt 16pt;
+
+// Panel UI style for calendar view's containing panel
+@include panel-ui(
+    $ui: 'employee-calendar-panel',
+    $background-color: map-get($calendar-colors, 'base'),
+    $header-background-color: map-get($calendar-colors, 'base'),
+    $body-background-color: map-get($calendar-colors, 'base'),
+    $body-color: map-get($calendar-text-colors, 'base'),
+    $body-padding: 0pt 16pt 16pt 16pt
+    //$body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include paneltitle-ui(
+    $ui: 'employee-calendar-panel',
+    $font-size: $panel-title-font-size
+);
+
+.legend-item-dot{
+    position: relative;
+    display: inline-block;
+    width:10pt; height:10pt;
+    margin:0pt 5pt 0pt 0pt; padding:0pt;
+    border-radius: 50%;
+    box-shadow: 0pt 2pt 5pt rgba(0,0,0,.33);
+}
+
+.legend-item-label{
+    position: relative;
+    display: inline-block;
+    font-size: 10pt;
+    margin:0pt; padding:0pt;
+    color: white;
+    width: 12em;
+    line-height: 14pt;
+    vertical-align: middle;
+}
+
+
+.legend {
+    margin:20pt 0pt 0pt 0pt;
+    border:solid 1px map-get($calendar-colors, 'medium');
+}
+
+
+@include dataview-ui(
+    $ui: 'calendar-legend',
+    $padding: 0pt 0pt 0pt 0pt,
+    $background-color: map-get($calendar-colors, 'base')
+);
+
+@include dataitem-ui(
+    $ui: 'calendar-legend',
+    $background-color: map-get($calendar-colors, 'base'),
+    $line-height: 16pt,
+    $padding: 2pt 1pt 2pt 1pt
+
+);
+
+@include listitem-ui(
+    $ui: 'calendar-legend',
+    $background-color: map-get($calendar-colors, 'base')
+);
+
+
+.employee-calendar-container {
+    // padding: 16pt 16pt 16pt 16pt;
+    background-color: map-get($calendar-colors, 'base');
+    color: map-get($calendar-text-colors, 'base');
+}
+
+
+
+// Turn off bottom border on calendar, add userCls: 'employee-calendar-noedge'
+.employee-calendar-noedge {
+    table.x-calendar-table {
+        // turn of left and right edges of each row
+        & > tbody > tr.x-calendar-weeks-row {
+            & > .x-calendar-weeks-cell:first-child {
+                // turn off left border of first cell in row
+                border-left: 0px;
+            }
+            & > .x-calendar-weeks-cell:last-child {
+                // turn off right border of last cell in row
+                border-right: 0px;
+            }
+        }
+        & > tbody > tr.x-calendar-weeks-row:last-child {
+            .x-calendar-weeks-cell {
+                border-bottom: 0px;
+            }
+        }
+    }
+}
+
+
+@include toolbar-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'base'),
+    $color : #ffffff,
+    $margin: 0pt 0pt 0pt 0pt,
+    $padding: 0pt 0pt 0pt 0pt,
+    $font-size: 16pt
+);
+
+@include calendar-header-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'medium'),
+    $color : #ffffff,
+    $font-size: 12pt,
+    $font-weight: 600,
+    $cell-border-color: map-get($calendar-colors, 'medium'),
+    $cell-border-style: none,
+    $cell-border-width: 0px
+);
+
+@include calendar-weeks-ui (
+    $ui: 'employee-calendar',
+    $background-color: map-get($calendar-colors, 'base'),
+    $selection-background-color: map-get($calendar-colors, 'medium'),
+    $selection-opacity: 1,
+    $day-border-width: 1px,
+    $day-border-color : map-get($calendar-colors, 'medium'),
+    $day-background-color: map-get($calendar-colors, 'base'),
+    $day-number-font-size: 10pt,
+    $day-number-line-height: 10pt,
+    $day-number-padding: 0pt 0pt 0pt 0pt,
+    $day-number-margin: 2pt 4pt 0pt 2pt,
+    $day-number-color: #ffffff,
+    $day-number-outside-color: map-get($calendar-colors, 'light')
+);
+
+.employee-calendar-form {
+    width:100%;
+    max-width:500pt;
+    min-width: 200pt;
+}
+
+@include toolbar-ui  (
+    $background-color: #ffffff,
+    $ui: 'employee-calendar-form'
+
+);
+
+@include panel-ui (
+    $header-color: #000,
+    $header-background-color: #fff,
+    $ui: 'employee-calendar-form'
+);
+
+
+@include textfield-ui(
+    $input-font-size: $cal-field-font-size,
+    $ui: 'employee-calendar-form'
+);
+
+@include field-ui(
+    $label-color: #000,
+    $focused-label-color: #000,
+    $label-font-size: $cal-head-font-size,    
+    $ui: 'employee-calendar-form'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: #000,
+    $checked-checkbox-color: #000,
+    $box-label-color: #000,
+    $box-label-font-size: $cal-field-font-size,
+    $ui: 'employee-calendar-form'
+);
+
+@include button-ui(
+
+    $ui: 'alt'
+)
+
+.cancel-button{
+    padding:0pt 5pt 0pt 5pt;
+}

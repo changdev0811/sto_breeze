@@ -1,0 +1,16 @@
+// Styes for Employee Info > Company
+
+// Override employeeinfo-shift-grid title style
+@include titlebar-ui(
+    $background-color: map-get($employee-info-colors, 'light'),
+    $title-color: map-get($employee-info-colors,'base'),
+    $ui: 'employeeinfo-shift-grid'
+);
+
+// Class used for role listing tabbar
+.employee-info-roletab-container {
+    @extend .employee-info-tab-container;
+    padding: 2pt;
+}
+
+

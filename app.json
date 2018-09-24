@@ -6,6 +6,16 @@
     "toolkit": "modern",
     "theme": "breeze-material",
     /**
+     * Force JS output to be ES5 compatible (revisit in future)
+     * Idea is to allow using ES6 compatible syntax, but testing doesn't seem to indicate
+     * these conventions are being converted (particularly lambda functions)
+     */
+    "language": {
+        "js": {
+            "output": "ES5"
+        }
+    },
+    /**
      * The list of required packages (with optional versions; default is "latest").
      *
      * For example,
@@ -16,10 +26,13 @@
      */
     "requires": [
         /* glyph font */
-        "font-awesome",
+        // "font-awesome",
+        "font-awesome-52",
         /* extra packages */
         "sencha-charts",
-        "calendar"
+        "calendar",
+        /* map support */
+        "google"
     ],
     /**
      * The relative path to the application's markup file (html, jsp, asp, etc.).
@@ -196,6 +209,30 @@
      */
     "js": [
         {
+            /**
+            * Include lib/md5.js (need to confirm how this is getting included, inline or just copied)
+            */
+            "path": "lib/md5.js",
+            "includeInBundle": true
+        },
+        // UTC Date extension lib Timely
+        {
+            "path": "lib/timely.js",
+            "includeInBundle": true
+        },
+        // Include html2canvas lib
+        {
+            "path": "lib/html2canvas.min.js"
+        },
+        // Include moment.js lib
+        {
+            "path": "lib/moment.min.js"
+        },
+        // Include moment w/ locales lib
+        {
+            "path": "lib/moment-with-locales.min.js"
+        },
+        {
             "path": "${framework.dir}/build/ext-modern-all-debug.js"
         },
         {
@@ -253,6 +290,7 @@
         //   - other: a string (such as the build.timestamp shown here) to allow
         //     requests to be cached for this build.
         //
+        // NOTE: Toggle this to disable cache buster for debugging!
         "cache": false,
         // When "cache" is not true, this value is the request parameter used
         // to control caching.

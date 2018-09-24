@@ -1,0 +1,16 @@
+@import 'functions.scss';
+/**
+    Sizing-related mixins and functions, for use with scoped-size-sets
+*/
+
+/**
+ Make flat ordered edge-size list from a base size and a list
+ of weights in the order of top, right, bottom, left
+*/
+@function edge-size-from-relative($base, $weights){
+    @return ($base * map-get($weights, 'top')) 
+            ($base * map-get($weights, 'right')) 
+            ($base * map-get($weights, 'bottom')) 
+            ($base * map-get($weights, 'left'));
+}
+

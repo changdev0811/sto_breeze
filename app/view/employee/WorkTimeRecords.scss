@@ -1,0 +1,89 @@
+// Work Time Records view Styles and Overrides
+
+/**
+ UI Style 'wtr-small' for Date panel widget
+*/
+
+@include paneltitle-ui(
+    $ui: 'wtr-panel',
+    $font-size: $panel-title-font-size
+);
+
+@include datepanel-ui(
+    $ui: 'wtr-small',
+    $cell-spacing: 2pt,
+    $cell-width: 1.5em,
+    $cell-height: 1.5em,
+    $focused-cell-outline-width: 0,
+    $focused-cell-outline-style: none,
+    $header-font-size: 10pt
+);
+
+@include panel-ui(
+    $ui: 'wtr-panel',
+    $body-background-color: map-get($wtr-colors,'base'),
+    $header-background-color: map-get($wtr-colors,'base') !important,
+    $body-color: map-get($wtr-text-colors,'base') !important
+);
+
+$wtr-side-head-font-size: 14pt;
+$wtr-side-body-font-size: 12pt;
+
+@include field-ui(
+    $label-font-size: $ei-field-font-size,
+    $label-color: map-get($wtr-text-colors,'base'),
+    // $label-width: 88pt,
+    $ui: 'dark-textfield'
+);
+
+@include displayfield-ui(
+    $input-font-size: $ei-field-font-size,
+    $input-color: map-get($wtr-text-colors,'base'),
+    $ui: 'dark-textfield'
+);
+
+@include field-ui(
+    $label-color: map-get($wtr-text-colors,'base'),
+    $focused-label-color: map-get($wtr-text-colors,'base'),
+    $label-font-size: $ei-head-font-size,    
+    $ui: 'dark-checkbox'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: map-get($wtr-text-colors,'base'),
+    $checked-checkbox-color: map-get($wtr-text-colors,'base'),
+    $box-label-color: map-get($wtr-text-colors,'base'),
+    $box-label-font-size: $ei-field-font-size,
+    $ui: 'dark-checkbox'
+);
+
+.wtr-content {
+    padding: $ei-form-padding;
+    .x-form-fieldset-title {
+        color: map-get($wtr-text-colors,'base');
+        font-size: $ei-head-font-size;
+    }
+}
+
+.employee-worktime-records-grid {
+    background-color:map-get($wtr-colors,'base'); 
+}
+
+@include gridcolumn-ui(
+    $ui: 'employee-worktime-records-grid',
+    $font-size: 10pt
+);
+
+// --Adjustments to time at a glance labels in side--
+// Adjust color, sizing of label
+@include field-ui(
+    $label-font-size: $wtr-side-body-font-size,
+    $label-color: map-get($wtr-text-colors,'light'),
+    // $label-width: 88pt,
+    $ui: 'dark-textfield-sm'
+);
+
+@include button-ui(
+    $ui: 'wtr-button',
+    $font-size: $wtr-side-body-font-size
+);

@@ -8,6 +8,22 @@ Ext.define('Breeze.Application', {
 
     name: 'Breeze',
 
+    controllers: ['Breeze.controller.Overseer'],
+
+    requires: [
+        'Breeze.helper.Auth'
+    ],
+
+    stores: [
+        'Breeze.store.option.UserTypes',
+        'Breeze.store.option.Genders',
+        'Breeze.store.option.Compensation',
+        'Breeze.store.employee.static.PunchRoundingIncrements',
+        'Breeze.store.company.Config'
+    ],
+
+    defaultToken: 'home',
+
     quickTips: false,
     platformConfig: {
         desktop: {
@@ -23,5 +39,24 @@ Ext.define('Breeze.Application', {
                 }
             }
         );
+    },
+
+    launch: function(){
+        console.log("Launched");
+
+        // TODO: Removing testing check when out of dev
+        var testing = true; // (should be removed later)
+        if(testing){
+            Breeze.helper.Auth.setCookies("1","2","5003");
+            Breeze.helper.Cookie.bake('STOLI','True',null);
+        }
+        if((Breeze.helper.Auth.isAuthorized() && Breeze.helper.Auth.isLoggedIn()) || testing){
+            // Ext.getStore('CompanyConfig').load();
+            this.viewport.add(Ext.create('Breeze.view.main.Nav', {
+                //data: {mode: 'supervisor'}
+            }));
+        } else {
+            this.viewport.add(Ext.create('Breeze.view.auth.Login'));
+        }
     }
 });
