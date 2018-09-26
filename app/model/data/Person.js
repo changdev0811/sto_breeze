@@ -2,7 +2,7 @@
  * Person model; used by several stores
  * (from models/Person)
  * @class Person
- * @alias Breeze.model.data.Person
+ * @alias model.data.Person
  */
 Ext.define('Breeze.model.data.Person', {
     extend: 'Breeze.model.Base',

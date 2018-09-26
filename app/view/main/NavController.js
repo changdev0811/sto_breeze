@@ -31,6 +31,7 @@
             'Breeze.api.Punch',
             'Breeze.api.reporting.YearAtAGlance',
             'Breeze.view.employee.Information',
+            'Breeze.view.report.department.Absence',
             'Ext.Toast'
         ],
 
@@ -66,6 +67,11 @@
             },
             'home': {
                 action: 'onHomeRoute'
+            },
+            'reports/:category/:type': {
+                action: 'onReportRoute',
+                // TODO: Implement before report route method to prevent access when not allowed
+                // before: 'beforeReportRoute'
             }
         },
 
@@ -313,6 +319,16 @@
             // window.open("https://tko.softtimeonline.com/STO/PunchStation/setup.exe");
             window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
             Ext.util.History.back();
+        },
+
+        onReportRoute: function(category, type){
+            console.info('Report Route: ', category, type);
+            var component = Ext.create(`Breeze.view.report.${category}.${type}`, {
+                data: {
+                    data: { user: this.getViewModel().get('userId') }
+                }
+            });
+            this.changeContent(component);
         },
 
         // ===[Content functions]===
