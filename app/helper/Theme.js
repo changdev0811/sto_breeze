@@ -15,17 +15,11 @@ Ext.define('Breeze.helper.Theme', {
         'night': 'night-mode'
     },
 
+    // Mode constants
     modes: {
-        'day': {
-            id: 'day',
-            theme: 'breeze-material',
-            nightMode: false
-        },
-        'night': {
-            id: 'night',
-            theme: 'breeze-night-material',
-            nightMode: true
-        }
+        'standard': 'day',
+        'day': 'day',
+        'night': 'night'
     },
 
     /**
@@ -51,7 +45,7 @@ Ext.define('Breeze.helper.Theme', {
     apply: function() {
         var oven = Breeze.helper.Cookie,
             mode = oven.get('theme/mode', {default: 'day', create: null}),
-            nightMode = Breeze.helper.Theme.modes[mode].nightMode;
+            nightMode = (mode == 'night');
         Ext.getBody().toggleCls(this.cssVars.night, nightMode);
     }
 });
