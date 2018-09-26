@@ -31,7 +31,7 @@ Ext.define('Breeze.helper.Theme', {
             modeCookie = oven.get(this.cookie, {default: mode, create: null});
         if(modeCookie !== mode){
             oven.bake(this.cookie, mode, null);
-            window.location.refresh();
+            window.location.reload();
         }
     },
 
