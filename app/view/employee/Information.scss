@@ -134,7 +134,7 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
 // grids
 
 @include dataview-ui(
-    $background-color :  #498DC6,
+    $background-color :  transparent,
     $ui: 'employeeinfo-shift-grid'
 );
 

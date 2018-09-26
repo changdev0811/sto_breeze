@@ -37,6 +37,9 @@ Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 
 
 // ====[Base (root) Set]====
+
+$scoped-content-base: #223042;
+
 $scoped-root-base: #2D415A;
 $scoped-root-light: #4ea5ff;
 $scoped-root-lighter: #498DC6;
@@ -59,12 +62,12 @@ $root-text-colors: (
 
 
 // ====[Base (root) Set]====
-$scoped-calendar-base: #2C9E85;
-$scoped-calendar-medium: #5BB09D;
-$scoped-calendar-light: #84C4B6;
+$scoped-calendar-base: #2E4159;
+$scoped-calendar-medium: #607085;
+$scoped-calendar-light: #96A0AE;
 
 $scoped-calendar-text-base: #ffffff;
-$scoped-calendar-text-light: #84C4B6;
+$scoped-calendar-text-light: #96A0AE;
 
 $calendar-colors: (
     base:  $scoped-calendar-base,
@@ -81,12 +84,12 @@ $calendar-text-colors: (
 // ====[Employee Info View]====
 
 // specific colors
-$scoped-employee-info-base: $scoped-root-lighter;
-$scoped-employee-info-light: #C0D8EB;
-$scoped-employee-info-medium: #bed9ed;
-$scoped-employee-info-dark: #6DAFFF;
-$scoped-employee-info-row-dark: #70a5d2;
-$scoped-employee-info-row-light: #96bede;
+$scoped-employee-info-base: #2B415C;
+$scoped-employee-info-light: #96A0AE;
+$scoped-employee-info-medium: #96A0AE;
+$scoped-employee-info-dark: #6A7A8D;
+$scoped-employee-info-row-dark: #4A5D74;
+$scoped-employee-info-row-light: #808D9D;
 
 $scoped-employee-info-text-base: #ffffff;
 $scoped-employee-info-text-light: $scoped-employee-info-light;
@@ -112,12 +115,16 @@ $employee-info-text-colors: (
 
 // ====[Employee FYI View]====
 
+
+
+
+
 // specific colors
-$scoped-employee-fyi-base: #48657F;
-$scoped-employee-fyi-light: #A4B2C0;
+$scoped-employee-fyi-base: #2E4159;
+$scoped-employee-fyi-light: #96A0AE;
 
 $scoped-employee-fyi-text-base: #ffffff;
-$scoped-employee-fyi-text-light: #A4B2C0;
+$scoped-employee-fyi-text-light: #96A0AE;
 $scoped-employee-fyi-text-alert: #E98591;
 
 $employee-fyi-colors: (
@@ -136,13 +143,13 @@ $employee-fyi-text-colors: (
 
 // colors
 //$scoped-wtr-base: $base-color;
-$scoped-wtr-base: #57576A;
-$scoped-wtr-medium: #81818F;
-$scoped-wtr-light: #ABABB5;
+$scoped-wtr-base: #2B415C;
+$scoped-wtr-medium: #96A0AE;
+$scoped-wtr-light: #96A0AE;
 
 // text
 $scoped-wtr-text-base: #ffffff;
-$scoped-wtr-text-light: #ABABB5;
+$scoped-wtr-text-light: #96A0AE;
 
 $wtr-colors: (
     base: $scoped-wtr-base,

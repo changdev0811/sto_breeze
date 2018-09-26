@@ -95,4 +95,19 @@ $content-edge: 12pt;
     margin: $content-edge $content-edge $content-edge $content-edge;
 }
 
+.full-content {
+    background-color: $scoped-content-base;
+}
+
+// Night Mode
+.night-mode{
+    .full-content {
+        background-color: $scoped-content-base;
+        box-shadow: inset 0pt 2pt 2pt 0pt rgba(0,0,0,0.25);
+    }
+    .main-nav-side-bar{
+        background-color: $base-color;
+        box-shadow: 2pt 2pt 2pt 0pt rgba(0,0,0,0.25);
+    }
+}
 

@@ -164,6 +164,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     },
                     reference: 'companyListTabs',
                     flex: 1,
+                    style:'background-color:#ff0000;',
                     items: [
                         // ===[Supervisors tab]==
                         {
