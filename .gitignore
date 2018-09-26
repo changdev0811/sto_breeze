@@ -1,5 +1,6 @@
 /build
 bootstrap.*
+!bootstrap.js
 classic.json*
 modern.json*
 .sencha

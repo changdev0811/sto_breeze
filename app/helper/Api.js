@@ -12,8 +12,10 @@
             apiPaths: {
                 punch: '../STOServe/PunchService.asmx/',
                 // api: '../STOServe/Service1.asmx/',
+                // TODO: make api url relative
                 api: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/',
                 // pulled from sti_namespace, used in STOLogin view
+                // TODO: make login api url relative
                 login: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/'
             },
 

@@ -29,10 +29,29 @@
             },
 
             /**
-             * Alias of Ext.util.Cookies.get function
+             * Wrapper for Ext.util.Cookies.get function with extra capabilities
              * @param {String} name Cookie name
+             * @param {Object} options Optional settings:
+             *      - default: (String) String indicating value to return if
+             *          cookie is null or undefined
+             *      - create: (Number) If present and cookie is null/undefined,
+             *          value is used as life in minutes for cookie created using default
+             *          value (see bake function). Only used if default is defined
              */
-            get: Ext.util.Cookies.get
+            get: function(name, options) {
+                var options = options || {};
+                var value = Ext.util.Cookies.get(name);
+                if(typeof value == 'undefined' || value == null){
+                    if(options.default){
+                        if(typeof options.create !== 'undefined'){
+                            this.bake(name, options.default, options.create);
+                        }
+                        return value;
+                    }
+                } else {
+                    return value;
+                }
+            }
         }
 
     });
