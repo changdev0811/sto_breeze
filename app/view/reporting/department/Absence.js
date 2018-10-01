@@ -1,12 +1,12 @@
 /**
  * Department Absence Report form
  * @class Absence
- * @namespace Breeze.view.report.department.Absence
- * @alias widget.report.department.absence
+ * @namespace Breeze.view.reporting.department.Absence
+ * @alias widget.reporting.department.absence
  */
-Ext.define('Breeze.view.report.department.Absence', {
+Ext.define('Breeze.view.reporting.department.Absence', {
     extend: 'Ext.Panel',
-    alias: 'widget.report.department.absence',
+    alias: 'widget.reporting.department.absence',
 
     requires: [
         'Ext.tab.Panel',
@@ -19,9 +19,12 @@ Ext.define('Breeze.view.report.department.Absence', {
         'Ext.field.Radio'
     ],
 
-    // viewModel: {
-    //     type: 'reporting.absence'
-    // },
+    controller: 'reporting.department.absence',
+
+    viewModel: {
+        type: 'reporting.department.absence'
+    },
+    
     layout: 'vbox',
     title: 'Department Absence Report',
 
@@ -184,7 +187,7 @@ Ext.define('Breeze.view.report.department.Absence', {
                     layout: 'fit',
                     items: [
                         {
-                            xtype: 'treelist'
+                            xtype: 'breeze.tree.usercategories'
                         }
                     ]
                 }

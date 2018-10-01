@@ -7,7 +7,7 @@
  */
 Ext.define('Breeze.api.company.Project', {
     extend: 'Breeze.api.Base',
-    
+    singleton: true,
     /**
      * Get project by ID
      * @api getProjectByID
