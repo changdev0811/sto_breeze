@@ -85,10 +85,21 @@ Ext.define('Breeze.view.main.Nav', {
                     menu:{
                         xtype: 'menu',
                         items:[
+                            {  
+                                xtype: 'menucheckitem',
+                                text: 'Enable Night Mode',
+                                bind: {
+                                    checked: '{nightMode}'
+                                },
+                                listeners: {
+                                    checkChange: 'onMenuNightModeChange'
+                                }
+                            },
                             {
                                xtype: 'menuitem',
                                text:'User Preferences',
                                iconCls:'x-fas fa-user-cog',
+                               separator: true
                             //    icon: 'resources/icons/user-cog.svg'
                             }, {
                                xtype: 'menuitem',

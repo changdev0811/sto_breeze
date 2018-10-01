@@ -43,9 +43,17 @@ Ext.define('Breeze.helper.Theme', {
     * index.html
     */
     apply: function() {
-        var oven = Breeze.helper.Cookie,
-            mode = oven.get('theme/mode', {default: 'day', create: null}),
-            nightMode = (mode == 'night');
+        var mode = this.getMode();
+        nightMode = (mode == 'night');
         Ext.getBody().toggleCls(this.cssVars.night, nightMode);
+    },
+
+    /**
+     * Get current theme mode, writing cookie with 'day' if no cookie exists
+     * @return {String} Either 'day' or 'night'
+     */
+    getMode: function(){
+        var oven = Breeze.helper.Cookie;
+        return oven.get('theme/mode', {default: 'day', create: null});
     }
 });
