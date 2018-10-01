@@ -19,12 +19,16 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         'Ext.field.Radio'
     ],
 
-    controller: 'reporting.department.absence',
-
     viewModel: {
         type: 'reporting.department.absence'
     },
     
+    controller: 'reporting.department.absence',
+
+    listeners: {
+        initialize: 'onInit'
+    },
+
     layout: 'vbox',
     title: 'Department Absence Report',
 
@@ -85,11 +89,15 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     xtype: 'container',
                     flex: 1,
                     layout: 'vbox',
+                    defaults: {
+                        userCls: 'report-section-padding',
+                    },
                     items: [
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
+                            userCls: 'report-section-padding',
                             defaults: {
                                 bodyAlign: 'stretch',
                             },
@@ -180,14 +188,25 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         }
                     ]
                 },
+                // Container for User-Defined Categories list
                 {
                     xtype: 'container',
                     flex: 1,
                     // docked: 'right',
-                    layout: 'fit',
+                    layout: {
+                        type: 'fit',
+                        alignment: 'stretch'
+                    },
+                    height: '100%',
+                    width: '100%',
+                    reference: 'udcContainer',
                     items: [
                         {
-                            xtype: 'breeze.tree.usercategories'
+                            xtype: 'breeze.tree.usercategories',
+                            bind: '{categoriesTree}',
+                            reference: 'udcTree',
+                            flex: 1,
+                            
                         }
                     ]
                 }

@@ -1,10 +1,11 @@
 /**
- * User defined category tree store ()
- * @class PunchPolicies
- * @namespace Breeze.store.tree.Udc
+ * User defined category list store ()
+ * @class UserDefinedList
+ * @namespace Breeze.store.category.UserDefinedList
  * @alias store.tree.udc
+ * @extends Breeze.store.TreeBase
  */
-Ext.define('Breeze.store.tree.Udc', {
+Ext.define('Breeze.store.category.UserDefinedList', {
 	extend: 'Breeze.store.Base',
 	model: 'Breeze.model.category.Node',
     autoLoad: false,
@@ -31,7 +32,7 @@ Ext.define('Breeze.store.tree.Udc', {
 		},
 		reader: {
 			type: 'json',
-			rootProperty: 'd.Rows'
+			rootProperty: 'd'
 		},
 		// Don't want proxy to include these params in request
 		pageParam: undefined,

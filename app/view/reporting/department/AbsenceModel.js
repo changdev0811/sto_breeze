@@ -16,6 +16,16 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             autoLoad: true
         }
         */
+       tempCat: {
+           type: 'tree',
+           root: {
+               children: [
+                   {
+                       text: 'Category'
+                   }
+               ]
+           }
+       }
     },
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
