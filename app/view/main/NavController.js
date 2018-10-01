@@ -19,7 +19,8 @@
             'Breeze.store.option.Genders',
             'Breeze.store.option.Compensation',
             'Breeze.store.employee.static.PunchRoundingIncrements',
-            'Breeze.store.company.Config'
+            'Breeze.store.company.Config',
+            'Breeze.store.reporting.Routes'
         ],
     
         requires: [
@@ -34,8 +35,9 @@
             'Ext.Toast'
         ],
 
-        // Routes
+        /** Routes */
         routes: {
+            // Personal routes
             'personal': {
                 action: 'onHomeRoute'
             },
@@ -60,12 +62,19 @@
                 action: 'onPersonalCalendarRoute',
                 before: 'beforeRoute'
             },
+            // Common routes
             'download/punch_station': {
                 action: 'onDownloadPunchStationRoute',
                 before: 'beforeRoute'
             },
             'home': {
                 action: 'onHomeRoute'
+            },
+            // Report route
+            'reports/:category/:type': {
+                action: 'onReportRoute',
+                // TODO: Implement before report route method to prevent access when not allowed
+                before: 'beforeReportRoute'
             }
         },
 
@@ -74,6 +83,7 @@
             this.apiClass = Ext.create('Breeze.api.Auth');
             this.empClass = Ext.create('Breeze.api.Employee');
             this.punchClass = Ext.create('Breeze.api.Punch');
+            this.reportRoutes = Ext.create('Breeze.store.reporting.Routes');
             Ext.util.History.init();
             this.loadEmployee();
             this.loadPunchSettings();
@@ -115,6 +125,9 @@
             )
         },
 
+        /**
+         * Check punch attendance status
+         */
         updateAttendanceStatus: function(){
             var vm = this.getViewModel();
             this.punchClass.getAttendanceStatus().then(
@@ -245,6 +258,9 @@
             console.info('Employee Info Route Set');
         },
 
+        /**
+         * Handle personal FYI route
+         */
         onPersonalFyiRoute: function() {
             this.changeContent(
                 Ext.create('Breeze.view.employee.Fyi', {
@@ -253,6 +269,9 @@
             );
         },
 
+        /**
+         * Handle Personal Year At a Glance Route
+         */
         onPersonalYaagRoute: function(){
             var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
             var me = this;
@@ -289,6 +308,9 @@
             )
         },
 
+        /**
+         * Handle personal Work Time Records route
+         */
         onPersonalWtrRoute: function(){
             var vm = this.getViewModel();
             var emp = vm.get('userId');
@@ -299,6 +321,9 @@
             );
         },
 
+        /**
+         * Handle personal calendar route
+         */
         onPersonalCalendarRoute: function(){
             this.changeContent(
                 Ext.create('Breeze.view.employee.Calendar', {
@@ -307,12 +332,52 @@
             );
         },
 
+        /**
+         * Handle download punch station route
+         */
         onDownloadPunchStationRoute: function(){
             // TODO: open link to punch station download in new tab (add correct url)
             console.info('Downloading punchstation');
             // window.open("https://tko.softtimeonline.com/STO/PunchStation/setup.exe");
             window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
             Ext.util.History.back();
+        },
+
+        /**
+         * Called before report route handler method.
+         * 
+         * Checks to make sure report route is valid, if not, action is cancelled
+         */
+        beforeReportRoute: function(category, type, action){
+            if(this.reportRoutes.resolve(category, type) == null){
+                action.stop();
+                Ext.util.History.back();
+            } else {
+                action.resume();
+            }
+        },
+
+        /**
+         * Handle report route
+         * 
+         * Uses Breeze.store.reporting.Routes to resolve view name based on
+         * provided category and type params (reports/<category>/<type>)
+         * 
+         * @param {String} category Category param from url
+         * @param {String} type Type param from url
+         */
+        onReportRoute: function(category, type){
+            console.group('Report Route Handler');
+            console.info('Route: ', category, type);
+            var viewNS = this.reportRoutes.resolve(category, type);
+            console.info('Resolved View: ', viewNS);
+            console.groupEnd();
+            var component = Ext.create(viewNS, {
+                data: {
+                    data: { user: this.getViewModel().get('userId') }
+                }
+            });
+            this.changeContent(component);
         },
 
         // ===[Content functions]===

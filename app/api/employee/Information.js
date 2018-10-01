@@ -79,7 +79,7 @@ Ext.define('Breeze.api.employee.Information', {
                 function(response){
                     var info = api.decodeJsonResponse(response);
                     if(info.DefaultProject !== null && resolveDefaultProject){
-                        var prjApi = Ext.create('Breeze.api.company.Project');
+                        var prjApi = Breeze.api.company.Project;
                         prjApi.getById(info.DefaultProject).then(
                             function(r){
                                 info.defaultProjectCode = r;

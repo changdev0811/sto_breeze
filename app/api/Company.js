@@ -10,7 +10,7 @@ Ext.define('Breeze.api.Company', {
     extend: 'Breeze.api.Base',
     
     constructor: function(){
-        this.project = Ext.create('Breeze.api.company.Project');
+        this.project = Breeze.api.company.Project;
     },
 
     // References to subclasses

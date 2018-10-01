@@ -15,6 +15,7 @@ Ext.define('Breeze.controller.Base', {
      *  - load: boolean indicating if store should be loaded
      *  - createOpts: object to pass to create call (options)
      *  - loadOpts: object to pass to load call, can include callback
+     *      e.g. callback: function(success, records, op)
      */
     addStoreToViewModel: function(storeNamespace, storeName, options){
         var vm = this.getViewModel();

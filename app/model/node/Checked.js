@@ -1,19 +1,19 @@
 /**
- * Custom category node; ported from Softtime.model.CatNode
- * @class Node
- * @namespace Breeze.model.category.Node
- * @alias model.category.node
- * @extends Breeze.model.Base
+ * Checked tree node model; ported from Softtime.model.CheckedNodeModel.js
+ * @class Checked
+ * @namespace Breeze.model.node.Checked
+ * @alias model.node.checked
+ * @extends Ext.data.TreeModel
  */
-Ext.define('Breeze.model.category.Node', {
-    alias: 'model.category.node',
+Ext.define('Breeze.model.node.Checked', {
 	// extend: 'Breeze.model.Base',
 	extend: 'Ext.data.TreeModel',
 	fields: [
 		{name: 'text', type: 'string'},
 		{name: 'type', type: 'string'},
-		{name: 'icon', type: 'string'},
-		{name: 'data', type: 'string'}
+		{name: 'iconCls', type: 'string'},
+		{name: 'data', type: 'string'},
+		{name: 'checked', type: 'boolean'}
 	],
 	/**
 	 * returns parsed object form of JSON data from data attribute
