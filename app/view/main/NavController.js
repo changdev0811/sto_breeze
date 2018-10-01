@@ -84,6 +84,8 @@
             this.empClass = Ext.create('Breeze.api.Employee');
             this.punchClass = Ext.create('Breeze.api.Punch');
             this.reportRoutes = Ext.create('Breeze.store.reporting.Routes');
+            this.theme = Breeze.helper.Theme;
+            this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
             Ext.util.History.init();
             this.loadEmployee();
             this.loadPunchSettings();
@@ -222,6 +224,10 @@
          */
         onMenuSignOut: function(c, e, eOpts){
             this.apiClass.logout(true);
+        },
+
+        onMenuNightModeChange: function(c, checked){
+            this.theme.swap((checked)? 'night' : 'day');
         },
 
         // ===[Route change handlers]===

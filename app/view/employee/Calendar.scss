@@ -52,7 +52,6 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 
 @include dataview-ui(
     $ui: 'calendar-legend',
-    $padding: 0pt 0pt 0pt 0pt,
     $background-color: map-get($calendar-colors, 'base')
 );
 
