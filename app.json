@@ -220,6 +220,10 @@
             "path": "lib/timely.js",
             "includeInBundle": true
         },
+        // Include dynamic theme loader
+        {
+            "path": "lib/dynamic_theme.js"
+        },
         // Include html2canvas lib
         {
             "path": "lib/html2canvas.min.js"
@@ -362,54 +366,42 @@
         "css": "bootstrap.css"
     },
     /**
-     * Controls the output directory for build resources.  May be set with
-     * either a string:
-     *
-     *      "${workspace.build.dir}/${build.environment}/${app.name}"
-     *
-     * or an object containing values for various types of build artifacts:
-     *
-     *      {
-     *          "base": "${workspace.build.dir}/${build.environment}/${app.name}",
-     *          "page": {
-     *              "path": "../index.html",
-     *              "enable": false
-     *          },
-     *          "css": "${app.output.resources}/${app.name}-all.css",
-     *          "js": {
-     *              "path": "app.js",
-     *              // This setting constrols the output language level.  Set to 'ES6' to 
-     *              // disable the transpiler
-     *              "version": "ES5"
-     *          },
-     *          "microloader": {
-     *              "path": "microloader.js",
-     *              "embed": true,
-     *              "enable": true
-     *          },
-     *          "manifest": {
-     *              "path": "app.json",
-     *              "embed": false,
-     *              "enable": "${app.output.microloader.enable}"
-     *          },
-     *          "resources": "resources",
-     *          "slicer": {
-     *              "path": "${app.output.resources}/images",
-     *              "enable": false
-     *          },
-     *          // Setting the "enable" property of this object to a Truthy value will cause a Application Cache
-     *          // manifest file to be generated based on this files appCache object. This file will then be injected
-     *          // into the index.html file of the built application
-     *          "appCache":{
-     *              "enable": false"
-     *          }
-     *      }
-     *
+     * Controls the output directory for build resources.
      */
     "output": {
         "base": "${workspace.build.dir}/${build.environment}/${app.name}",
+        // Makes it so different build profiles each get their own manifests
+        "manifest": "${build.id}.json",
+        // Override resource location for build profiles
+        "resources": {
+            // Put resources for each build in a named subdir
+            "path": "./${build.id}/resources",
+            // Keep shared resources in a root /resources dir
+            "shared": "./resources",
+            // Base folders in root
+            "base": "."
+        },
+        // Maybe separate app.js scripts by profile?
+        // "js": {
+        //     "path": "${build.id}/app.js"
+        // },
+        // Not sure if this is important, but KitchenSink did it
+        "framework": "${build.id}/framework.js",
         "appCache": {
             "enable": false
+        }
+    },
+    /**
+    * Build Profiles
+    */
+    "builds": {
+        "standard": {
+            "toolkit": "modern",
+            "theme": "breeze-material"
+        },
+        "night": {
+            "toolkit": "modern",
+            "theme": "breeze-night-material"
         }
     },
     /**

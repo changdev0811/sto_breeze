@@ -1,0 +1,212 @@
+// ========Scoped color sets============
+
+/*---------------------------------
+--How to use scope map--
+
+Use the 'map-get' SASS function to retrieve a property.
+ Example:
+
+ button {
+     background-color: map-get($employee-info-colors, 'base');
+     // same as background-color: $scoped-employee-info-base;
+     & :hover {
+         background-color: map-get($employee-info-colors, 'accent-light');
+         // same as background-color: $scoped-employee-info-accent-light;
+     }
+ }
+-------------------------------*/
+/*-------------------------
+--Naming--
+
+Specific colors:
+$scoped-<scope-name>-<part>
+ Parts:
+    - base (base color)
+    - light (light accent color)
+    - medium (medium accent color)
+    - dark (dark accent color)
+    - text-base (text color for base bg)
+    - text-light (text color for accent light bg)
+    - text-medium (text color for accent medium bg)
+    - text-dark (text color for accent dark bg)
+
+Maps:
+Colors:         $<scope-name>-colors (base, light, medium, dark)
+Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
+-------------------------------------*/
+
+
+// ====[Base (root) Set]====
+
+$scoped-content-base: #223042;
+
+$scoped-root-base: #2D415A;
+$scoped-root-light: #4ea5ff;
+$scoped-root-lighter: #498DC6;
+
+$scoped-root-text-base: #B8BFC9;
+$scoped-root-text-light: #ffffff;
+$scoped-root-text-dark: $scoped-root-light;
+
+$root-colors: (
+    base: $scoped-root-base,
+    light: $scoped-root-light,
+    lighter: $scoped-root-lighter
+);
+
+$root-text-colors: (
+    base: $scoped-root-text-base,
+    light: $scoped-root-text-light,
+    dark: $scoped-root-text-dark
+);
+
+
+// ====[Base (root) Set]====
+$scoped-calendar-base: #2E4159;
+$scoped-calendar-medium: #607085;
+$scoped-calendar-light: #96A0AE;
+
+$scoped-calendar-text-base: #ffffff;
+$scoped-calendar-text-light: #96A0AE;
+
+$calendar-colors: (
+    base:  $scoped-calendar-base,
+    medium: $scoped-calendar-medium,
+    light: $scoped-calendar-light
+);
+
+$calendar-text-colors: (
+    base:  $scoped-calendar-text-base,
+    light: $scoped-calendar-text-light,
+);
+
+
+// ====[Employee Info View]====
+
+// specific colors
+$scoped-employee-info-base: #2B415C;
+$scoped-employee-info-light: #96A0AE;
+$scoped-employee-info-medium: #96A0AE;
+$scoped-employee-info-dark: #6A7A8D;
+$scoped-employee-info-row-dark: #4A5D74;
+$scoped-employee-info-row-light: #808D9D;
+
+$scoped-employee-info-text-base: #ffffff;
+$scoped-employee-info-text-light: $scoped-employee-info-light;
+$scoped-employee-info-text-medium: $scoped-employee-info-base;
+$scoped-employee-info-text-dark: $scoped-employee-info-text-base;
+
+// scope map
+$employee-info-colors: (
+    base: $scoped-employee-info-base,
+    light: $scoped-employee-info-light,
+    medium: $scoped-employee-info-medium,
+    dark: $scoped-employee-info-base,
+    row-dark: $scoped-employee-info-row-dark,
+    row-light: $scoped-employee-info-row-light
+);
+$employee-info-text-colors: (
+    base: $scoped-employee-info-text-base,
+    light:$scoped-employee-info-text-light,
+    medium: $scoped-employee-info-text-medium,
+    dark: $scoped-employee-info-text-dark
+);
+
+
+// ====[Employee FYI View]====
+
+
+
+
+
+// specific colors
+$scoped-employee-fyi-base: #2E4159;
+$scoped-employee-fyi-light: #96A0AE;
+
+$scoped-employee-fyi-text-base: #ffffff;
+$scoped-employee-fyi-text-light: #96A0AE;
+$scoped-employee-fyi-text-alert: #E98591;
+
+$employee-fyi-colors: (
+    base:  $scoped-employee-fyi-base,
+    light: $scoped-employee-fyi-light
+);
+
+$employee-fyi-text-colors: (
+    base:  $scoped-employee-fyi-text-base,
+    light: $scoped-employee-fyi-text-light,
+    alert: $scoped-employee-fyi-text-alert,
+);
+
+
+// ====[WorkTime Records]====
+
+// colors
+//$scoped-wtr-base: $base-color;
+$scoped-wtr-base: #2B415C;
+$scoped-wtr-medium: #96A0AE;
+$scoped-wtr-light: #96A0AE;
+
+// text
+$scoped-wtr-text-base: #ffffff;
+$scoped-wtr-text-light: #96A0AE;
+
+$wtr-colors: (
+    base: $scoped-wtr-base,
+    medium: $scoped-wtr-medium,
+    light: $scoped-wtr-light
+);
+
+$wtr-text-colors: (
+    base: $scoped-wtr-text-base,
+    light: $scoped-wtr-text-light
+
+);
+
+// ====[Punch Clock Button[===
+
+$scoped-punchclock-in:     $confirm-color;
+$scoped-punchclock-out:    $alert-color;
+// use punched in as base, just for consistency
+$scoped-punchclock-base:        $scoped-punchclock-in;
+
+$scoped-punchclock-text-base:   #ffffff;
+$scoped-punchclock-text-in:     $scoped-punchclock-text-base;
+$scoped-punchclock-text-out:    $scoped-punchclock-text-base;
+
+$punchclock-colors: (
+    base: $scoped-punchclock-base,
+    in: $scoped-punchclock-in,
+    out: $scoped-punchclock-out
+);
+$punchclock-text-colors: (
+    base: $scoped-punchclock-text-base,
+    in: $scoped-punchclock-text-in,
+    out: $scoped-punchclock-text-out
+);
+
+// ====[Transparency Colors]====
+
+$scoped-transparent-hover: inherit;
+$scoped-transparent-focus: rgba(17,17,17,0.06);
+$scoped-transparent-pressed: rgba(17,17,17,0.3);
+
+$transparent-colors: (
+    hover: $scoped-transparent-hover,
+    focus: $scoped-transparent-focus,
+    pressed: $scoped-transparent-pressed
+);
+
+// ====[Message/Toast Colors]====
+
+$scoped-toast-success: $confirm-color;
+$scoped-toast-warn: #ed7827;
+$scoped-toast-error: $alert-color;
+
+$toast-colors: (
+    success: $scoped-toast-success,
+    warn: $scoped-toast-warn,
+    error: $scoped-toast-error
+);
+
+

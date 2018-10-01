@@ -106,6 +106,7 @@ Ext.define('Breeze.view.main.Nav', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            userCls: 'full-content',
             items: [
                 {
 

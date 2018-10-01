@@ -6,7 +6,7 @@
 Ext.define('Breeze.view.dashboard.Personal', {
     extend: 'Ext.Container',
     alias: 'widget.dashboard.personal',
-
+    userCls:'personal-content',
     requires: [
         'Breeze.view.dashboard.PersonalController',
         'Breeze.view.dashboard.PersonalModel'
