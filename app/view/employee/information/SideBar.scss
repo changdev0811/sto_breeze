@@ -6,6 +6,14 @@
 	line-height:18pt;
 }
 
+// Night Mode
+.night-mode{
+    .employeeinfo-notes-text{
+    	color:#fff;
+    }
+
+}
+
 
 .employeeinfo-notes-button {
 	position:absolute;
@@ -19,9 +27,9 @@
 @include button-ui(
 	$color: #ffffff,
 	$icon-color: #ffffff,
-	$hovered-icon-color : #8ed9ed,
-	$focused-icon-color : #8ed9ed,
-	$pressed-icon-color : #bed9ed,
+	$hovered-icon-color : #CACFD6,
+	$focused-icon-color : #CACFD6,
+	$pressed-icon-color : #96A0AE,
 	$disabled-icon-color : rgba(192, 216, 235, 0.8274509803921568),
 	$background-color : transparent,
 	$hovered-background-color : transparent,
