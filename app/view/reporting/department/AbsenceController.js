@@ -5,7 +5,7 @@
  * @alias controller.reporting.department.absence
  */
 Ext.define('Breeze.view.reporting.department.AbsenceController', {
-    extend: 'Breeze.controller.Base',
+    extend: 'Breeze.controller.Reporting',
     alias: 'controller.reporting.department.absence',
 
     stores: [

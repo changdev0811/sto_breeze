@@ -11,7 +11,7 @@ Ext.define('Breeze.store.category.UserDefinedList', {
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-    alias: 'store.tree.udc',
+    alias: 'store.category.udclist',
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call

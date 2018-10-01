@@ -12,7 +12,7 @@ Ext.define('Breeze.store.tree.reporting.Employees', {
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-    alias: 'store.tree.udc',
+    alias: 'store.tree.reporting.employees',
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call

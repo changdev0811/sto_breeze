@@ -32,6 +32,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     layout: 'vbox',
     title: 'Department Absence Report',
 
+    // Action buttons shown at bottom of panel
+    buttons: {
+        pdf: { text: 'PDF (Print)', handler: 'onPrintPDF' },
+        excel: { text: 'Excel (Print)', handler: 'onPrintExcel' },
+        word: { text: 'Word (Print)', handler: 'onPrintWord' },
+    },
+
     items: [
         {
             xtype: 'breeze-textfield',
@@ -60,7 +67,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     items: [
                                         {
                                             xtype: 'treelist',
-                                            reference: 'departmentTree'
+                                            reference: 'departmentTree',
+                                            bind: '{departmentsTree}'
                                         }
                                     ]
                                 },
@@ -71,7 +79,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     items: [
                                         {
                                             xtype: 'treelist',
-                                            reference: 'employeeTree'
+                                            reference: 'employeeTree',
+                                            bind: '{employeesTree}'
                                         }
                                     ]
                                 }

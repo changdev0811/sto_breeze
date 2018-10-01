@@ -4,6 +4,7 @@
  * @namespace Breeze.store.tree.reporting.Departments
  * @alias store.tree.reporting.departments
  * @extends Breeze.store.TreeBase
+ * @api getReportDepartments
  */
 Ext.define('Breeze.store.tree.reporting.Departments', {
 	extend: 'Breeze.store.TreeBase',
@@ -11,7 +12,7 @@ Ext.define('Breeze.store.tree.reporting.Departments', {
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-    alias: 'store.tree.udc',
+    alias: 'store.tree.reporting.departments',
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call
