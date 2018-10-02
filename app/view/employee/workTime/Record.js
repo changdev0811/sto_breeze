@@ -126,6 +126,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     flex: 1,
                     formatter: 'date("m/d/Y")',
                     dataIndex: 'Record_Date',
+                    sortable: true,
                     text: 'Date'
                 },
 
@@ -133,6 +134,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time IN',
+                    sortable: true,
                     // dataIndex: 'Start_Time'
                     tpl: [
                         '{[this.formatted(values.Start_Time)]}',
@@ -147,6 +149,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time OUT',
+                    sortable: true,
                     // dataIndex: 'End_Time'
                     tpl: [
                         '{[this.formatted(values.End_Time)]}',
@@ -161,14 +164,16 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Hours',
-                    dataIndex: 'Total_Time_Hours'
+                    dataIndex: 'Total_Time_Hours',
+                    sortable: true
 
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 2,
                     text: 'Project',
-                    dataIndex: 'Project'
+                    dataIndex: 'Project',
+                    sortable: true
                 }
             ]
         },
@@ -191,6 +196,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'button',
                     ui: 'plain wtr-button',
                     text: 'Show All Punches',
+                    reference: 'showPunchesButton',
                     data: {
                         showText: 'Show All Punches',
                         hideText: 'Hide All Punches'

@@ -116,6 +116,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             me.getViewModel().setStores({workTimeRecords: store});
+            me.updateShowPunchesButton(false);
             console.info('WorkTimeRecord loaded');
         }).catch(function(err){
             console.warn('Failed loading work time records: ', err);
@@ -233,15 +234,25 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         // update view model value
         var vm = this.getViewModel();
         var shown = !vm.get('showPunches');
-        vm.set('showPunches', shown);
-        // change text
-        cmp.setText(
-            cmp.getData()[(shown)? 'hideText' : 'showText']
-        );
+        this.updateShowPunchesButton(shown);
         this.changeVisibilityOfAllPunches(shown);
     },
 
     // ===[Display Logic]===
+
+    /**
+     * Force display mode of 'Show/Hide All Punches' button to update
+     * to match given boolean
+     * @param {Boolean} state If true, read 'Hide', else 'Show'
+     */
+    updateShowPunchesButton: function(state){
+        var vm = this.getViewModel(),
+            button = this.lookup('showPunchesButton');
+        vm.set('showPunches', state);
+        button.setText(
+            button.getData()[(!state)? 'showText' : 'hideText']
+        );
+    },
 
     /**
      * Make all punches visible or hidden based on parameter passed in
