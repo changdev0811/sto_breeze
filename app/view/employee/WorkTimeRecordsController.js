@@ -216,14 +216,32 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     },
 
     /**
-     * Handle state change of WTR 'show punches' checkbox
+     * Handles hiding/showing all punches when 'Show/Hide All Punches'
+     * button is pressed.
+     * 
+     * Uses boolean stored in view model and alternate text labels
+     * stored in button component's data attribute.
+     * 
+     * @param {Object} cmp Button component sending event
      */
-    onShowPunches: function(cmp, e, eOpts){
+    onShowPunches: function(cmp, event, eOpts){
+        // update view model value
+        var vm = this.getViewModel();
+        var shown = !vm.get('showPunches');
+        vm.set('showPunches', shown);
+        // change text
+        cmp.setText(
+            cmp.getData()[(shown)? 'hideText' : 'showText']
+        );
         // console.info('Show punches checkbox toggled!');
         var grid = this.lookup('workTimeRecordGrid');
         for(var i=0;i<grid.getItemCount();i++){
             var row = grid.getItemAt(i);
-            row.expand();
+            if(shown){
+                row.expand();
+            } else {
+                row.collapse();
+            }
         }
     },
 

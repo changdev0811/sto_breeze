@@ -187,7 +187,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 {
                     xtype: 'button',
                     ui: 'plain wtr-button',
-                    text: 'Show Punches',
+                    text: 'Show All Punches',
+                    data: {
+                        showText: 'Show All Punches',
+                        hideText: 'Hide All Punches'
+                    },
                     listeners: {
                         tap: 'onShowPunches'
                     }
