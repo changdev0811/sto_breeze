@@ -5,6 +5,14 @@
  *  function(comp, quick, kind) with quick as a bool indicating 
  *  if quick punch and kind as kind ('in', 'out', 'regular').
  * 
+ * Events:
+ *  - Fires event 'punch' when body or menu items are clicked
+ *  - handler function(
+ *      punchButtonRef:Object, quick:Boolean,
+ *      kind ('in', 'out', 'regular'),
+ *      eventObject:Object
+ *    )
+ * 
  * @class PunchButton
  * @namespace Breeze.widget.punch.PunchButton
  * @alias widget.breeze.punch.punchbutton
@@ -58,12 +66,14 @@ Ext.define('Breeze.widget.punch.PunchButton', {
      */
     updateMicro: function(newVal, oldVal){
         // update abbreviations for digital clock
-        this.getComponent('digitalClock').setAbbreviated(newVal);
+        this.getComponent('punchBodyButton').getComponent('digitalClock').setAbbreviated(newVal);
         // update layout
         if(newVal == true){
             this.setLayout(this.microLayout);
+            this.getComponent('punchBodyButton').setLayout('vbox');
         } else {
             this.setLayout(this.fullLayout);
+            this.getComponent('punchBodyButton').setLayout('hbox');
         }
     },
 
@@ -73,7 +83,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
      * new state
      */
     updateClockedIn: function(newVal, oldVal){
-        this.getComponent('digitalClock').setClockedIn(newVal);
+        this.getComponent('punchBodyButton').getComponent('digitalClock').setClockedIn(newVal);
         this.toggleCls('in', newVal);
         this.toggleCls('out', !newVal);
         var menu = this.getComponent('menuButton').getMenu();
@@ -113,23 +123,37 @@ Ext.define('Breeze.widget.punch.PunchButton', {
         menu.getComponent('mnuPunchWindow').setHandler(function(c,e,eOpts){
             me.fireEvent('punch', me, false, 'regular', eOpts);
         });
+        me.getComponent('punchBodyButton').el.on('click',function(c,e,eOpts){
+            me.fireEvent('punch', me, true, (me.getClockedIn())? 'out' : 'in');
+        });
     },
 
     items: [
         {
-            xtype:'breeze.punch.analogclock',
-            itemId: 'analogClock'
-        }, {
-            
-            xtype:'breeze.punch.digitalclock',
-            itemId: 'digitalClock',
-            clockedIn:false,
-            abbreviated:false
-        }, {
+            xtype: 'container',
+            itemId: 'punchBodyButton',
+            padding: 0, margin: 0,
+            bodyAlign: 'stretch',
+            flex: 1, layout: 'hbox',
+            items: [
+                {
+                    xtype:'breeze.punch.analogclock',
+                    itemId: 'analogClock'
+                }, {
+                    
+                    xtype:'breeze.punch.digitalclock',
+                    itemId: 'digitalClock',
+                    clockedIn:false,
+                    abbreviated:false
+                }
+            ]
+        },
+        {
             xtype: 'button',
             itemId: 'menuButton',
             docked: 'right',
             menuAlign: 'tr',
+            userCls: 'breeze-punch-button',
             ui: ['punchclock-button', 'punchclock-button-sm'],
             arrow: false,
             iconCls: 'x-fas fa-angle-right',

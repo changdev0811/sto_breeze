@@ -9,13 +9,20 @@ Ext.define('Breeze.view.dashboard.personal.Information', {
 
     layout: 'fit',
 
-    title: 'Employee Info',
+    title: {
+      userCls:'headerCursor',
+      text:'Employee Info'
+    },
 
     bind: {
         title: '{fullName}'
     },
 
     ui: 'employee-info-dashboard',
+
+    header:{
+        userCls:'headerCursor'
+    },
 
     tools: [
         {

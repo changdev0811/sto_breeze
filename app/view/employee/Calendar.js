@@ -136,6 +136,17 @@ Ext.define('Breeze.view.employee.Calendar',{
             }
         },
 
+        /*
+        {
+            xtype: 'container',
+            layout: 'vbox',
+            userCls:'legend-title',
+            height:'14pt',
+            html:"Legend"
+        },
+        */
+
+
         {
             xtype: 'dataview',
             ui:'calendar-legend',

@@ -12,7 +12,14 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
 
     layout: 'fit',
 
-    title: 'FYI',
+    title: {
+      userCls:'headerCursor',
+      text:'FYI'
+    },
+
+    header:{
+      userCls:'headerCursor',
+    },
 
     tools: [
         {
@@ -36,6 +43,5 @@ Ext.define('Breeze.view.dashboard.personal.Fyi', {
             }
         },
     ]
-
 
 });
