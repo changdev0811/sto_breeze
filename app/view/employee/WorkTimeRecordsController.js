@@ -215,6 +215,11 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         dialog.hide();
     },
 
+    onWorkRecordsUpdated: function(cmp, val, old, eOpts){
+        console.info('work records changed');
+        this.changeVisibilityOfAllPunches(this.getViewModel().get('showPunches'));
+    },
+
     /**
      * Handles hiding/showing all punches when 'Show/Hide All Punches'
      * button is pressed.
@@ -233,19 +238,28 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         cmp.setText(
             cmp.getData()[(shown)? 'hideText' : 'showText']
         );
-        // console.info('Show punches checkbox toggled!');
+        this.changeVisibilityOfAllPunches(shown);
+    },
+
+    // ===[Display Logic]===
+
+    /**
+     * Make all punches visible or hidden based on parameter passed in
+     * @param {Boolean} visible If true, all punches will be expanded; 
+     *      else all will be collapsed
+     */
+    changeVisibilityOfAllPunches: function(visible){
+        console.info('Punches visibility toggled!', visible);
         var grid = this.lookup('workTimeRecordGrid');
         for(var i=0;i<grid.getItemCount();i++){
             var row = grid.getItemAt(i);
-            if(shown){
+            if(visible){
                 row.expand();
             } else {
                 row.collapse();
             }
         }
     },
-
-    // ===[Display Logic]===
 
     /**
      * Display punch location map popup dialog
