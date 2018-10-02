@@ -153,7 +153,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
             itemId: 'menuButton',
             docked: 'right',
             menuAlign: 'tr',
-            //userCls: 'breeze-punch-button',
+            userCls: 'breeze-punch-button',
             ui: ['punchclock-button', 'punchclock-button-sm'],
             arrow: false,
             iconCls: 'x-fas fa-angle-right',
