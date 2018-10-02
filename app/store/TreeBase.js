@@ -36,7 +36,7 @@ Ext.define('Breeze.store.TreeBase', {
             var key = attrs[i];
             extras[key] = params[key];
         }
-        this.getProxy.setExtraParams(extras);
+        this.getProxy().setExtraParams(extras);
     },
 
     /**

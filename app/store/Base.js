@@ -35,7 +35,7 @@ Ext.define('Breeze.store.Base', {
             var key = attrs[i];
             extras[key] = params[key];
         }
-        this.getProxy.setExtraParams(extras);
+        this.getProxy().setExtraParams(extras);
     },
     /**
      * Have proxy send parameters as JSON
