@@ -35,6 +35,48 @@ Ext.define('Breeze.controller.Base', {
         }
     },
 
+    /**
+     * Add copy of previously loaded store to controller's view model
+     * 
+     * @param {String|Object} store ID under which target store is registered,
+     *      or actual store object
+     * @param {String} storeName The name to use for the store in the View 
+     *      Model
+     * @return {Boolean} Returns true if store is successfully added, 
+     *      false otherwise
+     */
+    addLoadedStoreToViewModel: function(store, storeName){
+        var me = this,
+            vm = me.getViewModel(),
+            stores = {};
+        var sourceStore = null;
+        
+        if(typeof store == 'string'){
+            // Store parameter was an ID
+            try {
+                sourceStore = Ext.getStore(storeId);
+            } catch (ex) {
+                console.warn(
+                    'Encountered exception while trying to get existing ' +
+                    'store to add to VM: ', ex
+                );
+            }
+        } else {
+            // Store parameter was a store instance
+            sourceStore = store
+        }
+
+        if(sourceStore !== null){
+            // Got store successfully
+            stores[storeName] = sourceStore;
+            vm.setStores(stores);
+            return true;
+        } else {
+            // Failed to get store
+            return false;
+        }
+    },
+
     //=== [Shared Tool Behaviors] ===
     
     /**

@@ -15,6 +15,7 @@ Ext.define('Breeze.api.Company', {
 
     // References to subclasses
     project: null,
+    category: Breeze.api.company.Category,
 
     /**
      * Check if Company is a support company

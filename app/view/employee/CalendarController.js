@@ -22,6 +22,7 @@ Ext.define('Breeze.view.employee.CalendarController', {
         // var vm = this.getViewModel();
         console.info('Calendar controller initialized');
         this.getViewModel().set('employeeId', comp.getData().employee);
+        this.companyApi = Ext.create('Breeze.api.Company');
         this.loadCategories();
         // this.loadCalendar();
         console.info('Loaded stuff', this.getViewModel().get('employeeId'));
@@ -30,21 +31,38 @@ Ext.define('Breeze.view.employee.CalendarController', {
 
     loadCategories: function(){
         var me = this;
-        this.addStoreToViewModel(
-            'Breeze.store.category.CompactList',
-            'categories',
-            {
-                load: true,
-                loadOpts: { callback: function(success,a,b){
-                    if(success){
-                        console.info('Categories loaded successfully');
-                        me.loadCalendar();
-                    } else {
-                        console.warn('Failed to load categories');
-                    }
-                }}
+        // this.addStoreToViewModel(
+        //     'Breeze.store.category.CompactList',
+        //     'categories',
+        //     {
+        //         load: true,
+        //         loadOpts: { callback: function(success,a,b){
+        //             if(success){
+        //                 console.info('Categories loaded successfully');
+        //                 me.loadCalendar();
+        //             } else {
+        //                 console.warn('Failed to load categories');
+        //             }
+        //         }}
+        //     }
+        // )
+        me.companyApi.category.loadCompactListStore((success, id, store) => {
+            if(!success){
+                // Failed to load
+                console.warn('Failed to load Categories store');
+            } else {
+                // Succeeded!
+                var addedToModel = me.addLoadedStoreToViewModel(store, 'categories');
+                if(addedToModel){
+                    // Successfully added store to view model
+                    console.info('Categories loaded successfully into View Model');
+                    me.loadCalendar();
+                } else {
+                    // Unable to add to view model
+                    console.warn('Failed to add categories to View Model')
+                }
             }
-        )
+        });
     },
 
     loadCalendar: function(){
