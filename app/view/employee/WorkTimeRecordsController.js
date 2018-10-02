@@ -83,8 +83,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
             lookupId,
-            start.toUTCString(),
-            end.toUTCString()
+            start,
+            end
         ).then(function(data){
            vm.set('atAGlance.regular', data.regular);
            vm.set('atAGlance.ot1',data.ot1);
@@ -109,8 +109,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
              // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start.toUTC({out: Date.UTC_OUT.STRING}),
-            end.toUTC({out: Date.UTC_OUT.STRING}),
+            start,
+            end,
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -135,8 +135,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
             // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start.toUTCString(),
-            end.toUTCString(),
+            start,
+            end,
             'workTimeSheetStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});

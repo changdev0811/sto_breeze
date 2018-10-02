@@ -29,8 +29,10 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
             store.load({
                 params: {
                     lookup_id: lookupId,
-                    start_time: startTime,
-                    end_time: endTime
+                    UTCstart_time: startTime.toUTC({out: Date.UTC_OUT.STRING}),
+                    UTCend_time: endTime.toUTC({out: Date.UTC_OUT.STRING}),
+                    start_time: startTime.toLocaleString(),
+                    end_time: endTime.toLocaleString()
                 },
                 callback: function(records, options, success){
                     if(success){
@@ -64,8 +66,10 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
             store.load({
                 params: {
                     lookup_id: lookupId,
-                    start_time: startTime,
-                    end_time: endTime
+                    start_time: startTime.toLocaleString(),
+                    end_time: endTime.toLocaleString(),
+                    UTCstart_time: startTime.toUTC({out: Date.UTC_OUT.STRING}),
+                    UTCend_time: endTime.toUTC({out: Date.UTC_OUT.STRING})
                 },
                 callback: function(records, options, success){
                     if(success){
@@ -88,15 +92,19 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
      */
     getEmployeePayrollHours: function(lookupId, startDate, endDate) {
         var me = this;
-        var api = me.api;
-        startDate = (typeof startDate == "object")? startDate.toUTCString() : startDate;
-        endDate = (typeof endDate == "object")? endDate.toUTCString() : endDate;
+        var api = me.api,
+            utcStartDate = (typeof startDate == "object")? 
+                startDate.toUTC({out: Date.UTC_OUT.STRING}) : startDate,
+            utcEndDate = (typeof endDate == "object")? 
+                endDate.toUTC({out: Date.UTC_OUT.STRING}) : endDate;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'getEmployeePayroll',
                 {
-                    sdate: startDate,
-                    edate: endDate,
+                    sdate: startDate.toLocaleString(),
+                    edate: endDate.toLocaleString(),
+                    UTCsdate: utcStartDate,
+                    UTCedate: utcEndDate,
                     lookup_id: lookupId
                 },
                 true, true,
