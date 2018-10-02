@@ -29,5 +29,27 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
     },
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+
+        /**
+         * Report params contains attributes that get submitted along with
+         * report request. When possible, they have been bound to their
+         * respective form fields so their values are automatically changed
+         * when edits are made in form
+         */
+        reportParams: {
+            CompanyName: null,
+            customerId: null,
+            groupByDepartment: false,
+            LogoInHeader: false,
+            NameInHeader: false,
+            RepSignature: false,
+            ReportTitle: '',
+            category_id: null,
+            dStart: (new Date()),
+            dEnd: (new Date()),
+            conditional: null,
+            conditional_amt: 0,
+            conditional_type: 0
+        }
     }
 });

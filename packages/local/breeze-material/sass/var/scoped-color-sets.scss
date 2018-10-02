@@ -205,4 +205,28 @@ $toast-colors: (
     error: $scoped-toast-error
 );
 
+// ====[Report Form Colors]====
+
+$scoped-reporting-base: $scoped-root-lighter;
+$scoped-reporting-medium: #bed9ed;
+$scoped-reporting-dark: #6DAFFF;
+
+$scoped-reporting-text-base: #ffffff;
+$scoped-reporting-text-light: #C0D8EB;
+$scoped-reporting-text-medium: $scoped-root-base;
+$scoped-reporting-text-dark: $scoped-reporting-text-base;
+
+$reporting-colors: (
+    base: $scoped-reporting-base,
+    medium: $scoped-reporting-medium,
+    dark: $scoped-reporting-dark
+);
+
+$reporting-text-colors: (
+    base: $scoped-reporting-text-base,
+    light: $scoped-reporting-text-light,
+    medium: $scoped-reporting-text-medium,
+    dark: $scoped-reporting-text-dark
+);
+
 

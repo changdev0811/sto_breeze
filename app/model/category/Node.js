@@ -13,7 +13,18 @@ Ext.define('Breeze.model.category.Node', {
 		{name: 'text', type: 'string'},
 		{name: 'type', type: 'string'},
 		{name: 'icon', type: 'string'},
-		{name: 'data', type: 'string'}
+		{name: 'data', type: 'string'},
+		{name: 'categoryData', calculate: function(data){
+			if(data.data == null){
+				return {};
+			} else {
+				try{
+					return JSON.parse(data.data);
+				} catch(ex){
+					return {};
+				}
+			}
+		}}
 	],
 	/**
 	 * returns parsed object form of JSON data from data attribute
@@ -25,4 +36,5 @@ Ext.define('Breeze.model.category.Node', {
 			return JSON.parse(this.get('data'));
 		}
 	}
+
 });

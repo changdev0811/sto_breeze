@@ -1,10 +1,10 @@
 /**
  * Report Selector view class
  * @class Selector
- * @namespace Breeze.view.report.Selector
- * @alias widget.report.selector
+ * @namespace Breeze.view.reporting.Selector
+ * @alias widget.reporting.selector
  */
-Ext.define('Breeze.view.report.Selector', {
+Ext.define('Breeze.view.reporting.Selector', {
     extend: 'Ext.Panel',
     alias: 'widget.report.selector'
 });
