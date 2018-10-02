@@ -43,6 +43,13 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
             { load: true }
         );
 
+        // Load company config
+        this.addStoreToViewModel(
+            'Breeze.store.company.Config',
+            'companyConfig',
+            { load: true }
+        );
+
         console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },

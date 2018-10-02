@@ -41,9 +41,16 @@ Ext.define('Breeze.view.reporting.department.Absence', {
 
     // Action buttons shown at bottom of panel
     buttons: {
-        pdf: { text: 'PDF (Print)', handler: 'onPrintPDF' },
-        excel: { text: 'Excel (Print)', handler: 'onPrintExcel' },
-        word: { text: 'Word (Print)', handler: 'onPrintWord' },
+        pdf: { text: 'PDF (Print)', handler: 'onPrintPDF', ui: 'action' },
+        excel: { text: 'Excel (Print)', handler: 'onPrintExcel', ui: 'action' },
+        word: { text: 'Word (Print)', handler: 'onPrintWord', ui: 'action' },
+    },
+
+    // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'reporting-actions',
+        shadow: false
     },
 
     // Body contents
@@ -52,7 +59,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         {
             xtype: 'breeze-textfield',
             label: 'Report Title',
-            name: 'reportTitle'
+            name: 'reportTitle',
+            bind: '{reportParams.ReportTitle}',
+            ui: 'reporting reporting-text'
         },
         // Main horizontal arranging container
         {
@@ -70,6 +79,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
+                            ui: 'reporting-tabs',
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -118,6 +128,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
+                                            // ui: 'reporting-tree',
                                             reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
@@ -167,6 +178,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
+                                            // ui: 'reporting-tree',
                                             reference: 'employeeTree',
                                             bind: '{employeesTree}'
                                         }
@@ -196,35 +208,38 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'report-section-padding',
+                            userCls: 'report-section-padding reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
                             },
                             items: [
                                 {
-                                    xtype: 'checkbox',
                                     name: 'headerCompanyLogo',
                                     inline: true,
                                     label: '',
-                                    boxLabel: 'Company Logo in Header'
+                                    boxLabel: 'Company Logo in Header',
+                                    bind: '{reportParams.LogoInHeader}'
                                 },
                                 {
-                                    xtype: 'checkbox',
                                     name: 'headerCompanyName',
                                     label: '',
                                     labelMinWidth: 0,
-                                    boxLabel: 'Company Name in Title'
+                                    boxLabel: 'Company Name in Title',
+                                    bind: '{reportParams.NameInHeader}'
                                 },
                                 {
-                                    xtype: 'checkbox',
                                     name: 'headerSignature',
                                     label: '',
-                                    boxLabel: 'Signature Line in Footer'
+                                    boxLabel: 'Signature Line in Footer',
+                                    bind: '{reportParams.RepSignature}'
                                 }
                             ]
                         },
                         {
                             xtype: 'fieldset',
+                            userCls: 'report-section-padding reporting-fieldset',
                             title: 'Date Range',
                             items: [
                                 {
@@ -233,8 +248,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     label: 'From',
                                     picker: {
                                         xtype: 'datepicker',
-                                        title: 'My Panel'
-                                    }
+                                        title: 'Start Date'
+                                    },
+                                    bind: '{reportParams.dStart}'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -242,17 +258,20 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     label: 'To',
                                     picker: {
                                         xtype: 'datepicker',
-                                        title: 'My Panel'
-                                    }
+                                        title: 'End Date'
+                                    },
+                                    bind: '{reportParams.dEnd}'
                                 }
                             ]
                         },
                         {
                             xtype: 'fieldset',
+                            userCls: 'report-section-padding reporting-fieldset',
                             title: 'Condition',
                             items: [
                                 {
                                     xtype: 'container',
+                                    reference: 'conditionValue',
                                     layout: 'hbox',
                                     items: [
                                         {
@@ -271,6 +290,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 },
                                 {
                                     xtype: 'container',
+                                    reference: 'conditionType',
                                     layout: 'hbox',
                                     defaults: {
                                         bodyAlign: 'stretch',
@@ -281,14 +301,19 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             flex: 1,
                                             name: 'conditionValueType',
                                             value: '20',
-                                            boxLabel: 'Days'
+                                            boxLabel: 'Days',
+                                            bind: '{reportParams.conditional_type}'
                                         },
                                         {
                                             xtype: 'radio',
                                             flex: 1,
                                             name: 'conditionValueType',
                                             value: '21',
-                                            boxLabel: 'Weeks'
+                                            boxLabel: 'Weeks',
+                                            bind: '{reportParams.conditional_type}'
+                                            // bind: {
+                                            //     checked: '{reportOptions.conditionalValueType == 21}'
+                                            // }
                                         }
                                     ]
                                 }
@@ -312,10 +337,12 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     items: [
                         {
                             xtype: 'breeze.tree.usercategories',
-                            bind: '{categoriesTree}',
+                            bind: {
+                                store: '{categoriesTree}'
+                            },
                             reference: 'udcTree',
                             flex: 1,
-                            
+                            ui: 'reporting-tree'
                         }
                     ]
                 }
