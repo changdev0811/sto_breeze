@@ -17,7 +17,10 @@ Ext.define('Breeze.store.tree.UserDefinedCategories', {
             // TODO: look into refreshCategoryMap call
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			this.addExtraParams({
+				leave_request_only: 0
+			});
 		}
 	},
 	proxy: {

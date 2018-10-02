@@ -44,9 +44,12 @@ Ext.define('Breeze.Application', {
     launch: function(){
         console.log("Launched");
         Breeze.helper.Theme.apply();
+        //======[Testing Mode Block Start]=========
         // TODO: Removing testing check when out of dev
-        var testing = true; // (should be removed later)
+        var testing = Breeze.helper.Base.isTestMode();
         if(testing){
+            // make dummy cookies for test mode, so we
+            // can skip login
             Breeze.helper.Auth.setCookies("1","2","5003");
             Breeze.helper.Cookie.bake('STOLI','True',null);
         }
