@@ -295,7 +295,7 @@
         //     requests to be cached for this build.
         //
         // NOTE: Toggle this to disable cache buster for debugging!
-        "cache": true,
+        "cache": false,
         // When "cache" is not true, this value is the request parameter used
         // to control caching.
         //
