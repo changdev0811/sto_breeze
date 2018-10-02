@@ -19,20 +19,25 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         'Ext.field.Radio'
     ],
 
+    // View Model
+
     viewModel: {
         type: 'reporting.department.absence'
     },
     
+    // Controller
+
     controller: 'reporting.department.absence',
 
     listeners: {
         initialize: 'onInit'
     },
 
+    // Layout and base styles
     layout: 'vbox',
-    title: 'Department Absence Report',
-
     ui: 'reporting-base',
+
+    title: 'Department Absence Report',
 
     // Action buttons shown at bottom of panel
     buttons: {
@@ -41,31 +46,38 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         word: { text: 'Word (Print)', handler: 'onPrintWord' },
     },
 
+    // Body contents
     items: [
+        // Form Title Text field
         {
             xtype: 'breeze-textfield',
             label: 'Report Title',
             name: 'reportTitle'
         },
+        // Main horizontal arranging container
         {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
             items: [
+                // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
                     layout: 'vbox',
                     items: [
+                        // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
                             flex: 1,
                             items: [
+                                // Departments tab
                                 {
                                     xtype: 'panel',
                                     title: 'Departments',
                                     layout: 'fit',
+                                    // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
@@ -80,6 +92,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         ]
                                     },
                                     items: [
+                                        // Departments tree
                                         {
                                             xtype: 'tree',
                                             layout: 'hbox',
@@ -110,10 +123,25 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         }
                                     ]
                                 },
+                                // Employees Tab
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     title: 'Employees',
                                     layout: 'fit',
+                                    // Toolbar containing 'check all' toggle checkbox
+                                    tbar: {
+                                        xtype: 'toolbar',
+                                        ui: 'reporting-tree',
+                                        items: [
+                                            {
+                                                xtype: 'checkbox',
+                                                boxLabel: 'Check All',
+                                                listeners: {
+                                                    change: 'onTreeGridCheckAllChange'
+                                                }
+                                            }
+                                        ]
+                                    },
                                     items: [
                                         // Employees selector tree
                                         {
@@ -146,6 +174,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 }
                             ]
                         },
+                        // Shared checkbox
                         {
                             xtype: 'checkbox',
                             labelAlign: 'top',
@@ -154,6 +183,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         }
                     ]
                 },
+                // Fieldset column container
                 {
                     xtype: 'container',
                     flex: 1,
