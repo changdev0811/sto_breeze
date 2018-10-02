@@ -18,6 +18,8 @@
 );
 
 
+
+
 @include dataview-ui (
     $ui: 'fyi-accrual-list',
     $background-color: map-get($employee-fyi-colors,'base')
@@ -29,5 +31,8 @@
     margin:14pt 7pt 0pt 0pt;
 }
 
+.headerCursor {
+    cursor:pointer;
+}
 
  

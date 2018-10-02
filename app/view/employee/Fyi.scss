@@ -7,13 +7,15 @@
 .employee-fyi-container {
     // padding: 0pt 16pt 16pt 16pt;
     background-color: map-get($employee-fyi-colors,'base');
-    max-width:600pt;
+    //max-width:600pt;
     color: map-get($employee-fyi-text-colors,'base');
 }
 
 
 .fyi-accrual-list {
     margin:15pt 0pt 15pt 0pt;
+    max-width:600pt;
+
 }
 
 

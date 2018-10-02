@@ -8,7 +8,16 @@ Ext.define('Breeze.view.dashboard.personal.Calendar', {
     ui:'employee-calendar-dashboard',
     alias: 'widget.dashboard.personal.calendar',
     userCls:'employee-calendar-dashboard',
-    title: 'Calendar',
+    
+
+    title: {
+      userCls:'headerCursor',
+      text:'Calendar'
+    },
+
+    header:{
+      userCls:'headerCursor',
+    },
 
     tools: [
         {

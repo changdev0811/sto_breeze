@@ -28,7 +28,7 @@ Ext.define('Breeze.view.dashboard.Personal', {
         {
             
             xtype: 'dashboard.personal.information',
-            
+            reference:'infoDash'
 
         },
     
@@ -39,11 +39,13 @@ Ext.define('Breeze.view.dashboard.Personal', {
             items: [
                 {
                     xtype: 'dashboard.personal.fyi',
+                    reference:'fyiDash',
                     flex: 1
                 },
 
                 {
                     xtype: 'dashboard.personal.calendar',
+                    reference:'calDash',
                     flex: 1
 
                 }

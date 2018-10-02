@@ -60,5 +60,10 @@
 @include button-ui(
     $ui: 'punchclock-button-sm',
     $arrow-icon-size: 10pt,
-    $icon-font-size: 10pt
+    $icon-font-size: 10pt,
 );
+/*
+.breeze-punch-button {
+    background-color: rgba(0,0,0,0.5);
+}
+*/
