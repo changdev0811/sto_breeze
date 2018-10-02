@@ -31,9 +31,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 // { type: 'rowexpander' }
                 rowexpander: true
             },
-            listeners: {
-                refresh: 'onWorkRecordsUpdated'
-            },
+            // Removed for now because trying to force newly loaded
+            // records to show their punches causes layout issues
+            // listeners: {
+            //     refresh: 'onWorkRecordsUpdated'
+            // },
             itemConfig: {
                 body: {
                     userCls: 'wtr-grid-no-spacer',
