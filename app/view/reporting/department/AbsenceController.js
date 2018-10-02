@@ -45,6 +45,33 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
 
         console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
+    },
 
+    /**
+     * Cascade checked value of tree grid item to any children
+     * @param {Object} cell Checked cell that was modified
+     * @param {Boolean} checked New value for checked
+     * @param {Object} node Tree node being targetted 
+     */
+    onTreeGridChecked: function(cell, index, checked, node, eOpts){
+        console.info('Cascading tree checked change');
+        node.cascadeBy(function(child){
+            child.set('checked', checked);
+        });
+    },
+
+    /**
+     * Handle change to checked state of 'Check All' toolbar item
+     * shown over departments and employees trees. Applies checked value
+     * to all items in current tree
+     * @param {Object} elem Checkbox element; active tree is determined 
+     *  relative to this
+     * @param {boolean} checked Checked value of source checkbox
+     */
+    onTreeGridCheckAllChange: function(elem, checked, eOpts){
+        console.info('Check all changed');
+        elem.parent.parent.getActiveItem().getRootNode().cascadeBy(function(child){
+            child.set('checked', checked);
+        });
     }
 });

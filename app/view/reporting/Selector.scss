@@ -13,3 +13,20 @@
         $weights: (top: 0, left: 0.25, right: 0.25, bottom: 0.25)
     );
 }
+
+/** Generic base UI for report form panels **/
+@include panel-ui(
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.25, right: 0.25, bottom: 0)
+    ),
+    // $header-background-color: $scoped-content-base,
+    // $header-color: map-get($root-colors, 'base'),
+    $ui: 'reporting-base'
+);
+
+@include toolbar-ui(
+    $ui: 'reporting-tree',
+    $background-color: $scoped-content-base,
+    $background-gradient: none
+);

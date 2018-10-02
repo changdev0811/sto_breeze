@@ -32,6 +32,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     layout: 'vbox',
     title: 'Department Absence Report',
 
+    ui: 'reporting-base',
+
     // Action buttons shown at bottom of panel
     buttons: {
         pdf: { text: 'PDF (Print)', handler: 'onPrintPDF' },
@@ -61,12 +63,48 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             flex: 1,
                             items: [
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     title: 'Departments',
                                     layout: 'fit',
+                                    tbar: {
+                                        xtype: 'toolbar',
+                                        ui: 'reporting-tree',
+                                        items: [
+                                            {
+                                                xtype: 'checkbox',
+                                                boxLabel: 'Check All',
+                                                listeners: {
+                                                    change: 'onTreeGridCheckAllChange'
+                                                }
+                                            }
+                                        ]
+                                    },
                                     items: [
                                         {
-                                            xtype: 'treelist',
+                                            xtype: 'tree',
+                                            layout: 'hbox',
+                                            hideHeaders: true,
+                                            rootVisible: false,
+                                            columns: [
+                                                {
+                                                    xtype: 'checkcolumn',
+                                                    dataIndex: 'checked',
+                                                    minWidth: '2em',
+                                                    width: 'auto',
+                                                    padding: 0,
+                                                    listeners: {
+                                                        checkChange: 'onTreeGridChecked'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'treecolumn',
+                                                    dataIndex: 'text',
+                                                    flex: 1,
+                                                    layout: {
+                                                        alignment: 'stretch'
+                                                    }
+                                                }
+                                            ],
                                             reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
@@ -77,8 +115,30 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     title: 'Employees',
                                     layout: 'fit',
                                     items: [
+                                        // Employees selector tree
                                         {
-                                            xtype: 'treelist',
+                                            xtype: 'tree',
+                                            layout: 'hbox',
+                                            hideHeaders: true,
+                                            expanderFirst: false,
+                                            rootVisible: false,
+                                            columns: [
+                                                {
+                                                    xtype: 'checkcolumn',
+                                                    dataIndex: 'checked',
+                                                    minWidth: '2em',
+                                                    width: 'auto',
+                                                    padding: 0
+                                                },
+                                                {
+                                                    xtype: 'treecolumn',
+                                                    dataIndex: 'text',
+                                                    flex: 1,
+                                                    layout: {
+                                                        alignment: 'stretch'
+                                                    }
+                                                }
+                                            ],
                                             reference: 'employeeTree',
                                             bind: '{employeesTree}'
                                         }
@@ -162,13 +222,22 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             title: 'Condition',
                             items: [
                                 {
-                                    xtype: 'combobox',
-                                    name: 'conditionType'
-                                },
-                                {
-                                    xtype: 'spinnerfield',
-                                    name: 'conditionValue',
-                                    label: ''
+                                    xtype: 'container',
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            name: 'conditionType',
+                                            flex: 2
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            name: 'conditionValue',
+                                            label: '',
+                                            flex: 1,
+                                            style: 'padding-left: 4pt'
+                                        }
+                                    ]
                                 },
                                 {
                                     xtype: 'container',
@@ -199,7 +268,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                 },
                 // Container for User-Defined Categories list
                 {
-                    xtype: 'container',
+                    xtype: 'fieldset',
+                    title: 'Categories',
                     flex: 1,
                     // docked: 'right',
                     layout: {
