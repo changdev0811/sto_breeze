@@ -18,6 +18,9 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
         selectedWeek: {start: null, end: null}
     },
 
+    nextText: '',
+    prevText: '',
+
     initialize: function(){
         var me = this;
         this.showFooter = false;

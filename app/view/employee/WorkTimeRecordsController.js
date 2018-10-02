@@ -83,8 +83,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getEmployeePayrollHours(
             lookupId,
-            start.toUTCString(),
-            end.toUTCString()
+            start,
+            end
         ).then(function(data){
            vm.set('atAGlance.regular', data.regular);
            vm.set('atAGlance.ot1',data.ot1);
@@ -109,13 +109,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
              // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start.toUTC({out: Date.UTC_OUT.STRING}),
-            end.toUTC({out: Date.UTC_OUT.STRING}),
+            start,
+            end,
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             me.getViewModel().setStores({workTimeRecords: store});
+            me.updateShowPunchesButton(false);
             console.info('WorkTimeRecord loaded');
         }).catch(function(err){
             console.warn('Failed loading work time records: ', err);
@@ -135,8 +136,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             this.api.auth.getCookies().emp,
             // '2018-07-01T00:00:00',
             // '2018-07-07T00:00:00',
-            start.toUTCString(),
-            end.toUTCString(),
+            start,
+            end,
             'workTimeSheetStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
@@ -215,19 +216,61 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         dialog.hide();
     },
 
+    onWorkRecordsUpdated: function(cmp, val, old, eOpts){
+        console.info('work records changed');
+        this.changeVisibilityOfAllPunches(this.getViewModel().get('showPunches'));
+    },
+
     /**
-     * Handle state change of WTR 'show punches' checkbox
+     * Handles hiding/showing all punches when 'Show/Hide All Punches'
+     * button is pressed.
+     * 
+     * Uses boolean stored in view model and alternate text labels
+     * stored in button component's data attribute.
+     * 
+     * @param {Object} cmp Button component sending event
      */
-    onShowPunches: function(cmp, e, eOpts){
-        // console.info('Show punches checkbox toggled!');
-        var grid = this.lookup('workTimeRecordGrid');
-        for(var i=0;i<grid.getItemCount();i++){
-            var row = grid.getItemAt(i);
-            row.expand();
-        }
+    onShowPunches: function(cmp, event, eOpts){
+        // update view model value
+        var vm = this.getViewModel();
+        var shown = !vm.get('showPunches');
+        this.updateShowPunchesButton(shown);
+        this.changeVisibilityOfAllPunches(shown);
     },
 
     // ===[Display Logic]===
+
+    /**
+     * Force display mode of 'Show/Hide All Punches' button to update
+     * to match given boolean
+     * @param {Boolean} state If true, read 'Hide', else 'Show'
+     */
+    updateShowPunchesButton: function(state){
+        var vm = this.getViewModel(),
+            button = this.lookup('showPunchesButton');
+        vm.set('showPunches', state);
+        button.setText(
+            button.getData()[(!state)? 'showText' : 'hideText']
+        );
+    },
+
+    /**
+     * Make all punches visible or hidden based on parameter passed in
+     * @param {Boolean} visible If true, all punches will be expanded; 
+     *      else all will be collapsed
+     */
+    changeVisibilityOfAllPunches: function(visible){
+        console.info('Punches visibility toggled!', visible);
+        var grid = this.lookup('workTimeRecordGrid');
+        for(var i=0;i<grid.getItemCount();i++){
+            var row = grid.getItemAt(i);
+            if(visible){
+                row.expand();
+            } else {
+                row.collapse();
+            }
+        }
+    },
 
     /**
      * Display punch location map popup dialog

@@ -11,7 +11,9 @@ Ext.define('Breeze.store.calendar.Events', {
         eventType: null,
         lookup: null,
         startParam: 'start',
-        endParam: 'end'
+        endParam: 'end',
+        UTCstart: null,
+        UTCend: null
     },
 
     /**
@@ -23,12 +25,15 @@ Ext.define('Breeze.store.calendar.Events', {
         // this.getProxy().extraParams.cust_id = extras.cust;
         // this.getProxy().extraParams.emp_id = extras.emp;
         // this.getProxy().extraParams.hashcookie = extras.pass;
+        // console.info('getting calendar params');
         this.getProxy().setExtraParams({
             cust_id: extras.cust,
             customer_id: parseInt(extras.cust),
             employee_id: parseInt(extras.emp),
             emp_id: extras.emp,
-            hashcookie: extras.pass
+            hashcookie: extras.pass,
+            UTCstart: this.getUTCstart(),
+            UTCend: this.getUTCend()
         });
     },
     /**

@@ -50,6 +50,15 @@
             } else {
                 return value;
             }
+        },
+
+        /**
+         * Delete a cookie
+         * @param {String} name Cookie name
+         * @param {String} path Optional path (needed if used when constructing)
+         */
+        delete: function(name, path){
+            Ext.util.Cookies.clear(name, path);
         }
 
     });

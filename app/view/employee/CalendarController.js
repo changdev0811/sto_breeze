@@ -21,9 +21,10 @@ Ext.define('Breeze.view.employee.CalendarController', {
         // var me = this;
         // var vm = this.getViewModel();
         console.info('Calendar controller initialized');
+        this.getViewModel().set('employeeId', comp.getData().employee);
         this.loadCategories();
         // this.loadCalendar();
-        console.info('Loaded stuff');
+        console.info('Loaded stuff', this.getViewModel().get('employeeId'));
     },
 
 
@@ -48,7 +49,7 @@ Ext.define('Breeze.view.employee.CalendarController', {
 
     loadCalendar: function(){
         var me = this;
-        var vm = this.getViewModel();
+        var vm = me.getViewModel();
 
         // var calStore = Ext.create('Ext.calendar.store.Calendars',
         //     {
@@ -68,21 +69,25 @@ Ext.define('Breeze.view.employee.CalendarController', {
         //         ]
         //     }
         // );
-
+        
+        var calendar = this.lookup('calendarPanel').getView().activeView,
+            start = calendar.getDisplayRange().start,
+            end = calendar.getDisplayRange().end;
         var calStore = Ext.create('Breeze.store.calendar.Calendar',
             {
                 // autoLoad: true,
                 categories: vm.getStore('categories'),
-                // startDate: (new Date()).toISOString(),
+                startDate: start.toLocaleString(),
+                endDate: end.toLocaleString(),
+                utcStartDate: start.toUTC({out: Date.UTC_OUT.STRING}),
+                utcEndDate: end.toUTC({out: Date.UTC_OUT.STRING}),
                 // endDate: (new Date()).toISOString(),
-                lookup: '5003'
+                lookup: vm.get('employeeId')
             }
         ).load({callback: function(r,o,success){
             console.info('Calendar load successful: ', success);
+            vm.setStores({calendar: calStore});
         }});
-
-
-        vm.setStores({calendar: calStore});
 
 
     },

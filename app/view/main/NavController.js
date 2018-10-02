@@ -331,9 +331,11 @@
          * Handle personal calendar route
          */
         onPersonalCalendarRoute: function(){
+            var vm = this.getViewModel();
+            var emp = vm.get('userId');
             this.changeContent(
                 Ext.create('Breeze.view.employee.Calendar', {
-                    data: { employee: undefined }
+                    data: { employee: emp }
                 })
             );
         },

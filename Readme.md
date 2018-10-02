@@ -1,5 +1,38 @@
 # Breeze
 
+## Environments
+
+### Development
+
+Changes for development mode:
+    
+- In `app/helper/Baser.js`:
+    - API Mode:
+        - Comment out line defining `api` as `Api` (disable real API)
+        - Uncomment line defining `api` as `DummyApi` (enable local dummy API)
+    - Testing Mode:
+        - Set `devTestMode` to true to skip login (only works when using dummy api)
+
+#### Running
+
+- Run ``sencha app watch``
+
+### Production
+
+Changes needed before each build / deploy:
+
+- In `app/helper/Baser.js`:
+    - API Mode:
+        - Uncomment line defining `api` as `Api` (enable real API)
+        - Comment out line defining `api` as `DummyApi` (disable local dummy API)
+    - Testing Mode:
+        - Set `devTestMode` to false to enable login (Not required-- as long as real API is in use, test mode will be disabled)
+
+#### Build
+
+- Run ``sencha app clean && sencha app build``
+- Output is in `/build/production/Breeze` directory
+
 ## Notes
 
 - Using ExtJS 6.5.3 because 6.6.x seems currently incompatible with Themer
@@ -7,7 +40,7 @@
 - Repo has `/ext` ignored; will need to use `sencha workspace install` to install framework, or copy contents of Ext 6.5.3 to project
     - Expects premium addons for 6.5.3 to be in `/ext/packages`
 
-## Default Project Readme
+## Readme
 
 This folder is primarily a container for the top-level pieces of the application.
 While you can remove some files and folders that this application does not use,

@@ -87,3 +87,18 @@ $wtr-side-body-font-size: 12pt;
     $ui: 'wtr-button',
     $font-size: $wtr-side-body-font-size
 );
+
+// Force alt button (colored background) to have visible menu arrow
+@include button-ui(
+    $ui: 'wtr-button-alt',
+    $icon-color: #ffffff,
+    $arrow-icon-color: #ffffff,
+    $padding: 4pt
+);
+
+// Action button spacing
+@include toolbar-ui(
+    $ui: 'wtr-actions',
+    $background-color: transparent,
+    $horizontal-spacing: 4pt
+);
