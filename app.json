@@ -221,9 +221,11 @@
             "includeInBundle": true
         },
         // Include dynamic theme loader
-        {
-            "path": "lib/dynamic_theme.js"
-        },
+        // {
+        //     "path": "lib/dynamic_theme.js",
+        //     "includeInBundle": false,
+        //     "remote": true
+        // },
         // Include html2canvas lib
         {
             "path": "lib/html2canvas.min.js"
