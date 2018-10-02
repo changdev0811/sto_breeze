@@ -10,7 +10,7 @@
     // padding: 0pt 4pt 4pt 4pt;
     padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.25, right: 0.25, bottom: 0.25)
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 }
 
@@ -18,7 +18,7 @@
 @include panel-ui(
     $body-padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.25)
+        $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
     ),
     $header-background-color: map-get($reporting-colors, 'base'),
     $header-color: map-get($reporting-text-colors, 'base'),
@@ -74,10 +74,23 @@
     $label-font-size: map-get($root-font-sizes, 'detail')
 );
 
+@include trigger-ui(
+    $ui: 'reporting',
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $hovered-icon-color: map-get($reporting-colors, 'dark'),
+    $pressed-icon-color: map-get($reporting-colors, 'medium')
+);
+
 @include checkboxfield-ui(
     $ui: 'reporting',
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
+    $box-label-color: map-get($reporting-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'base')
+);
+
+@include radiofield-ui(
+    $ui: 'reporting',
     $box-label-color: map-get($reporting-text-colors, 'base'),
     $box-label-font-size: map-get($root-font-sizes, 'base')
 );
@@ -87,6 +100,13 @@
     $focused-input-underline-color: map-get($reporting-colors, 'dark'),
     $input-color: map-get($reporting-text-colors, 'base'),
     $input-font-size: map-get($root-font-sizes, 'base')
+);
+
+@include datetrigger-ui(
+    $ui: 'reporting-date',
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $hovered-icon-color: map-get($reporting-colors, 'dark'),
+    $pressed-icon-color: map-get($reporting-colors, 'medium')
 );
 
 .reporting-fieldset {

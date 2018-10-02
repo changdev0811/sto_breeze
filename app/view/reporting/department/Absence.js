@@ -191,7 +191,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            bodyAlign: 'stretch'
+                            bodyAlign: 'stretch',
+                            ui: 'reporting'
                         }
                     ]
                 },
@@ -241,6 +242,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             xtype: 'fieldset',
                             userCls: 'report-section-padding reporting-fieldset',
                             title: 'Date Range',
+                            defaults: {
+                                ui: 'reporting reporting-text reporting-date'
+                            },
                             items: [
                                 {
                                     xtype: 'datefield',
@@ -273,6 +277,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     xtype: 'container',
                                     reference: 'conditionValue',
                                     layout: 'hbox',
+                                    defaults: {
+                                        ui: 'reporting reporting-text'
+                                    },
                                     items: [
                                         {
                                             xtype: 'combobox',
@@ -294,6 +301,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     layout: 'hbox',
                                     defaults: {
                                         bodyAlign: 'stretch',
+                                        ui: 'reporting'
                                     },
                                     items: [
                                         {
@@ -323,8 +331,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                 },
                 // Container for User-Defined Categories list
                 {
-                    xtype: 'fieldset',
-                    title: 'Categories',
+                    xtype: 'container',
+                    // userCls: 'reporting-fieldset',
+                    // title: 'Categories',
                     flex: 1,
                     // docked: 'right',
                     layout: {
@@ -335,6 +344,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
+                        // User defined categories tree control
                         {
                             xtype: 'breeze.tree.usercategories',
                             bind: {
