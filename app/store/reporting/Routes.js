@@ -35,6 +35,10 @@ Ext.define('Breeze.store.reporting.Routes', {
         { 
             category: 'department', type: 'absence', 
             view: 'Breeze.view.reporting.department.Absence' 
+        },
+        {
+            category: 'department', type: 'absencesummary', 
+            view: 'Breeze.view.reporting.department.AbsenceSummary'             
         }
     ],
 
