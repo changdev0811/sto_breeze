@@ -147,11 +147,17 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             boxLabel: 'Exempt',
                             name: 'exempt_status',
-                            value: 138
+                            value: 138,
+                            bind: {
+                                groupValue: '{info.ExemptStatus}'
+                            }
                         },{
                             boxLabel: 'Non-Exempt',
                             name: 'exempt_status',
-                            value: 139
+                            value: 139,
+                            bind: {
+                                groupValue: '{info.ExemptStatus}'
+                            }
                         }
                     ]
                 },
@@ -170,11 +176,17 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             boxLabel: 'Days',
                             name: 'recording_mode',
-                            value: 20
+                            value: 20,
+                            bind: {
+                                groupValue: '{info.RecordingMode}'
+                            }
                         },{
                             boxLabel: 'Hours',
                             name: 'recording_mode',
-                            value: 21
+                            value: 21,
+                            bind: {
+                                groupValue: '{info.RecordingMode}'
+                            }
                         }
                     ]
                 }

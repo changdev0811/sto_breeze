@@ -47,10 +47,10 @@ Ext.define('Breeze.view.employee.InformationController', {
                 me.loadEmployeeInfo(component, function(c){
                     // == After Employee Info loads ==
                     // Assign check fields after info loaded
-                    var exemptStatus = vm.get('info.ExemptStatus');
-                    c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
-                    var recordingMode = vm.get('info.RecordingMode');
-                    c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
+                    // var exemptStatus = vm.get('info.ExemptStatus');
+                    // c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
+                    // var recordingMode = vm.get('info.RecordingMode');
+                    // c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
                     me.applyCompanyConfig();
                     // if(vm.get('info.LoginType') == 13){
