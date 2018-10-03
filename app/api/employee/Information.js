@@ -102,5 +102,7 @@ Ext.define('Breeze.api.employee.Information', {
 
     // TODO: Implement addNewEmployee
     addNewEmployee: function(){},
+
+    uploadPicture: function(){}
     
 });

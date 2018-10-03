@@ -292,6 +292,24 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     onCloseNotesDialog: function(dialog, e, eOpts){
         dialog.hide();
+    },
+
+    onEditProfileImageTap: function(ref, e, eOpts){
+        var view = this.getView(),
+            dialog = this.lookup('profileImageEditorDialog');
+        if(!dialog){
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+    onRemoveProfileImage: function(ref,e,eOpts){
+
+    },
+
+    onUploadProfileImage: function(ref,e,eOpts){
+        
     }
 
 
