@@ -46,10 +46,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryModel', {
             ReportTitle: '',
             category_id: null,
             dStart: (new Date()),
-            dEnd: (new Date()),
-            conditional: null,
-            conditional_amt: 0,
-            conditional_type: 0
+            dEnd: (new Date())
         }
     }
 });

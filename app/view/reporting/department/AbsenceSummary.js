@@ -13,10 +13,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
         'Ext.list.Tree',
         'Ext.form.FieldSet',
         'Ext.field.Date',
-        'Ext.picker.Date',
-        'Ext.field.ComboBox',
-        'Ext.field.Spinner',
-        'Ext.field.Radio'
+        'Ext.picker.Date'
     ],
 
     // View Model
@@ -265,65 +262,6 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
                                         title: 'End Date'
                                     },
                                     bind: '{reportParams.dEnd}'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'report-section-padding reporting-fieldset',
-                            title: 'Condition',
-                            items: [
-                                {
-                                    xtype: 'container',
-                                    reference: 'conditionValue',
-                                    layout: 'hbox',
-                                    defaults: {
-                                        ui: 'reporting reporting-text'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'combobox',
-                                            name: 'conditionType',
-                                            flex: 2
-                                        },
-                                        {
-                                            xtype: 'spinnerfield',
-                                            name: 'conditionValue',
-                                            label: '',
-                                            flex: 1,
-                                            style: 'padding-left: 4pt'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'container',
-                                    reference: 'conditionType',
-                                    layout: 'hbox',
-                                    defaults: {
-                                        bodyAlign: 'stretch',
-                                        ui: 'reporting'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'radio',
-                                            flex: 1,
-                                            name: 'conditionValueType',
-                                            value: '20',
-                                            boxLabel: 'Days',
-                                            bind: '{reportParams.conditional_type}'
-                                        },
-                                        {
-                                            xtype: 'radio',
-                                            flex: 1,
-                                            name: 'conditionValueType',
-                                            value: '21',
-                                            boxLabel: 'Weeks',
-                                            bind: '{reportParams.conditional_type}'
-                                            // bind: {
-                                            //     checked: '{reportOptions.conditionalValueType == 21}'
-                                            // }
-                                        }
-                                    ]
                                 }
                             ]
                         }
