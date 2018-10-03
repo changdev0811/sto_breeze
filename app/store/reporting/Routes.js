@@ -40,9 +40,13 @@ Ext.define('Breeze.store.reporting.Routes', {
             category: 'department', type: 'absencesummary', 
             view: 'Breeze.view.reporting.department.AbsenceSummary'             
         },
-                {
+        {
             category: 'department', type: 'adjustment', 
             view: 'Breeze.view.reporting.department.Adjustment'             
+        },
+        {
+            category: 'department', type: 'daily', 
+            view: 'Breeze.view.reporting.department.Daily'             
         }
 
     ],

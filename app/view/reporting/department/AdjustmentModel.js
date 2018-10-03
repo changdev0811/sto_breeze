@@ -43,7 +43,7 @@ Ext.define('Breeze.view.reporting.department.AdjustmentModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: '',
+            ReportTitle: 'Adjustment Report',
             category_id: null,
             dStart: (new Date()),
             dEnd: (new Date())

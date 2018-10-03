@@ -43,7 +43,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: '',
+            ReportTitle: 'Absence Summary Report',
             category_id: null,
             dStart: (new Date()),
             dEnd: (new Date())

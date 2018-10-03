@@ -37,7 +37,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Department Absence Report',
+    title: 'Absence Report',
 
     // Action buttons shown at bottom of panel
     buttons: {

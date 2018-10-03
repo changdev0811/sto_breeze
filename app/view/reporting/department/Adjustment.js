@@ -34,7 +34,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Department Adjustment Report',
+    title: 'Adjustment Report',
 
     // Action buttons shown at bottom of panel
     buttons: {
