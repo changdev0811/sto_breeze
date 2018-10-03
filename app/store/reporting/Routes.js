@@ -47,6 +47,10 @@ Ext.define('Breeze.store.reporting.Routes', {
         {
             category: 'department', type: 'daily', 
             view: 'Breeze.view.reporting.department.Daily'             
+        },
+        {
+            category: 'department', type: 'puncherrors', 
+            view: 'Breeze.view.reporting.department.PunchErrors'             
         }
 
     ],
