@@ -41,9 +41,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
 
     // Action buttons shown at bottom of panel
     buttons: {
-        pdf: { text: 'PDF (Print)', handler: 'onPrintPDF', ui: 'action' },
-        excel: { text: 'Excel (Print)', handler: 'onPrintExcel', ui: 'action' },
-        word: { text: 'Word (Print)', handler: 'onPrintWord', ui: 'action' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow

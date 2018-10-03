@@ -1,12 +1,12 @@
 /**
- * Department Absence Summary Report form
- * @class AbsenceSummary
- * @namespace Breeze.view.reporting.department.AbsenceSummary
- * @alias widget.reporting.department.absencesummary
+ * Department Daily Report form
+ * @class Daily
+ * @namespace Breeze.view.reporting.department.Daily
+ * @alias widget.reporting.department.daily
  */
-Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
+Ext.define('Breeze.view.reporting.department.Daily', {
     extend: 'Ext.Panel',
-    alias: 'widget.reporting.department.absencesummary',
+    alias: 'widget.reporting.department.daily',
 
     requires: [
         'Ext.tab.Panel',
@@ -19,12 +19,12 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
     // View Model
 
     viewModel: {
-        type: 'reporting.department.absencesummary'
+        type: 'reporting.department.daily'
     },
     
     // Controller
 
-    controller: 'reporting.department.absencesummary',
+    controller: 'reporting.department.daily',
 
     listeners: {
         initialize: 'onInit'
@@ -34,7 +34,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Absence Summary Report',
+    title: 'Daily Report',
 
     // Action buttons shown at bottom of panel
     buttons: {
@@ -237,60 +237,50 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
                         },
                         {
                             xtype: 'fieldset',
+                            layout: 'vbox',
+                            title: 'Report Options',
                             userCls: 'report-section-padding reporting-fieldset',
-                            title: 'Date Range',
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+                            items: [
+                                {
+                                    name: 'ShowAdjust',
+                                    inline: true,
+                                    label: '',
+                                    boxLabel: 'Show Adjustments',
+                                    bind: '{reportParams.showadj}'
+                                },
+                                {
+                                    name: 'ShowAccr',
+                                    inline: true,
+                                    label: '',
+                                    boxLabel: 'Show Accruals',
+                                    bind: '{reportParams.showacc}'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'report-section-padding reporting-fieldset',
+                            title: 'Report Day',
                             defaults: {
                                 ui: 'reporting reporting-text reporting-date'
                             },
                             items: [
                                 {
                                     xtype: 'datefield',
-                                    name: 'start',
-                                    label: 'From',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Start Date'
-                                    },
-                                    bind: '{reportParams.dStart}'
-                                },
-                                {
-                                    xtype: 'datefield',
                                     name: 'finish',
-                                    label: 'To',
+                                    label: '',
                                     picker: {
                                         xtype: 'datepicker',
-                                        title: 'End Date'
+                                        title: 'Report Day'
                                     },
-                                    bind: '{reportParams.dEnd}'
+                                    bind: '{reportParams.sDate}'
                                 }
                             ]
-                        }
-                    ]
-                },
-                // Container for User-Defined Categories list
-                {
-                    xtype: 'container',
-                    // userCls: 'reporting-fieldset',
-                    // title: 'Categories',
-                    flex: 1,
-                    // docked: 'right',
-                    layout: {
-                        type: 'fit',
-                        alignment: 'stretch'
-                    },
-                    height: '100%',
-                    width: '100%',
-                    reference: 'udcContainer',
-                    items: [
-                        // User defined categories tree control
-                        {
-                            xtype: 'breeze.tree.usercategories',
-                            bind: {
-                                store: '{categoriesTree}'
-                            },
-                            reference: 'udcTree',
-                            flex: 1,
-                            ui: 'reporting-tree'
                         }
                     ]
                 }
