@@ -120,7 +120,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
-                                                    ui: 'ltblueTreeList',
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -131,7 +130,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    ui: 'ltblueTreeList',
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -218,120 +216,152 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
+                            flex:1,
                             title: 'Header Options',
-                            userCls: 'report-section-padding reporting-fieldset',
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting',
-                                xtype: 'breeze-checkbox'
-                            },
-                            items: [
-                                {
-                                    name: 'headerCompanyLogo',
-                                    inline: true,
-                                    label: '',
-                                    boxLabel: 'Company Logo in Header',
-                                    bind: '{reportParams.LogoInHeader}'
-                                },
-                                {
-                                    name: 'headerCompanyName',
-                                    label: '',
-                                    labelMinWidth: 0,
-                                    boxLabel: 'Company Name in Title',
-                                    bind: '{reportParams.NameInHeader}'
-                                },
-                                {
-                                    name: 'headerSignature',
-                                    label: '',
-                                    boxLabel: 'Signature Line in Footer',
-                                    bind: '{reportParams.RepSignature}'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'report-section-padding reporting-fieldset',
-                            title: 'Date Range',
-                            defaults: {
-                                ui: 'reporting reporting-text reporting-date'
-                            },
-                            items: [
-                                {
-                                    xtype: 'datefield',
-                                    name: 'start',
-                                    label: 'From',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Start Date'
-                                    },
-                                    bind: '{reportParams.dStart}'
-                                },
-                                {
-                                    xtype: 'datefield',
-                                    name: 'finish',
-                                    label: 'To',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'End Date'
-                                    },
-                                    bind: '{reportParams.dEnd}'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'report-section-padding reporting-fieldset',
-                            title: 'Condition',
+                            userCls: 'reporting-fieldset',
                             items: [
                                 {
                                     xtype: 'container',
-                                    reference: 'conditionValue',
-                                    layout: 'hbox',
-                                    defaults: {
-                                        ui: 'reporting reporting-text'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'combobox',
-                                            name: 'conditionType',
-                                            flex: 2
-                                        },
-                                        {
-                                            xtype: 'spinnerfield',
-                                            name: 'conditionValue',
-                                            label: '',
-                                            flex: 1,
-                                            style: 'padding-left: 4pt'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'container',
-                                    reference: 'conditionType',
-                                    layout: 'hbox',
+                                    layout: 'vbox',
+                                    userCls: 'report-section-padding',
+
                                     defaults: {
                                         bodyAlign: 'stretch',
-                                        ui: 'reporting'
+                                        ui: 'reporting',
+                                        xtype: 'breeze-checkbox'
+                                    },
+
+                                    items: [
+                                        {
+                                            name: 'headerCompanyLogo',
+                                            inline: true,
+                                            label: '',
+                                            boxLabel: 'Company Logo in Header',
+                                            bind: '{reportParams.LogoInHeader}'
+                                        },
+                                        {
+                                            name: 'headerCompanyName',
+                                            label: '',
+                                            labelMinWidth: 0,
+                                            boxLabel: 'Company Name in Title',
+                                            bind: '{reportParams.NameInHeader}'
+                                        },
+                                        {
+                                            name: 'headerSignature',
+                                            label: '',
+                                            boxLabel: 'Signature Line in Footer',
+                                            bind: '{reportParams.RepSignature}'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'reporting-fieldset',
+                            flex:1,
+                            title: 'Date Range',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    layout: 'vbox',
+                                    userCls: 'report-section-padding',
+
+                                    defaults: {
+                                        ui: 'reporting reporting-text reporting-date'
                                     },
                                     items: [
                                         {
-                                            xtype: 'radio',
-                                            flex: 1,
-                                            name: 'conditionValueType',
-                                            value: '20',
-                                            boxLabel: 'Days',
-                                            bind: '{reportParams.conditional_type}'
+                                            xtype: 'datefield',
+                                            name: 'start',
+                                            label: 'From',
+                                            picker: {
+                                                xtype: 'datepicker',
+                                                title: 'Start Date'
+                                            },
+                                            bind: '{reportParams.dStart}'
                                         },
                                         {
-                                            xtype: 'radio',
-                                            flex: 1,
-                                            name: 'conditionValueType',
-                                            value: '21',
-                                            boxLabel: 'Weeks',
-                                            bind: '{reportParams.conditional_type}'
-                                            // bind: {
-                                            //     checked: '{reportOptions.conditionalValueType == 21}'
-                                            // }
+                                            xtype: 'datefield',
+                                            name: 'finish',
+                                            label: 'To',
+                                            picker: {
+                                                xtype: 'datepicker',
+                                                title: 'End Date'
+                                            },
+                                            bind: '{reportParams.dEnd}'
+                                        }
+                                    ]
+                                }
+
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'reporting-fieldset',
+                            flex:1,
+                            title: 'Condition',
+
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    layout: 'vbox',
+                                    userCls: 'report-section-padding',
+
+
+
+                                    items: [
+                                        {
+                                            xtype: 'container',
+                                            reference: 'conditionValue',
+                                            layout: 'hbox',
+                                            defaults: {
+                                                ui: 'reporting reporting-text'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'combobox',
+                                                    name: 'conditionType',
+                                                    flex: 2
+                                                },
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    name: 'conditionValue',
+                                                    label: '',
+                                                    flex: 1,
+                                                    style: 'padding-left: 4pt'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'container',
+                                            reference: 'conditionType',
+                                            layout: 'hbox',
+                                            defaults: {
+                                                bodyAlign: 'stretch',
+                                                ui: 'reporting'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'radio',
+                                                    flex: 1,
+                                                    name: 'conditionValueType',
+                                                    value: '20',
+                                                    boxLabel: 'Days',
+                                                    bind: '{reportParams.conditional_type}'
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    flex: 1,
+                                                    name: 'conditionValueType',
+                                                    value: '21',
+                                                    boxLabel: 'Weeks',
+                                                    bind: '{reportParams.conditional_type}'
+                                                    // bind: {
+                                                    //     checked: '{reportOptions.conditionalValueType == 21}'
+                                                    // }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

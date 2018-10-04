@@ -8,11 +8,26 @@
 .report-section-padding {
     // See theme package sass/etc/extension/size.scss for function definition
     // padding: 0pt 4pt 4pt 4pt;
+    border:solid 1px white;
     padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 }
+
+// styling applied to reporting-fieldset title
+.reporting-fieldset {
+    .x-form-fieldset-title {
+        color: map-get($reporting-text-colors, 'base');
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0, left: 0.5, right: 0.5, bottom: 0 )
+        );
+    }
+}
+
+
 
 /** Generic base UI for report form panels **/
 @include panel-ui(
@@ -26,6 +41,22 @@
     $body-background-color: map-get($reporting-colors, 'base'),
     $ui: 'reporting-base'
 );
+
+
+@include panel-ui(
+    //$body-padding: edge-size-from-relative(
+    //    $base: $scoped-root-panel-body-padding-base,
+    //    $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
+    //),
+    $header-background-color: red,
+    //$header-color: map-get($reporting-text-colors, 'base'),
+    // $body-background-color: lighten(map-get($root-colors, 'light'), 25%),
+    $body-background-color: green,
+    $background-color: green,
+    $ui: 'reporting-subpanel'
+);
+
+
 
 @include paneltitle-ui(
     $ui: 'reporting-base',
@@ -71,7 +102,7 @@
     $ui: 'reporting',
     $label-color: map-get($reporting-text-colors, 'light'),
     $focused-label-color: map-get($reporting-text-colors, 'base'),
-    $label-font-size: map-get($root-font-sizes, 'detail')
+    $label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include trigger-ui(
@@ -109,9 +140,3 @@
     $pressed-icon-color: map-get($reporting-colors, 'medium')
 );
 
-.reporting-fieldset {
-    .x-form-fieldset-title {
-        color: map-get($reporting-text-colors, 'base');
-        font-size: map-get($root-font-sizes, 'detail');
-    }
-}
