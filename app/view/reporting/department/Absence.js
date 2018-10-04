@@ -79,7 +79,14 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            ui: 'reporting-tabs',
+                            layout: {
+                                animation: 'fade'
+                            },
+                            ui: 'employeeInfoTabs', //'reporting-tabs',
+                            tabBar: {
+                                defaultTabUI: 'employeeInfoTabs',
+                                shadow: false
+                            },  
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -87,6 +94,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     xtype: 'panel',
                                     title: 'Departments',
                                     layout: 'fit',
+
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
@@ -105,12 +113,14 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
+                                            ui: 'ltblueTreeList',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    ui: 'ltblueTreeList',
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -121,6 +131,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    ui: 'ltblueTreeList',
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -128,7 +139,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
-                                            // ui: 'reporting-tree',
                                             reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
