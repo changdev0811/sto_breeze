@@ -41,9 +41,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
 
     // Action buttons shown at bottom of panel
     buttons: {
-        pdf: { text: 'PDF (Print)', handler: 'onPrintPDF', ui: 'action' },
-        excel: { text: 'Excel (Print)', handler: 'onPrintExcel', ui: 'action' },
-        word: { text: 'Word (Print)', handler: 'onPrintWord', ui: 'action' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -75,6 +75,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     // docked: 'left',
                     flex: 1,
                     layout: 'vbox',
+
+
                     items: [
                         // Tab panel containing departments and employees
                         {
@@ -83,10 +85,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 animation: 'fade'
                             },
                             ui: 'employeeInfoTabs', //'reporting-tabs',
+
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
-                                shadow: false
+                                shadow: false,
                             },  
+
+
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -99,9 +104,11 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
+                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -109,11 +116,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             }
                                         ]
                                     },
+
                                     items: [
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            ui: 'ltblueTreeList',
+                                            ui: 'employeeinfo-shift-grid',
+                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -130,6 +139,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    cell:{
+                                                        ui:'report-tree-column',
+                                                    },
+
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -151,9 +164,11 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
+                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -165,6 +180,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
+                                            ui: 'employeeinfo-shift-grid',
+                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -179,6 +196,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    cell:{
+                                                        ui:'report-tree-column',
+                                                    },
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -216,82 +236,68 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
-                            flex:1,
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
                             items: [
+                               
                                 {
-                                    xtype: 'container',
-                                    layout: 'vbox',
-                                    userCls: 'report-section-padding',
-
-                                    defaults: {
-                                        bodyAlign: 'stretch',
-                                        ui: 'reporting',
-                                        xtype: 'breeze-checkbox'
-                                    },
-
-                                    items: [
-                                        {
-                                            name: 'headerCompanyLogo',
-                                            inline: true,
-                                            label: '',
-                                            boxLabel: 'Company Logo in Header',
-                                            bind: '{reportParams.LogoInHeader}'
-                                        },
-                                        {
-                                            name: 'headerCompanyName',
-                                            label: '',
-                                            labelMinWidth: 0,
-                                            boxLabel: 'Company Name in Title',
-                                            bind: '{reportParams.NameInHeader}'
-                                        },
-                                        {
-                                            name: 'headerSignature',
-                                            label: '',
-                                            boxLabel: 'Signature Line in Footer',
-                                            bind: '{reportParams.RepSignature}'
-                                        }
-                                    ]
+                                    name: 'headerCompanyLogo',
+                                    inline: true,
+                                    label: '',
+                                    boxLabel: 'Company Logo in Header',
+                                    bind: '{reportParams.LogoInHeader}'
+                                },
+                                {
+                                    name: 'headerCompanyName',
+                                    label: '',
+                                    labelMinWidth: 0,
+                                    boxLabel: 'Company Name in Title',
+                                    bind: '{reportParams.NameInHeader}'
+                                },
+                                {
+                                    name: 'headerSignature',
+                                    label: '',
+                                    boxLabel: 'Signature Line in Footer',
+                                    bind: '{reportParams.RepSignature}'
                                 }
+                                    
                             ]
                         },
                         {
                             xtype: 'fieldset',
                             userCls: 'reporting-fieldset',
-                            flex:1,
                             title: 'Date Range',
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting reporting-text reporting-date'
+                            },
                             items: [
                                 {
-                                    xtype: 'container',
-                                    layout: 'vbox',
-                                    userCls: 'report-section-padding',
-
-                                    defaults: {
-                                        ui: 'reporting reporting-text reporting-date'
+                                    xtype: 'datefield',
+                                    name: 'start',
+                                    label: 'From',
+                                    picker: {
+                                        xtype: 'datepicker',
+                                        title: 'Start Date'
                                     },
-                                    items: [
-                                        {
-                                            xtype: 'datefield',
-                                            name: 'start',
-                                            label: 'From',
-                                            picker: {
-                                                xtype: 'datepicker',
-                                                title: 'Start Date'
-                                            },
-                                            bind: '{reportParams.dStart}'
-                                        },
-                                        {
-                                            xtype: 'datefield',
-                                            name: 'finish',
-                                            label: 'To',
-                                            picker: {
-                                                xtype: 'datepicker',
-                                                title: 'End Date'
-                                            },
-                                            bind: '{reportParams.dEnd}'
-                                        }
-                                    ]
+                                    bind: '{reportParams.dStart}'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'finish',
+                                    label: 'To',
+                                    picker: {
+                                        xtype: 'datepicker',
+                                        title: 'End Date'
+                                    },
+                                    bind: '{reportParams.dEnd}'
                                 }
 
                             ]
@@ -299,73 +305,63 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         {
                             xtype: 'fieldset',
                             userCls: 'reporting-fieldset',
-                            flex:1,
                             title: 'Condition',
 
                             items: [
                                 {
                                     xtype: 'container',
-                                    layout: 'vbox',
-                                    userCls: 'report-section-padding',
-
-
-
+                                    reference: 'conditionValue',
+                                    layout: 'hbox',
+                                    defaults: {
+                                        ui: 'reporting reporting-text'
+                                    },
                                     items: [
                                         {
-                                            xtype: 'container',
-                                            reference: 'conditionValue',
-                                            layout: 'hbox',
-                                            defaults: {
-                                                ui: 'reporting reporting-text'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'combobox',
-                                                    name: 'conditionType',
-                                                    flex: 2
-                                                },
-                                                {
-                                                    xtype: 'spinnerfield',
-                                                    name: 'conditionValue',
-                                                    label: '',
-                                                    flex: 1,
-                                                    style: 'padding-left: 4pt'
-                                                }
-                                            ]
+                                            xtype: 'combobox',
+                                            name: 'conditionType',
+                                            flex: 2
                                         },
                                         {
-                                            xtype: 'container',
-                                            reference: 'conditionType',
-                                            layout: 'hbox',
-                                            defaults: {
-                                                bodyAlign: 'stretch',
-                                                ui: 'reporting'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'radio',
-                                                    flex: 1,
-                                                    name: 'conditionValueType',
-                                                    value: '20',
-                                                    boxLabel: 'Days',
-                                                    bind: '{reportParams.conditional_type}'
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    flex: 1,
-                                                    name: 'conditionValueType',
-                                                    value: '21',
-                                                    boxLabel: 'Weeks',
-                                                    bind: '{reportParams.conditional_type}'
-                                                    // bind: {
-                                                    //     checked: '{reportOptions.conditionalValueType == 21}'
-                                                    // }
-                                                }
-                                            ]
+                                            xtype: 'spinnerfield',
+                                            name: 'conditionValue',
+                                            label: '',
+                                            flex: 1,
+                                            style: 'padding-left: 4pt'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    reference: 'conditionType',
+                                    layout: 'hbox',
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'reporting'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'radio',
+                                            flex: 1,
+                                            name: 'conditionValueType',
+                                            value: '20',
+                                            boxLabel: 'Days',
+                                            bind: '{reportParams.conditional_type}'
+                                        },
+                                        {
+                                            xtype: 'radio',
+                                            flex: 1,
+                                            name: 'conditionValueType',
+                                            value: '21',
+                                            boxLabel: 'Weeks',
+                                            bind: '{reportParams.conditional_type}'
+                                            // bind: {
+                                            //     checked: '{reportOptions.conditionalValueType == 21}'
+                                            // }
                                         }
                                     ]
                                 }
                             ]
+
                         }
                     ]
                 },
