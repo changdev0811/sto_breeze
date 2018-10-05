@@ -8,17 +8,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.absence',
 
-    requires: [
-        'Ext.tab.Panel',
-        'Ext.list.Tree',
-        'Ext.form.FieldSet',
-        'Ext.field.Date',
-        'Ext.picker.Date',
-        'Ext.field.ComboBox',
-        'Ext.field.Spinner',
-        'Ext.field.Radio'
-    ],
-
     // View Model
 
     viewModel: {
@@ -75,8 +64,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     // docked: 'left',
                     flex: 1,
                     layout: 'vbox',
-
-
                     items: [
                         // Tab panel containing departments and employees
                         {
@@ -85,13 +72,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 animation: 'fade'
                             },
                             ui: 'employeeInfoTabs', //'reporting-tabs',
-
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
                             },  
-
-
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -306,7 +290,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             xtype: 'fieldset',
                             userCls: 'reporting-fieldset',
                             title: 'Condition',
-
                             items: [
                                 {
                                     xtype: 'container',
