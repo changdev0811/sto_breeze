@@ -87,13 +87,14 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 },
                 {
                     text: 'Upload',
-                    handler: 'onUploadProfileImage'
+                    handler: 'onUploadProfileImage',
+                    bind: {
+                        disabled: '{!pictureFileField.value}'
+                    }
                 },
                 {
                     text: 'Cancel',
-                    handler: function(cmp){
-                        cmp.getParent().getParent().hide();
-                    }
+                    handler: 'onCancelProfileImageEdit'
                 }
             ],
             layout: 'fit',
@@ -137,7 +138,8 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                                 {
                                     xtype: 'filefield',
                                     name: 'photo_upload',
-                                    label: 'Field',
+                                    reference: 'pictureFileField',
+                                    label: 'Image File',
                                     ui: 'employeeinfo-dialog-field'
                                 }
                             ]

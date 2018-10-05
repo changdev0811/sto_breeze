@@ -304,12 +304,27 @@ Ext.define('Breeze.view.employee.InformationController', {
         dialog.show();
     },
 
+    /**
+     * Handle profile image edit dialog's 'remove' button
+     */
     onRemoveProfileImage: function(ref,e,eOpts){
-
+        console.info('Remove profile image');
     },
 
+    /**
+     * Handle profile image edit dialog's 'upload' button
+     */
     onUploadProfileImage: function(ref,e,eOpts){
-        
+        console.info('Upload profile image');
+    },
+    
+    /**
+     * Handle profile image edit dialog's 'cancel' button
+     */
+    onCancelProfileImageEdit: function(ref, e, eOpts){
+        this.lookup('pictureFileField').reset();
+        ref.getParent().getParent().hide();
+        // this.lookup('profileImageForm').reset();
     }
 
 
