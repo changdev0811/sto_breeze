@@ -14,6 +14,26 @@
     );
 }
 
+// styling applied to reporting-fieldset title
+.reporting-fieldset {
+    border:solid 1px white;
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($reporting-text-colors, 'base');
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.5, left: 0.5, right: 0.5, bottom: 0 )
+        );
+    }
+}
+
+
+
 /** Generic base UI for report form panels **/
 @include panel-ui(
     $body-padding: edge-size-from-relative(
@@ -22,7 +42,6 @@
     ),
     $header-background-color: map-get($reporting-colors, 'base'),
     $header-color: map-get($reporting-text-colors, 'base'),
-    // $body-background-color: lighten(map-get($root-colors, 'light'), 25%),
     $body-background-color: map-get($reporting-colors, 'base'),
     $ui: 'reporting-base'
 );
@@ -35,9 +54,18 @@
 /** Generic base UI for report form tree views **/
 @include toolbar-ui(
     $ui: 'reporting-tree',
-    $background-color: $scoped-content-base,
+    $background-color: map-get($reporting-colors, 'base'),
     $background-gradient: none
 );
+
+@include treecell-ui(
+    $ui: 'report-tree-column',
+
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $expander-color: map-get($reporting-text-colors, 'base'),
+    // +++ apply icon and expand color here
+);
+
 
 // Space out action buttons at footer of reporting panel
 @include toolbar-ui(
@@ -71,7 +99,7 @@
     $ui: 'reporting',
     $label-color: map-get($reporting-text-colors, 'light'),
     $focused-label-color: map-get($reporting-text-colors, 'base'),
-    $label-font-size: map-get($root-font-sizes, 'detail')
+    $label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include trigger-ui(
@@ -109,9 +137,11 @@
     $pressed-icon-color: map-get($reporting-colors, 'medium')
 );
 
-.reporting-fieldset {
-    .x-form-fieldset-title {
-        color: map-get($reporting-text-colors, 'base');
-        font-size: map-get($root-font-sizes, 'detail');
-    }
+@include dataview-ui(
+    $background-color :  map-get($reporting-colors, 'base'),
+    $ui: 'employeeinfo-shift-grid'
+)
+
+.employeeinfo-shift-grid {
+    border:solid 1px white;
 }
