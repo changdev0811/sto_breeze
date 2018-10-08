@@ -4,7 +4,7 @@
  * @namespace Breeze.view.reporting.department.Daily
  * @alias controller.reporting.department.daily
  */
-Ext.define('Breeze.view.reporting.department.Daily', {
+Ext.define('Breeze.view.reporting.department.DailyController', {
     extend: 'Breeze.controller.Reporting',
     alias: 'controller.reporting.department.daily',
 
