@@ -33,10 +33,12 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     title: 'Absence Report',
 
     // Action buttons shown at bottom of panel
+    /* +++ Updated buttons class / alignment  +++ */
+    buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action' },
-        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action' },
-        word: { text: 'Word', handler: 'onPrintWord', ui: 'action' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls:'report-action-button' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls:'report-action-button' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -100,6 +102,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         items: [
                                             {
                                                 xtype: 'checkbox',
+                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
@@ -137,7 +140,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     cell:{
                                                         ui:'report-tree-column',
                                                     },
-
+                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -206,7 +209,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
-                                            // ui: 'reporting-tree',
                                             reference: 'employeeTree',
                                             bind: '{employeesTree}'
                                         }
