@@ -1,12 +1,12 @@
 /**
- * Department Adjustment Report form
- * @class Adjustment
- * @namespace Breeze.view.reporting.department.Adjustment
- * @alias widget.reporting.department.adjustment
+ * Department Daily Totals Report form
+ * @class DailyTotals
+ * @namespace Breeze.view.reporting.department.DailyTotals
+ * @alias widget.reporting.department.dailytotals
  */
-Ext.define('Breeze.view.reporting.department.Adjustment', {
+Ext.define('Breeze.view.reporting.department.DailyTotals', {
     extend: 'Ext.Panel',
-    alias: 'widget.reporting.department.adjustment',
+    alias: 'widget.reporting.department.dailytotals',
 
 
     /* +++ Remove the requires;[], array  +++ */
@@ -15,12 +15,12 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
     // View Model
 
     viewModel: {
-        type: 'reporting.department.adjustment'
+        type: 'reporting.department.dailytotals'
     },
     
     // Controller
 
-    controller: 'reporting.department.adjustment',
+    controller: 'reporting.department.dailytotals',
 
     listeners: {
         initialize: 'onInit'
@@ -30,7 +30,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Adjustment Report',
+    title: 'Department Daily Totals Report',
 
     // Action buttons shown at bottom of panel
     /* +++ Updated buttons class / alignment  +++ */
@@ -67,7 +67,6 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                 // First column in horizontal container
                 {
                     xtype: 'container',
-                    // docked: 'left',
                     flex: 1,
                     layout: 'vbox',
                     items: [
@@ -119,6 +118,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New userCls: property +++ */
+                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -135,7 +135,6 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    dataIndex: 'text',
                                                     /* +++ New cel:{} +++ */
                                                     cell:{
                                                         ui:'report-tree-column',
@@ -250,7 +249,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                             },
 
                             items: [
-
+                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -271,7 +270,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-
+                                    
                             ]
                         },
                         {
@@ -280,6 +279,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
+                                bodyAlign: 'stretch',
                                 ui: 'reporting reporting-text reporting-date'
                             },
                             items: [
@@ -303,10 +303,22 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                     },
                                     bind: '{reportParams.dEnd}'
                                 }
+
                             ]
+                        },
+                        {
+                            xtype: 'checkbox',
+                            labelAlign: 'top',
+                            boxLabel: 'HH:MM Format',
+                            bodyAlign: 'stretch',
+                            ui: 'reporting',
+                            checked: true,
+                            name: 'time_format',
+                            bind: '{reportParams.hhmm_format}'
                         }
                     ]
                 },
+                // Third Column Container
                 // Container for User-Defined Categories list
                 {
                     xtype: 'container',
@@ -332,6 +344,138 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                             flex: 1,
                             ui: 'reporting-tree'
                         }
+                    ]
+                },
+                // Fourth Column Container
+                {
+                    xtype: 'container',
+                    flex: 1,
+                    layout: 'vbox',
+                    items: [
+                        // Tab panel containing projects
+                        {
+                            xtype: 'tabpanel',
+                            /* +++ New layout:{}, +++ */
+                            layout: {
+                                animation: 'fade'
+                            },
+                            /* +++ Update to ui: +++ */
+                            ui: 'employeeInfoTabs', //'reporting-tabs',
+                            /* +++ New tabBar:{}, +++ */
+                            tabBar: {
+                                defaultTabUI: 'employeeInfoTabs',
+                                shadow: false,
+                            },  
+                            flex: 1,
+                            items: [
+                                // Projects tab
+                                {
+                                    xtype: 'panel',
+                                    title: 'Projects',
+                                    layout: 'fit',
+
+                                    // Toolbar containing 'check all' toggle checkbox
+                                    tbar: {
+                                        xtype: 'toolbar',
+                                        ui: 'reporting-tree',
+                                        /* +++ New shadow:false, property +++ */
+                                        shadow: false,
+                                        items: [
+                                            {
+                                                xtype: 'checkbox',
+                                                /* +++ New ui property +++ */
+                                                ui: 'reporting',
+                                                boxLabel: 'Check All',
+                                                listeners: {
+                                                    change: 'onTreeGridCheckAllChange'
+                                                }
+                                            }
+                                        ]
+                                    },
+
+                                    items: [
+                                        // Projects tree
+                                        {
+                                            xtype: 'tree',
+                                            /* +++ New ui: property +++ */
+                                            ui: 'employeeinfo-shift-grid',
+                                            /* +++ New userCls: property +++ */
+                                            userCls:'employeeinfo-shift-grid',
+                                            layout: 'hbox',
+                                            hideHeaders: true,
+                                            rootVisible: false,
+                                            columns: [
+                                                {
+                                                    xtype: 'checkcolumn',
+                                                    dataIndex: 'checked',
+                                                    minWidth: '2em',
+                                                    width: 'auto',
+                                                    padding: 0,
+                                                    listeners: {
+                                                        checkChange: 'onTreeGridChecked'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'treecolumn',
+                                                    /* +++ New cel:{} +++ */
+                                                    cell:{
+                                                        ui:'report-tree-column',
+                                                    },
+                                                    /* +++ New dataIndex +++ */
+                                                    dataIndex: 'text',
+                                                    flex: 1,
+                                                    layout: {
+                                                        alignment: 'stretch'
+                                                    }
+                                                }
+                                            ],
+                                            reference: 'departmentTree',
+                                            bind: '{departmentsTree}'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            layout: 'vbox',
+                            title: 'Submission Type',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
+                            items: [
+                               
+                                {
+                                    name: 'approved_option',
+                                    inline: true,
+                                    label: '',
+                                    checked: true,
+                                    boxLabel: 'Approved Time',
+                                    bind: '{reportParams.submit_approve}'
+                                },
+                                {
+                                    name: 'submitted_option',
+                                    label: '',
+                                    labelMinWidth: 0,
+                                    boxLabel: 'Submitted Time',
+                                    bind: '{reportParams.submit_submit}'
+                                },
+                                {
+                                    name: 'unsubmitted_option',
+                                    label: '',
+                                    boxLabel: 'Un-Submitted Time',
+                                    bind: '{reportParams.submit_unsubmit}'
+                                }
+                                    
+                            ]
+                        },
+
                     ]
                 }
             ]

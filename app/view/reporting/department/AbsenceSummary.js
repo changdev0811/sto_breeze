@@ -221,6 +221,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
+                            checked: true,
                             bodyAlign: 'stretch',
                             ui: 'reporting'
                         }
