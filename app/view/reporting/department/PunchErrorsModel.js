@@ -1,12 +1,12 @@
 /**
- * View Model class for Department Absence reporting view
- * @class AbsenceModel
- * @namespace Breeze.view.reporting.department.AbsenceModel
- * @alias viewmodel.reporting.department.absence
+ * View Model class for Department Punch Errors reporting view
+ * @class PunchErrorsModel
+ * @namespace Breeze.view.reporting.department.PunchErrorsModel
+ * @alias viewmodel.reporting.department.puncherrors
  */
-Ext.define('Breeze.view.reporting.department.AbsenceModel', {
+Ext.define('Breeze.view.reporting.department.PunchErrorsModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.reporting.department.absence',
+    alias: 'viewmodel.reporting.department.puncherrors',
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -43,13 +43,11 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Absence Report',
-            category_id: null,
+            ReportTitle: 'Punch Errors Report',
             dStart: (new Date()),
             dEnd: (new Date()),
-            conditional: null,
-            conditional_amt: 0,
-            conditional_type: 0,
+            hhmm_format: false,
+            errOption: 0
         }
     }
 });

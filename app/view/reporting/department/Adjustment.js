@@ -1,22 +1,30 @@
 /**
- * Department Absence Report form
- * @class Absence
- * @namespace Breeze.view.reporting.department.Absence
- * @alias widget.reporting.department.absence
+ * Department Adjustment Report form
+ * @class Adjustment
+ * @namespace Breeze.view.reporting.department.Adjustment
+ * @alias widget.reporting.department.adjustment
  */
-Ext.define('Breeze.view.reporting.department.Absence', {
+Ext.define('Breeze.view.reporting.department.Adjustment', {
     extend: 'Ext.Panel',
-    alias: 'widget.reporting.department.absence',
+    alias: 'widget.reporting.department.adjustment',
+
+    requires: [
+        'Ext.tab.Panel',
+        'Ext.list.Tree',
+        'Ext.form.FieldSet',
+        'Ext.field.Date',
+        'Ext.picker.Date'
+    ],
 
     // View Model
 
     viewModel: {
-        type: 'reporting.department.absence'
+        type: 'reporting.department.adjustment'
     },
     
     // Controller
 
-    controller: 'reporting.department.absence',
+    controller: 'reporting.department.adjustment',
 
     listeners: {
         initialize: 'onInit'
@@ -26,7 +34,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Absence Report',
+    title: 'Adjustment Report',
 
     // Action buttons shown at bottom of panel
     buttons: {
@@ -68,14 +76,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            layout: {
-                                animation: 'fade'
-                            },
-                            ui: 'employeeInfoTabs', //'reporting-tabs',
-                            tabBar: {
-                                defaultTabUI: 'employeeInfoTabs',
-                                shadow: false,
-                            },  
+                            ui: 'reporting-tabs',
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -83,16 +84,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     xtype: 'panel',
                                     title: 'Departments',
                                     layout: 'fit',
-
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -100,13 +98,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             }
                                         ]
                                     },
-
                                     items: [
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -123,10 +118,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    cell:{
-                                                        ui:'report-tree-column',
-                                                    },
-
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -134,6 +125,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
+                                            // ui: 'reporting-tree',
                                             reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
@@ -148,11 +140,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -164,8 +154,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -180,9 +168,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    cell:{
-                                                        ui:'report-tree-column',
-                                                    },
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -221,16 +206,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'reporting-fieldset',
-
+                            userCls: 'report-section-padding reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -251,15 +233,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         },
                         {
                             xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
+                            userCls: 'report-section-padding reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
-                                bodyAlign: 'stretch',
                                 ui: 'reporting reporting-text reporting-date'
                             },
                             items: [
@@ -283,68 +263,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     },
                                     bind: '{reportParams.dEnd}'
                                 }
-
                             ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
-                            title: 'Condition',
-                            items: [
-                                {
-                                    xtype: 'container',
-                                    reference: 'conditionValue',
-                                    layout: 'hbox',
-                                    defaults: {
-                                        ui: 'reporting reporting-text'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'combobox',
-                                            name: 'cbConditional',
-                                            flex: 2,
-                                            bind: '{reportParams.conditional}'
-                                        },
-                                        {
-                                            xtype: 'spinnerfield',
-                                            name: 'condValue',
-                                            label: '',
-                                            flex: 1,
-                                            style: 'padding-left: 4pt',
-                                            bind: '{reportParams.conditional_amt}'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'container',
-                                    reference: 'conditionType',
-                                    layout: 'hbox',
-                                    defaults: {
-                                        bodyAlign: 'stretch',
-                                        ui: 'reporting',
-                                        xtype: 'radio'
-                                    },
-                                    items: [
-                                        {
-                                            flex: 1,
-                                            name: 'condType',
-                                            id: 'radio1',
-                                            value: '20',
-                                            boxLabel: 'Days',
-                                            bind: '{reportParams.conditional_type}'
-                                        },
-                                        {
-                                            flex: 1,
-                                            name: 'condType',
-                                            id: 'radio2',
-                                            value: '21',
-                                            boxLabel: 'Weeks',
-                                            bind: '{reportParams.conditional_type}'
-                                        }
-                                    ]
-                                }
-                            ]
-
                         }
                     ]
                 },

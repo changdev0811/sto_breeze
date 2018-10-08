@@ -1,12 +1,12 @@
 /**
- * View Model class for Department Absence reporting view
- * @class AbsenceModel
- * @namespace Breeze.view.reporting.department.AbsenceModel
- * @alias viewmodel.reporting.department.absence
+ * View Model class for Department Daily reporting view
+ * @class DailyModel
+ * @namespace Breeze.view.reporting.department.DailyModel
+ * @alias viewmodel.reporting.department.daily
  */
-Ext.define('Breeze.view.reporting.department.AbsenceModel', {
+Ext.define('Breeze.view.reporting.department.DailyModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.reporting.department.absence',
+    alias: 'viewmodel.reporting.department.daily',
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -43,13 +43,10 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Absence Report',
-            category_id: null,
-            dStart: (new Date()),
-            dEnd: (new Date()),
-            conditional: null,
-            conditional_amt: 0,
-            conditional_type: 0,
+            ReportTitle: 'Daily Report',
+            sDate: (new Date()),
+            showadj: false,
+            showacc: false
         }
     }
 });

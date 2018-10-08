@@ -35,7 +35,24 @@ Ext.define('Breeze.store.reporting.Routes', {
         { 
             category: 'department', type: 'absence', 
             view: 'Breeze.view.reporting.department.Absence' 
+        },
+        {
+            category: 'department', type: 'absencesummary', 
+            view: 'Breeze.view.reporting.department.AbsenceSummary'             
+        },
+        {
+            category: 'department', type: 'adjustment', 
+            view: 'Breeze.view.reporting.department.Adjustment'             
+        },
+        {
+            category: 'department', type: 'daily', 
+            view: 'Breeze.view.reporting.department.Daily'             
+        },
+        {
+            category: 'department', type: 'puncherrors', 
+            view: 'Breeze.view.reporting.department.PunchErrors'             
         }
+
     ],
 
     resolve: function(category, type){
