@@ -8,13 +8,9 @@ Ext.define('Breeze.view.reporting.department.Daily', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.daily',
 
-    requires: [
-        'Ext.tab.Panel',
-        'Ext.list.Tree',
-        'Ext.form.FieldSet',
-        'Ext.field.Date',
-        'Ext.picker.Date'
-    ],
+
+    /* +++ Remove the requires;[], array  +++ */
+
 
     // View Model
 
@@ -37,10 +33,12 @@ Ext.define('Breeze.view.reporting.department.Daily', {
     title: 'Daily Report',
 
     // Action buttons shown at bottom of panel
+    /* +++ Updated buttons class / alignment  +++ */
+    buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action' },
-        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action' },
-        word: { text: 'Word', handler: 'onPrintWord', ui: 'action' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls:'report-action-button' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls:'report-action-button' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -76,7 +74,17 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            ui: 'reporting-tabs',
+                            /* +++ New layout:{}, +++ */
+                            layout: {
+                                animation: 'fade'
+                            },
+                            /* +++ Update to ui: +++ */
+                            ui: 'employeeInfoTabs', //'reporting-tabs',
+                            /* +++ New tabBar:{}, +++ */
+                            tabBar: {
+                                defaultTabUI: 'employeeInfoTabs',
+                                shadow: false,
+                            },  
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -84,13 +92,18 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     xtype: 'panel',
                                     title: 'Departments',
                                     layout: 'fit',
+
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        /* +++ New shadow:false, property +++ */
+                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
+                                                /* +++ New ui property +++ */
+                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -98,10 +111,14 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                             }
                                         ]
                                     },
+
                                     items: [
                                         // Departments tree
                                         {
                                             xtype: 'tree',
+                                            /* +++ New ui: property +++ */
+                                            ui: 'employeeinfo-shift-grid',
+                                            /* +++ New userCls: property +++ */
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -119,13 +136,18 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                                 {
                                                     xtype: 'treecolumn',
                                                     dataIndex: 'text',
+                                                    /* +++ New cel:{} +++ */
+                                                    cell:{
+                                                        ui:'report-tree-column',
+                                                    },
+                                                    /* +++ New dataIndex +++ */
+                                                    dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
                                                         alignment: 'stretch'
                                                     }
                                                 }
                                             ],
-                                            // ui: 'reporting-tree',
                                             reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
@@ -140,9 +162,13 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        /* +++ New shadot:false property +++ */
+                                        shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
+                                                /* +++ New ui: property +++ */
+                                                ui: 'reporting',
                                                 boxLabel: 'Check All',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
@@ -154,6 +180,10 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
+                                            /* +++ New ui: property +++ */
+                                            ui: 'employeeinfo-shift-grid',
+                                            /* +++ New user:Cls: property +++ */
+                                            userCls:'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -168,6 +198,10 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    /* +++ New cell:{} property +++ */
+                                                    cell:{
+                                                        ui:'report-tree-column',
+                                                    },
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -175,7 +209,6 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                                     }
                                                 }
                                             ],
-                                            // ui: 'reporting-tree',
                                             reference: 'employeeTree',
                                             bind: '{employeesTree}'
                                         }
@@ -206,13 +239,17 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'report-section-padding reporting-fieldset',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset',
+
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
+
                             items: [
+
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -233,19 +270,24 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
+
                             ]
                         },
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Report Options',
-                            userCls: 'report-section-padding reporting-fieldset',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset',
+
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
+
                             items: [
+
                                 {
                                     name: 'ShowAdjust',
                                     inline: true,
@@ -260,11 +302,13 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     boxLabel: 'Show Accruals',
                                     bind: '{reportParams.showacc}'
                                 }
+
                             ]
                         },
                         {
                             xtype: 'fieldset',
-                            userCls: 'report-section-padding reporting-fieldset',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset',
                             title: 'Report Day',
                             defaults: {
                                 ui: 'reporting reporting-text reporting-date'
@@ -276,7 +320,7 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     label: '',
                                     picker: {
                                         xtype: 'datepicker',
-                                        title: 'Report Day'
+                                        title: 'Report Date'
                                     },
                                     bind: '{reportParams.sDate}'
                                 }
