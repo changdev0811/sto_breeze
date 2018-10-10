@@ -1,12 +1,12 @@
 /**
- * View Model class for Department Daily Totals reporting view
- * @class DailyTotalsModel
- * @namespace Breeze.view.reporting.department.DailyTotalsModel
- * @alias viewmodel.reporting.department.dailytotals
+ * View Model class for Department In/Out History reporting view
+ * @class InOutHistoryModel
+ * @namespace Breeze.view.reporting.department.InOutHistoryModel
+ * @alias viewmodel.reporting.department.inouthistory
  */
-Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
+Ext.define('Breeze.view.reporting.department.InOutHistoryModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.reporting.department.dailytotals',
+    alias: 'viewmodel.reporting.department.inouthistory',
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -43,13 +43,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Department Daily Totals Report',
-            category_id: null,
+            ReportTitle: 'In/Out History Report',
             dStart: (new Date()),
-            dEnd: (new Date()),
-            conditional: null,
-            conditional_amt: 0,
-            conditional_type: 0,
+            dEnd: (new Date())
         }
     }
 });

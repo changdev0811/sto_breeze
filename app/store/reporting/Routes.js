@@ -53,9 +53,62 @@ Ext.define('Breeze.store.reporting.Routes', {
             view: 'Breeze.view.reporting.department.DailyTotals'             
         },
         {
+            category: 'department', type: 'deptdetails', 
+            view: 'Breeze.view.reporting.department.DeptDetails'             
+        },
+        {
+            category: 'department', type: 'deptprofile', 
+            view: 'Breeze.view.reporting.department.DeptProfile'             
+        },
+        {
+            category: 'department', type: 'deptreconciliation', 
+            view: 'Breeze.view.reporting.department.DeptReconciliation'             
+        },
+        {
+            category: 'department', type: 'inoutboard', 
+            view: 'Breeze.view.reporting.department.InOutBoard'             
+        },
+        {
+            category: 'department', type: 'inouthistory', 
+            view: 'Breeze.view.reporting.department.InOutHistory'             
+        },
+        {
+            category: 'department', type: 'monthly', 
+            view: 'Breeze.view.reporting.department.Monthly'             
+        },
+        {
+            category: 'department', type: 'notes', 
+            view: 'Breeze.view.reporting.department.Notes'             
+        },
+        {
+            category: 'department', type: 'overtime', 
+            view: 'Breeze.view.reporting.department.Overtime'             
+        },
+        {
+            category: 'department', type: 'payroll', 
+            view: 'Breeze.view.reporting.department.Payroll'             
+        },
+        {
             category: 'department', type: 'puncherrors', 
             view: 'Breeze.view.reporting.department.PunchErrors'             
+        },
+        {
+            category: 'department', type: 'security', 
+            view: 'Breeze.view.reporting.department.Security'             
+        },
+        {
+            category: 'department', type: 'shiftanalysis', 
+            view: 'Breeze.view.reporting.department.ShiftAnalysis'             
+        },
+        {
+            category: 'department', type: 'summaryproject', 
+            view: 'Breeze.view.reporting.department.SummaryProject'             
+        },
+        {
+            category: 'department', type: 'timerecap', 
+            view: 'Breeze.view.reporting.department.TimeRecap'             
         }
+
 
     ],
 

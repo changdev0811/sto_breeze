@@ -1,12 +1,12 @@
 /**
- * View Model class for Department Daily Totals reporting view
- * @class DailyTotalsModel
- * @namespace Breeze.view.reporting.department.DailyTotalsModel
- * @alias viewmodel.reporting.department.dailytotals
+ * View Model class for Department Security reporting view
+ * @class SecurityModel
+ * @namespace Breeze.view.reporting.department.SecurityModel
+ * @alias viewmodel.reporting.department.security
  */
-Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
+Ext.define('Breeze.view.reporting.department.SecurityModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.reporting.department.dailytotals',
+    alias: 'viewmodel.reporting.department.security',
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -39,17 +39,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
         reportParams: {
             CompanyName: null,
             customerId: null,
-            groupByDepartment: true,
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Department Daily Totals Report',
-            category_id: null,
-            dStart: (new Date()),
-            dEnd: (new Date()),
-            conditional: null,
-            conditional_amt: 0,
-            conditional_type: 0,
+            ReportTitle: 'Security Report',
         }
     }
 });

@@ -1,12 +1,12 @@
 /**
- * View Controller for Department Daily Totals reporting criteria view
- * @class DailyTotalsController
- * @namespace Breeze.view.reporting.department.DailyTotalsController
- * @alias controller.reporting.department.dailytotals
+ * View Controller for Department In/Out Board Report reporting criteria view
+ * @class InOutBoardController
+ * @namespace Breeze.view.reporting.department.InOutBoard
+ * @alias controller.reporting.department.inoutboard
  */
-Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
+Ext.define('Breeze.view.reporting.department.InOutBoardController', {
     extend: 'Breeze.controller.Reporting',
-    alias: 'controller.reporting.department.dailytotals',
+    alias: 'controller.reporting.department.inoutboard',
 
     stores: [
         'Breeze.store.tree.UserDefinedCategories'
@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
      */
     onInit: function (component) {
 
-        console.info('Department Daily Totals Report view inited');
+        console.info('In/Out Board Report view inited');
 
         var me = this;
         var vm = me.getViewModel();

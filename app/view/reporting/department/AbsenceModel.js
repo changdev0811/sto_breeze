@@ -39,7 +39,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
         reportParams: {
             CompanyName: null,
             customerId: null,
-            groupByDepartment: false,
+            groupByDepartment: true,
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
