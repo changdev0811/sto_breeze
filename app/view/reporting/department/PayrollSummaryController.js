@@ -1,12 +1,12 @@
 /**
- * View Controller for Department Monthly reporting criteria view
- * @class MonthlyController
- * @namespace Breeze.view.reporting.department.MonthlyController
- * @alias controller.reporting.department.monthly
+ * View Controller for Department Payroll Summary reporting criteria view
+ * @class PayrollSummaryController
+ * @namespace Breeze.view.reporting.department.PayrollSummaryController
+ * @alias controller.reporting.department.payrollsummary
  */
-Ext.define('Breeze.view.reporting.department.MonthlyController', {
+Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
     extend: 'Breeze.controller.Reporting',
-    alias: 'controller.reporting.department.monthly',
+    alias: 'controller.reporting.department.payrollsummary',
 
     stores: [
         'Breeze.store.tree.UserDefinedCategories'
@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.MonthlyController', {
      */
     onInit: function (component) {
 
-        console.info('Department Monthly Report view inited');
+        console.info('Department Payroll Summary Report view inited');
 
         var me = this;
         var vm = me.getViewModel();

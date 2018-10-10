@@ -1,12 +1,12 @@
 /**
- * View Controller for Department Monthly reporting criteria view
- * @class MonthlyController
- * @namespace Breeze.view.reporting.department.MonthlyController
- * @alias controller.reporting.department.monthly
+ * View Controller for Department Overtime Check reporting criteria view
+ * @class OvertimeCheckController
+ * @namespace Breeze.view.reporting.department.OvertimeCheckController
+ * @alias controller.reporting.department.overtimecheck
  */
-Ext.define('Breeze.view.reporting.department.MonthlyController', {
+Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
     extend: 'Breeze.controller.Reporting',
-    alias: 'controller.reporting.department.monthly',
+    alias: 'controller.reporting.department.overtimecheck',
 
     stores: [
         'Breeze.store.tree.UserDefinedCategories'
@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.MonthlyController', {
      */
     onInit: function (component) {
 
-        console.info('Department Monthly Report view inited');
+        console.info('Department Overtime Check Report view inited');
 
         var me = this;
         var vm = me.getViewModel();

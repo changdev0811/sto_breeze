@@ -81,12 +81,12 @@ Ext.define('Breeze.store.reporting.Routes', {
             view: 'Breeze.view.reporting.department.Notes'             
         },
         {
-            category: 'department', type: 'overtime', 
-            view: 'Breeze.view.reporting.department.Overtime'             
+            category: 'department', type: 'overtimecheck', 
+            view: 'Breeze.view.reporting.department.OvertimeCheck'             
         },
         {
-            category: 'department', type: 'payroll', 
-            view: 'Breeze.view.reporting.department.Payroll'             
+            category: 'department', type: 'payrollsummary', 
+            view: 'Breeze.view.reporting.department.PayrollSummary'             
         },
         {
             category: 'department', type: 'puncherrors', 

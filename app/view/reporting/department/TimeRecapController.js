@@ -1,12 +1,12 @@
 /**
- * View Controller for Department Monthly reporting criteria view
- * @class MonthlyController
- * @namespace Breeze.view.reporting.department.MonthlyController
- * @alias controller.reporting.department.monthly
+ * View Controller for Department Time Recap reporting criteria view
+ * @class TimeRecapController
+ * @namespace Breeze.view.reporting.department.TimeRecapController
+ * @alias controller.reporting.department.timerecap
  */
-Ext.define('Breeze.view.reporting.department.MonthlyController', {
+Ext.define('Breeze.view.reporting.department.TimeRecapController', {
     extend: 'Breeze.controller.Reporting',
-    alias: 'controller.reporting.department.monthly',
+    alias: 'controller.reporting.department.timerecap',
 
     stores: [
         'Breeze.store.tree.UserDefinedCategories'
@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.MonthlyController', {
      */
     onInit: function (component) {
 
-        console.info('Department Monthly Report view inited');
+        console.info('Department Time Recap Report view inited');
 
         var me = this;
         var vm = me.getViewModel();
