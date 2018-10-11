@@ -49,7 +49,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             dEnd: (new Date()),
             conditional: null,
             conditional_amt: 0,
-            conditional_type: 0,
+            conditional_type: 0
         }
     }
 });

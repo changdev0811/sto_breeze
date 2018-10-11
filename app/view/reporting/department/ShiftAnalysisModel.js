@@ -43,7 +43,7 @@ Ext.define('Breeze.view.reporting.department.ShiftAnalysisModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Shift Analysis Report',
+            ReportTitle: 'Shift Analysis Report'
        }
     }
 });

@@ -1,12 +1,12 @@
 /**
- * View Model class for Department In/Out Board reporting view
- * @class InOutBoardModel
- * @namespace Breeze.view.reporting.department.InOutBoard
- * @alias viewmodel.reporting.department.inoutboard
+ * View Model class for Employee Allowance Projection reporting view
+ * @class AllowanceModel
+ * @namespace Breeze.view.reporting.employee.AllowanceModel
+ * @alias viewmodel.reporting.employee.allowance
  */
-Ext.define('Breeze.view.reporting.department.InOutBoardModel', {
+Ext.define('Breeze.view.reporting.employee.AllowanceModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.reporting.department.inoutboard',
+    alias: 'viewmodel.reporting.employee.allowance',
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -43,7 +43,10 @@ Ext.define('Breeze.view.reporting.department.InOutBoardModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'In/Out Board Report'
-       }
+            ReportTitle: 'Employee Allowance Projection Report',
+            category_id: null,
+            scheduledtime: null,
+            sdate: (new Date())
+        }
     }
 });

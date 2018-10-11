@@ -42,7 +42,7 @@ Ext.define('Breeze.view.reporting.department.SecurityModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Security Report',
+            ReportTitle: 'Security Report'
         }
     }
 });

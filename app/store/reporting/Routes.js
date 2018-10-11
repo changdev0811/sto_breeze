@@ -32,6 +32,7 @@ Ext.define('Breeze.store.reporting.Routes', {
      *  }
      */
     data: [
+        // Department
         { 
             category: 'department', type: 'absence', 
             view: 'Breeze.view.reporting.department.Absence' 
@@ -107,8 +108,65 @@ Ext.define('Breeze.store.reporting.Routes', {
         {
             category: 'department', type: 'timerecap', 
             view: 'Breeze.view.reporting.department.TimeRecap'             
+        },
+        // Employee
+        {
+            category: 'employee', type: 'allowance', 
+            view: 'Breeze.view.reporting.employee.Allowance'             
+        },
+        {
+            category: 'employee', type: 'details', 
+            view: 'Breeze.view.reporting.employee.Details'             
+        },
+        {
+            category: 'employee', type: 'fyi', 
+            view: 'Breeze.view.reporting.employee.Fyi'             
+        },
+        {
+            category: 'employee', type: 'information', 
+            view: 'Breeze.view.reporting.employee.Information'             
+        },
+        {
+            category: 'employee', type: 'profile', 
+            view: 'Breeze.view.reporting.employee.Profile'             
+        },
+        {
+            category: 'employee', type: 'excessivehours', 
+            view: 'Breeze.view.reporting.employee.ExcessiveHours'             
+        },
+        {
+            category: 'employee', type: 'lateness', 
+            view: 'Breeze.view.reporting.employee.Lateness'             
+        },
+        {
+            category: 'employee', type: 'recordedtime', 
+            view: 'Breeze.view.reporting.employee.RecordedTime'             
+        },
+        {
+            category: 'employee', type: 'employeeproject', 
+            view: 'Breeze.view.reporting.employee.EmployeeProject'             
+        },
+        {
+            category: 'employee', type: 'timeactivity', 
+            view: 'Breeze.view.reporting.employee.TimeActivity'             
+        },
+        {
+            category: 'employee', type: 'timesheet', 
+            view: 'Breeze.view.reporting.employee.Timesheet'             
+        },
+        {
+            category: 'employee', type: 'worktime', 
+            view: 'Breeze.view.reporting.employee.Worktime'             
+        },
+        {
+            category: 'employee', type: 'yearataGlance', 
+            view: 'Breeze.view.reporting.employee.YearAtAGlance'             
         }
+        // Miscellaneous
 
+        // Point
+
+        // Project
 
     ],
 

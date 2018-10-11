@@ -42,7 +42,7 @@ Ext.define('Breeze.view.reporting.department.DeptProfileModel', {
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
-            ReportTitle: 'Department Profile Report',
+            ReportTitle: 'Department Profile Report'
         }
     }
 });

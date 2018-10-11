@@ -50,7 +50,7 @@ Ext.define('Breeze.view.reporting.department.DailyModel', {
             projids: false,
             submit_approve: false,
             submit_submit: false,
-            submit_unsubmit: false,
+            submit_unsubmit: false
         }
     }
 });
