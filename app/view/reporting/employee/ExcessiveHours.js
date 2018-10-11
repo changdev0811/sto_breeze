@@ -1,12 +1,12 @@
 /**
- * Employee Details Report form
- * @class Details
- * @namespace Breeze.view.reporting.employee.Details
- * @alias widget.reporting.employee.details
+ * Employee Excessive Hours Report form
+ * @class ExcessiveHours
+ * @namespace Breeze.view.reporting.employee.ExcessiveHours
+ * @alias widget.reporting.employee.excessivehours
  */
-Ext.define('Breeze.view.reporting.employee.Details', {
+Ext.define('Breeze.view.reporting.employee.ExcessiveHours', {
     extend: 'Ext.Panel',
-    alias: 'widget.reporting.employee.details',
+    alias: 'widget.reporting.employee.excessivehours',
 
 
     /* +++ Remove the requires;[], array  +++ */
@@ -15,12 +15,12 @@ Ext.define('Breeze.view.reporting.employee.Details', {
     // View Model
 
     viewModel: {
-        type: 'reporting.employee.details'
+        type: 'reporting.employee.excessivehours'
     },
     
     // Controller
 
-    controller: 'reporting.employee.details',
+    controller: 'reporting.employee.excessivehours',
 
     listeners: {
         initialize: 'onInit'
@@ -30,7 +30,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Employee Details Report',
+    title: 'Employee Excessive Hours Report',
 
     // Action buttons shown at bottom of panel
     /* +++ Updated buttons class / alignment  +++ */
@@ -272,41 +272,6 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                         },
                         {
                             xtype: 'fieldset',
-                            layout: 'vbox',
-                            title: 'Report Options',
-                            /* +++  Updated userCls: property +++ */
-                            userCls: 'reporting-fieldset',
-
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting',
-                                xtype: 'breeze-checkbox'
-                            },
-                            items: [
-                                {
-                                    name: 'ShowAdjust',
-                                    inline: true,
-                                    label: '',
-                                    boxLabel: 'Show Adjustments',
-                                    bind: '{reportParams.showadjust}'
-                                },
-                                {
-                                    name: 'ShowNotes',
-                                    label: '',
-                                    labelMinWidth: 0,
-                                    boxLabel: 'Show Notes',
-                                    bind: '{reportParams.shownotes}'
-                                },
-                                {
-                                    name: 'ShowNotesOnly',
-                                    label: '',
-                                    boxLabel: 'Show Notes Only',
-                                    bind: '{reportParams.notesonly}'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
                             /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
@@ -323,7 +288,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                                         xtype: 'datepicker',
                                         title: 'Start Date'
                                     },
-                                    bind: '{reportParams.sdate}'
+                                    bind: '{reportParams.dStart}'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -333,7 +298,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                                         xtype: 'datepicker',
                                         title: 'End Date'
                                     },
-                                    bind: '{reportParams.edate}'
+                                    bind: '{reportParams.dEnd}'
                                 }
 
                             ]
@@ -347,38 +312,19 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                             checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
+                        },
+                        {
+                            xtype: 'selectfield',
+                            name: 'hours_value',
+                            label: 'Hours Greater Than',
+                            store: '',
+                            bind: { value: '{info.hours_value}' },
+                            displayField: ''
                         }
+
                     ]
                 },
                 // Third Column Container
-                {
-                    // Container for User-Defined Categories list
-                    xtype: 'container',
-                    // userCls: 'reporting-fieldset',
-                    // title: 'Categories',
-                    flex: 1,
-                    // docked: 'right',
-                    layout: {
-                        type: 'fit',
-                        alignment: 'stretch'
-                    },
-                    height: '100%',
-                    width: '100%',
-                    reference: 'udcContainer',
-                    items: [
-                        // User defined categories tree control
-                        {
-                            xtype: 'breeze.tree.usercategories',
-                            bind: {
-                                store: '{categoriesTree}'
-                            },
-                            reference: 'udcTree',
-                            flex: 1,
-                            ui: 'reporting-tree'
-                        }
-                    ]
-                },
-                // Fourth Column Container
                 {
                     xtype: 'container',
                     flex: 1,

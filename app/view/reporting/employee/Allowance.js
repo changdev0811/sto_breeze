@@ -1,5 +1,5 @@
 /**
- * Employee Employee Allowance Projection Report form
+ * Employee Allowance Projection Report form
  * @class Allowance Projection
  * @namespace Breeze.view.reporting.employee.Allowance
  * @alias widget.reporting.employee.allowance

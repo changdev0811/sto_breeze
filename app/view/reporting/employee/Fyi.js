@@ -1,5 +1,5 @@
 /**
- * Department Employee FYI Report form
+ * Employee FYI Report form
  * @class Fyi
  * @namespace Breeze.view.reporting.employee.Fyi
  * @alias widget.reporting.employee.fyi

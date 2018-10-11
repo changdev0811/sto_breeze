@@ -1,5 +1,5 @@
 /**
- * Department Employee Information Report form
+ * Employee Information Report form
  * @class Information
  * @namespace Breeze.view.reporting.employee.Information
  * @alias widget.reporting.employee.information
