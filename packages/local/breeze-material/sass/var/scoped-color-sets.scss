@@ -237,3 +237,26 @@ $reporting-text-colors: (
 );
 
 
+
+
+
+// ====[Admin Form Colors]====
+
+$scoped-admin-base: #57576A;
+$scoped-admin-medium: #81818F;
+$scoped-admin-light: #ABABB5;
+
+$scoped-admin-text-base: #ffffff;
+$scoped-admin-text-light: #ABABB5;
+
+$admin-colors: (
+    base: $scoped-admin-base,
+    medium: $scoped-admin-medium,
+    light: $scoped-admin-light,
+);
+
+$admin-text-colors: (
+    base: $scoped-admin-text-base,
+    light: $scoped-admin-text-light,
+);
+

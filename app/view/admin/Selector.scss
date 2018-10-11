@@ -1,0 +1,190 @@
+/**
+ * Report Selector Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Report Selector view or its children
+*/
+
+// Padding to report form sections, based on root panel body padding weights
+.admin-section-padding {
+    // See theme package sass/etc/extension/size.scss for function definition
+    // padding: 0pt 4pt 4pt 4pt;
+    //padding: edge-size-from-relative(
+    //    $base: $scoped-root-panel-body-padding-base,
+    //    $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    //);
+}
+
+// styling applied to admin-fieldset title
+.admin-fieldset {
+    border:solid 1px white;
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($admin-text-colors, 'base');
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.125, left: 0.125, right: 0.125, bottom: 0 )
+        );
+    }
+}
+
+.admin-fieldset-no-border {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($admin-text-colors, 'base');
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.125, left: 0.125, right: 0.125, bottom: 0 )
+        );
+    }
+}
+
+
+
+/** Generic base UI for report form panels **/
+@include panel-ui(
+    //$body-padding: edge-size-from-relative(
+    //    $base: $scoped-root-panel-body-padding-base,
+    //    $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
+    //),
+    $header-background-color: map-get($admin-colors, 'base'),
+    $header-color: map-get($admin-text-colors, 'base'),
+    $body-background-color: map-get($admin-colors, 'base'),
+    $ui: 'admin-base'
+);
+
+@include paneltitle-ui(
+    $ui: 'admin-base',
+    $font-size: $panel-title-font-size
+);
+
+@include panel-ui(
+    $header-background-color: map-get($admin-colors, 'base'),
+    $header-color: map-get($admin-text-colors, 'base'),
+    $body-background-color: map-get($admin-colors, 'base'),
+    $ui: 'admin-sub'
+);
+
+@include paneltitle-ui(
+    $ui: 'admin-sub',
+    $font-size: 16pt,
+);
+
+
+
+/** Generic base UI for report form tree views **/
+@include toolbar-ui(
+    $ui: 'admin-tree',
+    $background-color: map-get($admin-colors, 'base'),
+    $background-gradient: none
+);
+
+@include treecell-ui(
+    $ui: 'report-tree-column',
+
+    $icon-color: map-get($admin-text-colors, 'base'),
+    $expander-color: map-get($admin-text-colors, 'base'),
+    // +++ apply icon and expand color here
+);
+
+
+// Space out action buttons at footer of reporting panel
+@include toolbar-ui(
+    $ui: 'admin-actions',
+    $background-color: map-get($admin-colors, 'base'),
+    $horizontal-spacing: 4pt
+);
+
+@include ui-extend(
+    $xtype: 'container',
+    $ui: 'admin-tabs'
+) {
+    border: 1pt solid map-get($root-colors, 'base');
+};
+
+
+// Tree grid with border
+@include grid-ui(
+    $ui: 'admin-tree'
+);
+
+@include ui-extend(
+    $xtype: 'grid',
+    $ui: 'admin-tree'
+){
+    border: 1pt solid map-get($root-colors, 'base');
+};
+
+/** Reporting Form Fields **/
+@include field-ui(
+    $ui: 'admin',
+    $label-color: map-get($admin-text-colors, 'light'),
+    $focused-label-color: map-get($admin-text-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include trigger-ui(
+    $ui: 'admin',
+    $icon-color: map-get($admin-text-colors, 'base'),
+    $hovered-icon-color: map-get($admin-colors, 'light'),
+    $pressed-icon-color: map-get($admin-colors, 'medium')
+);
+
+@include checkboxfield-ui(
+    $ui: 'admin',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $box-label-color: map-get($admin-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include radiofield-ui(
+    $ui: 'admin',
+    $box-label-color: map-get($admin-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include textfield-ui(
+    $ui: 'admin-text',
+    $focused-input-underline-color: map-get($admin-colors, 'light'),
+    $input-color: map-get($admin-text-colors, 'base'),
+    $input-font-size: map-get($root-font-sizes, 'base')
+);
+
+@include datetrigger-ui(
+    $ui: 'admin-date',
+    $icon-color: map-get($admin-text-colors, 'base'),
+    $hovered-icon-color: map-get($admin-colors, 'light'),
+    $pressed-icon-color: map-get($admin-colors, 'medium')
+);
+
+@include dataview-ui(
+    $background-color :  map-get($admin-colors, 'base'),
+    $ui: 'employeeinfo-shift-grid'
+)
+
+.employeeinfo-shift-grid {
+    border:solid 1px white;
+
+}
+
+.tool-button-left, .tool-button-right {
+    position:absolute;
+}
+
+.tool-button-left {
+    left:10pt;
+}
+
+.tool-button-right {
+    right:5pt;
+}

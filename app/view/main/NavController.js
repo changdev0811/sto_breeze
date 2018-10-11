@@ -70,12 +70,19 @@
             'home': {
                 action: 'onHomeRoute'
             },
+            // Admin route
+            'admin/:tyoe': {
+                action: 'onAdminRoute',
+                // TODO: Implement before report route method to prevent access when not allowed
+                //before: 'beforeAdminRoute'
+            },
             // Report route
             'reports/:category/:type': {
                 action: 'onReportRoute',
                 // TODO: Implement before report route method to prevent access when not allowed
                 before: 'beforeReportRoute'
             }
+
         },
 
         init: function(component){
@@ -387,6 +394,90 @@
             });
             this.changeContent(component);
         },
+
+
+
+
+        /**
+         * Handle admin route
+         */
+        onAdminRoute: function(type){
+            console.info('Admin Route', type);
+            var ns = null;
+            switch(type){
+                case 'accrualpolicies':
+                ns = 'Breeze.view.admin.AccrualPolicies';
+                break;
+
+                case 'audit':
+                ns = 'Breeze.view.admin.Audit';
+                break;
+
+                case 'departments':
+                ns = 'Breeze.view.admin.Departments';
+                break;
+
+                case 'holidayeditor':
+                ns = 'Breeze.view.admin.HolidayEditor';
+                break;
+
+                case 'motd':
+                ns = 'Breeze.view.admin.MOTD';
+                break;
+
+                case 'pointcats':
+                ns = 'Breeze.view.admin.PointCats';
+                break;
+
+                case 'projects':
+                ns = 'Breeze.view.admin.Projects';
+                break;
+
+                case 'puncherrors':
+                ns = 'Breeze.view.admin.PunchErrors';
+                break;
+
+                case 'punchpolicies':
+                ns = 'Breeze.view.admin.PunchPolicies';
+                break;
+
+                case 'stimessage':
+                ns = 'Breeze.view.admin.STIMessage';
+                break;
+
+                case 'restoreemployee':
+                ns = 'Breeze.view.admin.RestoreEmployee';
+                break;
+
+                case 'saoptions':
+                ns = 'Breeze.view.admin.SAOptions';
+                break;
+
+                case 'roles':
+                ns = 'Breeze.view.admin.Roles';
+                break;
+
+                case 'udc':
+                ns = 'Breeze.view.admin.UDC';
+                break;
+
+                /* other routes:
+                case 'url part':
+                ns = 'namespace';
+                break;
+                */
+            }
+            this.changeContent(
+                Ext.create(ns, {
+                    data: { employee: undefined }
+                })
+            );
+        },
+
+
+
+
+
 
         // ===[Content functions]===
 
