@@ -17,8 +17,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        pdf: { text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action' },
-        excel: { text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action' },
+        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action' },
+        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -30,31 +30,37 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
     // Body contents
     items: [
-        {    
-            xtype: 'panel',
-            title: 'Policies',
-            ui: 'admin-sub',
-            flex: 1,
-            layout: 'vbox',
+        {
+            xtype:'container',
+            flex:1,
+            layout:'vbox',
             items:[
-                {
-                    xtype: 'container',
-                    userCls:'admin-fieldset',
+                {    
+                    xtype: 'panel',
+                    title: 'Policies',
+                    ui: 'admin-sub' ,
                     flex: 1,
                     layout: 'vbox',
+                    items:[
+                        {
+                            xtype: 'container',
+                            userCls:'admin-fieldset',
+                            flex: 1,
+                            layout: 'vbox',
+                        }
+                    ]
                 },
                 {
-
-
                     xtype: 'breeze-textfield',
                     label: 'Setting Name',
-                    name: 'reportTitle',
+                    name: 'setting_name_label',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
 
                 },
                 {
                     xtype: 'fieldset',
+                    name: 'recording_mode',
                     userCls:'admin-fieldset',
                     title: 'Recording Model',
                     height:'45pt',
@@ -68,29 +74,83 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     items: [
                         {
                             flex: 1,
-                            name: 'condType',
-                            id: 'radio1',
+                            name: 'recording_mode',
                             value: '20',
                             boxLabel: 'Days',
                         },
                         {
                             flex: 1,
-                            name: 'condType',
-                            id: 'radio2',
+                            name: 'recording_mode',
                             value: '21',
                             boxLabel: 'Weeks',
                         }
                     ]
-
-
-
                 },
-                {
-                    xtype: 'fieldset',
-                    userCls:'admin-fieldset',
-                    title: 'Shift Information',
-                    height:'60pt',
+                {    
+                    xtype: 'panel',
+                    title:'Shift Information',
+                    ui: 'admin-sub' ,
+                    flex: 1,
                     layout: 'vbox',
+                    items:[
+                        {
+                            xtype: 'container',
+                            userCls:'admin-fieldset',
+                            flex: 1,
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    height: '200px',
+                                    ui: 'employeeinfo-shift-grid',
+                                    reference: 'shiftSegmentGrid',
+                                    //userCls: 'employee-info-grid',
+                                    striped: true,
+                                    sortable: false,
+                                    columnResize: false,
+                                    columnMenu: null,
+                                    layout: 'hbox',
+                                    // Plugin allowing editability
+                                    plugins: [
+                                        {
+                                            pluginId: 'shiftEdit',
+                                            type: 'gridcellediting'
+                                        }
+                                    ],
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            ui: 'employeeinfo-shift-grid',
+                                            align: 'center',
+                                            text: 'Start',
+                                            dataIndex: 'StartTime',
+                                            menuDisabled: true,
+                                            flex: 1,
+                                            
+                                            //bind: { editable: '{!readOnly}' }
+                                            
+                                        },
+                                        {
+                                            xtype: 'templatecolumn',
+                                            tpl: ['-'],
+                                            align: 'center',
+                                            width: '2em',
+                                            menuDisabled: true
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            ui: 'employeeinfo-shift-grid',
+                                            align: 'center',
+                                            text: 'Stop',
+                                            dataIndex: 'StopTime',
+                                            menuDisabled: true,
+                                            flex: 1
+                                        },
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
             ]
         },
@@ -126,6 +186,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     items:[
                         {
                             xtype: 'fieldset',
+                            name: 'category_recording_year_type',
                             userCls:'admin-fieldset',
                             title: 'Recording Year Type',
                             layout: 'hbox',
@@ -139,20 +200,17 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     flex: 1,
-                                    name: 'condType',
-                                    id: 'radio3',
+                                    name: 'recording_year_type',
                                     boxLabel: 'Anniversary',
                                 },
                                 {
                                     flex: 1,
-                                    name: 'condType',
-                                    id: 'radio4',
+                                    name: 'recording_year_type',
                                     boxLabel: 'Calendar',
                                 },
                                 {
                                     flex: 1,
-                                    name: 'condType',
-                                    id: 'radio5',
+                                    name: 'recording_year_type',
                                     boxLabel: 'Fiscal',
                                 }
                             ]
@@ -162,8 +220,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         },
                         {
                             xtype: 'fieldset',
+                            name: 'category_waiting_period_data',
                             userCls:'admin-fieldset',
-                            title: 'Start Accruing After:',
+                            title: 'Start Accruing After',
                             layout: 'hbox',
                             flex:1,
                             defaults: {
@@ -172,17 +231,22 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'spinnerfield',
-                                    name: 'saa1',
-                                    label: '',
                                     flex: 1,
                                     style: 'padding-left: 4pt',
-                                    //bind: '{reportParams.conditional_amt}'
+                                    name: 'category_new_time',
+                                    allowDecimals: false,
+                                    minValue: 0 
                                 },
                                 {
                                     xtype: 'combobox',
-                                    name: 'saa2',
                                     flex: 2,
-                                    //bind: '{reportParams.conditional}'
+                                    name: 'category_new_rate',
+                                    allowBlank: false,
+                                    editable: false,
+                                    displayField: 'Description',
+                                    forceSelection: true,
+                                    queryMode: 'local',
+                                    valueField: 'ID'
                                 },
                             ]
                         },
@@ -198,8 +262,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     items:[
                         {
                             xtype: 'fieldset',
+                            name: 'category_accrual_cap_data',
                             userCls:'admin-fieldset',
-                            title: 'Cap Accruals At:',
+                            title: 'Cap Accruals At',
                             layout: 'hbox',
                             flex:1,
 
@@ -209,15 +274,27 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'combobox',
-                                    name: 'ca1',
-                                    flex: 2,
-                                    //bind: '{reportParams.conditional}'
+                                    flex: 1,
+                                    name: 'category_accrual_cap_amount',
+                                    decimalPrecision: 2,
                                 },
                                 {
                                     xtype: 'combobox',
-                                    name: 'ca2',
-                                    flex: 2,
-                                    //bind: '{reportParams.conditional}'
+                                    flex: 1,
+                                    name: 'category_accrual_cap_unit',
+                                    store: Ext.create('Ext.data.Store', {
+                                        fields: ['code', 'description'],
+                                        data: [
+                                            { "code": 48, "description": "Days" },
+                                            { "code": 49, "description": "Hours" },
+                                            { "code": 50, "description": "Minutes" }
+
+                                        ]
+                                    }),
+                                    valueField: 'code',
+                                    displayField: 'description'
+
+
                                 },
                             ]
 
@@ -226,8 +303,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         },
                         {
                             xtype: 'fieldset',
+                            name: 'category_balance_cap_data',
                             userCls:'admin-fieldset',
-                            title: 'Cap Balance At:',
+                            title: 'Cap Balance At',
                             layout: 'hbox',
                             flex:1,
 
@@ -238,17 +316,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'spinnerfield',
-                                    name: 'cb1',
-                                    label: '',
+                                    name: 'category_balance_cap_amount',
                                     flex: 1,
                                     style: 'padding-left: 4pt',
-                                    //bind: '{reportParams.conditional_amt}'
+                                    decimalPrecision: 2,
                                 },
                                 {
                                     xtype: 'combobox',
-                                    name: 'cb2',
                                     flex: 2,
-                                    //bind: '{reportParams.conditional}'
+                                    name: 'category_balance_cap_unit',
+                                    store: Ext.create('Ext.data.Store', {
+                                        fields: ['code', 'description'],
+                                        data: [
+                                            { "code": 48, "description": "Days" },
+                                            { "code": 49, "description": "Hours" },
+                                            { "code": 50, "description": "Minutes" }
+
+                                        ]
+                                    }),
+                                    valueField: 'code',
+                                    displayField: 'description'
                                 },
                             ]
 
@@ -262,7 +349,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 {
                     xtype: 'fieldset',
                     userCls:'admin-fieldset',
-                    title: 'Recording Model',
+                    title: '',
                     height:'45pt',
                     layout: 'hbox',
                     flex:1
@@ -270,7 +357,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 {
                     xtype: 'fieldset',
                     userCls:'admin-fieldset',
-                    title: 'Recording Model',
+                    title: '',
                     height:'45pt',
                     layout: 'hbox',
                     flex:1
