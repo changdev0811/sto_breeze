@@ -409,8 +409,8 @@
                 ns = 'Breeze.view.admin.AccrualPolicies';
                 break;
 
-                case 'audit':
-                ns = 'Breeze.view.admin.Audit';
+                case 'companyhistory':
+                ns = 'Breeze.view.admin.CompanyHistory';
                 break;
 
                 case 'departments':

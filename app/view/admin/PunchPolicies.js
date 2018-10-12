@@ -22,8 +22,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
             layout: 'vbox',
             buttonAlign: 'right',
             buttons: {
-                sub: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
-                add: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
+                add: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
+                sub: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
             },
             buttonToolbar: {
                 xtype: 'toolbar',

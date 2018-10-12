@@ -1,12 +1,12 @@
 /**
- * Audit Report form
- * @class Audit
- * @namespace Breeze.view.admin.Audit
- * @alias widget.admin.audit
+ * CompanyHistory 
+ * @class CompanyHistory
+ * @namespace Breeze.view.admin.CompanyHistory
+ * @alias widget.admin.companycistory
  */
-Ext.define('Breeze.view.admin.Audit', {
+Ext.define('Breeze.view.admin.CompanyHistory', {
     extend: 'Ext.Panel',
-    alias: 'widget.admin.audit',
+    alias: 'widget.admin.companyhistory',
 
     // Layout and base styles
     layout: 'vbox',

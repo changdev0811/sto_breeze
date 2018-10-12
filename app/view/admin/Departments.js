@@ -83,71 +83,51 @@ Ext.define('Breeze.view.admin.Departments', {
                     label: 'Department Name:',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
-
+                    name: 'DeptName',
                 },
 
                 {
-                    xtype: 'breeze-textfield',
-                    label: 'Leave Request Conflect Limit:',
-                    ui: 'admin admin-text',
+                    xtype: 'spinnerfield',
+                    ui: 'reporting reporting-text',
                     userCls:'admin-fieldset-no-border',
-
+                    name: 'numConflictLimit',
+                    allowDecimals: false,
+                    minValue: 0,
+                    labelAlign:'left',
+                    labelWidth:'auto',
+                    label:'Leave Request Conflect Limit',
                 },
 
-
-
-                {
-                    xtype: 'tree',
-                    ui: 'employee-worktime-records-grid',
-                    userCls: 'admin-fieldset employee-worktime-records-grid',
-                    layout: 'hbox',
-                    hideHeaders: true,
-                    rootVisible: false,
-                    flex:1,
-                    columns: [
-                        //{
-                        //    xtype: 'treecolumn',
-                        //    /* +++ New cel:{} +++ */
-                        //    cell:{
-                        //        ui:'admin-tree-column',
-                        //    },
-                        //
-                        //    dataIndex: 'text',
-                        //    flex: 1,
-                        //    layout: {
-                        //        alignment: 'stretch'
-                        //    }
-                        //}
-                    ],
-                    //reference: 'departmentTree',
-                    //bind: '{departmentsTree}'
+                {    
+                    xtype: 'panel',
+                    title: 'Supervisors',
+                    ui: 'admin-sub' ,
+                    flex: 1,
+                    layout: 'vbox',
+                    items:[
+                        {
+                            xtype: 'container',
+                            userCls:'admin-fieldset',
+                            flex: 1,
+                            layout: 'vbox',
+                        }
+                    ]
                 },
-                {
-                    xtype: 'tree',
-                    ui: 'employee-worktime-records-grid',
-                    userCls: 'admin-fieldset employee-worktime-records-grid',
-                    layout: 'hbox',
-                    hideHeaders: true,
-                    rootVisible: false,
-                    flex:1,
-                    columns: [
-                        //{
-                        //    xtype: 'treecolumn',
-                        //    /* +++ New cel:{} +++ */
-                        //    cell:{
-                        //        ui:'admin-tree-column',
-                        //    },
-                        //
-                        //    dataIndex: 'text',
-                        //    flex: 1,
-                        //    layout: {
-                        //        alignment: 'stretch'
-                        //    }
-                        //}
-                    ],
-                    //reference: 'departmentTree',
-                    //bind: '{departmentsTree}'
-                }
+                {    
+                    xtype: 'panel',
+                    title: 'Employees',
+                    ui: 'admin-sub' ,
+                    flex: 1,
+                    layout: 'vbox',
+                    items:[
+                        {
+                            xtype: 'container',
+                            userCls:'admin-fieldset',
+                            flex: 1,
+                            layout: 'vbox',
+                        }
+                    ]
+                },
             ]
         },
 

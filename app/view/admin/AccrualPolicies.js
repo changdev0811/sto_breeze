@@ -1,5 +1,5 @@
 /**
- * AccrualPolicies Report form
+ * AccrualPolicies
  * @class AccrualPolicies
  * @namespace Breeze.view.admin.AccrualPolicies
  * @alias widget.admin.AccrualPolicies
@@ -56,7 +56,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     name: 'setting_name_label',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
-
                 },
                 {
                     xtype: 'fieldset',
@@ -65,7 +64,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     title: 'Recording Model',
                     height:'45pt',
                     layout: 'hbox',
-
                     defaults: {
                         bodyAlign: 'stretch',
                         ui: 'admin',
@@ -125,10 +123,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             text: 'Start',
                                             dataIndex: 'StartTime',
                                             menuDisabled: true,
-                                            flex: 1,
-                                            
+                                            flex: 1,                                            
                                             //bind: { editable: '{!readOnly}' }
-                                            
                                         },
                                         {
                                             xtype: 'templatecolumn',
@@ -154,8 +150,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 },
             ]
         },
-        {
-            
+        { 
             xtype: 'panel',
             title: 'List of Categories',
             ui: 'admin-sub',
@@ -163,7 +158,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             layout: 'vbox',
             items:[
                 {
-
                     xtype: 'container',
                     userCls:'admin-fieldset',
                     flex: 1,
@@ -178,7 +172,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             flex: 2,
             layout: 'vbox',
             items:[
-                
                 {
                     xtype: 'container',
                     layout: 'hbox',
@@ -191,7 +184,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             title: 'Recording Year Type',
                             layout: 'hbox',
                             flex:1,
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -214,9 +206,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     boxLabel: 'Fiscal',
                                 }
                             ]
-
-
-
                         },
                         {
                             xtype: 'fieldset',
@@ -250,11 +239,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 },
                             ]
                         },
-
                     ]
-
                 },
-
                 {
                     xtype: 'container',
                     layout: 'hbox',
@@ -293,13 +279,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     }),
                                     valueField: 'code',
                                     displayField: 'description'
-
-
                                 },
                             ]
-
-
-
                         },
                         {
                             xtype: 'fieldset',
@@ -308,8 +289,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             title: 'Cap Balance At',
                             layout: 'hbox',
                             flex:1,
-
-
                             defaults: {
                                 ui: 'reporting reporting-text'
                             },
@@ -331,20 +310,14 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             { "code": 48, "description": "Days" },
                                             { "code": 49, "description": "Hours" },
                                             { "code": 50, "description": "Minutes" }
-
                                         ]
                                     }),
                                     valueField: 'code',
                                     displayField: 'description'
                                 },
                             ]
-
-
-
                         },
-
                     ]
-
                 },
                 {
                     xtype: 'fieldset',
@@ -366,5 +339,4 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
         },
 
     ]
-
 });

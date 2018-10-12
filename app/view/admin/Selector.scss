@@ -88,6 +88,14 @@
     $background-gradient: none
 );
 
+
+@include toolbar-ui(
+    $ui: 'moose',
+    $background-color: red,
+    $background-gradient: none
+);
+
+
 @include treecell-ui(
     $ui: 'report-tree-column',
 
@@ -188,3 +196,6 @@
 .tool-button-right {
     right:5pt;
 }
+
+
+

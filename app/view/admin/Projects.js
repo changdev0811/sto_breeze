@@ -22,8 +22,8 @@ Ext.define('Breeze.view.admin.Projects', {
             layout: 'vbox',
             buttonAlign: 'right',
             buttons: {
-                sub: { text: '-', /*handler: 'onPrintPDF',*/ ui: 'action' },
-                add: { text: '+', /*handler: 'onPrintPDF',*/ ui: 'action' },
+                sub: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
+                add: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
             },
             buttonToolbar: {
                 xtype: 'toolbar',
@@ -57,23 +57,24 @@ Ext.define('Breeze.view.admin.Projects', {
                 {
                     xtype: 'breeze-textfield',
                     label: 'Name',
+                    name: 'project_name',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
                 },
                 {
                     xtype: 'breeze-textfield',
                     label: 'Description',
+                    name: 'description',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
                 },
                 {
                     xtype: 'breeze-textfield',
                     label: 'Code',
+                    name: 'project_code',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
                 },
-
-
                 {
                     xtype:'container',
                     userCls:'admin-fieldset-no-border',
@@ -82,25 +83,21 @@ Ext.define('Breeze.view.admin.Projects', {
                         {
                             xtype:'checkbox',
                             ui:'admin',
-                            name: 'condType',
+                            name: 'isWorktime',
                             id: 'radio1',
                             value: '20',
                             boxLabel: 'Counts as Time Worked',
                             bodyAlign: 'stretch',
-
-
                         },
 
                         {
                             xtype:'checkbox',
                             ui:'admin',
-                            name: 'condType',
+                            name: 'isOT',
                             id: 'radio2',
                             value: '20',
                             boxLabel: 'Counts as Overtime',
                             bodyAlign: 'stretch',
-
-
                         },
 
 

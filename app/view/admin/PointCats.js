@@ -22,8 +22,8 @@ Ext.define('Breeze.view.admin.PointCats', {
             layout: 'vbox',
             buttonAlign: 'right',
             buttons: {
-                sub: { text: '-', /*handler: 'onPrintPDF',*/ ui: 'action' },
-                add: { text: '+', /*handler: 'onPrintPDF',*/ ui: 'action' },
+                sub: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
+                add: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
             },
             buttonToolbar: {
                 xtype: 'toolbar',
@@ -69,19 +69,43 @@ Ext.define('Breeze.view.admin.PointCats', {
                             xtype: 'container',
                             userCls:'admin-fieldset-no-border',
                             layout:'hbox',
-                            items:[
+                            defaults: {
+                                ui: 'reporting reporting-text'
+                            },
+                            items: [
                                 {
-                                    xtype: 'breeze-textfield',
-                                    label: 'Duration',
-                                    ui: 'admin admin-text',
+                                    xtype: 'spinnerfield',
+                                    label:'Duration',
+                                    labelAlign:'left',
+                                    labelWidth:'auto',
+                                    name: 'duration_amount',
+                                    flex: 1,
+                                    style: 'padding-left: 4pt',
                                 },
                                 {
-                                    xtype: 'breeze-textfield',
-                                    label: 'Years',
-                                    ui: 'admin admin-text',
+                                    xtype: 'combobox',
+                                    flex: 1,
+                                    name: 'duration_unit',
+                                    store: Ext.create('Ext.data.Store', {
+                                        fields: ['code', 'description'],
+                                        data: [
+                                            { "code": 48, "description": "Days" },
+                                            { "code": 49, "description": "Hours" },
+                                            { "code": 50, "description": "Minutes" }
+                                        ]
+                                    }),
+                                    valueField: 'code',
+                                    displayField: 'description'
                                 },
                             ]
                         },
+
+
+
+
+
+
+
                         {
                             xtype: 'panel',
                             title: 'Details',

@@ -33,17 +33,23 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         {
             xtype: 'container',
             layout: 'hbox',
-            items:[
-
+            userCls:'admin-fieldset-no-border',
+            defaults: {
+                ui: 'reporting reporting-text',
+            },
+            items: [
                 {
-
-
-                    xtype: 'breeze-textfield',
-                    flex:1,
-                    label: 'Holidays for Year:',
-                    name: 'reportTitle',
-                    ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
+                    xtype: 'combobox',
+                    name: 'recYear',
+                    width:'200pt',
+                    label:'Holidays for Year',
+                    labelAlign:'left',
+                    labelWidth:'auto',
+                    name: 'duration_amount',
+                    name: 'category_balance_cap_unit',
+                    valueField: 'code',
+                    displayField: 'description',
+                    style: 'padding-left: 4pt',
 
                 },
                 {
@@ -57,12 +63,12 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 },
                 {
                     xtype:'container',
-                    flex:1
+                    flex:2
                 }
-
-
-
             ]
+
+
+
 
         },
 
@@ -84,7 +90,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     
                     buttons: {
                         apply: { text: 'Apply Holiday Schedule', /*handler: 'onPrintPDF',*/ ui: 'action', userCls:'tool-button-left' },
-                        add: { text: '+', /*handler: 'onPrintPDF',*/ ui: 'action', userCls:'tool-button-right' },
+                        add: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
                     },
 
                     buttonAlign: 'left',
@@ -133,6 +139,116 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                             userCls:'admin-fieldset',
                             flex: 1,
                             layout: 'vbox',
+                            items:[
+
+                                {
+                                    xtype: 'breeze-textfield',
+                                    label: 'Holiday Name',
+                                    name:'holiday_Name',
+                                    ui: 'admin admin-text',
+                                    userCls:'admin-fieldset-no-border',
+
+                                },
+                                {
+                                    xtype: 'spinnerfield',
+                                    ui: 'reporting reporting-text',
+                                    userCls:'admin-fieldset-no-border',
+                                    label:'Percentage',
+                                    name: 'percentage',
+                                    maxValue: 100,
+                                    minValue: 0,
+                                    labelAlign:'left',
+                                    labelWidth:'auto',
+                                    name: 'duration_amount',
+                                },
+                                {
+                                    xtype: 'panel.minicalendar',
+                                    reference: 'weekSelector',
+                                    ui: 'minicalendar',//'wtr-small',,
+                                    collapsed: true,
+                                    margin: '0pt 10pt 0pt 10pt',
+                                    listeners: {
+                                        //change: 'onWeekChange'
+                                    }
+                                },
+
+                                {
+                                    xtype: 'breeze-checkbox',
+                                    name: 'overtime_opt1',
+                                    boxLabel: 'Floating Holiday?',
+                                    name: 'floatingHoliday',
+                                    labelWidth: 'auto',
+                                    ui: 'employeeinfo-checkbox',
+                                    userCls: 'employee-info-general-field',
+                                    bodyAlign: 'stretch',
+                                    reference: 'otCheck1',
+                                    bind: {
+                                        //checked: '{info.punchPolicy.Ot_Opt1}'
+                                    },
+                                    listeners: {
+                                        //change: 'onOvertime1Change'
+                                    }
+
+
+                                },
+
+                                {
+                                    xtype:'container',
+                                    name: 'floatOptions',
+                                    layout:'hbox',
+                                    userCls: 'employee-info-general-field',
+                                    defaults: {
+                                        ui: 'reporting reporting-text'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 1,
+                                            name: 'week',
+                                            valueField: 'data',
+                                            displayField: 'text',
+                                            editable: false,
+                                            allowBlank: false,
+                                            blankText: 'Week',
+                                            forceSelection: true,
+                                        },
+                                        {
+                                            xtype: 'container',
+                                            width: '10pt' //Spacing
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 2,
+                                            name: 'day',
+                                            valueField: 'data',
+                                            displayField: 'text',
+                                            editable: false,
+                                            allowBlank: false,
+                                            blankText: 'Day',
+                                            forceSelection: true,
+                                        },
+                                        {
+                                            xtype: 'container',
+                                            width: '10pt' //Spacing
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 2,
+                                            name: 'month',
+                                            valueField: 'data',
+                                            displayField: 'text',
+                                            editable: false,
+                                            allowBlank: false,
+                                            blankText: 'Month',
+                                            forceSelection: true,
+                                        },                                    ]
+
+
+
+
+                                }
+
+                            ]
                         },
 
                     ]
