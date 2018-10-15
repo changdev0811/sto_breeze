@@ -155,11 +155,11 @@ Ext.define('Breeze.store.reporting.Routes', {
             view: 'Breeze.view.reporting.employee.Timesheet'             
         },
         {
-            category: 'employee', type: 'worktime', 
-            view: 'Breeze.view.reporting.employee.Worktime'             
+            category: 'employee', type: 'worktimedetails', 
+            view: 'Breeze.view.reporting.employee.WorktimeDetails'             
         },
         {
-            category: 'employee', type: 'yearataGlance', 
+            category: 'employee', type: 'yearataglance', 
             view: 'Breeze.view.reporting.employee.YearAtAGlance'             
         }
         // Miscellaneous
