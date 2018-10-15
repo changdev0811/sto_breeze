@@ -161,13 +161,98 @@ Ext.define('Breeze.store.reporting.Routes', {
         {
             category: 'employee', type: 'yearataglance', 
             view: 'Breeze.view.reporting.employee.YearAtAGlance'             
-        }
+        },
         // Miscellaneous
-
+        {
+            category: 'miscellaneous', type: 'accrualpolicies', 
+            view: 'Breeze.view.reporting.miscellaneous.AccrualPolicies'             
+        },
+        {
+            category: 'miscellaneous', type: 'anniversaries', 
+            view: 'Breeze.view.reporting.miscellaneous.Anniversaries'             
+        },
+        {
+            category: 'miscellaneous', type: 'audit', 
+            view: 'Breeze.view.reporting.miscellaneous.Audit'             
+        },
+        {
+            category: 'miscellaneous', type: 'birthdays', 
+            view: 'Breeze.view.reporting.miscellaneous.Birthdays'             
+        },
+        {
+            category: 'miscellaneous', type: 'departmentlist', 
+            view: 'Breeze.view.reporting.miscellaneous.DepartmentList'             
+        },
+        {
+            category: 'miscellaneous', type: 'holidaydetails', 
+            view: 'Breeze.view.reporting.miscellaneous.HolidayDetails'             
+        },
+        {
+            category: 'miscellaneous', type: 'holidays', 
+            view: 'Breeze.view.reporting.miscellaneous.Holidays'             
+        },
+        {
+            category: 'miscellaneous', type: 'holidayreconciliation', 
+            view: 'Breeze.view.reporting.miscellaneous.HolidayReconciliation'             
+        },
+        {
+            category: 'miscellaneous', type: 'leaverequestsummary', 
+            view: 'Breeze.view.reporting.miscellaneous.LeaveRequestSummary'             
+        },
+        {
+            category: 'miscellaneous', type: 'leaverequests.js', 
+            view: 'Breeze.view.reporting.miscellaneous.LeaveRequests'             
+        },
+        {
+            category: 'miscellaneous', type: 'attendance', 
+            view: 'Breeze.view.reporting.miscellaneous.Attendance'             
+        },
+        {
+            category: 'miscellaneous', type: 'policy', 
+            view: 'Breeze.view.reporting.miscellaneous.Policy'             
+        },
+        {
+            category: 'miscellaneous', type: 'quicklist', 
+            view: 'Breeze.view.reporting.miscellaneous.QuickList'             
+        },
+        {
+            category: 'miscellaneous', type: 'supervisors', 
+            view: 'Breeze.view.reporting.miscellaneous.Supervisors'             
+        },
         // Point
-
+        {
+            category: 'point', type: 'excessivepoints', 
+            view: 'Breeze.view.reporting.point.ExcessivePoints'             
+        },
+        {
+            category: 'point', type: 'pointdetails', 
+            view: 'Breeze.view.reporting.point.PointDetails'             
+        },
+        {
+            category: 'point', type: 'pointledger', 
+            view: 'Breeze.view.reporting.point.PointLedger'             
+        },
+        {
+            category: 'point', type: 'pointtotals', 
+            view: 'Breeze.view.reporting.point.PointTotals'             
+        },
         // Project
-
+        {
+            category: 'project', type: 'projectdetails', 
+            view: 'Breeze.view.reporting.project.ProjectDetails'             
+        },
+        {
+            category: 'project', type: 'projectprofile', 
+            view: 'Breeze.view.reporting.project.ProjectProfile'             
+        },
+        {
+            category: 'project', type: 'projectrecap', 
+            view: 'Breeze.view.reporting.project.ProjectRecap'             
+        },
+        {
+            category: 'project', type: 'projecttime', 
+            view: 'Breeze.view.reporting.project.ProjectTime'             
+        }
     ],
 
     resolve: function(category, type){
