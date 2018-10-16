@@ -108,11 +108,13 @@ Ext.define('Breeze.view.employee.InformationController', {
                             // remove hidden fields so they can't be pilfered with inspect
                             if(!vm.get('perms.ssn')){
                                 var ssnPlain = me.view.lookup('ssnPlain');
-                                ssnPlain.parent.remove(ssnPlain);
+                                // ssnPlain.parent.remove(ssnPlain);
+                                ssnPlain.setHidden(true);
                             }
                             if(!vm.get('perms.compensation')){
                                 var compPlain = me.view.lookup('compensationPlain');
-                                compPlain.parent.remove(compPlain);
+                                // compPlain.parent.remove(compPlain);
+                                compPlain.setHidden(true);
                             }
 
                             // handle rights

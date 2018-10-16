@@ -110,6 +110,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     label: 'Compensation',
                     value: '(Hidden)',
                     readOnly: true,
+                    ignoreReadOnly: true,
                     // ignoreReadOnly: true, // tell ReadOnly plugin to bypass this field
                     reference: 'compensationHidden',
                     bind: {

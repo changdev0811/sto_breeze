@@ -17,7 +17,7 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     fieldTypes: {
     	editable: [
             'textfield','datefield','email','text','password','spinnerfield','date',
-			// 'breeze-textfield',
+			'breeze-textfield',
 			// 'breeze-password', 'passwordfield',
 			'breeze-email', 
 			// 'numberfield',
