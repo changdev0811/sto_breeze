@@ -16,7 +16,14 @@ Ext.define('Breeze.widget.dataview.categories.Item', {
         // CSS Class applied to legend label component
         // labelCls: '',
         // UI style(s) for checkboxes
-        checkboxUi: ''
+        checkboxUi: '',
+        /** Optional field listeners to attach to checkboxes and radio buttons */
+        fieldListeners: {}
+    },
+
+    fieldIds: {
+        check: 'checkboxField',
+        radio: 'radioField'
     },
 
     layout: 'hbox',
@@ -27,26 +34,10 @@ Ext.define('Breeze.widget.dataview.categories.Item', {
     },
 
 
-    //===[Event Handlers]===
-
-    /**
-     * Handles change event for checkbox
-     * @param {Object} c Component event originated from (checkbox) 
-     * @param {Boolean} newVal New value
-     * @param {Boolean} oldVal Old Value 
-     */
-    onCheckboxChange: function (c, newVal, oldVal) {
-        // console.info('Checkbox changed');
-        if (newVal) {
-            c.getParent().getParent().getSelectable().select(c.getParent().getRecord(), true);
-        } else {
-            c.getParent().getParent().getSelectable().deselect(c.getParent().getRecord(), true);
-        }
-    },
-
     //===[Private Methods]===
 
     privates: {
+
         buildItems: function () {
             var items = [];
             switch (this.getParent().getFieldMode()) {
@@ -54,12 +45,11 @@ Ext.define('Breeze.widget.dataview.categories.Item', {
                     items.push(
                         {
                             xtype: 'breeze-checkbox',
-                            itemId: 'checkboxField',
+                            itemId: this.fieldIds.check,
                             ui: this.getCheckboxUi(),
                             padding: '1em',
-                            listeners: {
-                                change: this.onCheckboxChange
-                            }
+                            listeners: this.getFieldListeners(),
+                            style: 'pointer-events: none'
                         }
                     );
                     break;
@@ -67,12 +57,13 @@ Ext.define('Breeze.widget.dataview.categories.Item', {
                     items.push(
                         {
                             xtype: 'radio',
-                            itemId: 'radioField',
+                            itemId: this.fieldIds.radio,
                             ui: 'reporting',
                             bind: {
                                 value: '{record.Category_Code}'
                             },
-                            name: this.getParent().getId() + '-radio'
+                            name: this.getParent().getId() + '-radio',
+                            listeners: this.getFieldListeners()
                         }
                     );
                     break;
