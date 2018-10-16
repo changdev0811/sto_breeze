@@ -1,3 +1,9 @@
+/**
+ * Provides navigation tree nodes for Personal nav menu
+ * @class Personal
+ * @namespace Breeze.helper.navigation.Personal
+ * @extends Breeze.helper.navigation.TreeBase
+ */
 Ext.define('Breeze.helper.navigation.Personal', {
     extend: 'Breeze.helper.navigation.TreeBase',
 

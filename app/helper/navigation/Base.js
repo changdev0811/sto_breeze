@@ -1,23 +1,27 @@
+/**
+ * Base class for Navigation helpers. Not used directly-- more specific
+ * Navigation helper classes extend this
+ * @class Base
+ * @namespace Breeze.helper.navigation.Base
+ */
 Ext.define('Breeze.helper.navigation.Base', {
 
     /**
-     * Wrao array of tree nodes inside a tree store structure
+     * Takes tree node array and tosses it into a new instance
+     * of a TreeStore
      * @param {Array} baseData Array of tree nodes
-     * @return {Object} Nodes wrapped in tree store structure
+     * @return {Object} TreeStore containing provided tree nodes
      */
     createTree: function (baseData) {
-        return {
-            root: {
-                children: baseData
-            }
-        };
+        return Ext.create('Ext.data.TreeStore', {
+            children: baseData
+        });
     },
 
     /**
      * Merge tree data into an existing tree
-     * @param {Object} existing Existing tree object (from createTree)
-     * @param {Object|Array} newData Data to merge into tree, either returned
-     *      from createTree, or an array of nodes
+     * @param {Array} existing Existing tree array
+     * @param {Array} newData Data to merge into tree, an array of nodes
      * @param {String} path Path of ids joined by '/' specifying where merge
      *      is to occur
      * @param {Object} options Optional options:
@@ -38,10 +42,9 @@ Ext.define('Breeze.helper.navigation.Base', {
      *      createTree method to wrap it inside a tree store object
      */
     mergeTree: function (existing, newData, path, options) {
-        var base = existing.root.children.slice(0),
+        var base = existing.slice(0),
             // Accept table store format or array of child nodes
-            addition = (Array.isArray(newData))? newData.slice(0) :
-                newData.root.children.slice(0),
+            addition = newData.slice(0),
             // provide default values for options not defined
             options = { 
                 child: (options && options.children)? 
@@ -84,7 +87,7 @@ Ext.define('Breeze.helper.navigation.Base', {
 
     /**
      * Find node in tree by its path and id
-     * @param {Array|Object} tree Tree to traverse to resolve path
+     * @param {Array} tree Tree to traverse to resolve path
      * @param {String} path Path of target, consisting of IDs separated by '/'
      * @param {Boolean} parentOnly Optional bool that when true causes
      *      the node containing the target to be returned. If containing
@@ -95,7 +98,7 @@ Ext.define('Breeze.helper.navigation.Base', {
      */
     resolvePath: function (tree, path, parentOnly) {
         // ensure tree is array of nodes
-        var nodes = (Array.isArray(tree)) ? tree : tree.root.children,
+        var nodes = tree,
             parentOnly = parentOnly || false,
             pathSteps = path.split('/'),
             depth = 0;
