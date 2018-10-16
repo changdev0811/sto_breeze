@@ -145,3 +145,38 @@
 .employeeinfo-shift-grid {
     border:solid 1px white;
 }
+
+// ===[User Categories List Widget Specific]==
+@include listitem-ui(
+    $ui: 'reporting-list-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'row-dark'),
+    $selected-background-color: map-get($reporting-colors, 'row-light'),
+    $hovered-background-color: map-get($reporting-colors, 'row-light'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+@include panel-ui(
+    $ui: 'reporting-list-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+@include paneltitle-ui(
+    $ui: 'reporting-list-panel',
+    $font-size: map-get($root-font-sizes, 'base')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'reporting-list-panel'
+) {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+};
