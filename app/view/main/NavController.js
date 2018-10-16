@@ -95,21 +95,7 @@
 
         loadNavigation: function(){
             var me = this;
-            // var navTree= Ext.create('Breeze.helper.navigation.Personal');
-            // me.addStoreToViewModel(
-            //     navTree.asTree(),
-            //     'personalNav',
-            //     {
-            //         load: true,
-            //         loadOpts: { callback: function(success, r, o) {
-            //             if(success){
-            //                 console.info('Successfully loaded nav from helper');
-            //             } else {
-            //                 console.info('Failed to load nav from helper', r, o);
-            //             }
-            //         }}
-            //     }
-            // );
+            
             var navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
             navStore.load({
                 callback: (r,o,success) => {
@@ -121,29 +107,6 @@
                     }
                 }
             });
-            // var navStore = Ext.create('Breeze.store.navigation.Personal');
-            // navStore.load({callback: (r,o,success) => {
-            //     if(success){
-            //         me.addLoadedStoreToViewModel(navStore, 'personalNav');
-            //         console.info('loaded navigation items');
-            //     } else {
-            //         console.warn('Failed to load navigation items', r, o, success);
-            //     }
-            // }});
-            // me.addStoreToViewModel(
-            //     'Breeze.store.navigation.Personal',
-            //     'personalNav',
-            //     {
-            //         load: true,
-            //         loadOpts: { callback: function(success, r, o){
-            //             if(success){
-            //                 console.info('Loaded nav from store successfully');
-            //             } else {
-            //                 console.warn('Failed loading nav from store', r, o);
-            //             }
-            //         }}
-            //     }
-            // );
         },
 
         /**
