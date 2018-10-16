@@ -148,7 +148,7 @@
 
 // ===[User Categories List Widget Specific]==
 @include listitem-ui(
-    $ui: 'reporting-usercategories-item',
+    $ui: 'reporting-list-item',
     $color: map-get($reporting-text-colors, 'base'),
     $selected-color: map-get($reporting-text-colors, 'base'),
     $hovered-color: map-get($reporting-text-colors, 'base'),

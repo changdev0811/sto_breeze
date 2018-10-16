@@ -1,7 +1,16 @@
-Ext.define('Breeze.widget.dataview.UserCategoriesItem', {
+/**
+ * User Categories list widget item
+ * Used by widget.breeze.dataview.categories.list
+ * @class Item
+ * @namespace Breeze.widget.dataview.categories.Item
+ * @extends Ext.dataview.ListItem
+ * @alias widget.breeze.dataview.categories.item
+ * @xtype breeze-categories-item
+ */
+Ext.define('Breeze.widget.dataview.categories.Item', {
     extend: 'Ext.dataview.ListItem',
-    alias: 'widget.breeze.dataview.usercategoriesitem',
-    xtype: 'breeze-dataview-usercategories-item',
+    alias: 'widget.breeze.dataview.categories.item',
+    xtype: 'breeze-categories-item',
 
     config: {
         // CSS Class applied to legend label component

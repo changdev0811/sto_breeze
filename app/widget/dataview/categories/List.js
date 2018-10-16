@@ -1,7 +1,16 @@
-Ext.define('Breeze.widget.dataview.UserCategories', {
+/**
+ * User Categories multi-functional selection list widget
+ * List with selection options for single (none, radio) and multiple (checkbox)
+ * @class List
+ * @namespace Breeze.widget.dataview.categories.List
+ * @extends Ext.dataview.List
+ * @alias widget.breeze.dataview.categories.list
+ * @xtype breeze-categories-list
+ */
+Ext.define('Breeze.widget.dataview.categories.List', {
     extend: 'Ext.dataview.List',
-    alias: 'widget.breeze.dataview.usercategories',
-    xtype: 'breeze-dataview-usercategories',
+    alias: 'widget.breeze.dataview.categories.list',
+    xtype: 'breeze-categories-list',
 
     config: {
         /*  
@@ -15,9 +24,8 @@ Ext.define('Breeze.widget.dataview.UserCategories', {
 
     // Override default dataview item control
     itemConfig: {
-        xtype: 'breeze-dataview-usercategories-item',
+        xtype: 'breeze.dataview.categories.item',
         viewModel: true,
-        labelCls: '',
         checkboxUi: 'reporting'
     },
 
