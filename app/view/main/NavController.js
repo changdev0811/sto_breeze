@@ -70,6 +70,12 @@
             'home': {
                 action: 'onHomeRoute'
             },
+            'employees/:view/:id': {
+                action: 'onEmployeesViewRoute'
+            },
+            'employees': {
+                action: 'onEmployeesRoute'
+            },
             // Report route
             'reports/:category/:type': {
                 action: 'onReportRoute',
@@ -96,17 +102,9 @@
         loadNavigation: function(){
             var me = this;
             
+            // var navStore = Ext.create('Breeze.helper.navigation.Personal').asTreeWithExtras('Breeze.helper.navigation.Employees');
             var navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
-            navStore.load({
-                callback: (r,o,success) => {
-                    if(success){
-                        console.info('Loaded nav from helper');
-                        me.addLoadedStoreToViewModel(navStore, 'personalNav');
-                    } else {
-                        console.warn('Failed to load nav from helper', r, o);
-                    }
-                }
-            });
+            me.addLoadedStoreToViewModel(navStore, 'personalNav');
         },
 
         /**
@@ -265,6 +263,14 @@
                     data: { employee: undefined }
                 })
             );
+        },
+
+        onEmployeesViewRoute: function(view, id){
+
+        },
+
+        onEmployeesRoute: function(){
+            console.info('Employees route resolved');
         },
 
         onPersonalEmployeeInfoRoute: function(){

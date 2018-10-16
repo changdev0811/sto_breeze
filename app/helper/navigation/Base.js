@@ -13,9 +13,16 @@ Ext.define('Breeze.helper.navigation.Base', {
      * @return {Object} TreeStore containing provided tree nodes
      */
     createTree: function (baseData) {
-        return Ext.create('Ext.data.TreeStore', {
-            children: baseData
-        });
+        // return Ext.create('Ext.data.TreeStore', {
+        //     children: baseData,
+        //     autoLoad: true
+        // });
+        return {
+            type: 'tree',
+            root: {
+                children: baseData
+            }
+        }
     },
 
     /**
