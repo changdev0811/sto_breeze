@@ -188,8 +188,8 @@ Ext.define('Breeze.store.reporting.Routes', {
             view: 'Breeze.view.reporting.misc.HolidayDetails'             
         },
         {
-            category: 'misc', type: 'holidays', 
-            view: 'Breeze.view.reporting.misc.Holidays'             
+            category: 'misc', type: 'holidaylist', 
+            view: 'Breeze.view.reporting.misc.HolidayList'             
         },
         {
             category: 'misc', type: 'holidayreconciliation', 
