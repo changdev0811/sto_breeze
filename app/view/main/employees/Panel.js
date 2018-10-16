@@ -38,7 +38,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
             },
             defaults: {
                 userCls: 'employees-panel',
-                layout: type: 'vbox'
+                layout: 'vbox'
             },
             items: [
                 // ===[Employees Tab]===
