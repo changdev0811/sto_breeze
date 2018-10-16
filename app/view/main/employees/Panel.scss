@@ -1,0 +1,14 @@
+@include displayfield-ui(
+    $ui: 'employees-panel-field',
+    $input-font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+@include field-ui(
+    $ui: 'employees-panel-field',
+    $font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+.employees-panel {
+    background-color: map-get($wtr-colors, 'base');
+    padding: 8pt;
+}
