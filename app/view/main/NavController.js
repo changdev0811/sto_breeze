@@ -10,7 +10,7 @@
      * View Controller for view.main.Nav
      */
     Ext.define('Breeze.view.main.NavController', {
-        extend: 'Ext.app.ViewController',
+        extend: 'Breeze.controller.Base',
         alias: 'controller.main.nav',
 
         // TODO: Determine if this actually does anything
@@ -87,9 +87,26 @@
             this.theme = Breeze.helper.Theme;
             this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
             Ext.util.History.init();
+            this.loadNavigation();
             this.loadEmployee();
             this.loadPunchSettings();
             this.updateAttendanceStatus();
+        },
+
+        loadNavigation: function(){
+            var me = this;
+            
+            var navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
+            navStore.load({
+                callback: (r,o,success) => {
+                    if(success){
+                        console.info('Loaded nav from helper');
+                        me.addLoadedStoreToViewModel(navStore, 'personalNav');
+                    } else {
+                        console.warn('Failed to load nav from helper', r, o);
+                    }
+                }
+            });
         },
 
         /**

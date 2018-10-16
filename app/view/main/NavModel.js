@@ -55,33 +55,33 @@ Ext.define('Breeze.view.main.NavModel', {
                                 text: 'Download PunchStation', leaf: true,
                                 iconCls: 'x-fas fa-cloud-download-alt',
                                 routeRef: 'download/punch_station',
-                                id: 'personal'
+                                id: 'punchstation'
                             },
                             {
                                 text: 'Calendar', leaf: true,
                                 iconCls: 'x-fas fa-calendar',
-                                id: 'personal',
+                                id: 'calendar',
 								routeRef: 'personal/calendar'
                             }, {
                                 text: 'Employee Information', leaf: true,
                                 iconCls: 'x-fas fa-id-card',
                                 routeRef: 'personal/info',
-                                id: 'personal'
+                                id: 'employeeInfo'
                             }, {
                                 text: 'FYI', leaf: true,
                                 iconCls: 'x-fas fa-table',
                                 routeRef: 'personal/fyi',
-                                id: 'personal'
+                                id: 'fyi'
                             }, {
                                 text: 'Year at a Glance', leaf: true,
                                 iconCls: 'x-fas fa-eye',
                                 routeRef: 'personal/year_at_a_glance',
-                                id: 'personal'
+                                id: 'yaag'
                             }, {
                                 text: 'WorkTime Records', leaf: true,
                                 iconCls: 'x-fas fa-calendar-check-o',
                                 routeRef: 'personal/worktime_records',
-                                id: 'personal'
+                                id: 'wtr'
                             }
                         ]
                     }, {
