@@ -145,3 +145,16 @@
 .employeeinfo-shift-grid {
     border:solid 1px white;
 }
+
+// ===[User Categories List Widget Specific]==
+@include listitem-ui(
+    $ui: 'reporting-usercategories-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'row-dark'),
+    $selected-background-color: map-get($reporting-colors, 'row-light'),
+    $hovered-background-color: map-get($reporting-colors, 'row-light'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
