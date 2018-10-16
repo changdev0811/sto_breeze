@@ -10,7 +10,7 @@
      * View Controller for view.main.Nav
      */
     Ext.define('Breeze.view.main.NavController', {
-        extend: 'Ext.app.ViewController',
+        extend: 'Breeze.controller.Base',
         alias: 'controller.main.nav',
 
         // TODO: Determine if this actually does anything
@@ -87,9 +87,43 @@
             this.theme = Breeze.helper.Theme;
             this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
             Ext.util.History.init();
+            this.loadNavigation();
             this.loadEmployee();
             this.loadPunchSettings();
             this.updateAttendanceStatus();
+        },
+
+        loadNavigation: function(){
+            var me = this;
+            var navTree= Ext.create('Breeze.helper.navigation.Personal');
+            me.addLoadedStoreToViewModel(
+                navTree.asTree(),
+                'personalNav'
+            );
+            console.info('tree', navTree);
+            // var navStore = Ext.create('Breeze.store.navigation.Personal');
+            // navStore.load({callback: (r,o,success) => {
+            //     if(success){
+            //         me.addLoadedStoreToViewModel(navStore, 'personalNav');
+            //         console.info('loaded navigation items');
+            //     } else {
+            //         console.warn('Failed to load navigation items', r, o, success);
+            //     }
+            // }});
+            // me.addStoreToViewModel(
+            //     'Breeze.store.navigation.Personal',
+            //     'personalNav',
+            //     {
+            //         load: true,
+            //         loadOpts: { callback: function(success, r, o){
+            //             if(success){
+            //                 console.info('Loaded nav from store successfully');
+            //             } else {
+            //                 console.warn('Failed loading nav from store', r, o);
+            //             }
+            //         }}
+            //     }
+            // );
         },
 
         /**
