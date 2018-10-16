@@ -15,27 +15,60 @@ Ext.define('Breeze.widget.dataview.UserCategoriesItem', {
     initialize: function () {
         this.callParent();
         this.buildItems();
-        
     },
 
-    onCheckboxChange: function(c,e,eOpts){
-        console.info('Checkbox changed');
+
+    //===[Event Handlers]===
+
+    /**
+     * Handles change event for checkbox
+     * @param {Object} c Component event originated from (checkbox) 
+     * @param {Boolean} newVal New value
+     * @param {Boolean} oldVal Old Value 
+     */
+    onCheckboxChange: function (c, newVal, oldVal) {
+        // console.info('Checkbox changed');
+        if (newVal) {
+            c.getParent().getParent().getSelectable().select(c.getParent().getRecord(), true);
+        } else {
+            c.getParent().getParent().getSelectable().deselect(c.getParent().getRecord(), true);
+        }
     },
+
+    //===[Private Methods]===
 
     privates: {
-        buildItems: function(){
+        buildItems: function () {
             var items = [];
-            if (this.getParent().getCheckboxes()) {
-                items.push(
-                    {
-                        xtype: 'breeze-checkbox',
-                        itemId: 'checkboxField',
-                        ui: this.getCheckboxUi(),
-                        padding: '1em'
-                    }
-                );
+            switch (this.getParent().getFieldMode()) {
+                case 'check':
+                    items.push(
+                        {
+                            xtype: 'breeze-checkbox',
+                            itemId: 'checkboxField',
+                            ui: this.getCheckboxUi(),
+                            padding: '1em',
+                            listeners: {
+                                change: this.onCheckboxChange
+                            }
+                        }
+                    );
+                    break;
+                case 'radio':
+                    items.push(
+                        {
+                            xtype: 'radio',
+                            itemId: 'radioField',
+                            ui: 'reporting',
+                            bind: {
+                                value: '{record.Category_Code}'
+                            },
+                            name: this.getParent().getId() + '-radio'
+                        }
+                    );
+                    break;
             }
-    
+
             items.push(
                 {
                     bind: {
@@ -56,8 +89,6 @@ Ext.define('Breeze.widget.dataview.UserCategoriesItem', {
             );
 
             this.setItems(items);
-            this.getComponent('checkboxField').on('change', this.onCheckboxChange);
-
             // this.getComponent('label').setData({labelCls: this.getLabelCls()});
         }
     }
