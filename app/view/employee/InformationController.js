@@ -316,6 +316,17 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     onUploadProfileImage: function(ref,e,eOpts){
         console.info('Upload profile image');
+        this.apiClass.information.uploadPicture(
+            this.lookup('profileImageForm')
+        ).then((result) => {
+
+        }).catch((err) => {
+            Ext.toast({
+                message: err.message,
+                type: err.type,
+                timeout: 10000
+            });
+        });
     },
     
     /**

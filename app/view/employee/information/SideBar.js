@@ -110,11 +110,31 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     items: [
                         {
                             xtype: 'hiddenfield',
-                            name: 'extension'
+                            name: 'extension', itemId: 'extension'
                         },
                         {
                             xtype: 'hiddenfield',
-                            name: 'picture_modified'
+                            name: 'picture_modified', itemId: 'pictureModified'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            name: 'hashcookie', itemId: 'hashcookie'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            name: 'emp_id', itemId: 'empId'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            name: 'cust_id', itemId: 'custId'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            name: 'employee_id', itemId: 'employeeId'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            name: 'has_picture', itemId: 'hasPicture'
                         },
                         {
                             xtype: 'fieldset',
@@ -132,13 +152,16 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                         },
                         {
                             xtype: 'fieldset',
+                            itemId: 'imageFieldSet',
                             instructions: 'Select a file to upload as a replacement profile image',
                             title: 'Upload New',
                             items: [
                                 {
                                     xtype: 'filefield',
                                     name: 'photo_upload',
+                                    accept: 'image/*',
                                     reference: 'pictureFileField',
+                                    itemId: 'imageFile',
                                     label: 'Image File',
                                     ui: 'employeeinfo-dialog-field'
                                 }
