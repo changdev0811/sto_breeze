@@ -164,60 +164,60 @@ Ext.define('Breeze.store.reporting.Routes', {
         },
         // Miscellaneous
         {
-            category: 'miscellaneous', type: 'accrualpolicies', 
-            view: 'Breeze.view.reporting.miscellaneous.AccrualPolicies'             
+            category: 'misc', type: 'accrualpolicies', 
+            view: 'Breeze.view.reporting.misc.AccrualPolicies'             
         },
         {
-            category: 'miscellaneous', type: 'anniversaries', 
-            view: 'Breeze.view.reporting.miscellaneous.Anniversaries'             
+            category: 'misc', type: 'anniversaries', 
+            view: 'Breeze.view.reporting.misc.Anniversaries'             
         },
         {
-            category: 'miscellaneous', type: 'audit', 
-            view: 'Breeze.view.reporting.miscellaneous.Audit'             
+            category: 'misc', type: 'audit', 
+            view: 'Breeze.view.reporting.misc.Audit'             
         },
         {
-            category: 'miscellaneous', type: 'birthdays', 
-            view: 'Breeze.view.reporting.miscellaneous.Birthdays'             
+            category: 'misc', type: 'birthdays', 
+            view: 'Breeze.view.reporting.misc.Birthdays'             
         },
         {
-            category: 'miscellaneous', type: 'departmentlist', 
-            view: 'Breeze.view.reporting.miscellaneous.DepartmentList'             
+            category: 'misc', type: 'departmentlist', 
+            view: 'Breeze.view.reporting.misc.DepartmentList'             
         },
         {
-            category: 'miscellaneous', type: 'holidaydetails', 
-            view: 'Breeze.view.reporting.miscellaneous.HolidayDetails'             
+            category: 'misc', type: 'holidaydetails', 
+            view: 'Breeze.view.reporting.misc.HolidayDetails'             
         },
         {
-            category: 'miscellaneous', type: 'holidays', 
-            view: 'Breeze.view.reporting.miscellaneous.Holidays'             
+            category: 'misc', type: 'holidays', 
+            view: 'Breeze.view.reporting.misc.Holidays'             
         },
         {
-            category: 'miscellaneous', type: 'holidayreconciliation', 
-            view: 'Breeze.view.reporting.miscellaneous.HolidayReconciliation'             
+            category: 'misc', type: 'holidayreconciliation', 
+            view: 'Breeze.view.reporting.misc.HolidayReconciliation'             
         },
         {
-            category: 'miscellaneous', type: 'leaverequestsummary', 
-            view: 'Breeze.view.reporting.miscellaneous.LeaveRequestSummary'             
+            category: 'misc', type: 'leaverequestsummary', 
+            view: 'Breeze.view.reporting.misc.LeaveRequestSummary'             
         },
         {
-            category: 'miscellaneous', type: 'leaverequests.js', 
-            view: 'Breeze.view.reporting.miscellaneous.LeaveRequests'             
+            category: 'misc', type: 'leaverequests.js', 
+            view: 'Breeze.view.reporting.misc.LeaveRequests'             
         },
         {
-            category: 'miscellaneous', type: 'attendance', 
-            view: 'Breeze.view.reporting.miscellaneous.Attendance'             
+            category: 'misc', type: 'attendance', 
+            view: 'Breeze.view.reporting.misc.Attendance'             
         },
         {
-            category: 'miscellaneous', type: 'policy', 
-            view: 'Breeze.view.reporting.miscellaneous.Policy'             
+            category: 'misc', type: 'policy', 
+            view: 'Breeze.view.reporting.misc.Policy'             
         },
         {
-            category: 'miscellaneous', type: 'quicklist', 
-            view: 'Breeze.view.reporting.miscellaneous.QuickList'             
+            category: 'misc', type: 'quicklist', 
+            view: 'Breeze.view.reporting.misc.QuickList'             
         },
         {
-            category: 'miscellaneous', type: 'supervisors', 
-            view: 'Breeze.view.reporting.miscellaneous.Supervisors'             
+            category: 'misc', type: 'supervisors', 
+            view: 'Breeze.view.reporting.misc.Supervisors'             
         },
         // Point
         {
