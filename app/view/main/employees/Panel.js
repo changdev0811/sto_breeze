@@ -3,8 +3,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
     alias: 'widget.main.employees.panel',
     xtype: 'breeze-employees-panel',
 
-    // Uncomment to give this component an xtype 
-    // xtype : 'breeze-panel', 
+    controller: 'main.employees.panel',
 
     // showAnimation: {
     //     type: 'reveal',
@@ -21,17 +20,20 @@ Ext.define('Breeze.view.main.employees.Panel', {
 
     layout: 'fit',
 
-    // padding: '8pt',
-    layout: 'fit',
-
+    
+    layout: 'vbox',
+    userCls: 'employees-panel',
+    // padding: '16pt',
 
     items: [
         {
             xtype: 'tabpanel',
+            flex: 1,
             ui: 'wtr-tabbar',
             tabBar: {
                 defaultTabUI: 'wtr-tabbar',
-                shadow: false
+                shadow: false,
+                padding: '16pt'
             },
             layout: {
                 animation: 'fade'
@@ -49,11 +51,13 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
+                            ui: 'employees-panel-toolbar',
                             docked: 'top',
                             items: [
                                 {
                                     xtype: 'searchfield',
-                                    ui: 'alt',
+                                    ui: 'solo',
+                                    shadow: true,
                                     flex: 1,
                                     placeholder: 'Search'
                                 }
@@ -61,6 +65,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         },
                         {
                             xtype: 'toolbar',
+                            ui: 'employees-panel-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -90,17 +95,18 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-plus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-minus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 }
                             ]
                         },
                         {
                             xtype: 'tree',
+                            userCls: 'employees-panel-tree',
                             flex: 1,
                             reference: 'employeesTree'
                         }
@@ -114,6 +120,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
+                            ui: 'employees-panel-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -127,6 +134,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         },
                         {
                             xtype: 'toolbar',
+                            ui: 'employees-panel-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -156,17 +164,18 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-plus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-minus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 }
                             ]
                         },
                         {
                             xtype: 'tree',
+                            userCls: 'employees-panel-tree',
                             flex: 1,
                             reference: 'departmentsTree'
                         }
@@ -180,6 +189,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     items: [
                         {
                             xtype: 'toolbar',
+                            ui: 'employees-panel-toolbar',
                             itemId: 'searchToolbar',
                             docked: 'top',
                             items: [
@@ -194,6 +204,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         },
                         {
                             xtype: 'toolbar',
+                            ui: 'employees-panel-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -223,21 +234,35 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-plus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-minus',
-                                    ui: 'action'
+                                    ui: 'plain wtr-button'
                                 }
                             ]
                         },
                         {
                             xtype: 'tree',
+                            userCls: 'employees-panel-tree',
                             flex: 1,
                             reference: 'departmentsTree'
                         }
                     ]
+                }
+            ]
+        },
+        {
+            xtype: 'toolbar',
+            ui: 'employees-panel-toolbar',
+            dock: 'bottom',
+            items: [
+                {
+                    xtype: 'breeze-checkbox',
+                    ui: 'dark-checkbox',
+                    boxLabel: 'Exclude Terminated',
+                    name: 'exclude_terminated'
                 }
             ]
         }
