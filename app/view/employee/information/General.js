@@ -38,6 +38,7 @@ Ext.define('Breeze.view.employee.information.General', {
                     name: 'first_name',
                     label: 'First',
                     id: 'firstName',
+                    required: true,
                     bind: {
                         value: '{info.FirstName}'
                     }
@@ -49,6 +50,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 },
                 {
                     name: 'last_name',
+                    required: true,
                     label: 'Last',
                     bind: { value: '{info.LastName}' }
                 }

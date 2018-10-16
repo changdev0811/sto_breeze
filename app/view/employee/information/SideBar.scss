@@ -24,6 +24,15 @@
 	filter: drop-shadow(0pt 1pt 2pt rgba(0,0,0,.66));
 }
 
+.employeeinfo-edit-profile-image-button {
+	position:absolute;
+	/* position based on a 128x128 user icon */
+	left:calc(-8pt); top:calc(128pt - 33pt);
+	width:auto; height:auto;
+	padding: 0pt; margin: 0pt;
+	filter: drop-shadow(0pt 1pt 2pt rgba(0,0,0,.66));
+}
+
 @include button-ui(
 	$color: #ffffff,
 	$icon-color: #ffffff,
@@ -37,4 +46,14 @@
 	$focused-background-color : transparent,
 	$icon-size : 30pt,
 	$ui: 'employeeinfo-notes-button'
-)
+);
+
+@include field-ui(
+	$ui: 'employeeinfo-dialog-field',
+	$label-font-size: map-get($root-font-sizes, 'base')
+);
+
+@include dialog-ui(
+	$ui: 'employeeinfo-dialog',
+	$body-font-size: map-get($root-font-sizes, 'detail')
+);

@@ -47,10 +47,10 @@ Ext.define('Breeze.view.employee.InformationController', {
                 me.loadEmployeeInfo(component, function(c){
                     // == After Employee Info loads ==
                     // Assign check fields after info loaded
-                    var exemptStatus = vm.get('info.ExemptStatus');
-                    c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
-                    var recordingMode = vm.get('info.RecordingMode');
-                    c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
+                    // var exemptStatus = vm.get('info.ExemptStatus');
+                    // c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
+                    // var recordingMode = vm.get('info.RecordingMode');
+                    // c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
                     me.loadShiftSegments(vm);
                     me.applyCompanyConfig();
                     // if(vm.get('info.LoginType') == 13){
@@ -292,6 +292,50 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     onCloseNotesDialog: function(dialog, e, eOpts){
         dialog.hide();
+    },
+
+    onEditProfileImageTap: function(ref, e, eOpts){
+        var view = this.getView(),
+            dialog = this.lookup('profileImageEditorDialog');
+        if(!dialog){
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+    /**
+     * Handle profile image edit dialog's 'remove' button
+     */
+    onRemoveProfileImage: function(ref,e,eOpts){
+        console.info('Remove profile image');
+    },
+
+    /**
+     * Handle profile image edit dialog's 'upload' button
+     */
+    onUploadProfileImage: function(ref,e,eOpts){
+        console.info('Upload profile image');
+        this.apiClass.information.uploadPicture(
+            this.lookup('profileImageForm')
+        ).then((result) => {
+
+        }).catch((err) => {
+            Ext.toast({
+                message: err.message,
+                type: err.type,
+                timeout: 10000
+            });
+        });
+    },
+    
+    /**
+     * Handle profile image edit dialog's 'cancel' button
+     */
+    onCancelProfileImageEdit: function(ref, e, eOpts){
+        this.lookup('pictureFileField').reset();
+        ref.getParent().getParent().hide();
+        // this.lookup('profileImageForm').reset();
     }
 
 

@@ -186,6 +186,17 @@ Ext.define('Breeze.view.main.Nav', {
                     ]
                 },
                 {
+                    xtype: 'container',
+                    reference: 'employeesPanelContainer',
+                    layout: 'fit',
+                    items: [
+                        // {
+                        //     xtype: 'breeze-employees-panel'
+                        // }
+                    ],
+                    visible: false
+                },
+                {
                     xtype: 'navigationview',
                     flex: 3,
                     userCls: 'main-content',

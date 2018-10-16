@@ -1,0 +1,27 @@
+/**
+    Style classes and rules for Employees Panel view (main.employees.Panel)
+*/
+@include displayfield-ui(
+    $ui: 'employees-panel-field',
+    $input-font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+@include field-ui(
+    $ui: 'employees-panel-field',
+    $label-font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+@include toolbar-ui(
+    $ui: 'employees-panel-toolbar',
+    $background-color: map-get($wtr-colors, 'base')
+);
+
+// Background colored generic class
+.employees-panel {
+    background-color: map-get($wtr-colors, 'base');
+
+}
+// provides margins for tree control
+.employees-panel-tree {
+    margin: 8pt;
+}
