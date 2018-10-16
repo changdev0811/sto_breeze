@@ -62,11 +62,13 @@ Ext.define('Breeze.view.employee.information.Company', {
             items: [
                 {
                     xtype: 'selectfield',
+                    editable: false,
                     name: 'department',
                     label: 'Department',
                     displayField: 'Name',
                     valueField: 'Id',
                     reference: 'departments',
+                    store: 'departments',
                     bind: { value: '{info.Department}' }, 
                 },
                 {
@@ -116,6 +118,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 },
                 {
                     xtype: 'selectfield',
+                    editable: false,
                     label: 'Compensation Frequency',
                     name: 'comp_per',
                     store: 'CompensationOptions',

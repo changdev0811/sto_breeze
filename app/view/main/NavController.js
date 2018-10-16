@@ -70,8 +70,8 @@
             'home': {
                 action: 'onHomeRoute'
             },
-            'employees/:view/:id': {
-                action: 'onEmployeesViewRoute'
+            'employees/info/:id': {
+                action: 'onEmployeesEmployeeInfoRoute'
             },
             'employees': {
                 action: 'onEmployeesRoute'
@@ -265,8 +265,12 @@
             );
         },
 
-        onEmployeesViewRoute: function(view, id){
-
+        onEmployeesEmployeeInfoRoute: function(id){
+            this.changeContent(
+                Ext.create('Breeze.view.employee.Information', {
+                    data: { employee: id }
+                })
+            );
         },
 
         onEmployeesRoute: function(){

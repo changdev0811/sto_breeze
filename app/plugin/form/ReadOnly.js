@@ -17,15 +17,20 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     fieldTypes: {
     	editable: [
             'textfield','datefield','email','text','password','spinnerfield','date',
-            'breeze-textfield','breeze-password','breeze-email', 'numberfield',
-            'emailfield', 'passwordfield', 'textareafield', 'urlfield', 'selectfield'
+			// 'breeze-textfield',
+			// 'breeze-password', 'passwordfield',
+			'breeze-email', 
+			// 'numberfield',
+			'emailfield',  'textareafield', 'urlfield', 
+			//'selectfield'
     	],
     	disabled: [
             'checkbox', 'checkboxfield', 'radio', 'radiofield', 
-             'togglefield', 'sliderfield'
+             'togglefield', 'sliderfield', 'comboBox'
 		],
 		readOnly: [
-			'breeze-checkbox', 'breeze-checkboxfield',
+			'breeze-checkbox', 'breeze-checkboxfield', 'comboBox',
+			'selectfield'
 		]
     },
 
@@ -57,6 +62,7 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
 		 * @param {Object} field Field/Component to apply binding to
 		 */
     	propagateToField: function(field){
+			try{
 			// console.group('Binding to field ' + field.xtype);
     		if(this.fieldTypes.disabled.includes(field.xtype)){
     			// console.info('Starting bind: ', field.getBind());
@@ -81,7 +87,10 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
                 field.getBind();
     			field.setBind({readOnly: this.expressionString()});
     			// console.info('Post update bind: ', field.getBind());
-    		}
+			}
+		}catch(ex){
+			console.warn('ReadOnly exception: ', ex);
+		}
     		// console.groupEnd();
     	},
 

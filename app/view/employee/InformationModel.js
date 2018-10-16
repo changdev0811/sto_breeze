@@ -22,7 +22,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
         },
         // Misc config settings from company config
         companyConfig: {
-            
+
         },
         // ==[Company tab list visibility ]
         lists: {
@@ -40,6 +40,131 @@ Ext.define('Breeze.view.employee.InformationModel', {
             },
         },
 
+        info: {
+            employee: {
+                "__type": "Repository.Entities.Employee",
+                "_TerminationDate": null,
+                "_HireDate": "\/Date(1526774400000)\/",
+                "TerminationDate": "",
+                "CustomerID": 991012,
+                "ID": 5001,
+                "RecordingMode": 21,
+                "Shift_Hours": null,
+                "FirstName": "Admin",
+                "MiddleName": "",
+                "LastName": "Venture",
+                "HireDate": "",
+                "DepartmentName": null,
+                "StartUpSettings": 1001,
+                "Department": 1001,
+                "PunchPolicy": 564,
+                "DefaultProject": 0,
+                "DisplayName": null,
+                "BirthDate": "",
+                "Email": null,
+                "Notes": "",
+                "SSN": "",
+                "ExemptStatus": 139,
+                "Gender": null,
+                "EmployeeNumber": "",
+                "Payroll": "",
+                "Badge": "",
+                "CompRate": 0.00,
+                "CompPer": 5,
+                "ShiftSegComboStartTimes": [
+                ],
+                "ShiftSegComboStopTimes": [
+
+                ],
+                "ShiftStartTimes": [
+                ],
+                "ShiftStopTimes": [
+                ],
+                "ShiftStartSegments": [
+                ],
+                "ShiftStopSegments": [
+                ],
+                "PhotoFlag": false,
+                "Photo": "app/resources/EmployeePhotos/default_man.png",
+                "Username": "New",
+                "LoginType": 15,
+                "Supervisors": [],
+                "SupervisorIds": [],
+                "SupervisorDeptsIds": [],
+                "SupervisorTerms": [],
+                "SupervisedEmps": [],
+                "SupervisedEmpIds": [],
+                "SupervisedEmpDeptsIds": [],
+                "SupervisedEmpTerms": [],
+                "SupervisedDepts": [
+                    "Extra Department",
+                    "Test Department"
+                ],
+                "SupervisedDeptIds": [
+                    1002,
+                    1001
+                ],
+                "DeptRoles": [
+                    "Full Supervisor",
+                    "Full Supervisor"
+                ],
+                "DeptRoleIds": [
+                    1003,
+                    1003
+                ],
+                "ViewSSN": 1,
+                "ViewComp": 1,
+                "LayoffStatus": "Active",
+                "LayoffDate": null,
+                "WorkRecords": null,
+                "shiftHours": 13,
+                "displayName": "Venture, Admin",
+                "firstLast": "Admin Venture",
+                "possessiveFirstLast": "Admin Venture\u0027s"
+            },
+
+            "punchPolicy": {
+                "__type": "Repository.Entities.Punch_Policy_Info",
+                "policy_id": 0,
+                "customer_id": 991012,
+                "policy_name": null,
+                "IsFixed": false,
+                "Ot_Opt1": true,
+                "Ot_Opt2": false,
+                "Ot_Opt3": false,
+                "Ot_Opt4": false,
+                "Ot_Day1": 36000,
+                "Ot_Day2": 0,
+                "Ot_Day3": 0,
+                "Ot_Day4": 0,
+                "Ot_Week1": 144000,
+                "Ot_Week2": 0,
+                "Ot_Week3": 0,
+                "Ot_Week4": 0,
+                "Ot_Rate1": 1.50,
+                "Ot_Rate2": 0.00,
+                "Ot_Rate3": 0.00,
+                "Ot_Rate4": 0.00,
+                "Subtract_DayOt": true,
+                "Round_Increment": 10,
+                "Round_Offset": 2,
+                "Allow_RegularPunch": true,
+                "Allow_QuickPunch": true,
+                "Auto_PunchIn": true,
+                "Auto_PunchOut": false,
+                "Auto_Close_Shift": 8,
+                "Auto_LunchPunch": false,
+                "LunchPunch_Seg": 0,
+                "LunchPunch_Hours": 8,
+                "Can_Add_Projects": true,
+                "Can_Add_Notes": true,
+                "Can_Edit_Notes": true,
+                "Can_Adjust_Punches": false,
+                "Can_Use_TimeSheets": true,
+                "InOut_Opt": false,
+                "Can_Use_InOut": true
+            }
+        }
     },
 
     stores: {
@@ -47,100 +172,100 @@ Ext.define('Breeze.view.employee.InformationModel', {
     },
 
     formulas: {
-        hireDate: function(get){
+        hireDate: function (get) {
             return Ext.util.Format.date(
                 get('info.HireDate'), "m/d/Y"
             );
         },
         overtime_day1: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Day1')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Day1') / 60 / 60);
             },
-            set: function(value) {
-                this.set({
-                    'info.punchPolicy.Ot_Day1': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Day1', value * 60 * 60
+                )
             }
         },
         overtime_day2: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Day2')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Day2') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Day2': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Day2', value * 60 * 60
+                )
             }
         },
         overtime_day3: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Day3')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Day3') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Day3': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Day3', value * 60 * 60
+                )
             }
         },
         overtime_day4: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Day4')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Day4') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Day4': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Day4', value * 60 * 60
+                )
             }
         },
         overtime_week1: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Week1')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Week1') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Week1': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Week1', value * 60 * 60
+                )
             }
         },
         overtime_week2: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Week2')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Week2') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Week2': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Week2', value * 60 * 60
+                )
             }
         },
         overtime_week3: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Week3')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Week3') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Week3': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Week3', value * 60 * 60
+                )
             }
         },
         overtime_week4: {
-            get: function(get){
-                return (get('info.punchPolicy.Ot_Week4')/60/60);
+            get: function (get) {
+                return (get('info.punchPolicy.Ot_Week4') / 60 / 60);
             },
-            set: function(value){
-                this.set({
-                    'info.punchPolicy.Ot_Week4': value * 60 * 60
-                })
+            set: function (value) {
+                this.set(
+                    'info.punchPolicy.Ot_Week4', value * 60 * 60
+                )
             }
         },
 
-        hideNotesButton: function(get){
+        hideNotesButton: function (get) {
             var notes = get('info.Notes');
             return (typeof notes == 'undefined' || notes == null || notes === "") ? true : false;
         },
 
-        employeeNotes: function(get){
+        employeeNotes: function (get) {
             var notes = get('info.Notes');
-            if(notes == null || notes == ""){
+            if (notes == null || notes == "") {
                 return "No notes are currently recorded.";
             } else {
                 return notes;
@@ -151,7 +276,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * Pull all form data from elsewhere in model and return it in a single object
          * using the expected parameter names for submitting data updates
          */
-        formData: function(get){
+        formData: function (get) {
             return {
                 employee_id: get('employeeId'),
                 first_name: get('info.FirstName'),
@@ -237,9 +362,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 store: '{supervisors}',
                 ids: '{info.SupervisorIds}'
             },
-            get: function(data){
+            get: function (data) {
                 return data.store.queryRecordsBy(
-                    function(rec){
+                    function (rec) {
                         return data.ids.includes(rec.id);
                     }
                 );
@@ -251,9 +376,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 store: '{employees}',
                 ids: '{info.SupervisedEmpIds}'
             },
-            get: function(data){
+            get: function (data) {
                 return data.store.queryRecordsBy(
-                    function(rec){
+                    function (rec) {
                         return data.ids.includes(rec.id);
                     }
                 )
@@ -279,8 +404,8 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 roleIds: '{info.DeptRoleIds}',
                 roleNames: '{info.DeptRoles}'
             },
-            get: function(data){
-                return data.deptIds.map(function(v,idx){
+            get: function (data) {
+                return data.deptIds.map(function (v, idx) {
                     return {
                         // displayName: data.deptStore.findRecord('Id', v).get('Name'),
                         // role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
@@ -291,14 +416,14 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-        profileImage: function(get){
-            if(get('info.PhotoFlag')){
+        profileImage: function (get) {
+            if (get('info.PhotoFlag')) {
                 return get('info.Photo');
             } else {
                 return 'resources/photos/default_user.png'
             }
         }
-        
+
     }
 
 });
