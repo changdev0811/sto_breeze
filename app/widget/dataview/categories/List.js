@@ -63,16 +63,16 @@ Ext.define('Breeze.widget.dataview.categories.List', {
         }
     },
 
+    /**
+     * Get array of records for all items currently selected.
+     * Alias to getSelectable().getSelectedRecords()
+     */
     gatherSelected: function () {
-        var selectedRecords = [];
-
+        return this.getSelectable().getSelectedRecords();
     },
 
 
     //===[Event Handlers]===
-    onItemAdd: function (item, index) {
-        this.callParent([item, index]);
-    },
 
     /**
      * Handles event fired when an item is selected, syncing connected field's
