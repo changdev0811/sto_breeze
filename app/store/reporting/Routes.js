@@ -196,12 +196,12 @@ Ext.define('Breeze.store.reporting.Routes', {
             view: 'Breeze.view.reporting.misc.HolidayReconciliation'             
         },
         {
-            category: 'misc', type: 'leaverequestsummary', 
-            view: 'Breeze.view.reporting.misc.LeaveRequestSummary'             
+            category: 'misc', type: 'leaverequests', 
+            view: 'Breeze.view.reporting.misc.LeaveRequests'             
         },
         {
-            category: 'misc', type: 'leaverequests.js', 
-            view: 'Breeze.view.reporting.misc.LeaveRequests'             
+            category: 'misc', type: 'leaverequestsummary', 
+            view: 'Breeze.view.reporting.misc.LeaveRequestSummary'             
         },
         {
             category: 'misc', type: 'attendance', 
