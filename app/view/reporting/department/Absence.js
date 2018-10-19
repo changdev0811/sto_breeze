@@ -364,7 +364,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                           lets its value be bound to viewmodel
                                     */
                                     xtype: 'containerfield',
-                                    reference: 'conditionType',
+                                    reference: 'conditionalType',
                                     // == new binding: values.[radio name]
                                     bind: {
                                         values: {

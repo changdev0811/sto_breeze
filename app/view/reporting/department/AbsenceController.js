@@ -110,8 +110,15 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            cateoryList = this.lookup('categoryList');
+            cateoryList = this.lookup('categoryList'),
+            conditionalType = this.lookup('conditionalType');
         
+        // set condition type
+        vm.set(
+            'reportParams.conditional_type',
+            conditionalType.getValues()['condType']
+        );
+
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 
@@ -134,10 +141,21 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
         }
     },
 
+    /**
+     * Handle exception thrown by report store proxy
+     * @param {*} proxy 
+     * @param {*} response 
+     * @param {*} op 
+     * @param {*} eOpts 
+     */
     onReportException: function(proxy, response, op, eOpts){
         console.warn('Exception thrown for report: ', response);
     },
 
+    /**
+     * Build report
+     * @param {String} format Report format ('PDF','EXCEL', 'WORD')
+     */
     buildReport: function(format){
         var me = this,
             params = this.getViewModel().getData().reportParams;
@@ -168,13 +186,32 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
     //===[Action Button Override Handlers]===
 
     /**
-     * Handle 'Print PDF' action button
-     * Can be overridden in view controllers extending Reporting
+     * Overridden handler for 'Print PDF' action button
      */
     onPrintPDF: function(c, e, eOpts){
         console.info('Print PDF Clicked');
         if(this.validateParameters()){
             this.buildReport('PDF');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Excel' action button
+     */
+    onPrintExcel: function(c, e, eOpts){
+        console.info('Print Excel Clicked');
+        if(this.validateParameters()){
+            this.buildReport('EXCEL');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Word' action button
+     */
+    onPrintWord: function(c, e, eOpts){
+        console.info('Print Word Clicked');
+        if(this.validateParameters()){
+            this.buildReport('WORD');
         }
     },
 
