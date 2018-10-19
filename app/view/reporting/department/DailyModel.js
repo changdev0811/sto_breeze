@@ -39,14 +39,18 @@ Ext.define('Breeze.view.reporting.department.DailyModel', {
         reportParams: {
             CompanyName: null,
             customerId: null,
-            groupByDepartment: false,
+            groupByDepartment: true,
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
             ReportTitle: 'Daily Report',
-            sDate: (new Date()),
-            showadj: false,
-            showacc: false
+            dStart: (new Date()),
+            dEnd: (new Date()),
+            hhmm_format: false,
+            projids: false,
+            submit_approve: false,
+            submit_submit: false,
+            submit_unsubmit: false
         }
     }
 });

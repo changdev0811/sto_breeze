@@ -32,7 +32,9 @@
     }
 }
 
-
+.report-action-button {
+    min-width: 100pt !important;
+}
 
 /** Generic base UI for report form panels **/
 @include panel-ui(

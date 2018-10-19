@@ -39,7 +39,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
         reportParams: {
             CompanyName: null,
             customerId: null,
-            groupByDepartment: false,
+            groupByDepartment: true,
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
@@ -49,7 +49,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             dEnd: (new Date()),
             conditional: null,
             conditional_amt: 0,
-            conditional_type: 0,
+            conditional_type: 0
         }
     }
 });
