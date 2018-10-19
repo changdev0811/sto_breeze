@@ -26,10 +26,10 @@ Ext.define('Breeze.plugin.form.ReadOnly', {
     	],
     	disabled: [
             'checkbox', 'checkboxfield', 'radio', 'radiofield', 
-             'togglefield', 'sliderfield', 'comboBox'
+             'togglefield', 'sliderfield', 'combobox'
 		],
 		readOnly: [
-			'breeze-checkbox', 'breeze-checkboxfield', 'comboBox',
+			'breeze-checkbox', 'breeze-checkboxfield', 'combobox',
 			'selectfield'
 		]
     },

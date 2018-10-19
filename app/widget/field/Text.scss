@@ -1,0 +1,16 @@
+/**
+    Normally this would say that this stylesheet is for classes and rules
+    pertaining to the Breeze.widget.field.Text component, but
+    actually, its just the most generic and yet organizationally acceptable
+    location to add in the style overrides that hide input field icon doodads
+    when they are readonly.
+*/
+
+// Magic to make the icons on readonly input fields go away
+div.x-after-input-el {
+    .x-disabled {
+        .x-icon-el {
+            display: none;
+        }
+    }
+}
