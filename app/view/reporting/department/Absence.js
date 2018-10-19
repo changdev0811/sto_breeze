@@ -385,15 +385,28 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
-                        // User defined categories tree control
+                        // // User defined categories tree control
+                        // {
+                        //     xtype: 'breeze.tree.usercategories',
+                        //     bind: {
+                        //         store: '{categoriesTree}'
+                        //     },
+                        //     reference: 'udcTree',
+                        //     flex: 1,
+                        //     ui: 'reporting-tree'
+                        // }
                         {
-                            xtype: 'breeze.tree.usercategories',
-                            bind: {
-                                store: '{categoriesTree}'
+                            xtype: 'breeze-categories-list',
+                            ui: 'employeeinfo-shift-grid',
+                            userCls: 'employeeinfo-shift-grid',
+                            fieldMode: 'radio',
+                            itemConfig: {
+                                ui: 'reporting-list-item'
                             },
-                            reference: 'udcTree',
-                            flex: 1,
-                            ui: 'reporting-tree'
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
                         }
                     ]
                 }

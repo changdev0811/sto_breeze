@@ -22,12 +22,18 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
         var me = this;
         var vm = me.getViewModel();
 
-        // Load User-Defined Categories tree store
+        // Load User-Defined Categories list store
         this.addStoreToViewModel(
-            'Breeze.store.tree.UserDefinedCategories',
-            'categoriesTree',
+            'Breeze.store.category.CompactList',
+            'categoriesList',
             { load: true }
         );
+        
+        // this.addStoreToViewModel(
+        //     'Breeze.store.tree.UserDefinedCategories',
+        //     'categoriesTree',
+        //     { load: true }
+        // );
 
         // Load employees for tree selector
         this.addStoreToViewModel(
