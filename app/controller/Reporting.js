@@ -82,7 +82,7 @@ Ext.define('Breeze.controller.Reporting', {
      *        (default true)
      *  @return {Array} Array of the IDs of all checked tree items
      */
-    checkedTreeItemIds: function(tree, options){
+    checkedTreeItems: function(tree, options){
         var ids = [],
             options = this.resolveOptions(
                 options,

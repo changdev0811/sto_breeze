@@ -49,10 +49,10 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             dEnd: (new Date()),
             conditional: '>',
             conditional_amt: 0,
-            conditional_type: 0,
+            conditional_type: '20',
             // Concerning selected departments/ids
             idtype: 'emps', // According to existing code, this is always 'emps'
-            myinclist: []
+            myinclist: ''
         }
     }
 });

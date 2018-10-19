@@ -155,12 +155,21 @@ Ext.define('Breeze.api.reporting.Base', {
      * @param {Object} params Report parameters to pass to doReport ajax call as myParameters
      * @param {Object} options Optional extra options to pass along, including format, page, and optional
      *  id which causes the constructed store to use said value for the storeId
+     *      - format (string): Output format (default 'PDF')
+     *      - page (number): Output page (default 1)
+     *      - id (String): Optional ID for store (default null)
+     *      - exceptionHandler (Function): Function for listening to proxy exception
+     *          function(proxy, response, op, eOpts))
      * @return {Promise} Promise resolving with store instance, rejecting with error message
      */
     createReportStore: function(report, params, options){
         var format = (options && options['format'])? options.format : 'PDF';
         var page = (options && options['page'])? options.page : 1;
-        var storeParams = (options && options['id'])? { storeId: options.id } : {};
+        var options = this.resolveOptions(
+            options,
+            { format: 'PDF', page: 1, id: null, exceptionHandler: null}
+        );
+        var storeParams = (options.id !== null)? { storeId: options.id } : {};
         storeParams = Object.assign({}, storeParams, {
             myFormat: format,
             page: page,
@@ -170,6 +179,10 @@ Ext.define('Breeze.api.reporting.Base', {
             limit: 25
         });
         var store = Ext.create(this.statics().store, storeParams);
+        if(options.exceptionHandler !== null){
+            // If a handler was provided for dealing with exceptions, add listener
+            store.getProxy().addListener('exception', options.exceptionHandler);
+        }
         return new Promise(function(resolve,reject){
             store.load(function(records,op,success){
                 if(success){
