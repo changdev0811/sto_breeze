@@ -120,8 +120,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            // == Item ID for each tab to allow us to see which is active
-                                            itemId: 'employees',
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New userCls: property +++ */
@@ -154,7 +154,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',
+
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -163,6 +163,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
@@ -186,6 +188,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New user:Cls: property +++ */
@@ -356,8 +360,17 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    /* == putting radio boxes inside a xtype containerfield
+                                          lets its value be bound to viewmodel
+                                    */
+                                    xtype: 'containerfield',
                                     reference: 'conditionType',
+                                    // == new binding: values.[radio name]
+                                    bind: {
+                                        values: {
+                                            condType: '{reportParams.conditional_type}'
+                                        }
+                                    },
                                     layout: 'hbox',
                                     defaults: {
                                         bodyAlign: 'stretch',
@@ -371,7 +384,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             id: 'radio1',
                                             value: '20',
                                             boxLabel: 'Days',
-                                            bind: '{reportParams.conditional_type}'
+                                            // bind: '{reportParams.conditional_type}'
                                         },
                                         {
                                             flex: 1,
@@ -379,7 +392,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             id: 'radio2',
                                             value: '21',
                                             boxLabel: 'Weeks',
-                                            bind: '{reportParams.conditional_type}'
+                                            // bind: '{reportParams.conditional_type}'
                                         }
                                     ]
                                 }
@@ -403,20 +416,13 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
-                        // // User defined categories tree control
-                        // {
-                        //     xtype: 'breeze.tree.usercategories',
-                        //     bind: {
-                        //         store: '{categoriesTree}'
-                        //     },
-                        //     reference: 'udcTree',
-                        //     flex: 1,
-                        //     ui: 'reporting-tree'
-                        // }
+                        // User defined category selector
+                        // === Replacement category selector
                         {
                             xtype: 'breeze-categories-list',
                             ui: 'employeeinfo-shift-grid',
                             userCls: 'employeeinfo-shift-grid',
+                            reference: 'categoryList',
                             fieldMode: 'radio',
                             itemConfig: {
                                 ui: 'reporting-list-item'

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
     alias: 'controller.reporting.department.absence',
 
     stores: [
-        'Breeze.store.tree.UserDefinedCategories'
+        // 'Breeze.store.tree.UserDefinedCategories'
     ],
 
     /**
@@ -62,13 +62,83 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
 
     /**
      * Check parameter values and ensure all required fields have been
-     * provided
+     * provided.
+     * 
+     * If errors are found, display appropriate message(s) in error toast popup
+     * 
      * @return {Boolean} True if validation succeeds, false otherwise
-     * @todo TODO: Finish implementing
      */
     validateParameters: function(){
-        return true;
-    }
+        // Make sure view model has latest selected employees and category
+        this.refreshSelectedItems();
+        var valid = true,
+            messages = [],
+            vm = this.getViewModel()
+            vmData = vm.getData();
+        
+        if(vmData.reportParams.myinclist == ''){
+            valid = false;
+            messages.push('Please select a Department or Employee.');
+        }
+
+        if(vmData.reportParams.category_id == null){
+            valid = false;
+            messages.push('Please select a Category.')
+        }
+
+        if(!valid){
+            // If validation failed, show error(s) in toast message
+            Ext.toast({
+                message: messages.join('<br>'),
+                type: Ext.Toast.ERROR,
+                timeout: 10000
+            });
+        }
+
+        return valid;
+    },
+
+    /**
+     * Refresh values in viewmodel for selected employees and category
+     */
+    refreshSelectedItems: function(){
+        var vm = this.getViewModel(),
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
+            cateoryList = this.lookup('categoryList');
+        
+        // Set myinclist to list of chosen employee IDs
+        vm.set(
+            'reportParams.myinclist', 
+            this.checkedTreeItems(
+                employeeSelectTree.getComponent('tree'), {
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    forceInt: false
+                }
+            ).join(',')
+        );
+        
+        var selectedCategory = this.lookup('categoryList').getSelection();
+
+        if(selectedCategory !== null){
+            // set category_id
+            vm.set(
+                'reportParams.category_id',
+                selectedCategory.getData().Category_ID       
+            );
+        }
+    },
+
+    //===[Action Button Override Handlers]===
+
+    /**
+     * Handle 'Print PDF' action button
+     * Can be overridden in view controllers extending Reporting
+     */
+    onPrintPDF: function(c, e, eOpts){
+        console.info('Print PDF Clicked');
+        this.validateParameters();
+    },
+
 
     
 });
