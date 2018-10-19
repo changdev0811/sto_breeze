@@ -20,7 +20,13 @@ Ext.define('Breeze.api.reporting.Base', {
 
     config: {
         // Initial parameters for generation (input phase)
-        parameters: null
+        parameters: null,
+        // Exception handler function(proxy, response, op, eOpts))
+        exceptionHandler: null
+    },
+
+    constructor: function(cfg){
+        this.setConfig(cfg || {});
     },
 
     /**
@@ -158,8 +164,6 @@ Ext.define('Breeze.api.reporting.Base', {
      *      - format (string): Output format (default 'PDF')
      *      - page (number): Output page (default 1)
      *      - id (String): Optional ID for store (default null)
-     *      - exceptionHandler (Function): Function for listening to proxy exception
-     *          function(proxy, response, op, eOpts))
      * @return {Promise} Promise resolving with store instance, rejecting with error message
      */
     createReportStore: function(report, params, options){
@@ -167,7 +171,7 @@ Ext.define('Breeze.api.reporting.Base', {
         var page = (options && options['page'])? options.page : 1;
         var options = this.resolveOptions(
             options,
-            { format: 'PDF', page: 1, id: null, exceptionHandler: null}
+            { format: 'PDF', page: 1, id: null }
         );
         var storeParams = (options.id !== null)? { storeId: options.id } : {};
         storeParams = Object.assign({}, storeParams, {
@@ -179,9 +183,10 @@ Ext.define('Breeze.api.reporting.Base', {
             limit: 25
         });
         var store = Ext.create(this.statics().store, storeParams);
-        if(options.exceptionHandler !== null){
+        console.info('exception handler', this.getExceptionHandler());
+        if(this.getExceptionHandler() !== null){
             // If a handler was provided for dealing with exceptions, add listener
-            store.getProxy().addListener('exception', options.exceptionHandler);
+            store.getProxy().addListener('exception', this.getExceptionHandler());
         }
         return new Promise(function(resolve,reject){
             store.load(function(records,op,success){

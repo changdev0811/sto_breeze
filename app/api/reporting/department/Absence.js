@@ -48,7 +48,11 @@ Ext.define('Breeze.api.reporting.department.Absence', {
             modelParams = modelParamsData;
 
         if(cfg.isLoaded()){
-            return this.generate(cfg.getAt(0));
+            return this.generate(
+                    cfg.getAt(0),
+                    modelParams,
+                    format
+                );
         } else {
             return new Promise(function(resolve, reject){
                 cfg.load(function(r,op,success){
@@ -90,6 +94,7 @@ Ext.define('Breeze.api.reporting.department.Absence', {
         var me = this,
             params = [],
             // Store current user ID from cookie in emp and currentUser
+            cust = this.auth.getCookies().cust,
             emp = this.auth.getCookies().emp,
             currentUser = this.auth.getCookies().emp;
         // use employee id from constructor params, if available
@@ -102,7 +107,8 @@ Ext.define('Breeze.api.reporting.department.Absence', {
 
         // Add additional params taken from config
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
-
+        this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
+        this.appendParam(params, 'customer_id', cust);
 
         var reportKind = this.statics().report;
 
@@ -111,7 +117,7 @@ Ext.define('Breeze.api.reporting.department.Absence', {
                 reportKind, {"Rows": params}, { format: format }
             ).then(
                 function(store){
-                    resolve(store.getAt('CurrentPageURL'));
+                    resolve(store.getAt(0).get('CurrentPageURL'));
                 }
             ).catch(
                 function(err){
