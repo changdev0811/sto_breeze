@@ -14,6 +14,10 @@ Ext.define('Breeze.api.reporting.Base', {
         store: 'Breeze.store.reporting.BufferedReport'
     },
 
+    mixins: {
+        options: 'Breeze.mixin.OptionsParameter'
+    },
+
     config: {
         // Initial parameters for generation (input phase)
         parameters: null
@@ -43,12 +47,63 @@ Ext.define('Breeze.api.reporting.Base', {
 
     /**
      * Add new object with name and value keys to specified Array
-     * @param {Array} params Array to append to
+     * @param {Array} paramsArray Array to append to
      * @param {String} name Name for new parameter
      * @param {Object} value Value for new parameter
      */
-    appendParam: function(params, name, value){
-        params.push({name: name, value: value});
+    appendParam: function(paramsArray, name, value){
+        paramsArray.push({name: name, value: value});
+    },
+
+    /**
+     * Add multiple parameters into params array from a view model data object 
+     * @param {Array} paramsArray Array to append parameters to
+     * @param {Object} paramsDataObject Data object from view model containing
+     *      source parameter data
+     * @param {Object} options Optional extra parameters
+     *      - overwrite (default true) : if true, and checkNames is true,
+     *          then if param is already in array, it will be overwritten
+     *          with new value
+     *      - checkNames (default false) : if true, param array will be
+     *          checked to see if a param with given name already exists;
+     *          if so, it will only be overwritten if overwrite is true
+     */
+    appendParamsFromDataObject: function(paramsArray, paramsDataObject, 
+        options) {
+        
+        var options = this.resolveOptions(options,
+            {overwrite: true, checkNames: false}
+        );
+
+        /**
+         * Returns index of existing object in params array with a given name
+         * @param {String} name Name of param to look for
+         * @return Index of param with given name, or -1 if none found
+         */
+        var indexOfParamByName = function(name){
+            var z = paramsArray.find((i) => { return (i.name == name); });
+            if(z){
+                return paramsArray.indexOf(z);
+            } else {
+                return -1;
+            }
+        };
+
+        var names = Object.keys(paramsDataObject);
+        for(var i = 0; i < names.length; i++){
+            var name = names[i],
+                value = paramsDataObject[name];
+            if(options.checkNames){
+                var idx = indexOfParamByName(name);
+                if(idx !== -1 && options.overwrite){
+                    paramsArray[idx].value = value;
+                } else {
+                    this.appendParam(paramsArray, name, value);
+                }
+            } else {
+                this.appendParam(paramsArray, name, value);
+            }
+        }
     },
 
     /**
