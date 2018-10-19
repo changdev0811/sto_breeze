@@ -19,8 +19,14 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
 
         console.info('Department Absence Report view inited');
 
-        var me = this;
-        var vm = me.getViewModel();
+        var me = this,
+            vm = me.getViewModel();
+        
+        // Create instance of report generation API class
+        this.reportApi = Ext.create(
+            'Breeze.api.reporting.department.Absence',
+            {exceptionHandler: this.onReportException}
+        );
 
         // Load User-Defined Categories list store
         this.addStoreToViewModel(
@@ -76,7 +82,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
-        if(vmData.reportParams.myinclist == ''){
+        if(vmData.reportParams.incids == ''){
             valid = false;
             messages.push('Please select a Department or Employee.');
         }
@@ -108,7 +114,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
         
         // Set myinclist to list of chosen employee IDs
         vm.set(
-            'reportParams.myinclist', 
+            'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
                     nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
@@ -128,6 +134,37 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
         }
     },
 
+    onReportException: function(proxy, response, op, eOpts){
+        console.warn('Exception thrown for report: ', response);
+    },
+
+    buildReport: function(format){
+        var me = this,
+            params = this.getViewModel().getData().reportParams;
+        me.reportApi.process(params, format).then(
+            function(url){
+                if(typeof url == "string"){
+                    Ext.toast({
+                        message: 'Department Absence report successfully generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    window.open(url, '_blank');
+                } else {
+                    if(url.Message){
+                        Ext.toast({
+                            message: 'Department Absence report error: <br>' + url.Message,
+                            type: Ext.Toast.ERROR,
+                            timeout: 10000
+                        });
+                    }
+                }
+            }
+        ).catch(function(err){
+            console.warn('Error generating department absence report', err);
+        })
+    },
+
     //===[Action Button Override Handlers]===
 
     /**
@@ -136,7 +173,9 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
      */
     onPrintPDF: function(c, e, eOpts){
         console.info('Print PDF Clicked');
-        this.validateParameters();
+        if(this.validateParameters()){
+            this.buildReport('PDF');
+        }
     },
 
 
