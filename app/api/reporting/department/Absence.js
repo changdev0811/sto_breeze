@@ -38,12 +38,15 @@ Ext.define('Breeze.api.reporting.department.Absence', {
      * )
      * @param {Object} modelParamsData Parameter data object from report 
      * viewmodel
+     * @param {String} format Output format ('PDF', 'EXCEL' or 'WORD')
+     *  default is 'PDF'
      */
-    process: function(modelParamsData){
-        var cfg = Ext.getStore('CompanyConfig');
-        
-        var me = this,
+    process: function(modelParamsData, format){
+        var cfg = Ext.getStore('CompanyConfig'),
+            format = (format)? format : 'PDF',
+            me = this,
             modelParams = modelParamsData;
+
         if(cfg.isLoaded()){
             return this.generate(cfg.getAt(0));
         } else {
@@ -80,9 +83,10 @@ Ext.define('Breeze.api.reporting.department.Absence', {
      * @see Breeze.api.reporting.Base for more details on method
      * 
      * @param {Object} cfg Config params passed in by process
+     * @param {String} format Output data format
      * @return {Promise} Promise resolving with report data or rejecting with error message
      */
-    generate: function(cfg, modelParamsData){
+    generate: function(cfg, modelParamsData, format){
         var me = this,
             params = [],
             // Store current user ID from cookie in emp and currentUser
@@ -104,7 +108,7 @@ Ext.define('Breeze.api.reporting.department.Absence', {
 
         return new Promise(function(resolve, reject){
             me.createReportStore(
-                reportKind, {"Rows": params}
+                reportKind, {"Rows": params}, { format: format }
             ).then(
                 function(store){
                     resolve(store.getAt('CurrentPageURL'));

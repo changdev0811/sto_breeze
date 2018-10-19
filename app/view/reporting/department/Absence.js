@@ -74,6 +74,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             /* +++ New layout:{}, +++ */
                             layout: {
                                 animation: 'fade'
@@ -90,6 +92,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -116,6 +120,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
+                                            // == Item ID for each tab to allow us to see which is active
+                                            itemId: 'employees',
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New userCls: property +++ */

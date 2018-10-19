@@ -9,9 +9,18 @@
 Ext.define('Breeze.mixin.OptionsParameter', {
     extend: 'Ext.Mixin',
 
-    /* Original uncompressed version of resolveOptions
+    /**
+     * Provide values for any options not set from a default object.
+     * Functions recursively.
+     * @param {Object} options Object containing options to provide defaults for
+     * @param {Object} defaultOptions Object containing all default values, including nested
+     * @return {Object} Copy of input object with defaults applied
+     */
     resolveOptions: function (options, defaultOptions) {
-        var isObj = function (a) { return "object" == typeof a ? "Object" == a.constructor.name : !1 },
+        var isObj = function (a) {
+            return (a !== null && typeof a == 'object') ?
+                (a.constructor.name == "Object") : false;
+        },
             resolve = function (opts, defOpts) {
                 // console.group('Resolve for ', defOpts);
                 var names = Object.keys(defOpts),
@@ -42,14 +51,4 @@ Ext.define('Breeze.mixin.OptionsParameter', {
         resolve(working, defaultOptions);
         return working;
     }
-    */
-
-    /**
-     * Provide values for any options not set from a default object.
-     * Functions recursively.
-     * @param {Object} b Object containing options to provide defaults for
-     * @param {Object} e Object containing all default values, including nested
-     * @return {Object} Copy of input object with defaults applied
-     */
-    resolveOptions: function(b,e){var f=function(a){return"object"==typeof a?"Object"==a.constructor.name:!1},h=function(a,b){var d=Object.keys(b);a=a?a:{};for(var g=0;g<d.length;g++){var c=d[g],e=f(b[c]);a[c]?e&&(f(a[c])||(a[c]={}),h(a[c],b[c])):a[c]=b[c]}console.groupEnd()};b=b&&f(b)?b:{};var d=JSON.parse(JSON.stringify(b));h(d,e);return d}
 });

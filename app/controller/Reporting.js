@@ -9,6 +9,9 @@
 Ext.define('Breeze.controller.Reporting', {
     extend: 'Breeze.controller.Base',
     
+    mixins: {
+        options: 'Breeze.mixin.OptionsParameter'
+    },
 
     //===[Action Button Default Handlers]===
 
@@ -64,5 +67,52 @@ Ext.define('Breeze.controller.Reporting', {
         elem.parent.parent.getActiveItem().getRootNode().cascadeBy(function(child){
             child.set('checked', checked);
         });
+    },
+
+    // ====[Data Collection Helpers]====
+
+    /**
+     * Get array of IDs of all checked items in a tree
+     * @param {Object} tree Reference to Tree component instance
+     * @param {Object} options Optional options object
+     *      - nodeType: if set, limit ids to those of 
+     *        checked nodes with data.type == filter
+     *        (default null)  
+     *      - forceInt: If true, ids are forced to be integers
+     *        (default true)
+     *  @return {Array} Array of the IDs of all checked tree items
+     */
+    checkedTreeItemIds: function(tree, options){
+        var ids = [],
+            options = this.resolveOptions(
+                options,
+                {
+                    nodeType: null,
+                    forceInt: true
+                }
+            ),
+            eachFunction = function(node){
+                if(node.data.checked){
+                    if(
+                        options.nodeType !== null &&
+                        (node.data.type !== options.nodeType)
+                    ){
+                        // Node filter was set and didn't match node type,
+                        // so don't collect it
+                    } else {
+                        // Collect ID
+                        // Force format to int if options demand
+                        var id = (options.forceInt)?
+                            parseInt(node.data.data) :
+                            node.data.data;
+                        ids.push(id);
+                    }
+                }
+                node.eachChild(eachFunction);
+            };
+
+        tree.getRootNode().eachChild(eachFunction);
+
+        return ids;
     }
 });
