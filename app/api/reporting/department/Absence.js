@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.department.Absence', {
     
     statics: {
         ajaxCall: '',
-        report: ''
+        report: 'DepartmentAbsence'
     },
 
     /**
@@ -36,9 +36,40 @@ Ext.define('Breeze.api.reporting.department.Absence', {
      *      console.warn('Error', err);
      *  }
      * )
+     * @param {Object} modelParamsData Parameter data object from report 
+     * viewmodel
      */
-    process: function(){
-
+    process: function(modelParamsData){
+        var cfg = Ext.getStore('CompanyConfig');
+        
+        var me = this,
+            modelParams = modelParamsData;
+        if(cfg.isLoaded()){
+            return this.generate(cfg.getAt(0));
+        } else {
+            return new Promise(function(resolve, reject){
+                cfg.load(function(r,op,success){
+                    if(success){
+                        resolve(
+                            me.generate(
+                                Ext.getStore('CompanyConfig').getAt(0),
+                                modelParams
+                            )
+                        );
+                    } else {
+                        reject('Failed to load company config store for Department Absence report');
+                    }
+                });
+            }).then(
+                function(gen){
+                    return gen;
+                }
+            ).catch(
+                function(err){
+                    return err;
+                }
+            );
+        }
     },
 
     /**
@@ -51,7 +82,39 @@ Ext.define('Breeze.api.reporting.department.Absence', {
      * @param {Object} cfg Config params passed in by process
      * @return {Promise} Promise resolving with report data or rejecting with error message
      */
-    generate: function(cfg){
+    generate: function(cfg, modelParamsData){
+        var me = this,
+            params = [],
+            // Store current user ID from cookie in emp and currentUser
+            emp = this.auth.getCookies().emp,
+            currentUser = this.auth.getCookies().emp;
+        // use employee id from constructor params, if available
+        if(this.getParameters() && this.getParameters()['employeeId']){
+            emp = this.getParameters().employeeId;
+        }
 
+        // Add in parameters from model object
+        this.appendParamsFromDataObject(params, modelParamsData);
+
+        // Add additional params taken from config
+        this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
+
+
+        var reportKind = this.statics().report;
+
+        return new Promise(function(resolve, reject){
+            me.createReportStore(
+                reportKind, {"Rows": params}
+            ).then(
+                function(store){
+                    resolve(store.getAt('CurrentPageURL'));
+                }
+            ).catch(
+                function(err){
+                    console.warn('Error loading report store', err);
+                    reject(err);
+                }
+            )
+        });
     }
 });

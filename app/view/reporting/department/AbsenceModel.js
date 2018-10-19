@@ -16,16 +16,16 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             autoLoad: true
         }
         */
-       tempCat: {
-           type: 'tree',
-           root: {
-               children: [
-                   {
-                       text: 'Category'
-                   }
-               ]
-           }
-       }
+        tempCat: {
+            type: 'tree',
+            root: {
+                children: [
+                    {
+                        text: 'Category'
+                    }
+                ]
+            }
+        }
     },
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
@@ -39,7 +39,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
         reportParams: {
             CompanyName: null,
             customerId: null,
-            groupByDepartment: true,
+            GroupByDept: true,
             LogoInHeader: false,
             NameInHeader: false,
             RepSignature: false,
@@ -47,9 +47,12 @@ Ext.define('Breeze.view.reporting.department.AbsenceModel', {
             category_id: null,
             dStart: (new Date()),
             dEnd: (new Date()),
-            conditional: null,
+            conditional: '>',
             conditional_amt: 0,
-            conditional_type: 0
+            conditional_type: 0,
+            // Concerning selected departments/ids
+            idtype: 'emps', // According to existing code, this is always 'emps'
+            myinclist: []
         }
     }
 });

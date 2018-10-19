@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     viewModel: {
         type: 'reporting.department.absence'
     },
-    
+
     // Controller
 
     controller: 'reporting.department.absence',
@@ -36,9 +36,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
-        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls:'report-action-button' },
-        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls:'report-action-button' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls: 'report-action-button' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls: 'report-action-button' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls: 'report-action-button' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -84,7 +84,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -119,7 +119,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -137,8 +137,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 {
                                                     xtype: 'treecolumn',
                                                     /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    cell: {
+                                                        ui: 'report-tree-column',
                                                     },
                                                     /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
@@ -183,7 +183,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             /* +++ New ui: property +++ */
                                             ui: 'employeeinfo-shift-grid',
                                             /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -199,8 +199,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 {
                                                     xtype: 'treecolumn',
                                                     /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    cell: {
+                                                        ui: 'report-tree-column',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -250,7 +250,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                             },
 
                             items: [
-                               
+
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -271,7 +271,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
+
                             ]
                         },
                         {
@@ -323,9 +323,21 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     items: [
                                         {
                                             xtype: 'combobox',
+                                            editable: false, // prevent typing in own value
                                             name: 'cbConditional',
                                             flex: 2,
-                                            bind: '{reportParams.conditional}'
+                                            bind: '{reportParams.conditional}',
+                                            displayField: 'text',
+                                            valueField: 'data',
+                                            store: {
+                                                data: [
+                                                    { text: "Greater Than", data: '>' },
+                                                    { text: "Greater Than or Equal To", data: '>=' },
+                                                    { text: "Equal To", data: '*' },
+                                                    { text: "Less Than or Equal To", data: '<=' },
+                                                    { text: "Less Than", data: '<' }
+                                                ]
+                                            }
                                         },
                                         {
                                             xtype: 'spinnerfield',
