@@ -44,22 +44,25 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
-                me.loadEmployeeInfo(component, function(c){
-                    // == After Employee Info loads ==
-                    // Assign check fields after info loaded
-                    // var exemptStatus = vm.get('info.ExemptStatus');
-                    // c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
-                    // var recordingMode = vm.get('info.RecordingMode');
-                    // c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
-                    me.loadShiftSegments(vm);
-                    me.applyCompanyConfig();
-                    // if(vm.get('info.LoginType') == 13){
-                    //     vm.set('lists.employees.enabled', false);
-                    //     vm.set('lists.departments.enabled', false);
-                    //     var companyLists = c.lookupReference('companuListTabs');
-                    // }
-                    me.toggleCompanyLists(c);
-                });
+                if(vm.get('employeeId') !== 'new'){
+                    // if employee id isn't new, load employee
+                    me.loadEmployeeInfo(component, function(c){
+                        // == After Employee Info loads ==
+                        // Assign check fields after info loaded
+                        // var exemptStatus = vm.get('info.ExemptStatus');
+                        // c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
+                        // var recordingMode = vm.get('info.RecordingMode');
+                        // c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
+                        me.loadShiftSegments(vm);
+                        me.applyCompanyConfig();
+                        // if(vm.get('info.LoginType') == 13){
+                        //     vm.set('lists.employees.enabled', false);
+                        //     vm.set('lists.departments.enabled', false);
+                        //     var companyLists = c.lookupReference('companuListTabs');
+                        // }
+                        me.toggleCompanyLists(c);
+                    });
+                }
             });
         }).catch(function(err){
             console.warn('Employee Info Loading failed: ', err);
@@ -81,7 +84,7 @@ Ext.define('Breeze.view.employee.InformationController', {
 
                     // Set id to use for requesting security rights
                     var rightsCheckId = vm.get('employeeId')
-                    if(vm.get('employeeId') == 'mew'){
+                    if(vm.get('employeeId') == 'new'){
                         // New employee, use id of 0
                         rightsCheckId = 0;
                     }
@@ -105,11 +108,13 @@ Ext.define('Breeze.view.employee.InformationController', {
                             // remove hidden fields so they can't be pilfered with inspect
                             if(!vm.get('perms.ssn')){
                                 var ssnPlain = me.view.lookup('ssnPlain');
-                                ssnPlain.parent.remove(ssnPlain);
+                                // ssnPlain.parent.remove(ssnPlain);
+                                ssnPlain.setHidden(true);
                             }
                             if(!vm.get('perms.compensation')){
                                 var compPlain = me.view.lookup('compensationPlain');
-                                compPlain.parent.remove(compPlain);
+                                // compPlain.parent.remove(compPlain);
+                                compPlain.setHidden(true);
                             }
 
                             // handle rights
@@ -181,7 +186,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         var callback = (typeof callback == 'undefined')? function(){} : callback;
         var me = this;
         this.apiClass.information.getEmployeeInfo(
-            me.empId
+            me.getViewModel().get('employeeId')
         ).then(function(data){
             console.log("Loaded Employee Data Test");
             var vm = me.getViewModel();

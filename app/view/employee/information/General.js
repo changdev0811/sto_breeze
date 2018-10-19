@@ -89,6 +89,7 @@ Ext.define('Breeze.view.employee.information.General', {
                     reference: 'ssnHidden',
                     value: '(hidden)',
                     readOnly: true,
+                    ignoreReadOnly: true,
                     bind: {
                         hidden: '{perms.ssn}'
                     }

@@ -36,7 +36,8 @@ Ext.define('Breeze.helper.navigation.TreeBase', {
      *  TreeBase so overrides get combined with default config attributes
      */
     constructor: function(cfg){
-        this.setConfig(cfg || {});
+        this.callParent([cfg]);
+        this.initConfig();
     },
 
     /**
@@ -59,19 +60,21 @@ Ext.define('Breeze.helper.navigation.TreeBase', {
      */
     asTreeWithExtras: function (extras) {
         var tree = this.getData(),
-            extras = (Array.isArray(extras)) ? extras : [extras];
+            extras = (Array.isArray(extras)) ? extras : [extras],
+            me = this,
+            combined = null;
         
-        extras.forEach((treeNS) => {
-            var other = Ext.create(treeNS);
-            tree = this.mergeTree(
+        for(var i=0; i<extras.length; i++){
+            var other = Ext.create(extras[i]);
+            combined = this.mergeTree(
                 tree,
                 other.getData(),
                 other.getTargetPath(),
                 other.getMergeOptions()
             );
-        });
+        }
 
-        return tree;
+        return combined;
     }
 
 });

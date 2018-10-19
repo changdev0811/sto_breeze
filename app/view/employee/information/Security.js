@@ -35,7 +35,9 @@ Ext.define('Breeze.view.employee.information.Security', {
                 },
                 {
                     name: 'user_type',
-                    xtype: 'selectfield',
+                    // xtype: 'selectfield',
+                    xtype: 'combobox',
+                    editable: false,
                     label: 'User Type',
                     bind: { value: '{info.LoginType}' }, 
                     store: 'UserTypeOptions',
@@ -84,6 +86,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                             name: 'old_password',
                             label: 'Current Password',
                             xtype: 'breeze-password',
+                            ignoreReadOnly: true,
                             listeners: {
                                 change: 'checkChangeReady'
                             }

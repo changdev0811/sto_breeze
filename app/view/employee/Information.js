@@ -76,6 +76,7 @@ Ext.define('Breeze.view.employee.Information', {
             },
             items: [
                 // containers with title and items containing body
+                
                 {
                     xtype: 'container',
                     reference: 'employeeTab',

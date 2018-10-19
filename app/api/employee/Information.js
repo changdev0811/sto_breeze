@@ -100,9 +100,34 @@ Ext.define('Breeze.api.employee.Information', {
         })
     },
 
+    updateEmployee: function(parameters){
+        var me = this,
+            api = me.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'updateEmployee',
+                params,
+                true, true,
+                function(response){
+                    var rsp = api.decodeJsonResponse(response);
+                    if(rsp.success == true){
+                        resolve(true);
+                        // TODO: decide where to handle refreshing Employees panel, if enabled
+                    } else {
+                        resolve(false, rsp.error);
+                    }
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
+    },
+
     // TODO: Implement addNewEmployee
     addNewEmployee: function () { },
 
+    // TODO: Finish implementing
     uploadPicture: function (form) {
         console.info('EmpInfo API Upload Picture');
         return new Promise((resolve, reject) => {
@@ -131,6 +156,7 @@ Ext.define('Breeze.api.employee.Information', {
         });
     },
 
+    // TODO: Implement
     removePicture: function(form){
 
     }

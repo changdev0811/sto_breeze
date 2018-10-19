@@ -23,6 +23,7 @@ Ext.define('Breeze.helper.navigation.Personal', {
                         id: 'punchstation'
                     },
                     {
+                        // text: 'Calendar', leaf: true,
                         text: 'Calendar', leaf: true,
                         iconCls: 'x-fas fa-calendar',
                         id: 'calendar',
