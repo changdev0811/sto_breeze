@@ -4,6 +4,11 @@ Ext.define('Breeze.view.employee.information.Company', {
 
     layout: 'vbox',
 
+    requires: [
+        'Ext.grid.plugin.CellEditing',
+        'Ext.grid.plugin.Editable'
+    ],
+
     plugins: {
         readOnlyPlug: {
             type: 'breeze.form.readonly',
@@ -213,6 +218,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             ui: 'employeeinfo-shift-grid',
                                             userCls: 'employee-info-grid',
                                             reference: 'supervisorsListGrid',
+                                            plugins: {
+                                                gridcellediting: true
+                                            },
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -220,10 +228,20 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     text: 'Name',
                                                     dataIndex: 'displayName',
                                                     menuDisabled: true,
-                                                    ui: 'employeeinfo-shift-grid'
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    editable: true,
+                                                    // editor: {
+                                                    //     xtype: 'selectfield',
+                                                    //     store: 'supervisors',
+                                                    //     displayField: 'displayName',
+                                                    //     valueField: 'id'
+                                                    // }
                                                 }
                                             ],
-                                            bind: '{companySupervisorsList}'
+                                            // bind: '{companySupervisorsList}'
+                                            bind: {
+                                                store: '{companySupervisors}'
+                                            }
                                         }
                                     ]
                                 }
@@ -268,6 +286,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             ui: 'employeeinfo-shift-grid',
                                             userCls: 'employee-info-grid',
                                             reference: 'employeesListGrid',
+                                            plugins: {
+                                                gridcellediting: true
+                                            },
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -275,10 +296,20 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     text: 'Name',
                                                     dataIndex: 'displayName',
                                                     menuDisabled: true,
-                                                    ui: 'employeeinfo-shift-grid'
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    editable: true,
+                                                    editor: {
+                                                        xtype: 'selectfield',
+                                                        bind: {
+                                                            store: '{employees}'
+                                                        },
+                                                        displayField: 'displayName'
+                                                    }
                                                 }
                                             ],
-                                            bind: '{companyEmployeesList}'
+                                            bind: {
+                                                store: '{companySupervisedEmployees}'
+                                            }
                                         }
                                     ]
                                 }

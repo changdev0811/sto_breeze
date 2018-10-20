@@ -61,6 +61,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                         //     var companyLists = c.lookupReference('companuListTabs');
                         // }
                         me.toggleCompanyLists(c);
+                        me.prepareCompanyLists();
                     });
                 }
             });
@@ -260,6 +261,47 @@ Ext.define('Breeze.view.employee.InformationController', {
             listTab.remove(empTab);
             listTab.remove(depTab);
         }
+    },
+
+    prepareCompanyLists: function(){
+        var me = this,
+            vm = this.getViewModel();
+        console.info('Preparing company lists');
+
+        var emps = vm.get('employees'),
+            sups = vm.get('supervisors'),
+            deps = null;
+        
+        var eids = vm.get('info.SupervisedEmpIds'),
+            sids = vm.get('info.SupervisorIds');
+
+
+        // Create local store for company supervisors
+        this.addLoadedStoreToViewModel(
+            {
+                model: 'Breeze.model.data.Person',
+                data: (
+                    sups.queryRecordsBy((r)=>{
+                        return (sids.includes(r.id));
+                    })
+                ).map((i)=>{return i.data;})
+            },
+            'companySupervisors'
+        );
+
+        // Create local store for company supervised employees
+        this.addLoadedStoreToViewModel(
+            {
+                model: 'Breeze.model.data.Person',
+                data: (
+                    emps.queryRecordsBy((r)=>{
+                        return (eids.includes(r.id));
+                    })
+                ).map((i)=>{return i.data;})
+            },
+            'companySupervisedEmployees'
+        );
+
     },
 
     //===[Action Tool Handlers]===
