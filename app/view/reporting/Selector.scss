@@ -34,6 +34,28 @@
     }
 }
 
+// styling applied to reporting-fieldset title
+.no-padding {
+
+    .x-form-fieldset-body-el {
+        //margin:0;
+        padding:0;
+    }
+
+
+}
+
+// styling applied to reporting-fieldset title
+.no-margin {
+
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
+    );
+}
+
+
+
 
 
 /** Generic base UI for report form panels **/
@@ -155,9 +177,9 @@
     $color: map-get($reporting-text-colors, 'base'),
     $selected-color: map-get($reporting-text-colors, 'base'),
     $hovered-color: map-get($reporting-text-colors, 'base'),
-    $background-color: map-get($reporting-colors, 'row-dark'),
-    $selected-background-color: map-get($reporting-colors, 'row-light'),
-    $hovered-background-color: map-get($reporting-colors, 'row-light'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 

@@ -397,13 +397,17 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                 },
                 // Container for User-Defined Categories list
                 {
-                    xtype: 'container',
-                    // userCls: 'reporting-fieldset',
-                    // title: 'Categories',
+                    xtype: 'fieldset',
+
+                    // +++ added reporting-fieldset no-margin no-padding +++
+                    userCls: 'reporting-fieldset no-margin no-padding',
+                    title: 'Categories',
                     flex: 1,
 
-                    // +++ minWidth reasonable width to prevent wrapping +++
-                    minWidth:'130pt',
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'150pt',
 
                     // docked: 'right',
                     layout: {
@@ -419,7 +423,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         {
                             xtype: 'breeze-categories-list',
                             ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid',
+                            //userCls: 'employeeinfo-shift-grid',
                             reference: 'categoryList',
                             fieldMode: 'radio',
                             itemConfig: {
