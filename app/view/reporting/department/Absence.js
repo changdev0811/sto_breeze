@@ -74,7 +74,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     // +++ maxWidth to prevent expanding beyond tab selector +++
                     maxWidth:'300pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
-                    minWidth:'250pt',
+                    minWidth:'200pt',
 
                     layout: 'vbox',
                     items: [
