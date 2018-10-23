@@ -24,17 +24,17 @@
 
     .x-form-fieldset-title {
         color: map-get($reporting-text-colors, 'base');
+        background-color:map-get($reporting-colors, 'row-dark');
+        font-weight:1000;
         font-size: map-get($root-font-sizes, 'detail');
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.5, left: 0.5, right: 0.5, bottom: 0 )
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
         );
     }
 }
 
-.report-action-button {
-    min-width: 100pt !important;
-}
+
 
 /** Generic base UI for report form panels **/
 @include panel-ui(
@@ -116,20 +116,20 @@
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: map-get($reporting-text-colors, 'base'),
-    $box-label-font-size: map-get($root-font-sizes, 'base')
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include radiofield-ui(
     $ui: 'reporting',
     $box-label-color: map-get($reporting-text-colors, 'base'),
-    $box-label-font-size: map-get($root-font-sizes, 'base')
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include textfield-ui(
     $ui: 'reporting-text',
     $focused-input-underline-color: map-get($reporting-colors, 'dark'),
     $input-color: map-get($reporting-text-colors, 'base'),
-    $input-font-size: map-get($root-font-sizes, 'base')
+    $input-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include datetrigger-ui(
@@ -147,6 +147,7 @@
 .employeeinfo-shift-grid {
     border:solid 1px white;
 }
+
 
 // ===[User Categories List Widget Specific]==
 @include listitem-ui(
@@ -182,3 +183,4 @@
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 };
+
