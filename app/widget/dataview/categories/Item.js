@@ -73,7 +73,7 @@ Ext.define('Breeze.widget.dataview.categories.Item', {
                 {
                     bind: {
                         data: {
-                            color: '{record.Category_Color_HEX}',
+                            color: '{record.HexColor}',
                             nameText: '{record.Category_Name}'
                         }
                     },

@@ -6,7 +6,7 @@
  * @extends Breeze.store.Base
  * @api getUDCListAPI
  */
-Ext.define('Breeze.store.category.UserDefinedList', {
+Ext.define('Breeze.store.category.List', {
 	extend: 'Breeze.store.Base',
 	model: 'Breeze.model.category.Detail',
     autoLoad: false,
