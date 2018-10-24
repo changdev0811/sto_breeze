@@ -63,32 +63,46 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+
+
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:true,
+
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     flex: 1,
+
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'300pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
+
+
                     layout: 'vbox',
+
                     items: [
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             layout: {
                                 animation: 'fade'
                             },
-                            /* +++ Update to ui: +++ */
                             ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -96,14 +110,16 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -115,16 +131,23 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
+                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -135,11 +158,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -147,7 +169,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',
+
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -156,19 +178,24 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadot:false property +++ */
+
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui: property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -179,10 +206,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -190,6 +217,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -197,9 +228,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -230,6 +261,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 {
                     xtype: 'container',
                     flex: 1,
+                    
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'180pt',
+
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -321,10 +356,22 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 // Third Column Container
                 // Container for User-Defined Categories list
                 {
-                    xtype: 'container',
-                    // userCls: 'reporting-fieldset',
-                    // title: 'Categories',
+                    // +++ New Field Set +++
+                    xtype: 'fieldset',
+
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
+                    
+                    // +++ Categories +++
+                    title: 'Categories',
                     flex: 1,
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'150pt',
+
+
+                    
                     // docked: 'right',
                     layout: {
                         type: 'fit',
@@ -350,90 +397,93 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 {
                     xtype: 'container',
                     flex: 1,
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'150pt',
+
                     layout: 'vbox',
                     items: [
                         // Tab panel containing projects
                         {
-                            xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
-                            layout: {
-                                animation: 'fade'
-                            },
-                            /* +++ Update to ui: +++ */
-                            ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
-                            tabBar: {
-                                defaultTabUI: 'employeeInfoTabs',
-                                shadow: false,
-                            },  
+                            xtype: 'fieldset',
                             flex: 1,
+                            layout: 'vbox',
+                            title: 'Projects',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset no-padding',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
                             items: [
-                                // Projects tab
+                                
                                 {
-                                    xtype: 'panel',
-                                    title: 'Projects',
-                                    layout: 'fit',
-
-                                    // Toolbar containing 'check all' toggle checkbox
-                                    tbar: {
-                                        xtype: 'toolbar',
-                                        ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
-                                        shadow: false,
-                                        items: [
-                                            {
-                                                xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
-                                                ui: 'reporting',
-                                                boxLabel: 'Check All',
-                                                listeners: {
-                                                    change: 'onTreeGridCheckAllChange'
-                                                }
-                                            }
-                                        ]
-                                    },
-
+                                    xtype: 'toolbar',
+                                    ui: 'reporting-tree',
+                                    shadow: false,
                                     items: [
-                                        // Projects tree
                                         {
-                                            xtype: 'tree',
-                                            /* +++ New ui: property +++ */
-                                            ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
-                                            layout: 'hbox',
-                                            hideHeaders: true,
-                                            rootVisible: false,
-                                            columns: [
-                                                {
-                                                    xtype: 'checkcolumn',
-                                                    dataIndex: 'checked',
-                                                    minWidth: '2em',
-                                                    width: 'auto',
-                                                    padding: 0,
-                                                    listeners: {
-                                                        checkChange: 'onTreeGridChecked'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
-                                                    },
-                                                    /* +++ New dataIndex +++ */
-                                                    dataIndex: 'text',
-                                                    flex: 1,
-                                                    layout: {
-                                                        alignment: 'stretch'
-                                                    }
-                                                }
-                                            ],
-                                            reference: 'departmentTree',
-                                            bind: '{departmentsTree}'
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Check All Projects',
+                                            //listeners: {
+                                            //    change: 'onTreeGridCheckAllChange'
+                                            //}
                                         }
                                     ]
+                                },
+
+
+
+                                {
+                                    xtype: 'tree',
+                                    flex:1,
+                                    ui: 'employeeinfo-shift-grid',
+                                    //userCls:'employeeinfo-shift-grid',
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    expanderFirst: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            listeners: {
+                                                checkChange: 'onTreeGridChecked'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+                                    reference: 'projectsTree',
+                                    bind: '{departmentsTree}'
                                 }
+
+
+                                    
                             ]
                         },
                         {

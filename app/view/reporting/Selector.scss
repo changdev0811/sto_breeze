@@ -10,7 +10,7 @@
     // padding: 0pt 4pt 4pt 4pt;
     padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 }
 
@@ -19,22 +19,52 @@
     border:solid 1px white;
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 
     .x-form-fieldset-title {
         color: map-get($reporting-text-colors, 'base');
+        background-color:map-get($reporting-colors, 'row-dark');
+        font-weight:1000;
         font-size: map-get($root-font-sizes, 'detail');
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.5, left: 0.5, right: 0.5, bottom: 0 )
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
         );
     }
 }
 
-.report-action-button {
-    min-width: 100pt !important;
+.reporting-toolbar {
+    border-left: solid 1px white !important;
+    border-right: solid 1px white !important;
 }
+
+
+
+
+// styling applied to reporting-fieldset title
+.no-padding {
+
+    .x-form-fieldset-body-el {
+        //margin:0;
+        padding:0;
+    }
+
+
+}
+
+// styling applied to reporting-fieldset title
+.no-margin {
+
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
+    );
+}
+
+
+
+
 
 /** Generic base UI for report form panels **/
 @include panel-ui(
@@ -48,6 +78,7 @@
     $ui: 'reporting-base'
 );
 
+
 @include paneltitle-ui(
     $ui: 'reporting-base',
     $font-size: $panel-title-font-size
@@ -56,9 +87,14 @@
 /** Generic base UI for report form tree views **/
 @include toolbar-ui(
     $ui: 'reporting-tree',
-    $background-color: map-get($reporting-colors, 'base'),
-    $background-gradient: none
+    $background-color: map-get($reporting-colors, 'row-dark'),
+    $background-gradient: none,
+    $line-height: 22pt,
+    $padding: 0 14pt 0 14pt,
+
 );
+
+
 
 @include treecell-ui(
     $ui: 'report-tree-column',
@@ -116,20 +152,20 @@
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: map-get($reporting-text-colors, 'base'),
-    $box-label-font-size: map-get($root-font-sizes, 'base')
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include radiofield-ui(
     $ui: 'reporting',
     $box-label-color: map-get($reporting-text-colors, 'base'),
-    $box-label-font-size: map-get($root-font-sizes, 'base')
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include textfield-ui(
     $ui: 'reporting-text',
     $focused-input-underline-color: map-get($reporting-colors, 'dark'),
     $input-color: map-get($reporting-text-colors, 'base'),
-    $input-font-size: map-get($root-font-sizes, 'base')
+    $input-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include datetrigger-ui(
@@ -145,8 +181,36 @@
 )
 
 .employeeinfo-shift-grid {
-    border:solid 1px white;
+    border-left:solid 1px white;
+    border-bottom:solid 1px white;
+    border-right:solid 1px white;
 }
+
+
+@include treecell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
 
 // ===[User Categories List Widget Specific]==
 @include listitem-ui(
@@ -154,9 +218,9 @@
     $color: map-get($reporting-text-colors, 'base'),
     $selected-color: map-get($reporting-text-colors, 'base'),
     $hovered-color: map-get($reporting-text-colors, 'base'),
-    $background-color: map-get($reporting-colors, 'row-dark'),
-    $selected-background-color: map-get($reporting-colors, 'row-light'),
-    $hovered-background-color: map-get($reporting-colors, 'row-light'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
@@ -182,3 +246,4 @@
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 };
+
