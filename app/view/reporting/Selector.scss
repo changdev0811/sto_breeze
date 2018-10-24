@@ -10,7 +10,7 @@
     // padding: 0pt 4pt 4pt 4pt;
     padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 }
 
@@ -19,7 +19,7 @@
     border:solid 1px white;
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 
     .x-form-fieldset-title {
@@ -77,6 +77,7 @@
     $body-background-color: map-get($reporting-colors, 'base'),
     $ui: 'reporting-base'
 );
+
 
 @include paneltitle-ui(
     $ui: 'reporting-base',

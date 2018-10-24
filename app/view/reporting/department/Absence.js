@@ -422,8 +422,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
 
-                    // +++ added reporting-fieldset no-margin no-padding +++
-                    userCls: 'reporting-fieldset no-margin no-padding',
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
                     title: 'Categories',

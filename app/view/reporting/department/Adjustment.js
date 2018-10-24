@@ -57,6 +57,10 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:true,
+
             items: [
                 // First column in horizontal container
                 {
@@ -238,6 +242,10 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                 {
                     xtype: 'container',
                     flex: 1,
+
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -317,8 +325,8 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
 
-                    // +++ added reporting-fieldset no-margin no-padding +++
-                    userCls: 'reporting-fieldset no-margin no-padding',
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
                     title: 'Categories',
@@ -329,7 +337,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                     maxWidth:'150pt',
 
 
-                    
+
                     // docked: 'right',
                     layout: {
                         type: 'fit',
