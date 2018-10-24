@@ -335,7 +335,7 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                         {
                             xtype: 'breeze.tree.usercategories',
                             bind: {
-                                store: '{categoriesTree}'
+                                store: '{categoriesList}'
                             },
                             reference: 'udcTree',
                             flex: 1,

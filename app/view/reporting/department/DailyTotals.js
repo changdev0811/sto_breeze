@@ -385,7 +385,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                         {
                             xtype: 'breeze.tree.usercategories',
                             bind: {
-                                store: '{categoriesTree}'
+                                store: '{categoriesList}'
                             },
                             reference: 'udcTree',
                             flex: 1,

@@ -1,28 +1,32 @@
 /**
- * User defined category list store ()
- * @class UserDefinedList
- * @namespace Breeze.store.category.UserDefinedList
- * @alias store.tree.udc
- * @extends Breeze.store.TreeBase
+ * User defined category list store (used in reports)
+ * @class List
+ * @namespace Breeze.store.category.List
+ * @alias store.category.list
+ * @extends Breeze.store.Base
+ * @api getUDCListAPI
  */
-Ext.define('Breeze.store.category.UserDefinedList', {
+Ext.define('Breeze.store.category.List', {
 	extend: 'Breeze.store.Base',
-	model: 'Breeze.model.category.Node',
+	model: 'Breeze.model.category.Detail',
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-    alias: 'store.category.udclist',
+    alias: 'store.category.list',
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			this.addExtraParams({
+				leave_request_only: 0
+			});
 		}
 	},
 	proxy: {
 		type: 'ajax',
-		url : Breeze.helper.Store.api.url('getUDCTree'),
+		url : Breeze.helper.Store.api.url('getUDCListAPI'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {
 			create : 'POST',
