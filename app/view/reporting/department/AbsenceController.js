@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
     alias: 'controller.reporting.department.absence',
 
     stores: [
-        // 'Breeze.store.tree.UserDefinedCategories'
+        // 'Breeze.store.category.List'
     ],
 
     /**
@@ -30,16 +30,10 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
 
         // Load User-Defined Categories list store
         this.addStoreToViewModel(
-            'Breeze.store.category.CompactList',
+            'Breeze.store.category.List',
             'categoriesList',
             { load: true }
         );
-        
-        // this.addStoreToViewModel(
-        //     'Breeze.store.tree.UserDefinedCategories',
-        //     'categoriesTree',
-        //     { load: true }
-        // );
 
         // Load employees for tree selector
         this.addStoreToViewModel(

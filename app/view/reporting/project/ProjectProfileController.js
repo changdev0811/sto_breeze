@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.project.ProjectProfileController', {
     alias: 'controller.reporting.project.projectprofile',
 
     stores: [
-        'Breeze.store.tree.UserDefinedCategories'
+        'Breeze.store.category.List'
     ],
 
     /**
@@ -24,8 +24,8 @@ Ext.define('Breeze.view.reporting.project.ProjectProfileController', {
 
         // Load User-Defined Categories tree store
         this.addStoreToViewModel(
-            'Breeze.store.tree.UserDefinedCategories',
-            'categoriesTree',
+            'Breeze.store.category.List',
+            'categoriesList',
             { load: true }
         );
 

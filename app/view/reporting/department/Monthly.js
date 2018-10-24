@@ -330,7 +330,7 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                         {
                             xtype: 'breeze.tree.usercategories',
                             bind: {
-                                store: '{categoriesTree}'
+                                store: '{categoriesList}'
                             },
                             reference: 'udcTree',
                             flex: 1,

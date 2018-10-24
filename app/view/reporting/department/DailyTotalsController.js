@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
     alias: 'controller.reporting.department.dailytotals',
 
     stores: [
-        'Breeze.store.tree.UserDefinedCategories'
+        'Breeze.store.category.List'
     ],
 
     /**
@@ -24,8 +24,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
 
         // Load User-Defined Categories tree store
         this.addStoreToViewModel(
-            'Breeze.store.tree.UserDefinedCategories',
-            'categoriesTree',
+            'Breeze.store.category.List',
+            'categoriesList',
             { load: true }
         );
 
