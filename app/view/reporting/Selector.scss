@@ -34,6 +34,14 @@
     }
 }
 
+.reporting-toolbar {
+    border-left: solid 1px white !important;
+    border-right: solid 1px white !important;
+}
+
+
+
+
 // styling applied to reporting-fieldset title
 .no-padding {
 
@@ -78,9 +86,14 @@
 /** Generic base UI for report form tree views **/
 @include toolbar-ui(
     $ui: 'reporting-tree',
-    $background-color: map-get($reporting-colors, 'base'),
-    $background-gradient: none
+    $background-color: map-get($reporting-colors, 'row-dark'),
+    $background-gradient: none,
+    $line-height: 22pt,
+    $padding: 0 14pt 0 14pt,
+
 );
+
+
 
 @include treecell-ui(
     $ui: 'report-tree-column',
@@ -167,8 +180,35 @@
 )
 
 .employeeinfo-shift-grid {
-    border:solid 1px white;
+    border-left:solid 1px white;
+    border-bottom:solid 1px white;
+    border-right:solid 1px white;
 }
+
+
+@include treecell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
 
 
 // ===[User Categories List Widget Specific]==

@@ -105,12 +105,16 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -125,13 +129,20 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
+                                            
+                                            /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
+                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -142,8 +153,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    /* +++ Style update +++ */
                                                     cell: {
-                                                        ui: 'report-tree-column',
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -168,12 +180,17 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -195,6 +212,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -202,8 +223,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
+                                                    /* +++ Style update +++ */
                                                     cell: {
-                                                        ui: 'report-tree-column',
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -397,13 +419,15 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                 },
                 // Container for User-Defined Categories list
                 {
+                    // +++ New Field Set +++
                     xtype: 'fieldset',
 
                     // +++ added reporting-fieldset no-margin no-padding +++
                     userCls: 'reporting-fieldset no-margin no-padding',
+                    
+                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
 
                     // +++ fixed width +++
                     minWidth:'150pt',
@@ -423,7 +447,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         {
                             xtype: 'breeze-categories-list',
                             ui: 'employeeinfo-shift-grid',
-                            //userCls: 'employeeinfo-shift-grid',
+
                             reference: 'categoryList',
                             fieldMode: 'radio',
                             itemConfig: {
