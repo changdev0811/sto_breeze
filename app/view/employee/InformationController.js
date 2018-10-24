@@ -279,12 +279,15 @@ Ext.define('Breeze.view.employee.InformationController', {
         // Create local store for company supervisors
         this.addLoadedStoreToViewModel(
             {
-                model: 'Breeze.model.data.Person',
+                model: 'Breeze.model.employee.CompanyPerson',
                 data: (
                     sups.queryRecordsBy((r)=>{
                         return (sids.includes(r.id));
                     })
-                ).map((i)=>{return i.data;})
+                ).map((i)=>{return {
+                    personId: i.data.id, 
+                    displayName: i.data.displayName
+                };})
             },
             'companySupervisors'
         );
@@ -292,16 +295,90 @@ Ext.define('Breeze.view.employee.InformationController', {
         // Create local store for company supervised employees
         this.addLoadedStoreToViewModel(
             {
-                model: 'Breeze.model.data.Person',
+                model: 'Breeze.model.employee.CompanyPerson',
                 data: (
                     emps.queryRecordsBy((r)=>{
                         return (eids.includes(r.id));
                     })
-                ).map((i)=>{return i.data;})
+                ).map((i)=>{return {
+                    personId: i.data.id, 
+                    displayName: i.data.displayName
+                };})
             },
             'companySupervisedEmployees'
         );
 
+        this.addLoadedStoreToViewModel(
+            {
+                model: 'Breeze.model.employee.CompanyPerson',
+                data: emps.getData().items.map((r)=>{
+                    return {
+                        personId: r.data.id, 
+                        displayName: r.data.displayName
+                    };
+                })
+            },
+            'choices.employees'
+        );
+
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.employee.CompanyPerson',
+            data: []
+        }, 'choices.supervisedEmployees');
+
+        // Initialize supervised employee choices
+        this.buildSupervisedEmployeeChoices();
+
+    },
+
+    //===[Company List Change Handlers]===
+
+    /**
+     * Handle select event for supervised employees grid cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditSupervisedEmployeeSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+        
+        targetRecord.set({
+            personId: data.data.personId,
+            displayName: data.data.displayName
+        }, {commit: true});
+
+        console.info('Select updated record!');
+        this.buildSupervisedEmployeeChoices();
+    },
+
+    /**
+     * Build/update choices.supervisedEmployees store,
+     * used to edit supervised employees
+     */
+    buildSupervisedEmployeeChoices: function(){
+        var vm = this.getViewModel(),
+            all = vm.get('choices.employees'),
+            choices = vm.get('choices.supervisedEmployees'),
+            choiceIds = choices.getData().items.map((rec)=>{
+                return rec.data.personId;
+            }),
+            used = vm.get('companySupervisedEmployees').getData().items.map(
+                (rec) => { return rec.data.personId; }
+            ),
+            toRemove = choices.queryBy((rec) => {
+                return (used.includes(rec.data.personId));
+            }),
+            toAdd = all.queryBy((rec) => {
+                return (!used.includes(rec.data.personId));
+            }).items;
+        toAdd = toAdd.filter((rec) => {
+            return (!choiceIds.includes(rec.data.personId));
+        });
+        choices.loadData(toAdd, true);
+        choices.remove(toRemove.items);
+        choices.commitChanges();
+
+        console.info('Done building supervised employees store');
     },
 
     //===[Action Tool Handlers]===

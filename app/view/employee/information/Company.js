@@ -219,7 +219,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             userCls: 'employee-info-grid',
                                             reference: 'supervisorsListGrid',
                                             plugins: {
-                                                gridcellediting: true
+                                                gridcellediting: true,
                                             },
                                             columns: [
                                                 {
@@ -271,7 +271,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                         }
                                     },
                                     items: [
-                                        // ===[Supervisor list grid]==
+                                        // ===[Employee list grid]==
                                         {
                                             flex: 1,
                                             xtype: 'grid',
@@ -287,6 +287,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             userCls: 'employee-info-grid',
                                             reference: 'employeesListGrid',
                                             plugins: {
+                                                
                                                 gridcellediting: true
                                             },
                                             columns: [
@@ -294,18 +295,24 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
                                                     text: 'Name',
-                                                    dataIndex: 'displayName',
+                                                    dataIndex: 'personId',
+                                                    tpl: '{displayName}',
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
                                                     editable: true,
                                                     editor: {
                                                         xtype: 'selectfield',
                                                         bind: {
-                                                            store: '{employees}'
+                                                            store: '{choices.supervisedEmployees}'
                                                         },
-                                                        displayField: 'displayName'
+                                                        displayField: 'displayName',
+                                                        valueField: 'personId',
+                                                        listeners: {
+                                                            // change: 'onChangeSupervisedEmployeeEdit',
+                                                            select: 'onEditSupervisedEmployeeSelect'
+                                                        }
                                                     }
-                                                }
+                                                },
                                             ],
                                             bind: {
                                                 store: '{companySupervisedEmployees}'

@@ -26,6 +26,23 @@ Ext.define('Breeze.helper.Auth', {
             loggedIn: 'STOLI'
         },
 
+        authInterval: null,
+
+        /**
+         * Start interval timer used to make sure session is
+         * still authorized
+         */
+        startAuthCheckTimer: function(){
+            if(this.authInterval == null){
+                this.authInterval = window.setInterval(
+                    function(){
+                        Breeze.helper.Auth.isAuthorized(true);
+                    },
+                    600000
+                );
+            }
+        },
+
         /**
          * Create/update auth related cookies
          */
@@ -77,9 +94,9 @@ Ext.define('Breeze.helper.Auth', {
             var cookies = Breeze.helper.Cookie;
             var vals = this.getCookies();
             var okay = (
-                vals.pass !== null &&
-                vals.cust !== null &&
-                vals.emp !== null
+                !Object.isUnvalued(vals.pass) &&
+                !Object.isUnvalued(vals.cust) &&
+                !Object.isUnvalued(vals.emp)
             );
             if(!okay && forceReload){
                 window.location.reload();
