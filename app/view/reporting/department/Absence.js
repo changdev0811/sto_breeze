@@ -51,6 +51,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -73,7 +76,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                     flex: 1,
 
                     // +++ maxWidth to prevent expanding beyond tab selector +++
-                    maxWidth:'300pt',
+                    maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
 
@@ -204,7 +207,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             xtype: 'tree',
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
@@ -253,13 +258,16 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                         }
                     ]
                 },
-                // Fieldset column container
+                // Second column container
                 {
                     xtype: 'container',
                     flex: 1,
 
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
+
 
                     layout: 'vbox',
                     defaults: {
@@ -432,7 +440,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
 
                     // +++ fixed width +++
                     minWidth:'150pt',
-                    maxWidth:'150pt',
+                    maxWidth:'200pt',
 
                     // docked: 'right',
                     layout: {
