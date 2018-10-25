@@ -468,13 +468,15 @@ Ext.define('Breeze.view.employee.information.Company', {
                     items: [
                         {
                             xtype: 'button',
-                            ui: 'confirm',
+                            ui: 'confirm alt',
                             text: 'Add'
                         },
+                        { xtype: 'spacer', width: 8 },
                         {
                             xtype: 'button',
-                            ui: 'decline',
-                            text: 'Cancel'
+                            ui: 'decline alt',
+                            text: 'Cancel',
+                            handler: 'onActionSheetCancel'
                         }
                     ]
                 }
@@ -505,13 +507,15 @@ Ext.define('Breeze.view.employee.information.Company', {
                     items: [
                         {
                             xtype: 'button',
-                            ui: 'confirm',
+                            ui: 'confirm alt',
                             text: 'Add'
                         },
+                        { xtype: 'spacer', width: 8 },
                         {
                             xtype: 'button',
-                            ui: 'decline',
-                            text: 'Cancel'
+                            ui: 'decline alt',
+                            text: 'Cancel',
+                            handler: 'onActionSheetCancel'
                         }
                     ]
                 }
@@ -525,11 +529,25 @@ Ext.define('Breeze.view.employee.information.Company', {
             items: [
                 {
                     xtype: 'selectfield',
-                    label: 'Department'
+                    itemId: 'department',
+                    label: 'Department',
+                    displayField: 'departmentName',
+                    valueField: 'departmentId',
+                    bind: { 
+                        store: '{choices.supervisedDepartments}'
+                    },
+                    required: true
                 },
                 {
                     xtype: 'selectfield',
-                    label: 'Role'
+                    itemId: 'role',
+                    label: 'Role',
+                    displayField: 'Role_Name',
+                    valueField: 'Role_Id',
+                    bind: { 
+                        store: '{securityRoles}'
+                    },
+                    required: true
                 },
                 {
                     xtype: 'container',
@@ -540,17 +558,35 @@ Ext.define('Breeze.view.employee.information.Company', {
                     items: [
                         {
                             xtype: 'button',
-                            ui: 'confirm',
-                            text: 'Add'
+                            ui: 'confirm alt',
+                            text: 'Add',
+                            handler: 'onAddDepartment'
                         },
+                        { xtype: 'spacer', width: 8 },
                         {
                             xtype: 'button',
-                            ui: 'decline',
-                            text: 'Cancel'
+                            ui: 'decline alt',
+                            text: 'Cancel',
+                            handler: 'onActionSheetCancel'
                         }
                     ]
                 }
             ]
+        },
+
+        // Layoff effective date picker
+        {
+            xtype: 'datepicker',
+            reference: 'layoffEffectivePicker',
+            title: 'Select Layoff Effective Date',
+            value: (new Date()),
+            listeners: {
+                cancel: function(comp){
+                    console.info('cancel picker');
+                    comp.hide();
+                },
+                change: 'onLayoffEffectivePicked'
+            }
         }
     ]
 });

@@ -539,6 +539,38 @@ Ext.define('Breeze.view.employee.InformationController', {
         console.info('Done building departments store');
     },
 
+    //==[Company List ActionSheet Add event handlers]==
+    onAddDepartment: function(comp){
+        var vm = this.getViewModel(),
+            chosenDepts = vm.get('companyDepartments'),
+            sheet = comp.getParent().getParent(),
+            deptField = sheet.getComponent('department'),
+            roleField = sheet.getComponent('role');
+        
+        if(deptField.validate() && roleField.validate()){
+            // Both fields are valid, so make use of them
+            var deptRecord = deptField.getSelection().getData(),
+                roleRecord = roleField.getSelection().getData(),
+                newRecord = {
+                    departmentId: deptRecord.departmentId,
+                    departmentName: deptRecord.departmentName,
+                    roleId: roleRecord.Role_Id,
+                    roleName: roleRecord.Role_Name
+                };
+            chosenDepts.loadData([newRecord], true);
+            chosenDepts.commitChanges();
+            // Refresh available choices
+            this.buildSupervisedDepartmentChoices();
+        }
+        
+        // Close action sheet and reset values to empty
+        sheet.hide();
+        deptField.clearValue();
+        roleField.clearValue();
+        
+        console.info('Add supervised department');
+    },
+
     //===[Action Tool Handlers]===
     
     /**
@@ -560,18 +592,32 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     //===[Event Handlers]===
 
+    /**
+     * Handles 'cancel' button click inside actionsheet, closing
+     * actionsheet
+     * @param {Object} comp Firing component
+     */
+    onActionSheetCancel: function(comp){
+        comp.getParent().getParent().hide();
+    },
+
     onLayoffButtonToggle: function(){
         // TODO: Implement layoff toggle
         var vm = this.getViewModel();
 
         if(vm.get('info.LayoffStatus') == "Active"){
-            // TODO: Show effective date selector popup
-            vm.set('info.LayoffStatus', "Laid Off");
+            this.lookup('layoffEffectivePicker').show();
         } else {
             vm.set('info.LayoffStatus', "Active");
         }
 
         console.info('Layoff toggle button clicked');
+    },
+
+    onLayoffEffectivePicked: function(){
+        var vm = this.getViewModel();
+
+        console.info('Picked effective layoff date');
     },
 
     onNotesButtonTap: function(ref, x, eOpts){
