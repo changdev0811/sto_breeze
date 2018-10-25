@@ -60,6 +60,28 @@ Ext.define('Breeze.view.main.employees.PanelController', {
 
         // Reload store with updated params
         store.load();
+    },
+
+    /**
+     * Update search query parameter and reload departments
+     * store
+     * 
+     * @param {Object} comp Search field component
+     */
+    doDepartmentsSearch: function(comp){
+        var vm = this.getViewModel(),
+            query = comp.getValue(),
+            excludeTerminated = vm.get('excludeTerminated'),
+            store = vm.get('departmentsTree');
         
+        // Force store proxy to update
+        store.updateProxy(store.getProxy());
+
+        // Update params
+        store.setSearchString(query);
+        store.setExcludeTerminated(excludeTerminated);
+
+        // Reload store with updated params
+        store.load();
     }
 });

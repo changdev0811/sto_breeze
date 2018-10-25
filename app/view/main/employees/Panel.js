@@ -1,3 +1,9 @@
+/**
+ * Employees panel view
+ * @class Panel
+ * @namespace Breeze.view.main.employees.Panel
+ * @alias widget.main.employees.panel
+ */
 Ext.define('Breeze.view.main.employees.Panel', {
     extend: 'Ext.Container',
     alias: 'widget.main.employees.panel',
@@ -139,7 +145,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     // ui: 'dark-textfield',
                                     ui: 'alt',
                                     flex: 1,
-                                    placeholder: 'Search'
+                                    placeholder: 'Search',
+                                    listeners: {
+                                        action: 'doDepartmentsSearch',
+                                        clearicontap: 'doDepartmentsSearch'
+                                    }
                                 }
                             ]
                         },
