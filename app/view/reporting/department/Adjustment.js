@@ -59,7 +59,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
             layout: 'hbox',
 
             // +++ Allow h scroll when panel is too small +++
-            scrollable:true,
+            scrollable: 'x',
 
             items: [
                 // First column in horizontal container
@@ -340,22 +340,45 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
 
                     // docked: 'right',
                     layout: {
-                        type: 'fit',
+                        type: 'vbox',
                         alignment: 'stretch'
                     },
                     height: '100%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
-                        // User defined categories tree control
                         {
-                            xtype: 'breeze.tree.usercategories',
-                            bind: {
-                                store: '{categoriesList}'
-                            },
-                            reference: 'udcTree',
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            shadow: false,
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onCategoriesCheckAllChange'
+                                    }
+                                }
+                            ]
+                        },
+                        // User defined category selector
+                        // === Replacement category selector
+                        {
+                            xtype: 'breeze-categories-list',
+                            ui: 'employeeinfo-shift-grid',
                             flex: 1,
-                            ui: 'reporting-tree'
+                            reference: 'categoryList',
+                            // used by 'check all' listener
+                            itemId: 'categories',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item'
+                            },
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
                         }
                     ]
                 }

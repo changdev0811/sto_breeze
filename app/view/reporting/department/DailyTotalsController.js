@@ -55,6 +55,17 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
     },
 
     /**
+     * Handle categories list 'check all' changing value.
+     * Use to toggle all checkboxes in list.
+     * @param {Object} comp Component firing event
+     * @param {Boolean} newVal New value for checkbox
+     */
+    onCategoriesCheckAllChange: function(comp, newVal){
+        var categoryList = comp.getParent().getParent().getComponent('categories');
+        categoryList.changeAllCheckboxes(newVal);
+    },
+
+    /**
      * Check parameter values and ensure all required fields have been
      * provided
      * @return {Boolean} True if validation succeeds, false otherwise

@@ -45,6 +45,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         shadow: false
     },
 
+
     // Body contents
     items: [
         // Form Title Text field
@@ -62,7 +63,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
             layout: 'hbox',
 
             // +++ Allow h scroll when panel is too small +++
-            scrollable:true,
+            scrollable:'x',
 
             items: [
                 // First column in horizontal container

@@ -8,10 +8,6 @@ Ext.define('Breeze.view.reporting.department.AdjustmentController', {
     extend: 'Breeze.controller.Reporting',
     alias: 'controller.reporting.department.adjustment',
 
-    stores: [
-        'Breeze.store.category.List'
-    ],
-
     /**
      * Called when the view is created
      */
@@ -50,8 +46,18 @@ Ext.define('Breeze.view.reporting.department.AdjustmentController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
+    },
+
+    /**
+     * Handle categories list 'check all' changing value.
+     * Use to toggle all checkboxes in list.
+     * @param {Object} comp Component firing event
+     * @param {Boolean} newVal New value for checkbox
+     */
+    onCategoriesCheckAllChange: function(comp, newVal){
+        var categoryList = comp.getParent().getParent().getComponent('categories');
+        categoryList.changeAllCheckboxes(newVal);
     },
 
     /**

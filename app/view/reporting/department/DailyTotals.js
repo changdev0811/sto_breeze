@@ -66,7 +66,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
 
 
             // +++ Allow h scroll when panel is too small +++
-            scrollable:true,
+            scrollable:'x',
 
             items: [
                 // First column in horizontal container
@@ -264,6 +264,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'180pt',
+                    maxWidth: '200pt',
 
                     layout: 'vbox',
                     defaults: {
@@ -374,22 +375,45 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     
                     // docked: 'right',
                     layout: {
-                        type: 'fit',
+                        type: 'vbox',
                         alignment: 'stretch'
                     },
                     height: '100%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
-                        // User defined categories tree control
                         {
-                            xtype: 'breeze.tree.usercategories',
-                            bind: {
-                                store: '{categoriesList}'
-                            },
-                            reference: 'udcTree',
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            shadow: false,
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onCategoriesCheckAllChange'
+                                    }
+                                }
+                            ]
+                        },
+                        // User defined category selector
+                        // === Replacement category selector
+                        {
+                            xtype: 'breeze-categories-list',
+                            ui: 'employeeinfo-shift-grid',
                             flex: 1,
-                            ui: 'reporting-tree'
+                            reference: 'categoryList',
+                            // used by 'check all' listener
+                            itemId: 'categories',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item'
+                            },
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
                         }
                     ]
                 },
@@ -399,8 +423,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     flex: 1,
 
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'150pt',
+                    minWidth:'180pt',
+                    // No max, allow projects to expand if possible
+                    // maxWidth:'200pt',
 
                     layout: 'vbox',
                     items: [
@@ -430,15 +455,12 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                             xtype: 'checkbox',
                                             ui: 'reporting',
                                             boxLabel: 'Check All Projects',
-                                            //listeners: {
-                                            //    change: 'onTreeGridCheckAllChange'
-                                            //}
+                                            listeners: {
+                                               change: 'onTreeGridCheckAllChange'
+                                            }
                                         }
                                     ]
                                 },
-
-
-
                                 {
                                     xtype: 'tree',
                                     flex:1,
@@ -479,7 +501,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                         }
                                     ],
                                     reference: 'projectsTree',
-                                    bind: '{departmentsTree}'
+                                    // TODO: Update binding once projects API call is available
+                                    // bind: '{departmentsTree}'
                                 }
 
 
