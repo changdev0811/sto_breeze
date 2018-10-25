@@ -240,7 +240,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
-                                                    text: 'Name',
+                                                    // text: 'Name',
                                                     dataIndex: 'displayName',
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
@@ -313,7 +313,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
-                                                    text: 'Name',
+                                                    // text: 'Name',
                                                     dataIndex: 'personId',
                                                     tpl: '{displayName}',
                                                     menuDisabled: true,
@@ -392,7 +392,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
-                                                    text: 'Department Name',
+                                                    // text: 'Department Name',
                                                     dataIndex: 'departmentId',
                                                     tpl: '{departmentName}',
                                                     menuDisabled: true,
@@ -414,7 +414,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
-                                                    text: 'Role',
+                                                    // text: 'Role',
                                                     dataIndex: 'roleId',
                                                     tpl: '{roleName}',
                                                     menuDisabled: true,
@@ -435,11 +435,16 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     cell: {
                                                         toolDefaults: {
                                                             ui: 'employeeinfo-grid-tool',
-                                                            zone: 'end'
+                                                            zone: 'end',
+                                                            bind: {
+                                                                // Hide when readOnly
+                                                                hidden: '{readOnly}'
+                                                            }
                                                         },
                                                         tools: [
                                                             {
-                                                                iconCls: 'x-fas fa-times'
+                                                                iconCls: 'x-fas fa-times',
+                                                                handler: 'onRemoveDepartmentTool'
                                                             }
                                                         ]
                                                     }

@@ -586,7 +586,18 @@ Ext.define('Breeze.view.employee.InformationController', {
      * Handles 'remove' tool in Supervised Departments grid
      * under 'Company' tab
      */
-    onRemoveDepartmentTool: function(){
+    onRemoveDepartmentTool: function(grid, info){
+        var vm = this.getViewModel(),
+            records = vm.get('companyDepartments'),
+            record = records.findRecord('id', info.record.id);
+        
+        if(record !== null){
+            records.remove([record]);
+            records.commitChanges();
+
+            this.buildSupervisedDepartmentChoices();
+        }
+
         console.info('remove department');
     },
 
