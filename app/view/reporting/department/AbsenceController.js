@@ -160,7 +160,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
             function(url){
                 if(typeof url == "string"){
                     Ext.toast({
-                        message: 'Department Absence report successfully generated',
+                        message: 'Report Successfully Generated',
                         type: Ext.Toast.INFO,
                         timeout: 10000
                     });
@@ -168,7 +168,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
                 } else {
                     if(url.Message){
                         Ext.toast({
-                            message: 'Department Absence report error: <br>' + url.Message,
+                            message: 'Report Error: <br>' + url.Message,
                             type: Ext.Toast.ERROR,
                             timeout: 10000
                         });
@@ -176,7 +176,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
                 }
             }
         ).catch(function(err){
-            console.warn('Error generating department absence report', err);
+            console.warn('Error generating report', err);
         })
     },
 
