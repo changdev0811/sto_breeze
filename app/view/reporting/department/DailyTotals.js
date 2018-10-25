@@ -364,7 +364,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     xtype: 'fieldset',
 
                     // +++ added reporting-fieldset +++
-                    userCls: 'reporting-fieldset',
+                    userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
                     title: 'Categories',
