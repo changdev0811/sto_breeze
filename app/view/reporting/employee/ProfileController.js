@@ -62,7 +62,18 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
      */
     validateParameters: function(){
         return true;
-    }
+    },
+
+    /**
+     * Handle categories list 'check all' changing value.
+     * Use to toggle all checkboxes in list.
+     * @param {Object} comp Component firing event
+     * @param {Boolean} newVal New value for checkbox
+     */
+    onCategoriesCheckAllChange: function(comp, newVal){
+        var categoryList = comp.getParent().getParent().getComponent('categories');
+        categoryList.changeAllCheckboxes(newVal);
+    },
 
     
 });
