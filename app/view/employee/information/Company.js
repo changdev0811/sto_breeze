@@ -361,25 +361,56 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             ui: 'employeeinfo-shift-grid',
                                             userCls: 'employee-info-grid',
                                             reference: 'departmentsListGrid',
+                                            plugins: {
+                                                gridcellediting: true
+                                            },
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
                                                     text: 'Department Name',
-                                                    dataIndex: 'displayName',
+                                                    dataIndex: 'departmentId',
+                                                    tpl: '{departmentName}',
                                                     menuDisabled: true,
-                                                    ui: 'employeeinfo-shift-grid'
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    editable: true,
+                                                    editor: {
+                                                        xtype: 'selectfield',
+                                                        bind: {
+                                                            store: '{choices.supervisedDepartments}'
+                                                        },
+                                                        placeholder: 'Department',
+                                                        displayField: 'departmentName',
+                                                        valueField: 'departmentId',
+                                                        listeners: {
+                                                            select: 'onEditDepartmentsDeptSelect'
+                                                        }
+                                                    }
                                                 },
                                                 {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
                                                     text: 'Role',
-                                                    dataIndex: 'role',
+                                                    dataIndex: 'roleId',
+                                                    tpl: '{roleName}',
                                                     menuDisabled: true,
-                                                    ui: 'employeeinfo-shift-grid'
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    editable: true,
+                                                    editor: {
+                                                        xtype: 'selectfield',
+                                                        bind: {
+                                                            store: '{securityRoles}'
+                                                        },
+                                                        placeholder: 'Role',
+                                                        displayField: 'Role_Name',
+                                                        valueField: 'Role_Id',
+                                                        listeners: {
+                                                            select: 'onEditDepartmentsDeptSelect'
+                                                        }
+                                                    }
                                                 }
                                             ],
-                                            bind: '{companyDepartmentsList}'
+                                            bind: '{companyDepartments}'
                                         }
                                     ]
                                 }

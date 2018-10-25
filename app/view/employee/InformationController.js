@@ -197,7 +197,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
-            console.log("Employee Info Error");
+            console.warn("Employee Info Error", err);
         });
     },
 
@@ -263,6 +263,13 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
     },
 
+    /**
+     * Prepare stores needed for company supervisors, supervised
+     * employees and supervised departments grids.
+     * 
+     * Loads initial values and creates choice stores to track
+     * available items and used items for each grid
+     */
     prepareCompanyLists: function(){
         var me = this,
             vm = this.getViewModel();
@@ -270,16 +277,57 @@ Ext.define('Breeze.view.employee.InformationController', {
 
         var emps = vm.get('employees'),
             sups = vm.get('supervisors'),
-            deps = null;
+            deps = vm.get('departments'),
+            role = vm.get('securityRoles');
         
         var eids = vm.get('info.SupervisedEmpIds'),
-            sids = vm.get('info.SupervisorIds');
+            sids = vm.get('info.SupervisorIds'),
+            dids = vm.get('info.SupervisedDeptIds'),
+            rids = vm.get('info.DeptRoleIds');
 
+        var personModel = 'Breeze.model.employee.company.Person',
+            deptModel = 'Breeze.model.employee.company.Department';
+
+        //==[Complete Choice Set Stores]==
+
+        /* Create 'choices' store for employees, containing
+           full list of possible employees */
+        this.addLoadedStoreToViewModel(
+            {
+                model: personModel,
+                data: emps.getData().items.map((r)=>{
+                    return {
+                        personId: r.data.id, 
+                        displayName: r.data.displayName
+                    };
+                })
+            },
+            'choices.employees'
+        );
+
+        /* Create 'choices' store for departments, with full
+            list of possible departments */
+        this.addLoadedStoreToViewModel(
+            {
+                model: deptModel,
+                data: deps.getData().items.map((r)=>{
+                    return {
+                        departmentId: r.data.Id,
+                        departmentName: r.data.Name,
+                        roleId: 0,
+                        roleName: ''
+                    };
+                })
+            },
+            'choices.departments'
+        );
+
+        //==[Current Company Grid Data Value Stores]==
 
         // Create local store for company supervisors
         this.addLoadedStoreToViewModel(
             {
-                model: 'Breeze.model.employee.CompanyPerson',
+                model: personModel,
                 data: (
                     sups.queryRecordsBy((r)=>{
                         return (sids.includes(r.id));
@@ -295,7 +343,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         // Create local store for company supervised employees
         this.addLoadedStoreToViewModel(
             {
-                model: 'Breeze.model.employee.CompanyPerson',
+                model: personModel,
                 data: (
                     emps.queryRecordsBy((r)=>{
                         return (eids.includes(r.id));
@@ -308,26 +356,56 @@ Ext.define('Breeze.view.employee.InformationController', {
             'companySupervisedEmployees'
         );
 
+        // Create local store for company departments
         this.addLoadedStoreToViewModel(
             {
-                model: 'Breeze.model.employee.CompanyPerson',
-                data: emps.getData().items.map((r)=>{
+                model: deptModel,
+                data: (
+                    deps.queryRecordsBy((r)=>{
+                        return (dids.includes(r.id));
+                    })
+                ).map((r,idx)=>{
+                    console.info('Building dept store');
                     return {
-                        personId: r.data.id, 
-                        displayName: r.data.displayName
+                        departmentId: r.get('Id'),
+                        departmentName: r.get('Name'),
+                        roleId: rids[idx],
+                        roleName: role
+                            .findRecord('Role_Id', rids[idx]).get('Role_Name')
                     };
                 })
             },
-            'choices.employees'
+            'companyDepartments'
         );
+        
 
+        //==[Available Choice Set Stores]==
+
+        // Store used to track available supervisors
         this.addLoadedStoreToViewModel({
-            model: 'Breeze.model.employee.CompanyPerson',
+            model: personModel,
+            data: []
+        }, 'choices.supervisors');
+        
+        // Store used to track available supervised employees
+        this.addLoadedStoreToViewModel({
+            model: personModel,
             data: []
         }, 'choices.supervisedEmployees');
 
-        // Initialize supervised employee choices
+        // Store used to track available departments
+        this.addLoadedStoreToViewModel({
+            model: deptModel,
+            data: []
+        }, 'choices.supervisedDepartments');
+
+        //===[Build Initial Choice Sets]===
+
+        // Build choices for supervised employees
         this.buildSupervisedEmployeeChoices();
+
+        // Build choices for departments
+        this.buildSupervisedDepartmentChoices(); 
 
     },
 
@@ -352,8 +430,47 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     /**
+     * Handle select event for supervised departments grid
+     * department name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsDeptSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            departmentId: data.data.departmentId,
+            departmentName: data.data.departmentName
+        }, {commit: true});
+        
+        console.info('Select edit department department');
+        this.buildSupervisedDepartmentChoices();
+    },
+
+    /**
+     * Handle select event for supervised departments grid
+     * role name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsRoleSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            roleId: data.get('Role_Id'),
+            roleName: data.get('Role_Name')
+        }, {commit: true});
+
+        console.info('Select edit department role');
+    },
+
+    //===[Company Tab Grid choice store builders/updaters]==
+
+    /**
      * Build/update choices.supervisedEmployees store,
-     * used to edit supervised employees
+     * used to provide choices for editing supervised employees
      */
     buildSupervisedEmployeeChoices: function(){
         var vm = this.getViewModel(),
@@ -379,6 +496,39 @@ Ext.define('Breeze.view.employee.InformationController', {
         choices.commitChanges();
 
         console.info('Done building supervised employees store');
+    },
+
+    /**
+     * Build/update choice.departments store,
+     * used to provide choices for editing supervised departments
+     */
+    buildSupervisedDepartmentChoices: function(){
+        var vm = this.getViewModel(),
+            all = vm.get('choices.departments'),
+            choices = vm.get('choices.supervisedDepartments'),
+            choiceIds = choices.getData().items.map((rec)=>{
+                return rec.get('departmentId');
+            }),
+            used = vm.get('companyDepartments').getData().items.map(
+                (rec) => { return rec.get('departmentId'); }
+            ),
+            toRemove = choices.queryBy((rec) => {
+                return (used.includes(rec.get('departmentId')));
+            }),
+            toAdd = all.queryBy((rec) => {
+                return (!used.includes(rec.data.departmentId));
+            }).items.filter((rec) => {
+                return (!choiceIds.includes(rec.data.departmentId));
+            });
+
+        // Add missing
+        choices.loadData(toAdd, true);
+        // Remove used
+        choices.remove(toRemove.items);
+        // Save changes
+        choices.commitChanges();
+
+        console.info('Done building departments store');
     },
 
     //===[Action Tool Handlers]===
