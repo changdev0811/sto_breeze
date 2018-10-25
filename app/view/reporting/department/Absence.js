@@ -410,6 +410,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             value: '20',
                                             boxLabel: 'Days',
                                             // bind: '{reportParams.conditional_type}'
+                                            bind: {
+                                                groupValue: '{reportParams.conditional_type}'
+                                            }
                                         },
                                         {
                                             flex: 1,
@@ -418,6 +421,9 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             value: '21',
                                             boxLabel: 'Weeks',
                                             // bind: '{reportParams.conditional_type}'
+                                            bind: {
+                                                groupValue: '{reportParams.conditional_type}'
+                                            }
                                         }
                                     ]
                                 }
