@@ -64,6 +64,8 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
         return true;
     },
 
+    //===[Event Handlers]===
+
     /**
      * Handle mini calendar click event, adding newly selected
      * week to selected weeks store if not already present
@@ -86,11 +88,38 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
             // Not already present, so add it
             // true indicates data should be appended to existing
             selectedWeekStore.loadData([selection], true);
+            // sort
+            selectedWeekStore.sort('start','ASC');
             // commit changes
             selectedWeekStore.commitChanges();
+            // sort
+            selectedWeekStore.sort('start','ASC');
+            // // commit changes
+            // selectedWeekStore.commitChanges();
         }
         
         console.info('Week Selected');
+    },
+
+    /**
+     * Handle click event for 'x' tool button in Selected Week
+     * grid. Removes row and removes associated record from store
+     * 
+     * @param {Object} grid Grid event originated from
+     * @param {Object} info Additional event data
+     */
+    onWeekRemoveTool: function(grid, info){
+        // View model reference
+        var vm = this.getViewModel(),
+            weekStore = vm.get('selectedWeeks'),
+            recordToRemove = weekStore.findRecord('id', info.record.id);
+        
+        // If record was found, remove it
+        if(recordToRemove !== null){
+            weekStore.remove([recordToRemove]);
+            // commit changes to store
+            weekStore.commitChanges();
+        }
     }
 
     

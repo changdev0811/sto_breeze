@@ -23,29 +23,49 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
          *  - startText (short date string)
          */
         selectedWeeks: {
-
         }
     },
-    data: {
-        /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
 
+    constructor: function (cfg) {
+        this.callSuper([cfg]);
         /**
          * Report params contains attributes that get submitted along with
          * report request. When possible, they have been bound to their
          * respective form fields so their values are automatically changed
          * when edits are made in form
          */
-        reportParams: {
-            CompanyName: null,
-            customerId: null,
-            groupByDepartment: true,
-            LogoInHeader: false,
-            NameInHeader: false,
-            RepSignature: false,
-            ReportTitle: 'Overtime Check Report',
-            category_id: null,
-            hhmm_format: true,
-            recyear: null
-        }
+        var data = {
+            reportParams: {
+                CompanyName: null,
+                customerId: null,
+                groupByDepartment: true,
+                LogoInHeader: false,
+                NameInHeader: false,
+                RepSignature: false,
+                ReportTitle: 'Overtime Check Report',
+                category_id: null,
+                hhmm_format: true,
+                recyear: null,
+                ot_value: 8.0
+            }
+        };
+        this.setData(data);
+    },
+    data: {
+        /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+        
+        /*
+            TODO: Read from the following before submitting params to API call
+            The following vars are bound to weekly/hourly radio buttons
+            and associated values. Before submitting, set parameter ot_value
+            from one of the below ot_hours_x values, based on the value
+            of valType (1 = daily, 2 = weekly)
+        */
+        
+        // used for hour mode binding
+        ot_hours_daily: 8,
+        ot_hours_weekly: 40,
+        // whether to use daily or weekly
+        valType: 1
     }
 });

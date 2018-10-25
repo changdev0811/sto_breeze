@@ -285,20 +285,80 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                             bind: '{reportParams.hhmm_format}'
                         },
                         {
-                            xtype: 'selectfield',
-                            name: 'dailyhours',
-                            label: 'Daily Hours',
-                            store: '',
-                            bind: { value: '{info.ot_value}' },
-                            displayField: '',
-                        },
-                        {
-                            xtype: 'selectfield',
-                            name: 'weeklyhours',
-                            label: 'Weekly Hours',
-                            store: '',
-                            bind: { value: '{info.ot_value}' },
-                            displayField: '',
+                            xtype: 'container',
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    layout: 'hbox',
+                                    defaults: {
+                                        ui: 'reporting reporting-text'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'radiofield',
+                                            flex: 2,
+                                            bodyAlign: 'stretch',
+                                            inline: true,
+                                            name: 'valType',
+                                            value: 1,
+                                            boxLabel: 'Daily Hours',
+                                            reference: 'dailyHours',
+                                            bind: {
+                                                groupValue: '{valType}'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            name: 'daily_hours',
+                                            decimals: 2,
+                                            stepValue: 0.5,
+                                            bind: {
+                                                // readOnly and disabled change based on
+                                                // checked state of radio with reference
+                                                // dailyHours
+                                                readOnly: '{!dailyHours.checked}',
+                                                disabled: '{!dailyHours.checked}',
+                                                value: '{ot_hours_daily}'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    layout: 'hbox',
+                                    defaults: {
+                                        ui: 'reporting reporting-text'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'radiofield',
+                                            flex: 2,
+                                            bodyAlign: 'stretch',
+                                            name: 'valType',
+                                            value: 2,
+                                            boxLabel: 'Weekly Hours',
+                                            reference: 'weeklyHours',
+                                            bind: {
+                                                groupValue: '{valType}'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            name: 'weekly_hours',
+                                            decimals: 2,
+                                            stepValue: 0.5,
+                                            bind: {
+                                                readOnly: '{!weeklyHours.checked}',
+                                                disabled: '{!weeklyHours.checked}',
+                                                value: '{ot_hours_weekly}'
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
@@ -313,8 +373,16 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                         {
                             xtype: 'panel.minicalendar',
                             reference: 'weekSelector',
-                            ui: 'minicalendar',//'wtr-small',,
-                            collapsed: true,
+                            ui: 'light-minicalendar',//'wtr-small',
+                            tools: {
+                                previousMonth: {
+                                    ui: 'light-minicalendar'
+                                },
+                                nextMonth: {
+                                    ui: 'light-minicalendar'
+                                }
+                            },
+                            // collapsed: true,
                             flex: 1,
                             width: '100%',
                             margin: '0pt 10pt 0pt 10pt',
@@ -349,7 +417,20 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                         {
                                             dataIndex: 'startText',
                                             menuDisabled: true,
-                                            flex: 1
+                                            flex: 1,
+                                            // Remove tool button
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end',
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onWeekRemoveTool'
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
