@@ -429,8 +429,19 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         displayField: 'Role_Name',
                                                         valueField: 'Role_Id',
                                                         listeners: {
-                                                            select: 'onEditDepartmentsDeptSelect'
+                                                            select: 'onEditDepartmentsRoleSelect'
                                                         }
+                                                    },
+                                                    cell: {
+                                                        toolDefaults: {
+                                                            ui: 'employeeinfo-grid-tool',
+                                                            zone: 'end'
+                                                        },
+                                                        tools: [
+                                                            {
+                                                                iconCls: 'x-fas fa-times'
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ],

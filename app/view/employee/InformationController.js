@@ -540,6 +540,15 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     //==[Company List ActionSheet Add event handlers]==
+
+    /**
+     * Handle clicking 'Add' button in 'Add Supervised Department'
+     * ActionSheet.
+     * 
+     * If valid, adds a new row to the Supervised Departments grid
+     * 
+     * @param {Object} comp Button firing event
+     */
     onAddDepartment: function(comp){
         var vm = this.getViewModel(),
             chosenDepts = vm.get('companyDepartments'),
@@ -570,6 +579,17 @@ Ext.define('Breeze.view.employee.InformationController', {
         
         console.info('Add supervised department');
     },
+    
+    //==[Company List 'Remove' tool handlers]==
+    
+    /**
+     * Handles 'remove' tool in Supervised Departments grid
+     * under 'Company' tab
+     */
+    onRemoveDepartmentTool: function(){
+        console.info('remove department');
+    },
+
 
     //===[Action Tool Handlers]===
     
