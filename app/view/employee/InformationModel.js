@@ -167,10 +167,6 @@ Ext.define('Breeze.view.employee.InformationModel', {
         }
     },
 
-    stores: {
-
-    },
-
     formulas: {
         hireDate: function (get) {
             return Ext.util.Format.date(
@@ -272,6 +268,10 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
+        isLaidOff: function(get){
+            return (get('info.LayoffStatus') == 'Laid Off');
+        },
+
         /**
          * Pull all form data from elsewhere in model and return it in a single object
          * using the expected parameter names for submitting data updates
@@ -357,7 +357,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * Formula returning filtered selection of supervisors based on supervisor
          * IDs defined in employee info data object
          */
-        companySupervisorsList: {
+        companySupervisorChoices: {
             bind: {
                 store: '{supervisors}',
                 ids: '{info.SupervisorIds}'
@@ -371,31 +371,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-        companyEmployeesList: {
-            bind: {
-                store: '{employees}',
-                ids: '{info.SupervisedEmpIds}'
-            },
-            get: function (data) {
-                return data.store.queryRecordsBy(
-                    function (rec) {
-                        return data.ids.includes(rec.id);
-                    }
-                )
-            }
-        },
-
-        // companyDepartmentsList: {
-        //     bind: {
-        //         store: '{departments}',
-        //         ids: '{info.SupervisedDeptIds}'
-        //     },
-        //     get: function(data){
-        //         return data.store.queryRecordsBy(function(rec){return data.ids.includes(rec.id);});
-        //     }
-        // },
-
-        companyDepartmentsList: {
+        companyDepartmentOptions: {
             bind: {
                 // deptStore: '{departments}',
                 // roleStore: '{securityRoles}',

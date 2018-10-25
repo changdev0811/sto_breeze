@@ -12,10 +12,12 @@ Ext.define('Breeze.helper.Base', {
      * Swap which of the following two lines are commented out
      * to go from dev mode (using local dummy api) to production
      * (using live server api)
+     * Note: please keep the comment at the end of the line intact-- it
+     * is used by a build script to automatically force non-dummy mode
+     * on build
      ***********************************************************/
-    // api: Breeze.helper.Api,
-    api: Breeze.helper.DummyApi,
-
+    api: Breeze.helper.DummyApi, /*%api-mode%*/
+    // api: Breeze.helper.Api
 
     /*******************************************
      * Control 'test' mode (skip login screen)

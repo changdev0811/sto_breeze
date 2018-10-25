@@ -61,6 +61,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                         //     var companyLists = c.lookupReference('companuListTabs');
                         // }
                         me.toggleCompanyLists(c);
+                        me.prepareCompanyLists();
                     });
                 }
             });
@@ -196,7 +197,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
-            console.log("Employee Info Error");
+            console.warn("Employee Info Error", err);
         });
     },
 
@@ -262,6 +263,345 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
     },
 
+    /**
+     * Prepare stores needed for company supervisors, supervised
+     * employees and supervised departments grids.
+     * 
+     * Loads initial values and creates choice stores to track
+     * available items and used items for each grid
+     */
+    prepareCompanyLists: function(){
+        var me = this,
+            vm = this.getViewModel();
+        console.info('Preparing company lists');
+
+        var emps = vm.get('employees'),
+            sups = vm.get('supervisors'),
+            deps = vm.get('departments'),
+            role = vm.get('securityRoles');
+        
+        var eids = vm.get('info.SupervisedEmpIds'),
+            sids = vm.get('info.SupervisorIds'),
+            dids = vm.get('info.SupervisedDeptIds'),
+            rids = vm.get('info.DeptRoleIds');
+
+        var personModel = 'Breeze.model.employee.company.Person',
+            deptModel = 'Breeze.model.employee.company.Department';
+
+        //==[Complete Choice Set Stores]==
+
+        /* Create 'choices' store for employees, containing
+           full list of possible employees */
+        this.addLoadedStoreToViewModel(
+            {
+                model: personModel,
+                data: emps.getData().items.map((r)=>{
+                    return {
+                        personId: r.data.id, 
+                        displayName: r.data.displayName
+                    };
+                })
+            },
+            'choices.employees'
+        );
+
+        /* Create 'choices' store for departments, with full
+            list of possible departments */
+        this.addLoadedStoreToViewModel(
+            {
+                model: deptModel,
+                data: deps.getData().items.map((r)=>{
+                    return {
+                        departmentId: r.data.Id,
+                        departmentName: r.data.Name,
+                        roleId: 0,
+                        roleName: ''
+                    };
+                })
+            },
+            'choices.departments'
+        );
+
+        //==[Current Company Grid Data Value Stores]==
+
+        // Create local store for company supervisors
+        this.addLoadedStoreToViewModel(
+            {
+                model: personModel,
+                data: (
+                    sups.queryRecordsBy((r)=>{
+                        return (sids.includes(r.id));
+                    })
+                ).map((i)=>{return {
+                    personId: i.data.id, 
+                    displayName: i.data.displayName
+                };})
+            },
+            'companySupervisors'
+        );
+
+        // Create local store for company supervised employees
+        this.addLoadedStoreToViewModel(
+            {
+                model: personModel,
+                data: (
+                    emps.queryRecordsBy((r)=>{
+                        return (eids.includes(r.id));
+                    })
+                ).map((i)=>{return {
+                    personId: i.data.id, 
+                    displayName: i.data.displayName
+                };})
+            },
+            'companySupervisedEmployees'
+        );
+
+        // Create local store for company departments
+        this.addLoadedStoreToViewModel(
+            {
+                model: deptModel,
+                data: (
+                    deps.queryRecordsBy((r)=>{
+                        return (dids.includes(r.id));
+                    })
+                ).map((r,idx)=>{
+                    console.info('Building dept store');
+                    return {
+                        departmentId: r.get('Id'),
+                        departmentName: r.get('Name'),
+                        roleId: rids[idx],
+                        roleName: role
+                            .findRecord('Role_Id', rids[idx]).get('Role_Name')
+                    };
+                })
+            },
+            'companyDepartments'
+        );
+        
+
+        //==[Available Choice Set Stores]==
+
+        // Store used to track available supervisors
+        this.addLoadedStoreToViewModel({
+            model: personModel,
+            data: []
+        }, 'choices.supervisors');
+        
+        // Store used to track available supervised employees
+        this.addLoadedStoreToViewModel({
+            model: personModel,
+            data: []
+        }, 'choices.supervisedEmployees');
+
+        // Store used to track available departments
+        this.addLoadedStoreToViewModel({
+            model: deptModel,
+            data: []
+        }, 'choices.supervisedDepartments');
+
+        //===[Build Initial Choice Sets]===
+
+        // Build choices for supervised employees
+        this.buildSupervisedEmployeeChoices();
+
+        // Build choices for departments
+        this.buildSupervisedDepartmentChoices(); 
+
+    },
+
+    //===[Company List Event Handlers]===
+
+    onCompanyGridAddButton: function(comp, tool, eOpts){
+        var actSheet = this.lookup(tool.getData().sheet);
+        actSheet.show();
+
+        console.info('Handling add button click for company grid');
+    },
+
+    //==[Edit Cell Change Events]==
+    /**
+     * Handle select event for supervised employees grid cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditSupervisedEmployeeSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+        
+        targetRecord.set({
+            personId: data.data.personId,
+            displayName: data.data.displayName
+        }, {commit: true});
+
+        console.info('Select updated record!');
+        this.buildSupervisedEmployeeChoices();
+    },
+
+    /**
+     * Handle select event for supervised departments grid
+     * department name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsDeptSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            departmentId: data.data.departmentId,
+            departmentName: data.data.departmentName
+        }, {commit: true});
+        
+        console.info('Select edit department department');
+        this.buildSupervisedDepartmentChoices();
+    },
+
+    /**
+     * Handle select event for supervised departments grid
+     * role name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsRoleSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            roleId: data.get('Role_Id'),
+            roleName: data.get('Role_Name')
+        }, {commit: true});
+
+        console.info('Select edit department role');
+    },
+
+    //===[Company Tab Grid choice store builders/updaters]==
+
+    /**
+     * Build/update choices.supervisedEmployees store,
+     * used to provide choices for editing supervised employees
+     */
+    buildSupervisedEmployeeChoices: function(){
+        var vm = this.getViewModel(),
+            all = vm.get('choices.employees'),
+            choices = vm.get('choices.supervisedEmployees'),
+            choiceIds = choices.getData().items.map((rec)=>{
+                return rec.data.personId;
+            }),
+            used = vm.get('companySupervisedEmployees').getData().items.map(
+                (rec) => { return rec.data.personId; }
+            ),
+            toRemove = choices.queryBy((rec) => {
+                return (used.includes(rec.data.personId));
+            }),
+            toAdd = all.queryBy((rec) => {
+                return (!used.includes(rec.data.personId));
+            }).items;
+        toAdd = toAdd.filter((rec) => {
+            return (!choiceIds.includes(rec.data.personId));
+        });
+        choices.loadData(toAdd, true);
+        choices.remove(toRemove.items);
+        choices.commitChanges();
+
+        console.info('Done building supervised employees store');
+    },
+
+    /**
+     * Build/update choice.departments store,
+     * used to provide choices for editing supervised departments
+     */
+    buildSupervisedDepartmentChoices: function(){
+        var vm = this.getViewModel(),
+            all = vm.get('choices.departments'),
+            choices = vm.get('choices.supervisedDepartments'),
+            choiceIds = choices.getData().items.map((rec)=>{
+                return rec.get('departmentId');
+            }),
+            used = vm.get('companyDepartments').getData().items.map(
+                (rec) => { return rec.get('departmentId'); }
+            ),
+            toRemove = choices.queryBy((rec) => {
+                return (used.includes(rec.get('departmentId')));
+            }),
+            toAdd = all.queryBy((rec) => {
+                return (!used.includes(rec.data.departmentId));
+            }).items.filter((rec) => {
+                return (!choiceIds.includes(rec.data.departmentId));
+            });
+
+        // Add missing
+        choices.loadData(toAdd, true);
+        // Remove used
+        choices.remove(toRemove.items);
+        // Save changes
+        choices.commitChanges();
+
+        console.info('Done building departments store');
+    },
+
+    //==[Company List ActionSheet Add event handlers]==
+
+    /**
+     * Handle clicking 'Add' button in 'Add Supervised Department'
+     * ActionSheet.
+     * 
+     * If valid, adds a new row to the Supervised Departments grid
+     * 
+     * @param {Object} comp Button firing event
+     */
+    onAddDepartment: function(comp){
+        var vm = this.getViewModel(),
+            chosenDepts = vm.get('companyDepartments'),
+            sheet = comp.getParent().getParent(),
+            deptField = sheet.getComponent('department'),
+            roleField = sheet.getComponent('role');
+        
+        if(deptField.validate() && roleField.validate()){
+            // Both fields are valid, so make use of them
+            var deptRecord = deptField.getSelection().getData(),
+                roleRecord = roleField.getSelection().getData(),
+                newRecord = {
+                    departmentId: deptRecord.departmentId,
+                    departmentName: deptRecord.departmentName,
+                    roleId: roleRecord.Role_Id,
+                    roleName: roleRecord.Role_Name
+                };
+            chosenDepts.loadData([newRecord], true);
+            chosenDepts.commitChanges();
+            // Refresh available choices
+            this.buildSupervisedDepartmentChoices();
+        }
+        
+        // Close action sheet and reset values to empty
+        sheet.hide();
+        deptField.clearValue();
+        roleField.clearValue();
+        
+        console.info('Add supervised department');
+    },
+    
+    //==[Company List 'Remove' tool handlers]==
+    
+    /**
+     * Handles 'remove' tool in Supervised Departments grid
+     * under 'Company' tab
+     */
+    onRemoveDepartmentTool: function(grid, info){
+        var vm = this.getViewModel(),
+            records = vm.get('companyDepartments'),
+            record = records.findRecord('id', info.record.id);
+        
+        if(record !== null){
+            records.remove([record]);
+            records.commitChanges();
+
+            this.buildSupervisedDepartmentChoices();
+        }
+
+        console.info('remove department');
+    },
+
+
     //===[Action Tool Handlers]===
     
     /**
@@ -282,6 +622,34 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     //===[Event Handlers]===
+
+    /**
+     * Handles 'cancel' button click inside actionsheet, closing
+     * actionsheet
+     * @param {Object} comp Firing component
+     */
+    onActionSheetCancel: function(comp){
+        comp.getParent().getParent().hide();
+    },
+
+    onLayoffButtonToggle: function(){
+        // TODO: Implement layoff toggle
+        var vm = this.getViewModel();
+
+        if(vm.get('info.LayoffStatus') == "Active"){
+            this.lookup('layoffEffectivePicker').show();
+        } else {
+            vm.set('info.LayoffStatus', "Active");
+        }
+
+        console.info('Layoff toggle button clicked');
+    },
+
+    onLayoffEffectivePicked: function(){
+        var vm = this.getViewModel();
+
+        console.info('Picked effective layoff date');
+    },
 
     onNotesButtonTap: function(ref, x, eOpts){
         console.info("[onNotesButtonTap]");

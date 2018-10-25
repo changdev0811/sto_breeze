@@ -91,6 +91,7 @@
             this.punchClass = Ext.create('Breeze.api.Punch');
             this.reportRoutes = Ext.create('Breeze.store.reporting.Routes');
             this.theme = Breeze.helper.Theme;
+            Breeze.helper.Auth.startAuthCheckTimer();
             this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
             Ext.util.History.init();
             this.loadNavigation();

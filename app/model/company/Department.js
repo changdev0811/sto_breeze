@@ -5,6 +5,7 @@
  */
 Ext.define('Breeze.model.company.Department', {
 	extend: 'Breeze.model.Base',
+	idProperty: 'Id',
 	fields: [
 		{name: 'Id',		  type: 'integer'},
 		{name: 'Name',		  type: 'string' },

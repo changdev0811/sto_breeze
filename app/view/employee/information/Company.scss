@@ -13,4 +13,24 @@
     padding: 2pt;
 }
 
+@include tool-ui(
+    $ui: 'employeeinfo-grid-tool',
+    $color: map-get($employee-info-text-colors, 'base') !important,
+    $hovered-color: map-get($employee-info-text-colors, 'base') !important,
+);
+
+@include button-ui(
+    $ui: 'employeeinfo-grid-tool',
+    $icon-color: map-get($employee-info-text-colors, 'base')
+);
+
+// @include field-ui(
+//     $ui: 'employeeinfo-togglefield',
+//     $label-color: map-get($employee-info-text-colors, 'base')
+// );
+// @include togglefield-ui(
+//     $ui: 'employeeinfo-togglefield',
+//     $box-label-color: map-get($employee-info-text-colors, 'base'),  
+// );
+
 

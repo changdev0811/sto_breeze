@@ -74,9 +74,19 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
 
 
 @include displayfield-ui(
-    $input-font-size: $ei-field-font-size,
+    $input-font-size: $ei-field-font-size !important,
     $ui: 'employeeinfo-displayfield'
 );
+
+@include ui-extend(
+    $xtype: 'displayfield',
+    $ui: 'employeeinfo-displayfield'
+){
+    // Force displayfield font size
+    & > .x-body-wrap-el > .x-body-el > .x-innerhtml {
+        font-size: $ei-field-font-size;
+    }
+};
 
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),
@@ -158,4 +168,17 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
 
+@include panel-ui(
+    $ui: 'employee-info-grid-panel',
+    $header-background-color: map-get($employee-info-colors, 'light') !important,
+    $header-color: map-get($employee-info-colors, 'base'),
+    $tool-color: map-get($employee-info-colors, 'base'),
+    $tool-hovered-color: map-get($employee-info-colors, 'dark'),
+    $header-font-size: $ei-head-font-size
+);
+
+@include paneltitle-ui(
+    $ui: 'employee-info-grid-panel',
+    $color: map-get($employee-info-colors, 'base')
+);
 
