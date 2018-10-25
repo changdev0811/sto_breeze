@@ -1,3 +1,9 @@
+/**
+ * ViewModel for Employees Panel view
+ * @class PanelModel
+ * @namespace Breeze.view.main.employees.PanelModel
+ * @alias viewmodel.main.employees.panel
+ */
 Ext.define('Breeze.view.main.employees.PanelModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.main.employees.panel',
