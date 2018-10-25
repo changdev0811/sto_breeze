@@ -73,7 +73,8 @@
                 // before: 'beforeRoute'
             },
             'employees': {
-                action: 'onEmployeesRoute'
+                action: 'onEmployeesRoute',
+                before: 'beforeEmployeesRoute'
             },
             // Report route
             'reports/:category/:type': {
@@ -442,6 +443,17 @@
                 }
             });
             this.changeContent(component);
+        },
+
+
+        beforeEmployeesRoute: function(action){
+            var accessLevel = this.getViewModel().get('accessLevel');
+            if(accessLevel < Breeze.api.Employee.accessLevel.SUPERVISOR){
+                action.stop();
+                Ext.util.History.back();
+            } else {
+                action.resume();
+            }
         },
 
         onEmployeesRoute: function(){
