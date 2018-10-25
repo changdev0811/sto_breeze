@@ -11,5 +11,12 @@ Ext.define('Breeze.view.main.employees.PanelController', {
     /**
      * Called when the view is created
      */
-    init: function () {}
+    init: function () {
+        console.info('Employee Panel initialized');
+        this.addStoreToViewModel(
+            'Breeze.store.tree.employee.Departments',
+            'departmentsTree',
+            { load: true }
+        );
+    }
 });

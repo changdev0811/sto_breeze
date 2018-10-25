@@ -39,7 +39,8 @@
         routes: {
             // Personal routes
             'personal': {
-                action: 'onHomeRoute'
+                action: 'onHomeRoute',
+                before: 'beforeRoute'
             },
             'personal/info': {
                 action: 'onPersonalEmployeeInfoRoute',
@@ -68,10 +69,8 @@
                 before: 'beforeRoute'
             },
             'home': {
-                action: 'onHomeRoute'
-            },
-            'employees/info/:id': {
-                action: 'onEmployeesEmployeeInfoRoute'
+                action: 'onHomeRoute',
+                // before: 'beforeRoute'
             },
             'employees': {
                 action: 'onEmployeesRoute'
@@ -94,17 +93,29 @@
             Breeze.helper.Auth.startAuthCheckTimer();
             this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
             Ext.util.History.init();
-            this.loadNavigation();
+            this.loadAccess();
             this.loadEmployee();
             this.loadPunchSettings();
             this.updateAttendanceStatus();
         },
 
         loadNavigation: function(){
-            var me = this;
+            var me = this,
+                level = me.getViewModel().get('accessLevel');
             
             // var navStore = Ext.create('Breeze.helper.navigation.Personal').asTreeWithExtras('Breeze.helper.navigation.Employees');
-            var navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
+            var navStore;
+            if (level > Breeze.api.Employee.accessLevel.EMPLOYEE) {
+                // If user is supervisor or above, add employees section to nav
+                navStore = Ext.create('Breeze.helper.navigation.Personal')
+                    .asTreeWithExtras([
+                        'Breeze.helper.navigation.Employees'
+                    ]
+                    );
+            } else {
+                // Default employee level navigation
+                navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
+            }
             me.addLoadedStoreToViewModel(navStore, 'personalNav');
         },
 
@@ -128,6 +139,22 @@
             ).catch(function(err){
                 console.warn('Unable to get default project code', err);
             });
+        },
+
+        /**
+         * Retrieve and store user's access level
+         */
+        loadAccess: function(){
+            var me = this,
+                vm = me.getViewModel();
+            
+            me.empClass.getAccess().then(function(level){
+                vm.set('accessLevel', level);
+                // update navigation
+                me.loadNavigation();
+            }).catch((err)=>{
+                console.warn('Failed to get user access level info:', err);
+            })
         },
 
         /**
@@ -254,7 +281,19 @@
          * with the url
          */
         beforeRoute: function(action){
-            this.syncNavToRoute(action.getUrlParams().input);
+            // try{
+            //     this.syncNavToRoute(action.getUrlParams().input);
+            // } catch(err){
+            //     console.warn('Sync error: ', err);
+            // }
+            
+            // ensure employees panel isn't visible
+            try{
+                this.refreshEmployeesPanel(false);
+            } catch (err) {
+                console.warn('refresh err', err);
+            }
+            
             action.resume();
         },
 
@@ -264,18 +303,6 @@
                     data: { employee: undefined }
                 })
             );
-        },
-
-        onEmployeesEmployeeInfoRoute: function(id){
-            this.changeContent(
-                Ext.create('Breeze.view.employee.Information', {
-                    data: { employee: id }
-                })
-            );
-        },
-
-        onEmployeesRoute: function(){
-            console.info('Employees route resolved');
         },
 
         onPersonalEmployeeInfoRoute: function(){
@@ -416,7 +443,36 @@
             this.changeContent(component);
         },
 
+        onEmployeesRoute: function(){
+            console.info('Employees route resolved');
+            this.refreshEmployeesPanel(true);
+        },
+
         // ===[Content functions]===
+
+        /**
+         * Refresn employees panel, rebuilding content if setting to visible
+         * when previously hidden
+         * @param {Boolean} shown Whether panel should be shown
+         */
+        refreshEmployeesPanel: function(shown){
+            var panelContainer = this.lookup('employeesPanelContainer');
+            console.info(
+                'Refreshing employees panel: ', 
+                !panelContainer.getHidden(), shown
+            );
+            if(panelContainer.getHidden() == shown || panelContainer.items.length == 0){
+                panelContainer.setHidden(!shown);
+                if(shown){
+                    var panel = Ext.create('Breeze.view.main.employees.Panel');
+                    panelContainer.insert(0,panel);
+                }
+                if(!shown){
+                    panelContainer.removeAll(true);
+                }
+            }
+            
+        },
 
         /**
          * Swap contents of body content container
@@ -441,6 +497,21 @@
                 // TODO: Change what menus are shown / enabled
             }
 
+        },
+
+        /**
+         * Change content of container, disposing of previous content
+         * @param {Object} container Container component to change content of
+         * @param {Object} content Content component to put into container
+         */
+        changeContainerContent: function(container, content){
+            if(content && content !== null){
+                var old = container.getActiveItem();
+                container.setActiveItem(content);
+                if(typeof old !== 'undefined'){
+                    container.remove(old);
+                }
+            }
         },
 
         syncNavToRoute: function(route){

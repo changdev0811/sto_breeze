@@ -4,7 +4,13 @@ Ext.define('Breeze.view.main.employees.Panel', {
     xtype: 'breeze-employees-panel',
 
     controller: 'main.employees.panel',
+    viewModel: {
+        type: 'main.employees.panel'
+    },
 
+    listeners: {
+        initialize: 'init'
+    },
     // showAnimation: {
     //     type: 'reveal',
     //     direction: 'right',
@@ -18,9 +24,6 @@ Ext.define('Breeze.view.main.employees.Panel', {
 
     width: '300pt',
 
-    layout: 'fit',
-
-    
     layout: 'vbox',
     userCls: 'employees-panel',
     // padding: '16pt',
@@ -108,7 +111,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
-                            reference: 'employeesTree'
+                            reference: 'employeesEmployeeTree'
                         }
                     ]
                 },
@@ -177,77 +180,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
-                            reference: 'departmentsTree'
-                        }
-                    ]
-                },
-                // ===[Groups Tab]===
-                {
-                    xtype: 'container',
-                    title: 'Groups',
-                    layout: 'vbox',
-                    items: [
-                        {
-                            xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            itemId: 'searchToolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'searchfield',
-                                    // ui: 'dark-textfield',
-                                    ui: 'alt',
-                                    flex: 1,
-                                    placeholder: 'Search'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
-                                    label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'tree',
-                            userCls: 'employees-panel-tree',
-                            flex: 1,
-                            reference: 'departmentsTree'
+                            reference: 'employeesDepartmentTree',
+                            rootVisible: false,
+                            bind: {
+                                store: '{departmentsTree}'
+                            }
                         }
                     ]
                 }
