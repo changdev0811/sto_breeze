@@ -62,6 +62,35 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
      */
     validateParameters: function(){
         return true;
+    },
+
+    /**
+     * Handle mini calendar click event, adding newly selected
+     * week to selected weeks store if not already present
+     * 
+     * @param {Object} comp Reference to mini calendar component
+     */
+    onWeekSelect: function(comp){
+        // view model reference
+        var vm = this.getViewModel(),
+            // get selectedWeeks store
+            selectedWeekStore = vm.get('selectedWeeks'),
+            selection = comp.getSelectedWeek();
+        
+        // Add short date string attributes to record object for display purposes
+        selection.startText = Breeze.helper.Time.shortDate(selection.start);
+        
+        // Check if a week with this range has already been selected
+        if(selectedWeekStore.find('start', selection.start) == -1){
+            console.info('Adding range');
+            // Not already present, so add it
+            // true indicates data should be appended to existing
+            selectedWeekStore.loadData([selection], true);
+            // commit changes
+            selectedWeekStore.commitChanges();
+        }
+        
+        console.info('Week Selected');
     }
 
     

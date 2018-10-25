@@ -1,5 +1,8 @@
 /**
  * Custom override of standard Ext.panel.Date minicalendar
+ * 
+ * Fires event dateselect on date click
+ * 
  * @class MiniCalendar
  * @alias Breeze.widget.panel.MiniCalendar
  */
@@ -104,6 +107,12 @@ Ext.define('Breeze.widget.panel.MiniCalendar', {
                 Ext.callback(handler, me.scope, [me, value, oldValue]);
             }
         }
+    },
+
+    onDateClick: function(e){
+        var me = this;
+        this.callParent([e]);
+        this.fireEvent('dateselect', me);
     },
 
     privates: {

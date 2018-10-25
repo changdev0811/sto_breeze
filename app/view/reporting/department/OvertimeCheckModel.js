@@ -16,16 +16,15 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
             autoLoad: true
         }
         */
-       tempCat: {
-           type: 'tree',
-           root: {
-               children: [
-                   {
-                       text: 'Category'
-                   }
-               ]
-           }
-       }
+
+        /** Store will hold selected weeks
+         * fields: 
+         *  - start (date)
+         *  - startText (short date string)
+         */
+        selectedWeeks: {
+
+        }
     },
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */

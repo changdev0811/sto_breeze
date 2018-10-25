@@ -319,12 +319,14 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                             width: '100%',
                             margin: '0pt 10pt 0pt 10pt',
                             listeners: {
-                                change: 'onWeekChange'
+                                dateselect: 'onWeekSelect',
+
                             }
                         },
                         {
                             xtype: 'fieldset',
-                            layout: 'vbox',
+                            flex: 1,
+                            layout: { type: 'fit', align: 'stretch' },
                             title: 'Weeks Selected',
                             /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
@@ -332,7 +334,26 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
-                            }
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    layout: 'hbox',
+                                    ui: 'employeeinfo-shift-grid',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: false,
+                                    bind: { store: '{selectedWeeks}' },
+                                    columns: [
+                                        {
+                                            dataIndex: 'startText',
+                                            menuDisabled: true,
+                                            flex: 1
+                                        }
+                                    ]
+                                }
+                            ]
                         },
 
                     ]
