@@ -114,6 +114,7 @@
                     );
             } else {
                 // Default employee level navigation
+                this.refreshEmployeesPanel(false);
                 navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
             }
             me.addLoadedStoreToViewModel(navStore, 'personalNav');

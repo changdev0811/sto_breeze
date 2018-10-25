@@ -9,7 +9,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
     },
 
     listeners: {
-        initialize: 'init'
+        initialize: 'onInit'
     },
     // showAnimation: {
     //     type: 'reveal',
@@ -62,7 +62,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     ui: 'solo',
                                     shadow: true,
                                     flex: 1,
-                                    placeholder: 'Search'
+                                    placeholder: 'Search',
+                                    listeners: {
+                                        action: 'doEmployeesSearch',
+                                        clearicontap: 'doEmployeesSearch'
+                                    }
                                 }
                             ]
                         },
@@ -111,7 +115,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
-                            reference: 'employeesEmployeeTree'
+                            reference: 'employeesEmployeeTree',
+                            rootVisible: false,
+                            bind: {
+                                store: '{employeesTree}'
+                            }
                         }
                     ]
                 },
@@ -199,7 +207,10 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     xtype: 'breeze-checkbox',
                     ui: 'dark-checkbox',
                     boxLabel: 'Exclude Terminated',
-                    name: 'exclude_terminated'
+                    name: 'exclude_terminated',
+                    bind: {
+                        checked: '{excludeTerminated}'
+                    }
                 }
             ]
         }

@@ -13,5 +13,8 @@ Ext.define('Breeze.view.main.employees.PanelModel', {
     },
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
+        
+        // 'Exclude Terminated' panel parameter
+        excludeTerminated: false
     }
 });

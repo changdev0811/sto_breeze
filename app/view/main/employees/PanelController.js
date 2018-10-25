@@ -11,12 +11,55 @@ Ext.define('Breeze.view.main.employees.PanelController', {
     /**
      * Called when the view is created
      */
-    init: function () {
-        console.info('Employee Panel initialized');
+    onInit: function () {
+        
+        // Old tree api stores
         this.addStoreToViewModel(
             'Breeze.store.tree.employee.Departments',
             'departmentsTree',
             { load: true }
         );
+        this.addStoreToViewModel(
+            'Breeze.store.tree.employee.Employees',
+            'employeesTree',
+            { load: true }
+        );
+
+        // New list api stores
+        this.addStoreToViewModel(
+            'Breeze.store.employees.Departments',
+            'departmentsList',
+            { load: true }
+        );
+
+        console.info('Employee Panel initialized');
+    },
+
+    //===[Event Handlers]===
+
+    /**
+     * Update search query parameter and reload employees
+     * store
+     * 
+     * @param {Object} comp Search field component
+     */
+    doEmployeesSearch: function(comp){
+        console.info('Employees search');
+        var vm = this.getViewModel(),
+            query = comp.getValue(),
+            excludeTerminated = vm.get('excludeTerminated'),
+            store = vm.get('employeesTree');
+        
+        var proxy = store.getProxy();
+        // Force proxy to update
+        store.updateProxy(proxy);
+
+        // Update params
+        store.setSearchString(query);
+        store.setExcludeTerminated(excludeTerminated);
+
+        // Reload store with updated params
+        store.load();
+        
     }
 });

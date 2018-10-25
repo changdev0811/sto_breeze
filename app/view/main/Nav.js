@@ -195,7 +195,7 @@ Ext.define('Breeze.view.main.Nav', {
                         //     xtype: 'breeze-employees-panel'
                         // }
                     ],
-                    hidden: false
+                    hidden: true
                 },
                 {
                     xtype: 'navigationview',
