@@ -409,8 +409,16 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     },
 
-    //===[Company List Change Handlers]===
+    //===[Company List Event Handlers]===
 
+    onCompanyGridAddButton: function(comp, tool, eOpts){
+        var actSheet = this.lookup(tool.getData().sheet);
+        actSheet.show();
+
+        console.info('Handling add button click for company grid');
+    },
+
+    //==[Edit Cell Change Events]==
     /**
      * Handle select event for supervised employees grid cell editor plugin
      * @param {Object} comp Select field component
@@ -551,6 +559,20 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     //===[Event Handlers]===
+
+    onLayoffButtonToggle: function(){
+        // TODO: Implement layoff toggle
+        var vm = this.getViewModel();
+
+        if(vm.get('info.LayoffStatus') == "Active"){
+            // TODO: Show effective date selector popup
+            vm.set('info.LayoffStatus', "Laid Off");
+        } else {
+            vm.set('info.LayoffStatus', "Active");
+        }
+
+        console.info('Layoff toggle button clicked');
+    },
 
     onNotesButtonTap: function(ref, x, eOpts){
         console.info("[onNotesButtonTap]");

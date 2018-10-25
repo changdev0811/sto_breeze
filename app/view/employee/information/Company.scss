@@ -13,4 +13,13 @@
     padding: 2pt;
 }
 
+// @include field-ui(
+//     $ui: 'employeeinfo-togglefield',
+//     $label-color: map-get($employee-info-text-colors, 'base')
+// );
+// @include togglefield-ui(
+//     $ui: 'employeeinfo-togglefield',
+//     $box-label-color: map-get($employee-info-text-colors, 'base'),  
+// );
+
 

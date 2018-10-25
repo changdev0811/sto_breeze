@@ -98,6 +98,10 @@ Ext.define('Breeze.view.employee.information.General', {
                     xtype: 'datefield',
                     name: 'date_of_birth',
                     label: 'Birth Date',
+                    picker: {
+                        xtype: 'datepicker',
+                        title: 'Select Birth Date'
+                    },
                     bind: { value: '{info.BirthDate}' }
                     //msgTarget
                     //invalidText

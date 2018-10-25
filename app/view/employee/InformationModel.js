@@ -268,6 +268,10 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
+        isLaidOff: function(get){
+            return (get('info.LayoffStatus') == 'Laid Off');
+        },
+
         /**
          * Pull all form data from elsewhere in model and return it in a single object
          * using the expected parameter names for submitting data updates

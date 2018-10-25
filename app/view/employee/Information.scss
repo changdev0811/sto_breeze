@@ -74,9 +74,19 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
 
 
 @include displayfield-ui(
-    $input-font-size: $ei-field-font-size,
+    $input-font-size: $ei-field-font-size !important,
     $ui: 'employeeinfo-displayfield'
 );
+
+@include ui-extend(
+    $xtype: 'displayfield',
+    $ui: 'employeeinfo-displayfield'
+){
+    // Force displayfield font size
+    & > .x-body-wrap-el > .x-body-el > .x-innerhtml {
+        font-size: $ei-field-font-size;
+    }
+};
 
 @include field-ui(
     $label-color: map-get($employee-info-text-colors, 'light'),

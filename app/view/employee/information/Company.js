@@ -27,25 +27,28 @@ Ext.define('Breeze.view.employee.information.Company', {
                 flex: 1,
                 xtype: 'breeze-textfield',
                 userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield',
-                // bind: {
-                //     // make fields readonly when view model has readOnly set to true 
-                //     editable: '{!readOnly}',
-                //     readOnly: '{readOnly}'
-                // }
+                ui: 'employeeinfo-textfield'
             },
             items: [
                 {
                     xtype: 'datefield',
                     name: 'date_of_hire',
                     label: 'Hire Date',
-                    bind: { value: '{hireDate}' }
+                    bind: { value: '{hireDate}' },
+                    picker: {
+                        xtype: 'datepicker',
+                        title: 'Select Hire Date'
+                    },
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_termination',
                     label: 'Termination Date',
-                    bind: { value: '{info.TerminationDate}' }
+                    bind: { value: '{info.TerminationDate}' },
+                    picker: {
+                        xtype: 'datepicker',
+                        title: 'Select Termination Date'
+                    },
                 },
                 {
                     name: 'customer_employee_id',
@@ -136,29 +139,41 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'displayfield',
                     ui: 'employeeinfo-displayfield',
                     label: 'Layoff Status',
-                    bind: '{info.LayoffStatus}'
+                    bind: '{info.LayoffStatus}',
+                    bind: {
+                        hidden: '{!readOnly}'
+                    }
+                },
+                {
+                    xtype: 'containerfield',
+                    label: 'Layoff Status',
+                    bind: {
+                        hidden: '{readOnly}'
+                    },
+                    items: [
+                        // {
+                        //     xtype: 'togglefield',
+                        //     ui: 'employeeinfo-displayfield employeeinfo-togglefield',
+                        //     activeLabel: 'Laid Off',
+                        //     inactiveLabel: 'Active',
+                        //     labelAlign: 'right'
+                        // }
+                        {
+                            xtype: 'button',
+                            enableToggle: true,
+                            bind: {
+                                text: '{info.LayoffStatus}',
+                                pressed: '{isLaidOff}'
+                            },
+                            toggleHandler: 'onLayoffButtonToggle',
+                            ui: 'action'
+                        }
+                    ]
+
                 }
             ]
         },
-        // {
-        //     xtype: 'container',
-        //     userCls: 'employee-info-container',
-        //     layout: 'hbox',
-        //     defaults: {
-        //         flex: 1,
-        //         xtype: 'breeze-textfield',
-        //         userCls: 'employee-info-general-field',
-        //         ui: 'employeeinfo-displayfield'
-        //     },
-        //     items: [
-        //         {
-        //             xtype: 'displayfield',
-        //             ui: 'employeeinfo-displayfield',
-        //             label: 'Layoff Status',
-        //             bind: '{info.LayoffStatus}'
-        //         }
-        //     ]
-        // },
+        
         // Container for list tabs
         {
             xtype: 'container',
@@ -267,7 +282,11 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     title: 'Supervised Employees',
                                     tools: {
                                         add: {
-                                            iconCls: 'x-fas fa-plus'
+                                            iconCls: 'x-fas fa-plus',
+                                            data: {
+                                                sheet: 'employeeAddAction'
+                                            },
+                                            handler: 'onCompanyGridAddButton'
                                         }
                                     },
                                     items: [
@@ -342,7 +361,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     title: 'Supervised Departments',
                                     tools: {
                                         add: {
-                                            iconCls: 'x-fas fa-plus'
+                                            iconCls: 'x-fas fa-plus',
+                                            data: {
+                                                // reference to actionsheet button shows
+                                                sheet: 'departmentAddActionSheet'
+                                            },
+                                            handler: 'onCompanyGridAddButton'
                                         }
                                     },
                                     items: [
@@ -415,8 +439,115 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     ]
                                 }
                             ]
-
+                        }
+                    ]
+                }
+            ]
+        },
+        //===[Action Sheets for adding grid items]===
+        // Add to Supervisors action sheet
+        {
+            xtype: 'actionsheet',
+            reference: 'supervisorAddActionSheet',
+            title: 'Add Supervisor',
+            items: [
+                {
+                    xtype: 'selectfield',
+                    label: 'Department'
+                },
+                {
+                    xtype: 'selectfield',
+                    label: 'Role'
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            ui: 'confirm',
+                            text: 'Add'
                         },
+                        {
+                            xtype: 'button',
+                            ui: 'decline',
+                            text: 'Cancel'
+                        }
+                    ]
+                }
+            ]
+        },
+        // Add to Supervised Employees action sheet
+        {
+            xtype: 'actionsheet',
+            reference: 'employeeAddActionSheet',
+            title: 'Add Supervised Employee',
+            items: [
+                {
+                    xtype: 'selectfield',
+                    label: 'Employee Name',
+                    displayField: 'displayName',
+                    valueField: 'personId',
+                    bind: { 
+                        store: '{choices.supervisedEmployees}'
+                    },
+                    required: true
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            ui: 'confirm',
+                            text: 'Add'
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline',
+                            text: 'Cancel'
+                        }
+                    ]
+                }
+            ]
+        },
+        // Add to Supervised Departments action sheet
+        {
+            xtype: 'actionsheet',
+            reference: 'departmentAddActionSheet',
+            title: 'Add Department',
+            items: [
+                {
+                    xtype: 'selectfield',
+                    label: 'Department'
+                },
+                {
+                    xtype: 'selectfield',
+                    label: 'Role'
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            ui: 'confirm',
+                            text: 'Add'
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline',
+                            text: 'Cancel'
+                        }
                     ]
                 }
             ]
