@@ -33,7 +33,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
     title: 'Department Daily Totals Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -53,6 +52,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -72,16 +74,15 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 // First column in horizontal container
                 {
                     xtype: 'container',
+                    // docked: 'left',
                     flex: 1,
 
                     // +++ maxWidth to prevent expanding beyond tab selector +++
-                    maxWidth:'300pt',
+                    maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
 
-
                     layout: 'vbox',
-
                     items: [
                         // Tab panel containing departments and employees
                         {
@@ -208,7 +209,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                             xtype: 'tree',
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
@@ -257,7 +260,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                         }
                     ]
                 },
-                // Fieldset column container
+                // Second column container
                 {
                     xtype: 'container',
                     flex: 1,
@@ -360,7 +363,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
 
-                    // +++ added reporting-fieldset no-padding +++
+                    // +++ added reporting-fieldset +++
                     userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
@@ -369,7 +372,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
 
                     // +++ fixed width +++
                     minWidth:'150pt',
-                    maxWidth:'150pt',
+                    maxWidth:'200pt',
 
 
                     

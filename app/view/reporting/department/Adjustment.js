@@ -47,6 +47,9 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -69,7 +72,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                     flex: 1,
 
                     // +++ maxWidth to prevent expanding beyond tab selector +++
-                    maxWidth:'300pt',
+                    maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
 
@@ -78,6 +81,8 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             layout: {
                                 animation: 'fade'
                             },
@@ -85,12 +90,14 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -100,7 +107,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                         ui: 'reporting-tree',
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
-
+                                        
                                         shadow: false,
                                         items: [
                                             {
@@ -119,11 +126,13 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-
+                                            
                                             /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
-
+                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -133,7 +142,8 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                                     /* +++ Style update +++ */
                                                     cell: {
                                                         ui: 'report-tree-column reporting-tree-item',
-                                                    },                                                    dataIndex: 'checked',
+                                                    },
+                                                    dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
                                                     padding: 0,
@@ -154,7 +164,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',
+
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -163,12 +173,14 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        
+
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
 
@@ -189,8 +201,12 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -238,13 +254,15 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                         }
                     ]
                 },
-                // Fieldset column container
+                // Second column container
                 {
                     xtype: 'container',
                     flex: 1,
 
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
 
                     layout: 'vbox',
                     defaults: {
@@ -334,7 +352,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
 
                     // +++ fixed width +++
                     minWidth:'150pt',
-                    maxWidth:'150pt',
+                    maxWidth:'200pt',
 
 
 

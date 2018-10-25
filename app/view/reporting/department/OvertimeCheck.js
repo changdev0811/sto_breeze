@@ -426,7 +426,7 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                                 },
                                                 tools: [
                                                     {
-                                                        iconCls: 'x-fas fa-times',
+                                                        iconCls: 'x-fa fa-times',
                                                         handler: 'onWeekRemoveTool'
                                                     }
                                                 ]
