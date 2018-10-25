@@ -104,7 +104,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            cateoryList = this.lookup('categoryList'),
+            categoryList = this.lookup('categoryList'),
             conditionalType = this.lookup('conditionalType');
         
         // set condition type
@@ -124,13 +124,16 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
             ).join(',')
         );
         
-        var selectedCategory = this.lookup('categoryList').getSelection();
+        // Categories list method gatherSelected returns array of all records selected
+        var categoryRecords = categoryList.gatherSelected(),
+            // set selected category to the first selected record, if any, otherwise null
+            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
 
         if(selectedCategory !== null){
-            // set category_id
+            // set category_id if non null selected category
             vm.set(
                 'reportParams.category_id',
-                selectedCategory.getData().Category_ID       
+                selectedCategory.getData().Category_Id       
             );
         }
     },
