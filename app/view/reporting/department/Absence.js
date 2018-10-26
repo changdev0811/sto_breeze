@@ -64,22 +64,18 @@ Ext.define('Breeze.view.reporting.department.Absence', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
-
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
-
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
-
                     // +++ maxWidth to prevent expanding beyond tab selector +++
                     maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
-
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -133,10 +129,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            
                                             /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
-                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -168,7 +162,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                                     }
                                                 }
                                             ],
-
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -184,10 +178,8 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
-
                                         shadow: false,
                                         items: [
                                             {
@@ -262,13 +254,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                 {
                     xtype: 'container',
                     flex: 1,
-
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'200pt',
                     // +++ maxWidth width to prevent truncating +++
                     maxWidth:'300pt',
-
-
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',

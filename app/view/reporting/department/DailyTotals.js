@@ -9,8 +9,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
     alias: 'widget.reporting.department.dailytotals',
 
 
-    /* +++ Remove the requires;[], array  +++ */
-
 
     // View Model
 
@@ -170,7 +168,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                                     }
                                                 }
                                             ],
-
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]

@@ -164,7 +164,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                                     }
                                                 }
                                             ],
-
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
