@@ -161,7 +161,7 @@ Ext.define('Breeze.view.reporting.department.Security', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]

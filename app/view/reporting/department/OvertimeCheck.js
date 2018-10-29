@@ -153,7 +153,7 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]

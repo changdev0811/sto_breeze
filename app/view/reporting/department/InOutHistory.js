@@ -157,7 +157,7 @@ Ext.define('Breeze.view.reporting.department.InOutHistory', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]

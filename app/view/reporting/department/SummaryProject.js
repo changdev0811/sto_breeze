@@ -152,7 +152,7 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -418,7 +418,7 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
