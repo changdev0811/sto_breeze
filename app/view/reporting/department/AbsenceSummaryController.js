@@ -104,8 +104,8 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList'),
-        
+            categoryList = this.lookup('categoryList');
+
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 
