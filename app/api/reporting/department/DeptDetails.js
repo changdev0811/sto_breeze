@@ -12,7 +12,6 @@ Ext.define('Breeze.api.reporting.department.DeptDetails', {
         report: 'DepartmentDetails'
     },
 
-
     /**
      * Initiate generation process, calling generate when pre-reqs are available.
      * If pre-reqs are available at start, returns promise from generate. Otherwise,

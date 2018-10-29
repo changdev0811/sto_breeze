@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.DeptProfile', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.deptprofile',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.deptprofile'
     },
     
     // Controller
-
     controller: 'reporting.department.deptprofile',
 
     listeners: {

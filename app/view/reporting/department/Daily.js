@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.department.Daily', {
     layout: 'vbox',
     ui: 'reporting-base',
 
-    title: 'Daily Report',
+    title: 'Department Daily Report',
 
     // Action buttons shown at bottom of panel
     buttonAlign: 'left',

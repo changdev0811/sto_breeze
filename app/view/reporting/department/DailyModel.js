@@ -22,7 +22,7 @@ Ext.define('Breeze.view.reporting.department.DailyModel', {
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
-                ReportTitle: 'Daily Report',
+                ReportTitle: 'Department Daily Report',
                 showadj: null,
                 showacc: null,
                 sDate: (new Date()),

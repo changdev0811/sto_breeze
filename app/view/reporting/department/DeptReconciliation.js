@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliation', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.deptreconciliation',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.deptreconciliation'
     },
     
     // Controller
-
     controller: 'reporting.department.deptreconciliation',
 
     listeners: {
@@ -315,7 +311,7 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliation', {
                             items: [
 
                                 {
-                                    name: 'ShowSchedule',
+                                    name: 'ShowSched',
                                     inline: true,
                                     label: '',
                                     boxLabel: 'Show Scheduled Time',
