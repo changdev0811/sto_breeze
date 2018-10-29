@@ -8,10 +8,10 @@
 .admin-section-padding {
     // See theme package sass/etc/extension/size.scss for function definition
     // padding: 0pt 4pt 4pt 4pt;
-    //padding: edge-size-from-relative(
-    //    $base: $scoped-root-panel-body-padding-base,
-    //    $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
-    //);
+    padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+    );
 }
 
 // styling applied to admin-fieldset title
@@ -19,18 +19,21 @@
     border:solid 1px white;
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 
     .x-form-fieldset-title {
         color: map-get($admin-text-colors, 'base');
+        background-color:map-get($admin-colors, 'row-dark');
+        font-weight:1000;
         font-size: map-get($root-font-sizes, 'detail');
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.125, left: 0.125, right: 0.125, bottom: 0 )
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
         );
     }
 }
+
 
 .admin-fieldset-no-border {
     margin: edge-size-from-relative(
@@ -50,17 +53,52 @@
 
 
 
+.admin-toolbar {
+    border-left: solid 1px white !important;
+    border-right: solid 1px white !important;
+}
+
+
+
+
+// styling applied to admin-fieldset title
+.no-padding {
+
+    .x-form-fieldset-body-el {
+        //margin:0;
+        padding:0;
+    }
+
+
+}
+
+// styling applied to admin-fieldset title
+.no-margin {
+
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
+    );
+}
+
+.no-background {
+    background:transparent !important;
+}
+
+
+
 /** Generic base UI for report form panels **/
 @include panel-ui(
-    //$body-padding: edge-size-from-relative(
-    //    $base: $scoped-root-panel-body-padding-base,
-    //    $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
-    //),
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
+    ),
     $header-background-color: map-get($admin-colors, 'base'),
     $header-color: map-get($admin-text-colors, 'base'),
     $body-background-color: map-get($admin-colors, 'base'),
     $ui: 'admin-base'
 );
+
 
 @include paneltitle-ui(
     $ui: 'admin-base',
@@ -80,24 +118,18 @@
 );
 
 
-
 /** Generic base UI for report form tree views **/
 @include toolbar-ui(
     $ui: 'admin-tree',
-    $background-color: map-get($admin-colors, 'base'),
-    $background-gradient: none
+    $background-color: map-get($admin-colors, 'row-dark'),
+    $background-gradient: none,
+    $line-height: 22pt,
 );
 
-
-@include toolbar-ui(
-    $ui: 'moose',
-    $background-color: red,
-    $background-gradient: none
-);
 
 
 @include treecell-ui(
-    $ui: 'report-tree-column',
+    $ui: 'admin-tree-column',
 
     $icon-color: map-get($admin-text-colors, 'base'),
     $expander-color: map-get($admin-text-colors, 'base'),
@@ -134,21 +166,21 @@
 
 /** Reporting Form Fields **/
 @include field-ui(
-    $ui: 'admin',
+    $ui: 'reporting',
     $label-color: map-get($admin-text-colors, 'light'),
     $focused-label-color: map-get($admin-text-colors, 'base'),
     $label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include trigger-ui(
-    $ui: 'admin',
+    $ui: 'reporting',
     $icon-color: map-get($admin-text-colors, 'base'),
-    $hovered-icon-color: map-get($admin-colors, 'light'),
+    $hovered-icon-color: map-get($admin-colors, 'dark'),
     $pressed-icon-color: map-get($admin-colors, 'medium')
 );
 
 @include checkboxfield-ui(
-    $ui: 'admin',
+    $ui: 'reporting',
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: map-get($admin-text-colors, 'base'),
@@ -156,14 +188,14 @@
 );
 
 @include radiofield-ui(
-    $ui: 'admin',
+    $ui: 'reporting',
     $box-label-color: map-get($admin-text-colors, 'base'),
     $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include textfield-ui(
     $ui: 'admin-text',
-    $focused-input-underline-color: map-get($admin-colors, 'light'),
+    $focused-input-underline-color: map-get($admin-colors, 'dar'),
     $input-color: map-get($admin-text-colors, 'base'),
     $input-font-size: map-get($root-font-sizes, 'base')
 );
@@ -171,7 +203,7 @@
 @include datetrigger-ui(
     $ui: 'admin-date',
     $icon-color: map-get($admin-text-colors, 'base'),
-    $hovered-icon-color: map-get($admin-colors, 'light'),
+    $hovered-icon-color: map-get($admin-colors, 'dark'),
     $pressed-icon-color: map-get($admin-colors, 'medium')
 );
 
@@ -181,21 +213,75 @@
 )
 
 .employeeinfo-shift-grid {
-    border:solid 1px white;
-
-}
-
-.tool-button-left, .tool-button-right {
-    position:absolute;
-}
-
-.tool-button-left {
-    left:10pt;
-}
-
-.tool-button-right {
-    right:5pt;
+    border-left:solid 1px white;
+    border-bottom:solid 1px white;
+    border-right:solid 1px white;
 }
 
 
+@include treecell-ui(
+    $ui: 'admin-tree-item',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'admin-tree-item',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+
+// ===[User Categories List Widget Specific]==
+@include listitem-ui(
+    $ui: 'admin-list-item',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important,
+
+    $padding: 10pt 0pt 10pt 11.6pt
+
+);
+
+
+
+
+@include panel-ui(
+    $ui: 'admin-list-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+@include paneltitle-ui(
+    $ui: 'admin-list-panel',
+    $font-size: map-get($root-font-sizes, 'base')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'admin-list-panel'
+) {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+};
 

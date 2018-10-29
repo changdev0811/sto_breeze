@@ -64,24 +64,25 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     title: 'Recording Model',
                     height:'45pt',
                     layout: 'hbox',
+
+
                     defaults: {
                         bodyAlign: 'stretch',
-                        ui: 'admin',
+                        ui: 'reporting',
                         xtype: 'radio'
                     },
                     items: [
                         {
                             flex: 1,
-                            name: 'recording_mode',
-                            value: '20',
+                            name: 'recording_year_type',
                             boxLabel: 'Days',
                         },
                         {
                             flex: 1,
-                            name: 'recording_mode',
-                            value: '21',
+                            name: 'recording_year_type',
                             boxLabel: 'Weeks',
-                        }
+                        },
+
                     ]
                 },
                 {    

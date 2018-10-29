@@ -243,20 +243,35 @@ $reporting-text-colors: (
 // ====[Admin Form Colors]====
 
 $scoped-admin-base: #57576A;
-$scoped-admin-medium: #81818F;
 $scoped-admin-light: #ABABB5;
+$scoped-admin-medium: #81818F;
+$scoped-admin-dark: #6DAFFF;
+$scoped-admin-row-dark: rgba(255,255,255,.25);
+$scoped-admin-row-light: #96bede;
+
+
+
 
 $scoped-admin-text-base: #ffffff;
 $scoped-admin-text-light: #ABABB5;
+$scoped-admin-text-medium: #ff0000;
+$scoped-admin-text-dark: #00ff00;
+
+
 
 $admin-colors: (
     base: $scoped-admin-base,
-    medium: $scoped-admin-medium,
     light: $scoped-admin-light,
+    medium: $scoped-admin-medium,
+    dark: $scoped-admin-base,
+    row-dark: $scoped-admin-row-dark,
+    row-light: $scoped-admin-row-light
 );
 
 $admin-text-colors: (
     base: $scoped-admin-text-base,
     light: $scoped-admin-text-light,
+    medium: $scoped-admin-text-medium,
+    dark: $scoped-admin-text-dark
 );
 
