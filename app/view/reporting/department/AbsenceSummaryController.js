@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
 
         // Create instance of report generation API class
         this.reportApi = Ext.create(
-            'Breeze.api.reporting.department.Absence',
+            'Breeze.api.reporting.department.AbsenceSummary',
             {exceptionHandler: this.onReportException}
         );
 
@@ -105,14 +105,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
             categoryList = this.lookup('categoryList'),
-            conditionalType = this.lookup('conditionalType');
         
-        // set condition type
-        vm.set(
-            'reportParams.conditional_type',
-            conditionalType.getValues()['condType']
-        );
-
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 

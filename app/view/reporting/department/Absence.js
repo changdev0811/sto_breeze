@@ -45,7 +45,6 @@ Ext.define('Breeze.view.reporting.department.Absence', {
         shadow: false
     },
 
-
     // Body contents
     items: [
         // Form Title Text field
