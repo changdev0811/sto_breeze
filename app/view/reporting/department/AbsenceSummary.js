@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.absencesummary',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.absencesummary'
     },
     
     // Controller
-
     controller: 'reporting.department.absencesummary',
 
     listeners: {
