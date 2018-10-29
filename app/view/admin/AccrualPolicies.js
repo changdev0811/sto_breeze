@@ -56,7 +56,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     label: 'Setting Name',
                     name: 'setting_name_label',
                     ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
+                    userCls:'admin-fieldset',
 
                 },
                 {

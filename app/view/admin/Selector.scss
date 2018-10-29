@@ -19,7 +19,7 @@
     border:solid 1px white;
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 
     .x-form-fieldset-title {
@@ -29,27 +29,13 @@
         font-size: map-get($root-font-sizes, 'detail');
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0 )
         );
     }
 }
 
 
-.admin-fieldset-no-border {
-    margin: edge-size-from-relative(
-        $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
-    );
 
-    .x-form-fieldset-title {
-        color: map-get($admin-text-colors, 'base');
-        font-size: map-get($root-font-sizes, 'detail');
-        padding: edge-size-from-relative(
-            $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.125, left: 0.125, right: 0.125, bottom: 0 )
-        );
-    }
-}
 
 
 
@@ -59,7 +45,9 @@
 }
 
 
-
+.no-border {
+    border:none;
+}
 
 // styling applied to admin-fieldset title
 .no-padding {

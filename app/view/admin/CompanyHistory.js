@@ -30,7 +30,7 @@ Ext.define('Breeze.view.admin.CompanyHistory', {
             label: 'Search:',
             ui: 'admin admin-text',
             width:'50%',
-            userCls:'admin-fieldset-no-border',
+            userCls:'admin-fieldset no-border',
 
         },
         {
