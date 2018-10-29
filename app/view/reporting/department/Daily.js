@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.Daily', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.daily',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.daily'
     },
     
     // Controller
-
     controller: 'reporting.department.daily',
 
     listeners: {
@@ -161,7 +157,7 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]

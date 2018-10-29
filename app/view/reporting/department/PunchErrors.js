@@ -161,7 +161,7 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                                                     }
                                                 }
                                             ],
-                                            reference: 'departmentTree',                                            reference: 'departmentTree',
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
