@@ -355,6 +355,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                         {
                             xtype: 'toolbar',
                             ui: 'reporting-tree',
+                            userCls:'no-background',
                             shadow: false,
                             items: [
                                 {
