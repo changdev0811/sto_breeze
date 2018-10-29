@@ -52,10 +52,12 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 },
                 {
                     xtype: 'breeze-textfield',
+                    // +++ Added inline and width +++
                     label: 'Setting Name',
                     name: 'setting_name_label',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset-no-border',
+
                 },
                 {
                     xtype: 'fieldset',

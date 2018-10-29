@@ -166,21 +166,21 @@
 
 /** Reporting Form Fields **/
 @include field-ui(
-    $ui: 'reporting',
+    $ui: 'admin',
     $label-color: map-get($admin-text-colors, 'light'),
     $focused-label-color: map-get($admin-text-colors, 'base'),
     $label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include trigger-ui(
-    $ui: 'reporting',
+    $ui: 'admin',
     $icon-color: map-get($admin-text-colors, 'base'),
     $hovered-icon-color: map-get($admin-colors, 'dark'),
     $pressed-icon-color: map-get($admin-colors, 'medium')
 );
 
 @include checkboxfield-ui(
-    $ui: 'reporting',
+    $ui: 'admin',
     $checkbox-color: #ffffff,
     $checked-checkbox-color: #ffffff,
     $box-label-color: map-get($admin-text-colors, 'base'),
@@ -188,17 +188,18 @@
 );
 
 @include radiofield-ui(
-    $ui: 'reporting',
+    $ui: 'admin',
     $box-label-color: map-get($admin-text-colors, 'base'),
     $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include textfield-ui(
     $ui: 'admin-text',
-    $focused-input-underline-color: map-get($admin-colors, 'dar'),
+    $focused-input-underline-color: map-get($admin-colors, 'dark'),
     $input-color: map-get($admin-text-colors, 'base'),
-    $input-font-size: map-get($root-font-sizes, 'base')
+    $input-font-size: map-get($root-font-sizes, 'detail')
 );
+
 
 @include datetrigger-ui(
     $ui: 'admin-date',
