@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.dailytotals',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.dailytotals'
     },
     
     // Controller
-
     controller: 'reporting.department.dailytotals',
 
     listeners: {
@@ -63,23 +59,18 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
-
-
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
-
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
-
                     // +++ maxWidth to prevent expanding beyond tab selector +++
                     maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
-
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -133,10 +124,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            
                                             /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
-                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -184,10 +173,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
-
                                         shadow: false,
                                         items: [
                                             {
@@ -262,11 +249,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 {
                     xtype: 'container',
                     flex: 1,
-                    
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'180pt',
                     maxWidth: '200pt',
-
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -361,7 +346,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
 
-                    // +++ added reporting-fieldset +++
+                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
@@ -372,8 +357,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     minWidth:'150pt',
                     maxWidth:'200pt',
 
-
-                    
                     // docked: 'right',
                     layout: {
                         type: 'vbox',
@@ -386,6 +369,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                         {
                             xtype: 'toolbar',
                             ui: 'reporting-tree',
+                            userCls:'no-background',
                             shadow: false,
                             items: [
                                 {
@@ -422,12 +406,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 {
                     xtype: 'container',
                     flex: 1,
-
                     // +++ fixed width +++
                     minWidth:'180pt',
-                    // No max, allow projects to expand if possible
-                    // maxWidth:'200pt',
-
+                    maxWidth:'220pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing projects
@@ -450,6 +431,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                 {
                                     xtype: 'toolbar',
                                     ui: 'reporting-tree',
+                                    userCls:'no-background',
                                     shadow: false,
                                     items: [
                                         {

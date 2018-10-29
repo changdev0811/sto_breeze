@@ -1,17 +1,16 @@
 /**
- * Report handler for Department's Department Details report
- * @class DeptDetails
- * @namespace Breeze.api.reporting.department.DeptDetails
+ * Report handler for Department's Daily Totals report
+ * @class DailyTotals
+ * @namespace Breeze.api.reporting.department.DailyTotals
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.department.DeptDetails', {
+Ext.define('Breeze.api.reporting.department.DailyTotals', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentDetails'
+        report: 'DepartmentDailyTotals'
     },
-
 
     /**
      * Initiate generation process, calling generate when pre-reqs are available.

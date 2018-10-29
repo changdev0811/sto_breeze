@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.deptdetails',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.deptdetails'
     },
     
     // Controller
-
     controller: 'reporting.department.deptdetails',
 
     listeners: {
@@ -66,11 +62,15 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
             items: [
-
                 // First column in horizontal container
                 {
                     xtype: 'container',
+                    // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -102,7 +102,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                                         ui: 'reporting-tree',
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
-                                        
+
                                         shadow: false,
                                         items: [
                                             {
@@ -121,16 +121,21 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -141,11 +146,10 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -241,15 +245,14 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                         }
                     ]
                 },
-
                 // Second column container
                 {
                     xtype: 'container',
                     flex: 1,
                     // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
+                    minWidth:'180pt',
                     // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
+                    maxWidth:'200pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -369,21 +372,39 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
 
                     // docked: 'right',
                     layout: {
-                        type: 'fit',
+                        type: 'vbox',
                         alignment: 'stretch'
                     },
                     height: '100%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
+                        {
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onCategoriesCheckAllChange'
+                                    }
+                                }
+                            ]
+                        },
                         // User defined category selector
                         // === Replacement category selector
                         {
                             xtype: 'breeze-categories-list',
                             ui: 'employeeinfo-shift-grid',
-
+                            flex: 1,
                             reference: 'categoryList',
-                            fieldMode: 'radio',
+                            // used by 'check all' listener
+                            itemId: 'categories',
+                            fieldMode: 'check',
                             itemConfig: {
                                 ui: 'reporting-list-item'
                             },

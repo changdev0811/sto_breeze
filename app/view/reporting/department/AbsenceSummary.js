@@ -346,21 +346,39 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummary', {
 
                     // docked: 'right',
                     layout: {
-                        type: 'fit',
+                        type: 'vbox',
                         alignment: 'stretch'
                     },
                     height: '100%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
+                        {
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onCategoriesCheckAllChange'
+                                    }
+                                }
+                            ]
+                        },
                         // User defined category selector
                         // === Replacement category selector
                         {
                             xtype: 'breeze-categories-list',
                             ui: 'employeeinfo-shift-grid',
-
+                            flex: 1,
                             reference: 'categoryList',
-                            fieldMode: 'radio',
+                            // used by 'check all' listener
+                            itemId: 'categories',
+                            fieldMode: 'check',
                             itemConfig: {
                                 ui: 'reporting-list-item'
                             },
