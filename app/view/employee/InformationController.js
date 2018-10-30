@@ -229,22 +229,6 @@ Ext.define('Breeze.view.employee.InformationController', {
         var config = Ext.getStore('CompanyConfig').getAt(0);
     },
 
-    // collectCompanyLists: function(){
-    //     var vm = this.getViewModel();
-
-    //     var supervisorIds = vm.get('info.SupervisorIds');
-    //     var supervisors = vm.getStore('supervisors').queryRecordsBy(
-    //         function(rec){
-    //             return supervisorIds.includes(rec.id + '');
-    //         }
-    //     );
-    //     // vm.getStore('supervisors').filterBy(function(record){
-    //     //     return supervisorIds.includes(record.id + '');
-    //     // });
-    //     // this.lookup('supervisorsGrid').setStore(vm.getStore('supervisors'));
-    //     vm.set('lists.supervisors.data', supervisors);
-    // }
-
     /**
      * Toggle visibility of company tab lists based on login type
      * @param {Object} ctx Component context
@@ -290,8 +274,24 @@ Ext.define('Breeze.view.employee.InformationController', {
 
         //==[Complete Choice Set Stores]==
 
+        
+        
         /* Create 'choices' store for employees, containing
            full list of possible employees */
+        this.addLoadedStoreToViewModel(
+            {
+                model: personModel,
+                data: sups.getData().items.map((r)=>{
+                    return {
+                        personId: r.data.id,
+                        departmentId: r.data.departmentId, 
+                        displayName: r.data.displayName
+                    };
+                })
+            },
+            'choices.supervisors'
+        );
+
         this.addLoadedStoreToViewModel(
             {
                 model: personModel,
@@ -333,7 +333,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                         return (sids.includes(r.id));
                     })
                 ).map((i)=>{return {
-                    personId: i.data.id, 
+                    personId: i.data.id,
+                    departmentId: i.data.departmentId,
                     displayName: i.data.displayName
                 };})
             },
@@ -385,7 +386,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         this.addLoadedStoreToViewModel({
             model: personModel,
             data: []
-        }, 'choices.supervisors');
+        }, 'choices.supervising');
         
         // Store used to track available supervised employees
         this.addLoadedStoreToViewModel({
@@ -401,6 +402,9 @@ Ext.define('Breeze.view.employee.InformationController', {
 
         //===[Build Initial Choice Sets]===
 
+        // Build choices for supervisors
+        this.buildSupervisorChoices();
+
         // Build choices for supervised employees
         this.buildSupervisedEmployeeChoices();
 
@@ -409,73 +413,39 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     },
 
-    //===[Company List Event Handlers]===
-
-    onCompanyGridAddButton: function(comp, tool, eOpts){
-        var actSheet = this.lookup(tool.getData().sheet);
-        actSheet.show();
-
-        console.info('Handling add button click for company grid');
-    },
-
-    //==[Edit Cell Change Events]==
-    /**
-     * Handle select event for supervised employees grid cell editor plugin
-     * @param {Object} comp Select field component
-     * @param {Object} data New data
-     * @param {Object} eOpts Event Options
-     */
-    onEditSupervisedEmployeeSelect: function(comp, data, eOpts){
-        var targetRecord = comp.getParent().ownerCmp.getRecord();
-        
-        targetRecord.set({
-            personId: data.data.personId,
-            displayName: data.data.displayName
-        }, {commit: true});
-
-        console.info('Select updated record!');
-        this.buildSupervisedEmployeeChoices();
-    },
-
-    /**
-     * Handle select event for supervised departments grid
-     * department name cell editor plugin
-     * @param {Object} comp Select field component
-     * @param {Object} data New data
-     * @param {Object} eOpts Event Options
-     */
-    onEditDepartmentsDeptSelect: function(comp, data, eOpts){
-        var targetRecord = comp.getParent().ownerCmp.getRecord();
-
-        targetRecord.set({
-            departmentId: data.data.departmentId,
-            departmentName: data.data.departmentName
-        }, {commit: true});
-        
-        console.info('Select edit department department');
-        this.buildSupervisedDepartmentChoices();
-    },
-
-    /**
-     * Handle select event for supervised departments grid
-     * role name cell editor plugin
-     * @param {Object} comp Select field component
-     * @param {Object} data New data
-     * @param {Object} eOpts Event Options
-     */
-    onEditDepartmentsRoleSelect: function(comp, data, eOpts){
-        var targetRecord = comp.getParent().ownerCmp.getRecord();
-
-        targetRecord.set({
-            roleId: data.get('Role_Id'),
-            roleName: data.get('Role_Name')
-        }, {commit: true});
-
-        console.info('Select edit department role');
-    },
 
     //===[Company Tab Grid choice store builders/updaters]==
 
+    /**
+     * Build/update choices.supervisors store,
+     * used to provide choices for editing supervised employees
+     */
+    buildSupervisorChoices: function(){
+        var vm = this.getViewModel(),
+            all = vm.get('choices.supervisors'),
+            choices = vm.get('choices.supervising'),
+            choiceIds = choices.getData().items.map((rec)=>{
+                return rec.data.personId;
+            }),
+            used = vm.get('companySupervisors').getData().items.map(
+                (rec) => { return rec.data.personId; }
+            ),
+            toRemove = choices.queryBy((rec) => {
+                return (used.includes(rec.data.personId));
+            }),
+            toAdd = all.queryBy((rec) => {
+                return (!used.includes(rec.data.personId));
+            }).items;
+        toAdd = toAdd.filter((rec) => {
+            return (!choiceIds.includes(rec.data.personId));
+        });
+        choices.loadData(toAdd, true);
+        choices.remove(toRemove.items);
+        choices.commitChanges();
+
+        console.info('Done building supervised employees store');
+    },
+    
     /**
      * Build/update choices.supervisedEmployees store,
      * used to provide choices for editing supervised employees
@@ -539,6 +509,90 @@ Ext.define('Breeze.view.employee.InformationController', {
         console.info('Done building departments store');
     },
 
+    //===[Company List Event Handlers]===
+
+    onCompanyGridAddButton: function(comp, tool, eOpts){
+        var actSheet = this.lookup(tool.getData().sheet);
+        actSheet.show();
+
+        console.info('Handling add button click for company grid');
+    },
+
+    //==[Edit Cell Change Events]==
+
+    /**
+     * Handle select event for supervised employees grid cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditSupervisorSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+        
+        targetRecord.set({
+            personId: data.data.personId,
+            displayName: data.data.displayName
+        }, {commit: true});
+
+        console.info('Select updated record!');
+        this.buildSupervisorChoices();
+    },
+
+    /**
+     * Handle select event for supervised employees grid cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditSupervisedEmployeeSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+        
+        targetRecord.set({
+            personId: data.data.personId,
+            displayName: data.data.displayName
+        }, {commit: true});
+
+        console.info('Select updated record!');
+        this.buildSupervisedEmployeeChoices();
+    },
+
+    /**
+     * Handle select event for supervised departments grid
+     * department name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsDeptSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            departmentId: data.data.departmentId,
+            departmentName: data.data.departmentName
+        }, {commit: true});
+        
+        console.info('Select edit department department');
+        this.buildSupervisedDepartmentChoices();
+    },
+
+    /**
+     * Handle select event for supervised departments grid
+     * role name cell editor plugin
+     * @param {Object} comp Select field component
+     * @param {Object} data New data
+     * @param {Object} eOpts Event Options
+     */
+    onEditDepartmentsRoleSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord();
+
+        targetRecord.set({
+            roleId: data.get('Role_Id'),
+            roleName: data.get('Role_Name')
+        }, {commit: true});
+
+        console.info('Select edit department role');
+    },
+
     //==[Company List ActionSheet Add event handlers]==
 
     /**
@@ -581,7 +635,46 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
     
     //==[Company List 'Remove' tool handlers]==
-    
+
+
+    /**
+     * Handles 'remove' tool in Supervisor grid
+     * under 'Company' tab
+     */
+    onRemoveSupervisorTool: function(grid, info){
+        var vm = this.getViewModel(),
+            records = vm.get('companySupervisors'),
+            record = records.findRecord('id', info.record.id);
+        
+        if(record !== null){
+            records.remove([record]);
+            records.commitChanges();
+
+            this.buildSupervisorChoices();
+        }
+
+        console.info('remove department');
+    },
+
+    /**
+     * Handles 'remove' tool in Supervised Employees grid
+     * under 'Company' tab
+     */
+    onRemoveSupervisedEmployeeTool: function(grid, info){
+        var vm = this.getViewModel(),
+            records = vm.get('companySupervisedEmployees'),
+            record = records.findRecord('id', info.record.id);
+        
+        if(record !== null){
+            records.remove([record]);
+            records.commitChanges();
+
+            this.buildSupervisedEmployeeChoices();
+        }
+
+        console.info('remove department');
+    },
+
     /**
      * Handles 'remove' tool in Supervised Departments grid
      * under 'Company' tab

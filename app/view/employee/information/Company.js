@@ -245,13 +245,36 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
                                                     editable: true,
-                                                    // editor: {
-                                                    //     xtype: 'selectfield',
-                                                    //     store: 'supervisors',
-                                                    //     displayField: 'displayName',
-                                                    //     valueField: 'id'
-                                                    // }
-                                                }
+                                                    editable: true,
+                                                    editor: {
+                                                        xtype: 'selectfield',
+                                                        bind: {
+                                                            store: '{choices.supervising}'
+                                                        },
+                                                        displayField: 'displayName',
+                                                        valueField: 'personId',
+                                                        listeners: {
+                                                            select: 'onEditSupervisorSelect'
+                                                        }
+                                                    },
+                                                    // Remove icon
+                                                    cell: {
+                                                        toolDefaults: {
+                                                            ui: 'employeeinfo-grid-tool',
+                                                            zone: 'end',
+                                                            bind: {
+                                                                // Hide when readOnly
+                                                                hidden: '{readOnly}'
+                                                            }
+                                                        },
+                                                        tools: [
+                                                            {
+                                                                iconCls: 'x-fas fa-times',
+                                                                handler: 'onRemoveSupervisorTool'
+                                                            }
+                                                        ]
+                                                    }
+                                                },
                                             ],
                                             // bind: '{companySupervisorsList}'
                                             bind: {
@@ -330,6 +353,23 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                             // change: 'onChangeSupervisedEmployeeEdit',
                                                             select: 'onEditSupervisedEmployeeSelect'
                                                         }
+                                                    },
+                                                    // Remove icon
+                                                    cell: {
+                                                        toolDefaults: {
+                                                            ui: 'employeeinfo-grid-tool',
+                                                            zone: 'end',
+                                                            bind: {
+                                                                // Hide when readOnly
+                                                                hidden: '{readOnly}'
+                                                            }
+                                                        },
+                                                        tools: [
+                                                            {
+                                                                iconCls: 'x-fas fa-times',
+                                                                handler: 'onRemoveSupervisedEmployeeTool'
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                             ],

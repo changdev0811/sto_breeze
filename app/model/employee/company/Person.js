@@ -11,5 +11,6 @@ Ext.define('Breeze.model.employee.company.Person', {
     fields: [
         { name: 'personId', type: 'integer' },
         { name: 'displayName', type: 'string' },
+        { name: 'departmentId', type: 'integer' }
     ]
 });
