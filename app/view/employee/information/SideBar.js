@@ -1,6 +1,19 @@
+/**
+ * Employee Information Sidebar sub-view
+ * @class SideBar
+ * @namespace Breeze.view.employee.information.SideBar
+ * @alias widget.employee.information.sidebar
+ * @extends Ext.Container
+ */
 Ext.define('Breeze.view.employee.information.SideBar', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.sidebar',
+
+    controller: 'employee.information.sidebar',
+    listeners: {
+        initialize: 'onInit'
+    },
+
     requires: [
         'Ext.Img'
     ],

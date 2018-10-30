@@ -1,3 +1,10 @@
+/**
+ * Employee Info Company subview
+ * @class Company
+ * @namespace Breeze.view.employee.information.Company
+ * @alias widget.employee.information.company
+ * @extends Ext.Container
+ */
 Ext.define('Breeze.view.employee.information.Company', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.company',
@@ -421,7 +428,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 // reference to actionsheet button shows
                                                 sheet: 'departmentAddActionSheet',
                                                 // Name of function used to make sure its ok to add
-                                                checkHandler: 'canAddCompanyDepartment'
+                                                checkHandler: null
                                             },
                                             handler: 'onCompanyGridAddButton'
                                         }

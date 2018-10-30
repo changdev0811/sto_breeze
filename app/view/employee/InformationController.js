@@ -68,6 +68,9 @@ Ext.define('Breeze.view.employee.InformationController', {
                         me.toggleCompanyLists(c);
                         me.prepareCompanyLists();
                     });
+                } else {
+                    me.toggleCompanyLists(c);
+                    me.prepareCompanyLists();
                 }
             });
         }).catch(function(err){
@@ -95,58 +98,67 @@ Ext.define('Breeze.view.employee.InformationController', {
                             console.warn('Failed to load company config');
                         }
                         me.apiClass.getAccess().then(
-                            function(level){
+                            function (level) {
                                 vm.set('accessLevel', level);
 
                                 // Set id to use for requesting security rights
                                 var rightsCheckId = vm.get('employeeId')
-                                if(vm.get('employeeId') == 'new'){
+                                if (vm.get('employeeId') == 'new') {
                                     // New employee, use id of 0
                                     rightsCheckId = 0;
                                 }
-                                me.apiClass.getSecurityRights(rightsCheckId).then(
-                                    function(rights){
-                                        // Set read only state based on super admin, new record, or employee rights
-                                        if(
-                                            vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
-                                            vm.get('employeeId') == 'new' ||
-                                            (rights.Edit_Employee)
-                                        ) {
-                                            vm.set('readOnly', false);
-                                        } else {
-                                            vm.set('readOnly', true);
-                                        }
+                                me.addStoreToViewModel(
+                                    'Breeze.store.employee.SecRights',
+                                    'securityRights',
+                                    {
+                                        load: true,
+                                        createOpts: { employeeId: vm.get('viewerId') },
+                                        loadOpts: {
+                                            callback: function (success, rec, opt) {
+                                                if (success) {
+                                                    var rights = vm.get('securityRights').getAt(0).getData();
+                                                    // Set read only state based on super admin, new record, or employee rights
+                                                    if (
+                                                        vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
+                                                        vm.get('employeeId') == 'new' ||
+                                                        (rights.Edit_Employee)
+                                                    ) {
+                                                        vm.set('readOnly', false);
+                                                    } else {
+                                                        vm.set('readOnly', true);
+                                                    }
 
-                                        // Set field-specific visibility values
-                                        vm.set('perms.ssn', rights.View_SSN);
-                                        vm.set('perms.compensation', rights.View_Compensation);
+                                                    // Set field-specific visibility values
+                                                    vm.set('perms.ssn', rights.View_SSN);
+                                                    vm.set('perms.compensation', rights.View_Compensation);
 
-                                        // remove hidden fields so they can't be pilfered with inspect
-                                        if(!vm.get('perms.ssn')){
-                                            var ssnPlain = me.view.lookup('ssnPlain');
-                                            // ssnPlain.parent.remove(ssnPlain);
-                                            ssnPlain.setHidden(true);
-                                        }
-                                        if(!vm.get('perms.compensation')){
-                                            var compPlain = me.view.lookup('compensationPlain');
-                                            // compPlain.parent.remove(compPlain);
-                                            compPlain.setHidden(true);
-                                        }
+                                                    // remove hidden fields so they can't be pilfered with inspect
+                                                    if (!vm.get('perms.ssn')) {
+                                                        var ssnPlain = me.view.lookup('ssnPlain');
+                                                        // ssnPlain.parent.remove(ssnPlain);
+                                                        ssnPlain.setHidden(true);
+                                                    }
+                                                    if (!vm.get('perms.compensation')) {
+                                                        var compPlain = me.view.lookup('compensationPlain');
+                                                        // compPlain.parent.remove(compPlain);
+                                                        compPlain.setHidden(true);
+                                                    }
 
-                                        // handle rights
-                                        resolve();
+                                                    // handle rights
+                                                    resolve();
+                                                } else {
+                                                    console.warn('Error getting security rights');
+                                                    reject(false);
+                                                }
+                                            }
+                                        }
                                     }
-                                ).catch(
-                                    function(err){
-                                        console.warn('Error getting security rights: ', err);
-                                        reject(err);
-                                    }
-                                )
+                                );
+                            }).catch(function (err) {
+                                console.warn('Check access error: ', err);
+                                reject(err);
                             }
-                        ).catch(function(err){
-                            console.warn('Check access error: ', err);
-                            reject(err);
-                        });
+                        );
                     }
                 }}
             );
@@ -573,7 +585,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             });
             return false
         }
-        
+
         // No choices are available
         if(choices.count() == 0){
             if(vm.get('excludeTerminated')){
@@ -918,66 +930,6 @@ Ext.define('Breeze.view.employee.InformationController', {
         var vm = this.getViewModel();
 
         console.info('Picked effective layoff date');
-    },
-
-    onNotesButtonTap: function(ref, x, eOpts){
-        console.info("[onNotesButtonTap]");
-        //notesDialog
-        var view = this.getView(),
-            dialog = this.lookup('notesDialog');
-        if (!dialog) {
-            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
-            dialog = Ext.create(dialog);
-        }
-        dialog.show();
-    },
-
-    onCloseNotesDialog: function(dialog, e, eOpts){
-        dialog.hide();
-    },
-
-    onEditProfileImageTap: function(ref, e, eOpts){
-        var view = this.getView(),
-            dialog = this.lookup('profileImageEditorDialog');
-        if(!dialog){
-            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
-            dialog = Ext.create(dialog);
-        }
-        dialog.show();
-    },
-
-    /**
-     * Handle profile image edit dialog's 'remove' button
-     */
-    onRemoveProfileImage: function(ref,e,eOpts){
-        console.info('Remove profile image');
-    },
-
-    /**
-     * Handle profile image edit dialog's 'upload' button
-     */
-    onUploadProfileImage: function(ref,e,eOpts){
-        console.info('Upload profile image');
-        this.apiClass.information.uploadPicture(
-            this.lookup('profileImageForm')
-        ).then((result) => {
-
-        }).catch((err) => {
-            Ext.toast({
-                message: err.message,
-                type: err.type,
-                timeout: 10000
-            });
-        });
-    },
-    
-    /**
-     * Handle profile image edit dialog's 'cancel' button
-     */
-    onCancelProfileImageEdit: function(ref, e, eOpts){
-        this.lookup('pictureFileField').reset();
-        ref.getParent().getParent().hide();
-        // this.lookup('profileImageForm').reset();
     }
 
 
