@@ -4,19 +4,14 @@
  * @namespace Breeze.view.employee.InformationController
  * @alias controller.employee.information
  * @extends Breeze.controller.Base
+ * TODO: Deal with toggle of exclude terminated
  */
 Ext.define('Breeze.view.employee.InformationController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.employee.information',
 
     requires: [
-        'Breeze.api.Employee',
-        // 'Breeze.model.accrual.ShiftSegment',
-        // 'Breeze.store.accrual.ScheduleList',
-        // 'Breeze.store.company.EmployeeList',
-        // 'Breeze.store.company.SupervisorList',
-        // 'Breeze.store.company.FlatProjectList',
-        // 'Breeze.store.record.PunchPolicies'
+        'Breeze.api.Employee'
     ],
 
     onInit: function(component, eOpts){
@@ -37,7 +32,17 @@ Ext.define('Breeze.view.employee.InformationController', {
             vm.set('employeeId', this.empId);
         }
 
+        // Store whether to exclude terminated employees
+        if(!Object.isUnvalued(component.getData().excludeTerminated)){
+            this.excludeTerminated = component.getData().excludeTerminated;
+            vm.set('excludeTerminated', this.excludeTerminated);
+        } else {
+            this.excludeTerminated = false;
+            vm.set('excludeTerminated', this.excludeTerminated);
+        }
+
         this.checkAccess().then(function(){
+            // TODO: finish config loading
             me.loadStores(function(pass){
                 // Provide loaded stores to form fields needing them
                 comp.lookup('departments').setStore(vm.getStore('departments'));
@@ -73,65 +78,78 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     /**
      * Check user access and employee security rights
+     * 
+     * Also loads company configuration and puts it into store companyConfig
+     * 
      * @return {Promise} Promise resolving with no params, or rejecting with error
      */
     checkAccess: function(){
         var me = this;
         var vm = this.getViewModel();
         return new Promise( function(resolve, reject) {
-            me.apiClass.getAccess().then(
-                function(level){
-                    vm.set('accessLevel', level);
-
-                    // Set id to use for requesting security rights
-                    var rightsCheckId = vm.get('employeeId')
-                    if(vm.get('employeeId') == 'new'){
-                        // New employee, use id of 0
-                        rightsCheckId = 0;
-                    }
-                    me.apiClass.getSecurityRights(rightsCheckId).then(
-                        function(rights){
-                            // Set read only state based on super admin, new record, or employee rights
-                            if(
-                                vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
-                                vm.get('employeeId') == 'new' ||
-                                (rights.Edit_Employee)
-                            ) {
-                                vm.set('readOnly', false);
-                            } else {
-                                vm.set('readOnly', true);
-                            }
-
-                            // Set field-specific visibility values
-                            vm.set('perms.ssn', rights.View_SSN);
-                            vm.set('perms.compensation', rights.View_Compensation);
-
-                            // remove hidden fields so they can't be pilfered with inspect
-                            if(!vm.get('perms.ssn')){
-                                var ssnPlain = me.view.lookup('ssnPlain');
-                                // ssnPlain.parent.remove(ssnPlain);
-                                ssnPlain.setHidden(true);
-                            }
-                            if(!vm.get('perms.compensation')){
-                                var compPlain = me.view.lookup('compensationPlain');
-                                // compPlain.parent.remove(compPlain);
-                                compPlain.setHidden(true);
-                            }
-
-                            // handle rights
-                            resolve();
+            me.addStoreToViewModel(
+                'Breeze.store.company.Config',
+                'companyConfig', { load: true, loadOpts: { 
+                    callback: function(success) {
+                        if(!success){
+                            console.warn('Failed to load company config');
                         }
-                    ).catch(
-                        function(err){
-                            console.warn('Error getting security rights: ', err);
+                        me.apiClass.getAccess().then(
+                            function(level){
+                                vm.set('accessLevel', level);
+
+                                // Set id to use for requesting security rights
+                                var rightsCheckId = vm.get('employeeId')
+                                if(vm.get('employeeId') == 'new'){
+                                    // New employee, use id of 0
+                                    rightsCheckId = 0;
+                                }
+                                me.apiClass.getSecurityRights(rightsCheckId).then(
+                                    function(rights){
+                                        // Set read only state based on super admin, new record, or employee rights
+                                        if(
+                                            vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
+                                            vm.get('employeeId') == 'new' ||
+                                            (rights.Edit_Employee)
+                                        ) {
+                                            vm.set('readOnly', false);
+                                        } else {
+                                            vm.set('readOnly', true);
+                                        }
+
+                                        // Set field-specific visibility values
+                                        vm.set('perms.ssn', rights.View_SSN);
+                                        vm.set('perms.compensation', rights.View_Compensation);
+
+                                        // remove hidden fields so they can't be pilfered with inspect
+                                        if(!vm.get('perms.ssn')){
+                                            var ssnPlain = me.view.lookup('ssnPlain');
+                                            // ssnPlain.parent.remove(ssnPlain);
+                                            ssnPlain.setHidden(true);
+                                        }
+                                        if(!vm.get('perms.compensation')){
+                                            var compPlain = me.view.lookup('compensationPlain');
+                                            // compPlain.parent.remove(compPlain);
+                                            compPlain.setHidden(true);
+                                        }
+
+                                        // handle rights
+                                        resolve();
+                                    }
+                                ).catch(
+                                    function(err){
+                                        console.warn('Error getting security rights: ', err);
+                                        reject(err);
+                                    }
+                                )
+                            }
+                        ).catch(function(err){
+                            console.warn('Check access error: ', err);
                             reject(err);
-                        }
-                    )
-                }
-            ).catch(function(err){
-                console.warn('Check access error: ', err);
-                reject(err);
-            });
+                        });
+                    }
+                }}
+            );
         });
     },
 
@@ -141,7 +159,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     loadStores: function(callback){
         var vm = this.getViewModel();
-        
+
         vm.setStores({
             departments: Ext.create('Breeze.store.company.DepartmentList'),
             scheduleList: Ext.create('Breeze.store.accrual.ScheduleList'),
@@ -226,7 +244,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      * Apply settings retrieved from Company Config store
      */
     applyCompanyConfig: function(){
-        var config = Ext.getStore('CompanyConfig').getAt(0);
+        var config = this.getViewModel().get('companyConfig').getAt(0);
     },
 
     /**
@@ -449,6 +467,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     /**
      * Build/update choices.supervisedEmployees store,
      * used to provide choices for editing supervised employees
+     * TODO: Finish implementing
      */
     buildSupervisedEmployeeChoices: function(){
         var vm = this.getViewModel(),
@@ -509,14 +528,101 @@ Ext.define('Breeze.view.employee.InformationController', {
         console.info('Done building departments store');
     },
 
+    //===[Methods checking if item can be added to Company List grid]===
+
+    canAddCompanySupervisor: function(){
+        console.info('Checking if able to add supervisor');
+        var vm = this.getViewModel(),
+            choices = vm.get('choices.supervising'),
+            errorPath = 'errors.company.supervisor';
+        
+        // No choices are available
+        if(choices.count() == 0){
+            if(vm.get('excludeTerminated')){
+                Ext.toast({
+                    message: vm.get(`${errorPath}.noChoicesNonTerminated`),
+                    type: Ext.Toast.WARN,
+                    timeout: 10000
+                });
+            } else {
+                Ext.toast({
+                    message: vm.get(`${errorPath}.noChoices`),
+                    type: Ext.Toast.WARN,
+                    timeout: 10000
+                });
+            }
+            return false;
+        }
+
+        return true;
+    },
+
+    canAddCompanyEmployee: function(){
+        console.info('Checking if able to add supervisor');
+        var vm = this.getViewModel(),
+            choices = vm.get('choices.supervisedEmployees'),
+            departments = vm.get('companyDepartments'),
+            errorPath = 'errors.company.employee';
+        
+        // No Departments added
+        if(departments.count() == 0){
+            Ext.toast({
+                message: vm.get(`${errorPath}.noDepartments`),
+                type: Ext.Toast.WARN,
+                timeout: 10000
+            });
+            return false
+        }
+        
+        // No choices are available
+        if(choices.count() == 0){
+            if(vm.get('excludeTerminated')){
+                Ext.toast({
+                    message: vm.get(`${errorPath}.noChoicesNonTerminated`),
+                    type: Ext.Toast.WARN,
+                    timeout: 10000
+                });
+            } else {
+                Ext.toast({
+                    message: vm.get(`${errorPath}.noChoices`),
+                    type: Ext.Toast.WARN,
+                    timeout: 10000
+                });
+            }
+            return false;
+        }
+
+        return true;
+    },
+
     //===[Company List Event Handlers]===
 
-    onCompanyGridAddButton: function(comp, tool, eOpts){
-        var actSheet = this.lookup(tool.getData().sheet);
-        actSheet.show();
+    /**
+     * Handle click event for '+' tool button on company tab
+     * list grid panel titles
+     * 
+     * Uses data included in tools in view to decide which action sheet
+     * to display, and whether some condition must be met first
+     * 
+     * @param {Object} comp Component event originated from
+     * @param {Object} tool Tool component firing event
+     */
+    onCompanyGridAddButton: function(comp, tool){
+        var actSheet = this.lookup(tool.getData().sheet),
+            checkHandler = tool.getData().checkHandler,
+            canShow = true;
+        
+        if(!Object.isUnvalued(checkHandler)){
+            // Check handler name was provided
+            canShow = this[checkHandler]();
+        }
+        
+        if(canShow){
+            actSheet.show();
+        }
 
         console.info('Handling add button click for company grid');
-    },
+    },    
 
     //==[Edit Cell Change Events]==
 
@@ -599,11 +705,81 @@ Ext.define('Breeze.view.employee.InformationController', {
      * Handle clicking 'Add' button in 'Add Supervised Department'
      * ActionSheet.
      * 
+     * If valid, adds a new row to the Supervisor grid
+     * 
+     * @param {Object} comp Button firing event
+     */
+    onCompanyAddSupervisor: function(comp){
+        var vm = this.getViewModel(),
+            chosenSupers = vm.get('companySupervisors'),
+            sheet = comp.getParent().getParent(),
+            supField = sheet.getComponent('supervisor');
+        
+        if(supField.validate()){
+            // Both fields are valid, so make use of them
+            var supRecord = supField.getSelection().getData(),
+                newRecord = {
+                    personId: supRecord.personId,
+                    displayName: supRecord.displayName,
+                    departmentId: supRecord.departmentId
+                };
+            chosenSupers.loadData([newRecord], true);
+            chosenSupers.commitChanges();
+            // Refresh available choices
+            this.buildSupervisorChoices();
+        }
+        
+        // Close action sheet and reset values to empty
+        sheet.hide();
+        supField.clearValue();
+        
+        console.info('Add supervisor');
+    },
+
+    /**
+     * Handle clicking 'Add' button in 'Add Supervised Employee'
+     * ActionSheet.
+     * 
+     * If valid, adds a new row to the Employees grid
+     * 
+     * @param {Object} comp Button firing event
+     */
+    onCompanyAddEmployee: function(comp){
+        var vm = this.getViewModel(),
+            chosenSupers = vm.get('companySupervisors'),
+            sheet = comp.getParent().getParent(),
+            supField = sheet.getComponent('supervisor');
+        
+        if(supField.validate()){
+            // Both fields are valid, so make use of them
+            var supRecord = supField.getSelection().getData(),
+                newRecord = {
+                    personId: supRecord.personId,
+                    displayName: supRecord.displayName,
+                    departmentId: supRecord.departmentId
+                };
+            chosenSupers.loadData([newRecord], true);
+            chosenSupers.commitChanges();
+            // Refresh available choices
+            this.buildSupervisorChoices();
+        }
+        
+        // Close action sheet and reset values to empty
+        sheet.hide();
+        supField.clearValue();
+        
+        console.info('Add supervisor');
+    },
+
+    /**
+     * Handle clicking 'Add' button in 'Add Supervised Department'
+     * ActionSheet.
+     * 
      * If valid, adds a new row to the Supervised Departments grid
      * 
      * @param {Object} comp Button firing event
      */
-    onAddDepartment: function(comp){
+    onCompanyAddDepartment: function(comp){
         var vm = this.getViewModel(),
             chosenDepts = vm.get('companyDepartments'),
             sheet = comp.getParent().getParent(),
@@ -641,7 +817,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      * Handles 'remove' tool in Supervisor grid
      * under 'Company' tab
      */
-    onRemoveSupervisorTool: function(grid, info){
+    onCompanyRemoveSupervisorTool: function(grid, info){
         var vm = this.getViewModel(),
             records = vm.get('companySupervisors'),
             record = records.findRecord('id', info.record.id);
@@ -653,14 +829,14 @@ Ext.define('Breeze.view.employee.InformationController', {
             this.buildSupervisorChoices();
         }
 
-        console.info('remove department');
+        console.info('removed supervisor');
     },
 
     /**
      * Handles 'remove' tool in Supervised Employees grid
      * under 'Company' tab
      */
-    onRemoveSupervisedEmployeeTool: function(grid, info){
+    onCompanyRemoveSupervisedEmployeeTool: function(grid, info){
         var vm = this.getViewModel(),
             records = vm.get('companySupervisedEmployees'),
             record = records.findRecord('id', info.record.id);
@@ -672,14 +848,14 @@ Ext.define('Breeze.view.employee.InformationController', {
             this.buildSupervisedEmployeeChoices();
         }
 
-        console.info('remove department');
+        console.info('removed supervised employee');
     },
 
     /**
      * Handles 'remove' tool in Supervised Departments grid
      * under 'Company' tab
      */
-    onRemoveDepartmentTool: function(grid, info){
+    onCompanyRemoveDepartmentTool: function(grid, info){
         var vm = this.getViewModel(),
             records = vm.get('companyDepartments'),
             record = records.findRecord('id', info.record.id);
@@ -691,7 +867,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             this.buildSupervisedDepartmentChoices();
         }
 
-        console.info('remove department');
+        console.info('removed department');
     },
 
 

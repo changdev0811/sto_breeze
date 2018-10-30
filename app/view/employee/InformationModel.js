@@ -24,7 +24,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
         companyConfig: {
 
         },
-        // ==[Company tab list visibility ]
+        // ==[Company tab list visibility]==
         lists: {
             supervisors: {
                 enabled: true,
@@ -39,6 +39,29 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 readonly: true
             },
         },
+        // ==[Error Messages]==
+        errors: {
+            company: {
+                supervisor: {
+                    noChoices: 
+                        'This employee is already supervised by all of their department\'s ' +
+                        'supervisors.',
+                    noChoicesNonTerminated: 
+                        'This employee is already supervised by all of their department\'s ' + 
+                        'non-terminated supervisors.'
+                },
+                employee: {
+                    noChoices: 
+                        'This supervisor already has rights to all of their departments\' ' + 
+                        'employees.',
+                    noChoicesNonTerminated: 
+                        'This supervisor already has rights to all of their department\'s ' + 
+                        'non-terminated employees.',
+                    noDepartments: 
+                        'This supervisor must have departments before employees.'
+                }
+            }   
+        },     
 
         info: {
             employee: {
@@ -277,6 +300,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * using the expected parameter names for submitting data updates
          */
         formData: function (get) {
+            /*  TODO: Gather values for supervisor names, ids, depts,
+                Supervised employee names, ids, and
+                Supervised department names, roles, ids for params */
             return {
                 employee_id: get('employeeId'),
                 first_name: get('info.FirstName'),
@@ -351,45 +377,6 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 InOut_Opt: get('info.punchPolicy.InOut_Opt'),
                 Can_Use_InOut: get('info.punchPolicy.Can_Use_InOut')
             };
-        },
-
-        /**
-         * Formula returning filtered selection of supervisors based on supervisor
-         * IDs defined in employee info data object
-         */
-        companySupervisorChoices: {
-            bind: {
-                store: '{supervisors}',
-                ids: '{info.SupervisorIds}'
-            },
-            get: function (data) {
-                return data.store.queryRecordsBy(
-                    function (rec) {
-                        return data.ids.includes(rec.id);
-                    }
-                );
-            }
-        },
-
-        companyDepartmentOptions: {
-            bind: {
-                // deptStore: '{departments}',
-                // roleStore: '{securityRoles}',
-                deptIds: '{info.SupervisedDeptIds}',
-                deptNames: '{info.SupervisedDepts}',
-                roleIds: '{info.DeptRoleIds}',
-                roleNames: '{info.DeptRoles}'
-            },
-            get: function (data) {
-                return data.deptIds.map(function (v, idx) {
-                    return {
-                        // displayName: data.deptStore.findRecord('Id', v).get('Name'),
-                        // role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
-                        displayName: data.deptNames[idx],
-                        role: data.roleNames[idx]
-                    }
-                });
-            }
         },
 
         profileImage: function (get) {

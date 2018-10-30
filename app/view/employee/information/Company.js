@@ -212,9 +212,19 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     ui: 'employee-info-shift-grid employee-info-grid-panel',
                                     userCls: 'employee-info-grid',
                                     title: 'Supervisors',
+                                    // Grid title tool buttons
                                     tools: {
+                                        // Add tool
                                         add: {
-                                            iconCls: 'x-fas fa-plus'
+                                            iconCls: 'x-fas fa-plus',
+                                            data: {
+                                                // reference to actionsheet button shows
+                                                sheet: 'supervisorAddActionSheet',
+                                                // Name of function used to make sure its ok to add
+                                                checkHandler: 'canAddCompanySupervisor'
+
+                                            },
+                                            handler: 'onCompanyGridAddButton'
                                         }
                                     },
                                     items: [
@@ -241,7 +251,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     xtype: 'gridcolumn',
                                                     flex: 1,
                                                     // text: 'Name',
-                                                    dataIndex: 'displayName',
+                                                    dataIndex: 'personId',
+                                                    tpl: '{displayName}',
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
                                                     editable: true,
@@ -270,7 +281,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         tools: [
                                                             {
                                                                 iconCls: 'x-fas fa-times',
-                                                                handler: 'onRemoveSupervisorTool'
+                                                                handler: 'onCompanyRemoveSupervisorTool'
                                                             }
                                                         ]
                                                     }
@@ -307,7 +318,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                         add: {
                                             iconCls: 'x-fas fa-plus',
                                             data: {
-                                                sheet: 'employeeAddAction'
+                                                sheet: 'employeeAddAction',
+                                                // Name of function used to make sure its ok to add
+                                                checkHandler: 'canAddCompanyEmployee'
                                             },
                                             handler: 'onCompanyGridAddButton'
                                         }
@@ -367,7 +380,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         tools: [
                                                             {
                                                                 iconCls: 'x-fas fa-times',
-                                                                handler: 'onRemoveSupervisedEmployeeTool'
+                                                                handler: 'onCompanyRemoveSupervisedEmployeeTool'
                                                             }
                                                         ]
                                                     }
@@ -399,12 +412,16 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     ui: 'employee-info-shift-grid employee-info-grid-panel',
                                     userCls: 'employee-info-grid',
                                     title: 'Supervised Departments',
+                                    // Grid title tool buttons
                                     tools: {
+                                        // Add tool
                                         add: {
                                             iconCls: 'x-fas fa-plus',
                                             data: {
                                                 // reference to actionsheet button shows
-                                                sheet: 'departmentAddActionSheet'
+                                                sheet: 'departmentAddActionSheet',
+                                                // Name of function used to make sure its ok to add
+                                                checkHandler: 'canAddCompanyDepartment'
                                             },
                                             handler: 'onCompanyGridAddButton'
                                         }
@@ -484,7 +501,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         tools: [
                                                             {
                                                                 iconCls: 'x-fas fa-times',
-                                                                handler: 'onRemoveDepartmentTool'
+                                                                handler: 'onCompanyRemoveDepartmentTool'
                                                             }
                                                         ]
                                                     }
@@ -509,11 +526,14 @@ Ext.define('Breeze.view.employee.information.Company', {
             items: [
                 {
                     xtype: 'selectfield',
-                    label: 'Department'
-                },
-                {
-                    xtype: 'selectfield',
-                    label: 'Role'
+                    label: 'Supervisor',
+                    itemId: 'supervisor',
+                    displayField: 'displayName',
+                    valueField: 'personId',
+                    bind: {
+                        store: '{choices.supervising}'
+                    },
+                    required: true
                 },
                 {
                     xtype: 'container',
@@ -525,7 +545,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                         {
                             xtype: 'button',
                             ui: 'confirm alt',
-                            text: 'Add'
+                            text: 'Add',
+                            handler: 'onCompanyAddSupervisor'
                         },
                         { xtype: 'spacer', width: 8 },
                         {
@@ -564,7 +585,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                         {
                             xtype: 'button',
                             ui: 'confirm alt',
-                            text: 'Add'
+                            text: 'Add',
+                            handler: 'onCompanyAddEmployee'
                         },
                         { xtype: 'spacer', width: 8 },
                         {
@@ -616,7 +638,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             xtype: 'button',
                             ui: 'confirm alt',
                             text: 'Add',
-                            handler: 'onAddDepartment'
+                            handler: 'onCompanyAddDepartment'
                         },
                         { xtype: 'spacer', width: 8 },
                         {

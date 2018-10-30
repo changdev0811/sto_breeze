@@ -156,7 +156,7 @@ Ext.define('Breeze.api.employee.Information', {
         });
     },
 
-    // TODO: Implement
+    // TODO: Implement remove picture
     removePicture: function(form){
 
     }
