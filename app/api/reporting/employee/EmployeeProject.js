@@ -1,15 +1,15 @@
 /**
- * Report handler for Employee's Employee Information report
- * @class Information
- * @namespace Breeze.api.reporting.employee.Information
+ * Report handler for Employee's Employee Project report
+ * @class Project
+ * @namespace Breeze.api.reporting.employee.Project
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.employee.Information', {
+Ext.define('Breeze.api.reporting.employee.EmployeeProject', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'EmployeeInformation'
+        report: 'EmployeeProject'
     },
 
     /**

@@ -7,22 +7,17 @@
 Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
     extend: 'Breeze.api.reporting.Base',
 
-    // config: {
-    //     // Initial parameters for generation (input phase)
-    //     parameters: null
-    // },
-
     statics: {
         ajaxCall: 'createYAAGReportTempTable',
         report: 'EmployeeYearAtAGlance'
     },
-
 
     /**
      * Initiate generation process, calling generate when pre-reqs are available.
      * If pre-reqs are available at start, returns promise from generate. Otherwise,
      * returns promise that passes through promise from generate method. A double reject
      * will result in error being returned directly (shouldn't be reachable)
+     * @see Breeze.api.reporting.Base for more details on method
      * @return {Promise} Promise resolving with output of generate method
      * @example
      * 
@@ -41,22 +36,36 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
      *      console.warn('Error', err);
      *  }
      * )
+     
+     * @param {Object} modelParamsData Parameter data object from report 
+     * viewmodel
+     * @param {String} format Output format ('PDF', 'EXCEL' or 'WORD')
+     *  default is 'PDF'
      */
-    process: function(){
-        var cfg = Ext.getStore('CompanyConfig');
-        
-        var me = this;
+    process: function(modelParamsData, format){
+        var cfg = Ext.getStore('CompanyConfig'),
+            format = (format)? format : 'PDF',
+            me = this,
+            modelParams = modelParamsData;
+
         if(cfg.isLoaded()){
-            return this.generate(cfg.getAt(0));
+            return this.generate(
+                    cfg.getAt(0),
+                    modelParams,
+                    format
+                );
         } else {
             return new Promise(function(resolve, reject){
                 cfg.load(function(r,op,success){
                     if(success){
                         resolve(
-                            me.generate(Ext.getStore('CompanyConfig').getAt(0))
+                            me.generate(
+                                Ext.getStore('CompanyConfig').getAt(0),
+                                modelParams
+                            )
                         );
                     } else {
-                        reject('Faild to load config store for YAAG report');
+                        reject('Failed to load company config store for Department Absence report');
                     }
                 });
             }).then(
@@ -75,59 +84,48 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
      * Takes pre-reqs prepared by process function and returns a promise resolving with
      * generated report data. Returned directly by process or as a result of a pass through
      * once pre-reqs are ready; shouldn't be called directly
+     * 
+     * @see Breeze.api.reporting.Base for more details on method
+     * 
+     * @param {Object} cfg Config params passed in by process
+     * @param {String} format Output data format
      * @return {Promise} Promise resolving with report data or rejecting with error message
      */
-    generate: function(cfg) {
-        var emp = this.auth.getCookies().emp;
+    generate: function(cfg, modelParamsData, format){
+        var me = this,
+            params = [],
+            // Store current user ID from cookie in emp and currentUser
+            cust = this.auth.getCookies().cust,
+            emp = this.auth.getCookies().emp,
+            currentUser = this.auth.getCookies().emp;
         // use employee id from constructor params, if available
         if(this.getParameters() && this.getParameters()['employeeId']){
             emp = this.getParameters().employeeId;
         }
 
-        var params = [];
-        
-        this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
-        this.appendParam(params, 'custid', this.auth.getCookies().cust);
-        this.appendParam(params, 'LogoInHeader', true);
-        this.appendParam(params, 'NameInHeader', true);
-        this.appendParam(params, 'RepSignature', false);
+        // Add in parameters from model object
+        this.appendParamsFromDataObject(params, modelParamsData);
+
+        // Add additional params taken from config
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
-        this.appendParam(params, 'ReportTitle', 'My Year at a Glance');
-        this.appendParam(params, 'idtype', 'emps');
-        this.appendParam(params, 'incids', emp);
-        this.appendParam(params, 'GroupByDept', true);
-        this.appendParam(params, 'recyear', new Date().getFullYear());
-        this.appendParam(params, 'Colors', true);
-        this.appendParam(params, 'recyeartype', 'ALL');
+        this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
+        this.appendParam(params, 'customer_id', cust);
 
-        var realParams = { recyear: new Date().getFullYear(), recyeartype: 'ALL' };
-
-        var me = this;
-
-        var ajaxCall = this.statics().ajaxCall;
         var reportKind = this.statics().report;
 
-        /* Build and return the almighty promise of promises so process can
-            return it directly or return in via pass-through */
         return new Promise(function(resolve, reject){
-            me.createTemporaryTable(
-                ajaxCall,
-                me.createTemporaryTableName('YAAG')
-            ).then(function(r){
-                me.createReportStore(reportKind, {"Rows": params}).then(
-                    function(store){
-                        resolve(store.getAt(0).get('CurrentPageURL'));
-                    }
-                ).catch(
-                    function(err){
-                        reject('Error loading report store: ', err);
-                    }
-                );
-            }).catch(function(err){
-                reject('Error creating temporary table needed for YAAG report: ', err);
-            });
+            me.createReportStore(
+                reportKind, {"Rows": params}, { format: format }
+            ).then(
+                function(store){
+                    resolve(store.getAt(0).get('CurrentPageURL'));
+                }
+            ).catch(
+                function(err){
+                    console.warn('Error loading report store', err);
+                    reject(err);
+                }
+            )
         });
     }
-
-
 });
