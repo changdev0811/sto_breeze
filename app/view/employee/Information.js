@@ -81,9 +81,8 @@ Ext.define('Breeze.view.employee.Information', {
         {
             itemId: 'saveButton', text: 'Save',
             ui: 'confirm raised alt', weight: 3,
-            bind: {
-
-            }
+            bind: {},
+            handler: 'onSaveButtonTap'
         },
         // Discard changes button
         {
@@ -92,7 +91,8 @@ Ext.define('Breeze.view.employee.Information', {
             ui: 'decline raised alt', weight: 5,
             bind: {
                 disabled: '{!form.canRevert}'
-            }
+            },
+            handler: 'onRevertButtonTap'
         }
     ],
 
