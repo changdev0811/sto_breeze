@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.overtimecheck',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.overtimecheck'
     },
     
     // Controller
-
     controller: 'reporting.department.overtimecheck',
 
     listeners: {
@@ -70,7 +66,12 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                 // First column in horizontal container
                 {
                     xtype: 'container',
+                    // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -121,16 +122,21 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -141,11 +147,10 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -382,6 +387,8 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
 
                 // Third Column Container
                 {
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
                     xtype: 'container',
                     width: '220pt',
                     // flex: 1,

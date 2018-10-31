@@ -7,6 +7,7 @@
 Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.reporting.department.overtimecheck',
+
     stores: {
         /*
         A declaration of Ext.data.Store configurations that are first processed as binds to produce an effective
@@ -25,7 +26,7 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
         selectedWeeks: {
         }
     },
-
+    
     constructor: function (cfg) {
         this.callSuper([cfg]);
         /**
@@ -36,24 +37,25 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
          */
         var data = {
             reportParams: {
-                CompanyName: null,
-                customerId: null,
-                groupByDepartment: true,
+                GroupByDept: true,
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Overtime Check Report',
-                category_id: null,
+                inccats: '',
                 hhmm_format: true,
-                recyear: null,
-                ot_value: 8.0
+                ot_value: 8.0,
+                // Concerning selected departments/ids
+                idtype: 'emps', // According to existing code, this is always 'emps'
+                incids: ''
             }
         };
         this.setData(data);
     },
+
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
-        
+
         /*
             TODO: Read from the following before submitting params to API call
             The following vars are bound to weekly/hourly radio buttons
@@ -68,4 +70,5 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
         // whether to use daily or weekly
         valType: 1
     }
+
 });
