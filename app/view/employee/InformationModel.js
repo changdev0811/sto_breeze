@@ -379,11 +379,13 @@ Ext.define('Breeze.view.employee.InformationModel', {
             };
         },
 
-        profileImage: function (get) {
+        profilePicture: function (get) {
             if (get('info.PhotoFlag')) {
                 return get('info.Photo');
             } else {
-                return 'resources/photos/default_user.png'
+                var empSets = Breeze.helper.settings.Employee;
+                return `${empSets.profile}`
+                'resources/photos/default_user.png'
             }
         }
 

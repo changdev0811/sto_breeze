@@ -128,29 +128,94 @@ Ext.define('Breeze.api.employee.Information', {
     addNewEmployee: function () { },
 
     // TODO: Finish implementing
-    uploadPicture: function (form) {
+    /**
+     * Upload profile picture
+     * @param {Object} form Form used to submit picture upload
+     * @param {String} employeeId Employee ID of picture owner
+     * @return {Promise}    Promise resolving with uploaded image URL on success 
+     *                      or rejecting with Toast error object (fields type, 
+     *                      message and sometimes extra with additional error
+     *                      information)
+     * @api uploadEmployeePicture
+     */
+    uploadPicture: function (form, employeeId) {
+        var helper = this.helper,
+            jar = this.auth.getCookies(),
+            cust = jar.cust,
+            emp = jar.emp,
+            path = Breeze.helper.Settings.employee.profilePicture.path;
+            
         console.info('EmpInfo API Upload Picture');
         return new Promise((resolve, reject) => {
             var imageField = form.getComponent('imageFieldSet').
                     getComponent('imageFile'),
                 fileExtension = imageField.getFiles()[0].name
                     .split('.').slice(-1)[0].toLowerCase();
-
+            
             // Check file extension
-            if(['.jpg','.jpeg','.gif','.png','.bmp'].indexOf(fileExtension) == -1){
+            if(['jpg','jpeg','gif','png','bmp'].indexOf(fileExtension) == -1){
                 // If file extension isn't ok, reject with warning
                 reject(
                     {
                         type: Ext.Toast.WARN,
+                        // TODO: Check if we want this message to say 'Breeze' or 'SoftTime Online'
                         message: 'Invalid image type. The file type ' + fileExtension + 
-                            ' is not supported by SoftTime Online.<br/>' + 
+                            // Original:
+                            // ' is not supported by SoftTime Online.<br/>' + 
+                            ' is not supported by Breeze.<br/>' + 
                             'Please select a .jpeg, .jpg, .gif, .png, or .bmp file type'
                     }
                 );
             }
 
             form.getComponent('pictureModified').setValue(true);
-            form.getComponent('extension').setValue(fileExtension);
+            form.getComponent('extension').setValue('.' + fileExtension);
+
+            if(form.isValid()){
+                // Form is valid, so submit it
+                form.submit({
+                    url: helper.url('uploadEmployeePicture.ashx'),
+                    headers: {'Content-Type': 'application/json'},
+                    waitMsg: 'Uploading Image...',
+                    /**
+                     * Handle submission success
+                     */
+                    success: function(){
+                        var imgUrl = '',
+                            randoHash = String.random();
+                        if(emp == 'new'){
+                            // TODO: Figure out actual path name for images
+                            imgUrl = `${path}${cust}/tmp${emp}.${fileExtension}?bob=${randoHash}`;
+                        } else {
+                            imgUrl = `${path}${cust}/${employeeId}tmp${emp}.${fileExtension}?bob=${randoHash}`;
+                        }
+                        // Form successfully submitted, resolve URL
+                        resolve(imgUrl);
+                    },
+                    /**
+                     * Handle submission failure
+                     * @param {Ext.form.Panel} formRef Submitting form reference
+                     * @param {Object} results Submission results object
+                     */
+                    failure: function(formRef, results){
+                        // Form submission failed, so reject with generic error, including
+                        // copy of resulting 'results' object in 'extra' field
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Error occured while uploading image.',
+                            extra: results
+                        });
+                    }
+
+                })
+            } else {
+                // Form not valid, reject with warning message
+                // TODO: Improve copy of this warning message
+                reject({
+                    type: Ext.Toast.WARN,
+                    message: 'Please check form for errors before submitting.'
+                });
+            }
 
 
         });

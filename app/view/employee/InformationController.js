@@ -930,6 +930,78 @@ Ext.define('Breeze.view.employee.InformationController', {
         var vm = this.getViewModel();
 
         console.info('Picked effective layoff date');
+    },
+
+    //==[Sidebar methods]==
+    onNotesButtonTap: function(ref, x, eOpts){
+        console.info("[onNotesButtonTap]");
+        //notesDialog
+        var view = this.getView(),
+            dialog = this.lookup('notesDialog');
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+    onCloseNotesDialog: function(dialog, e, eOpts){
+        dialog.hide();
+    },
+
+    onEditProfilePictureTap: function(ref, e, eOpts){
+        var view = this.getView(),
+            dialog = this.lookup('profilePictureEditorDialog');
+        if(!dialog){
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+    /**
+     * Handle profile image edit dialog's 'remove' button
+     */
+    onRemoveProfilePicture: function(ref,e,eOpts){
+        console.info('Remove profile image');
+    },
+
+    /**
+     * Handle profile image edit dialog's 'upload' button
+     */
+    onUploadProfilePicture: function(ref,e,eOpts){
+        var vm = this.getViewModel(),
+            employeeId = vm.get('employeeId'),
+            form = this.lookup('profilePictureForm');
+
+        console.info('Upload profile image');
+        
+        this.apiClass.information.uploadPicture(
+            form,
+            employeeId
+        ).then((url) => {
+            // Update photo url in data model
+            vm.set('info.Photo', url);
+            console.info('New profile picture URL: ', url);
+        }).catch((err) => {
+            if(err.extra){
+                console.warn('Upload profile picture failed with extra response data:', err.extra);
+            }
+            Ext.toast({
+                message: err.message,
+                type: err.type,
+                timeout: 10000
+            });
+        });
+    },
+    
+    /**
+     * Handle profile image edit dialog's 'cancel' button
+     */
+    onCancelProfilePictureEdit: function(ref, e, eOpts){
+        this.lookup('pictureFileField').reset();
+        ref.getParent().getParent().hide();
+        // this.lookup('profilePictureForm').reset();
     }
 
 
