@@ -81,7 +81,7 @@ Ext.define('Breeze.view.reporting.department.AdjustmentController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.category_id == null){
+        if(vmData.reportParams.inccats == null){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -123,7 +123,6 @@ Ext.define('Breeze.view.reporting.department.AdjustmentController', {
             selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
             selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
-        
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',

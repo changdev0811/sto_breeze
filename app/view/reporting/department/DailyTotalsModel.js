@@ -23,7 +23,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department Daily Totals Report',
-                category_id: null,
+                inccats: '',
                 hhmm_format: true,
                 submit_approve: true,
                 submit_submit: false,

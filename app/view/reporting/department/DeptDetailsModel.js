@@ -23,7 +23,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department Details Report',
-                category_id: null,
+                inccats: '',
                 ShowChart: null,
                 dEnd: (new Date()),
                 recyear: null,

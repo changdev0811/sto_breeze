@@ -44,7 +44,7 @@ Ext.define('Breeze.view.reporting.department.MonthlyModel', {
             NameInHeader: false,
             RepSignature: false,
             ReportTitle: 'Monthly Report',
-            category_id: null,
+            inccats: '',
             recyear: null
         }
     }

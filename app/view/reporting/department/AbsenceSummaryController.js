@@ -81,7 +81,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.category_id == null){
+        if(vmData.reportParams.inccats == null){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -121,12 +121,12 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
         var categoryRecords = categoryList.gatherSelected(),
             // set selected category to the first selected record, if any, otherwise null
             selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
-
-        if(selectedCategory !== null){
-            // set category_id if non null selected category
+            // get array of selected categories, using map to filter out the IDs
+            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            // assign list of category ids as single string, joined with ','
             vm.set(
-                'reportParams.category_id',
-                selectedCategory.getData().Category_Id       
+                'reportParams.inccats',
+                selectedCategories.join(',')
             );
         }
     },

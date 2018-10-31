@@ -23,12 +23,12 @@ Ext.define('Breeze.view.reporting.department.AdjustmentModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Adjustment Report',
+                inccats: '',
                 dStart: (new Date()),
                 dEnd: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: '',
-                inccats: ''
+                incids: ''
             }
         };
         this.setData(data);
