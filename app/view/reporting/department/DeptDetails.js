@@ -333,7 +333,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                             xtype: 'fieldset',
                             /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-                            title: 'Date Selection',
+                            title: 'Recording Year',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting reporting-text reporting-date'

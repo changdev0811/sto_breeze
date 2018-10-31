@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.InOutHistory', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.inouthistory',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.inouthistory'
     },
     
     // Controller
-
     controller: 'reporting.department.inouthistory',
 
     listeners: {
@@ -66,11 +62,15 @@ Ext.define('Breeze.view.reporting.department.InOutHistory', {
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
             items: [
-                // First column
+                // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
