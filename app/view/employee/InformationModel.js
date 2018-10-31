@@ -412,6 +412,50 @@ Ext.define('Breeze.view.employee.InformationModel', {
          */
         hasCustomProfilePicture: function(get){
             return get('info.PhotoFlag');
+        },
+
+        /**
+         * Formula checking whether its possible to add a new shift to the
+         * shift information grid
+         * @param {Function} get ViewModel get function reference
+         * @return {Boolean} Boolean indicating whether add shift button should be enabled
+         */
+        canAddShift: function(get){
+            return (
+                !get('readOnly') &&
+                (get('shift.segments').count < 2)
+            );
+        },
+
+        /**
+         * Formula that runs once and builds a list of 48 shift time choices
+         * paired with numerical values
+         */
+        shiftChoices: {
+            single: true,
+            /*
+            get: function(get){
+                // Function that builds array of numerical shift values
+                var genValues = ()=>{for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);return b},
+                    genTime = (val)=>{
+                        var h = Math.floor(val/60.0),
+                            H = (h%12),
+                            m = (val % 60),
+                            t = (val < 720)? 'AM' : 'PM';
+                        H = (H==0)? 12 : H;
+                        return `${H}:${m.toZeroPaddedString(2)} ${t}`;
+                    };
+                return genValues().map((v)=>{
+                    return {value: v, time: genTime(v)};
+                });
+            }*/
+            get: function(get){
+                return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
+                    return b}().map(function(b){var a=Math.floor(b/60)%12;
+                    var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
+                    .toZeroPaddedString(2)+c;return{value:b,time:a}});
+            }
+
         }
 
     }

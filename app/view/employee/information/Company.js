@@ -263,7 +263,6 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
                                                     editable: true,
-                                                    editable: true,
                                                     editor: {
                                                         xtype: 'selectfield',
                                                         bind: {

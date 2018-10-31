@@ -58,7 +58,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                         // c.lookup('exemptStatus').down('[value=' + exemptStatus + ']').setChecked(true);
                         // var recordingMode = vm.get('info.RecordingMode');
                         // c.lookup('recordingMode').down('[value=' + recordingMode + ']').setChecked(true);
-                        me.loadShiftSegments(vm);
+                        // me.loadShiftSegments(vm);
+                        me.prepareShiftSegments();
                         me.applyCompanyConfig();
                         // if(vm.get('info.LoginType') == 13){
                         //     vm.set('lists.employees.enabled', false);
@@ -443,6 +444,38 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     },
 
+    /**
+     * Gather shift segment information from viewModel.info and load it
+     * into a store using accrual.ShiftSegment model
+     */
+    prepareShiftSegments: function(){
+        var vm = this.getViewModel(),
+            starts = vm.get('info.ShiftSegComboStartTimes'),
+            ends = vm.get('info.ShiftSegComboStopTimes'),
+            shiftSegs = [];
+        
+        // Go through start/end segments and build model records to use in form
+        for(
+            var i=0,s=starts[0],e=ends[0];
+            i<starts.length;
+            i++,s=starts[i],e=ends[i]
+        ){
+            // Add segment info to array
+            shiftSegs.push({
+                StartMin: s.shiftSegVal,
+                StartTime: s.shiftSegStr,
+                StopMin: e.shiftSegVal,
+                StopTime: e.shiftSegStr
+            });
+        }
+
+        // Create store in viewModel from prepared data
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.ShiftSegment',
+            data: shiftSegs
+        }, 'shift.segments' );
+    },
+
 
     //===[Company Tab Grid choice store builders/updaters]==
 
@@ -719,6 +752,93 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
 
         return true;
+    },
+
+    //===[Shift Segment Event Handlers & Validation Methods]===
+
+    checkForShiftTimeOverlap: function(updatingRecord, start, stop){
+        var vm = this.getViewModel(),
+            segments = vm.get('shift.segments'),
+            otherRecords = segments.queryRecordsBy(
+                (r) => { return r !== updatingRecord; }
+            ).map((s)=>{
+                return [s.get('StartMin'), s.get('StopMin')];
+            }),
+            noOverlap = true;
+        
+        /**
+         * Check if value overlaps a shift segment
+         * @param {Number} v Value to check for overlap
+         * @param {Array} r Segment rangeto check against
+         * @return {Boolean} True if overlap, false otherwise
+         */
+        var overlaps = (v, r) => {
+            return (v >= r[0] && v <= r[1]);
+        };
+
+        otherRecords.push([start,stop]);
+
+        otherRecords.forEach((r,i)=>{
+            otherRecords.forEach((r2,i2)=>{
+                if(i !== i2){
+                    r.forEach((v)=>{
+                        noOverlap &= !overlaps(v,r2);
+                    });
+                }
+            });
+        });
+
+        return !noOverlap;
+    },
+
+    /**
+     * Event handler for selecting new shift time value
+     * @param {Object} comp Component event originates from
+     * @param {Ext.data.Model} data New data model
+     * @param {Object} eOpts Event options
+     */
+    onShiftTimeSelect: function(comp, data, eOpts){
+        var targetRecord = comp.getParent().ownerCmp.getRecord(),
+            changed = comp.getParent().ownerCmp.getColumn().getItemId(),
+            start = (changed == 'start')? data : {
+                time: targetRecord.get('StartTime'), 
+                value: targetRecord.get('StartMin')
+            },
+            stop = (changed == 'stop')? data : {
+                time: targetRecord.get('StopTime'),
+                value: targetRecord.get('StopMin')
+            };
+
+        // Validate constraints to ensure values are okay
+        var differentTimes = (start.value !== stop.value),
+            noOverlap = this.checkForShiftTimeOverlap(
+                targetRecord, start.value, stop.value
+            );
+        
+        if(differentTimes && noOverlap){
+            // Changed value is OK, update and commit
+            targetRecord.set({
+                StartTime: start.time, StartMin: start.value,
+                StopTime: stop.time, StopMin: stop.value
+            }, {commit: true});
+        } else {
+            if(!differentTimes){
+                // Start and stop times not different
+                Ext.toast({
+                    type: Ext.Toast.WARN,
+                    message: 'The shift end time must be different from the start time.',
+                    timeout: 10000
+                });
+            } else if(!noOverlap){
+                // One or more shifts overlap, so show error
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'One or more shifts overlap.',
+                    timeout: 10000
+                });
+            }
+        }
+
     },
 
     //===[Company List Event Handlers]===
