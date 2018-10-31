@@ -128,7 +128,6 @@ Ext.define('Breeze.view.reporting.department.AdjustmentController', {
                 'reportParams.inccats',
                 selectedCategories.join(',')
             );
-        }
     },
 
     /**

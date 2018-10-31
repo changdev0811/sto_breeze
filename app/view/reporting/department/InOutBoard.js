@@ -1,5 +1,5 @@
 /**
- * Department Department In/Out Board Report form
+ * Department Department In/Out Board Report
  * @class InOutBoard
  * @namespace Breeze.view.reporting.department.InOutBoard
  * @alias widget.reporting.department.inoutboard
@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.InOutBoard', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.inoutboard',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.inoutboard'
     },
     
     // Controller
-
     controller: 'reporting.department.inoutboard',
 
     listeners: {

@@ -128,7 +128,6 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
                 'reportParams.inccats',
                 selectedCategories.join(',')
             );
-        }
     },
 
     /**
