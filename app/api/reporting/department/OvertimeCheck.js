@@ -1,15 +1,15 @@
 /**
- * Report handler for Department's Shift Analysis report
- * @class ShiftAnalysis
- * @namespace Breeze.api.reporting.department.ShiftAnalysis
+ * Report handler for Department Overtime Check report
+ * @class OvertimeCheck
+ * @namespace Breeze.api.reporting.department.OvertimeCheck
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.department.ShiftAnalysis', {
+Ext.define('Breeze.api.reporting.department.OverTimeCheck', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentShiftAnalysis'
+        report: 'DepartmentOverTimeCheck'
     },
 
     /**

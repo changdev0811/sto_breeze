@@ -1,15 +1,15 @@
 /**
- * Report handler for Department's Shift Analysis report
- * @class ShiftAnalysis
- * @namespace Breeze.api.reporting.department.ShiftAnalysis
+ * Report handler for Department's Summary by Project report
+ * @class SummaryProject
+ * @namespace Breeze.api.reporting.department.SummaryProject
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.department.ShiftAnalysis', {
+Ext.define('Breeze.api.reporting.department.SummaryProject', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentShiftAnalysis'
+        report: ''
     },
 
     /**
