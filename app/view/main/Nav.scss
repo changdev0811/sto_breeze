@@ -55,6 +55,18 @@ $content-edge: 12pt;
     }
 }
 
+// Override providing highlighting of selected nav icon + text
+.x-treelist-item.x-breeze-navtreeitem.x-treelist-item-selected {
+    & > div > div {
+        & > .x-treelist-item-icon { 
+            color: #ffffff;
+        }
+        & > .x-treelist-item-text {
+            color: #ffffff;
+        }
+    }
+}
+
 .main-nav-header{
     background-color: $base-color;
 }
