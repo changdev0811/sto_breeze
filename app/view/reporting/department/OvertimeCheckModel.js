@@ -42,7 +42,6 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Overtime Check Report',
-                inccats: '',
                 hhmm_format: true,
                 ot_value: 8.0,
                 // Concerning selected departments/ids

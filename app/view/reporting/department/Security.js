@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.Security', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.security',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.security'
     },
     
     // Controller
-
     controller: 'reporting.department.security',
 
     listeners: {

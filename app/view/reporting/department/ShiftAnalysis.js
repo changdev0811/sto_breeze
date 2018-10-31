@@ -1,5 +1,5 @@
 /**
- * Department Department Shift Analysis Report form
+ * Department Department Shift Analysis Report
  * @class ShiftAnalysis
  * @namespace Breeze.view.reporting.department.ShiftAnalysis
  * @alias widget.reporting.department.shiftanalysis
@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.ShiftAnalysis', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.shiftanalysis',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.shiftanalysis'
     },
     
     // Controller
-
     controller: 'reporting.department.shiftanalysis',
 
     listeners: {

@@ -387,8 +387,6 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
 
                 // Third Column Container
                 {
-                    // +++ added reporting-fieldset no-padding +++
-                    userCls: 'reporting-fieldset no-padding',
                     xtype: 'container',
                     width: '220pt',
                     // flex: 1,

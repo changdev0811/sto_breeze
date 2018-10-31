@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.summaryproject',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.summaryproject'
     },
     
     // Controller
-
     controller: 'reporting.department.summaryproject',
 
     listeners: {
@@ -69,7 +65,12 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                 // First column in horizontal container
                 {
                     xtype: 'container',
+                    // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -120,16 +121,21 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -140,11 +146,10 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -339,90 +344,90 @@ Ext.define('Breeze.view.reporting.department.SummaryProject', {
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ fixed width +++
+                    minWidth:'180pt',
+                    maxWidth:'220pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing projects
                         {
-                            xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
-                            layout: {
-                                animation: 'fade'
-                            },
-                            /* +++ Update to ui: +++ */
-                            ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
-                            tabBar: {
-                                defaultTabUI: 'employeeInfoTabs',
-                                shadow: false,
-                            },  
+                            xtype: 'fieldset',
                             flex: 1,
+                            layout: 'vbox',
+                            title: 'Projects',
+                            /* +++  Updated userCls: property +++ */
+                            userCls: 'reporting-fieldset no-padding',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
                             items: [
-                                // Projects tab
+                                
                                 {
-                                    xtype: 'panel',
-                                    title: 'Projects',
-                                    layout: 'fit',
-
-                                    // Toolbar containing 'check all' toggle checkbox
-                                    tbar: {
-                                        xtype: 'toolbar',
-                                        ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
-                                        shadow: false,
-                                        items: [
-                                            {
-                                                xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
-                                                ui: 'reporting',
-                                                boxLabel: 'Check All',
-                                                listeners: {
-                                                    change: 'onTreeGridCheckAllChange'
-                                                }
-                                            }
-                                        ]
-                                    },
-
+                                    xtype: 'toolbar',
+                                    ui: 'reporting-tree',
+                                    userCls:'no-background',
+                                    shadow: false,
                                     items: [
-                                        // Projects tree
                                         {
-                                            xtype: 'tree',
-                                            /* +++ New ui: property +++ */
-                                            ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
-                                            layout: 'hbox',
-                                            hideHeaders: true,
-                                            rootVisible: false,
-                                            columns: [
-                                                {
-                                                    xtype: 'checkcolumn',
-                                                    dataIndex: 'checked',
-                                                    minWidth: '2em',
-                                                    width: 'auto',
-                                                    padding: 0,
-                                                    listeners: {
-                                                        checkChange: 'onTreeGridChecked'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
-                                                    },
-                                                    /* +++ New dataIndex +++ */
-                                                    dataIndex: 'text',
-                                                    flex: 1,
-                                                    layout: {
-                                                        alignment: 'stretch'
-                                                    }
-                                                }
-                                            ],
-                                            reference: 'departmentTree',
-                                            bind: '{departmentsTree}'
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Check All Projects',
+                                            listeners: {
+                                               change: 'onTreeGridCheckAllChange'
+                                            }
                                         }
                                     ]
+                                },
+                                {
+                                    xtype: 'tree',
+                                    flex:1,
+                                    ui: 'employeeinfo-shift-grid',
+                                    //userCls:'employeeinfo-shift-grid',
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    expanderFirst: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            listeners: {
+                                                checkChange: 'onTreeGridChecked'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+                                    reference: 'projectsTree',
+                                    // TODO: Update binding once projects API call is available
+                                    // bind: '{departmentsTree}'
                                 }
+
+
+                                    
                             ]
                         },
                         {
