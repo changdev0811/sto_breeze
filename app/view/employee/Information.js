@@ -51,7 +51,50 @@ Ext.define('Breeze.view.employee.Information', {
         initialize: 'onInit'
     },
 
-    // userCls: 'employee-info-outer-container',
+    //==[Form Action Buttons]==
+    /* Toolbar configuration */
+    buttonToolbar: {
+        ui: 'employee-info-panel-toolbar',
+        bind: {
+            // Hide toolbar when readOnly mode
+            hidden: '{readOnly}'
+        },
+        defaults: {
+            minWidth: '90pt'
+        }
+    },
+    /* Buttons */
+    buttons: [
+        // Validation Message
+        {
+            xtype: 'component', itemId: 'validationMessage',
+            tpl: '{message}',
+            weight: 1, userCls: 'employee-info-toolbar-message',
+            bind: {
+                data: {
+                    message: '{form.validationMessage}'
+                }
+            }
+        },
+        { xtype: 'spacer', weight: 2 },
+        // Save Changes button
+        {
+            itemId: 'saveButton', text: 'Save',
+            ui: 'confirm raised alt', weight: 3,
+            bind: {
+
+            }
+        },
+        // Discard changes button
+        {
+            itemId: 'revertButton', text: 'Revert',
+            // ui: 'decline alt',
+            ui: 'decline raised alt', weight: 5,
+            bind: {
+                disabled: '{!form.canRevert}'
+            }
+        }
+    ],
 
     items: [
         {

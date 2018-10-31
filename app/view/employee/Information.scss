@@ -182,3 +182,21 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     $color: map-get($employee-info-colors, 'base')
 );
 
+//===[Panel action toolbar + buttons]===
+
+// Toolbar
+@include toolbar-ui(
+    $ui: 'employee-info-panel-toolbar',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $box-shadow: none,
+    $horizontal-spacing: $ei-padding-base
+);
+
+// Validation message
+.employee-info-toolbar-message {
+    overflow: { x: hidden, y: hidden; };
+    font-size: $ei-field-font-size;
+    color: map-get($employee-info-text-colors, 'base');
+}
+
+

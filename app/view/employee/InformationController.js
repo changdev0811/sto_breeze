@@ -1035,7 +1035,17 @@ Ext.define('Breeze.view.employee.InformationController', {
         this.lookup('pictureFileField').reset();
         ref.getParent().getParent().hide();
         // this.lookup('profilePictureForm').reset();
-    }
+    },
 
+
+    //===[Save/Revert Logic and Event Handlers]===
+
+    onSaveButtonTap: function(comp, e){
+        console.info('Save button pressed');
+    },
+
+    onRevertButtonTap: function(comp, e){
+        console.info('Revert button pressed');
+    }
 
 });

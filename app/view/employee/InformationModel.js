@@ -39,6 +39,13 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 readonly: true
             },
         },
+
+        // ==[Form Validation/Save Prep]==
+        form: {
+            // Validation error message text
+            validationMessage: ''
+        },
+
         // ==[Error Messages]==
         errors: {
             company: {
