@@ -10,11 +10,9 @@ Ext.define('Breeze.view.admin.MOTD', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Record Message of the Day',
-
-
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
     buttonToolbar: {

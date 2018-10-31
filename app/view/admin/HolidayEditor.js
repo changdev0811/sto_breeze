@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Holiday Editor',
 

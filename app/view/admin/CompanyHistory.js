@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.CompanyHistory', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Audit',
 
@@ -26,12 +26,11 @@ Ext.define('Breeze.view.admin.CompanyHistory', {
     // Body contents
     items: [
         {
-            xtype: 'breeze-textfield',
-            label: 'Search:',
-            ui: 'admin admin-text',
-            width:'50%',
-            userCls:'admin-fieldset no-border',
-
+           xtype: "searchfield",
+           //flex: 2,
+           ui: "alt",
+           userCls:'admin-fieldset no-border',
+           placeholder: "Search"
         },
         {
             xtype: 'container',

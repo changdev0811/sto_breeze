@@ -16,7 +16,7 @@ Ext.define('Breeze.view.admin.Departments', {
 
     // Layout and base styles
     layout: 'hbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Departments',
 
@@ -29,52 +29,104 @@ Ext.define('Breeze.view.admin.Departments', {
 
     // Body contents
     items: [
+        // Column 1
         {    
-            xtype: 'container',
+            xtype: 'fieldset',
+            //title:'Departments',
+            userCls:'admin-fieldset no-padding',
+            layout: {
+                type: 'vbox',
+                alignment: 'stretch'
+            },
             flex: 1,
-            layout: 'vbox',
             items:[
+                
                 {
-                    xtype: 'breeze-textfield',
-                    label: 'Search:',
-                    ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
+                    xtype: 'toolbar',
+                    ui: 'admin-tree',
+                    //userCls:'no-background',
+                    shadow: false,
+                    items: [
+                        {
+                           xtype: "searchfield",
+                           flex:3,
+                           ui: "alt",
+                           userCls:'admin-fieldset no-border',
+                           placeholder: "Search"
+                        },
+                        {
+                            xtype:'spacer',
+                            flex:1,
 
+                        },
+    
+                        {
+                            xtype: 'button',
+                            //text: 'Save for Future Use',
+                            iconCls:'x-fas fa-plus',
+                            ui: 'plain wtr-button',                   
+                        },
+
+                        {
+                            xtype: 'button',
+                            //text: 'Save for Future Use',
+                            iconCls:'x-fas fa-minus',
+                            ui: 'plain wtr-button',                   
+
+                        },
+
+
+
+
+                    ]
                 },
 
                 {
                     xtype: 'tree',
-                    ui: 'employee-worktime-records-grid',
-                    userCls: 'admin-fieldset employee-worktime-records-grid',
+                    // == Item ID to make finding tree in panel easier
+                    itemId: 'tree',
+                    ui: 'employeeinfo-shift-grid',
+                    userCls: 'employeeinfo-shift-grid no-border',
+                    flex:1,
                     layout: 'hbox',
                     hideHeaders: true,
                     rootVisible: false,
-                    flex:1,
                     columns: [
-                        //{
-                        //    xtype: 'treecolumn',
-                        //    /* +++ New cel:{} +++ */
-                        //    cell:{
-                        //        ui:'admin-tree-column',
-                        //    },
-                        //
-                        //    dataIndex: 'text',
-                        //    flex: 1,
-                        //    layout: {
-                        //        alignment: 'stretch'
-                        //    }
-                        //}
+                        {
+                            xtype: 'checkcolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'checked',
+                            minWidth: '2em',
+                            width: 'auto',
+                            padding: 0,
+                            //listeners: {
+                            //    checkChange: 'onTreeGridChecked'
+                            //}
+                        },
+                        {
+                            xtype: 'treecolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'text',
+                            flex: 1,
+                            layout: {
+                                alignment: 'stretch'
+                            }
+                        }
                     ],
-                    //reference: 'departmentTree',
-                    //bind: '{departmentsTree}'
-                }
 
-
-
+                    bind: '{departmentsTree}'
+                },
             ]
         },
+        
+        // Column 2
         {    
             xtype: 'container',
+            ui: 'admin-sub',
             flex: 1,
             layout: 'vbox',
             items:[
@@ -82,14 +134,14 @@ Ext.define('Breeze.view.admin.Departments', {
                     xtype: 'breeze-textfield',
                     label: 'Department Name:',
                     ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
+                    userCls:'admin-fieldset no-border',
                     name: 'DeptName',
                 },
 
                 {
                     xtype: 'spinnerfield',
-                    ui: 'reporting reporting-text',
-                    userCls:'admin-fieldset-no-border',
+                    ui: 'admin admin-text',
+                    userCls:'admin-fieldset no-border',
                     name: 'numConflictLimit',
                     allowDecimals: false,
                     minValue: 0,
@@ -98,36 +150,116 @@ Ext.define('Breeze.view.admin.Departments', {
                     label:'Leave Request Conflect Limit',
                 },
 
+
                 {    
-                    xtype: 'panel',
+                    xtype: 'fieldset',
                     title: 'Supervisors',
-                    ui: 'admin-sub' ,
+                    userCls:'admin-fieldset no-padding',
                     flex: 1,
-                    layout: 'vbox',
+                    layout: 'fit',
                     items:[
+
+                        // Employees selector tree
                         {
-                            xtype: 'container',
-                            userCls:'admin-fieldset',
-                            flex: 1,
-                            layout: 'vbox',
+                            xtype: 'tree',
+                            // == Item ID to make finding tree in panel easier
+                            itemId: 'tree',
+
+                            ui: 'employeeinfo-shift-grid',
+                            userCls: 'employeeinfo-shift-grid no-border',
+                            layout: 'hbox',
+                            hideHeaders: true,
+                            expanderFirst: false,
+                            rootVisible: false,
+                            columns: [
+                                {
+                                    xtype: 'checkcolumn',
+                                    cell: {
+                                        ui: 'report-tree-column reporting-tree-item',
+                                    },
+                                    dataIndex: 'checked',
+                                    minWidth: '2em',
+                                    width: 'auto',
+                                    padding: 0
+                                },
+                                {
+                                    xtype: 'treecolumn',
+                                    cell: {
+                                        ui: 'report-tree-column reporting-tree-item',
+                                    },
+                                    dataIndex: 'text',
+                                    flex: 1,
+                                    layout: {
+                                        alignment: 'stretch'
+                                    }
+                                }
+                            ],
+                            reference: 'employeeTree',
+                            bind: '{employeesTree}'
                         }
+
                     ]
                 },
+
+
+
+
+
                 {    
-                    xtype: 'panel',
-                    title: 'Employees',
-                    ui: 'admin-sub' ,
+                    xtype: 'fieldset',
+                    title:'Employees',
+                    userCls:'admin-fieldset no-padding',
                     flex: 1,
-                    layout: 'vbox',
+                    layout: 'fit',
                     items:[
+
+                        // Employees selector tree
                         {
-                            xtype: 'container',
-                            userCls:'admin-fieldset',
-                            flex: 1,
-                            layout: 'vbox',
+                            xtype: 'tree',
+                            // == Item ID to make finding tree in panel easier
+                            itemId: 'tree',
+
+                            ui: 'employeeinfo-shift-grid',
+                            userCls: 'employeeinfo-shift-grid no-border',
+                            layout: 'hbox',
+                            hideHeaders: true,
+                            expanderFirst: false,
+                            rootVisible: false,
+                            columns: [
+                                {
+                                    xtype: 'checkcolumn',
+                                    cell: {
+                                        ui: 'report-tree-column reporting-tree-item',
+                                    },
+                                    dataIndex: 'checked',
+                                    minWidth: '2em',
+                                    width: 'auto',
+                                    padding: 0
+                                },
+                                {
+                                    xtype: 'treecolumn',
+                                    cell: {
+                                        ui: 'report-tree-column reporting-tree-item',
+                                    },
+                                    dataIndex: 'text',
+                                    flex: 1,
+                                    layout: {
+                                        alignment: 'stretch'
+                                    }
+                                }
+                            ],
+                            reference: 'employeeTree',
+                            bind: '{employeesTree}'
                         }
+
                     ]
                 },
+
+
+
+
+
+
             ]
         },
 
