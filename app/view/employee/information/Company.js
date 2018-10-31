@@ -297,6 +297,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             // bind: '{companySupervisorsList}'
                                             bind: {
                                                 store: '{companySupervisors}'
+                                                // store: '{companySupervisorsAuto}'
                                             }
                                         }
                                     ]
@@ -325,7 +326,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                         add: {
                                             iconCls: 'x-fas fa-plus',
                                             data: {
-                                                sheet: 'employeeAddAction',
+                                                sheet: 'employeeAddActionSheet',
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: 'canAddCompanyEmployee'
                                             },
@@ -575,6 +576,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 {
                     xtype: 'selectfield',
                     label: 'Employee Name',
+                    itemId: 'employee',
                     displayField: 'displayName',
                     valueField: 'personId',
                     bind: { 

@@ -457,6 +457,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             choiceIds = choices.getData().items.map((rec)=>{
                 return rec.data.personId;
             }),
+            // used = vm.get('companySupervisors').getData().items.map(
             used = vm.get('companySupervisors').getData().items.map(
                 (rec) => { return rec.data.personId; }
             ),
@@ -540,8 +541,113 @@ Ext.define('Breeze.view.employee.InformationController', {
         console.info('Done building departments store');
     },
 
+    /**
+     * Update Company Grid List data fields in view model object 'info'
+     * by copying current data values from displayed grid stores
+     */
+    copyCompanyListsToModel: function(){
+        var vm = this.getViewModel(),
+            supervisors = vm.get('companySupervisors'),
+            employees = vm.get('companySupervisedEmployees'),
+            departments = vm.get('companyDepartments');
+        
+        /**
+         * Extracts fields from set of records into ordered arrays
+         * @param {(Object|Ext.data.Store)} items Store of records to extract items from
+         * @param {Object} map Map of array names to source field names
+         */
+        var extract = function(items, map){
+            var records = items.getData().items,
+                arrayNames = Object.keys(map),
+                arrays = {};
+            arrayNames.forEach((n) => { arrays[n] = []; });
+
+            for(
+                var ri=0,rec=records[ri];
+                ri<records.length;
+                ri++,rec=records[ri]
+            ) {
+                for(
+                    var ni=0,name=arrayNames[ni];
+                    ni<arrayNames.length;
+                    ni++,name=arrayNames[ni]
+                ) {
+                    arrays[name].push(rec.get(map[name]));
+                }
+            }
+
+            
+            return arrays;
+        };
+
+        /**
+         * Copies array values to viewmodel field named 'info.<array name>'
+         * @param {Object} arrays Object of named arrays from extract
+         */
+        var copyData = function(arrays){
+            var names = Object.keys(arrays);
+            names.forEach((n)=>{
+                // Update viewmodel attribute values
+                vm.set(
+                    ['info', n].join('.'),
+                    arrays[n]
+                );
+            })
+        };
+
+        /*  The array names used in these calls match to fields they are going to
+            be written to in info.* in the ViewModel */
+        var superParts = extract(
+                supervisors, 
+                {
+                    Supervisors: 'displayName', SupervisorIds: 'personId', 
+                    SupervisorDeptIds: 'departmentId'
+                }
+            ),
+            empParts = extract(
+                employees, 
+                {
+                    SupervisedEmps: 'displayName', SupervisedEmpIds: 'personId', 
+                    SupervisedEmpDeptsIds: 'departmentId'
+                }
+            ),
+            departParts = extract(
+                departments,
+                {
+                    SupervisedDepts: 'departmentName', 
+                    SupervisedDeptIds: 'departmentId', 
+                    DeptRoles: 'roleName', DeptRoleIds: 'roleId'
+                }
+            );
+        
+        // Copy array values to ViewModel
+        copyData(superParts);
+        copyData(empParts);
+        copyData(departParts);
+
+        // TODO: Determine exactly what the purpose of 'SupervisedEmpTerms' is
+        /*  Fill 'info.SupervisedEmpTerms' with falses matching the length of 
+            any of the empParts arrays */
+        var empCount = empParts.SupervisedEmps.length;
+        vm.set(
+            'info.SupervisedEmpTerms',
+            (new Array(empCount)).fill(false, 0, empCount)
+        );
+
+        console.info('Copied Company grid list data to ViewModel info record');              
+
+    },
+
     //===[Methods checking if item can be added to Company List grid]===
 
+    /**
+     * Checks whether or not a new supervisor can be added to Company
+     * supervisors list, based on specific requirements
+     * 
+     * If unable to add, displays a warning Toast explaining why
+     * 
+     * @return {Boolean} True if supervisor can be added, false otherwise
+     */
     canAddCompanySupervisor: function(){
         console.info('Checking if able to add supervisor');
         var vm = this.getViewModel(),
@@ -569,6 +675,14 @@ Ext.define('Breeze.view.employee.InformationController', {
         return true;
     },
 
+    /**
+     * Checks whether or not a new supervised employee can be added to Company
+     * supervised employees list, based on specific requirements
+     * 
+     * If unable to add, displays a warning Toast explaining why
+     * 
+     * @return {Boolean} True if employee can be added, false otherwise
+     */
     canAddCompanyEmployee: function(){
         console.info('Checking if able to add supervisor');
         var vm = this.getViewModel(),
@@ -758,9 +872,9 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     onCompanyAddEmployee: function(comp){
         var vm = this.getViewModel(),
-            chosenSupers = vm.get('companySupervisors'),
+            chosenSupers = vm.get('companySupervisedEmployees'),
             sheet = comp.getParent().getParent(),
-            supField = sheet.getComponent('supervisor');
+            supField = sheet.getComponent('employee');
         
         if(supField.validate()){
             // Both fields are valid, so make use of them
@@ -780,7 +894,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         sheet.hide();
         supField.clearValue();
         
-        console.info('Add supervisor');
+        console.info('Add employee');
     },
 
     /**
@@ -913,6 +1027,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         comp.getParent().getParent().hide();
     },
 
+    // TODO: Finish implementing data binding for layoffs
     onLayoffButtonToggle: function(){
         // TODO: Implement layoff toggle
         var vm = this.getViewModel();
@@ -1042,6 +1157,7 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     onSaveButtonTap: function(comp, e){
         console.info('Save button pressed');
+        this.copyCompanyListsToModel();
     },
 
     onRevertButtonTap: function(comp, e){
