@@ -999,15 +999,26 @@ Ext.define('Breeze.view.employee.InformationController', {
             form,
             employeeId
         ).then((url) => {
+            // Successfully uploaded new image
             // Update photo url in data model
             vm.set('info.Photo', url);
-            console.info('New profile picture URL: ', url);
+            // console.info('New profile picture URL: ', url);
+            // Display success toast
+            Ext.toast({
+                message: 'Profile picture successfully updated.',
+                type: Ext.Toast.INFO,
+                timeout: 10000
+            });
+            // Hide upload form
+            form.getParent().hide();
+            // Reset form fields
+            form.reset();
         }).catch((err) => {
             if(err.extra){
-                console.warn(
-                    'Upload profile picture failed with extra response data:', 
-                    err.extra.error
-                );
+                // console.warn(
+                //     'Upload profile picture failed with extra response data:', 
+                //     err.extra.error
+                // );
             }
             Ext.toast({
                 message: err.message,

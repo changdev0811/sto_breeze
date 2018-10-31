@@ -181,8 +181,8 @@ Ext.define('Breeze.api.employee.Information', {
             setField('employeeId', employeeId);
             setField('hashcookie', hash);
 
-            console.info('Form Values:');
-            console.table(form.getValues());
+            // console.info('Form Values:');
+            // console.table(form.getValues());
 
             if(form.isValid()){
                 // Quickly construct FormData object from form panel component
