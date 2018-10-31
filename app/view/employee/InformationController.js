@@ -963,7 +963,26 @@ Ext.define('Breeze.view.employee.InformationController', {
      * Handle profile image edit dialog's 'remove' button
      */
     onRemoveProfilePicture: function(ref,e,eOpts){
-        console.info('Remove profile image');
+
+        var picSettings = Breeze.helper.settings.Employee.profilePicture,
+            vm = this.getViewModel(),
+            form = this.lookup('profilePictureForm');
+        
+        // Update photo flag in view model to false, indicating no custom pic
+        vm.set('info.PhotoFlag', false);
+
+        // Update photo path in view model to default image
+        vm.set(
+            'info.Photo',
+            `${picSettings.path}${picSettings.defaultFile}`
+        );
+
+        // Update form fields
+        form.getComponent('hasPicture').setValue(false);
+        form.getComponent('imageFieldSet')
+            .getComponent('imageFile').reset();
+
+        console.info('Profile photo removed.');
     },
 
     /**
@@ -976,7 +995,7 @@ Ext.define('Breeze.view.employee.InformationController', {
 
         console.info('Upload profile image');
         
-        this.apiClass.information.uploadPicture(
+        this.apiClass.information.uploadPictureAjax(
             form,
             employeeId
         ).then((url) => {
@@ -985,7 +1004,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             console.info('New profile picture URL: ', url);
         }).catch((err) => {
             if(err.extra){
-                console.warn('Upload profile picture failed with extra response data:', err.extra);
+                console.warn(
+                    'Upload profile picture failed with extra response data:', 
+                    err.extra.error
+                );
             }
             Ext.toast({
                 message: err.message,

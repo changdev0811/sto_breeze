@@ -16,7 +16,6 @@ Ext.define('Breeze.api.Base', {
     api: Breeze.helper.Base.api,
     cookie: Breeze.helper.Cookie,
     auth: Breeze.helper.Auth,
-    helper: Breeze.helper.Api,
     /**
      * Return a unless undefined, in which case return b
      * @param {Object} a Value to return if defined

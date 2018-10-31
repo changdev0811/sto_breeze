@@ -86,7 +86,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     text: 'Remove Picture',
                     ui: 'decline',
                     bind: {
-                        disabled: '{!(info.Photo !== null)}'
+                        disabled: '{!hasCustomProfilePicture}'
                     },
                     handler: 'onRemoveProfilePicture'
                 },
@@ -147,7 +147,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                         },
                         {
                             xtype: 'fieldset',
-                            itemId: 'imageFieldSet',
+                            // itemId: 'imageFieldSet',
                             flex: 1,
                             title: 'Current Profile Picture',
                             items: [

@@ -379,14 +379,30 @@ Ext.define('Breeze.view.employee.InformationModel', {
             };
         },
 
+        /**
+         * Formula returning profile picture path or default file if
+         * no custom image has been set
+         * @param {Function} get ViewModel get function reference
+         * @return {String} profile picture url
+         */
         profilePicture: function (get) {
             if (get('info.PhotoFlag')) {
                 return get('info.Photo');
             } else {
-                var empSets = Breeze.helper.settings.Employee;
-                return `${empSets.profile}`
-                'resources/photos/default_user.png'
+                var picSets = Breeze.helper.settings.Employee
+                    .profilePicture;
+                return `${picSets.path}${picSets.defaultFile}`
             }
+        },
+
+        /**
+         * Formula returning bool indicating whether employee has a
+         * custom profile picture set or not
+         * @param {Function} get ViewModel get function reference
+         * @return {Boolean} True if custom picture, false otherwise
+         */
+        hasCustomProfilePicture: function(get){
+            return get('info.PhotoFlag');
         }
 
     }

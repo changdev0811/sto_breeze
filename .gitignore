@@ -8,3 +8,6 @@ modern.json*
 /sass
 sencha-error-*.log
 node_modules
+app-build
+app-build-cfg
+build_mode.dat
