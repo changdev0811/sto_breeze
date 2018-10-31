@@ -8,16 +8,12 @@ Ext.define('Breeze.view.reporting.department.Notes', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.notes',
 
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.notes'
     },
     
     // Controller
-
     controller: 'reporting.department.notes',
 
     listeners: {
@@ -66,11 +62,15 @@ Ext.define('Breeze.view.reporting.department.Notes', {
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
             items: [
-                // First column
+                // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees

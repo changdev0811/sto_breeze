@@ -4,12 +4,12 @@
  * @namespace Breeze.api.reporting.department.OvertimeCheck
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.department.OverTimeCheck', {
+Ext.define('Breeze.api.reporting.department.OvertimeCheck', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentOverTimeCheck'
+        report: 'DepartmentOvertimeCheck'
     },
 
     /**
