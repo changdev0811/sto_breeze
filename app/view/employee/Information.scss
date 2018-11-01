@@ -218,4 +218,12 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     color: map-get($employee-info-text-colors, 'base');
 }
 
+//===[ActionSheets]===
+@include toolbar-ui(
+    $ui: 'actionsheet-toolbar',
+    $horizontal-spacing: $ei-padding-base,
+    $background-color: #ffffff,
+    $box-shadow: none
+);
+
 

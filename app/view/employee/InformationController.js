@@ -46,8 +46,8 @@ Ext.define('Breeze.view.employee.InformationController', {
             me.loadStores(function(pass){
                 // Provide loaded stores to form fields needing them
                 comp.lookup('departments').setStore(vm.getStore('departments'));
-                comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
-                comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
+                // comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
+                // comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
                 if(vm.get('employeeId') !== 'new'){
                     // if employee id isn't new, load employee
@@ -78,6 +78,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             console.warn('Employee Info Loading failed: ', err);
         });
         
+    },
+
+    changeDummy: function(){
+        console.info('Dummy fired');
     },
 
     /**
@@ -474,6 +478,18 @@ Ext.define('Breeze.view.employee.InformationController', {
             model: 'Breeze.model.accrual.ShiftSegment',
             data: shiftSegs
         }, 'shift.segments' );
+
+        // Make shift choice list available to actionSheets, which can't use formula
+        var choices = (function(){
+            return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
+                return b}().map(function(b){var a=Math.floor(b/60)%12;
+                var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
+                .toZeroPaddedString(2)+c;return{value:b,time:a}});
+        })();
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.employee.schedule.ShiftTime',
+            data: choices
+        }, 'shiftChoices');
     },
 
 
@@ -800,18 +816,22 @@ Ext.define('Breeze.view.employee.InformationController', {
     onShiftTimeSelect: function(comp, data, eOpts){
         var targetRecord = comp.getParent().ownerCmp.getRecord(),
             changed = comp.getParent().ownerCmp.getColumn().getItemId(),
-            start = (changed == 'start')? data : {
+            selectedData = { 
+                time: data.data.time, 
+                value: BreezeTime.parse(data.data.time).asMinutes()
+            },
+            start = (changed == 'start')? selectedData : {
                 time: targetRecord.get('StartTime'), 
                 value: targetRecord.get('StartMin')
             },
-            stop = (changed == 'stop')? data : {
+            stop = (changed == 'stop')? selectedData : {
                 time: targetRecord.get('StopTime'),
                 value: targetRecord.get('StopMin')
             };
 
         // Validate constraints to ensure values are okay
         var differentTimes = (start.value !== stop.value),
-            noOverlap = this.checkForShiftTimeOverlap(
+            noOverlap = !this.checkForShiftTimeOverlap(
                 targetRecord, start.value, stop.value
             );
         
@@ -838,13 +858,71 @@ Ext.define('Breeze.view.employee.InformationController', {
                 });
             }
         }
-
     },
 
-    //===[Company List Event Handlers]===
+    // onAddShiftSegment: function(comp){
+    //     console.info('Add shift segment');
+    //     var vm = this.getViewModel(),
+    //         segments = vm.get('shift.segments'),
+    //         sheet = comp.getParent().getParent(),
+    //         startField = sheet.getComponent('startTime'),
+    //         stopField = sheet.getComponent('stopTime'),
+    //         startRec = startField.getRecord(),
+    //         stopRec = stopField.getRecord();
+        
+    //     if(startField.validate() && stopField.validate()){
+    //         var unique = 
+    //             (startRec.get('value') !== stopRec.get('value')),
+    //             noOverlap = !this.checkForShiftTimeOverlap(
+    //                 null,
+    //                 startRec.get('value'),
+    //                 stopRec.get('value')
+    //             );
+            
+    //         if(unique && noOverlap){
+    //             // All good, ready to add new shift segment row
+    //             var newRecord = {
+    //                 StartTime: (Breeze.fromMinutes(startRec.get('value')).asTime()),
+    //                 StartMin: startRec.get('value'),
+    //                 StopTime: (Breeze.fromMinutes(stopRec.get('value')).asTime()),
+    //                 StopMin: stopRec.get('value')
+    //             };
+    //             segments.loadData([newRecord], true);
+    //             segments.commitChanges();
+
+    //             sheet.hide();
+    //             startField.clearValue();
+    //             stopField.clearValue();
+    //         }
+    //     }
+
+    // },
+
+    onAddShiftSegmentDirect: function(){
+        var vm = this.getViewModel(),
+            segments = vm.get('shift.segments');
+        
+        segments.loadData([
+            {StartTime: '12:00AM', StartMin: 0, StopTime: '12:30AM', StopMin: 30}
+        ], true);
+        segments.commitChanges();
+    },
+
+    onRemoveShiftSegment: function(grid, info){
+        var vm = this.getViewModel(),
+            records = vm.get('shift.segments'),
+            record = records.findRecord('id', info.record.id);
+        
+        if(record !== null){
+            records.remove([record]);
+            records.commitChanges();
+        }
+    },
+
+    //===[Grid List Event Handlers]===
 
     /**
-     * Handle click event for '+' tool button on company tab
+     * Handle click event for '+' tool button on grid panels
      * list grid panel titles
      * 
      * Uses data included in tools in view to decide which action sheet
@@ -853,7 +931,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp Component event originated from
      * @param {Object} tool Tool component firing event
      */
-    onCompanyGridAddButton: function(comp, tool){
+    onGridAddButton: function(comp, tool){
         var actSheet = this.lookup(tool.getData().sheet),
             checkHandler = tool.getData().checkHandler,
             canShow = true;
@@ -1046,12 +1124,14 @@ Ext.define('Breeze.view.employee.InformationController', {
             chosenDepts.commitChanges();
             // Refresh available choices
             this.buildSupervisedDepartmentChoices();
+        
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            deptField.clearValue();
+            roleField.clearValue();
+        
         }
         
-        // Close action sheet and reset values to empty
-        sheet.hide();
-        deptField.clearValue();
-        roleField.clearValue();
         
         console.info('Add supervised department');
     },

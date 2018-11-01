@@ -423,7 +423,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
         canAddShift: function(get){
             return (
                 !get('readOnly') &&
-                (get('shift.segments').count < 2)
+                (get('shift.segments').count() < 2)
             );
         },
 
@@ -431,7 +431,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * Formula that runs once and builds a list of 48 shift time choices
          * paired with numerical values
          */
-        shiftChoices: {
+        shiftChoicesFormula: {
             single: true,
             /*
             get: function(get){

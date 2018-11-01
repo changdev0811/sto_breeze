@@ -231,7 +231,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 checkHandler: 'canAddCompanySupervisor'
 
                                             },
-                                            handler: 'onCompanyGridAddButton'
+                                            handler: 'onGridAddButton'
                                         }
                                     },
                                     items: [
@@ -329,7 +329,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: 'canAddCompanyEmployee'
                                             },
-                                            handler: 'onCompanyGridAddButton'
+                                            handler: 'onGridAddButton'
                                         }
                                     },
                                     items: [
@@ -430,7 +430,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: null
                                             },
-                                            handler: 'onCompanyGridAddButton'
+                                            handler: 'onGridAddButton'
                                         }
                                     },
                                     items: [
@@ -548,6 +548,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                         type: 'hbox',
                         pack: 'end'
                     },
+                    style: 'padding-top: 6pt',
                     items: [
                         {
                             xtype: 'button',
@@ -589,6 +590,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                         type: 'hbox',
                         pack: 'end'
                     },
+                    style: 'padding-top: 6pt',
                     items: [
                         {
                             xtype: 'button',
@@ -608,58 +610,59 @@ Ext.define('Breeze.view.employee.information.Company', {
             ]
         },
         // Add to Supervised Departments action sheet
-        {
-            xtype: 'actionsheet',
-            reference: 'departmentAddActionSheet',
-            title: 'Add Department',
-            items: [
-                {
-                    xtype: 'selectfield',
-                    itemId: 'department',
-                    label: 'Department',
-                    displayField: 'departmentName',
-                    valueField: 'departmentId',
-                    bind: { 
-                        store: '{choices.supervisedDepartments}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'selectfield',
-                    itemId: 'role',
-                    label: 'Role',
-                    displayField: 'Role_Name',
-                    valueField: 'Role_Id',
-                    bind: { 
-                        store: '{securityRoles}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'container',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'end'
-                    },
-                    items: [
-                        {
-                            xtype: 'button',
-                            ui: 'confirm alt',
-                            text: 'Add',
-                            handler: 'onCompanyAddDepartment'
-                        },
-                        { xtype: 'spacer', width: 8 },
-                        {
-                            xtype: 'button',
-                            ui: 'decline alt',
-                            text: 'Cancel',
-                            handler: 'onActionSheetCancel'
-                        }
-                    ]
-                }
-            ]
-        },
-
+        // {
+        //     xtype: 'actionsheet',
+        //     reference: 'departmentAddActionSheet',
+        //     title: 'Add Department',
+        //     items: [
+        //         {
+        //             xtype: 'selectfield',
+        //             itemId: 'department',
+        //             label: 'Department',
+        //             displayField: 'departmentName',
+        //             valueField: 'departmentId',
+        //             bind: { 
+        //                 store: '{choices.supervisedDepartments}'
+        //             },
+        //             required: true
+        //         },
+        //         {
+        //             xtype: 'selectfield',
+        //             itemId: 'role',
+        //             label: 'Role',
+        //             displayField: 'Role_Name',
+        //             valueField: 'Role_Id',
+        //             bind: { 
+        //                 store: '{securityRoles}'
+        //             },
+        //             required: true
+        //         },
+        //         {
+        //             xtype: 'container',
+        //             layout: {
+        //                 type: 'hbox',
+        //                 pack: 'end'
+        //             },
+        //             style: 'padding-top: 6pt',
+        //             items: [
+        //                 {
+        //                     xtype: 'button',
+        //                     ui: 'confirm alt',
+        //                     text: 'Add',
+        //                     handler: 'onCompanyAddDepartment'
+        //                 },
+        //                 { xtype: 'spacer', width: 8 },
+        //                 {
+        //                     xtype: 'button',
+        //                     ui: 'decline alt',
+        //                     text: 'Cancel',
+        //                     handler: 'onActionSheetCancel'
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // },
+          
         // Layoff effective date picker
         {
             xtype: 'datepicker',
