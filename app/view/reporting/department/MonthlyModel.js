@@ -26,7 +26,7 @@ Ext.define('Breeze.view.reporting.department.MonthlyModel', {
                 inccats: '',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: '',
+                incids: ''
             }
         };
         this.setData(data);

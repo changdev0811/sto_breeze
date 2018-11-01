@@ -32,7 +32,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
                 dEnd: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: '',
+                incids: ''
             }
         };
         this.setData(data);

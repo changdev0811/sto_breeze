@@ -31,7 +31,7 @@ Ext.define('Breeze.view.reporting.department.SummaryProjectModel', {
                 dEnd: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: '',
+                incids: ''
             }
         };
         this.setData(data);

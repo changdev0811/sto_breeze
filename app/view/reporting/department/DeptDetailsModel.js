@@ -29,7 +29,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsModel', {
                 recyear: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: '',
+                incids: ''
             }
         };
         this.setData(data);
