@@ -1,12 +1,12 @@
 /**
- * View Controller for AccrualPolicies Admin view
- * @class AccrualPoliciesController
- * @namespace Breeze.view.admin.AccrualPoliciesController
- * @alias controller.admin.accrualpolicies
+ * View Controller for Point Categories Admin view
+ * @class PointCatsController
+ * @namespace Breeze.view.admin.PointCatsController
+ * @alias controller.admin.pointcats
  */
-Ext.define('Breeze.view.admin.AccrualPoliciesController', {
+Ext.define('Breeze.view.admin.PointCatsController', {
     extend: 'Breeze.controller.Base',
-    alias: 'controller.admin.accrualpolicies',
+    alias: 'controller.admin.pointcats',
 
     stores: [
         // 'Breeze.store.category.List'

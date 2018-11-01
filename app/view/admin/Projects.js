@@ -1,5 +1,5 @@
 /**
- * Projects Report form
+ * Projects Admin view
  * @class Projects
  * @namespace Breeze.view.admin.Projects
  * @alias widget.admin.Projects
@@ -8,40 +8,102 @@ Ext.define('Breeze.view.admin.Projects', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.projects',
 
+    // View Model
+    viewModel: {
+        type: 'admin.projects'
+    },
+
+    // Controller
+    controller: 'admin.projects',
+    listeners: {
+        initialize: 'onInit'
+    },
+
     // Layout and base styles
     layout: 'hbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
     title: 'Projects',
 
     // Body contents
     items: [
+        // Column 1
         {
-            xtype: 'panel',
-            ui: 'admin-sub',
+            xtype: 'fieldset',
+            userCls:'admin-fieldset no-padding',
             flex: 1,
             layout: 'vbox',
-            buttonAlign: 'right',
-            buttons: {
-                sub: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
-                add: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
-            },
-            buttonToolbar: {
-                xtype: 'toolbar',
-                ui: 'admin-actions',
-                shadow: false
-            },
             items:[
                 {
-                    xtype: 'container',
-                    userCls:'admin-fieldset',
-                    flex: 1,
-                    layout: 'vbox',
+                    xtype: 'toolbar',
+                    ui:'admin-tree',
+                    shadow: false,
+                    items:[
+                        { 
+                            xtype: 'component', 
+                            html: 'Projects',
+                            userCls:'admin-title-toolbar', 
+                        },
+                        {
+                            xtype:'spacer',
+                            flex:1,
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls:'x-fas fa-plus',
+                            ui: 'plain wtr-button',                   
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls:'x-fas fa-minus',
+                            ui: 'plain wtr-button',                   
+                        },
+                    ]
                 },
+                {
+                    xtype: 'tree',
+                    // == Item ID to make finding tree in panel easier
+                    itemId: 'tree',
+                    ui: 'employeeinfo-shift-grid',
+                    userCls: 'employeeinfo-shift-grid no-border',
+                    flex:1,
+                    layout: 'hbox',
+                    hideHeaders: true,
+                    rootVisible: false,
+                    columns: [
+                        {
+                            xtype: 'checkcolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'checked',
+                            minWidth: '2em',
+                            width: 'auto',
+                            padding: 0,
+                            //listeners: {
+                            //    checkChange: 'onTreeGridChecked'
+                            //}
+                        },
+                        {
+                            xtype: 'treecolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'text',
+                            flex: 1,
+                            layout: {
+                                alignment: 'stretch'
+                            }
+                        }
+                    ],
+                    bind: '{departmentsTree}'
+                }, 
             ]
         },
+        // Column 2
         {
             xtype: 'panel',
             ui: 'admin-sub',
+            userCls:'admin-fieldset no-border no-padding',
             flex: 2,
             layout: 'vbox',
             buttons: {

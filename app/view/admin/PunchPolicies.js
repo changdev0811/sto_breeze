@@ -1,5 +1,5 @@
 /**
- * PunchPolicies Report form
+ * PunchPolicies Admin view
  * @class PunchPolicies
  * @namespace Breeze.view.admin.PunchPolicies
  * @alias widget.admin.punchpolicies

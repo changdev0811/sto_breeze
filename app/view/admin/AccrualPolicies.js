@@ -1,5 +1,5 @@
 /**
- * AccrualPolicies
+ * AccrualPolicies Admin view
  * @class AccrualPolicies
  * @namespace Breeze.view.admin.AccrualPolicies
  * @alias widget.admin.AccrualPolicies
@@ -7,17 +7,6 @@
 Ext.define('Breeze.view.admin.AccrualPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.accrualpolicies',
-
-    // View Model
-    viewModel: {
-        type: 'admin.accrualpolicies'
-    },
-
-    // Controller
-    controller: 'admin.accrualpolicies',
-    listeners: {
-        initialize: 'onInit'
-    },
 
     // View Model
     viewModel: {
@@ -354,12 +343,12 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 // === Replacement category selector
                 {
                     xtype: 'breeze-categories-list',
-                    ui: 'employeeinfo-shift-grid',
+                    ui: 'admin-shift-grid',
                     userCls: 'admin-fieldset no-background no-margin no-border',
                     reference: 'categoryList',
                     fieldMode: 'none',
                     itemConfig: {
-                        ui: 'admin-list-item'
+                        ui: 'admin-list-item-select'
                     },
                     bind: {
                         store: '{categoriesList}',

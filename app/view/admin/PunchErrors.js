@@ -1,5 +1,5 @@
 /**
- * PunchErrors Report form
+ * PunchErrors Admin view
  * @class PunchErrors
  * @namespace Breeze.view.admin.PunchErrors
  * @alias widget.admin.puncherrors

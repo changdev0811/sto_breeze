@@ -238,8 +238,8 @@
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
     $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'medium'),
-    $hovered-background-color: map-get($admin-colors, 'light'),
+    $selected-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
@@ -266,4 +266,43 @@
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 };
+
+
+
+// ===[User Categories List Widget Specific]== (SELECT VERSION)
+@include listitem-ui(
+    $ui: 'admin-list-item-select',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'medium'),
+    $hovered-background-color: map-get($admin-colors, 'light'),
+    $font-size: map-get($root-font-sizes, 'detail') !important,
+    $padding: 10pt 0pt 10pt 11.6pt
+);
+
+@include panel-ui(
+    $ui: 'admin-list-panel-select',
+    $background-color: map-get($admin-colors, 'base'),
+    $header-background-color: map-get($admin-colors, 'base'),
+    $body-background-color: map-get($admin-colors, 'base'),
+    $body-color: map-get($admin-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+@include paneltitle-ui(
+    $ui: 'admin-list-panel-select',
+    $font-size: map-get($root-font-sizes, 'base')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'admin-list-panel-select'
+) {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+};
+
 

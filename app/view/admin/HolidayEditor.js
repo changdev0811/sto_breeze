@@ -1,5 +1,5 @@
 /**
- * HolidayEditor Report form
+ * HolidayEditor Admin view
  * @class HolidayEditor
  * @namespace Breeze.view.admin.HolidayEditor
  * @alias widget.admin.holidayeditor

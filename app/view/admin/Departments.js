@@ -1,5 +1,5 @@
 /**
- * Departments Report form
+ * Departments Admin view
  * @class Departments
  * @namespace Breeze.view.admin.Departments
  * @alias widget.admin.departments
@@ -9,10 +9,16 @@ Ext.define('Breeze.view.admin.Departments', {
     alias: 'widget.admin.departments',
 
     // View Model
-
     viewModel: {
-        type: 'reporting.department.absence'
+        type: 'admin.departments'
     },
+
+    // Controller
+    controller: 'admin.departments',
+    listeners: {
+        initialize: 'onInit'
+    },
+
 
     // Layout and base styles
     layout: 'hbox',

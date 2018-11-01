@@ -1,5 +1,5 @@
 /**
- * MOTD Report form
+ * MOTD Admin view
  * @class MOTD
  * @namespace Breeze.view.admin.MOTD
  * @alias widget.admin.motd

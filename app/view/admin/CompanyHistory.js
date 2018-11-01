@@ -1,5 +1,5 @@
 /**
- * CompanyHistory 
+ * CompanyHistory Admin view
  * @class CompanyHistory
  * @namespace Breeze.view.admin.CompanyHistory
  * @alias widget.admin.companycistory
