@@ -8,6 +8,18 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.holidayeditor',
 
+    // View Model
+    viewModel: {
+        type: 'admin.holidayeditor'
+    },
+
+    // Controller
+    controller: 'admin.holidayeditor',
+    listeners: {
+        initialize: 'onInit'
+    },
+
+
     // Layout and base styles
     layout: 'vbox',
     ui: 'admin-base',
@@ -30,12 +42,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
     // Body contents
     items: [
+        // Top 1
         {
             xtype: 'container',
             layout: 'hbox',
-            userCls:'admin-fieldset-no-border',
+            userCls:'admin-fieldset no-border',
             defaults: {
-                ui: 'reporting reporting-text',
+                ui: 'admin admin-text',
             },
             items: [
                 {
@@ -52,6 +65,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     style: 'padding-left: 4pt',
 
                 },
+
+                {
+                    xtype:'spacer',
+                    width:'20pt',
+
+                },
+
                 {
 
 
@@ -66,31 +86,25 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     flex:2
                 }
             ]
-
-
-
-
         },
-
-
+        // Bottom
         {
             xtype:'panel',
             ui:'admin-sub',
             layout:'hbox',
             flex: 1,
             items:[
+                // Column 1
                 {
-                    
-                    xtype: 'panel',
-                    title: 'Holiday Schedule',
-                    ui: 'admin-sub',
+                    xtype:'panel',
+                    ui:'admin-sub',
+                    userCls:'admin-fieldset no-padding no-border',
+                    layout:'vbox',
                     flex: 1,
-                    layout: 'vbox',
 
-                    
+
                     buttons: {
-                        apply: { text: 'Apply Holiday Schedule', /*handler: 'onPrintPDF',*/ ui: 'action', userCls:'tool-button-left' },
-                        add: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
+                        apply: { text: 'Apply Holiday Schedule',  ui: 'action'},
                     },
 
                     buttonAlign: 'left',
@@ -100,21 +114,85 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                         shadow: false
                     },
 
-                    items:[
-                        {
 
-                            xtype: 'container',
-                            userCls:'admin-fieldset',
+                    items:[
+                        {    
+                            xtype: 'fieldset',
+                            userCls:'admin-fieldset no-margin',
                             flex: 1,
                             layout: 'vbox',
-                        },
 
+                            items:[
+                                {
+                                    xtype: 'toolbar',
+                                    ui:'admin-tree',
+                                    shadow: false,
+                                    items:[
+                                        { 
+                                            xtype: 'component', 
+                                            html: 'Holiday Schedule',
+                                            userCls:'admin-title-toolbar', 
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            flex:1,
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-plus',
+                                            ui: 'plain wtr-button',                   
+                                        },
+
+                                    ]
+                                },
+                                {
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    flex:1,
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            //listeners: {
+                                            //    checkChange: 'onTreeGridChecked'
+                                            //}
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+
+                                    bind: '{departmentsTree}'
+                                },
+                            ]
+                        },
                     ]
                 },
+                // Column 2
                 {
                     
                     xtype: 'panel',
-                    title: 'Holiday Details',
                     ui: 'admin-sub',
                     flex: 1,
                     layout: 'vbox',
@@ -135,7 +213,8 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     items:[
                         {
 
-                            xtype: 'container',
+                            xtype: 'fieldset',
+                            title:'Holiday Details',
                             userCls:'admin-fieldset',
                             flex: 1,
                             layout: 'vbox',
@@ -146,13 +225,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     label: 'Holiday Name',
                                     name:'holiday_Name',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset-no-border',
+                                    userCls:'admin-fieldset no-border',
 
                                 },
                                 {
                                     xtype: 'spinnerfield',
-                                    ui: 'reporting reporting-text',
-                                    userCls:'admin-fieldset-no-border',
+                                    ui: 'admin admin-text',
+                                    userCls:'admin-fieldset no-border',
                                     label:'Percentage',
                                     name: 'percentage',
                                     maxValue: 100,
@@ -253,14 +332,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
                     ]
                 },
-
-
             ]
-
         }
-
-
-        
     ]
-
 });

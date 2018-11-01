@@ -8,44 +8,124 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.punchpolicies',
 
+
+    // View Model
+    viewModel: {
+        type: 'admin.punchpolicies'
+    },
+
+    // Controller
+    controller: 'admin.punchpolicies',
+    listeners: {
+        initialize: 'onInit'
+    },
+
+
+
     // Layout and base styles
     layout: 'hbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
     title: 'Punch Policies',
 
     // Body contents
     items: [
-        {
-            xtype: 'panel',
-            ui: 'admin-sub',
+        // Column 1
+
+        {    
+            xtype: 'fieldset',
+            userCls:'admin-fieldset no-padding',
             flex: 1,
             layout: 'vbox',
-            buttonAlign: 'right',
-            buttons: {
-                add: { iconCls:'x-fas fa-plus'  /* userCls:'NEED NEW CLASS FOR THESE '*/},
-                sub: { iconCls:'x-fas fa-minus' /* userCls:'NEED NEW CLASS FOR THESE '*/},
-            },
-            buttonToolbar: {
-                xtype: 'toolbar',
-                ui: 'admin-actions',
-                shadow: false
-            },
+
+
             items:[
                 {
-                    xtype: 'container',
-                    userCls:'admin-fieldset',
-                    flex: 1,
-                    layout: 'vbox',
+                    xtype: 'toolbar',
+                    ui:'admin-tree',
+                            shadow: false,
+
+                    items:[
+
+                        { 
+                            xtype: 'component', 
+                            html: 'Punch Policies',
+                            userCls:'admin-title-toolbar', 
+                        },
+
+                        {
+                            xtype:'spacer',
+                            flex:1,
+
+                        },
+
+                        {
+                            xtype: 'button',
+                            //text: 'Save for Future Use',
+                            iconCls:'x-fas fa-plus',
+                            ui: 'plain wtr-button',                   
+                        },
+
+                        {
+                            xtype: 'button',
+                            //text: 'Save for Future Use',
+                            iconCls:'x-fas fa-minus',
+                            ui: 'plain wtr-button',                   
+
+                        },
+                    ]
+                },
+
+                {
+                    xtype: 'tree',
+                    // == Item ID to make finding tree in panel easier
+                    itemId: 'tree',
+                    ui: 'employeeinfo-shift-grid',
+                    userCls: 'employeeinfo-shift-grid no-border',
+                    flex:1,
+                    layout: 'hbox',
+                    hideHeaders: true,
+                    rootVisible: false,
+                    columns: [
+                        {
+                            xtype: 'checkcolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'checked',
+                            minWidth: '2em',
+                            width: 'auto',
+                            padding: 0,
+                            //listeners: {
+                            //    checkChange: 'onTreeGridChecked'
+                            //}
+                        },
+                        {
+                            xtype: 'treecolumn',
+                            cell: {
+                                ui: 'report-tree-column reporting-tree-item',
+                            },
+                            dataIndex: 'text',
+                            flex: 1,
+                            layout: {
+                                alignment: 'stretch'
+                            }
+                        }
+                    ],
+
+                    bind: '{departmentsTree}'
                 },
             ]
         },
+
+        // Column 2
         {
             xtype: 'panel',
             ui: 'admin-sub',
+            userCls:'admin-fieldset',
             flex: 2,
             layout: 'vbox',
 
-             buttonAlign: 'center',
+            buttonAlign: 'center',
             buttons: {
                 save: { text: 'Save Punch Policy', /*handler: 'onPrintPDF',*/ ui: 'action' },
                 saveapply: { text: 'Save and Apply Punch Policy to Employees', /*handler: 'onPrintPDF',*/ ui: 'action' },

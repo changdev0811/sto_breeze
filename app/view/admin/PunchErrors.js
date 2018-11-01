@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.PunchErrors', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Punch Errors',
 
