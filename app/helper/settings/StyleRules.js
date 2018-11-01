@@ -13,6 +13,7 @@ Ext.define('Breeze.helper.settings.StyleRules', {
      * Icons and labels for trees built from list API responses
      */
     list: {
+        // Employee
         Emp: {
             conditional: true,
             attribute: 'info.role',
@@ -25,18 +26,27 @@ Ext.define('Breeze.helper.settings.StyleRules', {
                 }
             }
         },
+        // Department
+        Dep: {
+            iconCls: 'x-fas fa-building'
+        },
+        // Calendar Link
         Cal: {
             iconCls: 'x-fas fa-calendar', text: 'Calendar'
         },
+        // Employee Info link
         EmpInfo: {
             iconCls: 'x-fas fa-id-card', text: 'Employee Information'
         },
+        // FYI link
         FYI: {
             iconCls: 'x-fas fa-table', text: 'FYI'
         },
+        // Year at a Glance link
         YAG: {
             iconCls: 'x-fas fa-eye', text: 'Year at a Glance'
         },
+        // WorkTime Records link
         WTR: {
             iconCls: 'x-fas fa-calendar-check-o', text: 'WorkTime Records'
         }

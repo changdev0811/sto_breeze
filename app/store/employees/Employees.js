@@ -41,15 +41,9 @@ Ext.define('Breeze.store.employees.Employees', {
          * @param {Object} eOpts Event object
          */
         load: function(self, records, success, op, node, eOpts){
-            var me = this,
-                travel = (rec) => {
-                    //me.giveStyling(rec);
-                    me.styleFromRule(rec);
-                    if(rec.childNodes.length > 0){
-                        rec.childNodes.forEach((c)=>{travel(c);});
-                    }
-                };
-            records.forEach((r)=>travel(r));
+            if(success){
+                this.applyStyling(records);
+            }
         }
 	},
 	proxy: {

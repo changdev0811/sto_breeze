@@ -7,6 +7,9 @@
  * @api getDepartmentListAPI
  */
 Ext.define('Breeze.store.employees.Departments', {
+	mixins: {
+        styleable: 'Breeze.mixin.ListStylable'
+    },
 	extend: 'Breeze.store.TreeBase',
 	model: 'Breeze.model.node.Node',
     autoLoad: false,
@@ -15,7 +18,8 @@ Ext.define('Breeze.store.employees.Departments', {
 	alias: 'store.employees.departments',
 	config: {
         searchString: '',
-        excludeTerminated: false
+		excludeTerminated: false,
+		ruleSet: 'list'
     },
 	listeners: {
 		beforeload : function () {
@@ -25,6 +29,11 @@ Ext.define('Breeze.store.employees.Departments', {
 			this.useJsonParams();
 			this.getProxy().extraParams.searchString = this.getSearchString();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
+		},
+		load: function(self, records, success){
+			if(success){
+				this.applyStyling(records);
+			}
 		}
 	},
 	proxy: {

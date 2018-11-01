@@ -229,7 +229,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             reference: 'employeesDepartmentTree',
                             rootVisible: false,
                             bind: {
-                                store: '{departmentsTree}'
+                                store: '{departmentsList}'
                             },
                             listeners: {
                                 select: 'onDepartmentsTreeSelect'
@@ -246,7 +246,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
             items: [
                 {
                     xtype: 'breeze-checkbox',
-                    ui: 'dark-checkbox',
+                    ui: 'employees-panel-checkbox',
                     boxLabel: 'Exclude Terminated',
                     name: 'exclude_terminated',
                     bind: {

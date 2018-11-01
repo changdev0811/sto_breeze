@@ -109,9 +109,23 @@ Ext.define('Breeze.view.main.employees.PanelController', {
      * @param {Object} comp Tree component sending event
      */
     onDepartmentsTreeSelect: function(comp){
+        this.updateDepartmentsRemoveEmployeeEnabled(comp);
+    },
+
+    /**
+     * Enable/disable department tab's remove employee button based
+     * on whether an employee is selected in the tree
+     * @param {Object} comp Departments tree component
+     */
+    updateDepartmentsRemoveEmployeeEnabled: function(comp){
+        var selected = (comp.getSelectionCount() > 0),
+            isEmployee = (
+                comp.getSelectable().getSelectedRecord().get('type') == 'Emp'
+            );
         this.lookup('employeesDepartmentToolbar')
-            .getComponent('remove').setDisabled(
-                (comp.getSelectionCount() == 0)
+            .getComponent('remove').setDisabled(!(
+                selected && isEmployee
+            )
         );
     }
 });
