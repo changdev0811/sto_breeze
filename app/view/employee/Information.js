@@ -156,7 +156,7 @@ Ext.define('Breeze.view.employee.Information', {
                 },
                 {
                     xtype: 'container',
-                    itemId: 'securityTab',
+                    reference: 'securityTab',
                     title: 'Security',
                     items: [
                         {

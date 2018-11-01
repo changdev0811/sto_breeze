@@ -874,7 +874,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             return (v >= r[0] && v <= r[1]);
         };
 
-        otherRecords.push([start,stop]);
+        if(!Object.isUnvalued(start)){
+            // Skip checking start and stop values if not provided
+            otherRecords.push([start,stop]);
+        }
 
         otherRecords.forEach((r,i)=>{
             otherRecords.forEach((r2,i2)=>{
@@ -1437,26 +1440,44 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     //===[Save/Revert Logic and Event Handlers]===
 
+    // TODO: Finish validation implementation
     validate: function(){
         var vm = this.getViewModel(),
             segments = vm.get('shift.segments');
 
-        var shiftsValid = true;
         // TODO: add shift validity check
+        var shiftsOverlapValid = true,
+            shiftsUniqueValid = true;
+        
+        // for(var i=0,rec=segments.getAt(0);i<segments.count;i++,rec=segments.getAt(i)){
+        //     shiftsOverlapValid &= this.checkForShiftTimeOverlap(rec);
+        // }
+        
 
+
+
+        // Collect tab containers we need to check for required fields
         var employeeTab = this.lookup('employeeTab'),
             employeeValid = true,
             companyTab = this.lookup('companyTab'),
-            companyValid = true;
+            companyValid = true,
+            securityTab = this.lookup('securityTab'),
+            securityValid = true;
         
         ['first_name', 'last_name'].forEach((f)=>{
             employeeValid &= employeeTab.down(`[name=${f}]`).validate();
         });
         ['department'].forEach((f)=>{
             companyValid &= companyTab.down(`[name=${f}]`).validate();
-        })
+        });
+        ['user_name'].forEach((f)=>{
+            securityValid &= securityTab.down(`[name=${f}]`).validate();
+        });
+        if(vm.get('newEmployee')){
+            securityValid &= securityTab.down(`[name=create_password]`);
+        }
 
-        return employeeValid && companyValid;
+        return employeeValid && companyValid && securityValid;
 
     },
 

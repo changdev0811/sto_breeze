@@ -42,7 +42,8 @@ Ext.define('Breeze.view.employee.information.Security', {
                         {
                             name: 'user_name',
                             label: 'User Name',
-                            bind: { value: '{info.Username}' }
+                            bind: { value: '{info.Username}' },
+                            required: true
                         },
                         {
                             name: 'user_type',
@@ -83,7 +84,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     items: [
                         {
                             xtype: 'breeze-password',
-                            name: 'initial-password',
+                            name: 'create_password',
                             bind: { 
                                 value: '{initialPassword}',
                                 required: '{newEmployee}',

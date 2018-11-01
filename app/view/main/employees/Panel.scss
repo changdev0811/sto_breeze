@@ -1,6 +1,9 @@
 /**
-    Style classes and rules for Employees Panel view (main.employees.Panel)
-*/
+ * Breeze.view.main.employees.Panel Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.main.employees.Panel view or its children
+ */
+
 @include displayfield-ui(
     $ui: 'employees-panel-field',
     $input-font-size: 0.8 * map-get($root-font-sizes, 'detail')
@@ -9,11 +12,6 @@
 @include field-ui(
     $ui: 'employees-panel-field',
     $label-font-size: 0.8 * map-get($root-font-sizes, 'detail')
-);
-
-@include toolbar-ui(
-    $ui: 'employees-panel-toolbar',
-    $background-color: map-get($wtr-colors, 'base')
 );
 
 // Background colored generic class
@@ -25,3 +23,24 @@
 .employees-panel-tree {
     margin: 8pt;
 }
+
+//==[ Employees Panel Toolbar Styles ]==
+
+/* Toolbar */
+@include toolbar-ui(
+    $ui: 'employees-toolbar',
+    $background-color: map-get($wtr-colors, 'base')
+);
+
+// @include toolbar-ui(
+//     $ui: 'employees-toolbar-med',
+//     $background-color: map-get($wtr-colors, 'medium')
+// );
+
+/* Info Label */
+@include field-ui(
+    $ui: 'employees-toolbar-display',
+    $label-font-size: 10pt
+);
+
+

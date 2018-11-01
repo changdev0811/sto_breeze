@@ -57,10 +57,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     xtype: 'container',
                     title: 'Employees',
                     items: [
+                        // Search toolbar
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
-                            ui: 'employees-panel-toolbar',
+                            ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -76,46 +77,58 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                 }
                             ]
                         },
+                        // Info + action
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
+                            ui: 'employees-toolbar', docked: 'top',
+                            reference: 'employeesEmployeeToolbar',
+                            defaults: {
+                                xtype: 'displayfield',
+                                ui: [
+                                    'dark-textfield', 'dark-textfield-sm',
+                                    'employees-toolbar-display'
+                                ]
+                            },
+                           items: [
+                               {
+                                    itemId: 'active',
+                                    bodyAlign: 'center',
                                     label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
-                            ]
+                                    value: '1'
+                               },
+                               {
+                                   itemId: 'terminated',
+                                   bodyAlign: 'center',
+                                   label: 'Terminated',
+                                   value: '2'
+                               },
+                               {
+                                   itemId: 'deleted',
+                                   bodyAlign: 'center',
+                                   label: 'Deleted',
+                                   value: '10'
+                               },
+                               { xtype: 'spacer' },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'new', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-plus',
+                                   bind: {
+                                       hidden: '{!permissions.canAdd}'
+                                   }
+                               },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'remove', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-minus', 
+                                   bind: {
+                                       hidden: '{!permissions.canRemove}',
+                                   },
+                                   disabled: true
+                               }
+                           ]
                         },
                         {
                             xtype: 'tree',
@@ -124,7 +137,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             reference: 'employeesEmployeeTree',
                             rootVisible: false,
                             bind: {
-                                store: '{employeesTree}'
+                                // store: '{employeesTree}'
+                                store: '{employeesList}'
+                            },
+                            listeners: {
+                                select: 'onEmployeesTreeSelect'
                             }
                         }
                     ]
@@ -137,7 +154,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
-                            ui: 'employees-panel-toolbar',
+                            ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -155,43 +172,54 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         },
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
+                            ui: 'employees-toolbar', docked: 'top',
+                            reference: 'employeesDepartmentToolbar',
+                            defaults: {
+                                xtype: 'displayfield',
+                                ui: [
+                                    'dark-textfield', 'dark-textfield-sm',
+                                    'employees-toolbar-display'
+                                ]
+                            },
                             items: [
                                 {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
+                                    itemId: 'active',
+                                    bodyAlign: 'center',
                                     label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
+                                    value: '1'
+                               },
+                               {
+                                   itemId: 'terminated',
+                                   bodyAlign: 'center',
+                                   label: 'Terminated',
+                                   value: '2'
+                               },
+                               {
+                                   itemId: 'deleted',
+                                   bodyAlign: 'center',
+                                   label: 'Deleted',
+                                   value: '10'
+                               },
+                               { xtype: 'spacer' },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'new', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-plus',
+                                   bind: {
+                                       hidden: '{!permissions.canAdd}'
+                                   }
+                               },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'remove', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-minus', 
+                                   bind: {
+                                       hidden: '{!permissions.canRemove}',
+                                   },
+                                   disabled: true
+                               }
                             ]
                         },
                         {
@@ -202,6 +230,9 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             rootVisible: false,
                             bind: {
                                 store: '{departmentsTree}'
+                            },
+                            listeners: {
+                                select: 'onDepartmentsTreeSelect'
                             }
                         }
                     ]
@@ -210,7 +241,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
         },
         {
             xtype: 'toolbar',
-            ui: 'employees-panel-toolbar',
+            ui: 'employees-toolbar',
             dock: 'bottom',
             items: [
                 {

@@ -32,6 +32,12 @@ Ext.define('Breeze.view.main.employees.PanelController', {
             { load: true }
         );
 
+        this.addStoreToViewModel(
+            'Breeze.store.employees.Employees',
+            'employeesList',
+            { load: true }
+        );
+
         console.info('Employee Panel initialized');
     },
 
@@ -83,5 +89,29 @@ Ext.define('Breeze.view.main.employees.PanelController', {
 
         // Reload store with updated params
         store.load();
+    },
+
+    /**
+     * Handle employees tree selection change, toggling
+     * whether 'remove' button is enabled
+     * @param {Object} comp Tree component sending event
+     */
+    onEmployeesTreeSelect: function(comp){
+        this.lookup('employeesEmployeeToolbar')
+            .getComponent('remove').setDisabled(
+                (comp.getSelectionCount() == 0)
+        );
+    },
+
+    /**
+     * Handle departments tree selection change, toggling
+     * whether 'remove' button is enabled
+     * @param {Object} comp Tree component sending event
+     */
+    onDepartmentsTreeSelect: function(comp){
+        this.lookup('employeesDepartmentToolbar')
+            .getComponent('remove').setDisabled(
+                (comp.getSelectionCount() == 0)
+        );
     }
 });

@@ -21,6 +21,12 @@ Ext.define('Breeze.view.main.employees.PanelModel', {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
         
         // 'Exclude Terminated' panel parameter
-        excludeTerminated: false
+        excludeTerminated: false,
+        
+        permissions: {
+            // TODO: update perms to false by default
+            canAdd: true,
+            canRemove: true
+        }
     }
 });
