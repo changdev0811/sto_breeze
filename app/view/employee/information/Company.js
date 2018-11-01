@@ -84,6 +84,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     valueField: 'Id',
                     reference: 'departments',
                     store: 'departments',
+                    required: true,
                     bind: { value: '{info.Department}' },
                 },
                 {

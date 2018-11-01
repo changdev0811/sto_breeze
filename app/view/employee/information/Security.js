@@ -1,3 +1,8 @@
+/**
+ * Security subview tab for Employee Info
+ * @class Security
+ * @namespace Breeze.view.employee.information.Security
+ */
 Ext.define('Breeze.view.employee.information.Security', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.security',
@@ -19,41 +24,73 @@ Ext.define('Breeze.view.employee.information.Security', {
         {
             xtype: 'fieldset',
             userCls: 'employee-info-fieldset',
-            layout: 'hbox',
+            
             title: 'Login Information',
-            defaults: {
-                flex: 1,
-                xtype: 'breeze-textfield',
-                userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
-            },
+            
             items: [
                 {
-                    name: 'user_name',
-                    label: 'User Name',
-                    bind: { value: '{info.Username}' }
+                    xtype: 'container',
+                    layout: 'hbox',
+                    defaults: {
+                        flex: 1,
+                        xtype: 'breeze-textfield',
+                        userCls: 'employee-info-general-field',
+                        ui: 'employeeinfo-textfield'
+                    },
+                    items: [
+    
+                        {
+                            name: 'user_name',
+                            label: 'User Name',
+                            bind: { value: '{info.Username}' }
+                        },
+                        {
+                            name: 'user_type',
+                            // xtype: 'selectfield',
+                            xtype: 'combobox',
+                            editable: false,
+                            label: 'User Type',
+                            bind: { value: '{info.LoginType}' }, 
+                            store: 'UserTypeOptions',
+                            displayField: 'Description',
+                            valueField: 'ID'
+                        },
+                        {
+                            xtype: 'breeze-email',
+                            name: 'email',
+                            label: 'Email',
+                            bind: { value: '{info.Email}' }, 
+                            // TODO: Email validation regex
+                            /* regex: */
+                            invalidText: 'Invalid email address',
+                            validators: Ext.create('Ext.data.validator.Email', 
+                            {message: 'Invalid email address'})
+                        }
+                    ]
                 },
                 {
-                    name: 'user_type',
-                    // xtype: 'selectfield',
-                    xtype: 'combobox',
-                    editable: false,
-                    label: 'User Type',
-                    bind: { value: '{info.LoginType}' }, 
-                    store: 'UserTypeOptions',
-                    displayField: 'Description',
-                    valueField: 'ID'
-                },
-                {
-                    xtype: 'breeze-email',
-                    name: 'email',
-                    label: 'Email',
-                    bind: { value: '{info.Email}' }, 
-                    // TODO: Email validation regex
-                    /* regex: */
-                    invalidText: 'Invalid email address',
-                    validators: Ext.create('Ext.data.validator.Email', 
-                    {message: 'Invalid email address'})
+                    xtype: 'container',
+                    layout: 'hbox',
+                    defaults: {
+                        flex: 1,
+                        xtype: 'breeze-textfield',
+                        userCls: 'employee-info-general-field',
+                        ui: 'employeeinfo-textfield'
+                    },
+                    bind: {
+                        hidden: '{!newEmployee}'
+                    },
+                    items: [
+                        {
+                            xtype: 'breeze-password',
+                            name: 'initial-password',
+                            bind: { 
+                                value: '{initialPassword}',
+                                required: '{newEmployee}',
+                            },
+                            label: 'New Password'
+                        }
+                    ]
                 }
             ]  
         },

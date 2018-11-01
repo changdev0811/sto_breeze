@@ -54,6 +54,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         }
                     },
                     items: [
+                        // TODO: Figure out how to make combo boxes work as input fields
                         {
                             xtype: 'grid',
                             height: '100pt',

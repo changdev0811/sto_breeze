@@ -11,6 +11,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
     data: {
         employeeName: 'X',
         employeeId: undefined,
+        newEmployee: false,
         departmentName: 'X',
         points: '',
         // When true, fields will be read-only

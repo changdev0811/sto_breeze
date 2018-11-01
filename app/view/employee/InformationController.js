@@ -109,6 +109,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                                 // Set id to use for requesting security rights
                                 var rightsCheckId = vm.get('employeeId')
                                 if (vm.get('employeeId') == 'new') {
+                                    vm.set('newEmployee', true);
                                     // New employee, use id of 0
                                     rightsCheckId = 0;
                                 }
@@ -684,6 +685,87 @@ Ext.define('Breeze.view.employee.InformationController', {
         );
 
         console.info('Copied Company grid list data to ViewModel info record');              
+
+    },
+
+    copyShiftSegmentsToModel: function(){
+        var vm = this.getViewModel(),
+            segments = vm.get('shift.segments');
+        
+        /**
+         * Extracts fields from set of records into ordered arrays
+         * @param {(Object|Ext.data.Store)} items Store of records to extract items from
+         * @param {Object} map Map of array names to source field names
+         */
+        var extract = function(items, map){
+            var records = items.getData().items,
+                arrayNames = Object.keys(map),
+                arrays = {};
+            arrayNames.forEach((n) => { arrays[n] = []; });
+
+            for(
+                var ri=0,rec=records[ri];
+                ri<records.length;
+                ri++,rec=records[ri]
+            ) {
+                for(
+                    var ni=0,name=arrayNames[ni];
+                    ni<arrayNames.length;
+                    ni++,name=arrayNames[ni]
+                ) {
+                    arrays[name].push(rec.get(map[name]));
+                }
+            }
+
+            
+            return arrays;
+        };
+
+        /**
+         * Copies array values to viewmodel field named 'info.<array name>'
+         * @param {Object} arrays Object of named arrays from extract
+         */
+        var copyData = function(arrays){
+            var names = Object.keys(arrays);
+            names.forEach((n)=>{
+                // Update viewmodel attribute values
+                vm.set(
+                    ['info', n].join('.'),
+                    arrays[n]
+                );
+            })
+        };
+
+        // Extract arrays
+        var shiftParts = extract(
+            segments,
+            {
+                ShiftStartSegments: 'StartMin',
+                ShiftStartTimes: 'StartTime',
+                ShiftStopSegments: 'StopMin',
+                ShiftStopTimes: 'StopTime'
+            }
+        );
+        // Extract combos
+        var combos = {ShiftSegComboStartTimes: [], ShiftSegComboStopTimes: []},
+            segItems = segments.getData().items;
+        for(var i=0,itm=segItems[0];i<segItems.length;i++,itm=segItems[i]){
+            combos.ShiftSegComboStartTimes.push({
+                shiftSegVal: itm.get('StartMin'),
+                shiftSegStr: itm.get('StartTime')
+            });
+            combos.ShiftSegComboStopTimes.push({
+                shiftSegVal: itm.get('StopMin'),
+                shiftSegStr: itm.get('StopTime')
+            });
+        }
+
+        // Copy Arrays
+        copyData(segments);
+        // Copy combos
+        copyData(combos);
+
+        console.info('Copied shift grid data to ViewModel info record');
 
     },
 
@@ -1355,9 +1437,35 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     //===[Save/Revert Logic and Event Handlers]===
 
+    validate: function(){
+        var vm = this.getViewModel(),
+            segments = vm.get('shift.segments');
+
+        var shiftsValid = true;
+        // TODO: add shift validity check
+
+        var employeeTab = this.lookup('employeeTab'),
+            employeeValid = true,
+            companyTab = this.lookup('companyTab'),
+            companyValid = true;
+        
+        ['first_name', 'last_name'].forEach((f)=>{
+            employeeValid &= employeeTab.down(`[name=${f}]`).validate();
+        });
+        ['department'].forEach((f)=>{
+            companyValid &= companyTab.down(`[name=${f}]`).validate();
+        })
+
+        return employeeValid && companyValid;
+
+    },
+
     onSaveButtonTap: function(comp, e){
         console.info('Save button pressed');
-        this.copyCompanyListsToModel();
+        if(this.validate()){
+            this.copyCompanyListsToModel();
+            this.copyShiftSegmentsToModel();
+        }
     },
 
     onRevertButtonTap: function(comp, e){
