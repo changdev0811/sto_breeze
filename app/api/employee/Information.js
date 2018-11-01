@@ -102,7 +102,12 @@ Ext.define('Breeze.api.employee.Information', {
 
     updateEmployee: function(parameters){
         var me = this,
-            api = me.api;
+            api = me.api,
+            cookies = me.auth.getCookies(),
+            params = Object.assign({}, parameters);
+        params.emp_id = cookies.emp;
+        params.cust_id = cookies.cust;
+        params.hashcookie = cookies.pass;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'updateEmployee',
@@ -111,14 +116,36 @@ Ext.define('Breeze.api.employee.Information', {
                 function(response){
                     var rsp = api.decodeJsonResponse(response);
                     if(rsp.success == true){
-                        resolve(true);
-                        // TODO: decide where to handle refreshing Employees panel, if enabled
+                        resolve({
+                            message: 'Employee Information successfully saved.',
+                            type: Ext.Toast.INFO,
+                            info: rsp.info,
+                            err: rsp.err
+                        });
                     } else {
-                        resolve(false, rsp.error);
+                        var msg = 'An error occured';
+                        if(!Object.isUnvalued(rsp.err)){
+                            msg = msg.concat('<br>(',rsp.err,')');
+                        }
+                        reject({
+                            message: msg,
+                            type: Ext.Toast.ERROR,
+                            info: rsp.info,
+                            err: rsp.err
+                        });
                     }
                 },
                 function(err){
-                    reject(err);
+                    var msg = 'An error occured';
+                    if(!Object.isUnvalued(err.statusText)){
+                        msg = msg.concat('<br>(',err.statusText,')');
+                    }
+                    reject({
+                        message: msg,
+                        type: Ext.Toast.ERROR,
+                        info: null,
+                        err: err
+                    });
                 }
             )
         });

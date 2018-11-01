@@ -1481,16 +1481,129 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     },
 
+    /**
+     * Handle Save button click event
+     * @param {Object} comp Event source component
+     * @param {Object} e Event object
+     */
     onSaveButtonTap: function(comp, e){
         console.info('Save button pressed');
         if(this.validate()){
+            // If validation passed, copy extra data to ViewModel
+
             this.copyCompanyListsToModel();
             this.copyShiftSegmentsToModel();
+
+            // Call update API method
+            this.apiClass.information.updateEmployee(
+                this.gatherUpdateParams()
+            ).then((resp)=>{
+                Ext.toast({
+                    message: resp.message,
+                    type: resp.type,
+                    timeout: 10000
+                });
+                // try to reload view
+                if(this.onInit){
+                    this.onInit(this.getView());
+                }
+            }).catch((resp)=>{
+                Ext.toast({
+                    message: resp.message,
+                    type: resp.type,
+                    timeout: 10000
+                });
+                console.warn('Save failed: ', resp.err, resp.info)
+            })
         }
+        console.info('ViewModel updated');
     },
 
     onRevertButtonTap: function(comp, e){
         console.info('Revert button pressed');
+    },
+
+    /**
+     * Collect all parameters into a single object for submission
+     * @return {Object} Employee info params
+     */
+    gatherUpdateParams: function(){
+        var vm = this.getViewModel(),
+            params = {};
+
+        params.employee_id = vm.get('employeeId');
+        params.first_name = vm.get('info.FirstName');
+        params.last_name = vm.get('info.LastName');
+        params.middle_name = vm.get('info.MiddleName');
+        params.company_employee_id = vm.get('info.CustomerId');
+        params.ssn = vm.get('info.SSN');
+        params.payroll = vm.get('info.Payroll');
+        params.paramse_of_hire = vm.get('info.HireDate');
+        params.paramse_of_birth = vm.get('info.BirthDate');
+        params.paramse_of_termination = vm.get('info.TerminationDate');
+        params.comp_rate = vm.get('info.CompRate');
+        params.comp_per = vm.get('info.CompPer');
+        params.sex = vm.get('info.Gender');
+        params.picture_path = vm.get('info.Photo');
+        params.picture_modified = vm.get('info.PhotoFlag');
+        // exempt = (vm.get('info.Exempt') == 138);
+        params.exempt = false;
+        params.notes = vm.get('info.Notes');
+        params.recording_mode = vm.get('info.RecordingMode');
+        params.exempt_status = vm.get('info.ExemptStatus');
+        params.badge_id = vm.get('info.Badge');
+        params.email = vm.get('info.Email').trim();
+        params.department_id = vm.get('info.Department');
+        params.schedule_id = vm.get('info.StartUpSettings');
+        params.punchpolicy_id = vm.get('info.punchPolicy.policy_id');
+        params.default_project = vm.get('info.DefaultProject');
+        // TODO: figure out what determines these values
+        params.changeAllowedTime = null;
+        params.changePastTime = null;
+        params.changeUserModifiedTime = null;
+        params.user_modified = null;
+        params.shiftStartSegments = vm.get('info.ShiftStartSegments');
+        params.shiftStopSegments = vm.get('info.ShiftStopSegments');
+        params.user_type = vm.get('info.LoginType');
+        params.supervisor_ids = vm.get('info.SupervisorIds');
+        params.employee_ids = vm.get('info.SupervisedEmpIds');
+        params.department_ids = vm.get('info.SupervisedDeptIds');
+        params.department_role_ids = vm.get('info.DeptRoleIds');
+        params.ot_opt1 = vm.get('info.punchPolicy.Ot_Opt1');
+        params.ot_opt2 = vm.get('info.punchPolicy.Ot_Opt2');
+        params.ot_opt3 = vm.get('info.punchPolicy.Ot_Opt3');
+        params.ot_opt4 = vm.get('info.punchPolicy.Ot_Opt4');
+        params.ot_day1 = vm.get('overtime_day1');
+        params.ot_day2 = vm.get('overtime_day2');
+        params.ot_day3 = vm.get('overtime_day3');
+        params.ot_day4 = vm.get('overtime_day4');
+        params.ot_week1 = vm.get('overtime_week1');
+        params.ot_week2 = vm.get('overtime_week2');
+        params.ot_week3 = vm.get('overtime_week3');
+        params.ot_week4 = vm.get('overtime_week4');
+        params.ot_rate1 = vm.get('info.punchPolicy.Ot_Rate1');
+        params.ot_rate2 = vm.get('info.punchPolicy.Ot_Rate2');
+        params.ot_rate3 = vm.get('info.punchPolicy.Ot_Rate3');
+        params.ot_rate4 = vm.get('info.punchPolicy.Ot_Rate4');
+        params.subtract_dayot = vm.get('info.punchPolicy.Subtract_DayOt');
+        params.round_increment = vm.get('info.punchPolicy.Round_Increment');
+        params.round_offset = vm.get('info.punchPolicy.round_offset');
+        params.Allow_RegularPunch = vm.get('info.punchPolicy.Allow_RegularPunch');
+        params.Allow_QuickPunch = vm.get('info.punchPolicy.Allow_QuickPunch');
+        params.Auto_PunchIn = vm.get('info.punchPolicy.Auto_PunchIn');
+        params.Auto_PunchOut = vm.get('info.punchPolicy.Auto_PunchOut');
+        params.Auto_Close_Shift = vm.get('info.punchPolicy.Auto_Close_Shift');
+        params.Auto_Lunch_Punch = vm.get('info.punchPolicy.Auto_LunchPunch');
+        params.LunchPunch_Seg = vm.get('info.punchPolicy.LunchPunch_Seg');
+        params.LunchPunch_Hours = vm.get('info.punchPolicy.LunchPunch_Hours');
+        params.Can_Add_Projects = vm.get('info.punchPolicy.Can_Add_Projects');
+        params.Can_Add_Notes = vm.get('info.punchPolicy.Can_Add_Notes');
+        params.Can_Edit_Projects = vm.get('info.punchPolicy.Can_Edit_Notes');
+        params.Can_Adjust_Punches = vm.get('info.punchPolicy.Can_Adjust_Punches');
+        params.Can_Use_TimeSheets = vm.get('info.punchPolicy.Can_Use_TimeSheets');
+        params.InOut_Opt = vm.get('info.punchPolicy.InOut_Opt');
+        params.Can_Use_InOut = vm.get('info.punchPolicy.Can_Use_InOut');
+        return params;
     }
 
 });
