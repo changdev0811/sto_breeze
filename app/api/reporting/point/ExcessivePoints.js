@@ -1,15 +1,15 @@
 /**
- * Report handler for Misc Audit report
- * @class Audit
- * @namespace Breeze.api.reporting.misc.Audit
+ * Report handler for Point's Excessive Points report
+ * @class Excessive
+ * @namespace Breeze.api.reporting.point.ExcessivePoints
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.misc.Audit', {
+Ext.define('Breeze.api.reporting.point.ExcessivePoints', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'MiscAudit'
+        report: 'PointExcessivePoints'
     },
 
     /**

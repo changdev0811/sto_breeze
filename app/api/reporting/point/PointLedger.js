@@ -1,16 +1,16 @@
 /**
- * Report handler for Misc Audit report
- * @class Audit
- * @namespace Breeze.api.reporting.misc.Audit
- * @extends Breeze.api.reporting.Base
- */
-Ext.define('Breeze.api.reporting.misc.Audit', {
-    extend: 'Breeze.api.reporting.Base',
-    
-    statics: {
-        ajaxCall: '',
-        report: 'MiscAudit'
-    },
+* Report handler for Point Ledger report
+* @class Ledger
+* @namespace Breeze.api.reporting.point.PointLedger
+* @extends Breeze.api.reporting.Base
+*/
+Ext.define('Breeze.api.reporting.point.PointLedger', {
+   extend: 'Breeze.api.reporting.Base',
+   
+   statics: {
+       ajaxCall: '',
+       report: 'PointLedger'
+   },
 
     /**
      * Initiate generation process, calling generate when pre-reqs are available.

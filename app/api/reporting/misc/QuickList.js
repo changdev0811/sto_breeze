@@ -1,15 +1,15 @@
 /**
- * Report handler for Misc Audit report
- * @class Audit
- * @namespace Breeze.api.reporting.misc.Audit
+ * Report handler for Misc. Quick List report
+ * @class Quick
+ * @namespace Breeze.api.reporting.misc.Quick
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.misc.Audit', {
+Ext.define('Breeze.api.reporting.misc.QuickList', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'MiscAudit'
+        report: 'MiscQuickList'
     },
 
     /**

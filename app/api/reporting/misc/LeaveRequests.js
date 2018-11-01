@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.misc.LeaveRequests', {
     
     statics: {
         ajaxCall: '',
-        report: ''
+        report: 'MiscLeaveRequests'
     },
 
     /**
@@ -36,9 +36,48 @@ Ext.define('Breeze.api.reporting.misc.LeaveRequests', {
      *      console.warn('Error', err);
      *  }
      * )
+     
+     * @param {Object} modelParamsData Parameter data object from report 
+     * viewmodel
+     * @param {String} format Output format ('PDF', 'EXCEL' or 'WORD')
+     *  default is 'PDF'
      */
-    process: function(){
+    process: function(modelParamsData, format){
+        var cfg = Ext.getStore('CompanyConfig'),
+            format = (format)? format : 'PDF',
+            me = this,
+            modelParams = modelParamsData;
 
+        if(cfg.isLoaded()){
+            return this.generate(
+                    cfg.getAt(0),
+                    modelParams,
+                    format
+                );
+        } else {
+            return new Promise(function(resolve, reject){
+                cfg.load(function(r,op,success){
+                    if(success){
+                        resolve(
+                            me.generate(
+                                Ext.getStore('CompanyConfig').getAt(0),
+                                modelParams
+                            )
+                        );
+                    } else {
+                        reject('Failed to load company config store for Department Absence report');
+                    }
+                });
+            }).then(
+                function(gen){
+                    return gen;
+                }
+            ).catch(
+                function(err){
+                    return err;
+                }
+            );
+        }
     },
 
     /**
@@ -49,9 +88,44 @@ Ext.define('Breeze.api.reporting.misc.LeaveRequests', {
      * @see Breeze.api.reporting.Base for more details on method
      * 
      * @param {Object} cfg Config params passed in by process
+     * @param {String} format Output data format
      * @return {Promise} Promise resolving with report data or rejecting with error message
      */
-    generate: function(cfg){
+    generate: function(cfg, modelParamsData, format){
+        var me = this,
+            params = [],
+            // Store current user ID from cookie in emp and currentUser
+            cust = this.auth.getCookies().cust,
+            emp = this.auth.getCookies().emp,
+            currentUser = this.auth.getCookies().emp;
+        // use employee id from constructor params, if available
+        if(this.getParameters() && this.getParameters()['employeeId']){
+            emp = this.getParameters().employeeId;
+        }
 
+        // Add in parameters from model object
+        this.appendParamsFromDataObject(params, modelParamsData);
+
+        // Add additional params taken from config
+        this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
+        this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
+        this.appendParam(params, 'customer_id', cust);
+
+        var reportKind = this.statics().report;
+
+        return new Promise(function(resolve, reject){
+            me.createReportStore(
+                reportKind, {"Rows": params}, { format: format }
+            ).then(
+                function(store){
+                    resolve(store.getAt(0).get('CurrentPageURL'));
+                }
+            ).catch(
+                function(err){
+                    console.warn('Error loading report store', err);
+                    reject(err);
+                }
+            )
+        });
     }
 });
