@@ -91,21 +91,25 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
-                                    layout: 'vbox',
+                                    layout: 'fit',
 
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -117,33 +121,35 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
-                                            flex: 1,
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
-                                                    cell: {
-                                                        ui:'report-tree-column reporting-tree-item',
-                                                    },
+                                                    padding: 0,
                                                     listeners: {
                                                         checkChange: 'onTreeGridChecked'
                                                     }
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column reporting-tree-item',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -160,18 +166,22 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
-                                    layout: 'vbox',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
+                                    layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui: property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -182,29 +192,33 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            flex: 1,
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
+                                            expanderFirst: false,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
-                                                    cell: {
-                                                        ui:'report-tree-column reporting-tree-item',
-                                                    }
+                                                    padding: 0
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column reporting-tree-item',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -213,7 +227,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                                     }
                                                 }
                                             ],
-                                            // reference: 'employeeTree',
+                                            reference: 'employeeTree',
                                             bind: '{employeesTree}'
                                         }
                                     ]
@@ -320,6 +334,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                     ]
                 },
                 // Third column
+                // Container for User-Defined Categories list
                 {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
@@ -330,7 +345,12 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                     // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-                    
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+
+                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
@@ -342,6 +362,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                         {
                             xtype: 'toolbar',
                             ui: 'reporting-tree',
+                            userCls:'no-background',
                             shadow: false,
                             items: [
                                 {

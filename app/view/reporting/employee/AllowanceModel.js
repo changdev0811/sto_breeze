@@ -7,7 +7,6 @@
 Ext.define('Breeze.view.reporting.employee.AllowanceModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.reporting.employee.allowance',
-
     
     constructor: function (cfg) {
         this.callSuper([cfg]);
