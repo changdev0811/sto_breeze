@@ -56,12 +56,19 @@
 
 // styling applied to admin-fieldset title
 .no-margin {
-
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0, right: 0, bottom: 0.25)
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
     );
 }
+
+.no-side-margin {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0.5)
+    );
+}
+
 
 .no-background {
     background:transparent !important;
