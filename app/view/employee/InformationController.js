@@ -1545,6 +1545,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.comp_per = vm.get('info.CompPer');
         params.sex = vm.get('info.Gender');
         params.picture_path = vm.get('info.Photo');
+        // params.picture_modified = vm.get('info.PhotoFlag').toString();
         params.picture_modified = vm.get('info.PhotoFlag');
         // exempt = (vm.get('info.Exempt') == 138);
         params.exempt = false;
@@ -1558,10 +1559,13 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.punchpolicy_id = vm.get('info.punchPolicy.policy_id');
         params.default_project = vm.get('info.DefaultProject');
         // TODO: figure out what determines these values
-        params.changeAllowedTime = null;
-        params.changePastTime = null;
-        params.changeUserModifiedTime = null;
-        params.user_modified = null;
+        // params.changeAllowedTime = "false";
+        // params.changePastTime = "false";
+        // params.changeUserModifiedTime = "false";
+        params.changeAllowedTime = false;
+        params.changePastTime = false;
+        params.changeUserModifiedTime = false;
+        params.user_modified = true;
         params.shiftStartSegments = vm.get('info.ShiftStartSegments');
         params.shiftStopSegments = vm.get('info.ShiftStopSegments');
         params.user_type = vm.get('info.LoginType');
@@ -1603,7 +1607,15 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.Can_Use_TimeSheets = vm.get('info.punchPolicy.Can_Use_TimeSheets');
         params.InOut_Opt = vm.get('info.punchPolicy.InOut_Opt');
         params.Can_Use_InOut = vm.get('info.punchPolicy.Can_Use_InOut');
-        return params;
+        var nullSanitized = {},
+            attrs = Object.keys(params);
+        attrs.forEach((a)=>{
+            nullSanitized[a] = params[a];
+            if(Object.isUnvalued(nullSanitized[a])){
+                nullSanitized[a]="";
+            }
+        });
+        return nullSanitized;
     }
 
 });

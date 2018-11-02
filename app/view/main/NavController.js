@@ -76,6 +76,10 @@
                 action: 'onEmployeesRoute',
                 before: 'beforeEmployeesRoute'
             },
+            'e/:act/:id': {
+                action: 'onEmployeesViewRoute',
+                before: 'beforeEmployeesViewRoute'
+            },
             // Report route
             'reports/:category/:type': {
                 action: 'onReportRoute',
@@ -90,6 +94,7 @@
             this.empClass = Ext.create('Breeze.api.Employee');
             this.punchClass = Ext.create('Breeze.api.Punch');
             this.reportRoutes = Ext.create('Breeze.store.reporting.Routes');
+            this.employeesRoutes = Ext.create('Breeze.store.employees.Routes');
             this.theme = Breeze.helper.Theme;
             Breeze.helper.Auth.startAuthCheckTimer();
             this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
@@ -445,6 +450,7 @@
             this.changeContent(component);
         },
 
+        //===[Employees]===
 
         beforeEmployeesRoute: function(action){
             var accessLevel = this.getViewModel().get('accessLevel');
@@ -459,6 +465,57 @@
         onEmployeesRoute: function(){
             console.info('Employees route resolved');
             this.refreshEmployeesPanel(true);
+        },
+
+        /**
+         * Perform pre-route checks to make sure there is a valid action
+         * to display in view with employees panel
+         */
+        beforeEmployeesViewRoute: function(act,id,action){
+            console.info('Before employee view route');
+            var vm = this.getViewModel(),
+                accessLevel = vm.get('accessLevel');
+                // viewDataArgs = vm.get('employeesView.args'),
+                // viewDataId = vm.get('employeesView.id');
+            if(
+                // Invalid access level
+                (accessLevel < Breeze.api.Employee.accessLevel.SUPERVISOR) ||
+                // Not enough data in viewmodel indicating intent
+                // (Object.isUnvalued(viewDataArgs) || Object.isUnvalued(viewDataId)) ||
+                // act in URL doesn't resolve
+                (this.employeesRoutes.resolve(act) == null)
+            ) {
+                action.stop();
+                Ext.util.History.back();
+            } else {
+                action.resume();
+            }
+        },
+
+        onEmployeesViewRoute: function(act,id){
+            var vm = this.getViewModel(),
+                // args = vm.get('employeesView.args'),
+                // id = vm.get('employeesView.id'),
+                plan = this.employeesRoutes.resolve(act);
+            
+            // Make sure employees panel is still shown
+            this.refreshEmployeesPanel(true);
+
+            if(!plan.method){
+                // var view = Ext.create(
+                //     plan.view, {
+                //         data: { employee: id }
+                //     }
+                // );
+
+                // this.changeContent(view);
+                this.replaceContent(
+                    plan.view,
+                    { data: { employee: id } }
+                );
+            }
+
+            console.info('Resolving employees view route');
         },
 
         // ===[Content functions]===
@@ -487,6 +544,21 @@
             
         },
 
+        replaceContent: function(ns, args){
+            var container = this.lookup('contentContainer');
+                
+            if(!Object.isUnvalued(container.getActiveItem())){
+                
+                // container.remove(container.getActiveItem(), true);
+                var old = container.pop();
+                container.remove(container.getActiveItem(), true);
+            } 
+
+            var newContent = Ext.create(ns, args);
+            container.push(newContent);
+
+        },
+
         /**
          * Swap contents of body content container
          * @param {Object} newContent New view / component to show in content container
@@ -498,14 +570,14 @@
             var container = this.lookup('contentContainer');
             
             if(newContent && newContent !== null){
-            //     container.add(newContent);
+                //     container.add(newContent);
                 var old = container.getActiveItem();
                 container.setActiveItem(newContent);
                 if(typeof old !== 'undefined'){
                     container.remove(old);
                 }
             }
-
+           
             if(modalMode){
                 // TODO: Change what menus are shown / enabled
             }

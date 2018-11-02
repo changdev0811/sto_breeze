@@ -47,7 +47,8 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             // },
                             bind: {
                                 // Dynamically disable based on readonly and shift count
-                                disabled: '{!canAddShift}'
+                                disabled: '{!canAddShift}',
+                                hidden: '{readOnly}'
                             },
                             // handler: 'onGridAddButton'
                             handler: 'onAddShiftSegmentDirect'
@@ -121,7 +122,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                     ui: 'employeeinfo-shift-grid', menuDisabled: true,
                                     align: 'center', flex: 1,
                                     dataIndex: 'StopMin', tpl: '{StopTime}',
-                                    ind: {
+                                    bind: {
                                         editable: '{!readOnly}'
                                     },
                                     editor: {

@@ -12,13 +12,17 @@ Ext.define('Breeze.store.tree.reporting.Departments', {
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-    alias: 'store.tree.reporting.departments',
+	alias: 'store.tree.reporting.departments',
+	config: {
+		excludeTerminated: false
+	},
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			this.getProxy().extraParams.excludeTerminated = this.getExcludeTerminated();
 		}
 	},
 	proxy: {

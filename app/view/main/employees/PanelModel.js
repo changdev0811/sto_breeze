@@ -27,6 +27,13 @@ Ext.define('Breeze.view.main.employees.PanelModel', {
             // TODO: update perms to false by default
             canAdd: true,
             canRemove: true
+        },
+
+        // Employee counts
+        counts: {
+            active: 0,
+            terminated: 0,
+            deleted: 0
         }
     }
 });

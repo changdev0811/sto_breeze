@@ -225,6 +225,10 @@ Ext.define('Breeze.view.employee.information.Company', {
                                         // Add tool
                                         add: {
                                             iconCls: 'x-fas fa-plus',
+                                            bind: {
+                                                hidden: '{readOnly}',
+                                                disabled: '{readOnly}'
+                                            },
                                             data: {
                                                 // reference to actionsheet button shows
                                                 sheet: 'supervisorAddActionSheet',
@@ -263,7 +267,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     tpl: '{displayName}',
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
-                                                    editable: true,
+                                                    bind: {
+                                                        editable: '{!readOnly}'
+                                                    },
                                                     editor: {
                                                         xtype: 'selectfield',
                                                         bind: {
@@ -288,7 +294,11 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         tools: [
                                                             {
                                                                 iconCls: 'x-fas fa-times',
-                                                                handler: 'onCompanyRemoveSupervisorTool'
+                                                                handler: 'onCompanyRemoveSupervisorTool',
+                                                                binding: {
+                                                                    hidden: '{readOnly}',
+                                                                    disabled: '{readOnly}'
+                                                                },
                                                             }
                                                         ]
                                                     }
@@ -325,6 +335,10 @@ Ext.define('Breeze.view.employee.information.Company', {
                                     tools: {
                                         add: {
                                             iconCls: 'x-fas fa-plus',
+                                            bind: {
+                                                hidden: '{readOnly}',
+                                                disabled: '{readOnly}'
+                                            },
                                             data: {
                                                 sheet: 'employeeAddActionSheet',
                                                 // Name of function used to make sure its ok to add
@@ -362,7 +376,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                     tpl: '{displayName}',
                                                     menuDisabled: true,
                                                     ui: 'employeeinfo-shift-grid',
-                                                    editable: true,
+                                                    binding: {
+                                                        editable: '{!readOnly}'
+                                                    },
                                                     editor: {
                                                         xtype: 'selectfield',
                                                         bind: {
@@ -388,7 +404,11 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                         tools: [
                                                             {
                                                                 iconCls: 'x-fas fa-times',
-                                                                handler: 'onCompanyRemoveSupervisedEmployeeTool'
+                                                                handler: 'onCompanyRemoveSupervisedEmployeeTool',
+                                                                binding: {
+                                                                    hidden: '{readOnly}',
+                                                                    disabled: '{readOnly}'
+                                                                },
                                                             }
                                                         ]
                                                     }
@@ -425,6 +445,10 @@ Ext.define('Breeze.view.employee.information.Company', {
                                         // Add tool
                                         add: {
                                             iconCls: 'x-fas fa-plus',
+                                            bind: {
+                                                hidden: '{readOnly}',
+                                                disabled: '{readOnly}'
+                                            },
                                             data: {
                                                 // reference to actionsheet button shows
                                                 sheet: 'departmentAddActionSheet',

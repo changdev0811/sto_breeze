@@ -94,19 +94,19 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     itemId: 'active',
                                     bodyAlign: 'center',
                                     label: 'Active',
-                                    value: '1'
+                                    bind: { value: '{counts.active}' }
                                },
                                {
                                    itemId: 'terminated',
                                    bodyAlign: 'center',
                                    label: 'Terminated',
-                                   value: '2'
+                                   bind: { value: '{counts.terminated}' }
                                },
                                {
                                    itemId: 'deleted',
                                    bodyAlign: 'center',
                                    label: 'Deleted',
-                                   value: '10'
+                                   bind: { value: '{counts.deleted}' }
                                },
                                { xtype: 'spacer' },
                                {
@@ -186,19 +186,19 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     itemId: 'active',
                                     bodyAlign: 'center',
                                     label: 'Active',
-                                    value: '1'
+                                    bind: { value: '{counts.active}' }
                                },
                                {
                                    itemId: 'terminated',
                                    bodyAlign: 'center',
                                    label: 'Terminated',
-                                   value: '2'
+                                   bind: { value: '{counts.terminated}' }
                                },
                                {
                                    itemId: 'deleted',
                                    bodyAlign: 'center',
                                    label: 'Deleted',
-                                   value: '10'
+                                   bind: { value: '{counts.deleted}' }
                                },
                                { xtype: 'spacer' },
                                {
