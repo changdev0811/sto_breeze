@@ -1559,20 +1559,18 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.punchpolicy_id = vm.get('info.punchPolicy.policy_id');
         params.default_project = vm.get('info.DefaultProject');
         // TODO: figure out what determines these values
-        // params.changeAllowedTime = "false";
-        // params.changePastTime = "false";
-        // params.changeUserModifiedTime = "false";
         params.changeAllowedTime = false;
         params.changePastTime = false;
         params.changeUserModifiedTime = false;
         params.user_modified = true;
-        params.shiftStartSegments = vm.get('info.ShiftStartSegments');
-        params.shiftStopSegments = vm.get('info.ShiftStopSegments');
+        // The next six array items have to be string joined and submitted as lists
+        params.shiftStartSegments = vm.get('info.ShiftStartSegments').join(',');
+        params.shiftStopSegments = vm.get('info.ShiftStopSegments').join(',');
+        params.supervisor_ids = vm.get('info.SupervisorIds').join(',');
+        params.employee_ids = vm.get('info.SupervisedEmpIds').join(',');
+        params.department_ids = vm.get('info.SupervisedDeptIds').join(',');
+        params.department_role_ids = vm.get('info.DeptRoleIds').join(',');
         params.user_type = vm.get('info.LoginType');
-        params.supervisor_ids = vm.get('info.SupervisorIds');
-        params.employee_ids = vm.get('info.SupervisedEmpIds');
-        params.department_ids = vm.get('info.SupervisedDeptIds');
-        params.department_role_ids = vm.get('info.DeptRoleIds');
         params.ot_opt1 = vm.get('info.punchPolicy.Ot_Opt1');
         params.ot_opt2 = vm.get('info.punchPolicy.Ot_Opt2');
         params.ot_opt3 = vm.get('info.punchPolicy.Ot_Opt3');
@@ -1591,7 +1589,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.ot_rate4 = vm.get('info.punchPolicy.Ot_Rate4');
         params.subtract_dayot = vm.get('info.punchPolicy.Subtract_DayOt');
         params.round_increment = vm.get('info.punchPolicy.Round_Increment');
-        params.round_offset = vm.get('info.punchPolicy.round_offset');
+        params.round_offset = vm.get('info.punchPolicy.Round_Offset');
         params.Allow_RegularPunch = vm.get('info.punchPolicy.Allow_RegularPunch');
         params.Allow_QuickPunch = vm.get('info.punchPolicy.Allow_QuickPunch');
         params.Auto_PunchIn = vm.get('info.punchPolicy.Auto_PunchIn');
