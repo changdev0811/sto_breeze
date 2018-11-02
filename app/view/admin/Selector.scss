@@ -77,7 +77,10 @@
 .admin-title-toolbar {
     font-weight:1000;
     color:map-get($admin-text-colors, 'base');
+}
 
+.tool-check-box {
+    margin-left:-4pt;
 }
 
 /** Generic base UI for report form panels **/
