@@ -11,6 +11,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
     data: {
         employeeName: 'X',
         employeeId: undefined,
+        newEmployee: false,
         departmentName: 'X',
         points: '',
         // When true, fields will be read-only
@@ -24,7 +25,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
         companyConfig: {
 
         },
-        // ==[Company tab list visibility ]
+        // ==[Company tab list visibility]==
         lists: {
             supervisors: {
                 enabled: true,
@@ -38,6 +39,38 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 enabled: true,
                 readonly: true
             },
+        },
+
+        // ==[Form Validation/Save Prep]==
+        form: {
+            // Validation error message text
+            validationMessage: '',
+            // whether changes have been made that can be reverted
+            canRevert: false
+        },
+
+        // ==[Error Messages]==
+        errors: {
+            company: {
+                supervisor: {
+                    noChoices:
+                        'This employee is already supervised by all of their department\'s ' +
+                        'supervisors.',
+                    noChoicesNonTerminated:
+                        'This employee is already supervised by all of their department\'s ' +
+                        'non-terminated supervisors.'
+                },
+                employee: {
+                    noChoices:
+                        'This supervisor already has rights to all of their departments\' ' +
+                        'employees.',
+                    noChoicesNonTerminated:
+                        'This supervisor already has rights to all of their department\'s ' +
+                        'non-terminated employees.',
+                    noDepartments:
+                        'This supervisor must have departments before employees.'
+                }
+            }
         },
 
         info: {
@@ -268,136 +301,84 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-        isLaidOff: function(get){
+        isLaidOff: function (get) {
             return (get('info.LayoffStatus') == 'Laid Off');
         },
 
-        /**
-         * Pull all form data from elsewhere in model and return it in a single object
-         * using the expected parameter names for submitting data updates
-         */
-        formData: function (get) {
-            return {
-                employee_id: get('employeeId'),
-                first_name: get('info.FirstName'),
-                last_name: get('info.LastName'),
-                middle_name: get('info.MiddleName'),
-                company_employee_id: get('info.CustomerId'),
-                ssn: get('info.SSN'),
-                payroll: get('info.Payroll'),
-                date_of_hire: get('info.HireDate'),
-                date_of_birth: get('info.BirthDate'),
-                date_of_termination: get('info.TerminationDate'),
-                comp_rate: get('info.CompRate'),
-                comp_per: get('info.CompPer'),
-                sex: get('info.Gender'),
-                picture_path: get('info.Photo'),
-                picture_modified: get('info.PhotoFlag'),
-                // exempt: (get('info.Exempt') == 138),
-                exempt: false,
-                notes: get('info.Notes'),
-                recording_mode: get('info.RecordingMode'),
-                exempt_status: get('info.ExemptStatus'),
-                badge_id: get('info.Badge'),
-                email: get('info.Email').trim(),
-                department_id: get('info.Department'),
-                schedule_id: get('info.StartUpSettings'),
-                punchpolicy_id: get('info.punchPolicy.policy_id'),
-                default_project: get('info.DefaultProject'),
-                // TODO: figure out what determines these values
-                changeAllowedTime: null,
-                changePastTime: null,
-                changeUserModifiedTime: null,
-                user_modified: null,
-                shiftStartSegments: get('info.ShiftStartSegments'),
-                shiftStopSegments: get('info.ShiftStopSegments'),
-                user_type: get('info.LoginType'),
-                supervisor_ids: get('info.SupervisorIds'),
-                employee_ids: get('info.SupervisedEmpIds'),
-                department_ids: get('info.SupervisedDeptIds'),
-                department_role_ids: get('info.DeptRoleIds'),
-                ot_opt1: get('info.punchPolicy.Ot_Opt1'),
-                ot_opt2: get('info.punchPolicy.Ot_Opt2'),
-                ot_opt3: get('info.punchPolicy.Ot_Opt3'),
-                ot_opt4: get('info.punchPolicy.Ot_Opt4'),
-                ot_day1: get('overtime_day1'),
-                ot_day2: get('overtime_day2'),
-                ot_day3: get('overtime_day3'),
-                ot_day4: get('overtime_day4'),
-                ot_week1: get('overtime_week1'),
-                ot_week2: get('overtime_week2'),
-                ot_week3: get('overtime_week3'),
-                ot_week4: get('overtime_week4'),
-                ot_rate1: get('info.punchPolicy.Ot_Rate1'),
-                ot_rate2: get('info.punchPolicy.Ot_Rate2'),
-                ot_rate3: get('info.punchPolicy.Ot_Rate3'),
-                ot_rate4: get('info.punchPolicy.Ot_Rate4'),
-                subtract_dayot: get('info.punchPolicy.Subtract_DayOt'),
-                round_increment: get('info.punchPolicy.Round_Increment'),
-                round_offset: get('info.punchPolicy.round_offset'),
-                Allow_RegularPunch: get('info.punchPolicy.Allow_RegularPunch'),
-                Allow_QuickPunch: get('info.punchPolicy.Allow_QuickPunch'),
-                Auto_PunchIn: get('info.punchPolicy.Auto_PunchIn'),
-                Auto_PunchOut: get('info.punchPolicy.Auto_PunchOut'),
-                Auto_Close_Shift: get('info.punchPolicy.Auto_Close_Shift'),
-                Auto_Lunch_Punch: get('info.punchPolicy.Auto_LunchPunch'),
-                LunchPunch_Seg: get('info.punchPolicy.LunchPunch_Seg'),
-                LunchPunch_Hours: get('info.punchPolicy.LunchPunch_Hours'),
-                Can_Add_Projects: get('info.punchPolicy.Can_Add_Projects'),
-                Can_Add_Notes: get('info.punchPolicy.Can_Add_Notes'),
-                Can_Edit_Projects: get('info.punchPolicy.Can_Edit_Notes'),
-                Can_Adjust_Punches: get('info.punchPolicy.Can_Adjust_Punches'),
-                Can_Use_TimeSheets: get('info.punchPolicy.Can_Use_TimeSheets'),
-                InOut_Opt: get('info.punchPolicy.InOut_Opt'),
-                Can_Use_InOut: get('info.punchPolicy.Can_Use_InOut')
-            };
-        },
+
 
         /**
-         * Formula returning filtered selection of supervisors based on supervisor
-         * IDs defined in employee info data object
+         * Formula returning profile picture path or default file if
+         * no custom image has been set
+         * @param {Function} get ViewModel get function reference
+         * @return {String} profile picture url
          */
-        companySupervisorChoices: {
-            bind: {
-                store: '{supervisors}',
-                ids: '{info.SupervisorIds}'
-            },
-            get: function (data) {
-                return data.store.queryRecordsBy(
-                    function (rec) {
-                        return data.ids.includes(rec.id);
-                    }
-                );
-            }
-        },
-
-        companyDepartmentOptions: {
-            bind: {
-                // deptStore: '{departments}',
-                // roleStore: '{securityRoles}',
-                deptIds: '{info.SupervisedDeptIds}',
-                deptNames: '{info.SupervisedDepts}',
-                roleIds: '{info.DeptRoleIds}',
-                roleNames: '{info.DeptRoles}'
-            },
-            get: function (data) {
-                return data.deptIds.map(function (v, idx) {
-                    return {
-                        // displayName: data.deptStore.findRecord('Id', v).get('Name'),
-                        // role: data.roleStore.findRecord('Role_Id', data.roleIds[idx]).get('Role_Name')
-                        displayName: data.deptNames[idx],
-                        role: data.roleNames[idx]
-                    }
-                });
-            }
-        },
-
-        profileImage: function (get) {
+        profilePicture: function (get) {
             if (get('info.PhotoFlag')) {
                 return get('info.Photo');
             } else {
-                return 'resources/photos/default_user.png'
+                var picSets = Breeze.helper.settings.Employee
+                    .profilePicture;
+                return `${picSets.path}${picSets.defaultFile}`
             }
+        },
+
+        /**
+         * Formula returning bool indicating whether employee has a
+         * custom profile picture set or not
+         * @param {Function} get ViewModel get function reference
+         * @return {Boolean} True if custom picture, false otherwise
+         */
+        hasCustomProfilePicture: function (get) {
+            return get('info.PhotoFlag');
+        },
+
+        /**
+         * Formula checking whether its possible to add a new shift to the
+         * shift information grid
+         * @param {Function} get ViewModel get function reference
+         * @return {Boolean} Boolean indicating whether add shift button should be enabled
+         */
+        canAddShift: function (get) {
+            return (
+                !get('readOnly') &&
+                (get('shift.segments').count() < 2)
+            );
+        },
+
+        /**
+         * Formula that runs once and builds a list of 48 shift time choices
+         * paired with numerical values
+         */
+        shiftChoicesFormula: {
+            single: true,
+            /*
+            get: function(get){
+                // Function that builds array of numerical shift values
+                var genValues = ()=>{for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);return b},
+                    genTime = (val)=>{
+                        var h = Math.floor(val/60.0),
+                            H = (h%12),
+                            m = (val % 60),
+                            t = (val < 720)? 'AM' : 'PM';
+                        H = (H==0)? 12 : H;
+                        return `${H}:${m.toZeroPaddedString(2)} ${t}`;
+                    };
+                return genValues().map((v)=>{
+                    return {value: v, time: genTime(v)};
+                });
+            }*/
+            get: function (get) {
+                return function () {
+                    for (var b = [], a = 0, c = 0; 48 > a; a++ , c = 30 * a)b.push(c);
+                    return b
+                }().map(function (b) {
+                    var a = Math.floor(b / 60) % 12;
+                    var c = 720 > b ? "AM" : "PM"; a = (0 == a ? 12 : a) + ":" + (b % 60)
+                        .toZeroPaddedString(2) + c; return { value: b, time: a }
+                });
+            }
+
         }
 
     }

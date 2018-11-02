@@ -1,10 +1,22 @@
+/**
+ * Employees panel view
+ * @class Panel
+ * @namespace Breeze.view.main.employees.Panel
+ * @alias widget.main.employees.panel
+ */
 Ext.define('Breeze.view.main.employees.Panel', {
     extend: 'Ext.Container',
     alias: 'widget.main.employees.panel',
     xtype: 'breeze-employees-panel',
 
     controller: 'main.employees.panel',
+    viewModel: {
+        type: 'main.employees.panel'
+    },
 
+    listeners: {
+        initialize: 'onInit'
+    },
     // showAnimation: {
     //     type: 'reveal',
     //     direction: 'right',
@@ -18,9 +30,6 @@ Ext.define('Breeze.view.main.employees.Panel', {
 
     width: '300pt',
 
-    layout: 'fit',
-
-    
     layout: 'vbox',
     userCls: 'employees-panel',
     // padding: '16pt',
@@ -48,10 +57,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     xtype: 'container',
                     title: 'Employees',
                     items: [
+                        // Search toolbar
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
-                            ui: 'employees-panel-toolbar',
+                            ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -59,56 +69,80 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     ui: 'solo',
                                     shadow: true,
                                     flex: 1,
-                                    placeholder: 'Search'
+                                    placeholder: 'Search',
+                                    listeners: {
+                                        action: 'doEmployeesSearch',
+                                        clearicontap: 'doEmployeesSearch'
+                                    }
                                 }
                             ]
                         },
+                        // Info + action
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
+                            ui: 'employees-toolbar', docked: 'top',
+                            reference: 'employeesEmployeeToolbar',
+                            defaults: {
+                                xtype: 'displayfield',
+                                ui: [
+                                    'dark-textfield', 'dark-textfield-sm',
+                                    'employees-toolbar-display'
+                                ]
+                            },
+                           items: [
+                               {
+                                    itemId: 'active',
+                                    bodyAlign: 'center',
                                     label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
-                            ]
+                                    bind: { value: '{counts.active}' }
+                               },
+                               {
+                                   itemId: 'terminated',
+                                   bodyAlign: 'center',
+                                   label: 'Terminated',
+                                   bind: { value: '{counts.terminated}' }
+                               },
+                               {
+                                   itemId: 'deleted',
+                                   bodyAlign: 'center',
+                                   label: 'Deleted',
+                                   bind: { value: '{counts.deleted}' }
+                               },
+                               { xtype: 'spacer' },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'new', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-plus',
+                                   bind: {
+                                       hidden: '{!permissions.canAdd}'
+                                   }
+                               },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'remove', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-minus', 
+                                   bind: {
+                                       hidden: '{!permissions.canRemove}',
+                                   },
+                                   disabled: true
+                               }
+                           ]
                         },
                         {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
-                            reference: 'employeesTree'
+                            reference: 'employeesEmployeeTree',
+                            rootVisible: false,
+                            bind: {
+                                // store: '{employeesTree}'
+                                store: '{employeesList}'
+                            },
+                            listeners: {
+                                select: 'onEmployeesTreeSelect'
+                            }
                         }
                     ]
                 },
@@ -120,7 +154,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
-                            ui: 'employees-panel-toolbar',
+                            ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
                                 {
@@ -128,126 +162,78 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     // ui: 'dark-textfield',
                                     ui: 'alt',
                                     flex: 1,
-                                    placeholder: 'Search'
+                                    placeholder: 'Search',
+                                    listeners: {
+                                        action: 'doDepartmentsSearch',
+                                        clearicontap: 'doDepartmentsSearch'
+                                    }
                                 }
                             ]
                         },
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
+                            ui: 'employees-toolbar', docked: 'top',
+                            reference: 'employeesDepartmentToolbar',
+                            defaults: {
+                                xtype: 'displayfield',
+                                ui: [
+                                    'dark-textfield', 'dark-textfield-sm',
+                                    'employees-toolbar-display'
+                                ]
+                            },
                             items: [
                                 {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
+                                    itemId: 'active',
+                                    bodyAlign: 'center',
                                     label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
+                                    bind: { value: '{counts.active}' }
+                               },
+                               {
+                                   itemId: 'terminated',
+                                   bodyAlign: 'center',
+                                   label: 'Terminated',
+                                   bind: { value: '{counts.terminated}' }
+                               },
+                               {
+                                   itemId: 'deleted',
+                                   bodyAlign: 'center',
+                                   label: 'Deleted',
+                                   bind: { value: '{counts.deleted}' }
+                               },
+                               { xtype: 'spacer' },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'new', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-plus',
+                                   bind: {
+                                       hidden: '{!permissions.canAdd}'
+                                   }
+                               },
+                               {
+                                   xtype: 'button', 
+                                   itemId: 'remove', text: '',
+                                   ui: 'plain wtr-button',
+                                   iconCls: 'x-fas fa-minus', 
+                                   bind: {
+                                       hidden: '{!permissions.canRemove}',
+                                   },
+                                   disabled: true
+                               }
                             ]
                         },
                         {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
-                            reference: 'departmentsTree'
-                        }
-                    ]
-                },
-                // ===[Groups Tab]===
-                {
-                    xtype: 'container',
-                    title: 'Groups',
-                    layout: 'vbox',
-                    items: [
-                        {
-                            xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            itemId: 'searchToolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'searchfield',
-                                    // ui: 'dark-textfield',
-                                    ui: 'alt',
-                                    flex: 1,
-                                    placeholder: 'Search'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'toolbar',
-                            ui: 'employees-panel-toolbar',
-                            docked: 'top',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'activeCount',
-                                    label: 'Active',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'terminatedCount',
-                                    label: 'Terminated',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    ui: 'dark-textfield dark-textfield-sm',
-                                    flex: 1,
-                                    itemId: 'deletedCount',
-                                    label: 'Deleted',
-                                    value: 1
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-plus',
-                                    ui: 'plain wtr-button'
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'tree',
-                            userCls: 'employees-panel-tree',
-                            flex: 1,
-                            reference: 'departmentsTree'
+                            reference: 'employeesDepartmentTree',
+                            rootVisible: false,
+                            bind: {
+                                store: '{departmentsList}'
+                            },
+                            listeners: {
+                                select: 'onDepartmentsTreeSelect'
+                            }
                         }
                     ]
                 }
@@ -255,14 +241,17 @@ Ext.define('Breeze.view.main.employees.Panel', {
         },
         {
             xtype: 'toolbar',
-            ui: 'employees-panel-toolbar',
+            ui: 'employees-toolbar',
             dock: 'bottom',
             items: [
                 {
                     xtype: 'breeze-checkbox',
-                    ui: 'dark-checkbox',
+                    ui: 'employees-panel-checkbox',
                     boxLabel: 'Exclude Terminated',
-                    name: 'exclude_terminated'
+                    name: 'exclude_terminated',
+                    bind: {
+                        checked: '{excludeTerminated}'
+                    }
                 }
             ]
         }

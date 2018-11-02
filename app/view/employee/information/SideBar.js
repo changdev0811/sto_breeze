@@ -1,6 +1,14 @@
+/**
+ * Employee Information Sidebar sub-view
+ * @class SideBar
+ * @namespace Breeze.view.employee.information.SideBar
+ * @alias widget.employee.information.sidebar
+ * @extends Ext.Container
+ */
 Ext.define('Breeze.view.employee.information.SideBar', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.sidebar',
+
     requires: [
         'Ext.Img'
     ],
@@ -10,7 +18,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             xtype: 'image',
             height: '128pt',
             bind: {
-                src: '{profileImage}'
+                src: '{profilePicture}'
             },
             reference: 'infoProfilePicture',
             userCls: 'employee-info-profile-picture'
@@ -34,7 +42,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             ui:'employeeinfo-notes-button', 
             //hidden:true, 
             listeners:{
-                tap:'onEditProfileImageTap'
+                tap:'onEditProfilePictureTap'
             }
         },
         {
@@ -68,33 +76,34 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             xtype: 'dialog',
             width: '400pt', height: '400pt',
             ui: 'light-themed-dialog employeeinfo-dialog',
-            reference: 'profileImageEditorDialog',
+            reference: 'profilePictureEditorDialog',
             title: {
-                text: 'Update Profile Image',
+                text: 'Update Profile Picture',
                 ui: 'light-themed-dialog'
             },
             buttons: [
                 {
-                    text: 'Remove Image',
+                    text: 'Remove Picture',
                     ui: 'decline',
                     bind: {
-                        disabled: '{!(info.Photo !== null)}'
+                        disabled: '{!hasCustomProfilePicture}'
                     },
-                    handler: 'onRemoveProfileImage'
+                    handler: 'onRemoveProfilePicture'
                 },
                 {
                     xtype: 'spacer'
                 },
                 {
                     text: 'Upload',
-                    handler: 'onUploadProfileImage',
+                    ui: 'action',
+                    handler: 'onUploadProfilePicture',
                     bind: {
                         disabled: '{!pictureFileField.value}'
                     }
                 },
                 {
                     text: 'Cancel',
-                    handler: 'onCancelProfileImageEdit'
+                    handler: 'onCancelProfilePictureEdit'
                 }
             ],
             layout: 'fit',
@@ -102,7 +111,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 {
                     xtype: 'formpanel',
                     layout: 'vbox',
-                    reference: 'profileImageForm',
+                    reference: 'profilePictureForm',
                     header: false,
                     defaults: {
                         ui: 'employeeinfo-dialog-field'
@@ -138,8 +147,9 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                         },
                         {
                             xtype: 'fieldset',
+                            // itemId: 'imageFieldSet',
                             flex: 1,
-                            title: 'Current Profile Image',
+                            title: 'Current Profile Picture',
                             items: [
                                 {
                                     xtype: 'image',
@@ -162,7 +172,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                                     accept: 'image/*',
                                     reference: 'pictureFileField',
                                     itemId: 'imageFile',
-                                    label: 'Image File',
+                                    label: 'Picture File',
                                     ui: 'employeeinfo-dialog-field'
                                 }
                             ]

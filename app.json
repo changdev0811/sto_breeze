@@ -225,6 +225,11 @@
             "path": "lib/extensions.js",
             "includeInBundle": true
         },
+        // Time/Minute class
+        {
+            "path": "lib/breeze_time.js",
+            "includeInBundle": true
+        },
         // Include dynamic theme loader
         // {
         //     "path": "lib/dynamic_theme.js",

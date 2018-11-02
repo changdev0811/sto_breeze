@@ -102,7 +102,12 @@ Ext.define('Breeze.api.employee.Information', {
 
     updateEmployee: function(parameters){
         var me = this,
-            api = me.api;
+            api = me.api,
+            cookies = me.auth.getCookies(),
+            params = Object.assign({}, parameters);
+        params.emp_id = cookies.emp;
+        params.cust_id = cookies.cust;
+        params.hashcookie = cookies.pass;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
                 'updateEmployee',
@@ -111,14 +116,36 @@ Ext.define('Breeze.api.employee.Information', {
                 function(response){
                     var rsp = api.decodeJsonResponse(response);
                     if(rsp.success == true){
-                        resolve(true);
-                        // TODO: decide where to handle refreshing Employees panel, if enabled
+                        resolve({
+                            message: 'Employee Information successfully saved.',
+                            type: Ext.Toast.INFO,
+                            info: rsp.info,
+                            err: rsp.err
+                        });
                     } else {
-                        resolve(false, rsp.error);
+                        var msg = 'An error occured';
+                        if(!Object.isUnvalued(rsp.err)){
+                            msg = msg.concat('<br>(',rsp.err,')');
+                        }
+                        reject({
+                            message: msg,
+                            type: Ext.Toast.ERROR,
+                            info: rsp.info,
+                            err: rsp.err
+                        });
                     }
                 },
                 function(err){
-                    reject(err);
+                    var msg = 'An error occured';
+                    if(!Object.isUnvalued(err.statusText)){
+                        msg = msg.concat('<br>(',err.statusText,')');
+                    }
+                    reject({
+                        message: msg,
+                        type: Ext.Toast.ERROR,
+                        info: null,
+                        err: err
+                    });
                 }
             )
         });
@@ -127,38 +154,171 @@ Ext.define('Breeze.api.employee.Information', {
     // TODO: Implement addNewEmployee
     addNewEmployee: function () { },
 
-    // TODO: Finish implementing
-    uploadPicture: function (form) {
+    /**
+     * Upload profile picture using AJAX
+     * @param {Object} form Form containing input fields
+     * @param {String} employeeId Employee ID of picture owner
+     * @return {Promise}    Promise resolving with uploaded image URL on success 
+     *                      or rejecting with Toast error object (fields type, 
+     *                      message and sometimes extra with additional error
+     *                      information)
+     * @api uploadEmployeePicture
+     */
+    uploadPictureAjax: function (form, employeeId) {
+        var api = this.api,
+            jar = this.auth.getCookies(),
+            hash = jar.pass,
+            cust = jar.cust,
+            emp = jar.emp,
+            path = Breeze.helper.Settings.employee.profilePicture.path;
+            
         console.info('EmpInfo API Upload Picture');
         return new Promise((resolve, reject) => {
             var imageField = form.getComponent('imageFieldSet').
                     getComponent('imageFile'),
                 fileExtension = imageField.getFiles()[0].name
                     .split('.').slice(-1)[0].toLowerCase();
-
+            
             // Check file extension
-            if(['.jpg','.jpeg','.gif','.png','.bmp'].indexOf(fileExtension) == -1){
+            if(['jpg','jpeg','gif','png','bmp'].indexOf(fileExtension) == -1){
                 // If file extension isn't ok, reject with warning
                 reject(
                     {
                         type: Ext.Toast.WARN,
+                        // TODO: Check if we want this message to say 'Breeze' or 'SoftTime Online'
                         message: 'Invalid image type. The file type ' + fileExtension + 
-                            ' is not supported by SoftTime Online.<br/>' + 
+                            // Original:
+                            // ' is not supported by SoftTime Online.<br/>' + 
+                            ' is not supported by Breeze.<br/>' + 
                             'Please select a .jpeg, .jpg, .gif, .png, or .bmp file type'
                     }
                 );
             }
 
-            form.getComponent('pictureModified').setValue(true);
-            form.getComponent('extension').setValue(fileExtension);
+            // Update hidden form fields
 
+            // internal shorthand function for setting form field values
+            var setField = (name,val) => { form.getComponent(name).setValue(val);};
+
+            setField('pictureModified', true);
+            setField('hasPicture', true);
+            setField('extension', `.${fileExtension}`);
+            setField('empId', emp);
+            setField('custId', cust);
+            setField('employeeId', employeeId);
+            setField('hashcookie', hash);
+
+            // console.info('Form Values:');
+            // console.table(form.getValues());
+
+            if(form.isValid()){
+                // Quickly construct FormData object from form panel component
+                var buildFormData = function(form) 
+                    {
+                        var data = new FormData(),
+                            values = form.getValues(),
+                            fields = Object.keys(values);
+                        fields.forEach((f)=>{
+                            data.append(f,values[f]);
+                        });
+                        return data;
+                    },
+                    // Copy form field values to form data object
+                    formData = buildFormData(form);
+                
+                // Add image file field to FormData object
+                formData.append(
+                    'photo_upload',
+                    form.getComponent('imageFieldSet')
+                        .getComponent('imageFile')
+                        .getFiles()[0]
+                );
+
+                // Prepare parameters for AJAX request
+                var ajaxParams = {
+                    url: api.url('uploadEmployeePicture.ashx'),
+                    method: 'POST',
+                    // defaultHeaders: {'Content-Type': 'application/json'},
+                    // params: formData,
+                    rawData: formData,
+                    headers: {'Content-Type': null}, // auto decide content type
+                    // cors: true,
+                    /**
+                     * Handle successful AJAX request
+                     * @param {Object} resp Response data
+                     * @param {Object} opts Options
+                     */
+                    success: function(resp, opts){
+                        var response = JSON.parse(resp.responseText);
+                        if(response.success){
+                            // Successful, resolve with generated URL
+                            var imgUrl = '',
+                            randoHash = String.random();
+                            if(emp == 'new'){
+                                // TODO: Figure out actual path name for images
+                                imgUrl = `${path}${cust}/tmp${emp}.${fileExtension}?bob=${randoHash}`;
+                            } else {
+                                imgUrl = `${path}${cust}/${employeeId}tmp${emp}.${fileExtension}?bob=${randoHash}`;
+                            }
+                            // Form successfully submitted, resolve URL
+                            resolve(imgUrl);
+                        } else {
+                            var msg = (response.message)? response.message : 
+                                (response.error)? response.error : 'Unknown';
+                            // response.success false, reject with error message
+                            reject({
+                                type: Ext.Toast.ERROR,
+                                message: 'Error occured during upload<br>'.concat(
+                                    '(', msg, ')'
+                                ),
+                                extra: response
+                            });
+                        }
+                    },
+                    /**
+                     * Handle request failure
+                     * @param {Object} resp Response data
+                     * @param {Object} opts Options
+                     */
+                    failure: function(resp, opts){
+                        var response = JSON.parse(resp.responseText),
+                            // grab error detail message from response, if present
+                            msg = (response.message)? response.message : 
+                                (response.error)? response.error : 'Unknown';
+                        
+                        // Failure occurred, so show generic error message, and include
+                        // additional details from response message, if available
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Error occured<br>'.concat(
+                                '(', msg, ')'
+                            ),
+                            extra: response
+                        });
+                    }
+                };
+
+                // Perform AJAX request
+                Ext.Ajax.request(ajaxParams);
+
+            } else {
+                // Form not valid, reject with warning message
+                // TODO: Improve copy of this warning message
+                reject({
+                    type: Ext.Toast.WARN,
+                    message: 'Please check form for errors before submitting.'
+                });
+            }
 
         });
     },
 
-    // TODO: Implement
-    removePicture: function(form){
-
+    /**
+     * Method is form specific, so logic is defined in employee/InformationController
+     * @see Breeze.view.employee.InformationController.onRemoveProfilePicture
+     * @deprecated
+     */
+    removePicture: function(){
     }
 
 });

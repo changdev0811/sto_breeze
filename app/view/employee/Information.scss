@@ -168,6 +168,7 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
 
+// Used for Company tab grids
 @include panel-ui(
     $ui: 'employee-info-grid-panel',
     $header-background-color: map-get($employee-info-colors, 'light') !important,
@@ -177,8 +178,52 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     $header-font-size: $ei-head-font-size
 );
 
+//==[ grid head/body font size adjustments (bigger body, smaller head ]==
+@include gridcell-ui(
+    $ui: 'employee-info-shift-grid-sized',
+    // $font-size: $ei-head-font-size,
+    $font-size: $ei-field-font-size
+);
+@include gridcolumn-ui(
+    $ui: 'employee-info-shift-grid-sized',
+    // $font-size: $ei-field-font-size,
+    $font-size: $ei-head-font-size
+);
+
+
+// Top padding for Schedule tab panel
+.ei-schedule-top-padding {
+    padding-top: $ei-padding-base * 2;
+}
+
 @include paneltitle-ui(
     $ui: 'employee-info-grid-panel',
     $color: map-get($employee-info-colors, 'base')
 );
+
+//===[Panel action toolbar + buttons]===
+
+// Toolbar
+@include toolbar-ui(
+    $ui: 'employee-info-panel-toolbar',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $box-shadow: none,
+    $horizontal-spacing: $ei-padding-base
+);
+
+// Validation message
+.employee-info-toolbar-message {
+    overflow: { x: hidden, y: hidden; };
+    font-size: $ei-field-font-size;
+    color: map-get($employee-info-text-colors, 'base');
+}
+
+//===[ActionSheets]===
+@include toolbar-ui(
+    $ui: 'actionsheet-toolbar',
+    $horizontal-spacing: $ei-padding-base,
+    $background-color: #ffffff,
+    $box-shadow: none
+);
+
 

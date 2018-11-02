@@ -1,33 +1,44 @@
 /**
- * Report Department tree store
+ * Employee Panel Department new API list store
  * @class Departments
- * @namespace Breeze.store.tree.reporting.Departments
- * @alias store.tree.reporting.departments
+ * @namespace Breeze.store.employees.Departments
+ * @alias store.employees.departments
  * @extends Breeze.store.TreeBase
- * @api getReportDepartments
+ * @api getDepartmentListAPI
  */
-Ext.define('Breeze.store.tree.reporting.Departments', {
+Ext.define('Breeze.store.employees.Departments', {
+	mixins: {
+        styleable: 'Breeze.mixin.ListStylable'
+    },
 	extend: 'Breeze.store.TreeBase',
-	model: 'Breeze.model.node.Checked',
+	model: 'Breeze.model.node.Node',
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-	alias: 'store.tree.reporting.departments',
+	alias: 'store.employees.departments',
 	config: {
-		excludeTerminated: false
-	},
+        searchString: '',
+		excludeTerminated: false,
+		ruleSet: 'list'
+    },
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
-			this.getProxy().extraParams.excludeTerminated = this.getExcludeTerminated();
+			this.getProxy().extraParams.searchString = this.getSearchString();
+            this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
+		},
+		load: function(self, records, success){
+			if(success){
+				this.applyStyling(records);
+			}
 		}
 	},
 	proxy: {
 		type: 'ajax',
-		url : Breeze.helper.Store.api.url('getReportDepartments'),
+		url : Breeze.helper.Store.api.url('getDepartmentListAPI'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {
 			create : 'POST',

@@ -1,33 +1,35 @@
 /**
- * Report Department tree store
+ * Employee Panel Department tree store
  * @class Departments
- * @namespace Breeze.store.tree.reporting.Departments
- * @alias store.tree.reporting.departments
+ * @namespace Breeze.store.tree.employee.Departments
+ * @alias store.tree.employee.departments
  * @extends Breeze.store.TreeBase
- * @api getReportDepartments
+ * @api getDepartmentTree
  */
-Ext.define('Breeze.store.tree.reporting.Departments', {
+Ext.define('Breeze.store.tree.employee.Departments', {
 	extend: 'Breeze.store.TreeBase',
-	model: 'Breeze.model.node.Checked',
+	model: 'Breeze.model.node.Node',
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-	alias: 'store.tree.reporting.departments',
+    alias: 'store.tree.employee.departments',
 	config: {
-		excludeTerminated: false
-	},
-	listeners: {
+        searchString: '',
+        excludeTerminated: false
+    },
+    listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
-			this.useJsonParams();
-			this.getProxy().extraParams.excludeTerminated = this.getExcludeTerminated();
+            this.useJsonParams();
+            this.getProxy().extraParams.searchString = this.getSearchString();
+            this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
 		}
 	},
 	proxy: {
 		type: 'ajax',
-		url : Breeze.helper.Store.api.url('getReportDepartments'),
+		url : Breeze.helper.Store.api.url('getDepartmentTree'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {
 			create : 'POST',
