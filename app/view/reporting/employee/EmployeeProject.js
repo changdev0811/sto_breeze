@@ -268,7 +268,6 @@ Ext.define('Breeze.view.reporting.employee.EmployeeProject', {
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
                                 {
                                     name: 'headerCompanyLogo',

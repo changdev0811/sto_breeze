@@ -91,6 +91,8 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -98,14 +100,16 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -117,15 +121,21 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -136,12 +146,10 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    dataIndex: 'text',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -158,19 +166,22 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadot:false property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui: property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -181,10 +192,12 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -192,6 +205,10 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -199,9 +216,9 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -290,14 +307,14 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                     name: 'on_time',
                                     inline: true,
                                     label: '',
-                                    boxLabel: 'Show Employees That Are On Time',
+                                    boxLabel: 'Calendar Year Mode (All Categories - No FYI)',
                                     bind: '{reportParams.on_time}'
                                 },
                                 {
                                     name: 'no_record',
                                     inline: true,
                                     label: '',
-                                    boxLabel: 'Show Employees With No Record For The Day',
+                                    boxLabel: 'Recording Year Mode (Selected Type - With FYI)',
                                     bind: '{reportParams.no_record}'
                                 }
                             ]

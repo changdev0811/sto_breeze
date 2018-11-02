@@ -323,25 +323,67 @@ Ext.define('Breeze.view.reporting.employee.Timesheet', {
                         {
                             xtype: 'panel.minicalendar',
                             reference: 'weekSelector',
-                            ui: 'minicalendar',//'wtr-small',,
-                            collapsed: true,
+                            ui: 'light-minicalendar',//'wtr-small',
+                            tools: {
+                                previousMonth: {
+                                    ui: 'light-minicalendar'
+                                },
+                                nextMonth: {
+                                    ui: 'light-minicalendar'
+                                }
+                            },
+                            // collapsed: true,
                             flex: 1,
                             width: '100%',
                             margin: '0pt 10pt 0pt 10pt',
                             listeners: {
-                                change: 'onWeekChange'
+                                dateselect: 'onWeekSelect',
+
                             }
                         },
                         {
                             xtype: 'fieldset',
-                            layout: 'vbox',
+                            flex: 1,
+                            layout: { type: 'fit', align: 'stretch' },
                             title: 'Weeks Selected',
                             userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
-                            }
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    layout: 'hbox',
+                                    ui: 'employeeinfo-shift-grid',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: false,
+                                    bind: { store: '{selectedWeeks}' },
+                                    columns: [
+                                        {
+                                            dataIndex: 'startText',
+                                            menuDisabled: true,
+                                            flex: 1,
+                                            // Remove tool button
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end',
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fa fa-times',
+                                                        handler: 'onWeekRemoveTool'
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         },
 
                     ]

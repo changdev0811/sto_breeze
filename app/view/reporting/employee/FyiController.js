@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
     alias: 'controller.reporting.employee.fyi',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

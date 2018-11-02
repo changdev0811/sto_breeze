@@ -22,13 +22,13 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
         var me = this;
         var vm = me.getViewModel();
 
-        // Load User-Defined Categories tree store
         // Create instance of report generation API class
         this.reportApi = Ext.create(
             'Breeze.api.reporting.employee.Profile',
             {exceptionHandler: this.onReportException}
         );
 
+        // Load User-Defined Categories tree store
         this.addStoreToViewModel(
             'Breeze.store.category.List',
             'categoriesList',

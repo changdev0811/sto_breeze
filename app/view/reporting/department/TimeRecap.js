@@ -62,7 +62,6 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
             // +++ Allow h scroll when panel is too small +++
             scrollable:'x',
             items: [
-
                 // First column in horizontal container
                 {
                     xtype: 'container',
@@ -246,7 +245,6 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                         }
                     ]
                 },
-
                 // Second column container
                 {
                     xtype: 'container',

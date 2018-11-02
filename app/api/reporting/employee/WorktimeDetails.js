@@ -4,7 +4,7 @@
  * @namespace Breeze.api.reporting.employee.Worktime
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.employee.EmployeeWorktimeDetails', {
+Ext.define('Breeze.api.reporting.employee.WorktimeDetails', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.employee.RecordedTimeController', {
     alias: 'controller.reporting.employee.recordedtime',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**
