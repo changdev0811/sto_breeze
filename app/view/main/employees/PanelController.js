@@ -83,7 +83,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         var vm = this.getViewModel(),
             query = comp.getValue(),
             excludeTerminated = vm.get('excludeTerminated'),
-            store = vm.get('employeesTree');
+            store = vm.get('employeesList');
         
         var proxy = store.getProxy();
         // Force proxy to update
@@ -108,7 +108,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         var vm = this.getViewModel(),
             query = comp.getValue(),
             excludeTerminated = vm.get('excludeTerminated'),
-            store = vm.get('departmentsTree');
+            store = vm.get('departmentsList');
         
         // Force store proxy to update
         store.updateProxy(store.getProxy());

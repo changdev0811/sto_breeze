@@ -70,7 +70,11 @@ Ext.define('Breeze.view.employee.InformationController', {
                         me.prepareCompanyLists();
                     });
                 } else {
-                    me.toggleCompanyLists(c);
+                    vm.set('info', Object.assign({},vm.get('newRecord.employee')));
+                    vm.set('info.punchPolicy', Object.assign({},vm.get('newRecord.punchPolicy')));
+                    me.prepareShiftSegments();
+                    me.applyCompanyConfig();
+                    // me.toggleCompanyLists(c);
                     me.prepareCompanyLists();
                 }
             });
