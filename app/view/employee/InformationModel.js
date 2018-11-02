@@ -53,25 +53,25 @@ Ext.define('Breeze.view.employee.InformationModel', {
         errors: {
             company: {
                 supervisor: {
-                    noChoices: 
+                    noChoices:
                         'This employee is already supervised by all of their department\'s ' +
                         'supervisors.',
-                    noChoicesNonTerminated: 
-                        'This employee is already supervised by all of their department\'s ' + 
+                    noChoicesNonTerminated:
+                        'This employee is already supervised by all of their department\'s ' +
                         'non-terminated supervisors.'
                 },
                 employee: {
-                    noChoices: 
-                        'This supervisor already has rights to all of their departments\' ' + 
+                    noChoices:
+                        'This supervisor already has rights to all of their departments\' ' +
                         'employees.',
-                    noChoicesNonTerminated: 
-                        'This supervisor already has rights to all of their department\'s ' + 
+                    noChoicesNonTerminated:
+                        'This supervisor already has rights to all of their department\'s ' +
                         'non-terminated employees.',
-                    noDepartments: 
+                    noDepartments:
                         'This supervisor must have departments before employees.'
                 }
-            }   
-        },     
+            }
+        },
 
         info: {
             employee: {
@@ -301,11 +301,11 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-        isLaidOff: function(get){
+        isLaidOff: function (get) {
             return (get('info.LayoffStatus') == 'Laid Off');
         },
 
-        
+
 
         /**
          * Formula returning profile picture path or default file if
@@ -329,7 +329,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * @param {Function} get ViewModel get function reference
          * @return {Boolean} True if custom picture, false otherwise
          */
-        hasCustomProfilePicture: function(get){
+        hasCustomProfilePicture: function (get) {
             return get('info.PhotoFlag');
         },
 
@@ -339,7 +339,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * @param {Function} get ViewModel get function reference
          * @return {Boolean} Boolean indicating whether add shift button should be enabled
          */
-        canAddShift: function(get){
+        canAddShift: function (get) {
             return (
                 !get('readOnly') &&
                 (get('shift.segments').count() < 2)
@@ -368,11 +368,15 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     return {value: v, time: genTime(v)};
                 });
             }*/
-            get: function(get){
-                return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
-                    return b}().map(function(b){var a=Math.floor(b/60)%12;
-                    var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
-                    .toZeroPaddedString(2)+c;return{value:b,time:a}});
+            get: function (get) {
+                return function () {
+                    for (var b = [], a = 0, c = 0; 48 > a; a++ , c = 30 * a)b.push(c);
+                    return b
+                }().map(function (b) {
+                    var a = Math.floor(b / 60) % 12;
+                    var c = 720 > b ? "AM" : "PM"; a = (0 == a ? 12 : a) + ":" + (b % 60)
+                        .toZeroPaddedString(2) + c; return { value: b, time: a }
+                });
             }
 
         }
