@@ -263,13 +263,11 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
                                 {
                                     name: 'headerCompanyLogo',
@@ -295,7 +293,6 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
@@ -353,7 +350,6 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Point Categories',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset no-padding',
 
                             defaults: {

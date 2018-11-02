@@ -184,15 +184,12 @@ Ext.define('Breeze.view.reporting.department.Security', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -213,7 +210,6 @@ Ext.define('Breeze.view.reporting.department.Security', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-
                             ]
                         }
                     ]

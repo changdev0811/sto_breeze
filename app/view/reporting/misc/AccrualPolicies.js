@@ -53,6 +53,9 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -170,9 +173,7 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',

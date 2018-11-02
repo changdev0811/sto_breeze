@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.recordedtime',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.employee.recordedtime'
     },
     
     // Controller
-
     controller: 'reporting.employee.recordedtime',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
     title: 'Employee Recorded Time Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -53,6 +46,9 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -63,28 +59,33 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             layout: {
                                 animation: 'fade'
                             },
-                            /* +++ Update to ui: +++ */
                             ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -240,9 +241,7 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -273,7 +272,6 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {

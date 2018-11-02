@@ -77,7 +77,6 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Projects',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset no-padding',
 
                             defaults: {
@@ -171,9 +170,7 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',

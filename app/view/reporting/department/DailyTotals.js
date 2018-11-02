@@ -261,17 +261,13 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -292,12 +288,10 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
@@ -417,7 +411,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Projects',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset no-padding',
 
                             defaults: {
@@ -496,7 +489,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Submission Type',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {

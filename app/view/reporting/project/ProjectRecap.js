@@ -261,9 +261,7 @@ Ext.define('Breeze.view.reporting.project.ProjectRecap', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -271,7 +269,6 @@ Ext.define('Breeze.view.reporting.project.ProjectRecap', {
                             },
 
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -292,12 +289,10 @@ Ext.define('Breeze.view.reporting.project.ProjectRecap', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
@@ -355,7 +350,6 @@ Ext.define('Breeze.view.reporting.project.ProjectRecap', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Projects',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset no-padding',
 
                             defaults: {
@@ -434,7 +428,6 @@ Ext.define('Breeze.view.reporting.project.ProjectRecap', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Submission Type',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {

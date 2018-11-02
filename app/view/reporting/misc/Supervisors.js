@@ -53,6 +53,9 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -77,9 +80,7 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -112,7 +113,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Report Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {
@@ -141,7 +141,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Sort By',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {

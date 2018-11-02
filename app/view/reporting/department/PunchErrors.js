@@ -263,15 +263,12 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -292,7 +289,6 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-
                             ]
                         }
                     ]
@@ -310,7 +306,6 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
 
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {

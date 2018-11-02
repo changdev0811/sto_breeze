@@ -262,9 +262,7 @@ Ext.define('Breeze.view.reporting.point.PointTotals', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -295,7 +293,6 @@ Ext.define('Breeze.view.reporting.point.PointTotals', {
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Effective Date',
                             defaults: {

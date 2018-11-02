@@ -265,14 +265,12 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -293,7 +291,6 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         },
                         {
@@ -369,7 +366,6 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                             flex: 1,
                             layout: { type: 'fit', align: 'stretch' },
                             title: 'Weeks Selected',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',

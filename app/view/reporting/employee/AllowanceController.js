@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
     alias: 'controller.reporting.employee.allowance',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**
@@ -21,6 +21,12 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
 
         var me = this;
         var vm = me.getViewModel();
+
+        // Create instance of report generation API class
+        this.reportApi = Ext.create(
+            'Breeze.api.reporting.employee.Allowance',
+            {exceptionHandler: this.onReportException}
+        );
 
         // Load User-Defined Categories tree store
         this.addStoreToViewModel(
@@ -54,15 +60,149 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
         console.info('Leaving init');
     },
 
-    /**
+/**
      * Check parameter values and ensure all required fields have been
-     * provided
+     * provided.
+     * 
+     * If errors are found, display appropriate message(s) in error toast popup
+     * 
      * @return {Boolean} True if validation succeeds, false otherwise
-     * @todo TODO: Finish implementing
      */
     validateParameters: function(){
-        return true;
-    }
+        // Make sure view model has latest selected employees and category
+        this.refreshSelectedItems();
+        var valid = true,
+            messages = [],
+            vm = this.getViewModel()
+            vmData = vm.getData();
+        
+        if(vmData.reportParams.incids == ''){
+            valid = false;
+            messages.push('Please select a Department or Employee.');
+        }
+
+        if(vmData.reportParams.inccats == null){
+            valid = false;
+            messages.push('Please select a Category.')
+        }
+
+        if(!valid){
+            // If validation failed, show error(s) in toast message
+            Ext.toast({
+                message: messages.join('<br>'),
+                type: Ext.Toast.ERROR,
+                timeout: 10000
+            });
+        }
+
+        return valid;
+    },
+
+    /**
+     * Refresh values in viewmodel for selected employees and category
+     */
+    refreshSelectedItems: function(){
+        var vm = this.getViewModel(),
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
+            categoryList = this.lookup('categoryList');
+
+        // Set myinclist to list of chosen employee IDs
+        vm.set(
+            'reportParams.incids', 
+            this.checkedTreeItems(
+                employeeSelectTree.getComponent('tree'), {
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    forceInt: false
+                }
+            ).join(',')
+        );
+        
+        // Categories list method gatherSelected returns array of all records selected
+        var categoryRecords = categoryList.gatherSelected(),
+            // set selected category to the first selected record, if any, otherwise null
+            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            // get array of selected categories, using map to filter out the IDs
+            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            // assign list of category ids as single string, joined with ','
+            vm.set(
+                'reportParams.inccats',
+                selectedCategories.join(',')
+            );
+    },
+
+    /**
+     * Handle exception thrown by report store proxy
+     * @param {*} proxy 
+     * @param {*} response 
+     * @param {*} op 
+     * @param {*} eOpts 
+     */
+    onReportException: function(proxy, response, op, eOpts){
+        console.warn('Exception thrown for report: ', response);
+    },
+
+    /**
+     * Build report
+     * @param {String} format Report format ('PDF','EXCEL', 'WORD')
+     */
+    buildReport: function(format){
+        var me = this,
+            params = this.getViewModel().getData().reportParams;
+        me.reportApi.process(params, format).then(
+            function(url){
+                if(typeof url == "string"){
+                    Ext.toast({
+                        message: 'Report Successfully Generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    window.open(url, '_blank');
+                } else {
+                    if(url.Message){
+                        Ext.toast({
+                            message: 'Report Error: <br>' + url.Message,
+                            type: Ext.Toast.ERROR,
+                            timeout: 10000
+                        });
+                    }
+                }
+            }
+        ).catch(function(err){
+            console.warn('Error generating report', err);
+        })
+    },
+
+    //===[Action Button Override Handlers]===
+
+    /**
+     * Overridden handler for 'Print PDF' action button
+     */
+    onPrintPDF: function(c, e, eOpts){
+        console.info('Print PDF Clicked');
+        if(this.validateParameters()){
+            this.buildReport('PDF');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Excel' action button
+     */
+    onPrintExcel: function(c, e, eOpts){
+        console.info('Print Excel Clicked');
+        if(this.validateParameters()){
+            this.buildReport('EXCEL');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Word' action button
+     */
+    onPrintWord: function(c, e, eOpts){
+        console.info('Print Word Clicked');
+        if(this.validateParameters()){
+            this.buildReport('WORD');
+        }
+    },
 
     
 });

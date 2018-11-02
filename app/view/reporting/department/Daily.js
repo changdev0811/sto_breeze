@@ -263,15 +263,12 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -292,14 +289,12 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-
                             ]
                         },
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Report Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {
@@ -329,7 +324,6 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Report Day',
                             defaults: {

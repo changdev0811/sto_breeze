@@ -264,14 +264,12 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -292,7 +290,6 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         }
                     ]
@@ -309,7 +306,6 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                     items: [
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Recording Year',
                             defaults: {
