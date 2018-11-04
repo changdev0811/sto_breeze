@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
 
         // Create instance of report generation API class
         this.reportApi = Ext.create(
-            'Breeze.api.reporting.employee.WorktimeDetails',
+            'Breeze.api.reporting.misc.AccrualPolicies',
             {exceptionHandler: this.onReportException}
         );
 

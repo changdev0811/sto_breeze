@@ -22,7 +22,7 @@ Ext.define('Breeze.view.reporting.department.SecurityModel', {
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
-                ReportTitle: 'Security',
+                ReportTitle: 'Department Security Report',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: ''

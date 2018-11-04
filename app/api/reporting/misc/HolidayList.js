@@ -1,15 +1,15 @@
 /**
  * Report handler for Misc. Holiday List report
- * @class Holidays
- * @namespace Breeze.api.reporting.misc.Holidays
+ * @class HolidayList
+ * @namespace Breeze.api.reporting.misc.HolidayList
  * @extends Breeze.api.reporting.Base
  */
-Ext.define('Breeze.api.reporting.misc.Holidays', {
+Ext.define('Breeze.api.reporting.misc.HolidayList', {
     extend: 'Breeze.api.reporting.Base',
     
     statics: {
         ajaxCall: '',
-        report: 'MiscHolidays'
+        report: 'MiscHolidayList'
     },
 
     /**

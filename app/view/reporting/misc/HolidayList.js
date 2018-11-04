@@ -66,6 +66,10 @@ Ext.define('Breeze.view.reporting.misc.HolidayList', {
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',

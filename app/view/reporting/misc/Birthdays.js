@@ -67,27 +67,32 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             layout: {
                                 animation: 'fade'
                             },
-                            /* +++ Update to ui: +++ */
                             ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -95,14 +100,16 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -114,15 +121,21 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -133,12 +146,10 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    dataIndex: 'text',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -155,19 +166,22 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadot:false property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui: property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -178,10 +192,12 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -189,6 +205,10 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -196,9 +216,9 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -277,7 +297,6 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                             layout: 'vbox',
                             title: 'Report Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -313,13 +332,15 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                 {   
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
                     },
-
                     items: [
-
                         {
                             xtype: 'fieldset',
                             userCls: 'reporting-fieldset',
