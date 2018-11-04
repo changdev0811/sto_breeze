@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.point.PointTotalsController', {
     alias: 'controller.reporting.point.pointtotals',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

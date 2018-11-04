@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
     alias: 'controller.reporting.misc.holidaydetails',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

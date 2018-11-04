@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummaryController', {
     alias: 'controller.reporting.misc.leaverequestsummary',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

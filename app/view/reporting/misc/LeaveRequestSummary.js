@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.leaverequestsummary',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.misc.leaverequestsummary'
     },
     
     // Controller
-
     controller: 'reporting.misc.leaverequestsummary',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
     title: 'Leave Request Summary Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -66,6 +59,8 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {
@@ -233,6 +228,10 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',

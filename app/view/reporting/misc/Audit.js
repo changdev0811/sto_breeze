@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.audit',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.misc.audit'
     },
     
     // Controller
-
     controller: 'reporting.misc.audit',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
     title: 'Audit Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -66,6 +59,8 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
     alias: 'controller.reporting.misc.policy',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

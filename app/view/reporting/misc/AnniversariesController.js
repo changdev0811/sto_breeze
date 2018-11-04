@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.misc.AnniversariesController', {
     alias: 'controller.reporting.misc.anniversaries',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.project.ProjectTimeController', {
     alias: 'controller.reporting.project.projecttime',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

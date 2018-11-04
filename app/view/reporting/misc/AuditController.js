@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.misc.AuditController', {
     alias: 'controller.reporting.misc.audit',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**

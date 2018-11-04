@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.point.PointLedgerController', {
     alias: 'controller.reporting.point.pointledger',
 
     stores: [
-        'Breeze.store.category.List'
+        // 'Breeze.store.category.List'
     ],
 
     /**
