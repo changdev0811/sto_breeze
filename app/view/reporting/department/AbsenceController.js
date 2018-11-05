@@ -37,14 +37,24 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
 
         // Load employees for tree selector
         this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Employees',
+            // TODO: Apply updated reporting employees store name to 
+            // all controllers
+            // Old:
+            // 'Breeze.store.tree.reporting.Employees',
+            // New:
+            'Breeze.store.reporting.parameters.Employees',
             'employeesTree',
             { load: true }
         );
 
         // Load departments for tree selector
         this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Departments',
+            // TODO: Apply updated reporting departments store name to 
+            // all controllers
+            // Old:
+            // 'Breeze.store.tree.reporting.Departments',
+            // New:
+            'Breeze.store.reporting.parameters.Departments',
             'departmentsTree',
             { load: true }
         );
