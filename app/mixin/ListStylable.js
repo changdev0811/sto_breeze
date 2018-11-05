@@ -39,6 +39,11 @@ Ext.define('Breeze.mixin.ListStylable', {
             rules = this.ruleSet,
             ruleNames = this.ruleNames;
         
+        // Automatically make node function as leaf if it has no children
+        if(node.childNodes == null || node.childNodes.length == 0){
+            node.set('leaf', true);
+        }
+
         if(ruleNames.includes(data.type)){
             var rule = rules[data.type];
             if(rule.conditional){

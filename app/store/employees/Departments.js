@@ -17,7 +17,8 @@ Ext.define('Breeze.store.employees.Departments', {
     // storeId: 'PunchPolicyList',
 	alias: 'store.employees.departments',
 	config: {
-        searchString: '',
+		searchString: '',
+		includeActions: true,
 		excludeTerminated: false,
 		ruleSet: 'list'
     },
@@ -28,6 +29,7 @@ Ext.define('Breeze.store.employees.Departments', {
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
 			this.getProxy().extraParams.searchString = this.getSearchString();
+			this.getProxy().extraParams.includeActions = this.getIncludeActions();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
 		},
 		load: function(self, records, success){

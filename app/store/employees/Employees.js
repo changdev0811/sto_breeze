@@ -18,6 +18,7 @@ Ext.define('Breeze.store.employees.Employees', {
 	alias: 'store.employees.employees',
 	config: {
         searchString: '',
+        includeActions: true,
         excludeTerminated: false,
         ruleSet: 'list'
     },
@@ -27,7 +28,8 @@ Ext.define('Breeze.store.employees.Employees', {
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
-			this.getProxy().extraParams.searchString = this.getSearchString();
+            this.getProxy().extraParams.searchString = this.getSearchString();
+            this.getProxy().extraParams.includeActions = this.getIncludeActions();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
         },
         /**
