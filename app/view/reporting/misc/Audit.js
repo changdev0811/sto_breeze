@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.audit',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.misc.audit'
     },
     
     // Controller
-
     controller: 'reporting.misc.audit',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
     title: 'Audit Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -53,6 +46,9 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -63,11 +59,17 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -77,9 +79,7 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -110,7 +110,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                         },
                         {
                             xtype: 'fieldset',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
@@ -145,7 +144,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Optional Parameters',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {

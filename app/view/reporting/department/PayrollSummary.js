@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.payrollsummary',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.department.payrollsummary'
     },
     
     // Controller
-
     controller: 'reporting.department.payrollsummary',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
     title: 'Payroll Summary Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -53,6 +46,9 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -63,33 +59,41 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:'x',
             items: [
 
                 // First column in horizontal container
                 {
                     xtype: 'container',
+                    // docked: 'left',
                     flex: 1,
+                    // +++ maxWidth to prevent expanding beyond tab selector +++
+                    maxWidth:'298pt',
+                    // +++ minWidth reasonable width to prevent most truncating +++
+                    minWidth:'200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
                         {
                             xtype: 'tabpanel',
-                            /* +++ New layout:{}, +++ */
+                            // == New reference to identify this tab panel easily
+                            reference: 'employeeSelectTabs',
                             layout: {
                                 animation: 'fade'
                             },
-                            /* +++ Update to ui: +++ */
                             ui: 'employeeInfoTabs', //'reporting-tabs',
-                            /* +++ New tabBar:{}, +++ */
                             tabBar: {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
-                            },  
+                            },
                             flex: 1,
                             items: [
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    // == Item ID for each tab to allow us to see which is active
+                                    itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
 
@@ -97,14 +101,16 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadow:false, property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
+                                        
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                // +++ Departments +++
+                                                boxLabel: 'Check All Departments',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -116,16 +122,21 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                         // Departments tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -136,11 +147,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cel:{} +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
-                                                    /* +++ New dataIndex +++ */
                                                     dataIndex: 'text',
                                                     flex: 1,
                                                     layout: {
@@ -157,19 +167,22 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    // == Item ID for panel 
+                                    itemId: 'employees',
                                     layout: 'fit',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-                                        /* +++ New shadot:false property +++ */
+                                        /* +++ Added reporting-toolbar userCls +++ */
+                                        userCls:'reporting-toolbar',
                                         shadow: false,
                                         items: [
                                             {
                                                 xtype: 'checkbox',
-                                                /* +++ New ui: property +++ */
                                                 ui: 'reporting',
-                                                boxLabel: 'Check All',
+                                                /* +++ Employees +++ */
+                                                boxLabel: 'Check All Employees',
                                                 listeners: {
                                                     change: 'onTreeGridCheckAllChange'
                                                 }
@@ -180,10 +193,12 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                         // Employees selector tree
                                         {
                                             xtype: 'tree',
-                                            /* +++ New ui: property +++ */
+                                            // == Item ID to make finding tree in panel easier
+                                            itemId: 'tree',
+
                                             ui: 'employeeinfo-shift-grid',
-                                            /* +++ New user:Cls: property +++ */
-                                            userCls:'employeeinfo-shift-grid',
+                                            /* +++ New userCls +++ */
+                                            userCls: 'employeeinfo-shift-grid',
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             expanderFirst: false,
@@ -191,6 +206,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                             columns: [
                                                 {
                                                     xtype: 'checkcolumn',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
+                                                    },
                                                     dataIndex: 'checked',
                                                     minWidth: '2em',
                                                     width: 'auto',
@@ -198,9 +217,9 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                                 },
                                                 {
                                                     xtype: 'treecolumn',
-                                                    /* +++ New cell:{} property +++ */
-                                                    cell:{
-                                                        ui:'report-tree-column',
+                                                    /* +++ Style update +++ */
+                                                    cell: {
+                                                        ui: 'report-tree-column reporting-tree-item',
                                                     },
                                                     dataIndex: 'text',
                                                     flex: 1,
@@ -232,6 +251,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -241,16 +264,13 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
-                               
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -271,14 +291,12 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-                                    
                             ]
                         },
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Submission Type',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {
@@ -344,26 +362,67 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                         {
                             xtype: 'panel.minicalendar',
                             reference: 'weekSelector',
-                            ui: 'minicalendar',//'wtr-small',,
-                            collapsed: true,
+                            ui: 'light-minicalendar',//'wtr-small',
+                            tools: {
+                                previousMonth: {
+                                    ui: 'light-minicalendar'
+                                },
+                                nextMonth: {
+                                    ui: 'light-minicalendar'
+                                }
+                            },
+                            // collapsed: true,
                             flex: 1,
                             width: '100%',
                             margin: '0pt 10pt 0pt 10pt',
                             listeners: {
-                                change: 'onWeekChange'
+                                dateselect: 'onWeekSelect',
+
                             }
                         },
                         {
                             xtype: 'fieldset',
-                            layout: 'vbox',
+                            flex: 1,
+                            layout: { type: 'fit', align: 'stretch' },
                             title: 'Weeks Selected',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
-                            }
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    layout: 'hbox',
+                                    ui: 'employeeinfo-shift-grid',
+                                    columnResize: false,
+                                    hideHeaders: true,
+                                    sortable: false,
+                                    columnMenu: false,
+                                    bind: { store: '{selectedWeeks}' },
+                                    columns: [
+                                        {
+                                            dataIndex: 'startText',
+                                            menuDisabled: true,
+                                            flex: 1,
+                                            // Remove tool button
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end',
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fa fa-times',
+                                                        handler: 'onWeekRemoveTool'
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         },
 
                     ]

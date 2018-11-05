@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.department.DeptDaily', {
     
     statics: {
         ajaxCall: '',
-        report: ''
+        report: 'DepartmentDaily'
     },
 
     /**

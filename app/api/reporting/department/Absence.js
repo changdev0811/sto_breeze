@@ -36,6 +36,7 @@ Ext.define('Breeze.api.reporting.department.Absence', {
      *      console.warn('Error', err);
      *  }
      * )
+     
      * @param {Object} modelParamsData Parameter data object from report 
      * viewmodel
      * @param {String} format Output format ('PDF', 'EXCEL' or 'WORD')

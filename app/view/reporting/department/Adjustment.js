@@ -14,7 +14,6 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
     },
     
     // Controller
-
     controller: 'reporting.department.adjustment',
 
     listeners: {
@@ -60,22 +59,18 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
-
             // +++ Allow h scroll when panel is too small +++
             scrollable: 'x',
-
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     // docked: 'left',
                     flex: 1,
-
                     // +++ maxWidth to prevent expanding beyond tab selector +++
                     maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
-
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -129,10 +124,8 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                             // == Item ID to make finding tree in panel easier
                                             itemId: 'tree',
                                             ui: 'employeeinfo-shift-grid',
-                                            
                                             /* +++ New userCls +++ */
                                             userCls: 'employeeinfo-shift-grid',
-                                            
                                             layout: 'hbox',
                                             hideHeaders: true,
                                             rootVisible: false,
@@ -164,7 +157,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                                     }
                                                 }
                                             ],
-
+                                            reference: 'departmentTree',
                                             bind: '{departmentsTree}'
                                         }
                                     ]
@@ -180,10 +173,8 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                     tbar: {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
-
                                         /* +++ Added reporting-toolbar userCls +++ */
                                         userCls:'reporting-toolbar',
-
                                         shadow: false,
                                         items: [
                                             {
@@ -258,12 +249,10 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                 {
                     xtype: 'container',
                     flex: 1,
-
                     // +++ minWidth width to prevent truncating +++
                     minWidth:'200pt',
                     // +++ maxWidth width to prevent truncating +++
                     maxWidth:'300pt',
-
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -274,15 +263,12 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                             layout: 'vbox',
                             title: 'Header Options',
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-
                                 {
                                     name: 'headerCompanyLogo',
                                     inline: true,
@@ -303,7 +289,6 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                                     boxLabel: 'Signature Line in Footer',
                                     bind: '{reportParams.RepSignature}'
                                 }
-
                             ]
                         },
                         {
@@ -354,8 +339,6 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                     minWidth:'150pt',
                     maxWidth:'200pt',
 
-
-
                     // docked: 'right',
                     layout: {
                         type: 'vbox',
@@ -368,6 +351,7 @@ Ext.define('Breeze.view.reporting.department.Adjustment', {
                         {
                             xtype: 'toolbar',
                             ui: 'reporting-tree',
+                            userCls:'no-background',
                             shadow: false,
                             items: [
                                 {

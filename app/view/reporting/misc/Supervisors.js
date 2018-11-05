@@ -8,18 +8,12 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.supervisors',
 
-
-    /* +++ Remove the requires;[], array  +++ */
-
-
     // View Model
-
     viewModel: {
         type: 'reporting.misc.supervisors'
     },
     
     // Controller
-
     controller: 'reporting.misc.supervisors',
 
     listeners: {
@@ -33,7 +27,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
     title: 'Supervisors Report',
 
     // Action buttons shown at bottom of panel
-    /* +++ Updated buttons class / alignment  +++ */
     buttonAlign: 'left',
     buttons: {
         pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
@@ -53,6 +46,9 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
         // Form Title Text field
         {
             xtype: 'breeze-textfield',
+            // +++ Added inline and width +++
+            inline:true,
+            width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
             bind: '{reportParams.ReportTitle}',
@@ -63,11 +59,17 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {
                     xtype: 'container',
                     flex: 1,
+                    // +++ minWidth width to prevent truncating +++
+                    minWidth:'200pt',
+                    // +++ maxWidth width to prevent truncating +++
+                    maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -77,9 +79,7 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -112,7 +112,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Report Options',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {
@@ -141,7 +140,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Sort By',
-                            /* +++  Updated userCls: property +++ */
                             userCls: 'reporting-fieldset',
 
                             defaults: {
