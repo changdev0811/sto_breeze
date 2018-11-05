@@ -86,6 +86,10 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
                             },
+
+                            // +++ Added active item to select default tab (0 = departments, 1 = employees, activeItem:INDEX,) +++
+                            activeItem:1,
+
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -166,6 +170,9 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                                 {
                                     xtype: 'panel',
                                     title: 'Employees',
+                                    
+                                    id:'employees-tab',
+
                                     // == Item ID for panel 
                                     itemId: 'employees',
                                     layout: 'fit',
