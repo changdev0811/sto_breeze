@@ -329,40 +329,69 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                     ]
                 },
                 // Third column container
-                {   
-                    xtype: 'container',
+                {
+                    // +++ New Field Set +++
+                    xtype: 'fieldset',
+
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
+                    
+                    // +++ Categories +++
+                    title: 'Month Options',
                     flex: 1,
-                    // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
-                    // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
-                    layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+
+                    // docked: 'right',
+                    layout: {
+                        type: 'vbox',
+                        alignment: 'stretch'
                     },
+                    height: '100%',
+                    width: '100%',
+                    //reference: 'udcContainer',
                     items: [
                         {
-                            xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
-                            title: 'Month Options',
-                            defaults: {
-                                ui: 'reporting reporting-text reporting-date'
-                            },
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
                             items: [
                                 {
-                                    xtype: 'datefield',
-                                    name: 'start',
-                                    label: 'Reporting Year',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
-                                    bind: '{reportParams.dStart}'
+                                    xtype: 'selectfield',
+                                    bodyAlign: 'stretch',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    name: 'year',
+                                    label: 'Recording Year',
+                                    store: '',
+                                    bind: { value: '{info.cbRecordingYear}' },
+                                    displayField: 'Description',
+                                    valueField: 'ID'
                                 }
                             ]
+                        },
+                        // User defined category selector
+                        // === Replacement category selector
+                        {
+                            xtype: 'breeze-categories-list',
+                            ui: 'employeeinfo-shift-grid',
+                            flex: 1,
+                            //reference: 'categoryList',
+                            // used by 'check all' listener
+                            //itemId: 'categories',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item'
+                            },
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
                         }
                     ]
-                }
+                },
             ]
         }
     ]

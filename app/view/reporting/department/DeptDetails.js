@@ -315,27 +315,41 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                         }
                     ]
                 },
-
                 // Third Column Container
                 {
-                    xtype: 'container',
+                    // +++ New Field Set +++
+                    xtype: 'fieldset',
+
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
+                    
+                    // +++ Categories +++
+                    title: 'Recording Year',
                     flex: 1,
-                    layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+
+                    // docked: 'right',
+                    layout: {
+                        type: 'vbox',
+                        alignment: 'stretch'
                     },
+                    height: '100%',
+                    width: '100%',
+                    //reference: 'udcContainer',
                     items: [
                         {
-                            xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
-                            title: 'Recording Year',
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting reporting-text reporting-date'
-                            },
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
                             items: [
                                 {
                                     xtype: 'selectfield',
+                                    bodyAlign: 'stretch',
+                                    ui: 'reporting reporting-text reporting-date',
                                     name: 'year',
                                     label: 'Recording Year',
                                     store: '',
@@ -344,10 +358,27 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                                     valueField: 'ID'
                                 }
                             ]
+                        },
+                        // User defined category selector
+                        // === Replacement category selector
+                        {
+                            xtype: 'breeze-categories-list',
+                            ui: 'employeeinfo-shift-grid',
+                            flex: 1,
+                            //reference: 'categoryList',
+                            // used by 'check all' listener
+                            //itemId: 'categories',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item'
+                            },
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
                         }
                     ]
                 },
-
                 // Fourth Column Container
                 // Container for User-Defined Categories list
                 {

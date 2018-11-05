@@ -314,6 +314,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
+                            flex:1,
                             title: 'Recording Years',
                             userCls: 'reporting-fieldset',
                             defaults: {
@@ -321,15 +322,57 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
+
                             items: [
                                 {
-                                    name: 'recording_years',
-                                    inline: true,
-                                    label: '',
-                                    boxLabel: 'Check All',
-                                    bind: '{reportParams.recyear}'
+                                    xtype: 'toolbar',
+                                    ui: 'reporting-tree',
+                                    userCls:'no-background',
+                                    shadow: false,
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Check All',
+                                            listeners: {
+                                                change: 'onCategoriesCheckAllChange'
+                                            }
+                                        }
+                                    ]
+                                },
+                                // User defined category selector
+                                // === Replacement category selector
+                                {
+                                    xtype: 'breeze-categories-list',
+                                    ui: 'employeeinfo-shift-grid',
+                                    flex: 1,
+                                    reference: 'categoryList',
+                                    // used by 'check all' listener
+                                    itemId: 'categories',
+                                    fieldMode: 'check',
+                                    itemConfig: {
+                                        ui: 'reporting-list-item'
+                                    },
+                                    bind: {
+                                        store: '{categoriesList}',
+                                    },
+                                    viewModel: true
                                 }
                             ]
+
+
+
+
+
+                            //items: [
+                            //    {
+                            //        name: 'recording_years',
+                            //        inline: true,
+                            //        label: '',
+                            //        boxLabel: 'Check All',
+                            //        bind: '{reportParams.recyear}'
+                            //    }
+                            //]
                         }
                     ]
                 },
