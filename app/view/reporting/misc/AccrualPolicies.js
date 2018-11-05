@@ -77,7 +77,9 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Accrual Policies',
-                            userCls: 'reporting-fieldset no-padding',
+
+                            // +++ added 'no-margin' to userCls
+                            userCls: 'reporting-fieldset no-padding no-margin',
 
                             defaults: {
                                 bodyAlign: 'stretch',
