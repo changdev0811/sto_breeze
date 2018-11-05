@@ -99,7 +99,8 @@ Ext.define('Breeze.view.reporting.misc.BirthdaysController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            // categoryList = this.lookup('categoryList');
+            monthOptionList = this.lookup('monthOptionList');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -110,6 +111,14 @@ Ext.define('Breeze.view.reporting.misc.BirthdaysController', {
                     forceInt: false
                 }
             ).join(',')
+        );
+
+        // Collect chosen month options
+        var monthRecords = monthOptionList.gatherSelected(),
+            selectedMonths = monthRecords.map((r)=>{return r.getData().name;});
+        vm.set(
+            'reportParams.months',
+            selectedMonths.join(',')
         );
         
     },
