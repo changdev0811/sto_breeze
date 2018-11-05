@@ -69,6 +69,23 @@ Ext.define('Breeze.controller.Reporting', {
         });
     },
 
+    /**
+     * Handles change event for 'Check All' checkbox connected to categories 
+     * list.
+     * 
+     * @note Note: Source checkbox should be in a toolbar nested in a container
+     *      also containing a categories list component with itemId set to 
+     *      'categories' for this event handler to work correctly
+     * 
+     * @param {Object} elem Checkbox element event originates from; used
+     *   as relative starting point for locating categories list
+     * @param {Boolean} checked Whether checkbox is checked (true) or not
+     */
+    onCategoriesCheckAllChange: function(elem, checked){
+        elem.getParent().getParent().getComponent('categories')
+            .changeAllCheckboxes(checked);
+    },
+
     // ====[Data Collection Helpers]====
 
     /**

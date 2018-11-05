@@ -239,9 +239,13 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: {
+                                // Update: Binding added for checkbox to model value GroupByDept
+                                // For checkboxes, 'checked' property is bound
+                                checked: '{reportParams.GroupByDept}'
+                            }
                         }
                     ]
                 },
