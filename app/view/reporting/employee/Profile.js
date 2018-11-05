@@ -324,6 +324,8 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                             },
 
                             items: [
+                                // ++New 11/5++
+                                // 'Check All' option for Years list
                                 {
                                     xtype: 'toolbar',
                                     ui: 'reporting-tree',
@@ -335,44 +337,35 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                             ui: 'reporting',
                                             boxLabel: 'Check All',
                                             listeners: {
-                                                change: 'onCategoriesCheckAllChange'
+                                                // New event listener added to Controller
+                                                change: 'onRecordingYearCheckAllChange'
                                             }
                                         }
                                     ]
                                 },
-                                // User defined category selector
-                                // === Replacement category selector
+                                // ++New 11/5++
+                                // Selector list control for Recording Year
                                 {
-                                    xtype: 'breeze-categories-list',
+                                    xtype: 'breeze-select-list',
                                     ui: 'employeeinfo-shift-grid',
                                     flex: 1,
-                                    reference: 'categoryList',
-                                    // used by 'check all' listener
-                                    itemId: 'categories',
+                                    // Reference name and itemID needed for 
+                                    // reading data and check all listener
+                                    reference: 'recordingYearList',
+                                    itemId: 'recordingYears',
                                     fieldMode: 'check',
                                     itemConfig: {
-                                        ui: 'reporting-list-item'
+                                        ui: 'reporting-list-item',
+                                        templates: {
+                                            radioValue: '{record.Year}',
+                                            itemData: { year: '{record.Year}' },
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{year}</div>'
+                                        }
                                     },
-                                    bind: {
-                                        store: '{categoriesList}',
-                                    },
+                                    store: 'Years',
                                     viewModel: true
                                 }
                             ]
-
-
-
-
-
-                            //items: [
-                            //    {
-                            //        name: 'recording_years',
-                            //        inline: true,
-                            //        label: '',
-                            //        boxLabel: 'Check All',
-                            //        bind: '{reportParams.recyear}'
-                            //    }
-                            //]
                         }
                     ]
                 },

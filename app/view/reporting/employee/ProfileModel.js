@@ -25,7 +25,8 @@ Ext.define('Breeze.view.reporting.employee.ProfileModel', {
                 ReportTitle: 'Employee Profile Report',
                 inccats: '',
                 showScheduled: null,
-                recyear: null,
+                // ++Update 11/5++ used by recording years list
+                recording_years: '', // List of recording years
                 sdate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
