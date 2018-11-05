@@ -1,23 +1,22 @@
 /**
- * Employee Panel Employee new API list store
+ * Employee List for report params new API list store
  * @class Employees
- * @namespace Breeze.store.employees.Employees
- * @alias store.employees.employees
+ * @namespace Breeze.store.reporting.parameters.Employees
+ * @alias store.reporting.parameters.employees
  * @extends Breeze.store.TreeBase
  * @api getEmployeeListAPI
  */
-Ext.define('Breeze.store.employees.Employees', {
+Ext.define('Breeze.store.reporting.parameters.Employees', {
     mixins: {
         styleable: 'Breeze.mixin.ListStylable'
     },
 	extend: 'Breeze.store.TreeBase',
-	model: 'Breeze.model.node.Node',
+	model: 'Breeze.model.node.Checked',
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-	alias: 'store.employees.employees',
+	alias: 'store.reporting.parameters.employees',
 	config: {
-        searchString: '',
         includeActions: true,
         excludeTerminated: false,
         ruleSet: 'list'
@@ -28,7 +27,6 @@ Ext.define('Breeze.store.employees.Employees', {
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
-            this.getProxy().extraParams.searchString = this.getSearchString();
             this.getProxy().extraParams.includeActions = this.getIncludeActions();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
         },

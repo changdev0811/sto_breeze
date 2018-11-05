@@ -1,24 +1,24 @@
 /**
- * Employee Panel Department new API list store
+ * Department list for report params using new API list store
  * @class Departments
- * @namespace Breeze.store.employees.Departments
- * @alias store.employees.departments
+ * @namespace Breeze.store.reporting.parameters.Departments
+ * @alias store.reporting.parameters.departments
  * @extends Breeze.store.TreeBase
  * @api getDepartmentListAPI
  */
-Ext.define('Breeze.store.employees.Departments', {
+Ext.define('Breeze.store.reporting.parameters.Departments', {
 	mixins: {
         styleable: 'Breeze.mixin.ListStylable'
     },
 	extend: 'Breeze.store.TreeBase',
-	model: 'Breeze.model.node.Node',
+	model: 'Breeze.model.node.Checked',
     autoLoad: false,
     clearOnLoad: true,
     // storeId: 'PunchPolicyList',
-	alias: 'store.employees.departments',
+	alias: 'store.reporting.parameters.departments',
 	config: {
-		searchString: '',
-		includeActions: true,
+		// searchString: '',
+		includeActions: false,
 		excludeTerminated: false,
 		ruleSet: 'list'
     },
@@ -28,7 +28,7 @@ Ext.define('Breeze.store.employees.Departments', {
             // refreshCategoryMap()
             this.provideAuthCookieToProxy();
 			this.useJsonParams();
-			this.getProxy().extraParams.searchString = this.getSearchString();
+			// this.getProxy().extraParams.searchString = this.getSearchString();
 			this.getProxy().extraParams.includeActions = this.getIncludeActions();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
 		},

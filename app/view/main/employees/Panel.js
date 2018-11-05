@@ -116,7 +116,8 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                    iconCls: 'x-fas fa-plus',
                                    bind: {
                                        hidden: '{!permissions.canAdd}'
-                                   }
+                                   },
+                                   handler: 'onNewEmployeeButton'
                                },
                                {
                                    xtype: 'button', 
@@ -208,7 +209,8 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                    iconCls: 'x-fas fa-plus',
                                    bind: {
                                        hidden: '{!permissions.canAdd}'
-                                   }
+                                   },
+                                   handler: 'onNewEmployeeButton'
                                },
                                {
                                    xtype: 'button', 

@@ -8,7 +8,7 @@
 Ext.define('Breeze.helper.settings.StyleRules', {
     singleton: true,
 
-    actions: ['Cal','EmpInfo','FYI','YAG','WTR','cal','empinfo','fyi','yag','wtr'],
+    actions: ['Cal','EmpInfo','FYI','YAG','WTV','cal','empinfo','fyi','yag','wtr'],
 
     /**
      * Icons and labels for trees built from list API responses
@@ -19,16 +19,16 @@ Ext.define('Breeze.helper.settings.StyleRules', {
             conditional: true,
             attribute: 'info.role',
             choices: {
-                admin: {
+                Admin: {
                     iconCls: 'x-fas fa-user-tie'
                 },
-                user: {
+                User: {
                     iconCls: 'x-fas fa-user'
                 }
             }
         },
         // Department
-        Dep: {
+        Dept: {
             iconCls: 'x-fas fa-building'
         },
         // Calendar Link
@@ -48,7 +48,7 @@ Ext.define('Breeze.helper.settings.StyleRules', {
             iconCls: 'x-fas fa-eye', text: 'Year at a Glance'
         },
         // WorkTime Records link
-        WTR: {
+        WTV: {
             iconCls: 'x-fas fa-calendar-check-o', text: 'WorkTime Records'
         }
     }

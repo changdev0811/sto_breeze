@@ -8,196 +8,192 @@ Ext.define('Breeze.view.employee.InformationModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.employee.information',
 
-    data: {
-        employeeName: 'X',
-        employeeId: undefined,
-        newEmployee: false,
-        departmentName: 'X',
-        points: '',
-        // When true, fields will be read-only
-        readOnly: true,
-        // Recieves emp role permission settings
-        perms: {
-            ssn: false, // is SSN shown?
-            compensation: false // is compensation shown?
-        },
-        // Misc config settings from company config
-        companyConfig: {
-
-        },
-        // ==[Company tab list visibility]==
-        lists: {
-            supervisors: {
-                enabled: true,
-                readonly: true
+    constructor: function(cfg){
+        this.callSuper([cfg]);
+        this.setData({
+            employeeName: 'X',
+            employeeId: undefined,
+            newEmployee: false,
+            departmentName: 'X',
+            points: '',
+            // When true, fields will be read-only
+            readOnly: true,
+            // Recieves emp role permission settings
+            perms: {
+                ssn: false, // is SSN shown?
+                compensation: false // is compensation shown?
             },
-            employees: {
-                enabled: true,
-                readonly: true
+            // Misc config settings from company config
+            companyConfig: {
+    
             },
-            departments: {
-                enabled: true,
-                readonly: true
-            },
-        },
-
-        // ==[Form Validation/Save Prep]==
-        form: {
-            // Validation error message text
-            validationMessage: '',
-            // whether changes have been made that can be reverted
-            canRevert: false
-        },
-
-        // ==[Error Messages]==
-        errors: {
-            company: {
-                supervisor: {
-                    noChoices:
-                        'This employee is already supervised by all of their department\'s ' +
-                        'supervisors.',
-                    noChoicesNonTerminated:
-                        'This employee is already supervised by all of their department\'s ' +
-                        'non-terminated supervisors.'
+            // ==[Company tab list visibility]==
+            lists: {
+                supervisors: {
+                    enabled: true,
+                    readonly: true
                 },
+                employees: {
+                    enabled: true,
+                    readonly: true
+                },
+                departments: {
+                    enabled: true,
+                    readonly: true
+                },
+            },
+    
+            // ==[Form Validation/Save Prep]==
+            form: {
+                // Validation error message text
+                validationMessage: '',
+                // whether changes have been made that can be reverted
+                canRevert: false
+            },
+    
+            // ==[Error Messages]==
+            errors: {
+                company: {
+                    supervisor: {
+                        noChoices:
+                            'This employee is already supervised by all of their department\'s ' +
+                            'supervisors.',
+                        noChoicesNonTerminated:
+                            'This employee is already supervised by all of their department\'s ' +
+                            'non-terminated supervisors.'
+                    },
+                    employee: {
+                        noChoices:
+                            'This supervisor already has rights to all of their departments\' ' +
+                            'employees.',
+                        noChoicesNonTerminated:
+                            'This supervisor already has rights to all of their department\'s ' +
+                            'non-terminated employees.',
+                        noDepartments:
+                            'This supervisor must have departments before employees.'
+                    }
+                }
+            },
+    
+            info: {
+                
+            },
+
+            newRecord: {
                 employee: {
-                    noChoices:
-                        'This supervisor already has rights to all of their departments\' ' +
-                        'employees.',
-                    noChoicesNonTerminated:
-                        'This supervisor already has rights to all of their department\'s ' +
-                        'non-terminated employees.',
-                    noDepartments:
-                        'This supervisor must have departments before employees.'
+                    "__type": "Repository.Entities.Employee",
+                    "_TerminationDate": null,
+                    "_HireDate": (new Date()),
+                    "TerminationDate": "",
+                    "CustomerID": 0,
+                    "ID": 0,
+                    "RecordingMode": 21,
+                    "Shift_Hours": null,
+                    "FirstName": "",
+                    "MiddleName": "",
+                    "LastName": "",
+                    "HireDate": "",
+                    "DepartmentName": null,
+                    "StartUpSettings": 1001,
+                    "Department": 0,
+                    "PunchPolicy": 0,
+                    "DefaultProject": 0,
+                    "DisplayName": null,
+                    "BirthDate": "",
+                    "Email": "",
+                    "Notes": "",
+                    "SSN": "",
+                    "ExemptStatus": 139,
+                    "Gender": null,
+                    "EmployeeNumber": "",
+                    "Payroll": "",
+                    "Badge": "",
+                    "CompRate": 0.00,
+                    "CompPer": 5,
+                    "ShiftSegComboStartTimes": [
+                    ],
+                    "ShiftSegComboStopTimes": [
+    
+                    ],
+                    "ShiftStartTimes": [
+                    ],
+                    "ShiftStopTimes": [
+                    ],
+                    "ShiftStartSegments": [
+                    ],
+                    "ShiftStopSegments": [
+                    ],
+                    "PhotoFlag": false,
+                    "Photo": "app/resources/EmployeePhotos/default_man.png",
+                    "Username": "New",
+                    "LoginType": 13,
+                    "Supervisors": [],
+                    "SupervisorIds": [],
+                    "SupervisorDeptsIds": [],
+                    "SupervisorTerms": [],
+                    "SupervisedEmps": [],
+                    "SupervisedEmpIds": [],
+                    "SupervisedEmpDeptsIds": [],
+                    "SupervisedEmpTerms": [],
+                    "SupervisedDepts": [],
+                    "SupervisedDeptIds": [
+                    ],
+                    "DeptRoles": [],
+                    "DeptRoleIds": [],
+                    "ViewSSN": 1,
+                    "ViewComp": 1,
+                    "LayoffStatus": "Active",
+                    "LayoffDate": null,
+                    "WorkRecords": null,
+                    "shiftHours": 13,
+                    "displayName": "",
+                    "firstLast": "",
+                    "possessiveFirstLast": ""
+                },
+    
+                "punchPolicy": {
+                    "__type": "Repository.Entities.Punch_Policy_Info",
+                    "policy_id": 0,
+                    "customer_id": 0,
+                    "policy_name": null,
+                    "IsFixed": false,
+                    "Ot_Opt1": true,
+                    "Ot_Opt2": false,
+                    "Ot_Opt3": false,
+                    "Ot_Opt4": false,
+                    "Ot_Day1": 36000,
+                    "Ot_Day2": 0,
+                    "Ot_Day3": 0,
+                    "Ot_Day4": 0,
+                    "Ot_Week1": 144000,
+                    "Ot_Week2": 0,
+                    "Ot_Week3": 0,
+                    "Ot_Week4": 0,
+                    "Ot_Rate1": 1.50,
+                    "Ot_Rate2": 0.00,
+                    "Ot_Rate3": 0.00,
+                    "Ot_Rate4": 0.00,
+                    "Subtract_DayOt": true,
+                    "Round_Increment": 10,
+                    "Round_Offset": 2,
+                    "Allow_RegularPunch": true,
+                    "Allow_QuickPunch": true,
+                    "Auto_PunchIn": true,
+                    "Auto_PunchOut": false,
+                    "Auto_Close_Shift": 8,
+                    "Auto_LunchPunch": false,
+                    "LunchPunch_Seg": 0,
+                    "LunchPunch_Hours": 8,
+                    "Can_Add_Projects": true,
+                    "Can_Add_Notes": true,
+                    "Can_Edit_Notes": true,
+                    "Can_Adjust_Punches": false,
+                    "Can_Use_TimeSheets": true,
+                    "InOut_Opt": false,
+                    "Can_Use_InOut": true
                 }
             }
-        },
-
-        info: {
-            employee: {
-                "__type": "Repository.Entities.Employee",
-                "_TerminationDate": null,
-                "_HireDate": "\/Date(1526774400000)\/",
-                "TerminationDate": "",
-                "CustomerID": 991012,
-                "ID": 5001,
-                "RecordingMode": 21,
-                "Shift_Hours": null,
-                "FirstName": "Admin",
-                "MiddleName": "",
-                "LastName": "Venture",
-                "HireDate": "",
-                "DepartmentName": null,
-                "StartUpSettings": 1001,
-                "Department": 1001,
-                "PunchPolicy": 564,
-                "DefaultProject": 0,
-                "DisplayName": null,
-                "BirthDate": "",
-                "Email": null,
-                "Notes": "",
-                "SSN": "",
-                "ExemptStatus": 139,
-                "Gender": null,
-                "EmployeeNumber": "",
-                "Payroll": "",
-                "Badge": "",
-                "CompRate": 0.00,
-                "CompPer": 5,
-                "ShiftSegComboStartTimes": [
-                ],
-                "ShiftSegComboStopTimes": [
-
-                ],
-                "ShiftStartTimes": [
-                ],
-                "ShiftStopTimes": [
-                ],
-                "ShiftStartSegments": [
-                ],
-                "ShiftStopSegments": [
-                ],
-                "PhotoFlag": false,
-                "Photo": "app/resources/EmployeePhotos/default_man.png",
-                "Username": "New",
-                "LoginType": 15,
-                "Supervisors": [],
-                "SupervisorIds": [],
-                "SupervisorDeptsIds": [],
-                "SupervisorTerms": [],
-                "SupervisedEmps": [],
-                "SupervisedEmpIds": [],
-                "SupervisedEmpDeptsIds": [],
-                "SupervisedEmpTerms": [],
-                "SupervisedDepts": [
-                    "Extra Department",
-                    "Test Department"
-                ],
-                "SupervisedDeptIds": [
-                    1002,
-                    1001
-                ],
-                "DeptRoles": [
-                    "Full Supervisor",
-                    "Full Supervisor"
-                ],
-                "DeptRoleIds": [
-                    1003,
-                    1003
-                ],
-                "ViewSSN": 1,
-                "ViewComp": 1,
-                "LayoffStatus": "Active",
-                "LayoffDate": null,
-                "WorkRecords": null,
-                "shiftHours": 13,
-                "displayName": "Venture, Admin",
-                "firstLast": "Admin Venture",
-                "possessiveFirstLast": "Admin Venture\u0027s"
-            },
-
-            "punchPolicy": {
-                "__type": "Repository.Entities.Punch_Policy_Info",
-                "policy_id": 0,
-                "customer_id": 991012,
-                "policy_name": null,
-                "IsFixed": false,
-                "Ot_Opt1": true,
-                "Ot_Opt2": false,
-                "Ot_Opt3": false,
-                "Ot_Opt4": false,
-                "Ot_Day1": 36000,
-                "Ot_Day2": 0,
-                "Ot_Day3": 0,
-                "Ot_Day4": 0,
-                "Ot_Week1": 144000,
-                "Ot_Week2": 0,
-                "Ot_Week3": 0,
-                "Ot_Week4": 0,
-                "Ot_Rate1": 1.50,
-                "Ot_Rate2": 0.00,
-                "Ot_Rate3": 0.00,
-                "Ot_Rate4": 0.00,
-                "Subtract_DayOt": true,
-                "Round_Increment": 10,
-                "Round_Offset": 2,
-                "Allow_RegularPunch": true,
-                "Allow_QuickPunch": true,
-                "Auto_PunchIn": true,
-                "Auto_PunchOut": false,
-                "Auto_Close_Shift": 8,
-                "Auto_LunchPunch": false,
-                "LunchPunch_Seg": 0,
-                "LunchPunch_Hours": 8,
-                "Can_Add_Projects": true,
-                "Can_Add_Notes": true,
-                "Can_Edit_Notes": true,
-                "Can_Adjust_Punches": false,
-                "Can_Use_TimeSheets": true,
-                "InOut_Opt": false,
-                "Can_Use_InOut": true
-            }
-        }
+        })
     },
 
     formulas: {
