@@ -180,25 +180,6 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsController', {
         })
     },
 
-    //===[Field Event Handlers]===
-    
-    /**
-     * ++New 11/5++
-     * Handle 'checked all' for Recording Months change event
-     * 
-     * Will need to be added to any controllers making use of recording months
-     * 
-     * Copies checked state to all items in list
-     * 
-     * @param {Object} elem Checkbox element event originated from
-     * @param {Boolean} checked Checked state of checkbox
-     */
-    onRecordingMonthCheckAllChange: function(elem, checked){
-        elem.getParent().getParent()
-            .getComponent('recordingMonths')
-            .changeAllCheckboxes(checked);
-    },
-
     //===[Action Button Override Handlers]===
 
     /**

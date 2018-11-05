@@ -337,8 +337,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                             ui: 'reporting',
                                             boxLabel: 'Check All',
                                             listeners: {
-                                                // New event listener added to Controller
-                                                change: 'onRecordingYearCheckAllChange'
+                                                change: 'onSelectListCheckAllChange'
                                             }
                                         }
                                     ]
@@ -352,7 +351,7 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                     // Reference name and itemID needed for 
                                     // reading data and check all listener
                                     reference: 'recordingYearList',
-                                    itemId: 'recordingYears',
+                                    itemId: 'selectList',
                                     fieldMode: 'check',
                                     itemConfig: {
                                         ui: 'reporting-list-item',

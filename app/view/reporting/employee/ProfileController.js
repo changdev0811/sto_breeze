@@ -180,24 +180,6 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
             console.warn('Error generating report', err);
         })
     },
-    //===[Field Event Handlers]===
-    
-    /**
-     * ++New 11/5++
-     * Handle 'checked all' for Recording Years change event
-     * 
-     * Will need to be added to any controllers making use of recording years
-     * 
-     * Copies checked state to all items in list
-     * 
-     * @param {Object} elem Checkbox element event originated from
-     * @param {Boolean} checked Checked state of checkbox
-     */
-    onRecordingYearCheckAllChange: function(elem, checked){
-        elem.getParent().getParent()
-            .getComponent('recordingYears')
-            .changeAllCheckboxes(checked);
-    },
 
     //===[Action Button Override Handlers]===
 

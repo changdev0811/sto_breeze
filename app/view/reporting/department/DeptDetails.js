@@ -381,8 +381,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                                     ui: 'reporting',
                                     boxLabel: 'Check All',
                                     listeners: {
-                                        // New event listener added to DeptDetailsController
-                                        change: 'onRecordingMonthCheckAllChange'
+                                        change: 'onSelectListCheckAllChange'
                                     }
                                 }
                             ]
@@ -396,7 +395,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                             // Reference name and itemID needed for 
                             // reading data and check all listener
                             reference: 'recordingMonthList',
-                            itemId: 'recordingMonths',
+                            itemId: 'selectList',
                             fieldMode: 'check',
                             itemConfig: {
                                 ui: 'reporting-list-item',
