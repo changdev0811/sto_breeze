@@ -15,6 +15,11 @@ Ext.define('Breeze.view.admin.MOTD', {
     title: 'Record Message of the Day',
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttons: {
+        save: { text: 'Submit', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:125pt;' },
+    },
+
+    buttonAlign: 'right',
     buttonToolbar: {
         xtype: 'toolbar',
         ui: 'admin-actions',
@@ -30,20 +35,7 @@ Ext.define('Breeze.view.admin.MOTD', {
             flex: 1,
             layout: 'vbox',
         },
-        {
-            xtype: 'panel',
-            ui: 'admin-sub',
-            buttons: {
-                save: { text: 'save', /*handler: 'onPrintPDF',*/ ui: 'action', },
-            },
 
-            buttonAlign: 'right',
-            buttonToolbar: {
-                xtype: 'toolbar',
-                ui: 'admin-actions',
-                shadow: false
-            },
-        },
 
     ]
 
