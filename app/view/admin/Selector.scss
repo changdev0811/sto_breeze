@@ -105,13 +105,14 @@
     $header-background-color: map-get($admin-colors, 'base'),
     $header-color: map-get($admin-text-colors, 'base'),
     $body-background-color: map-get($admin-colors, 'base'),
-    $ui: 'admin-sub'
+    $ui: 'admin-sub',
+
+    $header-font-size: 14pt !important,
+    $header-min-height: 14pt !important,
+    $header-title-padding: 0pt 0pt 5pt 0 !important
 );
 
-@include paneltitle-ui(
-    $ui: 'admin-sub',
-    $font-size: 16pt,
-);
+
 
 
 /** Generic base UI for report form tree views **/

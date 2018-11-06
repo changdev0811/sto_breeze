@@ -28,8 +28,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action' },
-        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action' },
+        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action', style:'width:200pt' },
+        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:200pt' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -41,345 +41,131 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
     // Body contents
     items: [
-        // Column 1
+
+        // Main horizontal arranging container
         {
-            xtype:'container',
-            flex:1,
-            layout:'vbox',
-            items:[
-                {    
-                    xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
-                    flex: 1,
-                    layout: 'vbox',
+            xtype: 'container',
+            flex: 1,
+            layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:'x',
+            items: [
 
-
-                    items:[
-                        {
-                            xtype: 'toolbar',
-                            ui:'admin-tree',
-                                    shadow: false,
-
-                            items:[
-
-                                { 
-                                    xtype: 'component', 
-                                    html: 'Policies',
-                                    userCls:'admin-title-toolbar', 
-                                },
-
-                                {
-                                    xtype:'spacer',
-                                    flex:1,
-
-                                },
-            
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
-                                },
-
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
-
-                                },
-                            ]
-                        },
-
-                        {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
-                            flex:1,
-                            layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
-                                },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-
-                            bind: '{departmentsTree}'
-                        },
-
-
-
-                    ]
-                },
+                // Column 1
                 {
-                    xtype: 'breeze-textfield',
-                    label: 'Setting Name',
-                    name: 'setting_name_label',
-                    ui: 'admin admin-text',
-                    userCls:'admin-fieldset no-border',
-
-                },
-                {
-                    xtype: 'fieldset',
-                    name: 'recording_mode',
-                    userCls:'admin-fieldset',
-                    title: 'Recording Model',
-                    height:'45pt',
-                    layout: 'hbox',
+                    xtype:'container',
                     flex:1,
-                    minHeight:'55pt',
-                    maxHeight:'55pt',
 
-                    defaults: {
-                        bodyAlign: 'stretch',
-                        ui: 'admin',
-                        xtype: 'radio'
-                    },
-                    items: [
-                        {
-                            flex: 1,
-                            name: 'recording_year_type',
-                            boxLabel: 'Days',
-                        },
-                        {
-                            flex: 1,
-                            name: 'recording_year_type',
-                            boxLabel: 'Weeks',
-                        },
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
 
-                    ]
-                },
-
-
-
-                {    
-                    xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
-                    flex: 1,
-                    layout: 'vbox',
+                    layout:'vbox',
                     items:[
-                        {
-                            xtype: 'toolbar',
-                            ui:'admin-tree',
-                            shadow: false,
-                            items:[
-
-                                { 
-                                    xtype: 'component', 
-                                    html: 'Shift Information',
-                                    userCls:'admin-title-toolbar', 
-                                },
-
-                                {
-                                    xtype:'spacer',
-                                    flex:1,
-
-                                },
-            
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
-                                },
-
-                            ]
-                        },
-
-                        {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
-                            flex:1,
-                            layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
-                                },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-
-                            bind: '{departmentsTree}'
-                        },
-
-
-
-                    ]
-                },
-
-
-
-
-
-                /*
-                {    
-                    xtype: 'panel',
-                    title:'Shift Information',
-                    ui: 'admin-sub' ,
-                    flex: 1,
-                    layout: 'vbox',
-                    items:[
-                        {
-                            xtype: 'container',
-                            userCls:'admin-fieldset',
+                        {    
+                            xtype: 'fieldset',
+                            userCls:'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
-                            items: [
+                            items:[
                                 {
-                                    xtype: 'grid',
-                                    height: '200px',
-                                    ui: 'employeeinfo-shift-grid',
-                                    reference: 'shiftSegmentGrid',
-                                    //userCls: 'employee-info-grid',
-                                    striped: true,
-                                    sortable: false,
-                                    columnResize: false,
-                                    columnMenu: null,
-                                    layout: 'hbox',
-                                    // Plugin allowing editability
-                                    plugins: [
-                                        {
-                                            pluginId: 'shiftEdit',
-                                            type: 'gridcellediting'
-                                        }
-                                    ],
-                                    columns: [
-                                        {
-                                            xtype: 'gridcolumn',
-                                            ui: 'employeeinfo-shift-grid',
-                                            align: 'center',
-                                            text: 'Start',
-                                            dataIndex: 'StartTime',
-                                            menuDisabled: true,
-                                            flex: 1,                                            
-                                            //bind: { editable: '{!readOnly}' }
+                                    xtype: 'toolbar',
+                                    ui:'admin-tree',
+                                            shadow: false,
+
+                                    items:[
+
+                                        { 
+                                            xtype: 'component', 
+                                            html: 'Policies',
+                                            userCls:'admin-title-toolbar', 
                                         },
+
                                         {
-                                            xtype: 'templatecolumn',
-                                            tpl: ['-'],
-                                            align: 'center',
-                                            width: '2em',
-                                            menuDisabled: true
+                                            xtype:'spacer',
+                                            flex:1,
+
                                         },
+                    
                                         {
-                                            xtype: 'gridcolumn',
-                                            ui: 'employeeinfo-shift-grid',
-                                            align: 'center',
-                                            text: 'Stop',
-                                            dataIndex: 'StopTime',
-                                            menuDisabled: true,
-                                            flex: 1
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-plus',
+                                            ui: 'plain wtr-button',                   
+                                        },
+
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-minus',
+                                            ui: 'plain wtr-button',                   
+
                                         },
                                     ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                */
-            ]
-        },
-        // Column 2
-        { 
-            xtype: 'fieldset',
-            title: 'List of Categories',
-            userCls:'admin-fieldset no-padding',
+                                },
 
-            flex: 1,
-            layout: {
-                type: 'fit',
-                alignment: 'stretch'
-            },
-            items: [
-                // User defined category selector
-                // === Replacement category selector
-                {
-                    xtype: 'breeze-categories-list',
-                    ui: 'admin-shift-grid',
-                    userCls: 'admin-fieldset no-background no-margin no-border',
-                    reference: 'categoryList',
-                    fieldMode: 'none',
-                    itemConfig: {
-                        ui: 'admin-list-item-select'
-                    },
-                    bind: {
-                        store: '{categoriesList}',
-                    },
-                    viewModel: true
-                }
-            ]
-        },
-        // Column 3
-        {
-            xtype: 'panel',
-            title: 'Illness Information',
-            ui: 'admin-sub',
-            flex: 2,
-            layout: 'vbox',
-            items:[
-                {
-                    xtype: 'container',
-                    userCls: 'admin-fieldset no-border',
-                    layout: 'hbox',
-                    flex:1,
-                    maxHeight:'55pt',
-                    minHeight:'55pt',
-                    items:[
+                                {
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    flex:1,
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            //listeners: {
+                                            //    checkChange: 'onTreeGridChecked'
+                                            //}
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+
+                                    bind: '{departmentsTree}'
+                                },
+
+
+
+                            ]
+                        },
+                        {
+                            xtype: 'breeze-textfield',
+                            label: 'Setting Name',
+                            name: 'setting_name_label',
+                            ui: 'admin admin-text',
+                            userCls:'admin-fieldset no-border',
+
+                        },
                         {
                             xtype: 'fieldset',
-                            name: 'category_recording_year_type',
-                            userCls:'admin-fieldset no-margin',
-                            title: 'Recording Year Type',
+                            name: 'recording_mode',
+                            userCls:'admin-fieldset',
+                            title: 'Recording Model',
+                            height:'45pt',
                             layout: 'hbox',
                             flex:1,
+                            minHeight:'55pt',
+                            maxHeight:'55pt',
 
                             defaults: {
                                 bodyAlign: 'stretch',
@@ -388,305 +174,480 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             },
                             items: [
                                 {
-                                    flex: 1.25,
+                                    flex: 1,
                                     name: 'recording_year_type',
-                                    boxLabel: 'Anniversary',
+                                    boxLabel: 'Days',
                                 },
                                 {
                                     flex: 1,
                                     name: 'recording_year_type',
-                                    boxLabel: 'Calendar',
+                                    boxLabel: 'Weeks',
                                 },
-                                {
-                                    flex: 1,
-                                    name: 'recording_year_type',
-                                    boxLabel: 'Fiscal',
-                                }
 
                             ]
                         },
-                        {
+
+
+
+                        {    
                             xtype: 'fieldset',
-                            name: 'category_waiting_period_data',
-                            ui: 'admin-base',
-                            userCls:'admin-fieldset',
-                            title: 'Start Accruing After',
-                            layout: 'hbox',
-                            flex:1,
-                            minHeight:'55pt',
-                            maxHeight:'55pt',
-                            defaults: {
-                                ui: 'admin admin-text'
-                            },
-                            items: [
+                            userCls:'admin-fieldset no-padding',
+                            flex: 1,
+                            layout: 'vbox',
+                            items:[
                                 {
-                                    xtype: 'spinnerfield',
-                                    flex: 1,
-                                    style: 'padding-left: 4pt',
-                                    name: 'category_new_time',
-                                    allowDecimals: false,
-                                    minValue: 0 
+                                    xtype: 'toolbar',
+                                    ui:'admin-tree',
+                                    shadow: false,
+                                    items:[
+
+                                        { 
+                                            xtype: 'component', 
+                                            html: 'Shift Information',
+                                            userCls:'admin-title-toolbar', 
+                                        },
+
+                                        {
+                                            xtype:'spacer',
+                                            flex:1,
+
+                                        },
+                    
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-plus',
+                                            ui: 'plain wtr-button',                   
+                                        },
+
+                                    ]
                                 },
+
                                 {
-                                    xtype: 'combobox',
-                                    flex: 2,
-                                    name: 'category_new_rate',
-                                    allowBlank: false,
-                                    editable: false,
-                                    displayField: 'Description',
-                                    forceSelection: true,
-                                    queryMode: 'local',
-                                    valueField: 'ID'
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    flex:1,
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            //listeners: {
+                                            //    checkChange: 'onTreeGridChecked'
+                                            //}
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+
+                                    bind: '{departmentsTree}'
                                 },
+
+
+
                             ]
                         },
                     ]
                 },
+                // Column 2
+                { 
+                    xtype: 'fieldset',
+                    title: 'List of Categories',
+                    userCls:'admin-fieldset no-padding',
+
+                    flex: 1,
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+
+
+                    layout: {
+                        type: 'fit',
+                        alignment: 'stretch'
+                    },
+                    items: [
+                        // User defined category selector
+                        // === Replacement category selector
+                        {
+                            xtype: 'breeze-categories-list',
+                            ui: 'admin-shift-grid',
+                            userCls: 'admin-fieldset no-background no-margin no-border',
+                            reference: 'categoryList',
+                            fieldMode: 'none',
+                            itemConfig: {
+                                ui: 'admin-list-item-select'
+                            },
+                            bind: {
+                                store: '{categoriesList}',
+                            },
+                            viewModel: true
+                        }
+                    ]
+                },
+                // Column 3
                 {
-                    xtype: 'container',
-                    userCls: 'admin-fieldset no-border',
-                    layout: 'hbox',
-                    flex:1,
-                    maxHeight:'55pt',
-                    minHeight:'55pt',
-                    items:[
-                        {
-                            xtype: 'fieldset',
-                            name: 'category_accrual_cap_data',
-                            ui: 'admin-base',
-                            userCls:'admin-fieldset no-margin',
-                            title: 'Cap Accruals At',
-                            layout: 'hbox',
-                            flex:1,
-                            minHeight:'55pt',
-                            maxHeight:'55pt',
-                            defaults: {
-                                ui: 'admin admin-text'
-                            },
-                            items: [
-                                {
-                                    xtype: 'spinnerfield',
-                                    flex: 1,
-                                    style: 'padding-left: 4pt',
-                                    name: 'category_accrual_cap_amount',
-                                    allowDecimals: false,
-                                    minValue: 0 
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    flex: 2,
-                                    name: 'category_accrual_cap_unit',
-                                    allowBlank: false,
-                                    editable: false,
-                                    displayField: 'Description',
-                                    forceSelection: true,
-                                    queryMode: 'local',
-                                    valueField: 'ID'
-                                },
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            name: 'category_balance_cap_data',
-                            ui: 'admin-base',
-                            userCls:'admin-fieldset',
-                            title: 'Cap Balance At',
-                            layout: 'hbox',
-                            flex:1,
-                            minHeight:'55pt',
-                            maxHeight:'55pt',
-                            defaults: {
-                                ui: 'admin admin-text'
-                            },
-                            items: [
-                                {
-                                    xtype: 'spinnerfield',
-                                    name: 'category_balance_cap_amount',
-                                    flex: 1,
-                                    style: 'padding-left: 4pt',
-                                    decimalPrecision: 2,
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    flex: 2,
-                                    name: 'category_balance_cap_unit',
-                                    store: Ext.create('Ext.data.Store', {
-                                        fields: ['code', 'description'],
-                                        data: [
-                                            { "code": 48, "description": "Days" },
-                                            { "code": 49, "description": "Hours" },
-                                            { "code": 50, "description": "Minutes" }
-                                        ]
-                                    }),
-                                    valueField: 'code',
-                                    displayField: 'description'
-                                },
-                            ]
-                        },
-                    ]
-                },
-                {    
-                    xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
-                    flex: 1,
+                    xtype: 'panel',
+                    title: 'Illness Information',
+                    
+
+                       
+
+
+                    ui: 'admin-sub',
+
+
+                    flex: 2,
+
+                    // +++ fixed width +++
+                    minWidth:'400pt',
+                    maxWidth:'400pt',
+
                     layout: 'vbox',
                     items:[
                         {
-                            xtype: 'toolbar',
-                            ui:'admin-tree',
-                            shadow: false,
-                            items:[
-                                {
-                                    xtype: 'checkbox',
-                                    ui: 'reporting',
-                                    boxLabel: 'Illness Accrual Rules',
-                                    //listeners: {
-                                    //    change: 'onCategoriesCheckAllChange'
-                                    //}
-                                },
-
-                                {
-                                    xtype:'spacer',
-                                    flex:1,
-
-                                },
-            
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
-                                },
-
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-clock',
-                                    ui: 'plain wtr-button',                   
-
-                                },
-                            ]
-                        },
-
-                        {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
-                            flex:1,
+                            xtype: 'container',
+                            userCls: 'admin-fieldset no-border',
                             layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
-                                },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-
-                            bind: '{departmentsTree}'
-                        },
-                    ]
-                },
-
-
-                {    
-                    xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
-                    flex: 1,
-                    layout: 'vbox',
-                    items:[
-                        {
-                            xtype: 'toolbar',
-                            ui:'admin-tree',
-                            shadow: false,
+                            flex:1,
+                            maxHeight:'55pt',
+                            minHeight:'55pt',
                             items:[
-                                { 
-                                    xtype: 'component', 
-                                    html: 'Illness Carry Over Rules',
-                                    userCls:'admin-title-toolbar', 
-                                },
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
+                                    xtype: 'fieldset',
+                                    name: 'category_recording_year_type',
+                                    userCls:'admin-fieldset no-margin',
+                                    title: 'Recording Year Type',
+                                    layout: 'hbox',
+                                    flex:3,
 
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'admin',
+                                        xtype: 'radio'
+                                    },
+                                    items: [
+                                        {
+                                            flex: 1.25,
+                                            name: 'recording_year_type',
+                                            boxLabel: 'Anniversary',
+                                        },
+                                        {
+                                            flex: 1,
+                                            name: 'recording_year_type',
+                                            boxLabel: 'Calendar',
+                                        },
+                                        {
+                                            flex: 1,
+                                            name: 'recording_year_type',
+                                            boxLabel: 'Fiscal',
+                                        }
+
+                                    ]
                                 },
                                 {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    xtype: 'fieldset',
+                                    name: 'category_waiting_period_data',
+                                    ui: 'admin-base',
+                                    userCls:'admin-fieldset',
+                                    title: 'Start Accruing After',
+                                    layout: 'hbox',
+                                    flex:2,
+                                    minHeight:'55pt',
+                                    maxHeight:'55pt',
+                                    defaults: {
+                                        ui: 'admin admin-text'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            style: 'padding-left: 4pt',
+                                            name: 'category_new_time',
+                                            allowDecimals: false,
+                                            minValue: 0 
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 2,
+                                            name: 'category_new_rate',
+                                            allowBlank: false,
+                                            editable: false,
+                                            displayField: 'Description',
+                                            forceSelection: true,
+                                            queryMode: 'local',
+                                            valueField: 'ID'
+                                        },
+                                    ]
                                 },
                             ]
                         },
                         {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
-                            flex:1,
+                            xtype: 'container',
+                            userCls: 'admin-fieldset no-border',
                             layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
+                            flex:1,
+                            maxHeight:'55pt',
+                            minHeight:'55pt',
+                            items:[
                                 {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                    xtype: 'fieldset',
+                                    name: 'category_accrual_cap_data',
+                                    ui: 'admin-base',
+                                    userCls:'admin-fieldset no-margin',
+                                    title: 'Cap Accruals At',
+                                    layout: 'hbox',
+                                    flex:3,
+                                    minHeight:'55pt',
+                                    maxHeight:'55pt',
+                                    defaults: {
+                                        ui: 'admin admin-text'
                                     },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            flex: 1,
+                                            style: 'padding-left: 4pt',
+                                            name: 'category_accrual_cap_amount',
+                                            allowDecimals: false,
+                                            minValue: 0 
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 2,
+                                            name: 'category_accrual_cap_unit',
+                                            allowBlank: false,
+                                            editable: false,
+                                            displayField: 'Description',
+                                            forceSelection: true,
+                                            queryMode: 'local',
+                                            valueField: 'ID'
+                                        },
+                                    ]
                                 },
                                 {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                    xtype: 'fieldset',
+                                    name: 'category_balance_cap_data',
+                                    ui: 'admin-base',
+                                    userCls:'admin-fieldset',
+                                    title: 'Cap Balance At',
+                                    layout: 'hbox',
+                                    flex:2,
+                                    minHeight:'55pt',
+                                    maxHeight:'55pt',
+                                    defaults: {
+                                        ui: 'admin admin-text'
                                     },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-                            bind: '{departmentsTree}'
+                                    items: [
+                                        {
+                                            xtype: 'spinnerfield',
+                                            name: 'category_balance_cap_amount',
+                                            flex: 1,
+                                            style: 'padding-left: 4pt',
+                                            decimalPrecision: 2,
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            flex: 2,
+                                            name: 'category_balance_cap_unit',
+                                            store: Ext.create('Ext.data.Store', {
+                                                fields: ['code', 'description'],
+                                                data: [
+                                                    { "code": 48, "description": "Days" },
+                                                    { "code": 49, "description": "Hours" },
+                                                    { "code": 50, "description": "Minutes" }
+                                                ]
+                                            }),
+                                            valueField: 'code',
+                                            displayField: 'description'
+                                        },
+                                    ]
+                                },
+                            ]
                         },
+                        {    
+                            xtype: 'fieldset',
+                            userCls:'admin-fieldset no-padding',
+                            flex: 1,
+                            layout: 'vbox',
+                            items:[
+                                {
+                                    xtype: 'toolbar',
+                                    ui:'admin-tree',
+                                    shadow: false,
+                                    items:[
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Illness Accrual Rules',
+                                            //listeners: {
+                                            //    change: 'onCategoriesCheckAllChange'
+                                            //}
+                                        },
+
+                                        {
+                                            xtype:'spacer',
+                                            flex:1,
+
+                                        },
+                    
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-plus',
+                                            ui: 'plain wtr-button',                   
+                                        },
+
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-clock',
+                                            ui: 'plain wtr-button',                   
+
+                                        },
+                                    ]
+                                },
+
+                                {
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    flex:1,
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            //listeners: {
+                                            //    checkChange: 'onTreeGridChecked'
+                                            //}
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+
+                                    bind: '{departmentsTree}'
+                                },
+                            ]
+                        },
+
+
+                        {    
+                            xtype: 'fieldset',
+                            userCls:'admin-fieldset no-padding',
+                            flex: 1,
+                            layout: 'vbox',
+                            items:[
+                                {
+                                    xtype: 'toolbar',
+                                    ui:'admin-tree',
+                                    shadow: false,
+                                    items:[
+                                        { 
+                                            xtype: 'component', 
+                                            html: 'Illness Carry Over Rules',
+                                            userCls:'admin-title-toolbar', 
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            flex:1,
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls:'x-fas fa-plus',
+                                            ui: 'plain wtr-button',                   
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    ui: 'employeeinfo-shift-grid',
+                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    flex:1,
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            //listeners: {
+                                            //    checkChange: 'onTreeGridChecked'
+                                            //}
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+                                    bind: '{departmentsTree}'
+                                },
+                            ]
+                        },
+
+
+
+
+
                     ]
                 },
-
-
-
-
 
             ]
-        },
-
+        }
     ]
 });
