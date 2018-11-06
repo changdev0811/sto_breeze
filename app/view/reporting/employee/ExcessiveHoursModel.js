@@ -26,7 +26,7 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHoursModel', {
                 dStart: (new Date()),
                 dEnd: (new Date()),
                 hhmm_format: null,
-                hours_value: null,
+                hours_value: 8,
                 submit_approve: true,
                 submit_submit: false,
                 submit_unsubmit: false,

@@ -333,15 +333,17 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHours', {
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         },
+                        // ++ New 11/5 ++ Spinner field for input
                         {
-                            xtype: 'selectfield',
+                            xtype: 'spinnerfield',
                             name: 'hours_value',
                             label: 'Hours Greater Than',
-                            store: '',
-                            bind: { value: '{info.hours_value}' },
-                            displayField: ''
+                            ui: 'reporting reporting-text',
+                            bind: { value: '{reportParams.hours_value}' },
+                            decimals: 1,
+                            minValue: 0,
+                            stepValue: 0.5
                         }
-
                     ]
                 },
                 // Third Column Container
