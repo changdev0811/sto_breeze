@@ -338,36 +338,53 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                             xtype: 'fieldset',
                             userCls: 'reporting-fieldset',
                             title: 'Error Type',
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting',
-                                xtype: 'radio'
-                            },
                             items: [
-                                {
-                                    flex: 1,
-                                    name: 'valType',
-                                    id: 'radio1',
-                                    value: '1',
-                                    boxLabel: 'Open Punches Only',
-                                    bind: '{reportParams.errOption}'
-                                },
-                                {
-                                    flex: 1,
-                                    name: 'valType',
-                                    id: 'radio2',
-                                    value: '2',
-                                    boxLabel: 'Overlap Punches Only',
-                                    bind: '{reportParams.errOption}'
+                                /*  ++New 11/5++
+                                    Moved 'defaults' from fieldset to inside new object with
+                                    xtype 'containerfield'
 
-                                },
+                                    No binding is needed on radio buttons inside items, just need
+                                    to have a bind:  { values: (nameOfRadios) : '{bind property}' } on
+                                    the containerfield object
+                                */
                                 {
-                                    flex: 1,
-                                    name: 'valType',
-                                    id: 'radio3',
-                                    value: '3',
-                                    boxLabel: 'Open and Overlap Punches',
-                                    bind: '{reportParams.errOption}'
+                                    xtype: 'containerfield',
+                                    // reference used to lookup values
+                                    reference: 'errorType',
+                                    bind: {
+                                        values: {
+                                            valType: '{reportParams.errOption}'
+                                        }
+                                    },
+                                    layout: 'vbox',
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'reporting',
+                                        xtype: 'radio'
+                                    },
+                                    items: [
+                                        {
+                                            flex: 1,
+                                            name: 'valType',
+                                            id: 'radio1',
+                                            value: 1,
+                                            boxLabel: 'Open Punches Only'
+                                        },
+                                        {
+                                            flex: 1,
+                                            name: 'valType',
+                                            id: 'radio2',
+                                            value: 2,
+                                            boxLabel: 'Overlap Punches Only'
+                                        },
+                                        {
+                                            flex: 1,
+                                            name: 'valType',
+                                            id: 'radio3',
+                                            value: 3,
+                                            boxLabel: 'Open and Overlap Punches'
+                                        }
+                                    ]
                                 }
                             ]
                         },

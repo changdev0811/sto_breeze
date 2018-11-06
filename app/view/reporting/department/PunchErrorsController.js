@@ -81,10 +81,10 @@ Ext.define('Breeze.view.reporting.department.PunchErrorsController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == null){
-            valid = false;
-            messages.push('Please select a Category.')
-        }
+        // if(vmData.reportParams.inccats == null){
+        //     valid = false;
+        //     messages.push('Please select a Category.')
+        // }
 
         if(!valid){
             // If validation failed, show error(s) in toast message
@@ -103,8 +103,10 @@ Ext.define('Breeze.view.reporting.department.PunchErrorsController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
+            // categoryList = this.lookup('categoryList');
+            // errorType radios
+            errorTypeGroup = this.lookup('errorType');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -116,18 +118,24 @@ Ext.define('Breeze.view.reporting.department.PunchErrorsController', {
                 }
             ).join(',')
         );
+
+        // Update value of errOption from selected errorType radio
+        vm.set(
+            'reportParams.errOption',
+            errorTypeGroup.getValues()['valType']
+        );
         
         // Categories list method gatherSelected returns array of all records selected
-        var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
-            // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+        // var categoryRecords = categoryList.gatherSelected(),
+        //     // set selected category to the first selected record, if any, otherwise null
+        //     selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+        //     // get array of selected categories, using map to filter out the IDs
+        //     selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+        //     // assign list of category ids as single string, joined with ','
+        //     vm.set(
+        //         'reportParams.inccats',
+        //         selectedCategories.join(',')
+        //     );
     },
 
     /**
