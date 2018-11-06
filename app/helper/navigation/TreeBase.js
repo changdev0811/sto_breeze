@@ -66,15 +66,16 @@ Ext.define('Breeze.helper.navigation.TreeBase', {
         
         for(var i=0; i<extras.length; i++){
             var other = Ext.create(extras[i]);
-            combined = this.mergeTree(
+            combined = this.mergeNodes(
                 tree,
                 other.getData(),
                 other.getTargetPath(),
                 other.getMergeOptions()
             );
+            tree = combined;
         }
 
-        return combined;
+        return this.createTree(combined);
     }
 
 });
