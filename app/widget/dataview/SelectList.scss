@@ -13,4 +13,12 @@
     line-height: 16pt;
     padding-left: 0.5em;
     vertical-align: middle;
+
+    & > .icon {
+        @extend .x-icon-el;
+        @extend .x-font-icon;
+        line-height: 16pt;
+        font-size: 14pt;
+        padding-right: 6pt;
+    }
 }

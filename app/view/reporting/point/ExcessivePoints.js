@@ -12,7 +12,7 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
     viewModel: {
         type: 'reporting.point.excessivepoints'
     },
-    
+
     // Controller
     controller: 'reporting.point.excessivepoints',
 
@@ -29,9 +29,9 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
-        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls:'report-action-button' },
-        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls:'report-action-button' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls: 'report-action-button' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls: 'report-action-button' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls: 'report-action-button' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -47,7 +47,7 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
         {
             xtype: 'breeze-textfield',
             // +++ Added inline and width +++
-            inline:true,
+            inline: true,
             width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
@@ -60,7 +60,7 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable: 'x',
             items: [
                 // First column in horizontal container
                 {
@@ -68,9 +68,9 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                     // docked: 'left',
                     flex: 1,
                     // +++ maxWidth to prevent expanding beyond tab selector +++
-                    maxWidth:'298pt',
+                    maxWidth: '298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
-                    minWidth:'200pt',
+                    minWidth: '200pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing departments and employees
@@ -101,8 +101,8 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
                                         /* +++ Added reporting-toolbar userCls +++ */
-                                        userCls:'reporting-toolbar',
-                                        
+                                        userCls: 'reporting-toolbar',
+
                                         shadow: false,
                                         items: [
                                             {
@@ -174,7 +174,7 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                                         xtype: 'toolbar',
                                         ui: 'reporting-tree',
                                         /* +++ Added reporting-toolbar userCls +++ */
-                                        userCls:'reporting-toolbar',
+                                        userCls: 'reporting-toolbar',
                                         shadow: false,
                                         items: [
                                             {
@@ -250,9 +250,9 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                     xtype: 'container',
                     flex: 1,
                     // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
+                    minWidth: '200pt',
                     // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
+                    maxWidth: '300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -323,15 +323,15 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
 
                             ]
                         },
+                        // ++New 11/5++ Spinner field for point limit
                         {
-                            xtype: 'checkbox',
-                            labelAlign: 'top',
-                            boxLabel: 'With Points Greater Than Or Equal To:',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            checked: true,
-                            name: 'time_format',
-                            bind: '{reportParams.hhmm_format}'
+                            xtype: 'spinnerfield',
+                            label: 'With Points Greater Than Or Equal To',
+                            // labelAlign: 'left',
+                            // labelWidth: 'auto',
+                            ui: 'reporting reporting-text reporting-date',
+                            minValue: 0,
+                            bind: '{reportParams.limit}'
                         }
                     ]
                 },
@@ -340,8 +340,8 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                     xtype: 'container',
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'180pt',
-                    maxWidth:'220pt',
+                    minWidth: '180pt',
+                    maxWidth: '220pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing projects
@@ -359,11 +359,12 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                             },
 
                             items: [
-                                
+                                // ++New 11/5++
+                                // 'Check All' option for Point Categories list
                                 {
                                     xtype: 'toolbar',
                                     ui: 'reporting-tree',
-                                    userCls:'no-background',
+                                    userCls: 'no-background',
                                     shadow: false,
                                     items: [
                                         {
@@ -371,55 +372,40 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                                             ui: 'reporting',
                                             boxLabel: 'Check All',
                                             listeners: {
-                                               change: 'onTreeGridCheckAllChange'
+                                                change: 'onSelectListCheckAllChange'
                                             }
                                         }
                                     ]
                                 },
+                                // ++New 11/5++
+                                // Selector list control for Point categories
                                 {
-                                    xtype: 'tree',
-                                    flex:1,
+                                    xtype: 'breeze-select-list',
                                     ui: 'employeeinfo-shift-grid',
-                                    //userCls:'employeeinfo-shift-grid',
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    expanderFirst: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'checkcolumn',
-                                            
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            listeners: {
-                                                checkChange: 'onTreeGridChecked'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'treecolumn',
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                    flex: 1,
+                                    // Reference name and itemID needed for 
+                                    // reading data and check all listener
+                                    reference: 'pointCatList',
+                                    itemId: 'selectList',
+                                    fieldMode: 'check',
+                                    itemConfig: {
+                                        ui: 'reporting-list-item',
+                                        templates: {
+                                            radioValue: '{record.PointID}',
+                                            itemData: { name: '{record.PointName}' },
+                                            // with icon as used in original
+                                            // itemTpl: ['<div class="breeze-dataview-select-item-label">',
+                                            //         '<span class="icon x-fas fa-exclamation"></span>',
+                                            //         '{name}</div>']
+                                            // without icon, like other lists
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{name}</div>'
                                         }
-                                    ],
-                                    reference: 'projectsTree',
-                                    // TODO: Update binding once projects API call is available
-                                    // bind: '{departmentsTree}'
+                                    },
+                                    bind: {
+                                        store: '{pointCatsList}'
+                                    },
+                                    viewModel: true
                                 }
-                                    
                             ]
                         }
                     ]
