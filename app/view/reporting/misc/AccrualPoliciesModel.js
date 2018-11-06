@@ -23,9 +23,7 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Accrual Policies Report',
-                // Concerning selected departments/ids
-                idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                schedule_ids: '' // Accrual policy IDs
             }
         };
         this.setData(data);

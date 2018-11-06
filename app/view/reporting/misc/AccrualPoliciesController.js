@@ -28,24 +28,11 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
+        // ++New 11/5++
+        // Load accrual policies for select list
         this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
-        // Load employees for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Employees',
-            'employeesTree',
-            { load: true }
-        );
-
-        // Load departments for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Departments',
-            'departmentsTree',
+            'Breeze.store.accrual.ScheduleList',
+            'policyList',
             { load: true }
         );
 
@@ -56,7 +43,6 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
@@ -77,6 +63,12 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
+        // Check if 1 > accrual policies was selected
+        if(vmData.reportParams.schedule_ids == ''){
+            valid = false;
+            messages.push('Please select one or more Accrual Policies.');
+        }
+
         if(!valid){
             // If validation failed, show error(s) in toast message
             Ext.toast({
@@ -94,31 +86,14 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            policyList = this.lookup('accrualPolicyList');
 
-        // Set myinclist to list of chosen employee IDs
-        vm.set(
-            'reportParams.incids', 
-            this.checkedTreeItems(
-                employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
-                    forceInt: false
-                }
-            ).join(',')
-        );
-        
-        // Categories list method gatherSelected returns array of all records selected
-        var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
-            // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+        // Update accrual policy schedule ids from accrualPolicyList
+        var scheduleRecords = policyList.gatherSelected(),
+            selectedScheduleIds = scheduleRecords.map((r)=>{
+                return r.getData().ID;
+            }).join(',');
+        vm.set('reportParams.schedule_ids', selectedScheduleIds);
     },
 
     /**

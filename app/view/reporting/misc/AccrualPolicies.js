@@ -12,7 +12,7 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
     viewModel: {
         type: 'reporting.misc.accrualpolicies'
     },
-    
+
     // Controller
     controller: 'reporting.misc.accrualpolicies',
 
@@ -29,9 +29,9 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls:'report-action-button' },
-        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls:'report-action-button' },
-        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls:'report-action-button' },
+        pdf: { text: 'PDF', handler: 'onPrintPDF', ui: 'action', userCls: 'report-action-button' },
+        excel: { text: 'Excel', handler: 'onPrintExcel', ui: 'action', userCls: 'report-action-button' },
+        word: { text: 'Word', handler: 'onPrintWord', ui: 'action', userCls: 'report-action-button' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -47,7 +47,7 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
         {
             xtype: 'breeze-textfield',
             // +++ Added inline and width +++
-            inline:true,
+            inline: true,
             width: '50%',
             label: 'Report Title',
             name: 'reportTitle',
@@ -67,8 +67,8 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                     xtype: 'container',
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'200pt',
-                    maxWidth:'300pt',
+                    minWidth: '200pt',
+                    maxWidth: '300pt',
                     layout: 'vbox',
                     items: [
                         // Tab panel containing projects
@@ -88,11 +88,12 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                             },
 
                             items: [
-                                
+                                // ++New 11/5++
+                                // 'Check All' option for Accrual Policy list
                                 {
                                     xtype: 'toolbar',
                                     ui: 'reporting-tree',
-                                    userCls:'no-background',
+                                    userCls: 'no-background',
                                     shadow: false,
                                     items: [
                                         {
@@ -100,57 +101,38 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                                             ui: 'reporting',
                                             boxLabel: 'Check All Policies',
                                             listeners: {
-                                               change: 'onTreeGridCheckAllChange'
+                                                // New event listener added to Controller
+                                                change: 'onSelectListCheckAllChange'
                                             }
                                         }
                                     ]
                                 },
+                                // ++New 11/5++
+                                // Selector list control for Accrual Policies
                                 {
-                                    xtype: 'tree',
-                                    flex:1,
+                                    xtype: 'breeze-select-list',
                                     ui: 'employeeinfo-shift-grid',
-                                    //userCls:'employeeinfo-shift-grid',
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    expanderFirst: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'checkcolumn',
-                                            
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            listeners: {
-                                                checkChange: 'onTreeGridChecked'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'treecolumn',
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                    flex: 1,
+                                    // Reference name and itemID needed for 
+                                    // reading data and check all listener
+                                    reference: 'accrualPolicyList',
+                                    itemId: 'selectList',
+                                    fieldMode: 'check',
+                                    itemConfig: {
+                                        ui: 'reporting-list-item',
+                                        templates: {
+                                            radioValue: '{record.ID}',
+                                            itemData: { name: '{record.Name}' },
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{name}</div>'
                                         }
-                                    ],
-                                    reference: 'projectsTree',
-                                    // TODO: Update binding once projects API call is available
-                                    // bind: '{departmentsTree}'
+                                    },
+                                    bind: {
+                                        store: '{policyList}'
+                                    },
+                                    viewModel: true
                                 }
 
 
-                                    
                             ]
                         }
                     ]
@@ -161,9 +143,9 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                     xtype: 'container',
                     flex: 1,
                     // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
+                    minWidth: '200pt',
                     // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
+                    maxWidth: '300pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
