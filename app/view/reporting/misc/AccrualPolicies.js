@@ -120,13 +120,10 @@ Ext.define('Breeze.view.reporting.misc.AccrualPolicies', {
                                     fieldMode: 'check',
                                     itemConfig: {
                                         ui: 'reporting-list-item',
-                                        // Makes checkboxes appear like trees used for employees/departments
-                                        checkboxUi: 'reporting reporting-check',
                                         templates: {
                                             radioValue: '{record.ID}',
                                             itemData: { name: '{record.Name}' },
-                                            // the margin-left adds spacing to match employees/departments tree
-                                            itemTpl: '<div style="margin-left: 32pt" class="breeze-dataview-select-item-label">{name}</div>'
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{name}</div>'
                                         }
                                     },
                                     bind: {
