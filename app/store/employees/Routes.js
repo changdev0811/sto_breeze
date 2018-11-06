@@ -39,7 +39,7 @@ Ext.define('Breeze.store.employees.Routes', {
             method: true
         },
         {
-            action: 'wtr', view: 'Breeze.view.employee.WorkTimeRecords',
+            action: 'wtv', view: 'Breeze.view.employee.WorkTimeRecords',
             method: false
         }
     ],

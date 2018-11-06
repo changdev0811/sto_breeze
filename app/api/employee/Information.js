@@ -282,6 +282,7 @@ Ext.define('Breeze.api.employee.Information', {
                      * @param {Object} opts Options
                      */
                     success: function(resp, opts){
+                        console.info('Upload picture response: ', resp.responseText);
                         var response = JSON.parse(resp.responseText);
                         if(response.success){
                             // Successful, resolve with generated URL
