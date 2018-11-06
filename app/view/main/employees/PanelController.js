@@ -122,6 +122,21 @@ Ext.define('Breeze.view.main.employees.PanelController', {
     },
 
     /**
+     * Handle change event for 'exclude terminated' checkbox
+     * 
+     * Causes departments and employees lists to perform search
+     */
+    onExcludeTerminatedChange: function(){
+        // var tabs = this.lookup('employeesPanelTabs');
+        
+        // if(tabs.getActiveItem().getItemId() == 'employees'){
+        this.doEmployeesSearch(this.lookup('employeesSearch'));
+        // } else {
+        this.doDepartmentsSearch(this.lookup('departmentsSearch'));
+        // }
+    },
+
+    /**
      * Handle employees tree selection change, toggling
      * whether 'remove' button is enabled
      * @param {Object} comp Tree component sending event

@@ -37,6 +37,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
     items: [
         {
             xtype: 'tabpanel',
+            reference: 'employeesPanelTabs',
             flex: 1,
             ui: 'wtr-tabbar',
             tabBar: {
@@ -56,6 +57,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                 {
                     xtype: 'container',
                     title: 'Employees',
+                    itemId: 'employees',
                     items: [
                         // Search toolbar
                         {
@@ -66,6 +68,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             items: [
                                 {
                                     xtype: 'searchfield',
+                                    reference: 'employeesSearch',
                                     ui: 'solo',
                                     shadow: true,
                                     flex: 1,
@@ -151,6 +154,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                 {
                     xtype: 'container',
                     title: 'Depts',
+                    itemId: 'depts',
                     items: [
                         {
                             xtype: 'toolbar',
@@ -160,6 +164,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             items: [
                                 {
                                     xtype: 'searchfield',
+                                    reference: 'departmentsSearch',
                                     // ui: 'dark-textfield',
                                     ui: 'alt',
                                     flex: 1,
@@ -253,7 +258,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     name: 'exclude_terminated',
                     bind: {
                         checked: '{excludeTerminated}'
+                    },
+                    listeners: {
+                        change: 'onExcludeTerminatedChange'
                     }
+
                 }
             ]
         }
