@@ -46,6 +46,8 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         {
             xtype: 'container',
             layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:'x',
             userCls:'admin-fieldset no-border',
             defaults: {
                 ui: 'admin admin-text',
@@ -65,20 +67,17 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     style: 'padding-left: 4pt',
 
                 },
-
                 {
                     xtype:'spacer',
                     width:'20pt',
 
                 },
-
                 {
-
-
                     xtype: 'button',
                     text: 'Save for Future Use',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
+                    style:'width:150pt;'
 
                 },
                 {
@@ -92,6 +91,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             xtype:'panel',
             ui:'admin-sub',
             layout:'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:'x',
+
             flex: 1,
             items:[
                 // Column 1
@@ -102,18 +104,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     layout:'vbox',
                     flex: 1,
 
-
-                    buttons: {
-                        apply: { text: 'Apply Holiday Schedule',  ui: 'action'},
-                    },
-
-                    buttonAlign: 'left',
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
-
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
 
                     items:[
                         {    
@@ -197,18 +190,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     flex: 1,
                     layout: 'vbox',
 
-                    buttons: {
-                        add: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'action' },
-                    },
-
-
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
-
-
+                    // +++ fixed width +++
+                    minWidth:'250pt',
+                    maxWidth:'350pt',
 
                     items:[
                         {
@@ -225,13 +209,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     label: 'Holiday Name',
                                     name:'holiday_Name',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset no-border',
+                                    userCls:'admin-fieldset no-border no-margin',
 
                                 },
                                 {
                                     xtype: 'spinnerfield',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset no-border',
+                                    userCls:'admin-fieldset no-border no-margin',
                                     label:'Percentage',
                                     name: 'percentage',
                                     maxValue: 100,
@@ -245,7 +229,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     reference: 'weekSelector',
                                     ui: 'minicalendar',//'wtr-small',,
                                     collapsed: true,
-                                    margin: '0pt 10pt 0pt 10pt',
+                                    margin: '10pt 10pt 0pt 10pt',
                                     listeners: {
                                         //change: 'onWeekChange'
                                     }
@@ -258,7 +242,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     name: 'floatingHoliday',
                                     labelWidth: 'auto',
                                     ui: 'employeeinfo-checkbox',
-                                    userCls: 'employee-info-general-field',
+                                    userCls: 'employee-info-general-field no-margin no-padding',
                                     bodyAlign: 'stretch',
                                     reference: 'otCheck1',
                                     bind: {
@@ -333,6 +317,40 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     ]
                 },
             ]
+        },
+
+        {
+            xtype: 'toolbar',
+            ui:'admin-fieldset',
+            userCls:'admin-fieldset no-border no-padding no-background',
+            shadow: false,
+            items:[
+                {
+                    xtype: 'button',
+                    text: 'Apply Holiday Schedule',
+                    ui: 'action',                   
+                    userCls:'admin-fieldset-no-border',
+                    style:'width:150pt;'
+
+                },
+                {
+                    xtype:'spacer',
+                    flex:1,
+                },
+                {
+                    xtype: 'button',
+                    text: 'save',
+                    ui: 'action',                   
+                    userCls:'admin-fieldset-no-border',
+                    style:'width:150pt;'
+
+                },
+
+            ]
         }
+
+
+
+
     ]
 });
