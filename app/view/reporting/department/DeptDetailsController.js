@@ -104,7 +104,8 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            categoryList = this.lookup('categoryList'),
+            recordingMonthList = this.lookup('recordingMonthList');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -120,14 +121,21 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsController', {
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
             // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            // selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',
                 selectedCategories.join(',')
             );
+
+        // Collect selected months from list
+        var monthRecords = recordingMonthList.gatherSelected(),
+            selectedMonths = monthRecords.map((r)=>{return r.getData().value});
+        vm.set(
+            'reportParams.incmonths', selectedMonths.join(',')
+        );
     },
 
     /**

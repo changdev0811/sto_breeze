@@ -17,7 +17,7 @@ Ext.define('Breeze.store.reporting.parameters.Employees', {
     // storeId: 'PunchPolicyList',
 	alias: 'store.reporting.parameters.employees',
 	config: {
-        includeActions: true,
+        includeActions: false,
         excludeTerminated: false,
         ruleSet: 'list'
     },

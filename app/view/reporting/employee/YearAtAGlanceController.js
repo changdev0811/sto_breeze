@@ -81,6 +81,15 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceController', {
             messages.push('Please select a Department or Employee.');
         }
 
+        // Fail if recyeartype isn't string, meaning a calendar type
+        // needs to be chosen
+        if(vmData.reportParams.recyeartype == null){
+            valid = false;
+            // trigger invalid styling flag for field
+            this.lookup('calendarType').validate();
+            messages.push('Please select a Calendar Type');
+        }
+
         if(!valid){
             // If validation failed, show error(s) in toast message
             Ext.toast({
@@ -99,7 +108,9 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            calendarMode = this.lookup('calendarModeGroup')
+                .getValues()['calendarMode'];
+            
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -110,6 +121,16 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceController', {
                     forceInt: false
                 }
             ).join(',')
+        );
+
+        // Set calendar mode value
+        vm.set(
+            'reportParams.recyeartype',
+            // If value isn't a string, treat it as null
+            // Necessary because of how bind value looks to
+            // calendar mode select field for second option, which will
+            // give 'true' if selected without a calendar mode chosen
+            (typeof calendarMode == 'string')? calendarMode : null
         );
         
     },

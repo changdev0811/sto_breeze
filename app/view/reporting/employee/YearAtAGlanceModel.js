@@ -23,10 +23,12 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Employee Year At A Glance Report',
-                recyear: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                // recording year
+                recyear: (new Date()).getYear() + 1900, // Defaults rec year to current year 
+                recyeartype: 'ALL', // Record year type ('ALL' or calendar type)
             }
         };
         this.setData(data);

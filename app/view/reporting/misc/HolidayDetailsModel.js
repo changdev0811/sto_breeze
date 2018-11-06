@@ -23,10 +23,10 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Holiday Details Report',
-                recyear: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                year: (new Date()).getFullYear(), // Selected year, default to current
             }
         };
         this.setData(data);

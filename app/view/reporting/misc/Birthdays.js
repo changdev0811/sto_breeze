@@ -351,8 +351,9 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                     },
                     height: '100%',
                     width: '100%',
-                    //reference: 'udcContainer',
                     items: [
+                        // ++New 11/5++
+                        // 'Check All' option for Months list
                         {
                             xtype: 'toolbar',
                             ui: 'reporting-tree',
@@ -360,33 +361,37 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                             shadow: false,
                             items: [
                                 {
-                                    xtype: 'selectfield',
-                                    bodyAlign: 'stretch',
-                                    ui: 'reporting reporting-text reporting-date',
-                                    name: 'year',
-                                    label: 'Recording Year',
-                                    store: '',
-                                    bind: { value: '{info.cbRecordingYear}' },
-                                    displayField: 'Description',
-                                    valueField: 'ID'
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        // New event listener added to Controller
+                                        change: 'onSelectListCheckAllChange'
+                                    }
                                 }
                             ]
                         },
-                        // User defined category selector
-                        // === Replacement category selector
+                        // ++New 11/5++
+                        // Selector list control for Month Options
                         {
-                            xtype: 'breeze-categories-list',
+                            xtype: 'breeze-select-list',
                             ui: 'employeeinfo-shift-grid',
                             flex: 1,
-                            //reference: 'categoryList',
-                            // used by 'check all' listener
-                            //itemId: 'categories',
+                            // Reference name and itemID needed for 
+                            // reading data and check all listener
+                            reference: 'monthOptionList',
+                            itemId: 'selectList',
                             fieldMode: 'check',
                             itemConfig: {
-                                ui: 'reporting-list-item'
+                                ui: 'reporting-list-item',
+                                templates: {
+                                    radioValue: '{record.value}',
+                                    itemData: { month: '{record.name}' },
+                                    itemTpl: '<div class="breeze-dataview-select-item-label">{month}</div>'
+                                }
                             },
                             bind: {
-                                store: '{categoriesList}',
+                                store: '{monthList}'
                             },
                             viewModel: true
                         }

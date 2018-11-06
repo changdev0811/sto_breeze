@@ -20,7 +20,8 @@
             'Breeze.store.option.Compensation',
             'Breeze.store.employee.static.PunchRoundingIncrements',
             'Breeze.store.company.Config',
-            'Breeze.store.reporting.Routes'
+            'Breeze.store.reporting.Routes',
+            'Breeze.store.option.Years'
         ],
     
         requires: [

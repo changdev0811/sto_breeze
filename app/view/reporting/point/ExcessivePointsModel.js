@@ -27,7 +27,9 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsModel', {
                 dEnd: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                pointids: '', // Point category IDs
+                limit: 0, // Points >= value 
             }
         };
         this.setData(data);

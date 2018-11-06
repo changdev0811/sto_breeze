@@ -104,7 +104,8 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            categoryList = this.lookup('categoryList'),
+            recordingYearList = this.lookup('recordingYearList');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -122,12 +123,20 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
             // set selected category to the first selected record, if any, otherwise null
             selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',
                 selectedCategories.join(',')
             );
+        
+        // Collect selected recording years
+        var yearRecords = recordingYearList.gatherSelected(),
+            selectedYears = yearRecords.map((r)=>{return r.getData().Year;});
+        vm.set(
+            'reportParams.recording_years',
+            selectedYears.join(',')
+        );
     },
 
     /**

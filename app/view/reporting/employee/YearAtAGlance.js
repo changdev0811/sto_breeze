@@ -303,20 +303,68 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
+                                // ++New 11/5++ Recording year select field
                                 {
-                                    name: 'on_time',
-                                    inline: true,
-                                    label: '',
-                                    boxLabel: 'Calendar Year Mode (All Categories - No FYI)',
-                                    bind: '{reportParams.on_time}'
+                                    xtype: 'selectfield',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    label: 'Recording Year',
+                                    labelWidth: 'auto',
+                                    labelAlign: 'left',
+                                    store: 'Years',
+                                    displayField: 'Year', valueField: 'Year',
+                                    bind: { value: '{reportParams.recyear}' }
+                                },
+                                // ++New 11/5++ Container field holding radio choices
+                                {
+                                    xtype: 'containerfield',
+                                    reference: 'calendarModeGroup',
+                                    layout: 'vbox',
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'reporting',
+                                        xtype: 'radio'
+                                    },
+                                    bind: {
+                                        values: {
+                                            calendarMode: '{reportParams.recyeartype}'
+                                        }
+                                    },
+                                    items: [
+                                        {
+                                            name: 'calendarMode',
+                                            value: 'ALL',
+                                            boxLabel: 'Calendar Year Mode (All Categories - No FYI)'
+                                        },
+                                        {
+                                            name: 'calendarMode',
+                                            // value: 'TYPE', // value used to indicate calendar type should be checked
+                                            boxLabel: 'Recording Year Mode (Selected Type - With FYI)',
+                                            // Reference used to hide/show Calendar type options field
+                                            reference: 'calendarModeType',
+                                            bind: {
+                                                // Makes it so value of this radio is equal to that of the 
+                                                // selected calendar type from select field below
+                                                value: '{calendarType.value}'
+                                            }
+                                        }
+                                    ]
                                 },
                                 {
-                                    name: 'no_record',
-                                    inline: true,
-                                    label: '',
-                                    boxLabel: 'Recording Year Mode (Selected Type - With FYI)',
-                                    bind: '{reportParams.no_record}'
+                                    xtype: 'selectfield',
+                                    reference: 'calendarType',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    label: 'Calendar Type',
+                                    // labelWidth: 'auto',
+                                    // labelAlign: 'left',
+                                    store: 'CalendarTypeOptions',
+                                    displayField: 'Description', valueField: 'Description',
+                                    bind: {
+                                        // Hide when calendar mode is 'ALL'
+                                        hidden: '{!calendarModeType.checked}',
+                                    },
+                                    required: true
                                 }
+
                             ]
                         }
                     ]

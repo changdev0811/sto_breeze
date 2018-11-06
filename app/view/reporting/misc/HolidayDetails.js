@@ -291,18 +291,18 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetails', {
                                 }
                             ]
                         },
+                        // ++New 11/5++ Reporting year select field
                         {
-                            xtype: 'datefield',
-                            labelAlign: 'top',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
+                            xtype: 'selectfield',
+                            ui: 'reporting reporting-text reporting-date',
                             label: 'Reporting Year',
-                            picker: {
-                                xtype: 'datepicker',
-                                title: ''
-                            },
-                            bind: '{reportParams.dStart}'
-                        }
+                            // If single line version is prefered, uncomment next two lines
+                            // labelWidth: 'auto',
+                            // labelAlign: 'left',
+                            store: 'Years',
+                            displayField: 'Year', valueField: 'Year',
+                            bind: { value: '{reportParams.year}' }
+                        },
                     ]
                 }
             ]

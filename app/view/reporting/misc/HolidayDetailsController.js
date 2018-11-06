@@ -28,13 +28,6 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
         // Load employees for tree selector
         this.addStoreToViewModel(
             'Breeze.store.tree.reporting.Employees',
@@ -56,7 +49,6 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
@@ -98,8 +90,7 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
 
         // Set myinclist to list of chosen employee IDs
         vm.set(

@@ -86,6 +86,26 @@ Ext.define('Breeze.controller.Reporting', {
             .changeAllCheckboxes(checked);
     },
 
+        
+    /**
+     * Handle change event for 'Check All' checkbox conneced
+     * to a select-list component.
+     * 
+     * Copies checked state to all items in list
+     * 
+     * @note Note: Source checkbox should be in a toolbar nested in a container
+     *      also containing a categories list component with itemId set to 
+     *      'selectList' for this event handler to work correctly
+     * 
+     * @param {Object} elem Checkbox element event originated from
+     * @param {Boolean} checked Checked state of checkbox
+     */
+    onSelectListCheckAllChange: function(elem, checked){
+        elem.getParent().getParent()
+            .getComponent('selectList')
+            .changeAllCheckboxes(checked);
+    },
+
     // ====[Data Collection Helpers]====
 
     /**

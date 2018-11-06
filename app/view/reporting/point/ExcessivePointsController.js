@@ -28,10 +28,10 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
+        // Load point categories list
         this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
+            'Breeze.store.point.List',
+            'pointCatsList',
             { load: true }
         );
 
@@ -76,6 +76,11 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
+        if(vmData.reportParams.pointids == ''){
+            valid = false;
+            messages.push('Please select one or more Point Categories.');
+        }
+
         if(vmData.reportParams.incids == ''){
             valid = false;
             messages.push('Please select a Department or Employee.');
@@ -94,12 +99,12 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsController', {
     },
 
     /**
-     * Refresh values in viewmodel for selected employees and category
+     * Refresh values in viewmodel for fields requiring manual attention
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            pointCatList = this.lookup('pointCatList');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -111,6 +116,13 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsController', {
                 }
             ).join(',')
         );
+
+        // Set selected point category ids
+        var pointCatRecords = pointCatList.gatherSelected(),
+            selectedPointCats = (pointCatRecords.map((r)=>{
+                return r.getData().PointID;
+            }));
+        vm.set('reportParams.pointids', selectedPointCats.join(','));
         
     },
 

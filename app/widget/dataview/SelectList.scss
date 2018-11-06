@@ -10,7 +10,15 @@
     // margin:0pt; padding:0pt;
     // color: white;
     // width: 12em;
-    line-height: 14pt;
+    line-height: 16pt;
     padding-left: 0.5em;
     vertical-align: middle;
+
+    & > .icon {
+        @extend .x-icon-el;
+        @extend .x-font-icon;
+        line-height: 16pt;
+        font-size: 14pt;
+        padding-right: 6pt;
+    }
 }
