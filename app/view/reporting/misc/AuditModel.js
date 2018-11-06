@@ -24,7 +24,9 @@ Ext.define('Breeze.view.reporting.misc.AuditModel', {
                 RepSignature: false,
                 ReportTitle: 'Audit Report',
                 dStart: (new Date()),
-                dEnd: (new Date())
+                dEnd: (new Date()),
+                searchString: '', // Search String
+                useSearchString: false, // Bound to whether searcString != ''
             }
         };
         this.setData(data);

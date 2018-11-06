@@ -29,25 +29,25 @@ Ext.define('Breeze.view.reporting.misc.AuditController', {
         );
 
         // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
+        // this.addStoreToViewModel(
+        //     'Breeze.store.category.List',
+        //     'categoriesList',
+        //     { load: true }
+        // );
 
         // Load employees for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Employees',
-            'employeesTree',
-            { load: true }
-        );
+        // this.addStoreToViewModel(
+        //     'Breeze.store.tree.reporting.Employees',
+        //     'employeesTree',
+        //     { load: true }
+        // );
 
         // Load departments for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Departments',
-            'departmentsTree',
-            { load: true }
-        );
+        // this.addStoreToViewModel(
+        //     'Breeze.store.tree.reporting.Departments',
+        //     'departmentsTree',
+        //     { load: true }
+        // );
 
         // Load company config
         this.addStoreToViewModel(
@@ -56,7 +56,6 @@ Ext.define('Breeze.view.reporting.misc.AuditController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
@@ -89,35 +88,26 @@ Ext.define('Breeze.view.reporting.misc.AuditController', {
     },
 
     /**
-     * Refresh values in viewmodel for selected employees and category
+     * Refresh values in viewmodel for fields needing manual manipulation
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            params = vm.get('reportParams');
 
-        // Set myinclist to list of chosen employee IDs
+        /*  Trim search string, and apply regex as per original
+            /Reports/CompanyHistory.js:38
+        */
         vm.set(
-            'reportParams.incids', 
-            this.checkedTreeItems(
-                employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
-                    forceInt: false
-                }
-            ).join(',')
+            'reportParams.searchString',
+            // TODO: Ask what this regex is supposed to be doing, as it doesn't seem useful
+            (params.searchString.trim() == '') ? '' : params.searchString.replace(/\s+/, ',')
         );
-        
-        // Categories list method gatherSelected returns array of all records selected
-        var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
-            // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+        // Update useSearchString based on value of searchString
+        vm.set(
+            'reportParams.useSearchString',
+            (vm.get('reportParams.searchString') !== '')
+        );
+
     },
 
     /**

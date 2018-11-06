@@ -147,17 +147,18 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                             userCls: 'reporting-fieldset',
 
                             defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting',
-                                xtype: 'breeze-checkbox'
+                                bodyAlign: 'stretch'
                             },
                             items: [
+                                // ++New 11/5++ Search string field
                                 {
-                                    name: 'headerCompanyLogo',
+                                    label: 'Search String',
                                     inline: true,
-                                    label: '',
-                                    boxLabel: 'Search String',
-                                    bind: '{reportParams.LogoInHeader}'
+                                    ui: 'reporting reporting-text',
+                                    xtype: 'breeze-textfield',
+                                    bind: {
+                                        value: '{reportParams.searchString}'
+                                    }
                                 }
                             ]
                         }
