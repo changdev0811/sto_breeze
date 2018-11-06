@@ -15,6 +15,8 @@ Ext.define('Breeze.helper.DummyApi', {
             punch: 'resources/dummy_api/',
             // api: '../STOServe/Service1.asmx/',
             api: 'resources/dummy_api/',
+            // ASHX Script path
+            ashx: 'https://vitest.softtimeonline.com/STOServe/',
             // pulled from sti_namespace, used in STOLogin view
             login: 'resources/dummy_api/'
         },
@@ -40,6 +42,14 @@ Ext.define('Breeze.helper.DummyApi', {
             } else {
                 return [this.dummyPath(),action].join('');
             }
+        },
+        /**
+         * Get url path to ASHX script
+         * @param {String} action API ASHX file name
+         * @return {String} full url path to ASHX
+         */
+        ashxUrl: function(action){
+            return [this.dummyPath(),action].join('');
         },
         request: function(api, service, params, cookieParams, sync, successHandler, failureHandler){
             return Breeze.helper.Api.request(api,service,params, cookieParams, sync,successHandler,failureHandler);

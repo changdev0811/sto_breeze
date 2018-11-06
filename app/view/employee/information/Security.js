@@ -104,6 +104,9 @@ Ext.define('Breeze.view.employee.information.Security', {
             layout: 'vbox',
             title: 'Change Password',
             ignoreReadOnly: true,
+            bind: {
+                hidden: '{newEmployee}'
+            },
             defaults: {
                 flex: 1,
                 xtype: 'textfield',

@@ -37,13 +37,13 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         this.addStoreToViewModel(
             'Breeze.store.employees.Departments',
             'departmentsList',
-            { load: true }
+            { load: true, createOpts: { storeId: 'employeesDepartments' } }
         );
 
         this.addStoreToViewModel(
             'Breeze.store.employees.Employees',
             'employeesList',
-            { load: true }
+            { load: true, createOpts: { storeId: 'employeesEmployees' } }
         );
 
         this.refreshEmployeeCounts();

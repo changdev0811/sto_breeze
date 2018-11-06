@@ -85,7 +85,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     "_TerminationDate": null,
                     "_HireDate": (new Date()),
                     "TerminationDate": "",
-                    "CustomerID": 0,
+                    "CustomerID": "",
                     "ID": 0,
                     "RecordingMode": 21,
                     "Shift_Hours": null,

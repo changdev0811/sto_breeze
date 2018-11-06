@@ -14,6 +14,8 @@
                 // api: '../STOServe/Service1.asmx/',
                 // TODO: make api url relative
                 api: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/',
+                // ASHX Script path
+                ashx: 'https://vitest.softtimeonline.com/STOServe/',
                 // pulled from sti_namespace, used in STOLogin view
                 // TODO: make login api url relative
                 login: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/'
@@ -26,6 +28,15 @@
              */
             url: function(action){
                 return [this.apiPaths.api,action].join('');
+            },
+
+            /**
+             * Get url path to ASHX script
+             * @param {String} action API ASHX file name
+             * @return {String} full url path to ASHX
+             */
+            ashxUrl: function(action){
+                return [this.apiPaths.ashx,action].join('');
             },
 
             /**

@@ -152,7 +152,40 @@ Ext.define('Breeze.api.employee.Information', {
     },
 
     // TODO: Implement addNewEmployee
-    addNewEmployee: function () { },
+    addNewEmployee: function (params) { 
+        var api = this.api,
+            jar = this.auth.getCookies();
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'addNewEmployee',
+                params,
+                true, true,
+                function(resp){
+                    var response = api.decodeJsonResponse(resp);
+                    if(response.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Successfully created Employee',
+                            info: null
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Error occured',
+                            info: response.err
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occured',
+                        info: err
+                    });
+                }
+            )
+        });
+    },
 
     /**
      * Upload profile picture using AJAX
@@ -236,7 +269,7 @@ Ext.define('Breeze.api.employee.Information', {
 
                 // Prepare parameters for AJAX request
                 var ajaxParams = {
-                    url: api.url('uploadEmployeePicture.ashx'),
+                    url: api.ashxUrl('uploadEmployeePicture.ashx'),
                     method: 'POST',
                     // defaultHeaders: {'Content-Type': 'application/json'},
                     // params: formData,
