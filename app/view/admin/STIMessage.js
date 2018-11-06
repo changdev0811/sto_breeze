@@ -1,5 +1,5 @@
 /**
- * MOTD Report form
+ * MOTD Admin view
  * @class STIMessage
  * @namespace Breeze.view.admin.STIMessage
  * @alias widget.admin.stimessage
@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.STIMessage', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'SoftTime Online Release Notes',
 

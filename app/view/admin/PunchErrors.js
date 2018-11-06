@@ -1,5 +1,5 @@
 /**
- * PunchErrors Report form
+ * PunchErrors Admin view
  * @class PunchErrors
  * @namespace Breeze.view.admin.PunchErrors
  * @alias widget.admin.puncherrors
@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.PunchErrors', {
 
     // Layout and base styles
     layout: 'vbox',
-    ui: 'wtr-panel',
+    ui: 'admin-base',
 
     title: 'Punch Errors',
 

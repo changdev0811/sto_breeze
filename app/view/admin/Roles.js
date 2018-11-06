@@ -1,20 +1,20 @@
 /**
- * Projects Admin view
- * @class Projects
- * @namespace Breeze.view.admin.Projects
- * @alias widget.admin.Projects
+ * Roles Admin view
+ * @class Roles
+ * @namespace Breeze.view.admin.Roles
+ * @alias widget.admin.roles
  */
-Ext.define('Breeze.view.admin.Projects', {
+Ext.define('Breeze.view.admin.Roles', {
     extend: 'Ext.Panel',
-    alias: 'widget.admin.projects',
+    alias: 'widget.admin.roles',
 
     // View Model
     viewModel: {
-        type: 'admin.projects'
+        type: 'admin.roles'
     },
 
     // Controller
-    controller: 'admin.projects',
+    controller: 'admin.roles',
     listeners: {
         initialize: 'onInit'
     },
@@ -22,7 +22,7 @@ Ext.define('Breeze.view.admin.Projects', {
     // Layout and base styles
     layout: 'hbox',
     ui: 'admin-base',
-    title: 'Projects',
+    title: 'Supervisor Roles',
 
     // Body contents
     items: [
@@ -40,7 +40,7 @@ Ext.define('Breeze.view.admin.Projects', {
                     items:[
                         { 
                             xtype: 'component', 
-                            html: 'Projects',
+                            html: 'Roles',
                             userCls:'admin-title-toolbar', 
                         },
                         {
@@ -118,29 +118,19 @@ Ext.define('Breeze.view.admin.Projects', {
                
                 {
                     xtype: 'breeze-textfield',
-                    label: 'Name',
+                    label: 'Role Name',
                     name: 'project_name',
                     ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
+                    userCls:'admin-fieldset no-border',
                 },
                 {
-                    xtype: 'breeze-textfield',
-                    label: 'Description',
-                    name: 'description',
-                    ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
-                },
-                {
-                    xtype: 'breeze-textfield',
-                    label: 'Code',
-                    name: 'project_code',
-                    ui: 'admin admin-text',
-                    userCls:'admin-fieldset-no-border',
-                },
-                {
-                    xtype:'container',
-                    userCls:'admin-fieldset-no-border',
+                    xtype:'fieldset',
+                    userCls:'admin-fieldset',
+                    title:'Supervisor Rights',
                     layout: 'vbox',
+                    defaults:{
+                        userCls:'admin-fieldset no-border no-padding',
+                    },
                     items:[
                         {
                             xtype:'checkbox',
@@ -148,7 +138,7 @@ Ext.define('Breeze.view.admin.Projects', {
                             name: 'isWorktime',
                             id: 'radio1',
                             value: '20',
-                            boxLabel: 'Counts as Time Worked',
+                            boxLabel: 'Check All',
                             bodyAlign: 'stretch',
                         },
 
@@ -158,10 +148,81 @@ Ext.define('Breeze.view.admin.Projects', {
                             name: 'isOT',
                             id: 'radio2',
                             value: '20',
-                            boxLabel: 'Counts as Overtime',
+                            boxLabel: 'Add Employee',
                             bodyAlign: 'stretch',
                         },
-
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio3',
+                            value: '20',
+                            boxLabel: 'Delete Employee',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio4',
+                            value: '20',
+                            boxLabel: 'Edit Employee',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio5',
+                            value: '20',
+                            boxLabel: 'View SSN',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio6',
+                            value: '20',
+                            boxLabel: 'View Compensation',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio7',
+                            value: '20',
+                            boxLabel: 'Employee Category Adjust',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio8',
+                            value: '20',
+                            boxLabel: 'Adjustments',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio9',
+                            value: '20',
+                            boxLabel: 'Leave Approvial',
+                            bodyAlign: 'stretch',
+                        },
+                        {
+                            xtype:'checkbox',
+                            ui:'admin',
+                            name: 'isOT',
+                            id: 'radio10',
+                            value: '20',
+                            boxLabel: 'Modify Recorded Time',
+                            bodyAlign: 'stretch',
+                        },
 
                     ]
 

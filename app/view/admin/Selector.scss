@@ -19,7 +19,7 @@
     border:solid 1px white;
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
     );
 
     .x-form-fieldset-title {
@@ -29,32 +29,26 @@
         font-size: map-get($root-font-sizes, 'detail');
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
-            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0 )
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
         );
     }
 }
-
-
-
-
-
 
 .admin-toolbar {
     border-left: solid 1px white !important;
     border-right: solid 1px white !important;
 }
 
-
 .no-border {
-    border:none;
+    border:none !important;
 }
 
 // styling applied to admin-fieldset title
-.no-padding {
+.no-padding  {
 
     .x-form-fieldset-body-el {
         //margin:0;
-        padding:0;
+        padding:0 !important;
     }
 
 
@@ -62,24 +56,38 @@
 
 // styling applied to admin-fieldset title
 .no-margin {
-
     margin: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
         $weights: (top: 0, left: 0, right: 0, bottom: 0)
     );
 }
 
+.no-side-margin {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0.5)
+    );
+}
+
+
 .no-background {
     background:transparent !important;
 }
 
+.admin-title-toolbar {
+    font-weight:1000;
+    color:map-get($admin-text-colors, 'base');
+}
 
+.tool-check-box {
+    margin-left:-4pt;
+}
 
 /** Generic base UI for report form panels **/
 @include panel-ui(
     $body-padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
-        $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
+        $weights: (top: 0, left: 0, right: 0.5, bottom: 0.25)
     ),
     $header-background-color: map-get($admin-colors, 'base'),
     $header-color: map-get($admin-text-colors, 'base'),
@@ -243,20 +251,15 @@
     $selected-background-color: map-get($admin-colors, 'base'),
     $hovered-background-color: map-get($admin-colors, 'base'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
-
     $padding: 10pt 0pt 10pt 11.6pt
-
 );
-
-
-
 
 @include panel-ui(
     $ui: 'admin-list-panel',
-    $background-color: map-get($employee-info-colors, 'base'),
-    $header-background-color: map-get($employee-info-colors, 'base'),
-    $body-background-color: map-get($employee-info-colors, 'base'),
-    $body-color: map-get($employee-info-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $header-background-color: map-get($admin-colors, 'base'),
+    $body-background-color: map-get($admin-colors, 'base'),
+    $body-color: map-get($admin-text-colors, 'base'),
     // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
 @include paneltitle-ui(
@@ -273,4 +276,43 @@
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
     );
 };
+
+
+
+// ===[User Categories List Widget Specific]== (SELECT VERSION)
+@include listitem-ui(
+    $ui: 'admin-list-item-select',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'medium'),
+    $hovered-background-color: map-get($admin-colors, 'light'),
+    $font-size: map-get($root-font-sizes, 'detail') !important,
+    $padding: 10pt 0pt 10pt 11.6pt
+);
+
+@include panel-ui(
+    $ui: 'admin-list-panel-select',
+    $background-color: map-get($admin-colors, 'base'),
+    $header-background-color: map-get($admin-colors, 'base'),
+    $body-background-color: map-get($admin-colors, 'base'),
+    $body-color: map-get($admin-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+@include paneltitle-ui(
+    $ui: 'admin-list-panel-select',
+    $font-size: map-get($root-font-sizes, 'base')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'admin-list-panel-select'
+) {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+};
+
 
