@@ -82,10 +82,10 @@
                 before: 'beforeEmployeesViewRoute'
             },
             // Admin route
-            'admin/:tyoe': {
+            'admin/:type': {
                 action: 'onAdminRoute',
                 // TODO: Implement before report route method to prevent access when not allowed
-                //before: 'beforeAdminRoute'
+                // before: 'beforeAdminRoute'
             },
             // Report route
             'reports/:category/:type': {
