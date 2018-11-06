@@ -43,14 +43,22 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryModel', {
                 RepSignature: false,
                 ReportTitle: 'Payroll Summary Report',
                 hhmm_format: true,
-                hourly_only: null,
+                hourly_only: false,
                 hhmm_format: true,
                 submit_approve: true,
-                submit_submit: null,
-                submit_unsubmit: null,
+                submit_submit: false,
+                submit_unsubmit: false,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                // Date rang fields
+                date_type: 'weeks', // Either 'weeks' or 'date_range
+                weeks_str: '', // Weeks chosen, if using 'weeks' type
+                weeks_strUtc: '', // Weeks chosen (utc)
+                dStart: null, // start date, if using date_range
+                dStartUtc: null, // start date, if using date_range
+                dEnd: null, // end date, if using date_range
+                dEndUtc: null // end date, if using date_range
             }
         };
         this.setData(data);

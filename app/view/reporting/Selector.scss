@@ -242,6 +242,7 @@
     $body-color: map-get($employee-info-text-colors, 'base'),
     // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
+
 @include paneltitle-ui(
     $ui: 'reporting-list-panel',
     $font-size: map-get($root-font-sizes, 'base')
@@ -257,3 +258,28 @@
     );
 };
 
+// Used on tab bodies containing multiple items
+@include panel-ui(
+    $ui: 'reporting-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include panel-ui(
+    $ui: 'reporting-bordered-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'reporting-bordered-panel'
+){
+    border: 1pt solid map-get($root-colors, 'base');
+};

@@ -358,6 +358,151 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                     width: '220pt',
                     // flex: 1,
                     layout: 'vbox',
+                    userCls: 'report-section-padding',
+                    items: [
+                        // ++New 11/5++ Placed mini calendar and range fields
+                        // Inside a tab panel control
+                        {
+                            xtype: 'tabpanel',
+                            // == New reference to identify this tab panel easily
+                            reference: 'dateTabs',
+                            layout: {
+                                animation: 'fade'
+                            },
+                            ui: 'employeeInfoTabs', //'reporting-tabs',
+                            tabBar: {
+                                defaultTabUI: 'employeeInfoTabs',
+                                shadow: false,
+                            },
+                            flex: 1,
+                            items: [
+                                // Week Range Tab
+                                {
+                                    xtype: 'panel',
+                                    // data for tab, used to set 'date_type'
+                                    data: {
+                                        type: 'weeks'
+                                    },
+                                    title: 'Week Range',
+                                    layout: 'vbox',
+                                    ui: 'reporting-panel',
+                                    items: [
+                                        {
+                                            xtype: 'panel.minicalendar',
+                                            reference: 'weekSelector',
+                                            ui: 'light-minicalendar',//'wtr-small',
+                                            tools: {
+                                                previousMonth: {
+                                                    ui: 'light-minicalendar'
+                                                },
+                                                nextMonth: {
+                                                    ui: 'light-minicalendar'
+                                                }
+                                            },
+                                            // collapsed: true,
+                                            flex: 1,
+                                            width: '100%',
+                                            margin: '2pt 1pt 0pt 1pt',
+                                            listeners: {
+                                                dateselect: 'onWeekSelect',
+                                            }
+                                        },
+                                        {
+                                            xtype: 'fieldset',
+                                            flex: 1,
+                                            layout: { type: 'fit', align: 'stretch' },
+                                            title: 'Weeks Selected',
+                                            userCls: 'reporting-fieldset no-margin',
+                                            defaults: {
+                                                bodyAlign: 'stretch',
+                                                ui: 'reporting',
+                                                xtype: 'breeze-checkbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'grid',
+                                                    layout: 'hbox',
+                                                    ui: 'employeeinfo-shift-grid',
+                                                    columnResize: false,
+                                                    hideHeaders: true,
+                                                    sortable: false,
+                                                    columnMenu: false,
+                                                    bind: { store: '{selectedWeeks}' },
+                                                    columns: [
+                                                        {
+                                                            dataIndex: 'startText',
+                                                            menuDisabled: true,
+                                                            flex: 1,
+                                                            // Remove tool button
+                                                            cell: {
+                                                                toolDefaults: {
+                                                                    ui: 'employeeinfo-grid-tool',
+                                                                    zone: 'end',
+                                                                },
+                                                                tools: [
+                                                                    {
+                                                                        iconCls: 'x-fa fa-times',
+                                                                        handler: 'onWeekRemoveTool'
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                // Date Range Tab
+                                {
+                                    xtype: 'panel',
+                                    title: 'Date Range',
+                                    // data for tab, used to set 'date_type'
+                                    data: {
+                                        type: 'date_range'
+                                    },
+                                    layout: 'vbox',
+                                    ui: 'reporting-panel',
+                                    items: [
+                                        {
+                                            xtype: 'fieldset',
+                                            layout: 'vbox',
+                                            itemId: 'fields',
+                                            // title: 'Submission Type',
+                                            userCls: 'reporting-fieldset no-margin',
+
+                                            defaults: {
+                                                bodyAlign: 'stretch',
+                                                ui: 'reporting reporting-text reporting-date',
+                                                xtype: 'datefield'
+                                            },
+                                            items: [
+                                                {
+                                                    label: 'From',
+                                                    picker: {
+                                                        xtype: 'datepicker',
+                                                        title: 'From Date'
+                                                    },
+                                                    bind: '{reportParams.dStart}',
+                                                    required: true
+                                                },
+                                                {
+                                                    label: 'To',
+                                                    picker: {
+                                                        xtype: 'datepicker',
+                                                        title: 'To Date'
+                                                    },
+                                                    bind: '{reportParams.dEnd}',
+                                                    required: true
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                }
+                            ]
+                        },
+                    ]
+                    /*
                     items: [
                         {
                             xtype: 'panel.minicalendar',
@@ -426,6 +571,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                         },
 
                     ]
+                    */
                 }
             ]
         }

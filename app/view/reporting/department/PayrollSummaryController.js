@@ -81,6 +81,34 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
             messages.push('Please select a Department or Employee.');
         }
 
+        // Check 1 > weeks have been picked if week mode
+        if(
+            vmData.reportParams.date_type == 'weeks' &&
+            vmData.reportParams.weeks_str == ''
+        ){
+            valid = false;
+            messages.push('Please select one or more weeks.');
+        }
+        
+        // Check dStart and dEnd picked if date_range mode
+        if(vmData.reportParams.date_type == 'date_range'){
+            // Cause fields in date_range tab to show red if not specified,
+            // using built in validator
+            this.lookup('dateTabs').getActiveItem()
+                .getComponent('fields').getItems().items.forEach((i)=>{
+                    i.validate();
+                }
+            );
+            if(vmData.reportParams.dStart == null){
+                valid = false;
+                messages.push('Please select a \'From\' date.');
+            }
+            if(vmData.reportParams.dEnd == null){
+                valid = false;
+                messages.push('Please select a \'To\' date.');
+            }
+        }
+
         if(!valid){
             // If validation failed, show error(s) in toast message
             Ext.toast({
@@ -157,7 +185,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            dateTabs = this.lookup('dateTabs');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -169,6 +197,63 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
                 }
             ).join(',')
         );
+
+        // Set selected week range or date range
+        var dateType = dateTabs.getActiveItem().getData().type;
+        // Update dateType parameter value
+        vm.set('reportParams.date_type', dateType);
+        // Update additional date params based on type selected
+        switch(dateType){
+            case 'weeks':
+                // Update weeks
+                var weeks = vm.get('selectedWeeks').getData().items;
+                // Set dStart and dEnd to null
+                vm.set('reportParams.dStart', null);
+                vm.set('reportParams.dEnd', null);
+                vm.set('reportParams.dStartUtc', null);
+                vm.set('reportParams.dEndUtc', null);
+                // Set week_str to list of selected weeks
+                vm.set(
+                    'reportParams.week_str',
+                    weeks.map((w) => { 
+                        return w.getData().startText; 
+                    }).join(',')
+                );
+                // Set week_strUtc to list of selected weeks as UTC dates
+                vm.set(
+                    'reportParams.week_strUtc',
+                    weeks.map((w) => {
+                        // Use our custom toUTC method, specifying output as string
+                        return w.getData().start.toUTC({ out: Date.UTC_OUT.STRING });
+                    }).join('*')
+                );
+                break;
+            case 'date_range':
+                // Wrapped in try-catch so as not to fail if no date values are provided
+                // Validation method will detect they are missing and prevent submission
+                try {
+                    // Update UTC ranges
+                    vm.set(
+                        'reportParams.dStartUtc', 
+                        vm.get('reportParams.dStart').toUTC({
+                            out: Date.UTC_OUT.STRING
+                        })
+                    );
+                    vm.set(
+                        'reportParams.dEndUtc', 
+                        vm.get('reportParams.dEnd').toUTC({
+                            out: Date.UTC_OUT.STRING
+                        })
+                    );
+
+                    // clear week_str and week_strUtc
+                    vm.set('reportParams.week_str', '');
+                    vm.set('reportParams.week_strUtc', '');
+                } catch (ex) {
+
+                }
+                break;
+        }
         
     },
 
