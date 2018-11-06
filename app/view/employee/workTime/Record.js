@@ -182,7 +182,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 },
                 {
                     xtype: 'gridcolumn',
-                    flex: 1,
+                    flex: 2,
                     text: 'Project',
                     dataIndex: 'Project',
                     sortable: true
