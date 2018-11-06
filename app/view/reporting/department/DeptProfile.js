@@ -102,7 +102,7 @@ Ext.define('Breeze.view.reporting.department.DeptProfile', {
                                             ui: 'reporting',
                                             boxLabel: 'Check All Departments',
                                             listeners: {
-                                               change: 'onTreeGridCheckAllChange'
+                                               change: 'onCheckAllChange'
                                             }
                                         }
                                     ]
@@ -148,9 +148,11 @@ Ext.define('Breeze.view.reporting.department.DeptProfile', {
                                             }
                                         }
                                     ],
-                                    reference: 'projectsTree',
+                                    reference: 'departmentsTree',
                                     // TODO: Update binding once projects API call is available
-                                    //bind: '{departmentsTree}'
+                                    bind: { 
+                                        store: '{departmentsList}'
+                                    }
 
                                 }
 
