@@ -118,14 +118,16 @@
                 level = me.getViewModel().get('accessLevel');
             
             // var navStore = Ext.create('Breeze.helper.navigation.Personal').asTreeWithExtras('Breeze.helper.navigation.Employees');
-            var navStore;
-            if (level > Breeze.api.Employee.accessLevel.EMPLOYEE) {
+            var navStore, extras = [];
+            if (level >= Breeze.api.Employee.accessLevel.SUPERVISOR) {
+                extras.push('Breeze.helper.navigation.Employees');
+                if(level == Breeze.api.Employee.accessLevel.SUPER_ADMIN){
+                    extras.push('Breeze.helper.navigation.Admin');
+                }
+                console.info('Extras: ', extras);
                 // If user is supervisor or above, add employees section to nav
                 navStore = Ext.create('Breeze.helper.navigation.Personal')
-                    .asTreeWithExtras([
-                        'Breeze.helper.navigation.Employees'
-                    ]
-                    );
+                    .asTreeWithExtras(extras);
             } else {
                 // Default employee level navigation
                 this.refreshEmployeesPanel(false);

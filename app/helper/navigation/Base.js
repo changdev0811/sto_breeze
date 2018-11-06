@@ -26,7 +26,7 @@ Ext.define('Breeze.helper.navigation.Base', {
     },
 
     /**
-     * Merge tree data into an existing tree
+     * Merge tree data into an existing node set
      * @param {Array} existing Existing tree array
      * @param {Array} newData Data to merge into tree, an array of nodes
      * @param {String} path Path of ids joined by '/' specifying where merge
@@ -45,10 +45,9 @@ Ext.define('Breeze.helper.navigation.Base', {
      *          if child is true, all children are replace. If
      *          child is false, all items in target's parent are
      *          replaced. Default false
-     * @return {Object} Tree resulting from merge passed through
-     *      createTree method to wrap it inside a tree store object
+     * @return {Object} Nodes resulting from merge
      */
-    mergeTree: function (existing, newData, path, options) {
+    mergeNodes: function (existing, newData, path, options) {
         var base = existing.slice(0),
             // Accept table store format or array of child nodes
             addition = newData.slice(0),
@@ -89,7 +88,35 @@ Ext.define('Breeze.helper.navigation.Base', {
             }
         }
 
-        return this.createTree(base);
+        return base;
+    },
+
+        /**
+     * Merge tree data into an existing tree
+     * @param {Array} existing Existing tree array
+     * @param {Array} newData Data to merge into tree, an array of nodes
+     * @param {String} path Path of ids joined by '/' specifying where merge
+     *      is to occur
+     * @param {Object} options Optional options:
+     *      - child: If true, merge data is appended to child attribute
+     *          of node targeted by path, unless node has no children 
+     *          attribute. (Ignored if node has no children attr)
+     *          If false, merge data is inserted into target node's
+     *          parent, relative to target's position. Default
+     *          false
+     *      - before: If child is false, true will cause values
+     *          to be inserted before target node, false means after.
+     *          default false
+     *      - replace: If true, merge data replaces content of target node,
+     *          if child is true, all children are replace. If
+     *          child is false, all items in target's parent are
+     *          replaced. Default false
+     * @return {Object} Tree resulting from merge passed through
+     *      createTree method to wrap it inside a tree store object
+     */
+    mergeTree: function(existing, newData, path, options){
+        var merged = this.mergeNodes(existing, newData, path, options);
+        return this.createTree(merged);
     },
 
     /**

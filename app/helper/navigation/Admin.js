@@ -15,7 +15,7 @@ Ext.define('Breeze.helper.navigation.Admin', {
                 text: 'Admin',
                 routeRef: 'admin',
                 id: 'admin',
-                iconCls: 'x-fas fa-user-crown',
+                iconCls: 'x-fas fa-crown',
                 children: [
                     {
                         text: 'Accrual Policies', leaf: true,
