@@ -15,9 +15,13 @@ Ext.define('Breeze.Application', {
     ],
 
     stores: [
+        // Option Lists
         'Breeze.store.option.UserTypes',
         'Breeze.store.option.Genders',
         'Breeze.store.option.Compensation',
+        'Breeze.store.option.CalendarTypes',
+        'Breeze.store.option.Years',
+        // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
         'Breeze.store.company.Config'
     ],
