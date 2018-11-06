@@ -122,7 +122,9 @@ Ext.define('Breeze.view.employee.InformationController', {
                                     'securityRights',
                                     {
                                         load: true,
-                                        createOpts: { employeeId: vm.get('viewerId') },
+                                        createOpts: { employeeId: 
+                                            (vm.get('employeeId') == 'new')? 0 : vm.get('employeeId') 
+                                        },
                                         loadOpts: {
                                             callback: function (success, rec, opt) {
                                                 if (success) {
@@ -1469,16 +1471,19 @@ Ext.define('Breeze.view.employee.InformationController', {
             securityValid = true;
         
         ['first_name', 'last_name'].forEach((f)=>{
-            employeeValid &= employeeTab.down(`[name=${f}]`).validate();
+            var partValid = employeeTab.down(`[name=${f}]`).validate();
+            employeeValid = employeeValid && partValid;
         });
         ['department'].forEach((f)=>{
-            companyValid &= companyTab.down(`[name=${f}]`).validate();
+            var partValid = companyTab.down(`[name=${f}]`).validate();
+            companyValid = companyValid && partValid;
         });
         ['user_name'].forEach((f)=>{
-            securityValid &= securityTab.down(`[name=${f}]`).validate();
+            var partValid = securityTab.down(`[name=${f}]`).validate();
+            securityValid = securityValid && partValid
         });
         if(vm.get('newEmployee')){
-            securityValid &= securityTab.down(`[name=create_password]`);
+            securityValid = securityValid && securityTab.down(`[name=create_password]`);
         }
 
         return employeeValid && companyValid && securityValid;
@@ -1491,34 +1496,60 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} e Event object
      */
     onSaveButtonTap: function(comp, e){
+        var vm = this.getViewModel();
         console.info('Save button pressed');
         if(this.validate()){
+            console.info('Validation passed')
             // If validation passed, copy extra data to ViewModel
 
             this.copyCompanyListsToModel();
             this.copyShiftSegmentsToModel();
 
-            // Call update API method
-            this.apiClass.information.updateEmployee(
-                this.gatherUpdateParams()
-            ).then((resp)=>{
-                Ext.toast({
-                    message: resp.message,
-                    type: resp.type,
-                    timeout: 10000
+            if(vm.get('newEmployee')){
+                console.info('Creating new employee record');
+                this.apiClass.information.addNewEmployee(
+                    this.gatherCreateParams()
+                ).then((resp) => {
+                    Ext.toast({
+                        type: resp.type,
+                        message: resp.message,
+                        timeout: 10000
+                    });
+                    // TODO: Decide where to navigate to after successfull save
+                }).catch((resp)=>{
+                    var msg = resp.message;
+                    if(typeof resp.err == 'string'){
+                        msg = msg.concat('<br>(', resp.err, ')');
+                    }
+                    Ext.toast({
+                        type: resp.type,
+                        message: msg,
+                        timeout: 10000
+                    })
                 });
-                // try to reload view
-                if(this.onInit){
-                    this.onInit(this.getView());
-                }
-            }).catch((resp)=>{
-                Ext.toast({
-                    message: resp.message,
-                    type: resp.type,
-                    timeout: 10000
-                });
-                console.warn('Save failed: ', resp.err, resp.info)
-            })
+            } else {
+                // Call update API method
+                this.apiClass.information.updateEmployee(
+                    this.gatherUpdateParams()
+                ).then((resp)=>{
+                    Ext.toast({
+                        message: resp.message,
+                        type: resp.type,
+                        timeout: 10000
+                    });
+                    // try to reload view
+                    if(this.onInit){
+                        this.onInit(this.getView());
+                    }
+                }).catch((resp)=>{
+                    Ext.toast({
+                        message: resp.message,
+                        type: resp.type,
+                        timeout: 10000
+                    });
+                    console.warn('Save failed: ', resp.err, resp.info)
+                })
+            }
         }
         console.info('ViewModel updated');
     },
@@ -1539,7 +1570,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.first_name = vm.get('info.FirstName');
         params.last_name = vm.get('info.LastName');
         params.middle_name = vm.get('info.MiddleName');
-        params.company_employee_id = vm.get('info.CustomerId');
+        params.company_employee_id = vm.get('info.CustomerID');
         params.ssn = vm.get('info.SSN');
         params.payroll = vm.get('info.Payroll');
         params.date_of_hire = vm.get('info.HireDate');
@@ -1620,6 +1651,46 @@ Ext.define('Breeze.view.employee.InformationController', {
             }
         });
         return nullSanitized;
+    },
+
+    gatherCreateParams: function(){
+        var vm = this.getViewModel(),
+            params = {
+                first_name: vm.get('info.FirstName'),
+                last_name: vm.get('info.LastName'),
+                middle_name: vm.get('info.MiddleName'),
+                employee_id: vm.get('info.CustomerID').trim(),
+                ssn: vm.get('info.SSN'),
+                payroll: vm.get('info.Payroll'),
+                date_of_hire: vm.get('info.HireDate'),
+                date_of_birth: vm.get('info.BirthDate'),
+                date_of_termination: vm.get('info.TerminationDate'),
+                comp_rate: vm.get('info.CompRate'),
+                comp_per: vm.get('info.CompPer'),
+                sex: vm.get('info.Gender'),
+                picture_path: vm.get('info.Photo'),
+                exempt: false,
+                notes: vm.get('info.Notes'),
+                recording_mode: vm.get('info.RecordingMode'),
+                exempt_status: vm.get('info.ExemptStatus'),
+                badge_id: vm.get('info.Badge'),
+                email: vm.get('info.Email').trim(),
+                department_id: vm.get('info.Department'),
+                schedule_id: vm.get('info.StartUpSettings'),
+                punchpolicy_id: vm.get('info.punchPolicy.policy_id'),
+                default_project: vm.get('info.DefaultProject'),
+                username: vm.get('info.Username'),
+                password: vm.get('initialPassword'),
+                shiftStartSegments: vm.get('info.ShiftStartSegments').join(','),
+                shiftStopSegments: vm.get('info.ShiftStopSegments').join(','),
+                user_modified: true,
+                user_type: vm.get('info.LoginType'),
+                supervisor_ids: vm.get('info.SupervisorIds').join(','),
+                employee_ids: vm.get('info.SupervisedEmpIds').join(','),
+                department_ids: vm.get('info.SupervisedDeptIds').join(','),
+                department_role_ids: vm.get('info.DeptRoleIds').join(',')
+            };
+        return params;
     }
 
 });

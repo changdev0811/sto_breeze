@@ -20,8 +20,8 @@ Ext.define('Breeze.store.employees.Departments', {
 		searchString: '',
 		includeActions: true,
 		excludeTerminated: false,
-		ruleSet: 'list'
-    },
+	},
+	ruleSet: 'list',
 	listeners: {
 		beforeload : function () {
             // TODO: look into refreshCategoryMap call

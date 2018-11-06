@@ -41,7 +41,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'datefield',
                     name: 'date_of_hire',
                     label: 'Hire Date',
-                    bind: { value: '{hireDate}' },
+                    bind: { value: '{info.HireDate}' },
                     picker: {
                         xtype: 'datepicker',
                         title: 'Select Hire Date'

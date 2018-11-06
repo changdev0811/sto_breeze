@@ -17,8 +17,8 @@ Ext.define('Breeze.mixin.ListStylable', {
      * @param {Array} records Collection of records to style
      */
     applyStyling: function(records){
-        this.ruleSet = Breeze.helper.settings.StyleRules[this.getRuleSet()];
-        this.ruleNames = Object.keys(this.ruleSet);
+        this.rules = Breeze.helper.settings.StyleRules[this.ruleSet];
+        this.ruleNames = Object.keys(this.rules);
 
         var me = this,
             travel = (rec) => {
@@ -36,7 +36,7 @@ Ext.define('Breeze.mixin.ListStylable', {
      */
     styleNode: function (node) {
         var data = node.getData(),
-            rules = this.ruleSet,
+            rules = this.rules,
             ruleNames = this.ruleNames;
         
         // Automatically make node function as leaf if it has no children

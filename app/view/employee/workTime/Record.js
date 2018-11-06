@@ -111,17 +111,19 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             columns: [
                 {
                     xtype: 'gridcolumn',
-                    text: '',
                     groupable: false,
                     hideable: false,
                     menu: null,
                     menuDisabled: true,
-                    resizable: false,
-                    tpl: '<span style="padding:0;" class="{Photo}"></span>',
-                    cell: {
-                        encodeHtml: false
+                    // tpl: '<div class="{Photo}"></div>',
+                    renderer: function(val, rec, col, cell){
+                        cell.setTools([{
+                            iconCls: rec.get('Photo')
+                        }]);
                     },
-                    width: '4em',
+                    // padding: '2pt', margin: '2pt',
+                    width: 'auto',
+                    
                 },
                 {
                     xtype: 'gridcolumn',
@@ -142,7 +144,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         '{[this.formatted(values.Start_Time)]}',
                         {
                             formatted: function(v){
-                                return v.toLocaleTimeString();
+                                if((Object.isUnvalued(v) || v == '')){
+                                    return v;
+                                } else {
+                                    return (moment(v).format('h:mm A'));
+                                }
                             }
                         }
                     ]
@@ -157,7 +163,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         '{[this.formatted(values.End_Time)]}',
                         {
                             formatted: function(v){
-                                return v.toLocaleTimeString();
+                                if((Object.isUnvalued(v) || v == '')){
+                                    return v;
+                                } else {
+                                    return (moment(v).format('h:mm A'));
+                                }
                             }
                         }
                     ]

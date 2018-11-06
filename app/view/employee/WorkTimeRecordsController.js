@@ -17,12 +17,21 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Initialize component handler
      */
     onInit: function(component, eOpts){
+
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
         var weekSelect = this.lookup('weekSelector');
         weekSelect.setValue(weekSelect.getValue());
+
+        var vm = this.getViewModel();
+
+        if(typeof component.getData().employee !== 'undefined'){
+            vm.set('employeeId', component.getData().employee);
+        } else {
+            vm.set('employeeId', this.api.auth.getCookies().emp);
+        }
+
         this.loadEmployee();
-        this.getViewModel().set('employeeId', component.getData().employee);
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadAtAGlance();
@@ -38,7 +47,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     loadEmployee: function(){
         var me = this;
         var vm = me.getViewModel();
-        Ext.create('Breeze.api.Employee').getHeaderInfo().then(function(r){
+        this.api.getHeaderInfo(vm.get('employeeId')).then(function(r){
             vm.set('employeeName', r.fullname);
         }).catch(
             function(err){

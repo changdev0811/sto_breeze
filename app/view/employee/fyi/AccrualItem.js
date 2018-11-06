@@ -44,6 +44,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
     ],
     updateRecord: function(record){
+        if(this.isDestroying){
+            return null;
+        }
         this.lookup('categoryName').setHtml(record.get('CatDesc'));
 
         var recorded = this.normalizedRecordFloat(record,'CatRecorded');

@@ -37,13 +37,13 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         this.addStoreToViewModel(
             'Breeze.store.employees.Departments',
             'departmentsList',
-            { load: true }
+            { load: true, createOpts: { storeId: 'employeesDepartments' } }
         );
 
         this.addStoreToViewModel(
             'Breeze.store.employees.Employees',
             'employeesList',
-            { load: true }
+            { load: true, createOpts: { storeId: 'employeesEmployees' } }
         );
 
         this.refreshEmployeeCounts();
@@ -90,7 +90,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         store.updateProxy(proxy);
 
         // Update params
-        store.setSearchString(query);
+        store.setSearchString((query == null)? "" : query);
         store.setExcludeTerminated(excludeTerminated);
 
         // Reload store with updated params
@@ -114,11 +114,26 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         store.updateProxy(store.getProxy());
 
         // Update params
-        store.setSearchString(query);
+        store.setSearchString((query == null)? "" : query);
         store.setExcludeTerminated(excludeTerminated);
 
         // Reload store with updated params
         store.load();
+    },
+
+    /**
+     * Handle change event for 'exclude terminated' checkbox
+     * 
+     * Causes departments and employees lists to perform search
+     */
+    onExcludeTerminatedChange: function(){
+        // var tabs = this.lookup('employeesPanelTabs');
+        
+        // if(tabs.getActiveItem().getItemId() == 'employees'){
+        this.doEmployeesSearch(this.lookup('employeesSearch'));
+        // } else {
+        this.doDepartmentsSearch(this.lookup('departmentsSearch'));
+        // }
     },
 
     /**

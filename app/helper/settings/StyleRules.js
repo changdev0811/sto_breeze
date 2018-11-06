@@ -8,7 +8,7 @@
 Ext.define('Breeze.helper.settings.StyleRules', {
     singleton: true,
 
-    actions: ['Cal','EmpInfo','FYI','YAG','WTV','cal','empinfo','fyi','yag','wtr'],
+    actions: ['Cal','EmpInfo','FYI','YAG','WTV','cal','empinfo','fyi','yag','wtv'],
 
     /**
      * Icons and labels for trees built from list API responses

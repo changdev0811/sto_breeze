@@ -639,15 +639,32 @@
         replaceContent: function(ns, args){
             var container = this.lookup('contentContainer');
                 
-            if(!Object.isUnvalued(container.getActiveItem())){
+            // if(!Object.isUnvalued(container.getActiveItem())){
                 
-                // container.remove(container.getActiveItem(), true);
-                var old = container.pop();
-                container.remove(container.getActiveItem(), true);
-            } 
+            //     container.remove(container.getActiveItem(), true);
+            //     // while(container.getItems().items.length > 1){
+            //         // var old = container.pop();
+            //         // container.remove(container.getItems().items[0], true);
+            //         // container.remove(old, true);
+            //     // }
+            //     // container.remove(container.getActiveItem(), true);
+            // } 
+
+            var old = container.getActiveItem();
+            if(!Object.isUnvalued(old)){
+                try {
+                    container.remove(old, true);
+                } catch (ex) {
+                    console.warn('Error', old, ex);
+                    container.remove(old);
+                } finally {
+
+                }
+            }
 
             var newContent = Ext.create(ns, args);
             container.push(newContent);
+            container.setActiveItem(newContent);
 
         },
 
