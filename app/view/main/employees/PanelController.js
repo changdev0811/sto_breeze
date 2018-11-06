@@ -90,7 +90,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         store.updateProxy(proxy);
 
         // Update params
-        store.setSearchString(query);
+        store.setSearchString((query == null)? "" : query);
         store.setExcludeTerminated(excludeTerminated);
 
         // Reload store with updated params
@@ -114,7 +114,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         store.updateProxy(store.getProxy());
 
         // Update params
-        store.setSearchString(query);
+        store.setSearchString((query == null)? "" : query);
         store.setExcludeTerminated(excludeTerminated);
 
         // Reload store with updated params
