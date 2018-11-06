@@ -338,26 +338,17 @@ Ext.define('Breeze.view.reporting.project.ProjectDetails', {
                 // Third Column Container
                 // Container for User-Defined Categories list
                 {
-                    // +++ New Field Set +++
                     xtype: 'fieldset',
-
-                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
-                    
-                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
-                    // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
-
-                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [
