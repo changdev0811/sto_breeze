@@ -71,15 +71,12 @@ Ext.define('Breeze.view.reporting.misc.HolidayList', {
                     // +++ maxWidth width to prevent truncating +++
                     maxWidth:'300pt',
                     layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
-                    },
                     items: [
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'reporting-fieldset',
+                            userCls: 'reporting-fieldset no-side-margin',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
