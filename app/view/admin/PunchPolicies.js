@@ -127,8 +127,9 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
 
             buttonAlign: 'center',
             buttons: {
-                save: { text: 'Save Punch Policy', /*handler: 'onPrintPDF',*/ ui: 'action' },
-                saveapply: { text: 'Save and Apply Punch Policy to Employees', /*handler: 'onPrintPDF',*/ ui: 'action' },
+                saveapply: { text: 'Save and Apply Punch Policy to Employees', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:275pt;' },
+                save: { text: 'Save Punch Policy', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:275pt;' },
+
             },
             buttonToolbar: {
                 xtype: 'toolbar',
@@ -197,19 +198,19 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 {
                                                     xtype: 'label',
                                                     html: 'Daily Overtime',
-                                                    userCls: 'employee-info-general-field',
+                                                    userCls: 'employee-info-general-field admin-label',
                                                     ui: 'employeeinfo-textfield'
                                                 },
                                                 {
                                                     xtype: 'label',
                                                     html: 'Weekly Overtime',
-                                                    userCls: 'employee-info-general-field',
+                                                    userCls: 'employee-info-general-field admin-label',
                                                     ui: 'employeeinfo-textfield'
                                                 },
                                                 {
                                                     xtype: 'label',
                                                     html: 'Rate',
-                                                    userCls: 'employee-info-general-field',
+                                                    userCls: 'employee-info-general-field admin-label',
                                                     ui: 'employeeinfo-textfield'
                                                 }
                                             ]    
@@ -489,7 +490,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'Round punch to nearest',
                                                 },
                                                 {
@@ -507,7 +508,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'minute(s)',
                                                 }
                                             ]
@@ -523,7 +524,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'Offset rounding by',
                                                 },
                                                 {
@@ -539,7 +540,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'minute(s)',
                                                 }
                                             ]
@@ -555,19 +556,19 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                             items: [
                                                 {
                                                     xtype: 'component',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     reference: 'roundPrev1',
                                                     html: 'Punches between 7 and 8 am round to 8 AM'
                                                 },
                                                 {
                                                     xtype: 'component',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     reference: 'roundPrev2',
                                                     html: 'Punches between 7 and 8 am round to 8 AM'
                                                 },
                                                 {
                                                     xtype: 'component',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     reference: 'roundPrev3',
                                                     html: 'Punches between 7 and 8 am round to 8 AM'
                                                 },
@@ -631,7 +632,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'Maximum shift length',
                                                 },
                                                 {
@@ -642,7 +643,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'hour(s)',
                                                 }
                                             ]
@@ -776,7 +777,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: 'Automaticly subtract ',
                                                 },
                                                 {
@@ -790,7 +791,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    userCls: 'employeeinfo-label',
+                                                    userCls: 'employeeinfo-label admin-label',
                                                     html: ' minutes if employee works a '
                                                 },
                                                 {
@@ -802,7 +803,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    userCls: ' employeeinfo-label',
+                                                    userCls: ' employeeinfo-label admin-label',
                                                     html: 'hour shift'
                                                 }
                                             ]
