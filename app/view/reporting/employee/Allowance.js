@@ -86,10 +86,8 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
                             },
-
                             // +++ Added active item to select default tab (0 = departments, 1 = employees, activeItem:INDEX,) +++
-                            activeItem:1,
-
+                            activeItem: 1,
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -246,9 +244,9 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
