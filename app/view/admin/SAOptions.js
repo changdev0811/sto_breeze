@@ -28,346 +28,429 @@ Ext.define('Breeze.view.admin.SAOptions', {
 
     // Body contents
     items: [
-        // Column 1
+
+        // Main horizontal arranging container
         {
-            xtype: 'panel',
-            ui: 'admin-sub',
-            userCls:'admin-fieldset',
-            flex: 2,
-            layout: 'vbox',
-            buttonAlign: 'right',
-            buttons: {
-                apply: { text: 'Apply',  ui: 'action' },
-            },
-            buttonToolbar: {
-                xtype: 'toolbar',
-                ui: 'admin-actions',
-                shadow: false
-            },
-            items:[
+            xtype: 'container',
+            flex: 1,
+            layout: 'hbox',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable:'x',
+            items: [
+
+                // Column 1
                 {
-                    xtype: 'container',
-                    userCls:'admin-text',
-                    layout: 'hbox',
-                    userCls:'admin-fieldset no-border no-background',
-                    items: [
-                        { 
-                            xtype: 'component', 
-                            html: 'Employee License [SEATS]',
-                            userCls:'admin-title-toolbar', 
-                        },
-                        {
-                            xtype:'spacer',
-                            width:'20pt',
-                        },
-                        { 
-                            xtype: 'component', 
-                            html: 'Renewal Date [DATE]',
-                            userCls:'admin-title-toolbar', 
-                        },
-                        {
-                            xtype:'spacer',
-                            flex:1,
-                        },
-                    ]
-                },
-                {
-                    xtype: 'tabpanel',
-                    layout: {
-                        animation: 'fade'
+                    xtype: 'panel',
+                    ui: 'admin-sub',
+                    userCls:'admin-fieldset',
+                    flex: 1,
+                    // +++ fixed width +++
+                    minWidth:'700pt',
+                    maxWidth:'890pt',
+
+                    layout: 'vbox',
+                    buttonAlign: 'right',
+                    buttons: {
+                        apply: { text: 'Apply',  ui: 'action', style:'width:175pt;' },
                     },
-                    ui: 'wtr-tabbar',
-                    userCls:'admin-fieldset no-border no-margin',
-                    tabBar: {
-                        defaultTabUI: 'wtr-tabbar',
+                    buttonToolbar: {
+                        xtype: 'toolbar',
+                        ui: 'admin-actions',
                         shadow: false
                     },
-                    flex: 1,
-                    defaults: {
-                        style:'background:transparent;'
-                    },
-                    items: [
-                        //========[Company Tab]===========
+                    items:[
                         {
-                            title: 'Company',
-                            reference: 'compantTab',
                             xtype: 'container',
-                            layout:'vbox',
-                            items:[
+                            userCls:'admin-text',
+                            layout: 'hbox',
+                            userCls:'admin-fieldset no-border no-background no-margin no-padding',
+                            items: [
                                 {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
+                                    xtype: 'component',
+                                    userCls: 'employeeinfo-label admin-label',
+                                    html: 'Employee License [SEATS]',
+                                },
+                                {
+                                    xtype:'spacer',
+                                    width:'20pt',
+                                },
+                                {
+                                    xtype: 'component',
+                                    userCls: 'employeeinfo-label admin-label',
+                                    html: 'Renewal Date [DATE]',
+                                },
+                                {
+                                    xtype:'spacer',
                                     flex:1,
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'tabpanel',
+                            layout: {
+                                animation: 'fade'
+                            },
+                            ui: 'wtr-tabbar',
+                            userCls:'admin-fieldset no-border no-margin',
+                            tabBar: {
+                                defaultTabUI: 'wtr-tabbar',
+                                shadow: false
+                            },
+                            flex: 1,
+                            defaults: {
+                                style:'background:transparent;',
+                                userCls:'employeeinfo-shift-grid'
+                            },
+                            items: [
+                                //========[Company Tab]===========
+                                {
+                                    title: 'Company',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
                                     layout:'vbox',
-
                                     items:[
-                                        // row 1
                                         {
-                                            xtype: 'container',
-                                            layout:'hbox',
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            layout:'vbox',
+
                                             items:[
+                                                // row 1
                                                 {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin no-border',
-                                                    flex:1,
-                                                    items:[]
-                                                },
-                                                {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-border no-padding',
-                                                    flex:1,
-                                                    layout:'vbox',
-                                                    defaults: {
-                                                        ui: 'admin admin-text'
-                                                    },
+                                                    xtype: 'container',
+                                                    layout:'hbox',
                                                     items:[
                                                         {
-                                                            xtype: 'breeze-textfield',
-                                                            label: 'Company Name',
-                                                            ui: 'admin admin-text',
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin no-border',
+                                                            flex:1,
+                                                            items:[]
                                                         },
                                                         {
-                                                            xtype: 'combobox',
-                                                            label:'Fiscal Date',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
-                                                        },
-                                                        {
-                                                            xtype: 'combobox',
-                                                            label:'Home TimeZone',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-border no-padding',
+                                                            flex:1,
+                                                            layout:'vbox',
+                                                            defaults: {
+                                                                ui: 'admin admin-text'
+                                                            },
+                                                            items:[
+                                                                {
+                                                                    xtype: 'breeze-textfield',
+                                                                    label: 'Company Name',
+                                                                    ui: 'admin admin-text',
+                                                                },
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    label:'Fiscal Date',
+                                                                    allowBlank: false,
+                                                                    editable: false,
+                                                                    displayField: 'Description',
+                                                                    forceSelection: true,
+                                                                    queryMode: 'local',
+                                                                    valueField: 'ID'
+                                                                },
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    label:'Home TimeZone',
+                                                                    allowBlank: false,
+                                                                    editable: false,
+                                                                    displayField: 'Description',
+                                                                    forceSelection: true,
+                                                                    queryMode: 'local',
+                                                                    valueField: 'ID'
+                                                                }
+                                                            ]
                                                         }
                                                     ]
-                                                }
-                                            ]
-                                        },
-                                        // row 2
-                                        {
-                                            xtype: 'container',
-                                            layout:'hbox',
-                                            items:[
-                                                {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin',
-                                                    flex:1,
-                                                    title:'Report Options',
-                                                    items:[
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio1',
-                                                            value: '20',
-                                                            boxLabel: 'Company Logo in Report Header',
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio2',
-                                                            value: '20',
-                                                            boxLabel: 'Company Name in Report Title',
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio3',
-                                                            value: '20',
-                                                            boxLabel: 'Signature Lines in Report Footer',
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                    ]
                                                 },
+                                                // row 2
                                                 {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset',
-                                                    flex:1,
-                                                    title:'Securety Options',
+                                                    xtype: 'container',
+                                                    layout:'hbox',
                                                     items:[
                                                         {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio4',
-                                                            value: '20',
-                                                            boxLabel: 'Enforce Password Complexity',
-                                                            bodyAlign: 'stretch',
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Report Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio1',
+                                                                    value: '20',
+                                                                    boxLabel: 'Company Logo in Report Header',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio2',
+                                                                    value: '20',
+                                                                    boxLabel: 'Company Name in Report Title',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio3',
+                                                                    value: '20',
+                                                                    boxLabel: 'Signature Lines in Report Footer',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
                                                         },
                                                         {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio5',
-                                                            value: '20',
-                                                            boxLabel: 'Disable SSN Field',
-                                                            bodyAlign: 'stretch',
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset',
+                                                            flex:1,
+                                                            title:'Securety Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio4',
+                                                                    value: '20',
+                                                                    boxLabel: 'Enforce Password Complexity',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio5',
+                                                                    value: '20',
+                                                                    boxLabel: 'Disable SSN Field',
+                                                                    bodyAlign: 'stretch',
+                                                                }
+                                                            ]
                                                         }
                                                     ]
-                                                }
+                                                },
                                             ]
                                         },
                                     ]
                                 },
-                            ]
-                        },
-                        //========[Accruals Tab]===========
-                        {
-                            title: 'Accruals',
-                            reference: 'compantTab',
-                            xtype: 'container',
-                            layout:'vbox',
-                            items:[
+                                //========[Accruals Tab]===========
                                 {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
-                                    flex:1,
+                                    title: 'Accruals',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
                                     layout:'vbox',
                                     items:[
-                                        // row 1
                                         {
-                                            xtype: 'container',
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
                                             layout:'vbox',
+
+                                            // +++ fixed width +++
+                                            width:'400pt',
+
+
                                             items:[
-                                                
+                                                // row 1
                                                 {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin',
-                                                    flex:1,
-                                                    title:'Carry Over Options',
-                                                    defaults:{
-                                                        ui: 'admin admin-text'
-                                                    },
+                                                    xtype: 'container',
+                                                    layout:'vbox',
                                                     items:[
+                                                        
                                                         {
-                                                            xtype: 'combobox',
-                                                            width:'160pt',
-                                                            label:'Carry Over Effective Year',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
-
-                                                        },
-
-                                                        {
-                                                            xtype: 'fieldset',
-                                                            userCls:'admin-fieldset no-margin',
-                                                            title:'Carry Over Type',
-                                                            layout:'vbox',
-                                                            defaults: {
-                                                                bodyAlign: 'stretch',
-                                                                ui: 'admin',
-                                                                xtype: 'radio'
-                                                            },
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Carry Over Options',
+                                                            layout:'hbox',
+                                                            
                                                             items:[
                                                                 {
-                                                                    flex: 1,
-                                                                    name: 'recording_year_type',
-                                                                    boxLabel: 'Days',
+                                                                    xtype: 'container',
+                                                                    flex:1,
+                                                                    layout:'vbox',
+                                                                    items:[
+                                                                        {
+                                                                            xtype: 'combobox',
+                                                                            ui: 'admin admin-text',
+                                                                            width:'160pt',
+                                                                            label:'Carry Over Effective Year',
+                                                                            allowBlank: false,
+                                                                            editable: false,
+                                                                            displayField: 'Description',
+                                                                            forceSelection: true,
+                                                                            queryMode: 'local',
+                                                                            valueField: 'ID'
+
+                                                                        },
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    flex: 1,
-                                                                    name: 'recording_year_type',
-                                                                    boxLabel: 'Weeks',
-                                                                },
+                                                                    xtype: 'fieldset',
+                                                                    flex:1,
+                                                                    userCls:'admin-fieldset',
+                                                                    title:'Carry Over Type',
+                                                                    layout:'vbox',
+                                                                    defaults: {
+                                                                        bodyAlign: 'stretch',
+                                                                        ui: 'admin',
+                                                                        xtype: 'radio'
+                                                                    },
+                                                                    items:[
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'Days',
+                                                                        },
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'Weeks',
+                                                                        },
+                                                                    ]
+                                                                }                                                                
                                                             ]
                                                         }
                                                     ]
-                                                }
-                                            ]
-                                        },
-                                        // row 2
-                                        {
-                                            xtype: 'container',
-                                            layout:'vbox',
-                                            items:[
+                                                },
+                                                // row 2
                                                 {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin',
-                                                    flex:1,
-                                                    title:'Employee Options',
+                                                    xtype: 'container',
+                                                    layout:'vbox',
                                                     items:[
                                                         {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio6',
-                                                            value: '20',
-                                                            boxLabel: 'Calculate Years of Service From Hire Date',
-                                                            bodyAlign: 'stretch',
-                                                        },
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Employee Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio6',
+                                                                    value: '20',
+                                                                    boxLabel: 'Calculate Years of Service From Hire Date',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
+                                                        }
                                                     ]
                                                 }
                                             ]
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        //========[Leave Requests Tab]===========
-                        {
-                            title: 'Leave Requests',
-                            reference: 'compantTab',
-                            xtype: 'container',
-                            layout:'vbox',
-                            items:[
+                                },
+                                //========[Leave Requests Tab]===========
                                 {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
-                                    flex:1,
+                                    title: 'Leave Requests',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
                                     layout:'vbox',
                                     items:[
-                                        // row 1
+                                        
                                         {
-                                            xtype: 'container',
-                                            layout:'hbox',
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-border no-padding',
+
+                                            layout: 'hbox',
+                                            defaults: {
+                                                userCls: 'employee-info-general-field',
+                                                ui: 'employeeinfo-textfield'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'label',
+                                                    userCls: 'employeeinfo-label admin-label ',
+                                                    html: 'Global Leave Request Conflict Limit',
+                                                },
+                                                {
+                                                    xtype:'spacer',
+                                                    width:'5pt'
+                                                },
+                                                {
+                                                    xtype: 'spinnerfield',
+                                                    name: 'auto_close_shift',
+                                                    width:'75pt',
+                                                    minValue: 0, maxValue: 24, value: 1,
+                                                    //bind: { value: '{info.punchPolicy.Auto_Close_Shift}' }
+                                                },
+                                            ]
+                                        },
+
+                                        {
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            layout:'vbox',
                                             items:[
+                                                // row 1
                                                 {
                                                     xtype: 'container',
-                                                    layout:'vbox',
-                                                    flex:1,
+                                                    layout:'hbox',
                                                     items:[
                                                         {
-                                                            xtype:'fieldset',
-                                                            userCls:'admin-fieldset no-side-margin',
-                                                            title:'Conflict Scope',
-                                                            defaults: {
-                                                                bodyAlign: 'stretch',
-                                                                ui: 'admin',
-                                                                xtype: 'radio'
-                                                            },
-                                                            items: [
+                                                            xtype: 'container',
+                                                            layout:'vbox',
+                                                            flex:1,
+                                                            items:[
                                                                 {
-                                                                    flex: 1,
-                                                                    name: 'recording_year_type',
-                                                                    boxLabel: 'Employee Department',
-                                                                },
-                                                                {
-                                                                    flex: 1,
-                                                                    name: 'recording_year_type',
-                                                                    boxLabel: 'All Departments',
-                                                                },
+                                                                    xtype:'fieldset',
+                                                                    userCls:'admin-fieldset no-side-margin',
+                                                                    title:'Conflict Scope',
+                                                                    defaults: {
+                                                                        bodyAlign: 'stretch',
+                                                                        ui: 'admin',
+                                                                        xtype: 'radio'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'Employee Department',
+                                                                        },
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'All Departments',
+                                                                        },
 
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    xtype:'fieldset',
+                                                                    userCls:'admin-fieldset no-side-margin',
+                                                                    title:'Approvial Options',
+                                                                    defaults: {
+                                                                        bodyAlign: 'stretch',
+                                                                        ui: 'admin',
+                                                                        xtype: 'radio'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'Instant',
+                                                                        },
+                                                                        {
+                                                                            flex: 1,
+                                                                            name: 'recording_year_type',
+                                                                            boxLabel: 'Require Login',
+                                                                        },
+
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
                                                             xtype:'fieldset',
-                                                            userCls:'admin-fieldset no-side-margin',
-                                                            title:'Approvial Options',
+                                                            userCls:'admin-fieldset',
+                                                            title:'Approvial Models',
+                                                            flex:1,
                                                             defaults: {
                                                                 bodyAlign: 'stretch',
                                                                 ui: 'admin',
@@ -375,25 +458,200 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             },
                                                             items: [
                                                                 {
-                                                                    flex: 1,
                                                                     name: 'recording_year_type',
-                                                                    boxLabel: 'Instant',
+                                                                    boxLabel: 'All Supervisors',
                                                                 },
                                                                 {
-                                                                    flex: 1,
                                                                     name: 'recording_year_type',
-                                                                    boxLabel: 'Require Login',
+                                                                    boxLabel: 'Any Supervisor',
                                                                 },
+                                                                {
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'Any Super Admin',
+                                                                },
+                                                                {
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'First Supervisor',
+                                                                },
+                                                                {
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'Vote',
+                                                                },
+                                                            ]
+                                                        },
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset',
+                                                            flex:1,
+                                                            layout:'vbox',
+                                                            title:'Cancellation Options',
+                                                            defaults:{
+                                                                ui: 'admin admin-text'
+                                                            },          
+                                                            items:[
+                                                                
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    label:'Pending Requests',
+                                                                    allowBlank: false,
+                                                                    editable: false,
+                                                                    displayField: 'Description',
+                                                                    forceSelection: true,
+                                                                    queryMode: 'local',
+                                                                    valueField: 'ID'
+                                                                },
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    label:'Approved Requests - Future',
+                                                                    allowBlank: false,
+                                                                    editable: false,
+                                                                    displayField: 'Description',
+                                                                    forceSelection: true,
+                                                                    queryMode: 'local',
+                                                                    valueField: 'ID'
+                                                                },
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    label:'Approved Requests - Past',
+                                                                    allowBlank: false,
+                                                                    editable: false,
+                                                                    displayField: 'Description',
+                                                                    forceSelection: true,
+                                                                    queryMode: 'local',
+                                                                    valueField: 'ID'
+                                                                },
+                                                                
+
+
 
                                                             ]
                                                         }
+                                                        
+
+
                                                     ]
                                                 },
+                                                // row 2
+                                                {
+                                                    xtype: 'container',
+                                                    layout:'hbox',
+                                                    items:[
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Employee Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio7',
+                                                                    value: '20',
+                                                                    boxLabel: 'Employees may not request leave exceeding their allowed time.',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio8',
+                                                                    value: '20',
+                                                                    boxLabel: 'Employees may request leave in the past.',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
+                                                        },
+
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset',
+                                                            flex:1,
+                                                            title:'Leave Response Notification Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio9',
+                                                                    value: '20',
+                                                                    boxLabel: "Email Supervisors when their employees' requests have been approved.",
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio10',
+                                                                    value: '20',
+                                                                    boxLabel: "Email Supervisors when their employees' requests have been denied.",
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
+                                                        }
+
+
+                                                    ]
+                                                },
+                                                // row 3
+                                                /*
+                                                {
+                                                    xtype: 'container',
+                                                    layout:'vbox',
+                                                    items:[
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Leave Response Notification Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio9',
+                                                                    value: '20',
+                                                                    boxLabel: "Email Supervisors when their employees' requests have been approved.",
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio10',
+                                                                    value: '20',
+                                                                    boxLabel: "Email Supervisors when their employees' requests have been denied.",
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                                */
+
+                                            ]
+                                        }
+                                    ]
+                                },
+                                //========[Points Tab]===========
+                                {
+                                    title: 'Points',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
+                                    layout:'vbox',
+                                    items:[
+                                        {
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            // +++ fixed width +++
+                                            width:'400pt',
+                                            layout:'vbox',
+                                            items:[
                                                 {
                                                     xtype:'fieldset',
-                                                    userCls:'admin-fieldset',
-                                                    title:'Approvial Models',
-                                                    flex:1,
+                                                    userCls:'admin-fieldset no-side-margin',
+                                                    title:'Point Expiration Type',
                                                     defaults: {
                                                         bodyAlign: 'stretch',
                                                         ui: 'admin',
@@ -402,273 +660,119 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     items: [
                                                         {
                                                             name: 'recording_year_type',
-                                                            boxLabel: 'All Supervisors',
+                                                            boxLabel: 'Expiration Date',
                                                         },
                                                         {
                                                             name: 'recording_year_type',
-                                                            boxLabel: 'Any Supervisor',
-                                                        },
-                                                        {
-                                                            name: 'recording_year_type',
-                                                            boxLabel: 'Any Super Admin',
-                                                        },
-                                                        {
-                                                            name: 'recording_year_type',
-                                                            boxLabel: 'First Supervisor',
-                                                        },
-                                                        {
-                                                            name: 'recording_year_type',
-                                                            boxLabel: 'Vote',
+                                                            boxLabel: 'Rolling Expiration',
                                                         },
                                                     ]
                                                 },
-                                                {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset',
-                                                    flex:1,
-                                                    layout:'vbox',
-                                                    title:'Cancellation Options',
-                                                    defaults:{
-                                                        ui: 'admin admin-text'
-                                                    },          
-                                                    items:[
-                                                        
-                                                        {
-                                                            xtype: 'combobox',
-                                                            label:'Pending Requests',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
-                                                        },
-                                                        {
-                                                            xtype: 'combobox',
-                                                            label:'Approved Requests - Future',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
-                                                        },
-                                                        {
-                                                            xtype: 'combobox',
-                                                            label:'Approved Requests - Past',
-                                                            allowBlank: false,
-                                                            editable: false,
-                                                            displayField: 'Description',
-                                                            forceSelection: true,
-                                                            queryMode: 'local',
-                                                            valueField: 'ID'
-                                                        },
-                                                        
-
-
-
-                                                    ]
-                                                }
-                                                
-
-
-                                            ]
-                                        },
-                                        // row 2
-                                        {
-                                            xtype: 'container',
-                                            layout:'vbox',
-                                            items:[
-                                                {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin',
-                                                    flex:1,
-                                                    title:'Employee Options',
-                                                    items:[
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio7',
-                                                            value: '20',
-                                                            boxLabel: 'Employees may not request leave exceeding their allowed time.',
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio8',
-                                                            value: '20',
-                                                            boxLabel: 'Employees may request leave in the past.',
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        // row 3
-                                        {
-                                            xtype: 'container',
-                                            layout:'vbox',
-                                            items:[
-                                                {
-                                                    xtype:'fieldset',
-                                                    userCls:'admin-fieldset no-side-margin',
-                                                    flex:1,
-                                                    title:'Leave Response Notification Options',
-                                                    items:[
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio9',
-                                                            value: '20',
-                                                            boxLabel: "Email Supervisors when their employees' requests have been approved.",
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                        {
-                                                            xtype:'checkbox',
-                                                            ui:'admin',
-                                                            //name: 'isWorktime',
-                                                            id: 'radio10',
-                                                            value: '20',
-                                                            boxLabel: "Email Supervisors when their employees' requests have been denied.",
-                                                            bodyAlign: 'stretch',
-                                                        },
-                                                    ]
-                                                }
                                             ]
                                         }
-
                                     ]
-                                }
-                            ]
-                        },
-                        //========[Points Tab]===========
-                        {
-                            title: 'Points',
-                            reference: 'compantTab',
-                            xtype: 'container',
-                            layout:'vbox',
-                            items:[
+                                },
+                                //========[Captions Tab]===========
                                 {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
-                                    flex:1,
+                                    title: 'Captions',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
                                     layout:'vbox',
                                     items:[
                                         {
-                                            xtype:'fieldset',
-                                            userCls:'admin-fieldset no-side-margin',
-                                            title:'Point Expiration Type',
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            layout:'vbox',
                                             defaults: {
-                                                bodyAlign: 'stretch',
-                                                ui: 'admin',
-                                                xtype: 'radio'
+                                                ui: 'admin admin-text',
+                                                width:'300pt'
                                             },
-                                            items: [
+                                            items:[
                                                 {
-                                                    name: 'recording_year_type',
-                                                    boxLabel: 'Expiration Date',
+                                                    xtype: 'breeze-textfield',
+                                                    label: 'Employee Number',
+                                                    ui: 'admin admin-text',
+                                                    valueField: 'ID'
                                                 },
                                                 {
-                                                    name: 'recording_year_type',
-                                                    boxLabel: 'Rolling Expiration',
+                                                    xtype:'spacer',
+                                                    height:'5pt'
+                                                },
+                                                {
+                                                    xtype: 'breeze-textfield',
+                                                    label: 'Project Singular',
+                                                    ui: 'admin admin-text',
+                                                    valueField: 'ID'
+                                                },
+                                                {
+                                                    xtype:'spacer',
+                                                    height:'5pt'
+                                                },
+                                                {
+                                                    xtype: 'breeze-textfield',
+                                                    label: 'Project Plural',
+                                                    ui: 'admin admin-text',
+                                                    valueField: 'ID'
                                                 },
                                             ]
-                                        },
+                                        }
                                     ]
-                                }
-                            ]
-                        },
-                        //========[Captions Tab]===========
-                        {
-                            title: 'Captions',
-                            reference: 'compantTab',
-                            xtype: 'container',
-                            layout:'vbox',
-                            items:[
+                                },
+                                //========[Punches Tab]===========
                                 {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
-                                    flex:1,
+                                    title: 'Punches',
+                                    reference: 'compantTab',
+                                    xtype: 'container',
                                     layout:'vbox',
-                                    defaults: {
-                                        ui: 'admin admin-text',
-                                        width:'300pt'
-                                    },
                                     items:[
                                         {
-                                            xtype: 'breeze-textfield',
-                                            label: 'Employee Number',
-                                            ui: 'admin admin-text',
-                                            valueField: 'ID'
-                                        },
-                                        {
-                                            xtype: 'breeze-textfield',
-                                            label: 'Project Singular',
-                                            ui: 'admin admin-text',
-                                            valueField: 'ID'
-                                        },
-                                        {
-                                            xtype: 'breeze-textfield',
-                                            label: 'Project Plural',
-                                            ui: 'admin admin-text',
-                                            valueField: 'ID'
-                                        },
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            layout:'vbox',
+
+                                            defaults: {
+                                                ui: 'admin admin-text',
+                                                width:'300pt'
+                                            },
+                                            items:[
+                                                {
+                                                    xtype: 'combobox',
+                                                    width:'160pt',
+                                                    label:'Work week starts',
+                                                    allowBlank: false,
+                                                    editable: false,
+                                                    displayField: 'Description',
+                                                    forceSelection: true,
+                                                    queryMode: 'local',
+                                                    valueField: 'ID'
+
+                                                },
+                                                {
+                                                    xtype:'spacer',
+                                                    height:'20pt'
+                                                },
+                                                {
+                                                    xtype:'checkbox',
+                                                    ui:'admin',
+                                                    //name: 'isWorktime',
+                                                    id: 'radio11',
+                                                    value: '20',
+                                                    boxLabel: 'SA can Punch Station in Kiosk Mode',
+                                                    bodyAlign: 'stretch',
+                                                },
+
+                                            ]
+                                        }
                                     ]
-                                }
+                                },
                             ]
-                        },
-                        //========[Punches Tab]===========
-                        {
-                            title: 'Punches',
-                            reference: 'compantTab',
-                            xtype: 'container',
-                            layout:'vbox',
-                            items:[
-                                {
-                                    xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-margin',
-                                    flex:1,
-                                    layout:'vbox',
-
-                                    defaults: {
-                                        ui: 'admin admin-text',
-                                        width:'300pt'
-                                    },
-                                    items:[
-                                        {
-                                            xtype: 'combobox',
-                                            width:'160pt',
-                                            label:'Work week starts',
-                                            allowBlank: false,
-                                            editable: false,
-                                            displayField: 'Description',
-                                            forceSelection: true,
-                                            queryMode: 'local',
-                                            valueField: 'ID'
-
-                                        },
-
-                                        {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            //name: 'isWorktime',
-                                            id: 'radio11',
-                                            value: '20',
-                                            boxLabel: 'SA can Punch Station in Kiosk Mode',
-                                            bodyAlign: 'stretch',
-                                        },
-
-                                    ]
-                                }
-                            ]
-                        },
+                        }       
                     ]
-                }       
+                },
+
             ]
-        },
+        }
     ]
 });
