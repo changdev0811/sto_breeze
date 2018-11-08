@@ -227,7 +227,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                 {
                                     xtype: 'panel.minicalendar',
                                     reference: 'weekSelector',
-                                    ui: 'minicalendar',//'wtr-small',,
+                                    ui: 'minicalendar-admin',//'wtr-small',,
                                     collapsed: true,
                                     margin: '10pt 10pt 0pt 10pt',
                                     listeners: {
@@ -251,10 +251,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     listeners: {
                                         //change: 'onOvertime1Change'
                                     }
-
-
                                 },
-
                                 {
                                     xtype:'container',
                                     name: 'floatOptions',
@@ -304,16 +301,11 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                             allowBlank: false,
                                             blankText: 'Month',
                                             forceSelection: true,
-                                        },                                    ]
-
-
-
-
+                                        },                                    
+                                    ]
                                 }
-
                             ]
                         },
-
                     ]
                 },
             ]
@@ -330,7 +322,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     text: 'Apply Holiday Schedule',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
-                    style:'width:150pt;'
+                    style:'width:175pt;'
 
                 },
                 {
@@ -342,7 +334,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     text: 'save',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
-                    style:'width:150pt;'
+                    style:'width:175pt;'
 
                 },
 
