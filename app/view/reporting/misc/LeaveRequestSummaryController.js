@@ -56,7 +56,15 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummaryController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
+        // Load request status options
+        this.addStoreToViewModel(
+            'Breeze.store.option.RequestStatuses',
+            'requestStatus',
+            // load is false becuase store isn't pulling from api
+            // data is defined inline
+            { load: false }
+        );
+        
         console.info('Leaving init');
     },
 
@@ -105,7 +113,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummaryController', {
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')

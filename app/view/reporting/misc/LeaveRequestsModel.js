@@ -35,53 +35,6 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestsModel', {
         this.setData(data);
     },
 
-    /* Automatically available stores not loaded from API calls */
-    stores: {
-        /**
-         * request status choice store (static, not from API call)
-         */
-        requestStatus: {
-            model: 'Breeze.model.data.TypeOption',
-            data: [
-                {
-                    ID: 0,
-                    CodeTypeID: 0,
-                    Description: 'All'
-                },
-                {
-                    ID: 2,
-                    CodeTypeID: 0,
-                    Description: 'Approved'
-                },
-                {
-                    ID: 6,
-                    CodeTypeID: 0,
-                    Description: 'Cancellation Denied'
-                },
-                {
-                    ID: 4,
-                    CodeTypeID: 0,
-                    Description: 'Cancellation Pending'
-                },
-                {
-                    ID: 5,
-                    CodeTypeID: 0,
-                    Description: 'Cancelled'
-                },
-                {
-                    ID: 3,
-                    CodeTypeID: 0,
-                    Description: 'Denied'
-                },
-                {
-                    ID: 1,
-                    CodeTypeID: 0,
-                    Description: 'Pending'
-                }
-            ]
-        }
-    },
-
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
     }
