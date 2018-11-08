@@ -72,14 +72,13 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                     maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
-                        userCls: 'report-section-padding',
+                        userCls: 'reporting-fieldset no-side-margin',
                     },
                     items: [
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -112,8 +111,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Report Options',
-                            userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -140,8 +137,6 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Sort By',
-                            userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',

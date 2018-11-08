@@ -86,6 +86,8 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
                             },
+                            // +++ Added active item to select default tab (0 = departments, 1 = employees, activeItem:INDEX,) +++
+                            activeItem: 1,
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -239,9 +241,9 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -371,26 +373,17 @@ Ext.define('Breeze.view.reporting.employee.Profile', {
                 // Third column
                 // Container for User-Defined Categories list
                 {
-                    // +++ New Field Set +++
                     xtype: 'fieldset',
-
-                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
-                    
-                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
-                    // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
-
-                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [

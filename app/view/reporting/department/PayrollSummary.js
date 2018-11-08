@@ -240,9 +240,9 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -336,7 +336,6 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                             boxLabel: 'HH:MM Format',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         },
@@ -484,7 +483,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                                         title: 'From Date'
                                                     },
                                                     bind: '{reportParams.dStart}',
-                                                    required: true
+                                                    //required: true
                                                 },
                                                 {
                                                     label: 'To',
@@ -493,7 +492,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                                         title: 'To Date'
                                                     },
                                                     bind: '{reportParams.dEnd}',
-                                                    required: true
+                                                    //required: true
                                                 }
                                             ]
                                         },

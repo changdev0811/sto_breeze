@@ -37,14 +37,14 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
 
         // Load employees for tree selector
         this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Employees',
+            'Breeze.store.reporting.parameters.Employees',
             'employeesTree',
             { load: true }
         );
 
         // Load departments for tree selector
         this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Departments',
+            'Breeze.store.reporting.parameters.Departments',
             'departmentsTree',
             { load: true }
         );

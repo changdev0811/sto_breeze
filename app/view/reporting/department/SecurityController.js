@@ -28,24 +28,10 @@ Ext.define('Breeze.view.reporting.department.SecurityController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
-        // Load employees for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Employees',
-            'employeesTree',
-            { load: true }
-        );
-
         // Load departments for tree selector
         this.addStoreToViewModel(
-            'Breeze.store.tree.reporting.Departments',
-            'departmentsTree',
+            'Breeze.store.reporting.parameters.Departments',
+            'departmentsList',
             { load: true }
         );
 
@@ -122,6 +108,19 @@ Ext.define('Breeze.view.reporting.department.SecurityController', {
      */
     onReportException: function(proxy, response, op, eOpts){
         console.warn('Exception thrown for report: ', response);
+    },
+
+    /**
+     * Handle 'check all' change event
+     * @param {Object} comp Event source component
+     * @param {Boolean} value Checkbox value
+     */
+    onCheckAllChange: function(comp, value){
+        comp.getParent().getParent().getComponent('tree').getRootNode()
+            .cascadeBy((child)=>{
+                child.set('checked', value);
+            }
+        );
     },
 
     /**

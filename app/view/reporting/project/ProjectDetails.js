@@ -239,9 +239,9 @@ Ext.define('Breeze.view.reporting.project.ProjectDetails', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -329,7 +329,6 @@ Ext.define('Breeze.view.reporting.project.ProjectDetails', {
                             boxLabel: 'HH:MM Format',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         }
@@ -338,26 +337,17 @@ Ext.define('Breeze.view.reporting.project.ProjectDetails', {
                 // Third Column Container
                 // Container for User-Defined Categories list
                 {
-                    // +++ New Field Set +++
                     xtype: 'fieldset',
-
-                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
-                    
-                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
-                    // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
-
-                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [

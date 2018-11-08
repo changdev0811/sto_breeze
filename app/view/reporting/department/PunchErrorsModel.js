@@ -26,7 +26,7 @@ Ext.define('Breeze.view.reporting.department.PunchErrorsModel', {
                 ReportTitle: 'Punch Errors Report',
                 dStart: (new Date()),
                 dEnd: (new Date()),
-                hhmm_format: false,
+                hhmm_format: true,
                 errOption: 1,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'

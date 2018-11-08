@@ -241,11 +241,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             boxLabel: 'Group by Department',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            bind: {
-                                // Update: Binding added for checkbox to model value GroupByDept
-                                // For checkboxes, 'checked' property is bound
-                                checked: '{reportParams.GroupByDept}'
-                            }
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -332,7 +328,6 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                             boxLabel: 'HH:MM Format',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         }
@@ -341,26 +336,17 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                 // Third Column Container
                 // Container for User-Defined Categories list
                 {
-                    // +++ New Field Set +++
                     xtype: 'fieldset',
-
-                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
-                    
-                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
-                    // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
-
-                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [

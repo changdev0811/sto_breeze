@@ -239,9 +239,9 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -251,9 +251,9 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                     xtype: 'container',
                     flex: 1,
                     // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
+                    minWidth:'180pt',
                     // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
+                    maxWidth:'200pt',
                     layout: 'vbox',
                     defaults: {
                         userCls: 'report-section-padding',
@@ -297,39 +297,6 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
 
                 // Third Column Container
                 {
-                    xtype: 'container',
-                    flex: 1,
-                    layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
-                    },
-                    items: [
-                        {
-                            xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
-                            title: 'Recording Year',
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting reporting-text reporting-date'
-                            },
-                            items: [
-                                {
-                                    xtype: 'selectfield',
-                                    name: 'year',
-                                    label: 'Recording Year',
-                                    store: '',
-                                    bind: { value: '{info.cbRecordingYear}' },
-                                    displayField: 'Description',
-                                    valueField: 'ID'
-                                }
-                            ]
-                        }
-                    ]
-                },
-
-                // Fourth Column Container
-                // Container for User-Defined Categories list
-                {
                     // +++ New Field Set +++
                     xtype: 'fieldset',
 
@@ -337,7 +304,7 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                     userCls: 'reporting-fieldset no-padding',
                     
                     // +++ Categories +++
-                    title: 'Categories',
+                    title: 'Recording Year',
                     flex: 1,
 
                     // +++ fixed width +++
@@ -349,7 +316,99 @@ Ext.define('Breeze.view.reporting.department.Monthly', {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
+                    width: '100%',
+                    items: [
+                        // ++Update++
+                        // Updated toolbar alignment
+                        {
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            layout: 'hbox',
+                            items: [
+                                {
+                                    xtype: 'selectfield',
+                                    bodyAlign: 'stretch',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    name: 'year',
+                                    label: 'Recording Year',
+                                    labelWidth: 'auto',
+                                    labelAlign: 'left',
+                                    store: 'Years',
+                                    bind: { value: '{reportParams.recyear}' },
+                                    displayField: 'Year',
+                                    valueField: 'Year',
+                                    flex: 1
+                                }
+                            ]
+                        },
+                        // ++New 11/5++
+                        // 'Check All' option for Years list
+                        {
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            bind: {
+                                // Hide until a recording year is selected
+                                hidden: '{reportParams.recyear==null}'
+                            },
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onSelectListCheckAllChange'
+                                    }
+                                }
+                            ]
+                        },
+                        // ++New 11/5++
+                        // Selector list control for Recording Year
+                        {
+                            xtype: 'breeze-select-list',
+                            ui: 'employeeinfo-shift-grid',
+                            flex: 1,
+                            // Reference name and itemID needed for 
+                            // reading data and check all listener
+                            reference: 'recordingMonthList',
+                            itemId: 'selectList',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item',
+                                templates: {
+                                    radioValue: '{record.value}',
+                                    itemData: { month: '{record.name}' },
+                                    itemTpl: '<div class="breeze-dataview-select-item-label">{month}</div>'
+                                }
+                            },
+                            bind: {
+                                store: '{monthList}',
+                                // Hide until recording year has been chosen
+                                hidden: '{reportParams.recyear==null}'
+                            },
+                            viewModel: true
+                        }
+                    ]
+                },
+
+                // Fourth Column Container
+                // Container for User-Defined Categories list
+                {
+                    xtype: 'fieldset',
+                    userCls: 'reporting-fieldset no-padding',
+                    title: 'Categories',
+                    flex: 1,
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+                    layout: {
+                        type: 'vbox',
+                        alignment: 'stretch'
+                    },
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [

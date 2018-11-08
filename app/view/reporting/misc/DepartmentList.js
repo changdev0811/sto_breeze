@@ -63,109 +63,102 @@ Ext.define('Breeze.view.reporting.misc.DepartmentList', {
             scrollable: 'x',
             items: [
                 // First column in horizontal container
+                // +++ Single Tab Tree Solution ()
                 {
                     xtype: 'container',
-                    // docked: 'left',
                     flex: 1,
+                    // +++ fixed width +++
                     // +++ maxWidth to prevent expanding beyond tab selector +++
                     maxWidth:'298pt',
                     // +++ minWidth reasonable width to prevent most truncating +++
                     minWidth:'200pt',
                     layout: 'vbox',
                     items: [
-                        // Tab panel containing departments and employees
+                        // fieldset containing toolbar & departments
                         {
-                            xtype: 'tabpanel',
-                            // == New reference to identify this tab panel easily
-                            reference: 'employeeSelectTabs',
-                            layout: {
-                                animation: 'fade'
-                            },
-                            ui: 'employeeInfoTabs', //'reporting-tabs',
-                            tabBar: {
-                                defaultTabUI: 'employeeInfoTabs',
-                                shadow: false,
-                            },
+                            xtype: 'fieldset',
                             flex: 1,
+                            layout: 'vbox',
+                            title: 'Departments',
+                            userCls: 'reporting-fieldset no-padding no-margin',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
                             items: [
-                                // Departments tab
+                                
                                 {
-                                    xtype: 'panel',
-                                    // == Item ID for each tab to allow us to see which is active
-                                    itemId: 'departments',
-                                    title: 'Departments',
-                                    layout: 'fit',
-
-                                    // Toolbar containing 'check all' toggle checkbox
-                                    tbar: {
-                                        xtype: 'toolbar',
-                                        ui: 'reporting-tree',
-                                        /* +++ Added reporting-toolbar userCls +++ */
-                                        userCls:'reporting-toolbar',
-                                        
-                                        shadow: false,
-                                        items: [
-                                            {
-                                                xtype: 'checkbox',
-                                                ui: 'reporting',
-                                                // +++ Departments +++
-                                                boxLabel: 'Check All Departments',
-                                                listeners: {
-                                                    change: 'onTreeGridCheckAllChange'
-                                                }
-                                            }
-                                        ]
-                                    },
-
+                                    xtype: 'toolbar',
+                                    ui: 'reporting-tree',
+                                    userCls:'no-background',
+                                    shadow: false,
                                     items: [
-                                        // Departments tree
                                         {
-                                            xtype: 'tree',
-                                            // == Item ID to make finding tree in panel easier
-                                            itemId: 'tree',
-                                            ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls +++ */
-                                            userCls: 'employeeinfo-shift-grid',
-                                            layout: 'hbox',
-                                            hideHeaders: true,
-                                            rootVisible: false,
-                                            columns: [
-                                                {
-                                                    xtype: 'checkcolumn',
-                                                    /* +++ Style update +++ */
-                                                    cell: {
-                                                        ui: 'report-tree-column reporting-tree-item',
-                                                    },
-                                                    dataIndex: 'checked',
-                                                    minWidth: '2em',
-                                                    width: 'auto',
-                                                    padding: 0,
-                                                    listeners: {
-                                                        checkChange: 'onTreeGridChecked'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'treecolumn',
-                                                    /* +++ Style update +++ */
-                                                    cell: {
-                                                        ui: 'report-tree-column reporting-tree-item',
-                                                    },
-                                                    dataIndex: 'text',
-                                                    flex: 1,
-                                                    layout: {
-                                                        alignment: 'stretch'
-                                                    }
-                                                }
-                                            ],
-                                            reference: 'departmentTree',
-                                            bind: '{departmentsTree}'
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Check All Departments',
+                                            listeners: {
+                                               change: 'onCheckAllChange'
+                                            }
                                         }
                                     ]
+                                },
+                                {
+                                    xtype: 'tree',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'tree',
+                                    flex:1,
+                                    ui: 'employeeinfo-shift-grid',
+                                    //userCls:'employeeinfo-shift-grid',
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    expanderFirst: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'checkcolumn',
+                                            
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+
+                                            dataIndex: 'checked',
+                                            minWidth: '2em',
+                                            width: 'auto',
+                                            padding: 0,
+                                            listeners: {
+                                                checkChange: 'onTreeGridChecked'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'treecolumn',
+                                            /* +++ Style update +++ */
+                                            cell: {
+                                                ui: 'report-tree-column reporting-tree-item',
+                                            },
+                                            dataIndex: 'text',
+                                            flex: 1,
+                                            layout: {
+                                                alignment: 'stretch'
+                                            }
+                                        }
+                                    ],
+                                    reference: 'departmentsTree',
+                                    // TODO: Update binding once projects API call is available
+                                    bind: { 
+                                        store: '{departmentsList}'
+                                    }
+
                                 }
                             ]
                         }
                     ]
                 },
+
                 // Second column container
                 {
                     xtype: 'container',

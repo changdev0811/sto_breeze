@@ -86,6 +86,8 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                                 defaultTabUI: 'employeeInfoTabs',
                                 shadow: false,
                             },
+                            // +++ Added active item to select default tab (0 = departments, 1 = employees, activeItem:INDEX,) +++
+                            activeItem: 1,
                             flex: 1,
                             items: [
                                 // Departments tab
@@ -239,9 +241,9 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -355,41 +357,22 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                                 }
 
                             ]
-                        },
-                        {
-                            xtype: 'checkbox',
-                            labelAlign: 'top',
-                            boxLabel: 'HH:MM Format',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            checked: true,
-                            name: 'time_format',
-                            bind: '{reportParams.hhmm_format}'
                         }
                     ]
                 },
                 // Third Column Container
                 {
-                    // +++ New Field Set +++
                     xtype: 'fieldset',
-
-                    // +++ added reporting-fieldset no-padding +++
                     userCls: 'reporting-fieldset no-padding',
-                    
-                    // +++ Categories +++
                     title: 'Categories',
                     flex: 1,
-
-                    // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
-
-                    // docked: 'right',
                     layout: {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     reference: 'udcContainer',
                     items: [

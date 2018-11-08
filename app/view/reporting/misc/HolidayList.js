@@ -71,15 +71,12 @@ Ext.define('Breeze.view.reporting.misc.HolidayList', {
                     // +++ maxWidth width to prevent truncating +++
                     maxWidth:'300pt',
                     layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
-                    },
                     items: [
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'reporting-fieldset',
+                            userCls: 'reporting-fieldset no-side-margin',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -110,16 +107,14 @@ Ext.define('Breeze.view.reporting.misc.HolidayList', {
                             ]
                         },
                         {
-                            xtype: 'datefield',
-                            labelAlign: 'top',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            label: 'Reporting Year',
-                            picker: {
-                                xtype: 'datepicker',
-                                title: ''
-                            },
-                            bind: '{reportParams.dStart}'
+                            xtype: 'selectfield',
+                            ui: 'reporting reporting-text reporting-date',
+                            label: 'Recording Year',
+                            labelWidth: 'auto',
+                            labelAlign: 'left',
+                            store: 'Years',
+                            displayField: 'Year', valueField: 'Year',
+                            bind: { value: '{reportParams.recyear}' }
                         }
                     ]
                 }

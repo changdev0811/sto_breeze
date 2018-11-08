@@ -23,10 +23,10 @@ Ext.define('Breeze.view.reporting.misc.HolidayReconciliationModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Holiday Reconciliation Report',
-                recyear: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                recyear: (new Date()).getYear() + 1900 // Defaults rec year to current year 
             }
         };
         this.setData(data);

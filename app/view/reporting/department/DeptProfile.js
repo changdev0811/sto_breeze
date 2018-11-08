@@ -63,7 +63,7 @@ Ext.define('Breeze.view.reporting.department.DeptProfile', {
             scrollable:'x',
             items: [
 
-
+                // First column in horizontal container
                 // +++ Single Tab Tree Solution ()
                 {
                     xtype: 'container',
@@ -154,10 +154,7 @@ Ext.define('Breeze.view.reporting.department.DeptProfile', {
                                         store: '{departmentsList}'
                                     }
 
-                                }
-
-
-                                    
+                                }                                    
                             ]
                         }
                     ]

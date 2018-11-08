@@ -23,7 +23,7 @@ Ext.define('Breeze.view.reporting.misc.HolidayListModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Holiday List Report',
-                recyear: null
+                recyear: (new Date()).getYear() + 1900 // Defaults rec year to current year 
             }
         };
         this.setData(data);

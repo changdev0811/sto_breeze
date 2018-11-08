@@ -72,14 +72,13 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                     maxWidth:'300pt',
                     layout: 'vbox',
                     defaults: {
-                        userCls: 'report-section-padding',
+                        userCls: 'reporting-fieldset no-side-margin',
                     },
                     items: [
                         {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Header Options',
-                            userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',
@@ -110,7 +109,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                         },
                         {
                             xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
                             title: 'Date Range',
                             defaults: {
                                 bodyAlign: 'stretch',
@@ -144,8 +142,6 @@ Ext.define('Breeze.view.reporting.misc.Audit', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Optional Parameters',
-                            userCls: 'reporting-fieldset',
-
                             defaults: {
                                 bodyAlign: 'stretch'
                             },

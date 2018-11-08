@@ -67,9 +67,12 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                     xtype: 'container',
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'180pt',
-                    maxWidth:'220pt',
+                    minWidth:'200pt',
+                    maxWidth:'298pt',
                     layout: 'vbox',
+                    defaults: {
+                        userCls: 'reporting-fieldset no-side-margin'
+                    },
                     items: [
                         // Tab panel containing projects
                         {
@@ -77,8 +80,6 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                             flex: 1,
                             layout: 'vbox',
                             title: 'Projects',
-                            userCls: 'reporting-fieldset no-padding',
-
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'reporting',

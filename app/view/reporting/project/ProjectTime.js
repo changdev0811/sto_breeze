@@ -239,9 +239,9 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                             xtype: 'checkbox',
                             labelAlign: 'top',
                             boxLabel: 'Group by Department',
-                            checked: true,
                             bodyAlign: 'stretch',
-                            ui: 'reporting'
+                            ui: 'reporting',
+                            bind: '{reportParams.GroupByDept}'
                         }
                     ]
                 },
@@ -329,7 +329,6 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                             boxLabel: 'HH:MM Format',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         }
