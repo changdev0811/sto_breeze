@@ -37,6 +37,9 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     ui: 'employee-info-shift-grid employee-info-grid-panel',
                     userCls: 'employee-info-grid',
                     title: 'Shift Information',
+                    body:{
+                        style:'background:red!important;',
+                    },
                     // Tools
                     tools: {
                         add: {

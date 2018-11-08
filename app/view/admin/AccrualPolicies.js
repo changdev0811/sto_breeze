@@ -109,7 +109,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     // == Item ID to make finding tree in panel easier
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     flex:1,
                                     layout: 'hbox',
                                     hideHeaders: true,
@@ -118,7 +118,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -131,7 +131,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,
@@ -228,7 +228,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     // == Item ID to make finding tree in panel easier
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     flex:1,
                                     layout: 'hbox',
                                     hideHeaders: true,
@@ -237,7 +237,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -250,7 +250,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,
@@ -387,6 +387,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             minValue: 0 
                                         },
                                         {
+                                            xtype:'spacer',
+                                            width:'10pt'
+                                        },
+                                        {
                                             xtype: 'combobox',
                                             flex: 2,
                                             name: 'category_new_rate',
@@ -432,6 +436,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             minValue: 0 
                                         },
                                         {
+                                            xtype:'spacer',
+                                            width:'10pt'
+                                        },
+                                        {
                                             xtype: 'combobox',
                                             flex: 2,
                                             name: 'category_accrual_cap_unit',
@@ -464,6 +472,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             style: 'padding-left: 4pt',
                                             decimalPrecision: 2,
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt'
                                         },
                                         {
                                             xtype: 'combobox',
@@ -532,7 +544,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     // == Item ID to make finding tree in panel easier
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     flex:1,
                                     layout: 'hbox',
                                     hideHeaders: true,
@@ -541,7 +553,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -554,7 +566,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,
@@ -604,7 +616,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     // == Item ID to make finding tree in panel easier
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     flex:1,
                                     layout: 'hbox',
                                     hideHeaders: true,
@@ -613,7 +625,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -626,7 +638,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,

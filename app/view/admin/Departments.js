@@ -80,7 +80,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                 {
                                    xtype: "searchfield",
                                    flex:1,
-                                   ui: "alt",
+                                   ui: "solo",
                                    //userCls:'admin-fieldset no-border no-margin no-padding',
                                    placeholder: "Search"
                                 },
@@ -116,7 +116,7 @@ Ext.define('Breeze.view.admin.Departments', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'tree',
                             ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
+                            userCls: 'employeeinfo-shift-grid no-border no-background',
                             flex:1,
                             layout: 'hbox',
                             hideHeaders: true,
@@ -125,7 +125,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                 {
                                     xtype: 'checkcolumn',
                                     cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                        ui: 'admin-tree-column admin-tree-item',
                                     },
                                     dataIndex: 'checked',
                                     minWidth: '2em',
@@ -138,7 +138,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                 {
                                     xtype: 'treecolumn',
                                     cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                        ui: 'admin-tree-column admin-tree-item',
                                     },
                                     dataIndex: 'text',
                                     flex: 1,
@@ -204,7 +204,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                     itemId: 'tree',
 
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     layout: 'hbox',
                                     hideHeaders: true,
                                     expanderFirst: false,
@@ -213,7 +213,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -223,7 +223,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,
@@ -258,7 +258,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                     itemId: 'tree',
 
                                     ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border',
+                                    userCls: 'employeeinfo-shift-grid no-border no-background',
                                     layout: 'hbox',
                                     hideHeaders: true,
                                     expanderFirst: false,
@@ -267,7 +267,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                         {
                                             xtype: 'checkcolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'checked',
                                             minWidth: '2em',
@@ -277,7 +277,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                         {
                                             xtype: 'treecolumn',
                                             cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
+                                                ui: 'admin-tree-column admin-tree-item',
                                             },
                                             dataIndex: 'text',
                                             flex: 1,
