@@ -308,7 +308,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequests', {
                                         xtype: 'datepicker',
                                         title: 'Start Date'
                                     },
-                                    bind: '{reportParams.dStart}'
+                                    bind: '{reportParams.sdate}'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -318,7 +318,33 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequests', {
                                         xtype: 'datepicker',
                                         title: 'End Date'
                                     },
-                                    bind: '{reportParams.dEnd}'
+                                    bind: '{reportParams.edate}'
+                                }
+                            ]
+                        },
+                        // Non-bordered container
+                        {
+                            xtype: 'container',
+                            items: [
+                                // Request status drop-down 
+                                {
+                                    xtype: 'selectfield',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    label: 'Request Status',
+                                    displayField: 'Description',
+                                    valueField: 'ID',
+                                    bind: { 
+                                        value: '{reportParams.status}',
+                                        store: '{requestStatus}'
+                                    }
+                                },
+                                // Include details checkbox
+                                {
+                                    xtype: 'checkbox',
+                                    bodyAlign: 'stretch',
+                                    ui: 'reporting',
+                                    boxLabel: 'Include Request Details',
+                                    bind: '{reportParams.includedtl}'
                                 }
                             ]
                         }
