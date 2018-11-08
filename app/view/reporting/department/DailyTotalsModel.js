@@ -32,7 +32,9 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
                 dEnd: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                inccats: '', // selected categories
+                projids: '' // Project IDs
             }
         };
         this.setData(data);
@@ -41,5 +43,4 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
     data: {
         /* This object holds the arbitrary data that populates the ViewModel and is then available for binding. */
     }
-
 });

@@ -1,7 +1,8 @@
 /**
  * Company Project (ported from model.Project)
  * @class Project
- * @alias Breeze.model.company.Project
+ * @namespace Breeze.model.company.Project
+ * @alias model.company.project
  */
 Ext.define('Breeze.model.company.Project', {
     extend: 'Breeze.model.Base',
@@ -20,10 +21,10 @@ Ext.define('Breeze.model.company.Project', {
             name: 'Description'
         },
         {
-            name: 'Parent_Id'
+            name: 'Parent_ID'
         },
         {
-            name: 'Id'
+            name: 'ID'
         },
         {
             name: 'CustomerId'
@@ -32,13 +33,13 @@ Ext.define('Breeze.model.company.Project', {
             name: 'Code'
         },
         {
-            name: 'isWorkTime', type: 'bool'
+            name: 'IsWorktime', type: 'bool'
         },
         {
-            name: 'isOT', type: 'bool'
+            name: 'IsOT', type: 'bool'
         },
         {
-            name: 'hourly_comp', type: 'number'
+            name: 'Hourly_Comp', type: 'number'
         }
     ]
 });
