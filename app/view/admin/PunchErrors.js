@@ -36,8 +36,8 @@ Ext.define('Breeze.view.admin.PunchErrors', {
             xtype: 'panel',
             ui: 'admin-sub',
             buttons: {
-                remove: { text: 'Remove Punch Errors', /*handler: 'onPrintPDF',*/ ui: 'action', },
-                reprocess: { text: 'Re-Process', /*handler: 'onPrintPDF',*/ ui: 'action', },
+                remove: { text: 'Remove Punch Errors', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:175pt;' },
+                reprocess: { text: 'Re-Process', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:175pt;' },
             },
 
             buttonAlign: 'right',

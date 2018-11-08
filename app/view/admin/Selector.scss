@@ -83,6 +83,11 @@
     margin-left:-4pt;
 }
 
+
+
+.admin-label {
+    color:map-get($admin-text-colors, 'base');
+}
 /** Generic base UI for report form panels **/
 @include panel-ui(
     $body-padding: edge-size-from-relative(
