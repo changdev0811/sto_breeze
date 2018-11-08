@@ -357,16 +357,6 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                                 }
 
                             ]
-                        },
-                        {
-                            xtype: 'checkbox',
-                            labelAlign: 'top',
-                            boxLabel: 'HH:MM Format',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            checked: true,
-                            name: 'time_format',
-                            bind: '{reportParams.hhmm_format}'
                         }
                     ]
                 },

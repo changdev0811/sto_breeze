@@ -295,40 +295,104 @@ Ext.define('Breeze.view.reporting.misc.Anniversaries', {
                     ]
                 },
                 // Third column container
-                {   
-                    xtype: 'container',
+                {
+                    // +++ New Field Set +++
+                    xtype: 'fieldset',
+
+                    // +++ added reporting-fieldset no-padding +++
+                    userCls: 'reporting-fieldset no-padding',
+                    
+                    // +++ Categories +++
+                    title: 'Recording Year',
                     flex: 1,
-                    // +++ minWidth width to prevent truncating +++
-                    minWidth:'200pt',
-                    // +++ maxWidth width to prevent truncating +++
-                    maxWidth:'300pt',
-                    layout: 'vbox',
-                    defaults: {
-                        userCls: 'report-section-padding',
+
+                    // +++ fixed width +++
+                    minWidth:'150pt',
+                    maxWidth:'200pt',
+
+                    // docked: 'right',
+                    layout: {
+                        type: 'vbox',
+                        alignment: 'stretch'
                     },
+                    height: '95%',
+                    width: '100%',
                     items: [
+                        // ++Update++
+                        // Updated toolbar alignment
                         {
-                            xtype: 'fieldset',
-                            userCls: 'reporting-fieldset',
-                            title: 'Month Options',
-                            defaults: {
-                                ui: 'reporting reporting-text reporting-date'
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            layout: 'hbox',
+                            items: [
+                                {
+                                    xtype: 'selectfield',
+                                    bodyAlign: 'stretch',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    name: 'year',
+                                    label: 'Recording Year',
+                                    labelWidth: 'auto',
+                                    labelAlign: 'left',
+                                    store: 'Years',
+                                    bind: { value: '{reportParams.recyear}' },
+                                    displayField: 'Year',
+                                    valueField: 'Year',
+                                    flex: 1
+                                }
+                            ]
+                        },
+                        // ++New 11/5++
+                        // 'Check All' option for Years list
+                        {
+                            xtype: 'toolbar',
+                            ui: 'reporting-tree',
+                            userCls:'no-background',
+                            shadow: false,
+                            bind: {
+                                // Hide until a recording year is selected
+                                hidden: '{reportParams.recyear==null}'
                             },
                             items: [
                                 {
-                                    xtype: 'datefield',
-                                    name: 'reportingyear',
-                                    label: 'Reporting Year',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
-                                    bind: '{reportParams.reportingyear}'
+                                    xtype: 'checkbox',
+                                    ui: 'reporting',
+                                    boxLabel: 'Check All',
+                                    listeners: {
+                                        change: 'onSelectListCheckAllChange'
+                                    }
                                 }
                             ]
+                        },
+                        // ++New 11/5++
+                        // Selector list control for Recording Year
+                        {
+                            xtype: 'breeze-select-list',
+                            ui: 'employeeinfo-shift-grid',
+                            flex: 1,
+                            // Reference name and itemID needed for 
+                            // reading data and check all listener
+                            reference: 'recordingMonthList',
+                            itemId: 'selectList',
+                            fieldMode: 'check',
+                            itemConfig: {
+                                ui: 'reporting-list-item',
+                                templates: {
+                                    radioValue: '{record.value}',
+                                    itemData: { month: '{record.name}' },
+                                    itemTpl: '<div class="breeze-dataview-select-item-label">{month}</div>'
+                                }
+                            },
+                            bind: {
+                                store: '{monthList}',
+                                // Hide until recording year has been chosen
+                                hidden: '{reportParams.recyear==null}'
+                            },
+                            viewModel: true
                         }
                     ]
-                }
+                },
             ]
         }
     ]

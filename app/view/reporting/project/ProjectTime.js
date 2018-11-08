@@ -329,7 +329,6 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                             boxLabel: 'HH:MM Format',
                             bodyAlign: 'stretch',
                             ui: 'reporting',
-                            checked: true,
                             name: 'time_format',
                             bind: '{reportParams.hhmm_format}'
                         }

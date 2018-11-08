@@ -51,7 +51,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryModel', {
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
-                // Date rang fields
+                // Date range fields
                 date_type: 'weeks', // Either 'weeks' or 'date_range
                 weeks_str: '', // Weeks chosen, if using 'weeks' type
                 weeks_strUtc: '', // Weeks chosen (utc)

@@ -25,7 +25,7 @@ Ext.define('Breeze.view.reporting.employee.EmployeeProjectModel', {
                 ReportTitle: 'Employee Summary by Project Report',
                 dStart: (new Date()),
                 dEnd: (new Date()),
-                hhmm_format: null,
+                hhmm_format: true,
                 submit_approve: true,
                 submit_submit: false,
                 submit_unsubmit: false,

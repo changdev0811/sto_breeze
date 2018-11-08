@@ -364,7 +364,7 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
                                         // Hide when calendar mode is 'ALL'
                                         hidden: '{!calendarModeType.checked}',
                                     },
-                                    required: true
+                                    //required: true
                                 }
 
                             ]

@@ -336,7 +336,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetails', {
                         type: 'vbox',
                         alignment: 'stretch'
                     },
-                    height: '100%',
+                    height: '95%',
                     width: '100%',
                     items: [
                         // ++Update++

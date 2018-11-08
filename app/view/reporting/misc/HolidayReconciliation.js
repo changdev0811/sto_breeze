@@ -293,16 +293,14 @@ Ext.define('Breeze.view.reporting.misc.HolidayReconciliation', {
                             ]
                         },
                         {
-                            xtype: 'datefield',
-                            labelAlign: 'top',
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            label: 'Reporting Year',
-                            picker: {
-                                xtype: 'datepicker',
-                                title: ''
-                            },
-                            bind: '{reportParams.dStart}'
+                            xtype: 'selectfield',
+                            ui: 'reporting reporting-text reporting-date',
+                            label: 'Recording Year',
+                            labelWidth: 'auto',
+                            labelAlign: 'left',
+                            store: 'Years',
+                            displayField: 'Year', valueField: 'Year',
+                            bind: { value: '{reportParams.recyear}' }
                         }
                     ]
                 }
