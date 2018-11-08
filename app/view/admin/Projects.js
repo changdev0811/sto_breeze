@@ -77,7 +77,7 @@ Ext.define('Breeze.view.admin.Projects', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'tree',
                             ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border',
+                            userCls: 'employeeinfo-shift-grid no-border no-background',
                             flex:1,
                             layout: 'hbox',
                             hideHeaders: true,
@@ -86,7 +86,7 @@ Ext.define('Breeze.view.admin.Projects', {
                                 {
                                     xtype: 'checkcolumn',
                                     cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                        ui: 'admin-tree-column admin-tree-item',
                                     },
                                     dataIndex: 'checked',
                                     minWidth: '2em',
@@ -99,7 +99,7 @@ Ext.define('Breeze.view.admin.Projects', {
                                 {
                                     xtype: 'treecolumn',
                                     cell: {
-                                        ui: 'report-tree-column reporting-tree-item',
+                                        ui: 'admin-tree-column admin-tree-item',
                                     },
                                     dataIndex: 'text',
                                     flex: 1,
