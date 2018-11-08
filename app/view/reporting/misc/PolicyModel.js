@@ -23,9 +23,10 @@ Ext.define('Breeze.view.reporting.misc.PolicyModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Policy Report',
-                // Concerning selected departments/ids
-                idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                // Concerning selected policies
+                idtype: 'policies', // According to existing code, this is always 'emps'
+                incids: '',
+                printBlank: false // Print blank checkbox
             }
         };
         this.setData(data);

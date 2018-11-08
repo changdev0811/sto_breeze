@@ -73,94 +73,58 @@ Ext.define('Breeze.view.reporting.misc.Policy', {
                     minWidth:'200pt',
                     layout: 'vbox',
                     items: [
-                        // Tab panel containing departments and employees
                         {
-                            xtype: 'tabpanel',
-                            // == New reference to identify this tab panel easily
-                            reference: 'employeeSelectTabs',
-                            layout: {
-                                animation: 'fade'
-                            },
-                            ui: 'employeeInfoTabs', //'reporting-tabs',
-                            tabBar: {
-                                defaultTabUI: 'employeeInfoTabs',
-                                shadow: false,
-                            },
+                            xtype: 'fieldset',
                             flex: 1,
+                            layout: 'vbox',
+                            title: 'Policies',
+                            userCls: 'reporting-fieldset no-padding no-margin',
+
+                            defaults: {
+                                bodyAlign: 'stretch',
+                                ui: 'reporting',
+                                xtype: 'breeze-checkbox'
+                            },
+
                             items: [
-                                // Policies tab
                                 {
-                                    xtype: 'panel',
-                                    // == Item ID for each tab to allow us to see which is active
-                                    itemId: 'departments',
-                                    title: 'Policies',
-                                    layout: 'fit',
-
-                                    // Toolbar containing 'check all' toggle checkbox
-                                    tbar: {
-                                        xtype: 'toolbar',
-                                        ui: 'reporting-tree',
-                                        /* +++ Added reporting-toolbar userCls +++ */
-                                        userCls:'reporting-toolbar',
-                                        
-                                        shadow: false,
-                                        items: [
-                                            {
-                                                xtype: 'checkbox',
-                                                ui: 'reporting',
-                                                // +++ Departments +++
-                                                boxLabel: 'Check All Policies',
-                                                listeners: {
-                                                    change: 'onTreeGridCheckAllChange'
-                                                }
-                                            }
-                                        ]
-                                    },
-
+                                    xtype: 'toolbar',
+                                    ui: 'reporting-tree',
+                                    userCls:'no-background',
+                                    shadow: false,
                                     items: [
-                                        // Policies tree
                                         {
-                                            xtype: 'tree',
-                                            // == Item ID to make finding tree in panel easier
-                                            itemId: 'tree',
-                                            ui: 'employeeinfo-shift-grid',
-                                            /* +++ New userCls +++ */
-                                            userCls: 'employeeinfo-shift-grid',
-                                            layout: 'hbox',
-                                            hideHeaders: true,
-                                            rootVisible: false,
-                                            columns: [
-                                                {
-                                                    xtype: 'checkcolumn',
-                                                    /* +++ Style update +++ */
-                                                    cell: {
-                                                        ui: 'report-tree-column reporting-tree-item',
-                                                    },
-                                                    dataIndex: 'checked',
-                                                    minWidth: '2em',
-                                                    width: 'auto',
-                                                    padding: 0,
-                                                    listeners: {
-                                                        checkChange: 'onTreeGridChecked'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'treecolumn',
-                                                    /* +++ Style update +++ */
-                                                    cell: {
-                                                        ui: 'report-tree-column reporting-tree-item',
-                                                    },
-                                                    dataIndex: 'text',
-                                                    flex: 1,
-                                                    layout: {
-                                                        alignment: 'stretch'
-                                                    }
-                                                }
-                                            ],
-                                            reference: 'departmentTree',
-                                            bind: '{departmentsTree}'
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel: 'Check All',
+                                            listeners: {
+                                                change: 'onSelectListCheckAllChange'
+                                            }
                                         }
                                     ]
+                                },
+                                // User defined category selector
+                                // === Replacement category selector
+                                {
+                                    xtype: 'breeze-categories-list',
+                                    ui: 'employeeinfo-shift-grid',
+                                    flex: 1,
+                                    reference: 'policyList',
+                                    // used by 'check all' listener
+                                    itemId: 'selectList',
+                                    fieldMode: 'check',
+                                    itemConfig: {
+                                        ui: 'reporting-list-item',
+                                        templates: {
+                                            radioValue: '{record.ID}',
+                                            itemData: { name: '{record.Name}' },
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{name}</div>'
+                                        }
+                                    },
+                                    bind: {
+                                        store: '{policiesList}',
+                                    },
+                                    viewModel: true
                                 }
                             ]
                         }
@@ -225,11 +189,10 @@ Ext.define('Breeze.view.reporting.misc.Policy', {
                             },
                             items: [
                                 {
-                                    name: 'headerCompanyLogo',
                                     inline: true,
                                     label: '',
                                     boxLabel: 'Print Blank Policy Checklist',
-                                    bind: '{reportParams.LogoInHeader}'
+                                    bind: '{reportParams.printBlank}'
                                 }
                             ]
                         }
