@@ -93,19 +93,19 @@ Ext.define('Breeze.view.reporting.misc.SupervisorsController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
-
-        // Set myinclist to list of chosen employee IDs
-        vm.set(
-            'reportParams.incids', 
-            this.checkedTreeItems(
-                employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
-                    forceInt: false
-                }
-            ).join(',')
-        );
+            listSuperAdminChecked = this.lookup('listSuperAdmin').getChecked(),
+            sortType = this.lookup('sortType');
+        
+        if(listSuperAdminChecked){
+            // set condition type
+            vm.set(
+                'reportParams.sort_type',
+                sortType.getValues()['sortType']
+            );
+        } else {
+            // If super admin not checked, use default sort type value
+            vm.set('reportParams.sort_type', 1);
+        }
         
     },
 

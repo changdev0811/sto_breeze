@@ -23,11 +23,12 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummaryModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Leave Requests Summary Report',
-                dStart: (new Date()),
-                dEnd: (new Date()),
+                sdate: (new Date()),
+                edate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                status: 0 // Request status, default to All
             }
         };
         this.setData(data);

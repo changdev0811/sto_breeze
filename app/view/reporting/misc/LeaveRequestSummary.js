@@ -321,6 +321,24 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                                     bind: '{reportParams.dEnd}'
                                 }
                             ]
+                        },
+                        // Non-bordered container
+                        {
+                            xtype: 'container',
+                            items: [
+                                // Request status drop-down 
+                                {
+                                    xtype: 'selectfield',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    label: 'Request Status',
+                                    displayField: 'Description',
+                                    valueField: 'ID',
+                                    bind: { 
+                                        value: '{reportParams.status}',
+                                        store: '{requestStatus}'
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }

@@ -28,10 +28,10 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
+        // Load Policies (TODO: Update once new api call is available)
         this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
+            'Breeze.store.accrual.ScheduleList',
+            'policiesList',
             { load: true }
         );
 
@@ -56,7 +56,6 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
             { load: true }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
@@ -76,6 +75,8 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
+        // TODO: Add check for selected policies once new API call is ready
+
         if(!valid){
             // If validation failed, show error(s) in toast message
             Ext.toast({
@@ -93,18 +94,10 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
+            policyList = this.lookup('policyList');
 
-        // Set myinclist to list of chosen employee IDs
-        vm.set(
-            'reportParams.incids', 
-            this.checkedTreeItems(
-                employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
-                    forceInt: false
-                }
-            ).join(',')
-        );
+        // Set incids to chosen policies
+        // TODO: Implement once new API call is available
         
     },
 

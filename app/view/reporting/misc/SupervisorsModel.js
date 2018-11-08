@@ -23,7 +23,10 @@ Ext.define('Breeze.view.reporting.misc.SupervisorsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Supervisors Report',
-                recyear: null
+                // checkboxes
+                ShowEmps: false,
+                sort_type: 1,
+                superAdminList: false
             }
         };
         this.setData(data);
