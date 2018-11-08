@@ -167,6 +167,11 @@
     $box-label-font-size: map-get($root-font-sizes, 'detail')
 );
 
+@include checkboxfield-ui(
+    $ui: 'reporting-no-padding',
+    $box-label-padding: 0pt 0pt 0pt 5pt !important,
+);
+
 @include radiofield-ui(
     $ui: 'reporting',
     $box-label-color: map-get($reporting-text-colors, 'base'),

@@ -266,7 +266,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
                             userCls: 'reporting-fieldset',
                             defaults: {
                                 bodyAlign: 'stretch',
-                                ui: 'reporting',
+                                ui: 'reporting reporting-no-padding',
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
@@ -300,7 +300,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
 
                             defaults: {
                                 bodyAlign: 'stretch',
-                                ui: 'reporting',
+                                ui: 'reporting reporting-no-padding',
                                 xtype: 'breeze-checkbox'
                             },
                             items: [
@@ -509,7 +509,7 @@ Ext.define('Breeze.view.reporting.employee.Details', {
 
                             defaults: {
                                 bodyAlign: 'stretch',
-                                ui: 'reporting',
+                                ui: 'reporting reporting-no-padding',
                                 xtype: 'breeze-checkbox'
                             },
 
