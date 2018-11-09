@@ -17,6 +17,7 @@ Ext.define('Breeze.store.reporting.parameters.Employees', {
     // storeId: 'PunchPolicyList',
 	alias: 'store.reporting.parameters.employees',
 	config: {
+        searchString: '',
         includeActions: false,
         excludeTerminated: false,
         ruleSet: 'list'
@@ -29,6 +30,7 @@ Ext.define('Breeze.store.reporting.parameters.Employees', {
 			this.useJsonParams();
             this.getProxy().extraParams.includeActions = this.getIncludeActions();
             this.getProxy().extraParams.excludeterminated = (this.getExcludeTerminated())? 1 : 0;
+            this.getProxy().extraParams.searchString = this.getSearchString();
         },
         /**
          * Handle load event, using it as an opportunity to appl rule based
