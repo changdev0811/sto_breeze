@@ -82,7 +82,7 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                             bind: {
                                 title: '{captions.projectPlural}'
                             },
-                            userCls: 'reporting-fieldset no-padding no-margin',
+                            userCls: 'reporting-fieldset no-padding no-side-margin',
 
                             defaults: {
                                 bodyAlign: 'stretch',
@@ -134,7 +134,7 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                             xtype: 'fieldset',
                             layout: 'vbox',
                             title: 'Submission Type',
-                            userCls: 'reporting-fieldset no-padding no-margin',
+                            userCls: 'reporting-fieldset no-margin',
 
                             defaults: {
                                 bodyAlign: 'stretch',
