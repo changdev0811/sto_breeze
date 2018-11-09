@@ -139,7 +139,7 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
                             hidden: true,
                             title: 'Sort By',
                             bind: {
-                                hidden: '{!listSuperAdmin.checked}'
+                                hidden: '{listSuperAdmin.checked}'
                             },
                             items: [
                                 {
