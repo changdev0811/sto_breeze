@@ -299,12 +299,18 @@
 
 // === Selector View Styles ===
 
-// Selector body style
-.reporting-selector-panel {
-    background-color: map-get($side-panel-colors, 'base');
-    color: map-get($side-panel-text-colors, 'base');
-    padding: map-path($root-panel-sizes, 'body' 'padding');
-}
+// Selector panel style
+@include panel-ui(
+    $ui: 'reporting-selector',
+    $header-background-color: map-get($side-panel-colors, 'base'),
+    $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
+    $body-background-color: map-get($side-panel-colors, 'base'),
+    $body-color: map-get($side-panel-text-colors, 'base'),
+    $body-padding: 8pt 8pt 8pt 8pt,
+    $header-padding: 8pt 8pt 0pt 8pt
+);
+
 
 // --Selector tree--
 
@@ -315,7 +321,7 @@
 
 // Class
 .reporting-selector-tree {
-    
+
 }
 
 

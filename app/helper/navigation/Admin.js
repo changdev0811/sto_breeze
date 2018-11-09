@@ -13,7 +13,7 @@ Ext.define('Breeze.helper.navigation.Admin', {
         data: [
             {
                 text: 'Admin',
-                routeRef: 'admin',
+                routeRef: 'admin/list',
                 id: 'admin',
                 iconCls: 'x-fas fa-crown',
                 children: [

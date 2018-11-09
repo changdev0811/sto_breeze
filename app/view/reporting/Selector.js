@@ -5,7 +5,7 @@
  * @alias widget.reporting.selector
  */
 Ext.define('Breeze.view.reporting.Selector', {
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.reporting.selector',
     xtype: 'breeze-reporting-selector',
 
@@ -17,9 +17,11 @@ Ext.define('Breeze.view.reporting.Selector', {
         type: 'reporting.selector'
     },
 
-    userCls: 'reporting-selector-panel',
+    ui: 'reporting-selector',
     width: '300pt',
     layout: 'vbox',
+
+    title: 'Reports',
 
     items: [
         {

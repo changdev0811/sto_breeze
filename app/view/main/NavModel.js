@@ -34,6 +34,10 @@ Ext.define('Breeze.view.main.NavModel', {
         employeesView: {
             args: null,
             id: null
+        },
+        // Side panel content tracking
+        sidePanel: {
+            type: null
         }
     },
 

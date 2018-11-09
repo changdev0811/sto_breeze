@@ -32,6 +32,16 @@ Ext.define('Breeze.view.main.NavController', {
         'Ext.Toast'
     ],
 
+    /**
+     * Constants for content displayable in side panel
+     */
+    PanelTypes: {
+        /** Employees panel */
+        EMPLOYEES: 'Breeze.view.main.employees.Panel',
+        /** Report selector panel */
+        REPORTING: 'Breeze.view.reporting.Selector'
+    },
+
     /** Routes */
     routes: {
         // Personal routes
@@ -85,7 +95,8 @@ Ext.define('Breeze.view.main.NavController', {
         },
         // Report selector route
         'reporting': {
-            action: 'onReportingRoute'
+            action: 'onReportingRoute',
+            before: 'beforeReportingRoute'
         },
         // Report route
         'reports/:category/:type': {
@@ -101,8 +112,21 @@ Ext.define('Breeze.view.main.NavController', {
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
         this.punchClass = Ext.create('Breeze.api.Punch');
-        this.reportRoutes = Ext.create('Breeze.store.reporting.Routes');
-        this.employeesRoutes = Ext.create('Breeze.store.employees.Routes');
+        this.addStoreToViewModel(
+            'Breeze.store.reporting.Routes',
+            'reportRoutes',
+            { load: false }
+        );
+        this.addStoreToViewModel(
+            'Breeze.store.employees.Routes',
+            'employeesRoutes',
+            { load: false }
+        );
+        this.addStoreToViewModel(
+            'Breeze.store.admin.Routes',
+            'adminRoutes',
+            { load: false }
+        );
         this.theme = Breeze.helper.Theme;
         Breeze.helper.Auth.startAuthCheckTimer();
         this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
@@ -130,7 +154,7 @@ Ext.define('Breeze.view.main.NavController', {
                 .asTreeWithExtras(extras);
         } else {
             // Default employee level navigation
-            this.refreshEmployeesPanel(false);
+            this.refreshSidePanel(false);
             navStore = Ext.create('Breeze.helper.navigation.Personal').asTree();
         }
         me.addLoadedStoreToViewModel(navStore, 'personalNav');
@@ -304,9 +328,9 @@ Ext.define('Breeze.view.main.NavController', {
         //     console.warn('Sync error: ', err);
         // }
         
-        // ensure employees panel isn't visible
+        // ensure side panel isn't visible
         try{
-            this.refreshEmployeesPanel(false);
+            this.refreshSidePanel(false);
         } catch (err) {
             console.warn('refresh err', err);
         }
@@ -424,123 +448,21 @@ Ext.define('Breeze.view.main.NavController', {
     },
 
     /**
-     * Handle reporting selector view route
-     */
-    onReportingRoute: function(){
-        let vm = this.getViewModel(),
-            emp = vm.get('userId');
-        this.changeContent(
-            Ext.create('Breeze.view.reporting.Selector', {
-                data: { employee: emp }
-            })
-        );
-    },
-
-    /**
-     * Called before report route handler method.
-     * 
-     * Checks to make sure report route is valid, if not, action is cancelled
-     */
-    beforeReportRoute: function(category, type, action){
-        if(this.reportRoutes.resolve(category, type) == null){
-            action.stop();
-            Ext.util.History.back();
-        } else {
-            action.resume();
-        }
-    },
-
-    /**
-     * Handle report route
-     * 
-     * Uses Breeze.store.reporting.Routes to resolve view name based on
-     * provided category and type params (reports/<category>/<type>)
-     * 
-     * @param {String} category Category param from url
-     * @param {String} type Type param from url
-     */
-    onReportRoute: function(category, type){
-        console.group('Report Route Handler');
-        console.info('Route: ', category, type);
-        var viewNS = this.reportRoutes.resolve(category, type);
-        console.info('Resolved View: ', viewNS);
-        console.groupEnd();
-        var component = Ext.create(viewNS, {
-            data: {
-                data: { user: this.getViewModel().get('userId') }
-            }
-        });
-        this.changeContent(component);
-    },
-
-    /**
      * Handle admin route
      */
     onAdminRoute: function(type){
         console.info('Admin Route', type);
-        var ns = null;
-        switch(type){
-            case 'accrualpolicies':
-            ns = 'Breeze.view.admin.AccrualPolicies';
-            break;
-
-            case 'companyhistory':
-            ns = 'Breeze.view.admin.CompanyHistory';
-            break;
-
-            case 'departments':
-            ns = 'Breeze.view.admin.Departments';
-            break;
-
-            case 'holidayeditor':
-            ns = 'Breeze.view.admin.HolidayEditor';
-            break;
-
-            case 'motd':
-            ns = 'Breeze.view.admin.MOTD';
-            break;
-
-            case 'pointcats':
-            ns = 'Breeze.view.admin.PointCats';
-            break;
-
-            case 'projects':
-            ns = 'Breeze.view.admin.Projects';
-            break;
-
-            case 'puncherrors':
-            ns = 'Breeze.view.admin.PunchErrors';
-            break;
-
-            case 'punchpolicies':
-            ns = 'Breeze.view.admin.PunchPolicies';
-            break;
-
-            case 'stimessage':
-            ns = 'Breeze.view.admin.STIMessage';
-            break;
-
-            case 'restoreemployee':
-            ns = 'Breeze.view.admin.RestoreEmployee';
-            break;
-
-            case 'saoptions':
-            ns = 'Breeze.view.admin.SAOptions';
-            break;
-
-            case 'roles':
-            ns = 'Breeze.view.admin.Roles';
-            break;
-
-            case 'udc':
-            ns = 'Breeze.view.admin.UDC';
-            break;
-
-            /* other routes:
-            case 'url part':
-            ns = 'namespace';
-            break;
-            */
+        var vm = this.getViewModel(),
+            routes = vm.get('adminRoutes');
+        // hide side panel
+        this.refreshSidePanel(false);
+        if(type !== 'list'){
+            let ns = routes.resolve(type);
+            this.changeContent(
+                Ext.create(ns, {
+                    data: { employee: undefined }
+                })
+            );    
         }
         this.changeContent(
             Ext.create(ns, {
@@ -563,7 +485,7 @@ Ext.define('Breeze.view.main.NavController', {
 
     onEmployeesRoute: function(){
         console.info('Employees route resolved');
-        this.refreshEmployeesPanel(true);
+        this.refreshSidePanel(true, this.PanelTypes.EMPLOYEES);
     },
 
     /**
@@ -573,7 +495,8 @@ Ext.define('Breeze.view.main.NavController', {
     beforeEmployeesViewRoute: function(act,id,action){
         console.info('Before employee view route');
         var vm = this.getViewModel(),
-            accessLevel = vm.get('accessLevel');
+            accessLevel = vm.get('accessLevel'),
+            employeesRoutes = vm.get('employeesRoutes');
             // viewDataArgs = vm.get('employeesView.args'),
             // viewDataId = vm.get('employeesView.id');
         if(
@@ -582,7 +505,7 @@ Ext.define('Breeze.view.main.NavController', {
             // Not enough data in viewmodel indicating intent
             // (Object.isUnvalued(viewDataArgs) || Object.isUnvalued(viewDataId)) ||
             // act in URL doesn't resolve
-            (this.employeesRoutes.resolve(act) == null)
+            (employeesRoutes.resolve(act) == null)
         ) {
             action.stop();
             Ext.util.History.back();
@@ -595,10 +518,10 @@ Ext.define('Breeze.view.main.NavController', {
         var vm = this.getViewModel(),
             // args = vm.get('employeesView.args'),
             // id = vm.get('employeesView.id'),
-            plan = this.employeesRoutes.resolve(act);
+            plan = vm.get('employeesRoutes').resolve(act);
         
         // Make sure employees panel is still shown
-        this.refreshEmployeesPanel(true);
+        this.refreshSidePanel(true, this.PanelTypes.EMPLOYEES);
 
         if(!plan.method){
             // var view = Ext.create(
@@ -617,30 +540,102 @@ Ext.define('Breeze.view.main.NavController', {
         console.info('Resolving employees view route');
     },
 
+    // ===[Reporting]===
+
+    beforeReportingRoute: function(action){
+        action.resume();
+    },
+
+    /**
+     * Handle reporting selector view route
+     */
+    onReportingRoute: function(){
+        this.refreshSidePanel(true, this.PanelTypes.REPORTING);
+    },
+
+    /**
+     * Called before report route handler method.
+     * 
+     * Checks to make sure report route is valid, if not, action is cancelled
+     */
+    beforeReportRoute: function(category, type, action){
+        var reportRoutes = this.getViewModel().get('reportRoutes');
+        if(reportRoutes.resolve(category, type) == null){
+            action.stop();
+            Ext.util.History.back();
+        } else {
+            // Hide reporting side panel
+            this.refreshSidePanel(false);
+            action.resume();
+        }
+    },
+
+    /**
+     * Handle report route
+     * 
+     * Uses Breeze.store.reporting.Routes to resolve view name based on
+     * provided category and type params (reports/<category>/<type>)
+     * 
+     * @param {String} category Category param from url
+     * @param {String} type Type param from url
+     */
+    onReportRoute: function(category, type){
+        console.group('Report Route Handler');
+        console.info('Route: ', category, type);
+        var reportRoutes = this.getViewModel().get('reportRoutes'),
+            viewNS = reportRoutes.resolve(category, type);
+        console.info('Resolved View: ', viewNS);
+        console.groupEnd();
+        var component = Ext.create(viewNS, {
+            data: {
+                data: { user: this.getViewModel().get('userId') }
+            }
+        });
+        this.changeContent(component);
+    },
+
     // ===[Content functions]===
 
     /**
-     * Refresn employees panel, rebuilding content if setting to visible
+     * Refresn side panel, rebuilding content if setting to visible
      * when previously hidden
      * @param {Boolean} shown Whether panel should be shown
+     * @param {String} panelType which panel to display
      */
-    refreshEmployeesPanel: function(shown){
-        var panelContainer = this.lookup('employeesPanelContainer');
+    refreshSidePanel: function(shown, panelType){
+        var panelContainer = this.lookup('sidePanelContainer'),
+            vm = this.getViewModel(),
+            currentPanelType = vm.get('sidePanel.type');
         console.info(
-            'Refreshing employees panel: ', 
+            'Refreshing side panel: ', 
             !panelContainer.getHidden(), shown
         );
-        if(panelContainer.getHidden() == shown || panelContainer.items.length == 0){
+        if(
+            panelContainer.getHidden() == shown || 
+            panelContainer.items.length == 0 ||
+            // hiding panel or changing panel type
+            (!shown || panelType !== currentPanelType)
+        ){
             panelContainer.setHidden(!shown);
             if(shown){
-                var panel = Ext.create('Breeze.view.main.employees.Panel');
+                if(
+                    panelContainer.items.length > 0 &&
+                    panelType !== currentPanelType
+                ){
+                    // remove panel contents if changing type
+                    panelContainer.removeAll()
+                }
+                let emp = vm.get('userId'),
+                    panel = Ext.create(panelType, { data: { employee: emp }});
+                vm.set('sidePanel.type', panelType)
                 panelContainer.insert(0,panel);
             }
             if(!shown){
                 panelContainer.removeAll(true);
+                // Update panel type
+                vm.set('sidePanel.type', panelType);
             }
-        }
-        
+        }  
     },
 
     replaceContent: function(ns, args){
