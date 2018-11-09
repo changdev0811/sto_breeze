@@ -87,6 +87,10 @@
                 // TODO: Implement before report route method to prevent access when not allowed
                 // before: 'beforeAdminRoute'
             },
+            // Report selector route
+            'reporting': {
+                action: 'onReportingRoute'
+            },
             // Report route
             'reports/:category/:type': {
                 action: 'onReportRoute',
@@ -421,6 +425,19 @@
             // window.open("https://tko.softtimeonline.com/STO/PunchStation/setup.exe");
             window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
             Ext.util.History.back();
+        },
+
+        /**
+         * Handle reporting selector view route
+         */
+        onReportingRoute: function(){
+            let vm = this.getViewModel(),
+                emp = vm.get('userId');
+            this.changeContent(
+                Ext.create('Breeze.view.reporting.Selector', {
+                    data: { employee: emp }
+                })
+            );
         },
 
         /**

@@ -296,3 +296,14 @@
 ){
     border: 1pt solid map-get($root-colors, 'base');
 };
+
+// === Selector View Styles ===
+@include panel-ui(
+    $ui: 'reporting-selector-panel',
+    $header-background-color: map-get($reporting-colors, 'base'),
+    $header-font-size: $panel-title-font-size,
+    $body-background-color: map-get($reporting-colors, 'base'),
+    $body-color: map-get($reporting-text-colors, 'base'),
+    $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+

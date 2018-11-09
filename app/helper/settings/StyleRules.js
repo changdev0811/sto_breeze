@@ -50,6 +50,14 @@ Ext.define('Breeze.helper.settings.StyleRules', {
         // WorkTime Records link
         WTV: {
             iconCls: 'x-fas fa-calendar-check-o', text: 'WorkTime Records'
+        },
+        // For reporting tree groups
+        RepGroup: {
+            iconCls: 'x-fas fa-book'
+        },
+        // For reporting tree items
+        Report: {
+            iconCls: 'x-fas fa-file-invoice'
         }
     }
 });
