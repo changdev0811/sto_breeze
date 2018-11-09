@@ -178,10 +178,7 @@ Ext.define('Breeze.view.main.Nav', {
                                     reference: 'navSideMenuTree',
                                     bind: '{personalNav}',
                                     listeners: {
-                                        selectionchange: 'onSideNavSelect',
-                                        itemclick: function(c,i,e){
-                                            console.info('X');
-                                        }
+                                        selectionchange: 'onSideNavSelect'
                                     }
                                 }
                             ]
