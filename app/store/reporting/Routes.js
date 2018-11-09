@@ -14,7 +14,8 @@ Ext.define('Breeze.store.reporting.Routes', {
     fields: [
         { name: 'category', type: 'string' },
         { name: 'type', type: 'string' },
-        { name: 'view', type: 'string' }
+        { name: 'view', type: 'string' },
+        { name: 'key', type: 'string' }
     ],
 
     /**

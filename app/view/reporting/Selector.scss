@@ -299,12 +299,31 @@
 };
 
 // === Selector View Styles ===
+
+// Selector panel style
 @include panel-ui(
-    $ui: 'reporting-selector-panel',
-    $header-background-color: map-get($reporting-colors, 'base'),
-    $header-font-size: $panel-title-font-size,
-    $body-background-color: map-get($reporting-colors, 'base'),
-    $body-color: map-get($reporting-text-colors, 'base'),
-    $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+    $ui: 'reporting-selector',
+    $header-background-color: map-get($side-panel-colors, 'base'),
+    $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
+    $body-background-color: map-get($side-panel-colors, 'base'),
+    $body-color: map-get($side-panel-text-colors, 'base'),
+    $body-padding: 8pt 8pt 8pt 8pt,
+    $header-padding: 8pt 8pt 0pt 8pt
 );
+
+
+// --Selector tree--
+
+// UI type
+@include treelist-ui(
+    $ui: 'reporting-selector'
+);
+
+// Class
+.reporting-selector-tree {
+
+}
+
+
 

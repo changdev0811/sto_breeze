@@ -7,6 +7,7 @@
 Ext.define('Breeze.view.reporting.Selector', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.selector',
+    xtype: 'breeze-reporting-selector',
 
     controller: 'reporting.selector',
     listeners: {
@@ -16,17 +17,19 @@ Ext.define('Breeze.view.reporting.Selector', {
         type: 'reporting.selector'
     },
 
-    title: 'Reports',
-    ui: 'reporting-selector-panel',
-    // ui: 'reporting-base',
+    ui: 'reporting-selector',
+    width: '300pt',
+    layout: 'vbox',
 
-    layout: 'hbox',
+    title: 'Reports',
 
     items: [
         {
             xtype: 'tree',
             flex: 1,
             reference: 'reportsTree',
+            ui: 'reporting-selector',
+            userCls: 'reporting-selector-tree',
             expanderOnly: false,
             singleExpand: true,
             rootVisible: false,

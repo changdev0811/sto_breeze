@@ -41,6 +41,9 @@ $scoped-root-panel-body-padding-weights: (
 
 // --[Root Panel Sets]--
 $root-panel-sizes: (
+    header: (
+        font: $panel-title-font-size
+    ),
     body: (
         padding: edge-size-from-relative(
             $base: $scoped-root-panel-body-padding-base,
