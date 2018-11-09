@@ -5,7 +5,7 @@
  * @alias widget.main.employees.panel
  */
 Ext.define('Breeze.view.main.employees.Panel', {
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.main.employees.panel',
     xtype: 'breeze-employees-panel',
 
@@ -31,8 +31,17 @@ Ext.define('Breeze.view.main.employees.Panel', {
     width: '300pt',
 
     layout: 'vbox',
-    userCls: 'employees-panel',
+    ui: 'employees-side-bar-panel',
     // padding: '16pt',
+    
+    title: 'Employees',
+
+    tools: {
+        close: {
+            iconCls: 'x-fas fa-times',
+            handler: 'onCloseTool'
+        }
+    },
 
     items: [
         {
@@ -84,6 +93,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             ui: 'employees-toolbar', docked: 'top',
+                            shadow: false,
                             reference: 'employeesEmployeeToolbar',
                             defaults: {
                                 xtype: 'displayfield',
@@ -164,6 +174,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
+                            shadow: false,
                             ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
@@ -261,6 +272,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
             xtype: 'toolbar',
             ui: 'employees-toolbar',
             dock: 'bottom',
+            shadow: false,
             items: [
                 {
                     xtype: 'breeze-checkbox',

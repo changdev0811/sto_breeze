@@ -180,7 +180,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
             //     `e/${type}/${String.random()}`
             // );
             this.redirectTo(
-                `e/${type}/${id}`
+                `employees/${type}/${id}`
             );
         }
     },
@@ -202,5 +202,12 @@ Ext.define('Breeze.view.main.employees.PanelController', {
                 selected && isEmployee
             )
         );
+    },
+
+    /**
+     * Handle close tool click event
+     */
+    onCloseTool: function(){
+        Ext.fireEvent('sidepanelclose',{});
     }
 });

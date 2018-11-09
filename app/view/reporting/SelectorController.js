@@ -40,5 +40,9 @@ Ext.define('Breeze.view.reporting.SelectorController', {
         if(!Object.isUnvalued(url)){
             this.redirectTo(url);
         }
+    },
+
+    onCloseTool: function(){
+        Ext.fireEvent('sidepanelclose',{});
     }
 });

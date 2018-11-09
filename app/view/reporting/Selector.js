@@ -23,6 +23,13 @@ Ext.define('Breeze.view.reporting.Selector', {
 
     title: 'Reports',
 
+    tools: {
+        close: {
+            iconCls: 'x-fas fa-times',
+            handler: 'onCloseTool'
+        }
+    },
+
     items: [
         {
             xtype: 'tree',

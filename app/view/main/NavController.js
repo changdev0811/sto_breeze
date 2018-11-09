@@ -33,13 +33,32 @@ Ext.define('Breeze.view.main.NavController', {
     ],
 
     /**
-     * Constants for content displayable in side panel
+     * Settings for content displayable in side panel
      */
-    PanelTypes: {
+    Panels: {
         /** Employees panel */
-        EMPLOYEES: 'Breeze.view.main.employees.Panel',
+        EMPLOYEES: {
+            view: 'Breeze.view.main.employees.Panel',
+            clearContent: false,
+            id: 'employees',
+            authorize: 'authorizedToViewEmployees'
+        },
         /** Report selector panel */
-        REPORTING: 'Breeze.view.reporting.Selector'
+        REPORTING: {
+            view: 'Breeze.view.reporting.Selector',
+            clearContent: false,
+            id: 'reporting'
+        }
+    },
+
+    /**
+     * Global event listeners
+     */
+    listen: {
+        global: {
+            sidepanelclose: 'onSidePanelClose',
+            sidepanelopen: 'onSidePanelOpen'
+        }
     },
 
     /** Routes */
@@ -79,11 +98,7 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onHomeRoute',
             // before: 'beforeRoute'
         },
-        'employees': {
-            action: 'onEmployeesRoute',
-            before: 'beforeEmployeesRoute'
-        },
-        'e/:act/:id': {
+        'employees/:act/:id': {
             action: 'onEmployeesViewRoute',
             before: 'beforeEmployeesViewRoute'
         },
@@ -92,11 +107,6 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onAdminRoute',
             // TODO: Implement before report route method to prevent access when not allowed
             // before: 'beforeAdminRoute'
-        },
-        // Report selector route
-        'reporting': {
-            action: 'onReportingRoute',
-            before: 'beforeReportingRoute'
         },
         // Report route
         'reports/:category/:type': {
@@ -108,7 +118,7 @@ Ext.define('Breeze.view.main.NavController', {
     },
 
     init: function(component){
-        this.router = Ext.create('Breeze.helper.routing.TreeRouter', this);
+        this.router = Ext.create('Breeze.helper.routing.TreeRouter', {controller: this});
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
         this.punchClass = Ext.create('Breeze.api.Punch');
@@ -297,10 +307,12 @@ Ext.define('Breeze.view.main.NavController', {
      * Handle side nav tree item selection changing
      */
     onSideNavSelect: function(tree, tRecord, eOpst){
-        console.log("Side nav menu item selection changed!");
-        var r = this.router.resolve(tRecord, true);
-        console.log("Route result: " + r);
-        this.router.resolve(tRecord);
+        if(tRecord !== null){
+            console.log("Side nav menu item selection changed!");
+            var r = this.router.resolve(tRecord, true);
+            console.log("Route result: " + r);
+            this.router.resolve(tRecord);
+        }
     },
 
     /**
@@ -473,21 +485,19 @@ Ext.define('Breeze.view.main.NavController', {
 
     //===[Employees]===
 
-    beforeEmployeesRoute: function(action){
+    /**
+     * Check if user is authorized to see employees panel
+     * @return {boolean} True if authorized, false otherwise
+     */
+    authorizedToViewEmployees: function(){
         var accessLevel = this.getViewModel().get('accessLevel');
         if(accessLevel < Breeze.api.Employee.accessLevel.SUPERVISOR){
-            action.stop();
-            Ext.util.History.back();
+            return false;
         } else {
-            action.resume();
+            return true;
         }
     },
-
-    onEmployeesRoute: function(){
-        console.info('Employees route resolved');
-        this.refreshSidePanel(true, this.PanelTypes.EMPLOYEES);
-    },
-
+    
     /**
      * Perform pre-route checks to make sure there is a valid action
      * to display in view with employees panel
@@ -521,7 +531,7 @@ Ext.define('Breeze.view.main.NavController', {
             plan = vm.get('employeesRoutes').resolve(act);
         
         // Make sure employees panel is still shown
-        this.refreshSidePanel(true, this.PanelTypes.EMPLOYEES);
+        this.refreshSidePanel(true, this.Panels.EMPLOYEES);
 
         if(!plan.method){
             // var view = Ext.create(
@@ -542,17 +552,6 @@ Ext.define('Breeze.view.main.NavController', {
 
     // ===[Reporting]===
 
-    beforeReportingRoute: function(action){
-        action.resume();
-    },
-
-    /**
-     * Handle reporting selector view route
-     */
-    onReportingRoute: function(){
-        this.refreshSidePanel(true, this.PanelTypes.REPORTING);
-    },
-
     /**
      * Called before report route handler method.
      * 
@@ -565,7 +564,7 @@ Ext.define('Breeze.view.main.NavController', {
             Ext.util.History.back();
         } else {
             // Hide reporting side panel
-            this.refreshSidePanel(false);
+            // this.refreshSidePanel(false);
             action.resume();
         }
     },
@@ -599,60 +598,71 @@ Ext.define('Breeze.view.main.NavController', {
     /**
      * Refresn side panel, rebuilding content if setting to visible
      * when previously hidden
-     * @param {Boolean} shown Whether panel should be shown
-     * @param {String} panelType which panel to display
+     * @param {Boolean} show Whether panel should be shown
+     * @param {Object} type which panel to display
      */
-    refreshSidePanel: function(shown, panelType){
+    refreshSidePanel: function(show, type){
         var panelContainer = this.lookup('sidePanelContainer'),
             vm = this.getViewModel(),
-            currentPanelType = vm.get('sidePanel.type');
-        console.info(
-            'Refreshing side panel: ', 
-            !panelContainer.getHidden(), shown
-        );
+            currentType = vm.get('sidePanel.type');
         if(
-            panelContainer.getHidden() == shown || 
+            panelContainer.getHidden() == show ||
             panelContainer.items.length == 0 ||
-            // hiding panel or changing panel type
-            (!shown || panelType !== currentPanelType)
+            (currentType !== type.id || !show)
         ){
-            panelContainer.setHidden(!shown);
-            if(shown){
-                if(
-                    panelContainer.items.length > 0 &&
-                    panelType !== currentPanelType
-                ){
-                    // remove panel contents if changing type
-                    panelContainer.removeAll()
+            panelContainer.setHidden(!show);
+            if(type){
+                if(show && currentType !== type.id){
+                    panelContainer.removeAll();
+                    if(type.clearContent){
+                        // clear content panel if configured to do so
+                        this.lookup('contentContainer').removeAll();
+                    }
+                    let emp = vm.get('userId'),
+                        panel = Ext.create(
+                            type.view,
+                            { data: { employee: emp } }
+                        );
+                    vm.set('sidePanel.type', type.id);
+                    panelContainer.insert(0, panel);
+                    console.info('Showing side panel: ', type.id);
+                } else {
+                    console.info('Hiding side panel');
                 }
-                let contentContainer = this.lookup('contentContainer'),
-                    emp = vm.get('userId'),
-                    panel = Ext.create(panelType, { data: { employee: emp }});
-                contentContainer.removeAll();
-                vm.set('sidePanel.type', panelType)
-                panelContainer.insert(0,panel);
+            } else {
+                // no type, set type to null
+                vm.set('sidePanel.type', null);
             }
-            if(!shown){
-                panelContainer.removeAll(true);
-                // Update panel type
-                vm.set('sidePanel.type', panelType);
+        }
+    },
+
+    /**
+     * Handle global event to close side panel
+     */
+    onSidePanelClose: function(){
+        this.refreshSidePanel(false);
+    },
+
+    /**
+     * Handle global event to show side panel
+     * @param {Object} e Event data
+     */
+    onSidePanelOpen: function(e){
+        var panel = this.Panels[e.route.toUpperCase()];
+        if(!Object.isUnvalued(panel)){
+            var authorized = true;
+            if(panel.authorize){
+                authorized = this[panel.authorize];
             }
-        }  
+            if(authorized){
+                this.refreshSidePanel(true, this.Panels[e.route.toUpperCase()]);
+                this.syncNavToRoute(e.route);
+            }
+        }
     },
 
     replaceContent: function(ns, args){
         var container = this.lookup('contentContainer');
-            
-        // if(!Object.isUnvalued(container.getActiveItem())){
-            
-        //     container.remove(container.getActiveItem(), true);
-        //     // while(container.getItems().items.length > 1){
-        //         // var old = container.pop();
-        //         // container.remove(container.getItems().items[0], true);
-        //         // container.remove(old, true);
-        //     // }
-        //     // container.remove(container.getActiveItem(), true);
-        // } 
 
         var old = container.getActiveItem();
         if(!Object.isUnvalued(old)){
@@ -714,7 +724,7 @@ Ext.define('Breeze.view.main.NavController', {
 
     syncNavToRoute: function(route){
         var tree = this.lookup('navSideMenuTree');
-        if(route && route !== null){
+        if(route && !Object.isUnvalued(route)){
             var navNode = tree.getNodeByRoute(route);
             if(navNode !== null && tree.getSelection() !== navNode){
                 // Found a node with the given route, and it isn't currently selected
