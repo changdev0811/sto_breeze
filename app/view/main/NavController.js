@@ -83,7 +83,7 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onEmployeesRoute',
             before: 'beforeEmployeesRoute'
         },
-        'employee/:act/:id': {
+        'e/:act/:id': {
             action: 'onEmployeesViewRoute',
             before: 'beforeEmployeesViewRoute'
         },

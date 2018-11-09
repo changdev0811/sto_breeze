@@ -207,12 +207,32 @@ $toast-colors: (
 
 // ====[Side Panel]====
 
-/*
- Note: To change these, scoped vars with unique values will need to be
- added. Right now these sets are direct copies of those from work time records
-*/
-$side-panel-colors: $wtr-colors;
-$side-panel-text-colors: $wtr-text-colors;
+// colors
+//$scoped-wtr-base: $base-color;
+$scoped-side-panel-base: #57576A;
+$scoped-side-panel-medium: #81818F;
+$scoped-side-panel-light: #ABABB5;
+$scoped-side-panel-tree: #ffffff;
+
+// text
+$scoped-side-panel-text-base: #ffffff;
+$scoped-side-panel-text-light: #ABABB5;
+$scoped-side-panel-text-icon: $scoped-side-panel-base;
+
+// Side panel colors
+$side-panel-colors: (
+    base: $scoped-side-panel-base,
+    medium: $scoped-side-panel-medium,
+    light: $scoped-side-panel-light,
+    tree: $scoped-side-panel-tree
+);
+
+// Side panel text colors
+$side-panel-text-colors: (
+    base: $scoped-side-panel-text-base,
+    light: $scoped-side-panel-text-light,
+    icon: $scoped-side-panel-text-icon
+);
 
 // ====[Report Form Colors]====
 

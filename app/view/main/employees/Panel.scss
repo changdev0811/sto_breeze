@@ -57,3 +57,11 @@
     $label-font-size: map-get($root-font-sizes, 'detail') !important
 );
 
+// @include treelist-ui(
+//     $ui: 'employees-panel-treelist',
+//     $background-color: map-get($side-panel-colors, 'tree'),
+//     $item-font-size: map-get($root-font-sizes, 'detail'),
+//     $item-line-height: map-get($root-font-sizes, 'base'),
+//     $item-icon-color: map-get($side-panel-text-colors, 'icon')
+// )
+
