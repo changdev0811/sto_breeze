@@ -3,7 +3,7 @@
  * 
  * Format for url is reports/<category>/<type>
  * 
- * @class ViewRoutes
+ * @class Routes
  * @namespace Breeze.store.reporting.Routes
  */
 Ext.define('Breeze.store.reporting.Routes', {
@@ -32,226 +32,329 @@ Ext.define('Breeze.store.reporting.Routes', {
      *  }
      */
     data: [
-        // Department
-        { 
-            category: 'department', type: 'absence', 
-            view: 'Breeze.view.reporting.department.Absence' 
+        {
+            "category": "department",
+            "type": "absence",
+            "view": "Breeze.view.reporting.department.Absence",
+            "key": "AbsenceReport"
         },
         {
-            category: 'department', type: 'absencesummary', 
-            view: 'Breeze.view.reporting.department.AbsenceSummary'             
+            "category": "department",
+            "type": "absencesummary",
+            "view": "Breeze.view.reporting.department.AbsenceSummary",
+            "key": "AbsenceSummary"
         },
         {
-            category: 'department', type: 'adjustment', 
-            view: 'Breeze.view.reporting.department.Adjustment'             
+            "category": "department",
+            "type": "adjustment",
+            "view": "Breeze.view.reporting.department.Adjustment",
+            "key": "AdjustmentReport"
         },
         {
-            category: 'department', type: 'daily', 
-            view: 'Breeze.view.reporting.department.Daily'             
+            "category": "department",
+            "type": "daily",
+            "view": "Breeze.view.reporting.department.Daily",
+            "key": "DailyReport"
         },
         {
-            category: 'department', type: 'dailytotals', 
-            view: 'Breeze.view.reporting.department.DailyTotals'             
+            "category": "department",
+            "type": "dailytotals",
+            "view": "Breeze.view.reporting.department.DailyTotals",
+            "key": "DeptDailyTotals"
         },
         {
-            category: 'department', type: 'deptdetails', 
-            view: 'Breeze.view.reporting.department.DeptDetails'             
+            "category": "department",
+            "type": "deptdetails",
+            "view": "Breeze.view.reporting.department.DeptDetails",
+            "key": "DepartmentDetails"
         },
         {
-            category: 'department', type: 'deptprofile', 
-            view: 'Breeze.view.reporting.department.DeptProfile'             
+            "category": "department",
+            "type": "deptprofile",
+            "view": "Breeze.view.reporting.department.DeptProfile",
+            "key": "DeptProfile"
         },
         {
-            category: 'department', type: 'deptreconciliation', 
-            view: 'Breeze.view.reporting.department.DeptReconciliation'             
+            "category": "department",
+            "type": "deptreconciliation",
+            "view": "Breeze.view.reporting.department.DeptReconciliation",
+            "key": "DepartmentReconciliation"
         },
         {
-            category: 'department', type: 'inoutboard', 
-            view: 'Breeze.view.reporting.department.InOutBoard'             
+            "category": "department",
+            "type": "inoutboard",
+            "view": "Breeze.view.reporting.department.InOutBoard",
+            "key": "InOutBoard"
         },
         {
-            category: 'department', type: 'inouthistory', 
-            view: 'Breeze.view.reporting.department.InOutHistory'             
+            "category": "department",
+            "type": "inouthistory",
+            "view": "Breeze.view.reporting.department.InOutHistory",
+            "key": "InOutHistory"
         },
         {
-            category: 'department', type: 'monthly', 
-            view: 'Breeze.view.reporting.department.Monthly'             
+            "category": "department",
+            "type": "monthly",
+            "view": "Breeze.view.reporting.department.Monthly",
+            "key": "MonthlyReport"
         },
         {
-            category: 'department', type: 'notes', 
-            view: 'Breeze.view.reporting.department.Notes'             
+            "category": "department",
+            "type": "notes",
+            "view": "Breeze.view.reporting.department.Notes",
+            "key": "Notes"
         },
         {
-            category: 'department', type: 'overtimecheck', 
-            view: 'Breeze.view.reporting.department.OvertimeCheck'             
+            "category": "department",
+            "type": "overtimecheck",
+            "view": "Breeze.view.reporting.department.OvertimeCheck",
+            "key": "OvertimeCheck"
         },
         {
-            category: 'department', type: 'payrollsummary', 
-            view: 'Breeze.view.reporting.department.PayrollSummary'             
+            "category": "department",
+            "type": "payrollsummary",
+            "view": "Breeze.view.reporting.department.PayrollSummary",
+            "key": "PayrollSummary"
         },
         {
-            category: 'department', type: 'puncherrors', 
-            view: 'Breeze.view.reporting.department.PunchErrors'             
+            "category": "department",
+            "type": "puncherrors",
+            "view": "Breeze.view.reporting.department.PunchErrors",
+            "key": "PunchErrors"
         },
         {
-            category: 'department', type: 'security', 
-            view: 'Breeze.view.reporting.department.Security'             
+            "category": "department",
+            "type": "security",
+            "view": "Breeze.view.reporting.department.Security",
+            "key": "SecurityReport"
         },
         {
-            category: 'department', type: 'shiftanalysis', 
-            view: 'Breeze.view.reporting.department.ShiftAnalysis'             
+            "category": "department",
+            "type": "shiftanalysis",
+            "view": "Breeze.view.reporting.department.ShiftAnalysis",
+            "key": "ShiftAnalysis"
         },
         {
-            category: 'department', type: 'summaryproject', 
-            view: 'Breeze.view.reporting.department.SummaryProject'             
+            "category": "department",
+            "type": "summaryproject",
+            "view": "Breeze.view.reporting.department.SummaryProject",
+            "key": "DProjectSummary"
         },
         {
-            category: 'department', type: 'timerecap', 
-            view: 'Breeze.view.reporting.department.TimeRecap'             
-        },
-        // Employee
-        {
-            category: 'employee', type: 'allowance', 
-            view: 'Breeze.view.reporting.employee.Allowance'             
+            "category": "department",
+            "type": "timerecap",
+            "view": "Breeze.view.reporting.department.TimeRecap",
+            "key": "TimeRecap"
         },
         {
-            category: 'employee', type: 'details', 
-            view: 'Breeze.view.reporting.employee.Details'             
+            "category": "employee",
+            "type": "allowance",
+            "view": "Breeze.view.reporting.employee.Allowance",
+            "key": "AllowanceProjection"
         },
         {
-            category: 'employee', type: 'fyi', 
-            view: 'Breeze.view.reporting.employee.Fyi'             
+            "category": "employee",
+            "type": "details",
+            "view": "Breeze.view.reporting.employee.Details",
+            "key": "EmployeeDetails"
         },
         {
-            category: 'employee', type: 'information', 
-            view: 'Breeze.view.reporting.employee.Information'             
+            "category": "employee",
+            "type": "fyi",
+            "view": "Breeze.view.reporting.employee.Fyi",
+            "key": "EmployeeFYI"
         },
         {
-            category: 'employee', type: 'profile', 
-            view: 'Breeze.view.reporting.employee.Profile'             
+            "category": "employee",
+            "type": "information",
+            "view": "Breeze.view.reporting.employee.Information",
+            "key": "EmployeeInformation"
         },
         {
-            category: 'employee', type: 'excessivehours', 
-            view: 'Breeze.view.reporting.employee.ExcessiveHours'             
+            "category": "employee",
+            "type": "profile",
+            "view": "Breeze.view.reporting.employee.Profile",
+            "key": "EmployeeProfile"
         },
         {
-            category: 'employee', type: 'lateness', 
-            view: 'Breeze.view.reporting.employee.Lateness'             
+            "category": "employee",
+            "type": "excessivehours",
+            "view": "Breeze.view.reporting.employee.ExcessiveHours",
+            "key": "ExcessiveHours"
         },
         {
-            category: 'employee', type: 'recordedtime', 
-            view: 'Breeze.view.reporting.employee.RecordedTime'             
+            "category": "employee",
+            "type": "lateness",
+            "view": "Breeze.view.reporting.employee.Lateness",
+            "key": "LatenessCheck"
         },
         {
-            category: 'employee', type: 'employeeproject', 
-            view: 'Breeze.view.reporting.employee.EmployeeProject'             
+            "category": "employee",
+            "type": "recordedtime",
+            "view": "Breeze.view.reporting.employee.RecordedTime",
+            "key": "RecordedTime"
         },
         {
-            category: 'employee', type: 'timeactivity', 
-            view: 'Breeze.view.reporting.employee.TimeActivity'             
+            "category": "employee",
+            "type": "employeeproject",
+            "view": "Breeze.view.reporting.employee.EmployeeProject",
+            "key": "EProjectSummary"
         },
         {
-            category: 'employee', type: 'timesheet', 
-            view: 'Breeze.view.reporting.employee.Timesheet'             
+            "category": "employee",
+            "type": "timeactivity",
+            "view": "Breeze.view.reporting.employee.TimeActivity",
+            "key": "TimeActivity"
         },
         {
-            category: 'employee', type: 'worktimedetails', 
-            view: 'Breeze.view.reporting.employee.WorktimeDetails'             
+            "category": "employee",
+            "type": "timesheet",
+            "view": "Breeze.view.reporting.employee.Timesheet",
+            "key": "Timesheet"
         },
         {
-            category: 'employee', type: 'yearataglance', 
-            view: 'Breeze.view.reporting.employee.YearAtAGlance'             
-        },
-        // Miscellaneous
-        {
-            category: 'misc', type: 'accrualpolicies', 
-            view: 'Breeze.view.reporting.misc.AccrualPolicies'             
+            "category": "employee",
+            "type": "worktimedetails",
+            "view": "Breeze.view.reporting.employee.WorktimeDetails",
+            "key": "WorktimeDetails"
         },
         {
-            category: 'misc', type: 'anniversaries', 
-            view: 'Breeze.view.reporting.misc.Anniversaries'             
+            "category": "employee",
+            "type": "yearataglance",
+            "view": "Breeze.view.reporting.employee.YearAtAGlance",
+            "key": "YearAtAGlance"
         },
         {
-            category: 'misc', type: 'audit', 
-            view: 'Breeze.view.reporting.misc.Audit'             
+            "category": "misc",
+            "type": "accrualpolicies",
+            "view": "Breeze.view.reporting.misc.AccrualPolicies",
+            "key": "AccrualPolicies"
         },
         {
-            category: 'misc', type: 'birthdays', 
-            view: 'Breeze.view.reporting.misc.Birthdays'             
+            "category": "misc",
+            "type": "anniversaries",
+            "view": "Breeze.view.reporting.misc.Anniversaries",
+            "key": "AnniversaryList"
         },
         {
-            category: 'misc', type: 'departmentlist', 
-            view: 'Breeze.view.reporting.misc.DepartmentList'             
+            "category": "misc",
+            "type": "audit",
+            "view": "Breeze.view.reporting.misc.Audit",
+            "key": "CompanyHistory"
         },
         {
-            category: 'misc', type: 'holidaydetails', 
-            view: 'Breeze.view.reporting.misc.HolidayDetails'             
+            "category": "misc",
+            "type": "birthdays",
+            "view": "Breeze.view.reporting.misc.Birthdays",
+            "key": "BirthdayList"
         },
         {
-            category: 'misc', type: 'holidaylist', 
-            view: 'Breeze.view.reporting.misc.HolidayList'             
+            "category": "misc",
+            "type": "departmentlist",
+            "view": "Breeze.view.reporting.misc.DepartmentList",
+            "key": "DepartmentList"
         },
         {
-            category: 'misc', type: 'holidayreconciliation', 
-            view: 'Breeze.view.reporting.misc.HolidayReconciliation'             
+            "category": "misc",
+            "type": "holidaydetails",
+            "view": "Breeze.view.reporting.misc.HolidayDetails",
+            "key": "HolidayDetails"
         },
         {
-            category: 'misc', type: 'leaverequests', 
-            view: 'Breeze.view.reporting.misc.LeaveRequests'             
+            "category": "misc",
+            "type": "holidaylist",
+            "view": "Breeze.view.reporting.misc.HolidayList",
+            "key": "HolidayList"
         },
         {
-            category: 'misc', type: 'leaverequestsummary', 
-            view: 'Breeze.view.reporting.misc.LeaveRequestSummary'             
+            "category": "misc",
+            "type": "holidayreconciliation",
+            "view": "Breeze.view.reporting.misc.HolidayReconciliation",
+            "key": "HolidayReconciliation"
         },
         {
-            category: 'misc', type: 'attendance', 
-            view: 'Breeze.view.reporting.misc.Attendance'             
+            "category": "misc",
+            "type": "leaverequests",
+            "view": "Breeze.view.reporting.misc.LeaveRequests",
+            "key": "LeaveRequestSummary"
         },
         {
-            category: 'misc', type: 'policy', 
-            view: 'Breeze.view.reporting.misc.Policy'             
+            "category": "misc",
+            "type": "leaverequestsummary",
+            "view": "Breeze.view.reporting.misc.LeaveRequestSummary",
+            "key": "LeaveRequests"
         },
         {
-            category: 'misc', type: 'quicklist', 
-            view: 'Breeze.view.reporting.misc.QuickList'             
+            "category": "misc",
+            "type": "attendance",
+            "view": "Breeze.view.reporting.misc.Attendance",
+            "key": "PerfectAttendance"
         },
         {
-            category: 'misc', type: 'supervisors', 
-            view: 'Breeze.view.reporting.misc.Supervisors'             
-        },
-        // Point
-        {
-            category: 'point', type: 'excessivepoints', 
-            view: 'Breeze.view.reporting.point.ExcessivePoints'             
+            "category": "misc",
+            "type": "policy",
+            "view": "Breeze.view.reporting.misc.Policy",
+            "key": "PolicyReport"
         },
         {
-            category: 'point', type: 'pointdetails', 
-            view: 'Breeze.view.reporting.point.PointDetails'             
+            "category": "misc",
+            "type": "quicklist",
+            "view": "Breeze.view.reporting.misc.QuickList",
+            "key": "QuickList"
         },
         {
-            category: 'point', type: 'pointledger', 
-            view: 'Breeze.view.reporting.point.PointLedger'             
+            "category": "misc",
+            "type": "supervisors",
+            "view": "Breeze.view.reporting.misc.Supervisors",
+            "key": "SupervisorList"
         },
         {
-            category: 'point', type: 'pointtotals', 
-            view: 'Breeze.view.reporting.point.PointTotals'             
-        },
-        // Project
-        {
-            category: 'project', type: 'projectdetails', 
-            view: 'Breeze.view.reporting.project.ProjectDetails'             
+            "category": "point",
+            "type": "excessivepoints",
+            "view": "Breeze.view.reporting.point.ExcessivePoints",
+            "key": "ExcessivePoints"
         },
         {
-            category: 'project', type: 'projectprofile', 
-            view: 'Breeze.view.reporting.project.ProjectProfile'             
+            "category": "point",
+            "type": "pointdetails",
+            "view": "Breeze.view.reporting.point.PointDetails",
+            "key": "PointDetails"
         },
         {
-            category: 'project', type: 'projectrecap', 
-            view: 'Breeze.view.reporting.project.ProjectRecap'             
+            "category": "point",
+            "type": "pointledger",
+            "view": "Breeze.view.reporting.point.PointLedger",
+            "key": "PointLedger"
         },
         {
-            category: 'project', type: 'projecttime', 
-            view: 'Breeze.view.reporting.project.ProjectTime'             
+            "category": "point",
+            "type": "pointtotals",
+            "view": "Breeze.view.reporting.point.PointTotals",
+            "key": "PointTotals"
+        },
+        {
+            "category": "project",
+            "type": "projectdetails",
+            "view": "Breeze.view.reporting.project.ProjectDetails",
+            "key": "ProjectDetails"
+        },
+        {
+            "category": "project",
+            "type": "projectprofile",
+            "view": "Breeze.view.reporting.project.ProjectProfile",
+            "key": "ProjectProfile"
+        },
+        {
+            "category": "project",
+            "type": "projectrecap",
+            "view": "Breeze.view.reporting.project.ProjectRecap",
+            "key": "ProjectRecap"
+        },
+        {
+            "category": "project",
+            "type": "projecttime",
+            "view": "Breeze.view.reporting.project.ProjectTime",
+            "key": "ProjectTimeSummary"
         }
     ],
 
@@ -261,6 +364,22 @@ Ext.define('Breeze.store.reporting.Routes', {
         });
         if(idx !== -1){
             return this.getAt(idx).data.view;
+        } else {
+            return null;
+        }
+    },
+
+     /**
+     * Resolve report key value into route URL
+     * @param {String} key Report key value
+     * @return {String} resolved url
+     */
+    resolveKey: function (key) {
+        var idx = this.find('key', key);
+        if (idx !== -1) {
+            let rec = this.getAt(idx).data,
+                url = `reports/${rec.category}/${rec.type}`;
+            return url;
         } else {
             return null;
         }

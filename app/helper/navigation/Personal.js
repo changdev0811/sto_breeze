@@ -58,7 +58,7 @@ Ext.define('Breeze.helper.navigation.Personal', {
             }, {
                 text: 'Reports', leaf: true,
                 iconCls: 'x-fas fa-bar-chart',
-                routeRef: 'personal/reports',
+                routeRef: 'reporting',
                 id: 'reports'
             }, {
                 text: 'Help', leaf: true,
