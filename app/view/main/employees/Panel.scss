@@ -16,7 +16,7 @@
 
 // Background colored generic class
 .employees-panel {
-    background-color: map-get($employees-panel-colors, 'base');
+    background-color: map-get($side-panel-colors, 'base');
 
 }
 // provides margins for tree control
@@ -29,7 +29,7 @@
 /* Toolbar */
 @include toolbar-ui(
     $ui: 'employees-toolbar',
-    $background-color: map-get($employees-panel-colors, 'base')
+    $background-color: map-get($side-panel-colors, 'base')
 );
 
 // @include toolbar-ui(
@@ -46,10 +46,10 @@
 @include checkboxfield-ui(
     $ui: 'employees-panel-checkbox',
     $box-label-font-size: map-get($root-font-sizes, 'detail') !important,
-    $box-label-color: map-get($employees-panel-text-colors, 'base'),
-    $checkbox-color: map-get($employees-panel-text-colors, 'base'),
-    $checked-checkbox-color: map-get($employees-panel-text-colors, 'base'),
-    $disabled-checkbox-color: map-get($employees-panel-colors, 'medium')
+    $box-label-color: map-get($side-panel-text-colors, 'base'),
+    $checkbox-color: map-get($side-panel-text-colors, 'base'),
+    $checked-checkbox-color: map-get($side-panel-text-colors, 'base'),
+    $disabled-checkbox-color: map-get($side-panel-colors, 'medium')
 );
 
 @include field-ui(

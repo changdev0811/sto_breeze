@@ -205,14 +205,14 @@ $toast-colors: (
     error: $scoped-toast-error
 );
 
-// ====[Employees Panel]====
+// ====[Side Panel]====
 
 /*
  Note: To change these, scoped vars with unique values will need to be
  added. Right now these sets are direct copies of those from work time records
 */
-$employees-panel-colors: $wtr-colors;
-$employees-panel-text-colors: $wtr-text-colors;
+$side-panel-colors: $wtr-colors;
+$side-panel-text-colors: $wtr-text-colors;
 
 // ====[Report Form Colors]====
 

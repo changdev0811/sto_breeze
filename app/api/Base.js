@@ -17,10 +17,7 @@ Ext.define('Breeze.api.Base', {
     cookie: Breeze.helper.Cookie,
     auth: Breeze.helper.Auth,
     /**
-     * Return a unless undefined, in which case return b
-     * @param {Object} a Value to return if defined
-     * @param {Object} b Value to return if a is undefined
-     * @return {Object} a unless a is undefined, in which case b
+     * Alias for $breeze.defVal
      */
-    defVal: function(a,b){return"undefined"==typeof a?b:a}
+    defVal: $breeze.defVal
 });

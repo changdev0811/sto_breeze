@@ -298,12 +298,25 @@
 };
 
 // === Selector View Styles ===
-@include panel-ui(
-    $ui: 'reporting-selector-panel',
-    $header-background-color: map-get($reporting-colors, 'base'),
-    $header-font-size: $panel-title-font-size,
-    $body-background-color: map-get($reporting-colors, 'base'),
-    $body-color: map-get($reporting-text-colors, 'base'),
-    $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+
+// Selector body style
+.reporting-selector-panel {
+    background-color: map-get($side-panel-colors, 'base');
+    color: map-get($side-panel-text-colors, 'base');
+    padding: map-path($root-panel-sizes, 'body' 'padding');
+}
+
+// --Selector tree--
+
+// UI type
+@include treelist-ui(
+    $ui: 'reporting-selector'
 );
+
+// Class
+.reporting-selector-tree {
+    
+}
+
+
 
