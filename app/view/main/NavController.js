@@ -322,11 +322,11 @@ Ext.define('Breeze.view.main.NavController', {
      * with the url
      */
     beforeRoute: function(action){
-        // try{
-        //     this.syncNavToRoute(action.getUrlParams().input);
-        // } catch(err){
-        //     console.warn('Sync error: ', err);
-        // }
+        try{
+            this.syncNavToRoute(action.getUrlParams().input);
+        } catch(err){
+            console.warn('Sync error: ', err);
+        }
         
         // ensure side panel isn't visible
         try{
@@ -625,8 +625,10 @@ Ext.define('Breeze.view.main.NavController', {
                     // remove panel contents if changing type
                     panelContainer.removeAll()
                 }
-                let emp = vm.get('userId'),
+                let contentContainer = this.lookup('contentContainer'),
+                    emp = vm.get('userId'),
                     panel = Ext.create(panelType, { data: { employee: emp }});
+                contentContainer.removeAll();
                 vm.set('sidePanel.type', panelType)
                 panelContainer.insert(0,panel);
             }
