@@ -335,6 +335,7 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                     ]
                 },
                 // Third Column Container
+                // Projects Form Fields
                 {
                     xtype: 'container',
                     flex: 1,
@@ -348,7 +349,11 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                             xtype: 'fieldset',
                             flex: 1,
                             layout: 'vbox',
-                            title: 'Projects',
+                            // ++New++ Bind config caption for 'Projects' to title
+                            // Removed explicit 'title' text
+                            bind: {
+                                title: '{captions.projectPlural}'
+                            },
                             userCls: 'reporting-fieldset no-padding',
 
                             defaults: {
@@ -356,9 +361,7 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-                                
                                 {
                                     xtype: 'toolbar',
                                     ui: 'reporting-tree',
@@ -368,59 +371,35 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                                         {
                                             xtype: 'checkbox',
                                             ui: 'reporting',
-                                            boxLabel: 'Check All Projects',
+                                            boxLabel: 'Check All',
                                             listeners: {
-                                               change: 'onTreeGridCheckAllChange'
+                                                change: 'onSelectListCheckAllChange'
                                             }
                                         }
                                     ]
                                 },
+                                // Projects list
                                 {
-                                    xtype: 'tree',
-                                    flex:1,
+                                    xtype: 'breeze-categories-list',
                                     ui: 'employeeinfo-shift-grid',
-                                    //userCls:'employeeinfo-shift-grid',
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    expanderFirst: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'checkcolumn',
-                                            
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            listeners: {
-                                                checkChange: 'onTreeGridChecked'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'treecolumn',
-                                            /* +++ Style update +++ */
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                    flex: 1,
+                                    reference: 'projectList',
+                                    // used by 'check all' listener
+                                    itemId: 'selectList',
+                                    fieldMode: 'check',
+                                    itemConfig: {
+                                        ui: 'reporting-list-item',
+                                        templates: {
+                                            radioValue: '{record.ID}',
+                                            itemData: { name: '{record.Name}' },
+                                            itemTpl: '<div class="breeze-dataview-select-item-label">{name}</div>'
                                         }
-                                    ],
-                                    reference: 'projectsTree',
-                                    // TODO: Update binding once projects API call is available
-                                    // bind: '{departmentsTree}'
+                                    },
+                                    bind: {
+                                        store: '{projectsList}',
+                                    },
+                                    viewModel: true
                                 }
-
-
-                                    
                             ]
                         },
                         {
@@ -434,9 +413,7 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-                               
                                 {
                                     name: 'approved_option',
                                     inline: true,
@@ -458,7 +435,6 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
                                     boxLabel: 'Un-Submitted Time',
                                     bind: '{reportParams.submit_unsubmit}'
                                 }
-                                    
                             ]
                         }
                     ]
