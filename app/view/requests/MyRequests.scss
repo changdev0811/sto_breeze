@@ -1,0 +1,58 @@
+/**
+ * Breeze.view.requests.MyRequests Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.requests.MyRequests view or its children
+ */
+
+ @include panel-ui(
+     $ui: 'requests-leave-panel',
+     $background-color: map-get($employee-info-colors, 'base'),
+     $header-background-color: map-get($employee-info-colors, 'base'),
+     $body-background-color: map-get($employee-info-colors, 'base'),
+     $body-color: map-get($employee-info-colors, 'base')
+ );
+
+ @include panel-ui(
+     $ui: 'requests-days-panel',
+     $background-color: map-get($employee-fyi-colors, 'base'),
+     $header-background-color: map-get($employee-fyi-colors, 'base'),
+     $body-background-color: map-get($employee-fyi-colors, 'base'),
+     $body-color: map-get($employee-fyi-colors, 'base')
+ );
+
+
+.requests-calendar-panel {
+    height:auto; 
+    margin:0pt 0pt 0pt 0pt;
+}
+
+.requests-leave-panel {
+    height:auto; 
+    margin:0pt 12pt 12pt 0pt;
+    padding:0pt;
+}
+
+.requests-days-panel {
+    height:auto; 
+    margin:0pt 12pt 0pt 0pt;
+    padding:0pt;
+}
+
+.requests-fieldset {
+    height:auto; 
+    border: solid 1px #fff;
+    margin:0pt 8pt 8pt 8pt;
+    background-color: transparent;
+}
+
+.headerCursor {
+    cursor:pointer;
+}
+
+.requests-label{
+    line-height: 2em;
+    color:map-get($admin-text-colors, 'base');
+    font-size: $ei-field-font-size;
+}
+
+

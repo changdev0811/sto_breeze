@@ -70,6 +70,10 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onPersonalCalendarRoute',
             before: 'beforeRoute'
         },
+        // My Requests routes
+        'requests' : {
+            action: 'onMyRequestsRoute'
+        },
         // Common routes
         'download/punch_station': {
             action: 'onDownloadPunchStationRoute',
@@ -435,6 +439,21 @@ Ext.define('Breeze.view.main.NavController', {
             })
         );
     },
+    /**
+     * Handle My Requests route
+     */
+    onMyRequestsRoute: function(){
+        console.info("[onMyRequestsRoute]");
+        var vm = this.getViewModel(),
+            emp = vm.get('userId');
+        this.changeContent(
+            Ext.create('Breeze.view.requests.MyRequests', {
+                data: { employee: emp }
+            })
+
+        );
+    },
+
 
     /**
      * Handle download punch station route
