@@ -308,7 +308,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                                         xtype: 'datepicker',
                                         title: 'Start Date'
                                     },
-                                    bind: '{reportParams.dStart}'
+                                    bind: '{reportParams.edate}'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -318,7 +318,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                                         xtype: 'datepicker',
                                         title: 'End Date'
                                     },
-                                    bind: '{reportParams.dEnd}'
+                                    bind: '{reportParams.sdate}'
                                 }
                             ]
                         },

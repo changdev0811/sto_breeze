@@ -49,11 +49,35 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
             { load: true }
         );
 
+        // Load projects for tree selector
+        this.addStoreToViewModel(
+            'Breeze.store.reporting.parameters.Projects',
+            'projectsList',
+            { load: true, createOpts: { showNoProject: true } }
+        );
+
         // Load company config
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // ++New+ callback for config load to store caption text
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            captions = config.getAt(0).get('Captions');
+                        vm.set(
+                            'captions.projectSingular', 
+                            captions.ProjectSingular
+                        );
+                        vm.set(
+                            'captions.projectPlural',
+                            captions.ProjectPlural
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -81,9 +105,16 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == null){
+        if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
+        }
+
+        // Validation check for Projects
+        if(vmData.reportParams.projids == ''){
+            valid = false;
+            let caption = vm.get('captions.projectPlural');
+            messages.push(`Please select one or more ${caption}.`);
         }
 
         if(!valid){
@@ -104,14 +135,15 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            categoryList = this.lookup('categoryList'),
+            projectList = this.lookup('projectList');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')
@@ -122,12 +154,23 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
             // set selected category to the first selected record, if any, otherwise null
             selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            /*  TODO: +++Note: the following needs to have 'return' in the 
+                body-- might be missing elsewhere
+            */
+            selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',
                 selectedCategories.join(',')
             );
+        
+        // Gather selected projects
+        var projectRecords = projectList.gatherSelected(),
+            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+        vm.set(
+            'reportParams.projids',
+            selectedProjects.join(',')
+        );
     },
 
     /**

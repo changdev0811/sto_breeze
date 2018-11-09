@@ -31,7 +31,8 @@ Ext.define('Breeze.view.reporting.project.ProjectTimeModel', {
                 hhmm_format: true,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                projids: '' // Project IDs
             }
         };
         this.setData(data);

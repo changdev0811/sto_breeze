@@ -387,6 +387,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                     ]
                 },
                 // Fourth Column Container
+                // Projects Form Fields
                 {
                     xtype: 'container',
                     flex: 1,
@@ -464,9 +465,7 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                 ui: 'reporting',
                                 xtype: 'breeze-checkbox'
                             },
-
                             items: [
-                               
                                 {
                                     name: 'approved_option',
                                     inline: true,
@@ -488,10 +487,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotals', {
                                     boxLabel: 'Un-Submitted Time',
                                     bind: '{reportParams.submit_unsubmit}'
                                 }
-                                    
                             ]
-                        },
-
+                        }
                     ]
                 }
             ]

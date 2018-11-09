@@ -22,7 +22,8 @@ Ext.define('Breeze.view.reporting.project.ProjectProfileModel', {
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
-                ReportTitle: 'Project Profile Report'
+                ReportTitle: 'Project Profile Report',
+                projids: '' // Project IDs
             }
         };
         this.setData(data);

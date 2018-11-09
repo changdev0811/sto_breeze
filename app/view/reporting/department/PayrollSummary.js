@@ -468,7 +468,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                             layout: 'vbox',
                                             itemId: 'fields',
                                             // title: 'Submission Type',
-                                            userCls: 'reporting-fieldset no-margin',
+                                            userCls: 'reporting-fieldset no-margin employeeinfo-shift-grid',
 
                                             defaults: {
                                                 bodyAlign: 'stretch',

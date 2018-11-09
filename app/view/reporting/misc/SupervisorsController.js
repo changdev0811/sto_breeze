@@ -96,7 +96,7 @@ Ext.define('Breeze.view.reporting.misc.SupervisorsController', {
             listSuperAdminChecked = this.lookup('listSuperAdmin').getChecked(),
             sortType = this.lookup('sortType');
         
-        if(listSuperAdminChecked){
+        if(!listSuperAdminChecked){
             // set condition type
             vm.set(
                 'reportParams.sort_type',
