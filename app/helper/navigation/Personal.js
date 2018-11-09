@@ -59,6 +59,7 @@ Ext.define('Breeze.helper.navigation.Personal', {
                 text: 'Reports', leaf: true,
                 iconCls: 'x-fas fa-bar-chart',
                 routeRef: 'reporting',
+                routeEvent: 'sidepanelopen',
                 id: 'reports'
             }, {
                 text: 'Help', leaf: true,

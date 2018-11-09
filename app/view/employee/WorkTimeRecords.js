@@ -1,7 +1,8 @@
 /**
  * Work Time Records view
  * @class WorkTimeRecords
- * @alias Breeze.view.employee.WorkTimeRecords
+ * @namespace Breeze.view.employee.WorkTimeRecords
+ * @alias employee.worktimerecords
  */
 Ext.define('Breeze.view.employee.WorkTimeRecords', {
     extend: 'Ext.Panel',

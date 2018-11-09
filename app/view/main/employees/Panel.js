@@ -5,7 +5,7 @@
  * @alias widget.main.employees.panel
  */
 Ext.define('Breeze.view.main.employees.Panel', {
-    extend: 'Ext.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.main.employees.panel',
     xtype: 'breeze-employees-panel',
 
@@ -31,8 +31,17 @@ Ext.define('Breeze.view.main.employees.Panel', {
     width: '300pt',
 
     layout: 'vbox',
-    userCls: 'employees-panel',
+    ui: 'employees-side-bar-panel',
     // padding: '16pt',
+    
+    title: 'Employees',
+
+    tools: {
+        close: {
+            iconCls: 'x-fas fa-times',
+            handler: 'onCloseTool'
+        }
+    },
 
     items: [
         {
@@ -84,6 +93,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             ui: 'employees-toolbar', docked: 'top',
+                            shadow: false,
                             reference: 'employeesEmployeeToolbar',
                             defaults: {
                                 xtype: 'displayfield',
@@ -146,6 +156,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             },
                             listeners: {
                                 select: 'onEmployeesTreeSelect'
+                            },
+                            plugins: {
+                                expandSelect: {
+                                    type: 'breeze.grid.expandselect'
+                                }
                             }
                         }
                     ]
@@ -159,6 +174,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         {
                             xtype: 'toolbar',
                             itemId: 'searchToolbar',
+                            shadow: false,
                             ui: 'employees-toolbar',
                             docked: 'top',
                             items: [
@@ -166,7 +182,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                     xtype: 'searchfield',
                                     reference: 'departmentsSearch',
                                     // ui: 'dark-textfield',
-                                    ui: 'alt',
+                                    ui: 'solo',
                                     flex: 1,
                                     placeholder: 'Search',
                                     listeners: {
@@ -233,6 +249,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             xtype: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
+                            // expanderOnly: false,
                             reference: 'employeesDepartmentTree',
                             rootVisible: false,
                             bind: {
@@ -240,6 +257,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             },
                             listeners: {
                                 select: 'onDepartmentsTreeSelect'
+                            },
+                            plugins: {
+                                expandSelect: {
+                                    type: 'breeze.grid.expandselect'
+                                }
                             }
                         }
                     ]
@@ -250,6 +272,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
             xtype: 'toolbar',
             ui: 'employees-toolbar',
             dock: 'bottom',
+            shadow: false,
             items: [
                 {
                     xtype: 'breeze-checkbox',

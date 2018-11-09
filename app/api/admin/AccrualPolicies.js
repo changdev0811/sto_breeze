@@ -4,7 +4,7 @@
  * @class AccrualPolicies
  * @namespace Breeze.api.admin.AccrualPolicies
  */
-Ext.define('Breeze.api.Common', {
+Ext.define('Breeze.api.admin.AccrualPolicies', {
     extend: 'Breeze.api.Base',
 
     /**

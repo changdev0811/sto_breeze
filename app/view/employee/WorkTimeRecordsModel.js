@@ -52,7 +52,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             if(typeof startDate !== "object"){
                 return '';
             } else {
-                return Breeze.helper.Time.shortDate(startDate,'-');
+                return Breeze.helper.Time.shortDate(startDate,'/');
             }
         },
         titleDateEnd: function(get){
@@ -60,7 +60,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             if(typeof endDate !== "object"){
                 return '';
             } else {
-                return Breeze.helper.Time.shortDate(endDate,'-');
+                return Breeze.helper.Time.shortDate(endDate,'/');
             }
         },
         glanceRegularHours: function(get){

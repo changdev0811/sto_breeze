@@ -18,7 +18,17 @@ Ext.define('Breeze.widget.navBar.NavTree', {
 
     config: {
         /* Attribute used by getItemByRoute as route value */
-        itemRouteDataAttribute: 'routeRef'
+        itemRouteDataAttribute: 'routeRef',
+        /* If events should be fired on click */
+        eventsOnClick: true
+    },
+
+    initialize: function(){
+        this.callParent(arguments);
+        if(this.getEventsOnClick()){
+            // Attach item click listener
+            this.on('itemclick', this.handleItemClick);
+        }
     },
 
     /**
@@ -52,7 +62,6 @@ Ext.define('Breeze.widget.navBar.NavTree', {
         }
     },
 
-
     /**
      * Attempt to look up a tree item by the route string associated with it.
      * Relies on the config property itemRouteDataAttribute to know the name
@@ -73,19 +82,33 @@ Ext.define('Breeze.widget.navBar.NavTree', {
         return null;
     },
 
-    privates: {
-        onClick: function(e){
-            var item = e.getTarget('[data-recordId]'),
-                id;
-            console.info('navtree onclick');
-            if (item) {
-                id = item.getAttribute('data-recordId');
-                item = this.itemMap[id];
-                if (item) {
-                    item.onClick(e);
-                }
+    handleItemClick: function(tree, info, eOpts){
+        console.info('click handled');
+        if(
+            !Object.isUnvalued(tree.getSelection()) &&
+            info.node.id == tree.getSelection().id
+        ){
+            if(info.node.getData()['routeEvent']){
+                console.info('Updating selected tree node');
+                tree.setSelection(null);
+                tree.setSelection(info.node);
             }
-        },
+        }
+    },
+
+    privates: {
+        // onClick: function(e){
+        //     var item = e.getTarget('[data-recordId]'),
+        //         id;
+        //     console.info('navtree onclick');
+        //     if (item) {
+        //         id = item.getAttribute('data-recordId');
+        //         item = this.itemMap[id];
+        //         if (item) {
+        //             item.onClick(e);
+        //         }
+        //     }
+        // },
         onToolStripClick: function(e) {
             var item = e.getTarget('[data-recordId]'),
                 id;

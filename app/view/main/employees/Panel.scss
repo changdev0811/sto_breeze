@@ -14,14 +14,21 @@
     $label-font-size: 0.8 * map-get($root-font-sizes, 'detail')
 );
 
-// Background colored generic class
-.employees-panel {
-    background-color: map-get($side-panel-colors, 'base');
+// Panel
+@include panel-ui(
+    $ui: 'employees-side-bar-panel',
+    $header-background-color: map-get($side-panel-colors, 'base'),
+    $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
+    $body-background-color: map-get($side-panel-colors, 'base'),
+    $body-color: map-get($side-panel-text-colors, 'base'),
+    $body-padding: 2pt 8pt 4pt 8pt,
+    // $header-min-height: 24pt
+);
 
-}
 // provides margins for tree control
 .employees-panel-tree {
-    margin: 8pt;
+    // margin: 8pt;
 }
 
 //==[ Employees Panel Toolbar Styles ]==
@@ -56,4 +63,12 @@
     $ui: 'employees-panel-checkbox',
     $label-font-size: map-get($root-font-sizes, 'detail') !important
 );
+
+// @include treelist-ui(
+//     $ui: 'employees-panel-treelist',
+//     $background-color: map-get($side-panel-colors, 'tree'),
+//     $item-font-size: map-get($root-font-sizes, 'detail'),
+//     $item-line-height: map-get($root-font-sizes, 'base'),
+//     $item-icon-color: map-get($side-panel-text-colors, 'icon')
+// )
 
