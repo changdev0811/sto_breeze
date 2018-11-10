@@ -9,6 +9,10 @@ Ext.define('Breeze.view.main.employees.Panel', {
     alias: 'widget.main.employees.panel',
     xtype: 'breeze-employees-panel',
 
+    requires: [
+        'Breeze.plugin.grid.ExpandSelect'
+    ],
+
     controller: 'main.employees.panel',
     viewModel: {
         type: 'main.employees.panel'
@@ -158,7 +162,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                 select: 'onEmployeesTreeSelect'
                             },
                             plugins: {
-                                expandSelect: {
+                                expandSelect2: {
                                     type: 'breeze.grid.expandselect'
                                 }
                             }

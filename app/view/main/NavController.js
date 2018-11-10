@@ -652,7 +652,7 @@ Ext.define('Breeze.view.main.NavController', {
         if(!Object.isUnvalued(panel)){
             var authorized = true;
             if(panel.authorize){
-                authorized = this[panel.authorize];
+                authorized = this[panel.authorize]();
             }
             if(authorized){
                 this.refreshSidePanel(true, this.Panels[e.route.toUpperCase()]);
