@@ -28,8 +28,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action', style:'width:200pt' },
-        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:200pt' },
+        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action', style: 'width:200pt' },
+        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:200pt' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -48,104 +48,77 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable: 'x',
             items: [
 
                 // Column 1
                 {
-                    xtype:'container',
-                    flex:1,
+                    xtype: 'container',
+                    flex: 1,
 
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'200pt',
+                    minWidth: '150pt',
+                    maxWidth: '200pt',
 
-                    layout:'vbox',
-                    items:[
-                        {    
+                    layout: 'vbox',
+                    items: [
+                        // Accrual Policies List
+                        {
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-padding',
+                            userCls: 'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
-                                            shadow: false,
-
-                                    items:[
-
-                                        { 
-                                            xtype: 'component', 
+                                    ui: 'admin-tree',
+                                    shadow: false,
+                                    items: [
+                                        {
+                                            xtype: 'component',
                                             html: 'Policies',
-                                            userCls:'admin-title-toolbar', 
+                                            userCls: 'admin-title-toolbar',
                                         },
-
                                         {
-                                            xtype:'spacer',
-                                            flex:1,
-
+                                            xtype: 'spacer',
+                                            flex: 1
                                         },
-                    
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
+                                            iconCls: 'x-fas fa-plus',
+                                            ui: 'plain wtr-button',
                                         },
-
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-minus',
-                                            ui: 'plain wtr-button',                   
-
+                                            iconCls: 'x-fas fa-minus',
+                                            ui: 'plain wtr-button',
                                         },
                                     ]
                                 },
-
                                 {
-                                    xtype: 'tree',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border no-background',
-                                    flex:1,
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'checkcolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            //listeners: {
-                                            //    checkChange: 'onTreeGridChecked'
-                                            //}
-                                        },
-                                        {
-                                            xtype: 'treecolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                    xtype: 'breeze-categories-list',
+                                    ui: 'admin-shift-grid',
+                                    userCls: 'admin-fieldset no-background no-margin no-border',
+                                    reference: 'policyList',
+                                    fieldMode: 'none',
+                                    itemConfig: {
+                                        ui: 'admin-list-item-select',
+                                        templates: {
+                                            radioValue: '{record.ID}',
+                                            itemData: { name: '{record.Name} '},
+                                            itemTpl: '{name}'
                                         }
-                                    ],
-
-                                    bind: '{departmentsTree}'
-                                },
-
-
-
+                                    },
+                                    bind: {
+                                        store: '{scheduleList}',
+                                    },
+                                    viewModel: true,
+                                    listeners: {
+                                        select: 'onPolicySelect'
+                                    }
+                                }
                             ]
                         },
                         {
@@ -153,19 +126,19 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             label: 'Setting Name',
                             name: 'setting_name_label',
                             ui: 'admin admin-text',
-                            userCls:'admin-fieldset no-border',
+                            userCls: 'admin-fieldset no-border',
 
                         },
                         {
                             xtype: 'fieldset',
                             name: 'recording_mode',
-                            userCls:'admin-fieldset',
+                            userCls: 'admin-fieldset',
                             title: 'Recording Model',
-                            height:'45pt',
+                            height: '45pt',
                             layout: 'vbox',
-                            flex:1,
-                            minHeight:'55pt',
-                            maxHeight:'55pt',
+                            flex: 1,
+                            minHeight: '55pt',
+                            maxHeight: '55pt',
 
 
                             items: [
@@ -206,99 +179,76 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 }
                             ]
                         },
-
-
-
-                        {    
+                        {
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-padding',
+                            userCls: 'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
+                                    ui: 'admin-tree',
                                     shadow: false,
-                                    items:[
-
-                                        { 
-                                            xtype: 'component', 
-                                            html: 'Shift Information',
-                                            userCls:'admin-title-toolbar', 
-                                        },
-
+                                    items: [
                                         {
-                                            xtype:'spacer',
-                                            flex:1,
-
+                                            xtype: 'component',
+                                            html: 'Shift Information',
+                                            userCls: 'admin-title-toolbar',
                                         },
-                    
+                                        {
+                                            xtype: 'spacer',
+                                            flex: 1,
+                                        },
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
-                                        },
-
+                                            iconCls: 'x-fas fa-plus',
+                                            ui: 'plain wtr-button',
+                                        }
                                     ]
                                 },
-
                                 {
-                                    xtype: 'tree',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border no-background',
-                                    flex:1,
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
+                                    xtype: 'grid',
+                                    height: '100%',
+                                    sortable: false, columnResize: false,
+                                    columnMenu: false, hideHeaders: true,
+                                    bind: {
+                                        store: '{shiftSegments}'
+                                    },
+                                    defaults: {
+                                        xtype: 'gridcolumn',
+                                        menuDisabled: true
+                                    },
                                     columns: [
                                         {
-                                            xtype: 'checkcolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            //listeners: {
-                                            //    checkChange: 'onTreeGridChecked'
-                                            //}
+                                            tpl: '{StartTime}',
+                                            dataIndex: 'StartSegment'
                                         },
                                         {
-                                            xtype: 'treecolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                            xtype: 'templatecolumn',
+                                            tpl: ['-'],
+                                            width: '2em'
+                                        },
+                                        {
+                                            tpl: '{StopTime}',
+                                            dataIndex: 'StopSegment'
                                         }
-                                    ],
-
-                                    bind: '{departmentsTree}'
-                                },
-
-
-
+                                    ]
+                                }
                             ]
                         },
                     ]
                 },
                 // Column 2
-                { 
+                {
                     xtype: 'fieldset',
                     title: 'List of Categories',
-                    userCls:'admin-fieldset no-padding',
+                    userCls: 'admin-fieldset no-padding',
 
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'200pt',
+                    minWidth: '150pt',
+                    maxWidth: '200pt',
 
 
                     layout: {
@@ -320,6 +270,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             bind: {
                                 store: '{categoriesList}',
                             },
+                            listeners: {
+                                select: 'onCategorySelect'
+                            },
                             viewModel: true
                         }
                     ]
@@ -328,9 +281,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 {
                     xtype: 'panel',
                     title: 'Illness Information',
-                    
 
-                       
+
+
 
 
                     ui: 'admin-sub',
@@ -339,61 +292,83 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     flex: 2,
 
                     // +++ fixed width +++
-                    minWidth:'400pt',
-                    maxWidth:'400pt',
+                    minWidth: '400pt',
+                    maxWidth: '400pt',
 
                     layout: 'vbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'container',
                             userCls: 'admin-fieldset no-border',
                             layout: 'hbox',
-                            flex:1,
-                            maxHeight:'55pt',
-                            minHeight:'55pt',
-                            items:[
+                            flex: 1,
+                            maxHeight: '55pt',
+                            minHeight: '55pt',
+                            items: [
                                 {
                                     xtype: 'fieldset',
                                     name: 'category_recording_year_type',
-                                    userCls:'admin-fieldset no-margin',
+                                    userCls: 'admin-fieldset no-margin',
                                     title: 'Recording Year Type',
                                     layout: 'hbox',
-                                    flex:3,
+                                    flex: 3,
 
-                                    defaults: {
-                                        bodyAlign: 'stretch',
-                                        ui: 'admin',
-                                        xtype: 'radio'
-                                    },
                                     items: [
                                         {
-                                            flex: 1.25,
-                                            name: 'recording_year_type',
-                                            boxLabel: 'Anniversary',
-                                        },
-                                        {
-                                            flex: 1,
-                                            name: 'recording_year_type',
-                                            boxLabel: 'Calendar',
-                                        },
-                                        {
-                                            flex: 1,
-                                            name: 'recording_year_type',
-                                            boxLabel: 'Fiscal',
+                                            xtype: 'containerfield',
+                                            reference: 'recordingYear',
+                                            defaults: {
+                                                bodyAlign: 'stretch',
+                                                ui: 'admin',
+                                                xtype: 'radio'
+                                            },
+                                            bind: {
+                                                values: {
+                                                    yearType: '{categoryYearType}'
+                                                }
+                                            },
+                                            items: [
+                                                {
+                                                    flex: 1.25,
+                                                    name: 'yearType',
+                                                    boxLabel: 'Anniversary',
+                                                    value: 45,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                },
+                                                {
+                                                    flex: 1,
+                                                    name: 'yearType',
+                                                    boxLabel: 'Calendar',
+                                                    value: 46,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                },
+                                                {
+                                                    flex: 1,
+                                                    name: 'yearType',
+                                                    boxLabel: 'Fiscal',
+                                                    value: 45,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                }
+                                            ]
                                         }
-
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
                                     name: 'category_waiting_period_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset',
+                                    userCls: 'admin-fieldset',
                                     title: 'Start Accruing After',
                                     layout: 'hbox',
-                                    flex:2,
-                                    minHeight:'55pt',
-                                    maxHeight:'55pt',
+                                    flex: 2,
+                                    minHeight: '55pt',
+                                    maxHeight: '55pt',
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
@@ -404,11 +379,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             style: 'padding-left: 4pt',
                                             name: 'category_new_time',
                                             allowDecimals: false,
-                                            minValue: 0 
+                                            minValue: 0
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'10pt'
+                                            xtype: 'spacer',
+                                            width: '10pt'
                                         },
                                         {
                                             xtype: 'combobox',
@@ -429,20 +404,20 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             xtype: 'container',
                             userCls: 'admin-fieldset no-border',
                             layout: 'hbox',
-                            flex:1,
-                            maxHeight:'55pt',
-                            minHeight:'55pt',
-                            items:[
+                            flex: 1,
+                            maxHeight: '55pt',
+                            minHeight: '55pt',
+                            items: [
                                 {
                                     xtype: 'fieldset',
                                     name: 'category_accrual_cap_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset no-margin',
+                                    userCls: 'admin-fieldset no-margin',
                                     title: 'Cap Accruals At',
                                     layout: 'hbox',
-                                    flex:3,
-                                    minHeight:'55pt',
-                                    maxHeight:'55pt',
+                                    flex: 3,
+                                    minHeight: '55pt',
+                                    maxHeight: '55pt',
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
@@ -453,11 +428,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             style: 'padding-left: 4pt',
                                             name: 'category_accrual_cap_amount',
                                             allowDecimals: false,
-                                            minValue: 0 
+                                            minValue: 0
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'10pt'
+                                            xtype: 'spacer',
+                                            width: '10pt'
                                         },
                                         {
                                             xtype: 'selectfield',
@@ -477,12 +452,12 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     xtype: 'fieldset',
                                     name: 'category_balance_cap_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset',
+                                    userCls: 'admin-fieldset',
                                     title: 'Cap Balance At',
                                     layout: 'hbox',
-                                    flex:2,
-                                    minHeight:'55pt',
-                                    maxHeight:'55pt',
+                                    flex: 2,
+                                    minHeight: '55pt',
+                                    maxHeight: '55pt',
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
@@ -495,8 +470,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             decimalPrecision: 2,
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'10pt'
+                                            xtype: 'spacer',
+                                            width: '10pt'
                                         },
                                         {
                                             xtype: 'combobox',
@@ -517,17 +492,17 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 },
                             ]
                         },
-                        {    
+                        {
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-padding',
+                            userCls: 'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
+                                    ui: 'admin-tree',
                                     shadow: false,
-                                    items:[
+                                    items: [
                                         {
                                             xtype: 'checkbox',
                                             ui: 'reporting',
@@ -538,23 +513,23 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         },
 
                                         {
-                                            xtype:'spacer',
-                                            flex:1,
+                                            xtype: 'spacer',
+                                            flex: 1,
 
-                                        },
-                    
-                                        {
-                                            xtype: 'button',
-                                            //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
                                         },
 
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-clock',
-                                            ui: 'plain wtr-button',                   
+                                            iconCls: 'x-fas fa-plus',
+                                            ui: 'plain wtr-button',
+                                        },
+
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls: 'x-fas fa-clock',
+                                            ui: 'plain wtr-button',
 
                                         },
                                     ]
@@ -566,7 +541,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
                                     userCls: 'employeeinfo-shift-grid no-border no-background',
-                                    flex:1,
+                                    flex: 1,
                                     layout: 'hbox',
                                     hideHeaders: true,
                                     rootVisible: false,
@@ -603,32 +578,32 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         },
 
 
-                        {    
+                        {
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-padding',
+                            userCls: 'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
+                                    ui: 'admin-tree',
                                     shadow: false,
-                                    items:[
-                                        { 
-                                            xtype: 'component', 
+                                    items: [
+                                        {
+                                            xtype: 'component',
                                             html: 'Illness Carry Over Rules',
-                                            userCls:'admin-title-toolbar', 
+                                            userCls: 'admin-title-toolbar',
                                         },
                                         {
-                                            xtype:'spacer',
-                                            flex:1,
+                                            xtype: 'spacer',
+                                            flex: 1,
 
                                         },
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
-                                            iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
+                                            iconCls: 'x-fas fa-plus',
+                                            ui: 'plain wtr-button',
                                         },
                                     ]
                                 },
@@ -638,7 +613,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     itemId: 'tree',
                                     ui: 'employeeinfo-shift-grid',
                                     userCls: 'employeeinfo-shift-grid no-border no-background',
-                                    flex:1,
+                                    flex: 1,
                                     layout: 'hbox',
                                     hideHeaders: true,
                                     rootVisible: false,

@@ -585,12 +585,11 @@ Ext.define('Breeze.view.main.NavController', {
             viewNS = reportRoutes.resolve(category, type);
         console.info('Resolved View: ', viewNS);
         console.groupEnd();
-        var component = Ext.create(viewNS, {
+        this.replaceContent(viewNS, {
             data: {
                 data: { user: this.getViewModel().get('userId') }
             }
         });
-        this.changeContent(component);
     },
 
     // ===[Content functions]===

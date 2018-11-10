@@ -46,6 +46,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
         });
     },
 
+    data: {
+        selectedCategory: null    
+    },
+
     stores: {
         accrualCapUnit: {
             fields: [
@@ -57,6 +61,27 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 { code: 49, description: 'Hours' },
                 { code: 50, description: 'Minutes' }
             ]
+        }
+    },
+
+    formulas: {
+        categoryYearType: {
+            bind: {
+                categories: '{policyCategories}',
+                categoryId: '{selectedCategory}'
+            },
+            get: function(data){
+                if(
+                    !Object.isUnvalued(data.categories) && 
+                    Object.isUnvalued(data.categoryId)
+                ){
+                    var cat = data.categories
+                        .query('categoryId', data.categoryId);
+                    return cat.get('calendarType');
+                } else {
+                    return null;
+                }
+            }
         }
     }
 
