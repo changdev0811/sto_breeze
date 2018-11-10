@@ -197,7 +197,7 @@
 
 @include textfield-ui(
     $ui: 'admin-text',
-    $focused-input-underline-color: map-get($admin-colors, 'dark'),
+    $focused-input-underline-color: map-get($admin-colors, 'light'),
     $input-color: map-get($admin-text-colors, 'base'),
     $input-font-size: map-get($root-font-sizes, 'detail')
 );

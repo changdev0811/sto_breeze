@@ -24,6 +24,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             { load: true }
         );
 
+        console.info('Accrual policies controller inited');
+
    
     },
 

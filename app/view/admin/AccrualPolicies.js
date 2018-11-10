@@ -162,28 +162,48 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             userCls:'admin-fieldset',
                             title: 'Recording Model',
                             height:'45pt',
-                            layout: 'hbox',
+                            layout: 'vbox',
                             flex:1,
                             minHeight:'55pt',
                             maxHeight:'55pt',
 
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'admin',
-                                xtype: 'radio'
-                            },
+
                             items: [
                                 {
-                                    flex: 1,
-                                    name: 'recording_year_type',
-                                    boxLabel: 'Days',
-                                },
-                                {
-                                    flex: 1,
-                                    name: 'recording_year_type',
-                                    boxLabel: 'Weeks',
-                                },
-
+                                    xtype: 'containerfield',
+                                    reference: 'recordingMode',
+                                    layout: 'hbox',
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'admin',
+                                        xtype: 'radio'
+                                    },
+                                    bind: {
+                                        values: {
+                                            recMode: '{policy.recMode}'
+                                        }
+                                    },
+                                    items: [
+                                        {
+                                            flex: 1,
+                                            name: 'recMode',
+                                            boxLabel: 'Days',
+                                            value: '20',
+                                            bind: {
+                                                groupValue: '{recordingMode.recMode}'
+                                            }
+                                        },
+                                        {
+                                            flex: 1,
+                                            name: 'recMode',
+                                            boxLabel: 'Hours',
+                                            value: '21',
+                                            bind: {
+                                                groupValue: '{recordingMode.recMode}'
+                                            }
+                                        }
+                                    ]
+                                }
                             ]
                         },
 
@@ -440,15 +460,16 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             width:'10pt'
                                         },
                                         {
-                                            xtype: 'combobox',
+                                            xtype: 'selectfield',
                                             flex: 2,
                                             name: 'category_accrual_cap_unit',
-                                            allowBlank: false,
-                                            editable: false,
-                                            displayField: 'Description',
-                                            forceSelection: true,
-                                            queryMode: 'local',
-                                            valueField: 'ID'
+                                            // allowBlank: false,
+                                            // editable: false,
+                                            displayField: 'description',
+                                            valueField: 'code',
+                                            bind: {
+                                                store: '{accrualCapUnit}'
+                                            }
                                         },
                                     ]
                                 },
