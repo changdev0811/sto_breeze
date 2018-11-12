@@ -1,0 +1,157 @@
+/**
+ * Breeze.view.requests.MyRequests Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.requests.MyRequests view or its children
+ */
+
+@include gridcolumn-ui(
+    $ui: 'requests-grid',
+    $font-size: 10pt,
+    $padding: 4pt,
+);
+
+@include gridcolumn-ui(
+    $ui: 'requests-grid-input',
+    $font-size: 10pt,
+    $padding: 4pt,
+    $color: map-get($root-colors, 'base'),
+);
+
+
+@include panel-ui(
+ $ui: 'requests-leave-panel',
+ $background-color: map-get($employee-info-colors, 'base'),
+ $header-background-color: map-get($employee-info-colors, 'base'),
+ $body-background-color: map-get($employee-info-colors, 'base'),
+ $body-color: map-get($employee-info-colors, 'base'),
+);
+
+@include panel-ui(
+ $ui: 'requests-days-panel',
+ $background-color: map-get($employee-fyi-colors, 'base'),
+ $header-background-color: map-get($employee-fyi-colors, 'base'),
+ $body-background-color: map-get($employee-fyi-colors, 'base'),
+ $body-color: map-get($employee-fyi-colors, 'base')
+);
+
+@include panel-ui(
+ $ui: 'requests-input-panel',
+ $background-color: #fff,
+ $header-background-color: #fff,
+ $body-background-color: #fff,
+ $body-color:  map-get($root-colors, 'base'),
+ $header-color: map-get($root-colors, 'base'),
+ $tool-color :  map-get($root-colors, 'base'),
+);
+
+
+@include toolbar-ui(
+    $ui: 'requests-input-panel',
+    $background-color: #fff,
+    $horizontal-spacing: 4pt
+);
+
+
+@include field-ui(
+    $ui: 'requests-input',
+    $label-color: map-get($root-colors, 'base'),
+    $focused-label-color: map-get($root-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include trigger-ui(
+    $ui: 'requests-input',
+    $icon-color: map-get($root-colors, 'base'),
+    $hovered-icon-color: map-get($root-colors, 'base'),
+    $pressed-icon-color: map-get($root-colors, 'base')
+);
+
+@include checkboxfield-ui(
+    $ui: 'requests-input',
+    $checkbox-color: map-get($root-colors, 'base'),
+    $checked-checkbox-color: map-get($root-colors, 'base'),
+    $box-label-color: map-get($root-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include radiofield-ui(
+    $ui: 'requests-input',
+    $box-label-color: map-get($root-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include textfield-ui(
+    $ui: 'requests-text-input',
+    $focused-input-underline-color: map-get($root-colors, 'base'),
+    $input-color: map-get($root-colors, 'base'),
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+
+@include datetrigger-ui(
+    $ui: 'requests-date-input',
+    $icon-color: map-get($root-colors, 'base'),
+    $hovered-icon-color: map-get($root-colors, 'base'),
+    $pressed-icon-color: map-get($root-colors, 'base'),
+);
+
+@include dataview-ui(
+    $background-color :  map-get($admin-colors, 'base'),
+    $ui: 'employeeinfo-shift-grid'
+)
+
+
+.requests-calendar-panel {
+    height:auto; 
+    margin:0pt 0pt 0pt 0pt;
+}
+
+.requests-leave-panel {
+    height:auto; 
+    margin:0pt 12pt 12pt 0pt;
+    padding:0pt;
+}
+
+.requests-days-panel {
+    height:auto; 
+    margin:0pt 12pt 0pt 0pt;
+    padding:0pt;
+}
+
+.requests-input-panel  { 
+    height:100%;
+    margin:0pt;
+    padding:0pt 12pt 12pt 0pt; 
+}
+
+.requests-rule {
+    border-left: solid 1px black !important;
+
+}
+
+.requests-fieldset {
+    height:auto; 
+    border: solid 1px #fff;
+    margin:0pt 8pt 8pt 8pt;
+    background-color: transparent;
+}
+
+.requests-fieldset-input {
+    height:auto; 
+    border: solid 1px map-get($root-colors, 'base');
+    margin:0pt 8pt 8pt 8pt;
+    background-color: transparent;
+}
+
+
+.headerCursor {
+    cursor:pointer;
+}
+
+.requests-label{
+    line-height: 2em;
+    color:map-get($admin-text-colors, 'base');
+    font-size: $ei-field-font-size;
+}
+
+

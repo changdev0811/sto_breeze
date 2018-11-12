@@ -53,7 +53,7 @@ Ext.define('Breeze.helper.navigation.Personal', {
             }, {
                 text: 'My Requests', leaf: true,
                 iconCls: 'x-fas fa-retweet',
-                routeRef: 'personal/requests',
+                routeRef: 'requests',
                 id: 'myRequests'
             }, {
                 text: 'Reports', leaf: true,
