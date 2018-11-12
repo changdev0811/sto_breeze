@@ -220,3 +220,69 @@ $employees-panel-text-colors: $wtr-text-colors;
 
 
 
+
+// ====[Report Form Colors]====
+
+
+$scoped-reporting-base: #2B415C;
+$scoped-reporting-light: #96A0AE;
+$scoped-reporting-medium: #96A0AE;
+$scoped-reporting-dark: #6A7A8D;
+$scoped-reporting-row-dark: #718092;
+$scoped-reporting-row-light: #718092;
+
+$scoped-reporting-text-base: #ffffff;
+$scoped-reporting-text-light: #96A0AE;
+$scoped-reporting-text-medium: $scoped-root-base;
+$scoped-reporting-text-dark: $scoped-reporting-text-base;
+
+$reporting-colors: (
+    base: $scoped-reporting-base,
+    light: $scoped-reporting-light,
+    medium: $scoped-reporting-medium,
+    dark: $scoped-reporting-dark,
+    row-dark: $scoped-reporting-row-dark,
+    row-light: $scoped-reporting-row-light
+);
+
+$reporting-text-colors: (
+    base: $scoped-reporting-text-base,
+    light: $scoped-reporting-text-light,
+    medium: $scoped-reporting-text-medium,
+    dark: $scoped-reporting-text-dark
+);
+
+
+
+// ====[Admin Form Colors]====
+
+$scoped-admin-base: #2B415C;
+$scoped-admin-light: #96A0AE;
+$scoped-admin-medium: #96A0AE;
+$scoped-admin-dark: #6A7A8D;
+$scoped-admin-row-dark: rgba(255,255,255,.33);
+$scoped-admin-row-light: rgba(255,255,255,.33);
+
+$scoped-admin-text-base: #ffffff;
+$scoped-admin-text-light: #96A0AE;
+$scoped-admin-text-medium: $scoped-root-base;
+$scoped-admin-text-dark: $scoped-reporting-text-base;
+
+
+
+$admin-colors: (
+    base: $scoped-admin-base,
+    light: $scoped-admin-light,
+    medium: $scoped-admin-medium,
+    dark: $scoped-admin-base,
+    row-dark: $scoped-admin-row-dark,
+    row-light: $scoped-admin-row-light
+);
+
+$admin-text-colors: (
+    base: $scoped-admin-text-base,
+    light: $scoped-admin-text-light,
+    medium: $scoped-admin-text-medium,
+    dark: $scoped-admin-text-dark
+);
+
