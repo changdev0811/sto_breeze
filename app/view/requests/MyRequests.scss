@@ -23,7 +23,7 @@
  $background-color: map-get($employee-info-colors, 'base'),
  $header-background-color: map-get($employee-info-colors, 'base'),
  $body-background-color: map-get($employee-info-colors, 'base'),
- $body-color: map-get($employee-info-colors, 'base')
+ $body-color: map-get($employee-info-colors, 'base'),
 );
 
 @include panel-ui(
@@ -41,13 +41,15 @@
  $body-background-color: #fff,
  $body-color: #000,
  $header-color: #000,
+ $tool-color :  #000,
+
 );
 
 @include field-ui(
     $ui: 'requests-input',
     $label-color: #000,
     $focused-label-color: #000,
-    $label-font-size: #000,
+    $label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include trigger-ui(
@@ -62,25 +64,25 @@
     $checkbox-color: #000,
     $checked-checkbox-color: #000,
     $box-label-color: #000,
-    $box-label-font-size: #000
+    $box-label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include radiofield-ui(
     $ui: 'requests-input',
     $box-label-color: #000,
-    $box-label-font-size: #000
+    $box-label-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 @include textfield-ui(
-    $ui: 'admin-text-input',
+    $ui: 'requests-text-input',
     $focused-input-underline-color: #000,
     $input-color: #000,
-    $input-font-size: #000
+    $input-font-size: map-get($root-font-sizes, 'detail'),
 );
 
 
 @include datetrigger-ui(
-    $ui: 'admin-date-input',
+    $ui: 'requests-date-input',
     $icon-color: #000,
     $hovered-icon-color: #000,
     $pressed-icon-color: #000,

@@ -28,18 +28,16 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
             items:[
                 {
                     xtype: 'panel',
-                    //ui:'requests-input-panel',
-                    //userCls:'requests-input-panel',
+                    ui:'requests-input-panel',
+                    userCls:'requests-input-panel',
                     title: 'Leave Request',
-
+                    layout:'vbox',
                     tools: [
                         {
                             iconCls: 'x-fas fa-times',
                             //handler: ''
                         }
-                    ],
-
-
+                    ], 
 
                     // Action buttons shown at bottom of panel
                     buttonAlign: 'center',
@@ -64,27 +62,19 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Request Name',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
+                                    ui: 'requests-text-input',
                                     flex:1,
-
                                 },
                                 {
                                     xtype:'spacer',
                                     width:'10pt',
                                 },
                                 {
-                                    xtype: 'combobox',
+                                    xtype: 'selectfield',
                                     label: 'Category',
-                                    ui: 'requests-input',
-
+                                    ui: 'requests-text-input',
                                     flex: 1,
-                                    allowBlank: false,
-                                    editable: false,
                                     displayField: 'Category',
-                                    forceSelection: true,
-                                    queryMode: 'local',
-                                    valueField: 'ID'
                                 },
                             ]
                         },
@@ -93,9 +83,8 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                             layout: 'hbox',
                             items:[
                                 {
-                                xtype: 'datefield',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
+                                    xtype: 'datefield',
+                                    ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'Start Date',
                                     reference: 'viewDate',
@@ -108,42 +97,52 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     //    change: 'onViewDateChanged'
                                     //}
                                 },
+
                                 {
                                     xtype:'spacer',
-                                    width:'10pt',
+                                    width:'20pt'
                                 },
+
+
                                 {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'start100',
-                                    boxLabel: '100%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'start75',
-                                    boxLabel: '75%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'start50',
-                                    boxLabel: '50%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'start25',
-                                    boxLabel: '25%',
-                                },
+                                    xtype:'fieldset',
+                                    //title:'percentage',
+                                    ui:'admin-fieldset',
+                                    items:[
+                                        {
+                                            xtype:'containerfield',
+                                            layout:'hbox',
+                                            
+                                            defaults:{
+                                                bodyAlign: 'stretch',
+                                                ui: 'requests-input',
+                                                padding:'0pt 5pt 0pt 5,t',
+                                            },
+                                            items:[
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'start100',
+                                                    boxLabel: '100%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'start75',
+                                                    boxLabel: '75%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'start50',
+                                                    boxLabel: '50%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'start25',
+                                                    boxLabel: '25%',
+                                                },
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         {
@@ -151,9 +150,8 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                             layout: 'hbox',
                             items:[
                                 {
-                                xtype: 'datefield',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
+                                    xtype: 'datefield',
+                                    ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'End Date',
                                     reference: 'viewDate',
@@ -166,53 +164,59 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     //    change: 'onViewDateChanged'
                                     //}
                                 },
+
                                 {
                                     xtype:'spacer',
-                                    width:'10pt',
+                                    width:'20pt'
                                 },
+
+
                                 {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'end100',
-                                    boxLabel: '100%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'end75',
-                                    boxLabel: '75%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'end50',
-                                    boxLabel: '50%',
-                                },
-                                {
-                                    bodyAlign: 'stretch',
-                                    ui: 'requests-input',
-                                    userCls:'requests-fieldset no-border',
-                                    xtype: 'radio',
-                                    //name: 'end25',
-                                    boxLabel: '25%',
-                                },
+                                    xtype:'fieldset',
+                                    //title:'percentage',
+                                    ui:'admin-fieldset',
+                                    items:[
+                                        {
+                                            xtype:'containerfield',
+                                            layout:'hbox',
+                                            
+                                            defaults:{
+                                                bodyAlign: 'stretch',
+                                                ui: 'requests-input',
+                                                padding:'0pt 5pt 0pt 5,t',
+                                            },
+                                            items:[
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'end100',
+                                                    boxLabel: '100%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'end75',
+                                                    boxLabel: '75%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'end50',
+                                                    boxLabel: '50%',
+                                                },
+                                                {
+                                                    xtype: 'radio',
+                                                    //name: 'end25',
+                                                    boxLabel: '25%',
+                                                },
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
                         },
-
                         {
                             xtype:'fieldset',
                             userCls:'requests-fieldset-input',
                             flex:1,
                         }
-
-
-
                     ]
                 }
             ],
