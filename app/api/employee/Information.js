@@ -353,6 +353,70 @@ Ext.define('Breeze.api.employee.Information', {
      * @deprecated
      */
     removePicture: function(){
+    },
+
+    /**
+     * Check layoff effective date
+     * @param {Number} employeeId Employee ID
+     * @param {Date} effectiveDate Effective layoff date
+     * @return {Promise} resolving with true or rejecting with error
+     * @api /CheckLayoffEffectiveDate
+     */
+    checkLayoffEffectiveDate: function(employeeId, effectiveDate){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'CheckLayoffEffectiveDate',
+                { 
+                    employee_id: employeeId, 
+                    effectivedate: effectiveDate.shortDate() 
+                },
+                true, true,
+                function(resp){
+                    var response = api.decodeJsonResponse(resp);
+                    if(response.success){
+                        resolve(true);
+                    } else {
+                        reject(response.err);
+                    }
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
+    },
+
+    /**
+     * Toggle employee layoff status
+     * @param {Number} employeeId Employee ID
+     * @param {Date} effectiveDate Effective layoff date
+     * @return {Promise} resolving with true or rejecting with message
+     * @api /ToggleEmployeeLayoff
+     */
+    toggleLayoff: function(employeeId, effectiveDate){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'ToggleEmployeeLayoff',
+                { 
+                    employee_id: employeeId, 
+                    effectivedate: effectiveDate.toUTCString() 
+                },
+                true, true,
+                function(resp){
+                    var response = api.decodeJsonResponse(resp);
+                    if(response.status){
+                        resolve(true);
+                    } else {
+                        reject(response.message);
+                    }
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     }
 
 });

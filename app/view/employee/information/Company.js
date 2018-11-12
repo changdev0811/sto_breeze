@@ -10,7 +10,7 @@ Ext.define('Breeze.view.employee.information.Company', {
     alias: 'widget.employee.information.company',
 
     layout: 'vbox',
-
+    reference: 'employeeInfoCompanyView',
     requires: [
         'Ext.grid.plugin.CellEditing',
         'Ext.grid.plugin.Editable'
@@ -167,13 +167,33 @@ Ext.define('Breeze.view.employee.information.Company', {
                         //     labelAlign: 'right'
                         // }
                         {
+                            xtype: 'datefield',
+                            reference: 'companyLayoffDate',
+                            label: 'Layoff Date',
+                            hidden: true,
+                            // bind: { value: '{info.LayoffDate}' },
+                            picker: {
+                                xtype: 'datepicker',
+                                title: 'Select Layoff Effective Date',
+                                listeners: {
+                                    cancel: function(comp){
+                                        console.info('cancel picker');
+                                        comp.hide();
+                                    },
+                                    change: 'onLayoffEffectivePicked'
+                                    // change: function(ref, val){
+                                    //     console.info('Layoff date picked');
+                                    // }
+                                }
+                            },
+                        },
+                        {
                             xtype: 'button',
-                            enableToggle: true,
                             bind: {
-                                text: '{info.LayoffStatus}',
+                                text: '{layoffButtonText}',
                                 pressed: '{isLaidOff}'
                             },
-                            toggleHandler: 'onLayoffButtonToggle',
+                            handler: 'onLayoffButtonTap',
                             ui: 'action'
                         }
                     ]
@@ -689,18 +709,22 @@ Ext.define('Breeze.view.employee.information.Company', {
         },
           
         // Layoff effective date picker
-        {
-            xtype: 'datepicker',
-            reference: 'layoffEffectivePicker',
-            title: 'Select Layoff Effective Date',
-            value: (new Date()),
-            listeners: {
-                cancel: function(comp){
-                    console.info('cancel picker');
-                    comp.hide();
-                },
-                change: 'onLayoffEffectivePicked'
-            }
-        }
+        // {
+        //     xtype: 'datepicker',
+        //     reference: 'layoffEffectivePicker',
+        //     title: 'Select Layoff Effective Date',
+        //     value: (new Date()),
+
+        //     listeners: {
+        //         cancel: function(comp){
+        //             console.info('cancel picker');
+        //             comp.hide();
+        //         },
+        //         // change: 'onLayoffEffectivePicked'
+        //         change: function(ref, val){
+        //             console.info('Layoff date picked');
+        //         }
+        //     }
+        // }
     ]
 });
