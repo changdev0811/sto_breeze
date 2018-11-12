@@ -42,21 +42,22 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     // Action buttons shown at bottom of panel
                     buttonAlign: 'center',
                     buttons: {
-                        save:   { name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action', style:'width:125pt' },
-                        submit: { name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:125pt' },
-                        remove: { name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:125pt' },
+                        save:   { weight:1, name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action', style:'width:125pt' },
+                        submit: { weight:2, name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:125pt' },
+                        remove: { weight:3, name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'decline alt', style:'width:125pt' },
                     },
 
                     // Adjust action button toolbar spacing and appearance with UI and shadow
                     buttonToolbar: {
                         xtype: 'toolbar',
-                        ui: 'admin-actions',
+                        ui: 'requests-input-panel',
                         shadow: false,
                     },
 
                     items:[
                         {
                             xtype: 'container',
+                            userCls:'requests-fieldset',
                             layout: 'hbox',
                             items:[
                                 {
@@ -80,6 +81,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                         },
                         {
                             xtype: 'container',
+                            userCls:'requests-fieldset',
                             layout: 'hbox',
                             items:[
                                 {
@@ -121,22 +123,22 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                             items:[
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'start100',
+                                                    name: 'start',
                                                     boxLabel: '100%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'start75',
+                                                    name: 'start',
                                                     boxLabel: '75%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'start50',
+                                                    name: 'start',
                                                     boxLabel: '50%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'start25',
+                                                    name: 'start',
                                                     boxLabel: '25%',
                                                 },
                                             ]
@@ -147,6 +149,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                         },
                         {
                             xtype: 'container',
+                            userCls:'requests-fieldset',
                             layout: 'hbox',
                             items:[
                                 {
@@ -188,22 +191,22 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                             items:[
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'end100',
+                                                    name: 'end',
                                                     boxLabel: '100%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'end75',
+                                                    name: 'end',
                                                     boxLabel: '75%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'end50',
+                                                    name: 'end',
                                                     boxLabel: '50%',
                                                 },
                                                 {
                                                     xtype: 'radio',
-                                                    //name: 'end25',
+                                                    name: 'end',
                                                     boxLabel: '25%',
                                                 },
                                             ]
@@ -213,9 +216,10 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                             ]
                         },
                         {
-                            xtype:'fieldset',
-                            userCls:'requests-fieldset-input',
-                            flex:1,
+                            xtype:'textareafield',
+                            label:'Notes',
+                            userCls:'requests-fieldset',
+                            //flex:1,
                         }
                     ]
                 }
@@ -233,11 +237,12 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     ui:'requests-input-panel',
                     userCls:'requests-input-panel requests-rule',
                     title: 'Work Days Requested',
+                    layout: 'fit',
                     items:[
 
                         {
                             xtype:'container',
-                            userCls:'requests-fieldset',
+                            userCls:'requests-fieldset-input',
                             layout: 'fit',
                             scrollable:'y',
                             flex:1,
@@ -255,13 +260,13 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            text:'Name',
+                                            text:'Day',
                                             dataIndex: 'text',
                                             flex: 1,
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            text:'State',
+                                            text:'Percentage',
                                             dataIndex: 'text',
                                             flex: 1,
                                         }
