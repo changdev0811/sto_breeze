@@ -1,12 +1,12 @@
 /**
- * View Controller for Department Payroll Summary reporting criteria view
- * @class PayrollSummaryController
- * @namespace Breeze.view.reporting.department.PayrollSummaryController
- * @alias controller.reporting.department.payrollsummary
+ * View Controller for Department QuickList reporting criteria view
+ * @class QuickListController
+ * @namespace Breeze.view.reporting.misc.QuickListController
+ * @alias controller.reporting.misc.quicklist
  */
-Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
+Ext.define('Breeze.view.reporting.misc.QuickListController', {
     extend: 'Breeze.controller.Reporting',
-    alias: 'controller.reporting.department.payrollsummary',
+    alias: 'controller.reporting.misc.quicklist',
 
     stores: [
         // 'Breeze.store.category.List'
@@ -17,7 +17,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
      */
     onInit: function (component) {
 
-        console.info('Department Payroll Summary Report view inited');
+        console.info('Misc QuickList Report view inited');
 
         var me = this;
         var vm = me.getViewModel();
@@ -25,7 +25,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
         // Load User-Defined Categories tree store
         // Create instance of report generation API class
         this.reportApi = Ext.create(
-            'Breeze.api.reporting.department.PayrollSummary',
+            'Breeze.api.reporting.misc.QuickList',
             {exceptionHandler: this.onReportException}
         );
 
@@ -79,6 +79,11 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
         if(vmData.reportParams.incids == ''){
             valid = false;
             messages.push('Please select a Department or Employee.');
+        }
+
+        if(vmData.reportParams.inccats == null){
+            valid = false;
+            messages.push('Please select a Category.')
         }
 
         // Check 1 > weeks have been picked if week mode
