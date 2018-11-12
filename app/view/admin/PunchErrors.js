@@ -6,7 +6,7 @@
  */
 Ext.define('Breeze.view.admin.PunchErrors', {
     extend: 'Ext.Panel',
-    alias: 'widget.admin.punchprrors',
+    alias: 'widget.admin.puncherrors',
 
     // Layout and base styles
     layout: 'vbox',
