@@ -13,7 +13,7 @@ Ext.define('Breeze.helper.navigation.Employees', {
                 routeRef: 'employees',
                 routeEvent: 'sidepanelopen',
                 id: 'employees',
-                iconCls: 'x-fas fa-user-tie',
+                iconCls: 'x-fas fa-users',
                 leaf: true
             }
         ]
