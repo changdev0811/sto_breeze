@@ -4,21 +4,92 @@
  * that appear within the Breeze.view.requests.MyRequests view or its children
  */
 
- @include panel-ui(
-     $ui: 'requests-leave-panel',
-     $background-color: map-get($employee-info-colors, 'base'),
-     $header-background-color: map-get($employee-info-colors, 'base'),
-     $body-background-color: map-get($employee-info-colors, 'base'),
-     $body-color: map-get($employee-info-colors, 'base')
- );
+@include gridcolumn-ui(
+    $ui: 'requests-grid',
+    $font-size: 10pt,
+    $padding: 4pt,
+);
 
- @include panel-ui(
-     $ui: 'requests-days-panel',
-     $background-color: map-get($employee-fyi-colors, 'base'),
-     $header-background-color: map-get($employee-fyi-colors, 'base'),
-     $body-background-color: map-get($employee-fyi-colors, 'base'),
-     $body-color: map-get($employee-fyi-colors, 'base')
- );
+@include gridcolumn-ui(
+    $ui: 'requests-grid-input',
+    $font-size: 10pt,
+    $padding: 4pt,
+    $color: #000,
+);
+
+
+@include panel-ui(
+ $ui: 'requests-leave-panel',
+ $background-color: map-get($employee-info-colors, 'base'),
+ $header-background-color: map-get($employee-info-colors, 'base'),
+ $body-background-color: map-get($employee-info-colors, 'base'),
+ $body-color: map-get($employee-info-colors, 'base')
+);
+
+@include panel-ui(
+ $ui: 'requests-days-panel',
+ $background-color: map-get($employee-fyi-colors, 'base'),
+ $header-background-color: map-get($employee-fyi-colors, 'base'),
+ $body-background-color: map-get($employee-fyi-colors, 'base'),
+ $body-color: map-get($employee-fyi-colors, 'base')
+);
+
+@include panel-ui(
+ $ui: 'requests-input-panel',
+ $background-color: #fff,
+ $header-background-color: #fff,
+ $body-background-color: #fff,
+ $body-color: #000,
+ $header-color: #000,
+);
+
+@include field-ui(
+    $ui: 'requests-input',
+    $label-color: #000,
+    $focused-label-color: #000,
+    $label-font-size: #000,
+);
+
+@include trigger-ui(
+    $ui: 'requests-input',
+    $icon-color: #000,
+    $hovered-icon-color: #000,
+    $pressed-icon-color: #000
+);
+
+@include checkboxfield-ui(
+    $ui: 'requests-input',
+    $checkbox-color: #000,
+    $checked-checkbox-color: #000,
+    $box-label-color: #000,
+    $box-label-font-size: #000
+);
+
+@include radiofield-ui(
+    $ui: 'requests-input',
+    $box-label-color: #000,
+    $box-label-font-size: #000
+);
+
+@include textfield-ui(
+    $ui: 'admin-text-input',
+    $focused-input-underline-color: #000,
+    $input-color: #000,
+    $input-font-size: #000
+);
+
+
+@include datetrigger-ui(
+    $ui: 'admin-date-input',
+    $icon-color: #000,
+    $hovered-icon-color: #000,
+    $pressed-icon-color: #000,
+);
+
+@include dataview-ui(
+    $background-color :  map-get($admin-colors, 'base'),
+    $ui: 'employeeinfo-shift-grid'
+)
 
 
 .requests-calendar-panel {
@@ -38,12 +109,31 @@
     padding:0pt;
 }
 
+.requests-input-panel  { 
+    height:100%;
+    margin:0pt;
+    padding:0pt 12pt 12pt 0pt; 
+}
+
+.requests-rule {
+    border-left: solid 1px black !important;
+
+}
+
 .requests-fieldset {
     height:auto; 
     border: solid 1px #fff;
     margin:0pt 8pt 8pt 8pt;
     background-color: transparent;
 }
+
+.requests-fieldset-input {
+    height:auto; 
+    border: solid 1px #000;
+    margin:0pt 8pt 8pt 8pt;
+    background-color: transparent;
+}
+
 
 .headerCursor {
     cursor:pointer;

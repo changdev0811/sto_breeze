@@ -10,6 +10,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
 
     // Layout and base styles
     layout: 'hbox',
+    scrollable:'x',
 
     // Body contents
     items: [
@@ -17,7 +18,8 @@ Ext.define('Breeze.view.requests.MyRequests', {
         // column 1
         {
             xtype: 'container',
-            flex: 1,
+            //flex: 1,
+            width: '220pt',
             layout: 'vbox',
             items:[
                 {
@@ -43,10 +45,10 @@ Ext.define('Breeze.view.requests.MyRequests', {
                             items:[
                                 // Departments tree
                                 {
-                                    xtype: 'tree',
+                                    xtype: 'grid',
                                     // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
+                                    itemId: 'grid',
+                                    ui: 'employeeinfo-shift-grid requests-grid',
                                     userCls: 'no-background',
                                     layout: 'hbox',
                                     hideHeaders: true,
@@ -55,23 +57,17 @@ Ext.define('Breeze.view.requests.MyRequests', {
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Name',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
                                             flex: 1,
                                         },
                                         {
                                             xtype: 'gridcolumn',
                                             text:'State',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
                                             flex: 1,
                                         }
                                     ],
-                                    reference: 'departmentTree',
+                                    //reference: 'departmentTree',
                                     //bind: '{departmentsTree}'
                                 }
                             ]
@@ -122,10 +118,10 @@ Ext.define('Breeze.view.requests.MyRequests', {
                             items: [
                                 // Departments tree
                                 {
-                                    xtype: 'tree',
+                                    xtype: 'grid',
                                     // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
+                                    itemId: 'grid',
+                                    ui: 'employeeinfo-shift-grid requests-grid',
                                     userCls: 'no-background',
                                     scrollable:'y',
                                     layout: 'hbox',
@@ -135,41 +131,29 @@ Ext.define('Breeze.view.requests.MyRequests', {
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Date',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
-                                            flex: 1,
+                                            flex: 4,
                                         },
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Category',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
-                                            flex: 1,
+                                            flex: 5,
                                         },
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Percent',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
-                                            flex: 1,
+                                            flex: 5,
                                         },
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Conflicts',
-                                            cell: {
-                                                ui: 'report-tree-column reporting-tree-item',
-                                            },
                                             dataIndex: 'text',
-                                            flex: 1,
+                                            flex: 5,
                                         }
                                     ],
-                                    reference: 'departmentTree',
+                                    //reference: 'departmentTree',
                                     //bind: '{departmentsTree}'
                                 }
                             ]
@@ -182,6 +166,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
         {
             xtype: 'container',
             flex: 2,
+            minWidth: '600pt',
             layout: 'vbox',
             items:[
                 {
