@@ -321,4 +321,50 @@
     );
 };
 
+@include grid-ui(
+    $ui: 'admin-grid'
+);
+.admin-grid .x-headercontainer-admin-grid {
+        height: 18pt
+}
+
+// @include ui-extend(
+//     $ui: 'admin-grid',
+//     $xtype: 'headercontainer'
+// ) {
+//     height: 16pt;
+// };
+
+// @include gridcolumn-ui(
+//     $ui: 'admin-grid',
+//     $font-size: 10pt,
+//     $padding: edge-size-from-relative(
+//         $base: $scoped-root-panel-body-padding-base,
+//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
+//     ) !important,
+// );
+
+// @include gridcell-ui(
+//     $ui: 'admin-grid',
+//     $font-size: 10pt,
+//     $line-height: 14pt
+// );
+
+// @include rowheader-ui(
+//     $ui: 'admin-grid',
+//     $padding: edge-size-from-relative(
+//         $base: $scoped-root-panel-body-padding-base,
+//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
+//     ) !important,
+//     $background-color: red
+// );
+
+// @include itemheader-ui(
+//     $ui: 'admin-grid',
+//     $padding: edge-size-from-relative(
+//         $base: $scoped-root-panel-body-padding-base,
+//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
+//     ) !important,
+//         $background-color: red
+// );
 

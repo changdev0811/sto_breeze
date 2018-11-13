@@ -209,6 +209,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 },
                                 {
                                     xtype: 'grid',
+                                    ui: 'admin-grid',
                                     height: '100%',
                                     sortable: false, columnResize: false,
                                     columnMenu: false, hideHeaders: true,
@@ -547,11 +548,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'grid',
                                     flex: 1,
-                                    sortable: false,
-                                    striped: false,
-                                    columnMenu: null,
-                                    grouped: true,
-                                    ui: 'employeeinfo-shift-grid',
+                                    sortable: false, striped: false,
+                                    columnMenu: null, grouped: true,
+                                    ui: 'admin-grid', userCls: 'admin-grid',
                                     reference: 'accrualRuleGrid',
                                     hidden: true,
                                     bind: {
@@ -566,6 +565,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         //         newStore.setGroupField('ruleName');
                                         //     }
                                         // }
+                                    },
+                                    defaults: {
+                                        userCls: 'admin-grid'
                                     },
                                     defaultType: 'gridcolumn',
                                     columns: [

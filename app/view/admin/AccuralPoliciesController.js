@@ -92,7 +92,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                             });
                             me.addLoadedStoreToViewModel({
                                 model: 'Breeze.model.accrual.policy.ShiftSegment',
-                                data: policy.getAt(0).getData().shifts,
+                                data: policy.getAt(0).shifts().getData(),
                             }, 'policySegments');
                             console.info('Loaded policy');
                         } else {
