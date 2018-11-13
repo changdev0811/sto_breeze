@@ -46,7 +46,7 @@ Ext.define('Breeze.store.admin.Routes', {
             view: "Breeze.view.admin.MOTD"
         },
         {
-            type: "pointcats",
+            type: "pointcatsegories",
             view: "Breeze.view.admin.PointCats"
         },
         {
