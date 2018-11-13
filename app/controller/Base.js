@@ -77,6 +77,27 @@ Ext.define('Breeze.controller.Base', {
         }
     },
 
+    /**
+     * Loads a store and returns the result
+     * @param {String} store Store name
+     * @param {Object} args Parameters to pass to store constructor
+     * @return {Promise} Promise resolving with store or rejecting on error
+     */
+    loadStore: function(store, args){
+        var args = $breeze.defVal(args, {});
+        return new Promise((resolve, reject)=>{
+            var s = Ext.create(store, args).load({
+                callback: (records, ops, success)=>{
+                    if(success){
+                        resolve(s);
+                    } else {
+                        reject(null);
+                    }
+                }
+            });
+        });
+    },
+
     //=== [Shared Tool Behaviors] ===
     
     /**

@@ -23,7 +23,8 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.Years',
         // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
-        'Breeze.store.company.Config'
+        'Breeze.store.company.Config',
+        'Breeze.store.option.NewRates'
     ],
 
     defaultToken: 'home',

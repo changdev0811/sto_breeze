@@ -197,7 +197,7 @@
 
 @include textfield-ui(
     $ui: 'admin-text',
-    $focused-input-underline-color: map-get($admin-colors, 'dark'),
+    $focused-input-underline-color: map-get($admin-colors, 'light'),
     $input-color: map-get($admin-text-colors, 'base'),
     $input-font-size: map-get($root-font-sizes, 'detail')
 );
@@ -321,4 +321,57 @@
     );
 };
 
+// === Data Grid Styling ===
 
+@include grid-ui(
+    $ui: 'admin-grid'
+);
+
+@include dataview-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent
+)
+
+@include gridcell-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($admin-text-colors, 'base'),
+    $background-color: transparent
+);
+
+@include gridrow-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-dark')
+);
+
+@include headercontainer-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent
+);
+
+@include gridcolumn-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($admin-text-colors, 'base'),
+    $background-color: transparent
+);
+
+@include rowheader-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($admin-text-colors, 'base'),
+    $background-color:mix(
+        map-get($admin-colors, 'base'),
+        map-get($admin-colors, 'row-dark')
+    )
+);
