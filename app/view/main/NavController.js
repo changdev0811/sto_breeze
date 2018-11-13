@@ -495,11 +495,12 @@ Ext.define('Breeze.view.main.NavController', {
         this.refreshSidePanel(false);
         if(type !== 'list'){
             let ns = routes.resolve(type);
-            this.changeContent(
-                Ext.create(ns, {
-                    data: { employee: undefined }
-                })
-            );    
+            // this.changeContent(
+            //     Ext.create(ns, {
+                    
+            //     })
+            // );    
+            this.replaceContent(ns, {});
         } else {
             this.changeContent(
                 Ext.create('Breeze.view.dashboard.Admin')
@@ -633,7 +634,8 @@ Ext.define('Breeze.view.main.NavController', {
     refreshSidePanel: function(show, type){
         var panelContainer = this.lookup('sidePanelContainer'),
             vm = this.getViewModel(),
-            currentType = vm.get('sidePanel.type');
+            currentType = vm.get('sidePanel.type'),
+            type = Object.defVal(type, currentType);
         if(
             panelContainer.getHidden() == show ||
             panelContainer.items.length == 0 ||
