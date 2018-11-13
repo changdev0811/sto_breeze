@@ -495,11 +495,10 @@ Ext.define('Breeze.view.main.NavController', {
         this.refreshSidePanel(false);
         if(type !== 'list'){
             let ns = routes.resolve(type);
-            this.changeContent(
-                Ext.create(ns, {
+            this.replaceContent(ns, {
                     data: { employee: undefined }
-                })
-            );    
+                }
+            );
         } else {
             this.changeContent(
                 Ext.create('Breeze.view.dashboard.Admin')
