@@ -24,7 +24,7 @@ Ext.define('Breeze.view.dashboard.admin.LeaveRequestsActionTaken', {
     tools: [
         {
             iconCls: 'x-fas fa-angle-right',
-            handler: 'onInfoNavClick'
+            handler: 'onLeaveRequestsActionTakenNavClick'
 
         }
     ],
