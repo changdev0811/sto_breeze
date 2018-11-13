@@ -42,7 +42,7 @@ Ext.define('Breeze.view.main.NavController', {
         /** Employees panel */
         EMPLOYEES: {
             view: 'Breeze.view.main.employees.Panel',
-            clearContent: true,
+            clearContent: false,
             id: 'employees',
             authorize: 'authorizedToViewEmployees'
         },
@@ -50,7 +50,7 @@ Ext.define('Breeze.view.main.NavController', {
         REPORTING: {
             view: 'Breeze.view.reporting.Selector',
             // view: 'Breeze.view.employees.Information',
-            clearContent: true,
+            clearContent: false,
             id: 'reporting'
         }
     },
