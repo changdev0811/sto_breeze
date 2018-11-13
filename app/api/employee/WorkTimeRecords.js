@@ -19,7 +19,7 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
      *  resolve, and nothing on reject
      */
     getWorkTimeRecordsForRange: function(lookupId, startTime, endTime, storeId){
-        var storeId = this.defVal(storeId,'WorkTimeRecords');
+        var storeId = Object.defVal(storeId,'WorkTimeRecords');
         var me = this;
         return new Promise(function(resolve, reject){
             var store = Ext.create('Breeze.store.record.WorkTime', {
@@ -56,7 +56,7 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
      *  resolve, and nothing on reject
      */
     getTimeSheetForRange: function(lookupId, startTime, endTime, storeId){
-        var storeId = this.defVal(storeId,'TimeSheetViewRecords');
+        var storeId = Object.defVal(storeId,'TimeSheetViewRecords');
         var me = this;
         return new Promise(function(resolve, reject){
             var store = Ext.create('Breeze.store.record.timeSheet.View', {

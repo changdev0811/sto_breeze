@@ -49,9 +49,9 @@ Ext.define('Breeze.api.company.Category', {
      */
     loadCompactListStore: function(callback, options){
         // get defaults for options, falling back on default store id
-        var options = this.defVal(options, {}),
-            callback = this.defVal(callback, null);
-        options.storeId = this.defVal(options.storeId, this.storeIds.compactList);
+        var options = Object.defVal(options, {}),
+            callback = Object.defVal(callback, null);
+        options.storeId = Object.defVal(options.storeId, this.storeIds.compactList);
         
         var store = Ext.create('Breeze.store.category.CompactList', {
             storeId: options.storeId

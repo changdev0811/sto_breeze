@@ -16,8 +16,8 @@ Ext.define('Breeze.api.employee.Information', {
      */
     getEmployeeInfo: function (employeeId, storeId) {
         var authInfo = this.auth.getCookies();
-        var employeeId = this.defVal(employeeId, authInfo.emp);
-        var storeId = this.defVal(storeId, 'employee_info');
+        var employeeId = Object.defVal(employeeId, authInfo.emp);
+        var storeId = Object.defVal(storeId, 'employee_info');
         var api = this.api;
         return new Promise(function (resolve, reject) {
             api.serviceRequest(
@@ -69,7 +69,7 @@ Ext.define('Breeze.api.employee.Information', {
      */
     getCurrentInfo: function (resolveDefaultProject) {
         // var authInfo = this.auth.getCookies();
-        var resolveDefaultProject = this.defVal(resolveDefaultProject, true);
+        var resolveDefaultProject = Object.defVal(resolveDefaultProject, true);
         var api = this.api;
         return new Promise(function (resolve, reject) {
             api.serviceRequest(

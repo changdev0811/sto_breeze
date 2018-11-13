@@ -21,10 +21,10 @@ Ext.define('Breeze.api.employee.Fyi', {
         */
     getFYI: function (employeeId, year, day, scheduled, storeId) {
         var authInfo = this.auth.getCookies();
-        var employeeId = this.defVal(employeeId, authInfo.emp);
-        var scheduled = this.defVal(scheduled, false);
-        var storeId = this.defVal(storeId, 'employee_fyi');
-        var year = this.defVal(year, (new Date()).getFullYear());
+        var employeeId = Object.defVal(employeeId, authInfo.emp);
+        var scheduled = Object.defVal(scheduled, false);
+        var storeId = Object.defVal(storeId, 'employee_fyi');
+        var year = Object.defVal(year, (new Date()).getFullYear());
         var api = this.api;
         return new Promise(function (resolve, reject) {
             api.serviceRequest(

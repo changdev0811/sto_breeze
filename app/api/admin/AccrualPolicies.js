@@ -63,7 +63,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
      */
     create: function(name, id){
         var api = this.api,
-            id = this.defVal(id,0);
+            id = Object.defVal(id,0);
         return new Promise((resolve, reject)=>{
             api.serviceRequest(
                 'createAccrualPolicy',
