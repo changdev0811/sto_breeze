@@ -499,12 +499,17 @@ Ext.define('Breeze.view.main.NavController', {
                     data: { employee: undefined }
                 })
             );    
+        } else {
+            this.changeContent(
+                Ext.create('Breeze.view.dashboard.Admin')
+            );
         }
-        this.changeContent(
-            Ext.create(ns, {
-                data: { employee: undefined }
-            })
-        );
+        // this.changeContent(
+        //     Ext.create(ns, {
+        //         data: { employee: undefined }
+        //     })
+        // );
+
     },
 
     //===[Employees]===
