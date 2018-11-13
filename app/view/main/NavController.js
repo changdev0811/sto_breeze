@@ -42,7 +42,7 @@ Ext.define('Breeze.view.main.NavController', {
         /** Employees panel */
         EMPLOYEES: {
             view: 'Breeze.view.main.employees.Panel',
-            clearContent: false,
+            clearContent: true,
             id: 'employees',
             authorize: 'authorizedToViewEmployees'
         },
@@ -50,7 +50,7 @@ Ext.define('Breeze.view.main.NavController', {
         REPORTING: {
             view: 'Breeze.view.reporting.Selector',
             // view: 'Breeze.view.employees.Information',
-            clearContent: false,
+            clearContent: true,
             id: 'reporting'
         }
     },
@@ -634,8 +634,18 @@ Ext.define('Breeze.view.main.NavController', {
     refreshSidePanel: function(show, type){
         var panelContainer = this.lookup('sidePanelContainer'),
             vm = this.getViewModel(),
-            currentType = vm.get('sidePanel.type'),
-            type = Object.defVal(type, currentType);
+            currentType = vm.get('sidePanel.type');
+
+        if(
+            !show && !panelContainer.getHidden() &&
+            !type
+        ){
+            vm.set('sidePanel.type', null);
+            panelContainer.setHidden(true);
+            panelContainer.removeAll();
+            return null;
+        }
+        var type = Object.defVal(type, currentType);
         if(
             panelContainer.getHidden() == show ||
             panelContainer.items.length == 0 ||
@@ -688,6 +698,10 @@ Ext.define('Breeze.view.main.NavController', {
             if(authorized){
                 this.refreshSidePanel(true, this.Panels[e.route.toUpperCase()]);
                 this.syncNavToRoute(e.route);
+                window.location.hash="";
+                if(panel.clearContent){
+                    this.lookup('contentContainer').removeAll();
+                }
             }
         }
     },
@@ -701,7 +715,7 @@ Ext.define('Breeze.view.main.NavController', {
                 container.remove(old, true);
             } catch (ex) {
                 console.warn('Error', old, ex);
-                container.remove(old);
+                // container.remove(old);
             } finally {
 
             }
