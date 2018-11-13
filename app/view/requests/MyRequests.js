@@ -8,6 +8,8 @@ Ext.define('Breeze.view.requests.MyRequests', {
     extend: 'Ext.Container',
     alias: 'widget.requests.myrequests',
 
+    userCls:'requests-content',
+
     // Layout and base styles
     layout: 'hbox',
     scrollable:'x',
@@ -18,6 +20,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
         // column 1
         {
             xtype: 'container',
+            userCls:'requests-content',
             //flex: 1,
             width: '220pt',
             layout: 'vbox',
@@ -165,6 +168,8 @@ Ext.define('Breeze.view.requests.MyRequests', {
         // column 2 (calendar)
         {
             xtype: 'container',
+            userCls:'requests-content',
+
             flex: 2,
             minWidth: '600pt',
             layout: 'vbox',

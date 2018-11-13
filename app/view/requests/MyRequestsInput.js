@@ -21,7 +21,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
         {
             xtype: 'container',
             //flex: 2,
-            width:'480pt',
+            width:'500pt',
             layout: 'vbox',
 
 

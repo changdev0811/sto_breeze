@@ -11,6 +11,7 @@ Ext.define('Breeze.view.requests.Requests', {
     alias: 'widget.requests.requests',
     controller: 'requests.requests',
     requires: ['Ext.layout.Card'],
+    userCls:'requests-content',
     layout: 'card',
     items: [
         {
