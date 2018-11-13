@@ -301,3 +301,69 @@ $admin-text-colors: (
     dark: $scoped-admin-text-dark
 );
 
+
+
+
+
+
+// ====[red Colors]====
+
+$scoped-red-base: #DC5E71;
+$scoped-red-light: #E78593;
+$scoped-red-medium: #EFAFB7;
+$scoped-red-row-dark: rgba(255,255,255,.33);
+$scoped-red-row-light: rgba(255,255,255,.33);
+
+$scoped-red-text-base: #ffffff;
+$scoped-red-text-light: #E78593;
+$scoped-red-text-medium: $scoped-root-base;
+$scoped-red-text-dark: $scoped-reporting-text-base;
+
+$red-colors: (
+    base: $scoped-red-base,
+    light: $scoped-red-light,
+    medium: $scoped-red-medium,
+    dark: $scoped-red-base,
+    row-dark: $scoped-red-row-dark,
+    row-light: $scoped-red-row-light
+);
+
+$red-text-colors: (
+    base: $scoped-red-text-base,
+    light: $scoped-red-text-light,
+    medium: $scoped-red-text-medium,
+    dark: $scoped-red-text-dark
+);
+
+
+
+// ====[green Form Colors]====
+
+$scoped-green-base: #229F86;
+$scoped-green-light: #55B8A4;
+$scoped-green-medium: #8FCFC3;
+$scoped-green-row-dark: rgba(255,255,255,.33);
+$scoped-green-row-light: rgba(255,255,255,.33);
+
+$scoped-green-text-base: #ffffff;
+$scoped-green-text-light: #55B8A4;
+$scoped-green-text-medium: $scoped-root-base;
+$scoped-green-text-dark: $scoped-reporting-text-base;
+
+$green-colors: (
+    base: $scoped-green-base,
+    light: $scoped-green-light,
+    medium: $scoped-green-medium,
+    dark: $scoped-green-base,
+    row-dark: $scoped-green-row-dark,
+    row-light: $scoped-green-row-light
+);
+
+$green-text-colors: (
+    base: $scoped-green-text-base,
+    light: $scoped-green-text-light,
+    medium: $scoped-green-text-medium,
+    dark: $scoped-green-text-dark
+);
+
+

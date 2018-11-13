@@ -1,0 +1,29 @@
+/**
+ * Breeze.view.dashboard.admin.LeaveRequestsActionTaken Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.dashboard.admin.LeaveRequestsActionTaken view or its children
+ */
+
+ @include panel-ui(
+     $ui: 'admin-leaverequestsactiontaken-dashboard',
+     $background-color: map-get($green-colors, 'base'),
+     $header-background-color: map-get($green-colors, 'base'),
+     $body-background-color: map-get($green-colors, 'base'),
+     $body-color: map-get($green-colors, 'base')
+ );
+
+@include paneltitle-ui(
+    $ui: 'admin-leaverequestsactiontaken-dashboard',
+    $font-size: $panel-title-font-size
+);
+
+
+.admin-leaverequestsactiontaken-dashboard {
+    height:auto; 
+    margin:0pt 0pt 14pt 0pt;
+}
+
+.headerCursor {
+    cursor:pointer;
+}
+ 

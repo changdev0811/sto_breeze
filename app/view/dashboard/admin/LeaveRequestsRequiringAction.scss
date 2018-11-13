@@ -1,0 +1,29 @@
+/**
+ * Breeze.view.dashboard.admin.LeaveRequestsRequiringAction Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.dashboard.admin.LeaveRequestsRequiringAction view or its children
+ */
+
+ @include panel-ui(
+     $ui: 'admin-leaverequestsrequiringaction-dashboard',
+     $background-color: map-get($employee-info-colors, 'base'),
+     $header-background-color: map-get($employee-info-colors, 'base'),
+     $body-background-color: map-get($employee-info-colors, 'base'),
+     $body-color: map-get($employee-info-colors, 'base')
+ );
+
+@include paneltitle-ui(
+    $ui: 'admin-leaverequestsrequiringaction-dashboard',
+    $font-size: $panel-title-font-size
+);
+
+
+.admin-leaverequestsrequiringaction-dashboard {
+    height:auto; 
+    margin:0pt 0pt 14pt 0pt;
+}
+
+.headerCursor {
+    cursor:pointer;
+}
+ 
