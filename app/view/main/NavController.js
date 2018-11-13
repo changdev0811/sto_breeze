@@ -463,8 +463,8 @@ Ext.define('Breeze.view.main.NavController', {
         var vm = this.getViewModel(),
             emp = vm.get('userId');
         this.changeContent(
-            //Ext.create('Breeze.view.requests.MyRequests', {
-            Ext.create('Breeze.view.requests.MyRequestsInput', {
+            Ext.create('Breeze.view.requests.MyRequests', {
+            //Ext.create('Breeze.view.requests.MyRequestsInput', {
                 data: { employee: emp }
             })
 
