@@ -23,16 +23,16 @@ Ext.define('Breeze.view.dashboard.Admin', {
         {
             xtype: 'dashboard.admin.leaverequestsrequiringaction',
             reference:'leaverequestsrequiringactionDash',
-            flex: 1,
+            flex: 3,
         },
         {            
             xtype: 'dashboard.admin.leaverequestsactiontaken',
             reference:'leaverequestsactiontaken',
-            flex: 1,
+            flex: 3,
         },
         {
             xtype: 'container',
-            flex: 1,
+            flex: 4,
             layout: 'hbox',
             items: [
                 {

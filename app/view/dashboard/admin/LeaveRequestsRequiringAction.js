@@ -14,7 +14,8 @@ Ext.define('Breeze.view.dashboard.admin.LeaveRequestsRequiringAction', {
       text:'Leave Requests Requiring Action'
     },
 
-    //ui: 'employee-info-dashboard',
+    ui: 'admin-leaverequestsrequiringaction-dashboard',
+    userCls: 'admin-leaverequestsrequiringaction-dashboard',
 
     header:{
         userCls:'headerCursor'

@@ -14,7 +14,8 @@ Ext.define('Breeze.view.dashboard.admin.DepartmentAttendance', {
       text:'Dept Attendance'
     },
 
-    //ui: 'employee-info-dashboard',
+    ui: 'admin-departmentattendance-dashboard',
+    userCls: 'admin-departmentattendance-dashboard',
 
     header:{
         userCls:'headerCursor'

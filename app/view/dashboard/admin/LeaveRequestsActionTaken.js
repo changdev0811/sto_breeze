@@ -14,7 +14,8 @@ Ext.define('Breeze.view.dashboard.admin.LeaveRequestsActionTaken', {
       text:'Leave Requests Action Taken'
     },
 
-    //ui: 'employee-info-dashboard',
+    ui: 'admin-leaverequestsactiontaken-dashboard',
+    userCls: 'admin-leaverequestsactiontaken-dashboard',
 
     header:{
         userCls:'headerCursor'
