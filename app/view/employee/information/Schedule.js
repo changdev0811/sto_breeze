@@ -34,7 +34,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     xtype: 'panel',
                     
                     // userCls: 'employee-info-fieldset',
-                    ui: 'employee-info-shift-grid employee-info-grid-panel',
+                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                     userCls: 'employee-info-grid',
                     title: 'Shift Information',
                     body:{

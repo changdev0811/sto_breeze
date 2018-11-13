@@ -237,7 +237,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    ui: 'employee-info-shift-grid employee-info-grid-panel',
+                                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                                     userCls: 'employee-info-grid',
                                     title: 'Supervisors',
                                     // Grid title tool buttons
@@ -349,7 +349,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    ui: 'employee-info-shift-grid employee-info-grid-panel',
+                                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                                     userCls: 'employee-info-grid',
                                     title: 'Supervised Employees',
                                     tools: {
@@ -457,7 +457,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    ui: 'employee-info-shift-grid employee-info-grid-panel',
+                                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                                     userCls: 'employee-info-grid',
                                     title: 'Supervised Departments',
                                     // Grid title tool buttons
