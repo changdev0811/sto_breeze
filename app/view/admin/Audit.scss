@@ -1,0 +1,52 @@
+/**
+    Styles for admin/audit view
+*/
+
+// Style for Audit view's top instruction caption
+.admin-audit-caption {
+    font-weight: bold;
+    color: map-get($admin-text-colors, 'base');
+    font-size: map-get($root-font-sizes, 'detail');
+    text-align: center;
+}
+
+// Audit history list item classes
+.admin-audit{
+    display: flex;
+    flex-direction: row;
+    width: 100%
+}
+
+.admin-audit-item {
+    font-size: map-get($root-font-sizes, 'detail');
+    line-height: map-get($root-font-sizes, 'detail') + 6pt;
+    &[data-content=date]{
+        // min-width: 150pt;
+        // flex: 1 auto;
+        width: 150pt;
+        font-weight: bold;
+        color: $neutral_color;
+    };
+    &[data-content=message]{
+        float: right;
+        flex: 3 3 auto;
+        text-align: left;
+    };
+}
+
+// History dataview UI type
+@include dataview-ui(
+    $ui: 'admin-audit-history',
+    $background-color: transparent,
+    $item-color: map-get($admin-text-colors, 'base'),
+    $item-font-size: map-get($root-font-sizes, 'base'),
+    $item-padding: 6pt 6pt 6pt 6pt
+);
+
+@include ui-extend(
+    $ui: 'admin-audit-history',
+    $xtype: 'dataview'
+){
+    margin: map-path($root-panel-sizes, 'body' 'padding');
+    border: 1pt solid map-get($admin-text-colors, 'base');
+};

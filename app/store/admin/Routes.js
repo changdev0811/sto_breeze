@@ -26,6 +26,10 @@ Ext.define('Breeze.store.admin.Routes', {
             view: "Breeze.view.admin.AccrualPolicies"
         },
         {
+            type: 'audit',
+            view: 'Breeze.view.admin.Audit'
+        },
+        {
             type: "companyhistory",
             view: "Breeze.view.admin.CompanyHistory"
         },
@@ -42,7 +46,7 @@ Ext.define('Breeze.store.admin.Routes', {
             view: "Breeze.view.admin.MOTD"
         },
         {
-            type: "pointcats",
+            type: "pointcatsegories",
             view: "Breeze.view.admin.PointCats"
         },
         {
