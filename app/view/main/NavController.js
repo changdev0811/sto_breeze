@@ -29,7 +29,10 @@ Ext.define('Breeze.view.main.NavController', {
         'Breeze.api.Punch',
         'Breeze.api.reporting.YearAtAGlance',
         'Breeze.view.employee.Information',
-        'Ext.Toast'
+        'Ext.Toast',
+        'Breeze.view.main.employees.Panel',
+        'Breeze.view.reporting.Selector',
+        'Breeze.helper.settings.StyleRules'
     ],
 
     /**
@@ -46,6 +49,7 @@ Ext.define('Breeze.view.main.NavController', {
         /** Report selector panel */
         REPORTING: {
             view: 'Breeze.view.reporting.Selector',
+            // view: 'Breeze.view.employees.Information',
             clearContent: false,
             id: 'reporting'
         }

@@ -5,10 +5,14 @@
  * @alias widget.reporting.selector
  */
 Ext.define('Breeze.view.reporting.Selector', {
+    requires: [
+        'Ext.Panel', 
+        'Breeze.view.reporting.SelectorController',
+        'Ext.grid.Tree'
+    ],
     extend: 'Ext.Panel',
     alias: 'widget.reporting.selector',
-    xtype: 'breeze-reporting-selector',
-
+    // xtype: 'breeze-reporting-selector',
     controller: 'reporting.selector',
     listeners: {
         initialize: 'onInit'

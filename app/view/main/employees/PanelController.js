@@ -8,6 +8,10 @@
 Ext.define('Breeze.view.main.employees.PanelController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.main.employees.panel',
+    requires: [
+        'Breeze.store.employees.Departments',
+        'Breeze.store.employees.Employees',
+    ],
     /**
      * Called when the view is created
      */

@@ -11,7 +11,9 @@ Ext.define('Breeze.Application', {
     controllers: ['Breeze.controller.Overseer'],
 
     requires: [
-        'Breeze.helper.Auth'
+        'Breeze.helper.Auth',
+        'Breeze.view.main.employees.Panel',
+        'Breeze.view.reporting.Selector'
     ],
 
     stores: [

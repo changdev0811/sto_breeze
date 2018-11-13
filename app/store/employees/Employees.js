@@ -7,6 +7,9 @@
  * @api getEmployeeListAPI
  */
 Ext.define('Breeze.store.employees.Employees', {
+    requires: [
+        'Breeze.mixin.ListStylable'
+    ],
     mixins: {
         styleable: 'Breeze.mixin.ListStylable'
     },

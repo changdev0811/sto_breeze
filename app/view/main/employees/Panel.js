@@ -10,7 +10,20 @@ Ext.define('Breeze.view.main.employees.Panel', {
     xtype: 'breeze-employees-panel',
 
     requires: [
-        'Breeze.plugin.grid.ExpandSelect'
+        'Ext.Panel',
+        'Ext.tab.Panel',
+        'Ext.grid.Tree',
+        'Ext.tab.Tab',
+        'Ext.field.Search',
+        'Ext.field.Checkbox',
+        'Ext.field.Display',
+        'Ext.Container',
+        'Ext.Toolbar',
+        'Ext.Button',
+        'Ext.Spacer',
+        'Breeze.plugin.grid.ExpandSelect',
+        'Breeze.view.main.employees.PanelController',
+        'Breeze.view.main.employees.PanelModel'
     ],
 
     controller: 'main.employees.panel',

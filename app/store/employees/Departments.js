@@ -7,6 +7,9 @@
  * @api getDepartmentListAPI
  */
 Ext.define('Breeze.store.employees.Departments', {
+	requires: [
+		'Breeze.mixin.ListStylable'
+	],
 	mixins: {
         styleable: 'Breeze.mixin.ListStylable'
     },

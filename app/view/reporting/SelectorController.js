@@ -8,12 +8,16 @@
 Ext.define('Breeze.view.reporting.SelectorController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.reporting.selector',
+    requires: [
+        'Breeze.store.reporting.Reports',
+        'Breeze.store.reporting.Routes',
+    ],
     /**
      * Called when the view is created
      */
     onInit: function () {
 
-        let vm = this.getViewModel();
+        var vm = this.getViewModel();
 
         // Load report selector tree
         this.addStoreToViewModel(
