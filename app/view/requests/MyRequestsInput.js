@@ -20,8 +20,8 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
         // column 1
         {
             xtype: 'container',
-            flex: 2,
-            minWidth:'400pt',
+            //flex: 2,
+            width:'500pt',
             layout: 'vbox',
 
 
@@ -32,19 +32,15 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     userCls:'requests-input-panel',
                     title: 'Leave Request',
                     layout:'vbox',
-                    tools: [
-                        {
-                            iconCls: 'x-fas fa-times',
-                            //handler: ''
-                        }
-                    ], 
+ 
 
                     // Action buttons shown at bottom of panel
                     buttonAlign: 'center',
                     buttons: {
-                        save:   { weight:1, name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action', style:'width:125pt' },
-                        submit: { weight:2, name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action', style:'width:125pt' },
-                        remove: { weight:3, name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'decline alt', style:'width:125pt' },
+                        cancel: { weight:1, name: 'cancel_button', text: 'cancel', handler: 'closeLeaveRequestForm', ui: 'action',      width:'115pt' },
+                        save:   { weight:2, name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action',      width:'115pt' },
+                        submit: { weight:3, name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action',      width:'115pt' },
+                        remove: { weight:4, name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'decline alt', width:'115pt' },
                     },
 
                     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -89,7 +85,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'Start Date',
-                                    reference: 'viewDate',
+                                    // reference: 'viewDate',
                                     maxWidth:'125pt',
                                     picker: {
                                         xtype: 'datepicker',
@@ -157,7 +153,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'End Date',
-                                    reference: 'viewDate',
+                                    // reference: 'viewDate',
                                     maxWidth:'125pt',
                                     picker: {
                                         xtype: 'datepicker',
