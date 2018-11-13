@@ -30,7 +30,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            //handler: ''
+                            handler: 'showLeaveRequestForm'
                         }
                     ],
                     flex: 1,

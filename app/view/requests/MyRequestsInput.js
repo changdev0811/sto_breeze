@@ -37,7 +37,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     // Action buttons shown at bottom of panel
                     buttonAlign: 'center',
                     buttons: {
-                        cancel: { weight:1, name: 'cancel_button', text: 'cancel', /* handler: 'onPrintPDF',*/           ui: 'action',      width:'115pt' },
+                        cancel: { weight:1, name: 'cancel_button', text: 'cancel', handler: 'closeLeaveRequestForm', ui: 'action',      width:'115pt' },
                         save:   { weight:2, name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action',      width:'115pt' },
                         submit: { weight:3, name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action',      width:'115pt' },
                         remove: { weight:4, name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'decline alt', width:'115pt' },
@@ -85,7 +85,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'Start Date',
-                                    reference: 'viewDate',
+                                    // reference: 'viewDate',
                                     maxWidth:'125pt',
                                     picker: {
                                         xtype: 'datepicker',
@@ -153,7 +153,7 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     ui: 'requests-date-input',
                                     //name: 'start_date',
                                     label: 'End Date',
-                                    reference: 'viewDate',
+                                    // reference: 'viewDate',
                                     maxWidth:'125pt',
                                     picker: {
                                         xtype: 'datepicker',
