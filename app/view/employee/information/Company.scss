@@ -13,6 +13,14 @@
     padding: 2pt;
 }
 
+.employee-info-layoff-status{
+    font-size: map-get($root-font-sizes, 'base');
+    padding: {
+        top: 6pt;
+        right: 4pt;
+    }
+}
+
 @include tool-ui(
     $ui: 'employeeinfo-grid-tool',
     $color: map-get($employee-info-text-colors, 'base') !important,

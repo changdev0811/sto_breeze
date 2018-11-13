@@ -1319,21 +1319,66 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     // TODO: Finish implementing data binding for layoffs
-    onLayoffButtonToggle: function(){
+    onLayoffButtonTap: function(){
         // TODO: Implement layoff toggle
-        var vm = this.getViewModel();
+        var vm = this.getViewModel(),
+            empId = vm.get('employeeId'),
+            field = this.lookup('companyLayoffDate'),
+            layoffDate = vm.get('info.LayoffDate'),
+            me = this;
+        
+        this.apiClass.information.checkLayoffEffectiveDate(
+            empId, layoffDate
+        ).then((success)=>{
+            field.setValue(layoffDate);
+            this.showLayoffDateSheet();
+        }).catch((err)=>{
+            field.setValue(new Date());
+            this.showLayoffDateSheet();
+        });
 
-        if(vm.get('info.LayoffStatus') == "Active"){
-            this.lookup('layoffEffectivePicker').show();
-        } else {
-            vm.set('info.LayoffStatus', "Active");
-        }
+        // if(vm.get('info.LayoffStatus') == "Active"){
+        //     this.lookup('layoffEffectivePicker').show();
+        // } else {
+        //     vm.set('info.LayoffStatus', "Active");
+        // }
 
         console.info('Layoff toggle button clicked');
     },
 
-    onLayoffEffectivePicked: function(){
-        var vm = this.getViewModel();
+    /**
+     * Display layoff date select sheet
+     */
+    showLayoffDateSheet: function(){
+        var field = this.lookup('companyLayoffDate');
+        field.getPicker().show();
+    },
+
+    /**
+     * Apply updated layoff effective date
+     * @param {Object} sheet 
+     * @param {Date} value New date
+     */
+    onLayoffEffectivePicked: function(sheet, value){
+        var vm = this.getViewModel(),
+            me = this;
+
+        this.apiClass.information.toggleLayoff(
+            vm.get('employeeId'),
+            value
+        ).then((msg)=>{
+            // Ext.Toast({
+            //     type: Ext.Toast.INFO,
+            //     message: 'Successfully updated E'
+            // })
+            me.onRefreshTool(null, null, null);
+        }).catch((err)=>{
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: `Error changing layoff date: <br>${err}`,
+                timeout: 10000
+            });
+        })
 
         console.info('Picked effective layoff date');
     },

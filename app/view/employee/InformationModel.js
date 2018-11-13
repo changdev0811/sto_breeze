@@ -301,6 +301,18 @@ Ext.define('Breeze.view.employee.InformationModel', {
             return (get('info.LayoffStatus') == 'Laid Off');
         },
 
+        /**
+         * Text to show on layoff button based on current state
+         * @param {Function} get 
+         * @return {String} Button text
+         */
+        layoffButtonText: function(get){
+            if(get('isLaidOff')){
+                return 'Reinstate';
+            } else {
+                return 'Active';
+            }
+        },
 
 
         /**
