@@ -168,7 +168,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
      * Handle 'New' employee button click event
      */
     onNewEmployeeButton: function(){
-        this.redirectTo('employee/empinfo/new');
+        this.redirectTo('employees/empinfo/new');
     },
 
     tryPerformingNodeAction: function(nodeRecord){
