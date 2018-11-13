@@ -10,7 +10,6 @@ Ext.define('Breeze.view.dashboard.AdminController', {
     alias: 'controller.dashboard.admin',
     
 
-
     //requires: [
     //    'Breeze.api.Employee'
     //],
@@ -31,8 +30,6 @@ Ext.define('Breeze.view.dashboard.AdminController', {
         //this.lookup('fyiDash').getHeader().el.on('click', function(e){
         //    me.onFyiNavClick(e);
         //});
-
-
     },
 
     loadFyi: function(){
@@ -65,17 +62,21 @@ Ext.define('Breeze.view.dashboard.AdminController', {
 
     /*== Navigation button handlers ==*/
     
-    onFyiNavClick: function(){
-        //this.redirectTo('admin/fyi');
+    onLeaveRequestsRequiringActionNavClick: function(){
+        //this.redirectTo('leaveRequests');
     },
     
-    onCalendarNavClick: function(){
-        //this.redirectTo('admin/calendar');
+    onLeaveRequestsActionTakenNavClick: function(){
+        //this.redirectTo('leaveRequests');
     },
 
-    onInfoNavClick: function(){
+    onEmployeeAbsencesNavClick: function(){
+        //this.redirectTo('absences');
+    },
+  
+    onDepartmentAttendanceNavClick: function(){
         //this.redirectTo('admin/info');
-    }
-    
+    },
+
 
 });
