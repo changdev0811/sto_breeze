@@ -8,7 +8,7 @@ Ext.define('Breeze.store.option.NewRates', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.TypeOption',
     alias: 'store.option.newrates',
-    storeId: 'UserTypeOptions',
+    storeId: 'NewRates',
     autoLoad: true,
     listeners: {
 		beforeload : function () {

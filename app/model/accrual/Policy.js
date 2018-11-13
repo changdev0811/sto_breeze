@@ -4,6 +4,10 @@
  * @namespace Breeze.model.accrual.Policy
  */
 Ext.define('Breeze.model.accrual.Policy', {
+    requires: [
+        'Breeze.model.accrual.policy.ShiftSegment',
+        'Breeze.model.accrual.policy.Category'
+    ],
     extend: 'Breeze.model.Base',
     fields: [
         { name: 'ID', type: 'integer' },
@@ -14,13 +18,13 @@ Ext.define('Breeze.model.accrual.Policy', {
     ],
 
     hasMany: [
-        { 
-            model: 'Breeze.model.accrual.policy.ShiftSegment', 
-            name: 'shifts' 
-        },
-        {
-            model: 'Breeze.model.accrual.policy.Category',
-            name: 'Categories'
-        }
+        // { 
+        //     model: 'Breeze.model.accrual.policy.ShiftSegment', 
+        //     name: 'shifts' 
+        // },
+        // {
+        //     model: 'Breeze.model.accrual.policy.Category',
+        //     name: 'Categories'
+        // }
     ]
 });

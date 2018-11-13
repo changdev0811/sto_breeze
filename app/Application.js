@@ -23,7 +23,8 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.Years',
         // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
-        'Breeze.store.company.Config'
+        'Breeze.store.company.Config',
+        'Breeze.store.option.NewRates'
     ],
 
     defaultToken: 'home',
@@ -54,7 +55,7 @@ Ext.define('Breeze.Application', {
         if(testing){
             // make dummy cookies for test mode, so we
             // can skip login
-            Breeze.helper.Auth.setCookies("1","2","5003");
+            Breeze.helper.Auth.setCookies("1","2","5001");
             Breeze.helper.Cookie.bake('STOLI','True',null);
         }
         if((Breeze.helper.Auth.isAuthorized() && Breeze.helper.Auth.isLoggedIn()) || testing){

@@ -65,18 +65,23 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     formulas: {
+        selectedCategory: function(get){
+            return get('policyCategories').findRecord('categoryId', get('categoryId'));
+        },
         categoryYearType: {
-            bind: {
-                categories: '{policyCategories}',
-                categoryId: '{selectedCategory}'
-            },
-            get: function(data){
+            // TODO: Implement category year type set
+            // set: function(get){
+
+            // },
+            get: function(get){
+                var catId = get('categoryId'),
+                    cats = get('policyCategories');
                 if(
-                    !Object.isUnvalued(data.categories) && 
-                    Object.isUnvalued(data.categoryId)
+                    !Object.isUnvalued(catId) && 
+                    !Object.isUnvalued(cats)
                 ){
-                    var cat = data.categories
-                        .query('categoryId', data.categoryId);
+                    var cat = cats
+                        .findRecord('categoryId', catId);
                     return cat.get('calendarType');
                 } else {
                     return null;

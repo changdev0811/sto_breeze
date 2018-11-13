@@ -133,7 +133,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             xtype: 'fieldset',
                             name: 'recording_mode',
                             userCls: 'admin-fieldset',
-                            title: 'Recording Model',
+                            title: 'Recording Mode',
                             height: '45pt',
                             layout: 'vbox',
                             flex: 1,
@@ -153,7 +153,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     },
                                     bind: {
                                         values: {
-                                            recMode: '{policy.recMode}'
+                                            recMode: '{policyData.recordingMode}'
                                         }
                                     },
                                     items: [
@@ -161,7 +161,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             name: 'recMode',
                                             boxLabel: 'Days',
-                                            value: '20',
+                                            value: 20,
                                             bind: {
                                                 groupValue: '{recordingMode.recMode}'
                                             }
@@ -170,7 +170,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             name: 'recMode',
                                             boxLabel: 'Hours',
-                                            value: '21',
+                                            value: 21,
                                             bind: {
                                                 groupValue: '{recordingMode.recMode}'
                                             }
@@ -213,7 +213,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     sortable: false, columnResize: false,
                                     columnMenu: false, hideHeaders: true,
                                     bind: {
-                                        store: '{shiftSegments}'
+                                        store: '{policySegments}'
                                     },
                                     defaults: {
                                         xtype: 'gridcolumn',
@@ -280,17 +280,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 // Column 3
                 {
                     xtype: 'panel',
-                    title: 'Illness Information',
-
-
-
-
-
+                    bind: {
+                        title: '{selectedCategory.categoryName} Information',
+                    },
                     ui: 'admin-sub',
-
-
                     flex: 2,
-
                     // +++ fixed width +++
                     minWidth: '400pt',
                     maxWidth: '400pt',
@@ -378,23 +372,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             style: 'padding-left: 4pt',
                                             name: 'category_new_time',
-                                            allowDecimals: false,
-                                            minValue: 0
+                                            decimals: 0,
+                                            minValue: 0,
+                                            bind: {
+                                                value: '{selectedCategory.newTime}'
+                                            }
                                         },
                                         {
                                             xtype: 'spacer',
                                             width: '10pt'
                                         },
                                         {
-                                            xtype: 'combobox',
+                                            xtype: 'selectfield',
                                             flex: 2,
                                             name: 'category_new_rate',
-                                            allowBlank: false,
-                                            editable: false,
                                             displayField: 'Description',
-                                            forceSelection: true,
-                                            queryMode: 'local',
-                                            valueField: 'ID'
+                                            valueField: 'ID',
+                                            store: 'NewRates',
+                                            bind: {
+                                                value: '{selectedCategory.newRate}'
+                                            }
                                         },
                                     ]
                                 },
@@ -427,8 +424,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             style: 'padding-left: 4pt',
                                             name: 'category_accrual_cap_amount',
-                                            allowDecimals: false,
-                                            minValue: 0
+                                            decimals: 0,
+                                            minValue: 0,
+                                            bind: {
+                                                value: '{selectedCategory.accrualCapAmount}'
+                                            }
                                         },
                                         {
                                             xtype: 'spacer',
@@ -443,7 +443,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             displayField: 'description',
                                             valueField: 'code',
                                             bind: {
-                                                store: '{accrualCapUnit}'
+                                                store: '{accrualCapUnit}',
+                                                value: '{selectedCategory.accrualCapUnit}'
                                             }
                                         },
                                     ]
@@ -467,14 +468,17 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             name: 'category_balance_cap_amount',
                                             flex: 1,
                                             style: 'padding-left: 4pt',
-                                            decimalPrecision: 2,
+                                            decimals: 2,
+                                            bind: {
+                                                value: '{selectedCategory.balanceCapAmount}'
+                                            }
                                         },
                                         {
                                             xtype: 'spacer',
                                             width: '10pt'
                                         },
                                         {
-                                            xtype: 'combobox',
+                                            xtype: 'selectfield',
                                             flex: 2,
                                             name: 'category_balance_cap_unit',
                                             store: Ext.create('Ext.data.Store', {
@@ -486,7 +490,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 ]
                                             }),
                                             valueField: 'code',
-                                            displayField: 'description'
+                                            displayField: 'description',
+                                            bind: {
+                                                value: '{selectedCategory.balanceCapUnit}'
+                                            }
                                         },
                                     ]
                                 },
@@ -506,7 +513,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'checkbox',
                                             ui: 'reporting',
-                                            boxLabel: 'Illness Accrual Rules',
+                                            bind: {
+                                                boxLabel: '{selectedCategory.categoryName} Accrual Rules'
+                                            },
                                             //listeners: {
                                             //    change: 'onCategoriesCheckAllChange'
                                             //}
@@ -591,7 +600,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     items: [
                                         {
                                             xtype: 'component',
-                                            html: 'Illness Carry Over Rules',
+                                            bind: {
+                                                html: '{selectedCategory.categoryName} Carry Over Rules'
+                                            },
                                             userCls: 'admin-title-toolbar',
                                         },
                                         {

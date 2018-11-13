@@ -45,17 +45,24 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} eOpts 
      */
     onPolicySelect: function(list, record, eOpts){
-        var vm = this.getViewModel();
+        var vm = this.getViewModel(),
+            me = this;
 
         this.loadStore(
             'Breeze.store.accrual.Policy',
             { scheduleId: record.get('ID') }
         ).then((policy)=>{
             vm.set('policyData', policy.getAt(0));
-            vm.set('shiftSegments', policy.getAt(0).shifts());
-            vm.set('policyCategories', policy.getAt(0).Categories());
+            me.addLoadedStoreToViewModel({
+                model: 'Breeze.model.accrual.policy.Category',
+                data: policy.getAt(0).getData().Categories,
+            }, 'policyCategories');
+            me.addLoadedStoreToViewModel({
+                model: 'Breeze.model.accrual.policy.ShiftSegment',
+                data: policy.getAt(0).getData().shifts,
+            }, 'policySegments');
             console.info('Loaded policy');
-        }).catch(()=>{
+        }).catch(function(){
             console.warn('Unable to load policy information');
         });
     },
@@ -63,7 +70,20 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     onCategorySelect: function(list, record, eOpts){
         var vm = this.getViewModel();
 
-        vm.set('selectedCategory', record.get('Category_Id'));
+        vm.set('categoryId', record.get('Category_Id'));
+        // vm.set('selectedCategory', vm.get('policyCategories').query)
+        console.info('Category Selected');
+    },
+
+
+    // TODO: Implement add policy handler
+    onAddPolicy: function(comp){
+
+    },
+
+    // TODO: Implement delete policy handler
+    onDeletePolicy: function(comp){
+
     }
 
 
