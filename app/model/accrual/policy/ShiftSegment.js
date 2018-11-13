@@ -10,5 +10,12 @@ Ext.define('Breeze.model.accrual.policy.ShiftSegment', {
         {name: 'StopTime',	type: 'string' },
         {name: 'StopSegment',	type: 'integer'},
 		{name: 'StartSegment',	type: 'integer'}
-    ]
+    ],
+    proxy: {
+        type: 'ajax',
+        reader: {
+            type: 'json',
+            rootProperty: 'd'
+        }
+    }
 });

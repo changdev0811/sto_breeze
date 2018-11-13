@@ -18,13 +18,13 @@ Ext.define('Breeze.model.accrual.Policy', {
     ],
 
     hasMany: [
-        // { 
-        //     model: 'Breeze.model.accrual.policy.ShiftSegment', 
-        //     name: 'shifts' 
-        // },
-        // {
-        //     model: 'Breeze.model.accrual.policy.Category',
-        //     name: 'Categories'
-        // }
+        { 
+            model: 'Breeze.model.accrual.policy.ShiftSegment', 
+            name: 'shifts' 
+        },
+        {
+            model: 'Breeze.model.accrual.policy.Category',
+            name: 'Categories'
+        }
     ]
 });

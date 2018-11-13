@@ -28,7 +28,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        save: { name: 'save_button', text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action', style: 'width:200pt' },
+        save: { name: 'save_button', text: 'Save Accrual Policy', handler: 'onSavePolicy', ui: 'action', style: 'width:200pt' },
         apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:200pt' },
     },
 
@@ -314,7 +314,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             defaults: {
                                                 bodyAlign: 'stretch',
                                                 ui: 'admin',
-                                                xtype: 'radio'
+                                                xtype: 'radio',
+                                                style: 'padding-right: 8pt'
                                             },
                                             bind: {
                                                 values: {
@@ -323,7 +324,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             },
                                             items: [
                                                 {
-                                                    flex: 1.25,
                                                     name: 'yearType',
                                                     boxLabel: 'Anniversary',
                                                     value: 45,
@@ -332,7 +332,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                     }
                                                 },
                                                 {
-                                                    flex: 1,
                                                     name: 'yearType',
                                                     boxLabel: 'Calendar',
                                                     value: 46,
@@ -341,7 +340,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                     }
                                                 },
                                                 {
-                                                    flex: 1,
                                                     name: 'yearType',
                                                     boxLabel: 'Fiscal',
                                                     value: 45,
@@ -514,24 +512,24 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             xtype: 'checkbox',
                                             ui: 'reporting',
                                             bind: {
-                                                boxLabel: '{selectedCategory.categoryName} Accrual Rules'
+                                                boxLabel: '{selectedCategory.categoryName} Accrual Rules',
+                                                checked: '{selectedCategory.allowAccrual}'
                                             },
                                             //listeners: {
                                             //    change: 'onCategoriesCheckAllChange'
                                             //}
                                         },
 
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1,
-
-                                        },
+                                        { xtype: 'spacer', flex: 1 },
 
                                         {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
+                                            bind: {
+                                                disabled: '{!selectedCategory.allowAccrual}'
+                                            }
                                         },
 
                                         {
@@ -539,49 +537,155 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-clock',
                                             ui: 'plain wtr-button',
-
+                                            bind: {
+                                                disabled: '{!selectedCategory.allowAccrual}'
+                                            }
                                         },
                                     ]
                                 },
 
                                 {
-                                    xtype: 'tree',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border no-background',
+                                    xtype: 'grid',
                                     flex: 1,
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
+                                    sortable: false,
+                                    striped: false,
+                                    columnMenu: null,
+                                    grouped: true,
+                                    ui: 'employeeinfo-shift-grid',
+                                    reference: 'accrualRuleGrid',
+                                    hidden: true,
+                                    bind: {
+                                        // store: '{selectedCategory.accrualRules}'
+                                        // store: '{selectedCategoryAccrualRules}'
+                                        store: '{groupedCategoryAccrualRules}',
+                                        hidden: '{!selectedCategory.allowAccrual}'
+                                    },
+                                    listeners: {
+                                        // storechange: (grid, newStore)=>{
+                                        //     if(!Object.isUnvalued(newStore)){
+                                        //         newStore.setGroupField('ruleName');
+                                        //     }
+                                        // }
+                                    },
+                                    defaultType: 'gridcolumn',
                                     columns: [
                                         {
-                                            xtype: 'checkcolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            //listeners: {
-                                            //    checkChange: 'onTreeGridChecked'
-                                            //}
+                                            itemId: 'from',
+                                            text: 'From',
+                                            dataIndex: 'svcFrom',
+                                            menuDisabled: true,
+                                            tpl: [
+                                                '<tpl if="svcFrom==0">Hire</tpl>',
+                                                '<tpl if="svcFrom!=0">',
+                                                '{svcFrom} Year<tpl if="svcFrom!=1">s</tpl>',
+                                                '</tpl>'
+                                            ]
                                         },
                                         {
-                                            xtype: 'treecolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'text',
+                                            itemId: 'through',
+                                            text: 'Through',
+                                            dataIndex: 'svcTo',
+                                        },
+                                        {
+                                            itemId: 'info',
+                                            text: 'Accrual Information',
                                             flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                            dataIndex: 'accrualChanged',
+                                            tpl: [
+                                               '<tpl if="accformInc!=0">',
+                                                '<tpl if="accformPer==56||accformPer==119">Monthly Special: </tpl>',
+                                                '{accformInc} ',
+                                                '<tpl if="accformUnit==48">Day</tpl>',
+                                                '<tpl if="accformUnit==49">Hour</tpl>',
+                                                '<tpl if="accformUnit==50">Minute</tpl>',
+                                                '<tpl if="accformInc!=1">s</tpl> ',
+                                                '<tpl if="accformPer &lt; 115">',
+                                                    '<tpl if="accformPer==51">Weekly on ',
+                                                        '<tpl if="accformDay==1">Sunday</tpl>',
+                                                        '<tpl if="accformDay==2">Monday</tpl>',
+                                                        '<tpl if="accformDay==3">Tuesday</tpl>',
+                                                        '<tpl if="accformDay==4">Wednesday</tpl>',
+                                                        '<tpl if="accformDay==5">Thursday</tpl>',
+                                                        '<tpl if="accformDay==6">Friday</tpl>',
+                                                        '<tpl if="accformDay==7">Saturday</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer==52">BiWeekly on the ',
+                                                        '<tpl if="accformDay &lt; 8"> first </tpl>',
+                                                        '<tpl if="accformDay &gt; 7"> second </tpl>',
+                                                        '<tpl if="accformDay==1||accformDay==8">Sunday</tpl>',
+                                                        '<tpl if="accformDay==2||accformDay==9">Monday</tpl>',
+                                                        '<tpl if="accformDay==3||accformDay==10">Tuesday</tpl>',
+                                                        '<tpl if="accformDay==4||accformDay==11">Wednesday</tpl>',
+                                                        '<tpl if="accformDay==5||accformDay==12">Thursday</tpl>',
+                                                        '<tpl if="accformDay==6||accformDay==13">Friday</tpl>',
+                                                        '<tpl if="accformDay==7||accformDay==14">Saturday</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer==53">Monthly on ',
+                                                        '<tpl if="accformDay!=\'ANNIVERSARY\'">the </tpl>',
+                                                        '{accformDay}',
+                                                        '<tpl if="accformDay==1 ||accformDay==21||accformDay==31">st</tpl>',
+                                                        '<tpl if="accformDay==2 ||accformDay==22">nd</tpl>',
+                                                        '<tpl if="accformDay==3 ||accformDay==23">rd</tpl>',
+                                                        '<tpl if="accformDay!=1 &&accformDay!=2 &&accformDay!=3 &&accformDay!=21&&accformDay!=22&&accformDay!=23&&accformDay!=31&&accformDay!=\'ANNIVERSARY\'">th</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer==54">Quarterly</tpl>',
+                                                    '<tpl if="accformPer==55">Semi-Annually</tpl>',
+                                                    '<tpl if="accformPer==56"> on ',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==1">January</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==2">February</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==3">March</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==4">April</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==5">May</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==6">June</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==7">July</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==8">August</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==9">September</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==10">October</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==11">November</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==12">December</tpl>',
+                                                        ' {msDay}',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ' ,
+                                                            '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                            '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer==114">Annually on {accformDay}</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer &gt; 114"> per ',
+                                                    '<tpl if="accformPer!=119">',
+                                                        '<tpl if="accformDay &gt; 1">{accformDay} </tpl>',
+                                                        '<tpl if="accformPer==115">Day</tpl>',
+                                                        '<tpl if="accformPer==116">Week</tpl>',
+                                                        '<tpl if="accformPer==117">Month</tpl>',
+                                                        '<tpl if="accformPer==118">Year</tpl>',
+                                                        '<tpl if="accformPer==140">Worked Hour</tpl>',
+                                                        '<tpl if="accformPer==141">Worked Day</tpl>',
+                                                        '<tpl if="accformDay &gt; 1">s</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer==119">',
+                                                        '{msMonth}',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==1">st</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==2">nd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==3">rd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[0])!=1 &&eval(accformDay.split(\'-\')[0])!=2 &&eval(accformDay.split(\'-\')[0])!=3">th</tpl>',
+                                                        ' Month on ',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">the </tpl>',
+                                                        '{msDay}',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ' ,
+                                                            '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                            '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
+                                                    '</tpl>',
+                                                '</tpl>',
+                                                '</tpl>',
+                                            '<tpl if="accformInc==0">No Accrual</tpl>'
+                                            ]
                                         }
-                                    ],
-
-                                    bind: '{departmentsTree}'
+                                    ]
                                 },
                             ]
                         },

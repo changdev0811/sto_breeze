@@ -48,29 +48,67 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var vm = this.getViewModel(),
             me = this;
 
-        this.loadStore(
+        // this.loadStore(
+        //     'Breeze.store.accrual.Policy',
+        //     { scheduleId: record.get('ID') }
+        // ).then((policy)=>{
+        //     vm.set('policyData', policy.getAt(0));
+        //     me.addLoadedStoreToViewModel({
+        //         model: 'Breeze.model.accrual.policy.Category',
+        //         data: policy.getAt(0).getData().Categories,
+        //     }, 'policyCategories');
+        //     me.addLoadedStoreToViewModel({
+        //         model: 'Breeze.model.accrual.policy.ShiftSegment',
+        //         data: policy.getAt(0).getData().shifts,
+        //     }, 'policySegments');
+        //     console.info('Loaded policy');
+        // }).catch(function(){
+        //     console.warn('Unable to load policy information');
+        // });
+        this.addStoreToViewModel(
             'Breeze.store.accrual.Policy',
-            { scheduleId: record.get('ID') }
-        ).then((policy)=>{
-            vm.set('policyData', policy.getAt(0));
-            me.addLoadedStoreToViewModel({
-                model: 'Breeze.model.accrual.policy.Category',
-                data: policy.getAt(0).getData().Categories,
-            }, 'policyCategories');
-            me.addLoadedStoreToViewModel({
-                model: 'Breeze.model.accrual.policy.ShiftSegment',
-                data: policy.getAt(0).getData().shifts,
-            }, 'policySegments');
-            console.info('Loaded policy');
-        }).catch(function(){
-            console.warn('Unable to load policy information');
-        });
+            'policy',
+            {
+                createOpts: {
+                    scheduleId: record.get('ID')
+                },
+                load: true,
+                loadOpts: {
+                    callback: function(success){
+                        if(success){
+                            var policy = vm.get('policy');
+                            vm.set('policyData', policy.getAt(0));
+                            me.addLoadedStoreToViewModel({
+                                model: 'Breeze.model.accrual.policy.Category',
+                                data: policy.getAt(0).getData().Categories,
+                            }, 'policyCategories');
+                            // policy.getAt(0).Categories().load();
+                            // policy.getAt(0).Categories().each((c)=>{
+                            //     c.accrualRules().setGroupField('ruleName');
+                            // });
+                            // vm.set('policyCategories', policy.getAt(0).Categories());
+                            vm.get('policyCategories').each((c)=>{
+                                // c.accrualRules().setGroupField('ruleName');
+                            });
+                            me.addLoadedStoreToViewModel({
+                                model: 'Breeze.model.accrual.policy.ShiftSegment',
+                                data: policy.getAt(0).getData().shifts,
+                            }, 'policySegments');
+                            console.info('Loaded policy');
+                        } else {
+                            console.warn('Unable to load policy information');
+                        }
+                    }
+                }
+            }
+        )
     },
 
     onCategorySelect: function(list, record, eOpts){
         var vm = this.getViewModel();
 
         vm.set('categoryId', record.get('Category_Id'));
+        this.lookup('accrualRuleGrid').runRefresh();
         // vm.set('selectedCategory', vm.get('policyCategories').query)
         console.info('Category Selected');
     },
@@ -84,6 +122,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     // TODO: Implement delete policy handler
     onDeletePolicy: function(comp){
 
+    },
+
+    /**
+     * Handle 'Save Accrual Policy' button click event
+     */
+    onSavePolicy: function(){
+        console.info('Save policy clicked');
     }
 
 

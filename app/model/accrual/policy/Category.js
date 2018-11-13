@@ -4,6 +4,10 @@
  * @namespace Breeze.model.accrual.policy.Category
  */
 Ext.define('Breeze.model.accrual.policy.Category', {
+    requires: [
+        'Breeze.model.accrual.policy.Rule',
+        'Breeze.model.accrual.policy.CarryOverRule',
+    ],
     extend: 'Breeze.model.Base',
     fields: [
         {name: 'accrualCapAmount',	type: 'integer' },
@@ -30,5 +34,12 @@ Ext.define('Breeze.model.accrual.policy.Category', {
             model: 'Breeze.model.accrual.policy.CarryOverRule',
             name: 'carryOverRules'
         }
-    ]
+    ],
+    proxy: {
+        type: 'memory',
+        reader: {
+            type: 'json',
+            rootProperty: 'Categories'
+        }
+    }
 });

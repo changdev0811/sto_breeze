@@ -14,5 +14,12 @@ Ext.define('Breeze.model.accrual.policy.CarryOverRule', {
         {name: 'perUnit',	    type: 'integer' },
         {name: 'svcFrom',	type: 'integer' },
         {name: 'svcTo',	    type: 'integer' },
-    ]
+    ],
+    proxy: {
+        type: 'memory',
+        reader: {
+            type: 'json',
+            rootProperty: 'carryOverRules'
+        }
+    }
 });

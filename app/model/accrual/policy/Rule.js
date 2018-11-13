@@ -10,11 +10,19 @@ Ext.define('Breeze.model.accrual.policy.Rule', {
         {name: 'svcFrom',	type: 'integer' },
         {name: 'svcTo',	    type: 'integer' },
         {name: 'accformDay',	    type: 'string' },
-        {name: 'accformInc',	type: 'integer' },
+        {name: 'accformInc',	type: 'number' },
         {name: 'accformPer',	type: 'integer' },
         {name: 'accformUnit',	    type: 'boolean' },
-        {name: 'accrualChanged',	type: 'auto' },
+        {name: 'accrualChanged',	type: 'boolean' },
         {name: 'msDay',	    type: 'string' },
         {name: 'msMonth',	    type: 'string' }
-    ]
+    ],
+    proxy: {
+        type: 'memory',
+        reader: {
+            type: 'json',
+            rootProperty: 'accrualRules',
+            groupRootProperty: 'ruleName'
+        }
+    }
 });

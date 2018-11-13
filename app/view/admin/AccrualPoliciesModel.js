@@ -61,12 +61,30 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 { code: 49, description: 'Hours' },
                 { code: 50, description: 'Minutes' }
             ]
+        },
+        groupedCategoryAccrualRules: {
+            source: '{selectedCategoryAccrualRules}',
+            groupField: 'ruleName'
         }
     },
 
     formulas: {
         selectedCategory: function(get){
-            return get('policyCategories').findRecord('categoryId', get('categoryId'));
+            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+            if(!Object.isUnvalued(cat)){
+                return cat;
+            } else {
+                return cat;
+            }
+        },
+
+        selectedCategoryAccrualRules: function(get){
+            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+            if(!Object.isUnvalued(cat)){
+                return cat.accrualRules();
+            } else {
+                return null;
+            }
         },
         categoryYearType: {
             // TODO: Implement category year type set
