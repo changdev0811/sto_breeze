@@ -90,7 +90,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                             items: [
                                 // Departments tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     // == Item ID for each tab to allow us to see which is active
                                     itemId: 'departments',
                                     title: 'Departments',
@@ -164,7 +164,7 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
                                 },
                                 // Employees Tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     title: 'Employees',
                                     // == Item ID for panel 
                                     itemId: 'employees',

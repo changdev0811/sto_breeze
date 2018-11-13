@@ -91,6 +91,7 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                                 // Departments tab
                                 {
                                     xtype: 'panel',
+                                    ui: 'reporting-tab-panel',
                                     // == Item ID for each tab to allow us to see which is active
                                     itemId: 'departments',
                                     title: 'Departments',
@@ -165,7 +166,7 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
                                 // Employees Tab
                                 {
                                     xtype: 'panel',
-                                    title: 'Employees',
+                                    ui: 'reporting-tab-panel',                                    title: 'Employees',
                                     // == Item ID for panel 
                                     itemId: 'employees',
                                     layout: 'fit',

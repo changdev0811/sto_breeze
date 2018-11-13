@@ -227,3 +227,7 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
 );
 
 
+@include panel-ui(
+    $ui: 'employee-info-tab-panel',
+    $body-background-color: map-get($employee-info-colors, 'base')
+);

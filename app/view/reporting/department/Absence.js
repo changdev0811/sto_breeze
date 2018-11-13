@@ -95,7 +95,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
-
+                                    ui: 'reporting-tab-panel',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
@@ -169,6 +169,7 @@ Ext.define('Breeze.view.reporting.department.Absence', {
                                     // == Item ID for panel 
                                     itemId: 'employees',
                                     layout: 'fit',
+                                    ui: 'reporting-tab-panel',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',

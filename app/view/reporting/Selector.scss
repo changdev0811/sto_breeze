@@ -132,6 +132,11 @@
 };
 
 
+@include panel-ui(
+    $ui: 'reporting-tab-panel',
+    $body-background-color: map-get($reporting-colors, 'base')
+);
+
 // Tree grid with border
 @include grid-ui(
     $ui: 'reporting-tree'

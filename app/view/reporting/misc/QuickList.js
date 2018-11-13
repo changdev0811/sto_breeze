@@ -91,7 +91,7 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                             items: [
                                 // Departments tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     // == Item ID for each tab to allow us to see which is active
                                     itemId: 'departments',
                                     title: 'Departments',
@@ -165,7 +165,7 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                                 },
                                 // Employees Tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     title: 'Employees',
                                     // == Item ID for panel 
                                     itemId: 'employees',
@@ -433,7 +433,7 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                             items: [
                                 // Week Range Tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     // data for tab, used to set 'date_type'
                                     data: {
                                         type: 'weeks'
@@ -510,7 +510,7 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                                 },
                                 // Date Range Tab
                                 {
-                                    xtype: 'panel',
+                                    xtype: 'panel', ui: 'reporting-tab-panel',
                                     title: 'Date Range',
                                     // data for tab, used to set 'date_type'
                                     data: {

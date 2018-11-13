@@ -96,7 +96,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                     itemId: 'departments',
                                     title: 'Departments',
                                     layout: 'fit',
-
+                                    ui: 'reporting-tab-panel',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
@@ -170,6 +170,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                     // == Item ID for panel 
                                     itemId: 'employees',
                                     layout: 'fit',
+                                    ui: 'reporting-tab-panel',
                                     // Toolbar containing 'check all' toggle checkbox
                                     tbar: {
                                         xtype: 'toolbar',
