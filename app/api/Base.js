@@ -19,5 +19,5 @@ Ext.define('Breeze.api.Base', {
     /**
      * Alias for $breeze.defVal
      */
-    defVal: $breeze.defVal
+    defVal: Object.defVal
 });

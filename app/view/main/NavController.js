@@ -707,7 +707,7 @@ Ext.define('Breeze.view.main.NavController', {
      * @param {Boolean} modalMode If true, treat view as 'modal' (disable menus); default false
      */
     changeContent: function(newContent, modalMode){
-        var modalMode = $breeze.defVal(modalMode, false);
+        var modalMode = Object.defVal(modalMode, false);
 
         var container = this.lookup('contentContainer');
         

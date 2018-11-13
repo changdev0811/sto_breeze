@@ -84,7 +84,7 @@ Ext.define('Breeze.controller.Base', {
      * @return {Promise} Promise resolving with store or rejecting on error
      */
     loadStore: function(store, args){
-        var args = $breeze.defVal(args, {});
+        var args = Object.defVal(args, {});
         return new Promise((resolve, reject)=>{
             var s = Ext.create(store, args).load({
                 callback: (records, ops, success)=>{

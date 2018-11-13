@@ -37,9 +37,9 @@ Ext.define('Breeze.helper.routing.TreeRouter', {
      *      or false if route item has a routeAct value of false
      */
     resolve: function(treeRecord, noRedirect){
-        var noRedirect = $breeze.defVal(noRedirect, false);
+        var noRedirect = Object.defVal(noRedirect, false);
         var route = this.getPrefix() + treeRecord.data[this.getRouteAttribute()];
-        var act = $breeze.defVal(treeRecord.data[this.getActAttribute()], true);
+        var act = Object.defVal(treeRecord.data[this.getActAttribute()], true);
         var event = treeRecord.data[this.getEventAttribute()];
         if(act){
             if(!noRedirect){
