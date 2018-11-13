@@ -95,6 +95,7 @@ Ext.define('Breeze.view.main.NavController', {
         },
         // My Requests routes
         'requests' : {
+            before: 'beforeRoute',
             action: 'onMyRequestsRoute'
         },
         // Common routes

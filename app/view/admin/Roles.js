@@ -167,7 +167,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isWorktime',
-                                    id: 'radio1',
                                     value: '20',
                                     boxLabel: 'Check All',
                                     bodyAlign: 'stretch',
@@ -177,7 +176,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio2',
                                     value: '20',
                                     boxLabel: 'Add Employee',
                                     bodyAlign: 'stretch',
@@ -185,8 +183,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                 {
                                     xtype:'checkbox',
                                     ui:'admin',
-                                    name: 'isOT',
-                                    id: 'radio3',
                                     value: '20',
                                     boxLabel: 'Delete Employee',
                                     bodyAlign: 'stretch',
@@ -195,7 +191,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio4',
                                     value: '20',
                                     boxLabel: 'Edit Employee',
                                     bodyAlign: 'stretch',
@@ -204,7 +199,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio5',
                                     value: '20',
                                     boxLabel: 'View SSN',
                                     bodyAlign: 'stretch',
@@ -213,7 +207,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio6',
                                     value: '20',
                                     boxLabel: 'View Compensation',
                                     bodyAlign: 'stretch',
@@ -222,7 +215,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio7',
                                     value: '20',
                                     boxLabel: 'Employee Category Adjust',
                                     bodyAlign: 'stretch',
@@ -231,7 +223,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio8',
                                     value: '20',
                                     boxLabel: 'Adjustments',
                                     bodyAlign: 'stretch',
@@ -240,7 +231,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio9',
                                     value: '20',
                                     boxLabel: 'Leave Approvial',
                                     bodyAlign: 'stretch',
@@ -249,7 +239,6 @@ Ext.define('Breeze.view.admin.Roles', {
                                     xtype:'checkbox',
                                     ui:'admin',
                                     name: 'isOT',
-                                    id: 'radio10',
                                     value: '20',
                                     boxLabel: 'Modify Recorded Time',
                                     bodyAlign: 'stretch',
@@ -258,25 +247,9 @@ Ext.define('Breeze.view.admin.Roles', {
                             ]
 
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     ]
                 },
-
             ]
         }
-
     ]
 });
