@@ -95,12 +95,6 @@
     $pressed-icon-color: map-get($root-colors, 'base'),
 );
 
-@include dataview-ui(
-    $background-color :  map-get($admin-colors, 'base'),
-    $ui: 'employeeinfo-shift-grid'
-)
-
-
 .requests-calendar-panel {
     height:auto; 
     margin:0pt 0pt 0pt 0pt;

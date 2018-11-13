@@ -212,7 +212,7 @@
 
 @include dataview-ui(
     $background-color :  map-get($admin-colors, 'base'),
-    $ui: 'employeeinfo-shift-grid'
+    $ui: 'admin-shift-grid'
 )
 
 .employeeinfo-shift-grid {
