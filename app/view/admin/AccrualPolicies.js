@@ -735,42 +735,95 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     ]
                                 },
                                 {
-                                    xtype: 'tree',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border no-background',
+                                    xtype: 'grid',
                                     flex: 1,
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
+                                    sortable: false, striped: false,
+                                    columnMenu: null,
+                                    ui: 'admin-grid', userCls: 'admin-grid',
+                                    reference: 'carryOverGrid',
+                                    bind: {
+                                        store: '{selectedCategoryCarryOverRules}',
+                                    },
+                                    listeners: {
+                                        // storechange: (grid, newStore)=>{
+                                        //     if(!Object.isUnvalued(newStore)){
+                                        //         newStore.setGroupField('ruleName');
+                                        //     }
+                                        // }
+                                    },
+                                    defaults: {
+                                        cell: {
+                                            ui: 'admin-grid admin-tree-item'
+                                        },
+                                        draggable: false
+                                    },
+                                    defaultType: 'gridcolumn',
                                     columns: [
                                         {
-                                            xtype: 'checkcolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            //listeners: {
-                                            //    checkChange: 'onTreeGridChecked'
-                                            //}
+                                            itemId: 'from',
+                                            text: 'From',
+                                            dataIndex: 'svcFrom',
+                                            flex: 1,
+                                            menuDisabled: true,
+                                            tpl: [
+                                                '<tpl if="svcFrom==0">Hire</tpl>',
+                                                '<tpl if="svcFrom!=0">Year {svcFrom}</tpl>',
+                                            ]
                                         },
                                         {
-                                            xtype: 'treecolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'text',
+                                            itemId: 'through',
+                                            text: 'Through',
+                                            dataIndex: 'svcTo',
                                             flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
-                                            }
+                                            cell: {
+                                                encodeHtml: false
+                                            },
+                                            tpl: [
+                                                '<tpl if="svcTo==0">&infin;</tpl>',
+                                                '<tpl if="svcTo!=0">Year {svcTo}</tpl>'
+                                            ]
+                                        },
+                                        {
+                                            itemId: 'over',
+                                            xtype: 'checkcolumn',
+                                            flex: 1.25,
+                                            headerCheckbox: false,
+                                            text: 'Carry Over',
+                                            dataIndex: 'allowCarry'
+                                        },
+                                        {
+                                            itemId: 'max',
+                                            flex: 1.25,
+                                            text: 'Carry Max',
+                                            dataIndex: 'carryMax',
+                                            tpl: [
+                                                '<tpl if="allowCarry==false">--</tpl>',
+                                                '<tpl if="allowCarry==true">',
+                                                    '<tpl if="carryOver==0">No Max</tpl>',
+                                                    '<tpl if="carryOver &gt; 0">{carryOver}</tpl>',
+                                                '</tpl>'
+                                            ]
+                                        },
+                                        {
+                                            itemId: 'info',
+                                            text: 'Carry Over Expiration',
+                                            flex: 2.5,
+                                            dataIndex: 'expChanged',
+                                            tpl: [
+                                                '<tpl if="allowCarry==false">--</tpl>',
+                                                '<tpl if="allowCarry==true">',
+                                                    '<tpl if="perAmount==0">No expiration</tpl>',
+                                                    '<tpl if="perAmount!=0">Expires after {perAmount} ',
+                                                        '<tpl if="perUnit==57">day</tpl>',
+                                                        '<tpl if="perUnit==58">week</tpl>',
+                                                        '<tpl if="perUnit==59">month</tpl>',
+                                                        '<tpl if="perUnit==60">year</tpl>',
+                                                        '<tpl if="perAmount!=1">s</tpl>',
+                                                    '</tpl>',
+                                                '</tpl>'
+                                            ]
                                         }
-                                    ],
-                                    bind: '{departmentsTree}'
+                                    ]
                                 },
                             ]
                         },

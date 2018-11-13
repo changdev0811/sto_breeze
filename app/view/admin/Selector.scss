@@ -359,6 +359,7 @@
         $base: $scoped-root-panel-body-padding-base,
         $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
     ),
+    $color: map-get($admin-text-colors, 'base'),
     $background-color: transparent
 );
 

@@ -86,6 +86,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 return null;
             }
         },
+        selectedCategoryCarryOverRules: function(get){
+            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+            if(!Object.isUnvalued(cat)){
+                return cat.carryOverRules();
+            } else {
+                return null;
+            }
+        },
         categoryYearType: {
             // TODO: Implement category year type set
             // set: function(get){
