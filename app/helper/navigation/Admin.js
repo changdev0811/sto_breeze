@@ -90,10 +90,16 @@ Ext.define('Breeze.helper.navigation.Admin', {
                         routeRef: 'admin/superadmin'
                     },
                     {
+                        text: 'Supervisor Roles', leaf: true,
+                        iconCls: 'x-fas fa-badge-check',
+                        id: 'supervisorRoles',
+                        routeRef: 'admin/roles'
+                    },
+                    {
                         text: 'User Defined Categories', leaf: true,
                         iconCls: 'x-fas fa-archive',
                         id: 'userDefinedCategories',
-                        routeref: 'admin/userdefinedcategories'
+                        routeRef: 'admin/udc'
                     }
                 ]
             }

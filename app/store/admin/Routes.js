@@ -46,7 +46,7 @@ Ext.define('Breeze.store.admin.Routes', {
             view: "Breeze.view.admin.MOTD"
         },
         {
-            type: "pointcatsegories",
+            type: "pointcategories",
             view: "Breeze.view.admin.PointCats"
         },
         {
@@ -62,15 +62,15 @@ Ext.define('Breeze.store.admin.Routes', {
             view: "Breeze.view.admin.PunchPolicies"
         },
         {
-            type: "stimessage",
+            type: "releasenotes",
             view: "Breeze.view.admin.STIMessage"
         },
         {
-            type: "restoreemployee",
+            type: "restoreemployees",
             view: "Breeze.view.admin.RestoreEmployee"
         },
         {
-            type: "saoptions",
+            type: "superadmin",
             view: "Breeze.view.admin.SAOptions"
         },
         {
