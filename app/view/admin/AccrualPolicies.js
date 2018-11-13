@@ -567,7 +567,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         // }
                                     },
                                     defaults: {
-                                        userCls: 'admin-grid'
+                                        cell: {
+                                            ui: 'admin-grid admin-tree-item'
+                                        }
                                     },
                                     defaultType: 'gridcolumn',
                                     columns: [
@@ -587,6 +589,14 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             itemId: 'through',
                                             text: 'Through',
                                             dataIndex: 'svcTo',
+                                            cell: {
+                                                encodeHtml: false
+                                            },
+                                            tpl: [
+                                                '<tpl if="svcTo==0">&infin;</tpl>',
+                                                '<tpl if="svcTo!=0">{svcTo} Year',
+                                                '<tpl if="svcTo!=1">s</tpl></tpl>'
+                                            ]
                                         },
                                         {
                                             itemId: 'info',

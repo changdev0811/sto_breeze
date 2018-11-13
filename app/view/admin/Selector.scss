@@ -321,50 +321,56 @@
     );
 };
 
+// === Data Grid Styling ===
+
 @include grid-ui(
     $ui: 'admin-grid'
 );
-.admin-grid .x-headercontainer-admin-grid {
-        height: 18pt
-}
 
-// @include ui-extend(
-//     $ui: 'admin-grid',
-//     $xtype: 'headercontainer'
-// ) {
-//     height: 16pt;
-// };
+@include dataview-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent
+)
 
-// @include gridcolumn-ui(
-//     $ui: 'admin-grid',
-//     $font-size: 10pt,
-//     $padding: edge-size-from-relative(
-//         $base: $scoped-root-panel-body-padding-base,
-//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
-//     ) !important,
-// );
+@include gridcell-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($admin-text-colors, 'base'),
+    $background-color: transparent
+);
 
-// @include gridcell-ui(
-//     $ui: 'admin-grid',
-//     $font-size: 10pt,
-//     $line-height: 14pt
-// );
+@include gridrow-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-dark')
+);
 
-// @include rowheader-ui(
-//     $ui: 'admin-grid',
-//     $padding: edge-size-from-relative(
-//         $base: $scoped-root-panel-body-padding-base,
-//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
-//     ) !important,
-//     $background-color: red
-// );
+@include headercontainer-ui(
+    $ui: 'admin-grid',
+    $background-color: transparent
+);
 
-// @include itemheader-ui(
-//     $ui: 'admin-grid',
-//     $padding: edge-size-from-relative(
-//         $base: $scoped-root-panel-body-padding-base,
-//         $weights: (top: 0, left: 0.5, right: 0, bottom: 0)
-//     ) !important,
-//         $background-color: red
-// );
+@include gridcolumn-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $background-color: transparent
+);
 
+@include rowheader-ui(
+    $ui: 'admin-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($admin-text-colors, 'base'),
+    $background-color:mix(
+        map-get($admin-colors, 'base'),
+        map-get($admin-colors, 'row-dark')
+    )
+);
