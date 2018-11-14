@@ -246,7 +246,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                     title: 'Accruals',
                                     reference: 'compantTab',
                                     xtype: 'container',
-                                    layout:'vbox',
+                                    layout:'hbox',
                                     items:[
                                         {
                                             xtype: 'fieldset',
@@ -330,13 +330,79 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             xtype:'fieldset',
                                                             userCls:'admin-fieldset no-side-margin',
                                                             flex:1,
-                                                            title:'Employee Options',
+                                                            title:'Accrual Cap Options',
+                                                            defaults: {
+                                                                bodyAlign: 'stretch',
+                                                                ui: 'admin',
+                                                                xtype: 'radio'
+                                                            },
+                                                            items:[
+                                                                {
+                                                                    flex: 1,
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'Skip accrual that would exceed cap',
+                                                                },
+                                                                {
+                                                                    flex: 1,
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'Allow accrual that would exceed cap',
+                                                                },
+                                                                {
+                                                                    flex: 1,
+                                                                    name: 'recording_year_type',
+                                                                    boxLabel: 'Prorate accrual that would exceed cap',
+                                                                }
+                                                            ]
+                                                        },
+
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'fieldset',
+                                            userCls:'admin-fieldset no-margin no-border',
+                                            flex:1,
+                                            layout:'vbox',
+
+                                            // +++ fixed width +++
+                                            width:'400pt',
+
+
+                                            items:[
+                                                // row 1
+                                                {
+                                                    xtype: 'container',
+                                                    layout:'vbox',
+                                                    items:[
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Balance Cap Option',
                                                             items:[
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
                                                                     //name: 'isWorktime',
                                                                     id: 'radio6',
+                                                                    value: '20',
+                                                                    boxLabel: 'Suppress Accrual Caps when applying Balance Caps',
+                                                                    bodyAlign: 'stretch',
+                                                                },
+                                                            ]
+                                                        },
+                                                        {
+                                                            xtype:'fieldset',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            flex:1,
+                                                            title:'Employee Options',
+                                                            items:[
+                                                                {
+                                                                    xtype:'checkbox',
+                                                                    ui:'admin',
+                                                                    //name: 'isWorktime',
+                                                                    id: 'radio7',
                                                                     value: '20',
                                                                     boxLabel: 'Calculate Years of Service From Hire Date',
                                                                     bodyAlign: 'stretch',
@@ -347,6 +413,8 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                 }
                                             ]
                                         }
+
+
                                     ]
                                 },
                                 //========[Leave Requests Tab]===========
