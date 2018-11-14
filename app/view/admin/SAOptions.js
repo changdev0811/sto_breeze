@@ -35,7 +35,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable:true,
             items: [
 
                 // Column 1
@@ -47,6 +47,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                     // +++ fixed width +++
                     minWidth:'700pt',
                     maxWidth:'890pt',
+
+                    minHeight:'450pt',
+                    //maxHeight:'450pt',
+
 
                     layout: 'vbox',
                     buttonAlign: 'right',
@@ -304,12 +308,12 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                         {
                                                                             flex: 1,
                                                                             name: 'recording_year_type',
-                                                                            boxLabel: 'Days',
+                                                                            boxLabel: 'Used Time Only',
                                                                         },
                                                                         {
                                                                             flex: 1,
                                                                             name: 'recording_year_type',
-                                                                            boxLabel: 'Weeks',
+                                                                            boxLabel: 'Used and Negative Time',
                                                                         },
                                                                     ]
                                                                 }                                                                
@@ -424,7 +428,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                 {
                                                                     xtype:'fieldset',
                                                                     userCls:'admin-fieldset no-side-margin',
-                                                                    title:'Approvial Options',
+                                                                    title:'Approval Options',
                                                                     defaults: {
                                                                         bodyAlign: 'stretch',
                                                                         ui: 'admin',

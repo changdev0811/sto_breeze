@@ -22,6 +22,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
     // Layout and base styles
     layout: 'vbox',
+
+
+
     ui: 'admin-base',
 
     title: 'Holiday Editor',
@@ -53,19 +56,21 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 ui: 'admin admin-text',
             },
             items: [
+
                 {
-                    xtype: 'combobox',
+                    xtype: 'selectfield',
                     name: 'recYear',
                     width:'200pt',
                     label:'Holidays for Year',
                     labelAlign:'left',
                     labelWidth:'auto',
-                    name: 'duration_amount',
-                    name: 'category_balance_cap_unit',
-                    valueField: 'code',
-                    displayField: 'description',
-                    style: 'padding-left: 4pt',
 
+                    label: 'Recording Year',
+                    labelWidth: 'auto',
+                    labelAlign: 'left',
+                    store: 'Years',
+                    displayField: 'Year', valueField: 'Year',
+                    bind: { value: (new Date()).getYear() + 1900 } //<-- this should probably be in the model.js
                 },
                 {
                     xtype:'spacer',
@@ -91,8 +96,10 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             xtype:'panel',
             ui:'admin-sub',
             layout:'hbox',
+
+
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable:true,
 
             flex: 1,
             items:[
@@ -108,10 +115,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     minWidth:'150pt',
                     maxWidth:'200pt',
 
+                    minHeight:'420pt',
+
+
                     items:[
                         {    
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-margin',
+                            userCls:'admin-fieldset no-side-margin',
                             flex: 1,
                             layout: 'vbox',
 
@@ -194,6 +204,10 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     minWidth:'250pt',
                     maxWidth:'350pt',
 
+                    minHeight:'420pt',
+
+
+
                     items:[
                         {
 
@@ -262,46 +276,60 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     },
                                     items: [
                                         {
-                                            xtype: 'combobox',
-                                            flex: 1,
+                                            xtype: 'selectfield',
                                             name: 'week',
-                                            valueField: 'data',
-                                            displayField: 'text',
-                                            editable: false,
-                                            allowBlank: false,
-                                            blankText: 'Week',
-                                            forceSelection: true,
+                                            flex: 2,
+                                            options: [
+                                                { text: '1st', value: 1 },
+                                                { text: '2nd', value: 2 },
+                                                { text: '3rd', value: 3 },
+                                                { text: '4th', value: 4 },
+                                                { text: '5th', value: 5 },
+                                            ]//<-- this should probably be in the model.js
                                         },
                                         {
                                             xtype: 'container',
                                             width: '10pt' //Spacing
                                         },
                                         {
-                                            xtype: 'combobox',
-                                            flex: 2,
+                                            xtype: 'selectfield',
                                             name: 'day',
-                                            valueField: 'data',
-                                            displayField: 'text',
-                                            editable: false,
-                                            allowBlank: false,
-                                            blankText: 'Day',
-                                            forceSelection: true,
+                                            flex: 3,
+                                            options: [
+                                                { text: 'Sunday',       value: 1 },
+                                                { text: 'Monday',       value: 2 },
+                                                { text: 'Tuesday',      value: 3 },
+                                                { text: 'Wednesday',    value: 4 },
+                                                { text: 'Thursday',     value: 5 },
+                                                { text: 'Friday',       value: 6 },
+                                                { text: 'Saturday',     value: 7 },
+                                            ]//<-- this should probably be in the model.js
                                         },
                                         {
                                             xtype: 'container',
                                             width: '10pt' //Spacing
                                         },
                                         {
-                                            xtype: 'combobox',
-                                            flex: 2,
+                                            xtype: 'selectfield',
                                             name: 'month',
-                                            valueField: 'data',
-                                            displayField: 'text',
-                                            editable: false,
-                                            allowBlank: false,
-                                            blankText: 'Month',
-                                            forceSelection: true,
-                                        },                                    
+                                            flex: 3,
+                                            options: [
+                                                { text: 'January', value: 1 },
+                                                { text: 'February', value: 2 },
+                                                { text: 'March', value: 3 },
+                                                { text: 'April', value: 4 },
+                                                { text: 'May', value: 5 },
+                                                { text: 'June', value: 6 },
+                                                { text: 'July', value: 7 },
+                                                { text: 'August', value: 8 },
+                                                { text: 'September', value: 9 },
+                                                { text: 'October', value: 10 },
+                                                { text: 'November', value: 11 },
+                                                { text: 'December', value: 12 },
+                                            ]//<-- this should probably be in the model.js
+                                        },
+
+
                                     ]
                                 }
                             ]

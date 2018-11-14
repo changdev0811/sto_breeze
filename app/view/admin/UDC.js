@@ -33,7 +33,7 @@ Ext.define('Breeze.view.admin.UDC', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable:true,
             items: [
                 // Column 1
                 {
@@ -43,6 +43,7 @@ Ext.define('Breeze.view.admin.UDC', {
                     // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
+                    minHeight:'420pt',
 
 
                     layout: 'vbox',
@@ -107,6 +108,10 @@ Ext.define('Breeze.view.admin.UDC', {
                     // +++ fixed width +++
                     minWidth:'400pt',
                     maxWidth:'400pt',
+
+                    minHeight:'420pt',
+
+
 
                     layout: 'vbox',
                     buttons: {
@@ -257,7 +262,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             name: 'isWorktime',
                                             id: 'radio2',
                                             value: '20',
-                                            boxLabel: 'Paied Category',
+                                            boxLabel: 'Paid Category',
                                             bodyAlign: 'stretch',
                                         },
                                     ]

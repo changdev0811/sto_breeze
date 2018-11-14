@@ -45,7 +45,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
     //     duration: 200
     // },
 
-    width: '300pt',
+    width: '200pt',
 
     layout: 'vbox',
     ui: 'employees-side-bar-panel',
@@ -69,14 +69,14 @@ Ext.define('Breeze.view.main.employees.Panel', {
             tabBar: {
                 defaultTabUI: 'wtr-tabbar',
                 shadow: false,
-                padding: '16pt'
+                padding: '0pt'
             },
             layout: {
                 animation: 'fade'
             },
             defaults: {
                 userCls: 'employees-panel',
-                layout: 'vbox'
+                layout: 'vbox',
             },
             items: [
                 // ===[Employees Tab]===
@@ -84,6 +84,12 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     xtype: 'container',
                     title: 'Employees',
                     itemId: 'employees',
+
+
+                    defaults: {
+                        padding: '0pt',
+                    },
+
                     items: [
                         // Search toolbar
                         {
@@ -187,6 +193,11 @@ Ext.define('Breeze.view.main.employees.Panel', {
                     xtype: 'container',
                     title: 'Depts',
                     itemId: 'depts',
+                    
+                    defaults: {
+                        padding: '0pt',
+                    },
+
                     items: [
                         {
                             xtype: 'toolbar',
