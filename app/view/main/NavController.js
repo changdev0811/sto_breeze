@@ -386,7 +386,8 @@ Ext.define('Breeze.view.main.NavController', {
      */
     onPersonalFyiRoute: function() {
         this.changeContent(
-            Ext.create('Breeze.view.employee.Fyi', {
+            Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
+            //Ext.create('Breeze.view.employee.Fyi', {
                 data: { employee: undefined }
             })
         );

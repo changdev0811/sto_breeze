@@ -63,6 +63,13 @@
     $ui: 'fyi-display-field'
 );
 
+@include toolbar-ui(
+    $ui: 'employee-fyi-actions',
+    $background-color: map-get($employee-fyi-colors, 'base'),
+    $horizontal-spacing: 4pt
+);
+
+
 
 // == Panel Version Styling ==
 
