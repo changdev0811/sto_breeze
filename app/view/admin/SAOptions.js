@@ -521,7 +521,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                         {
                                                             xtype:'fieldset',
                                                             userCls:'admin-fieldset',
-                                                            title:'Approvial Models',
+                                                            title:'Approval Models',
                                                             flex:1,
                                                             defaults: {
                                                                 bodyAlign: 'stretch',

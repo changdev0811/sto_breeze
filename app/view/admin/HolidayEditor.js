@@ -59,18 +59,16 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
                 {
                     xtype: 'selectfield',
-                    name: 'recYear',
+                    ui: 'reporting reporting-text reporting-date',
+
+                    //name: 'recYear',
                     width:'200pt',
                     label:'Holidays for Year',
                     labelAlign:'left',
                     labelWidth:'auto',
-
-                    label: 'Recording Year',
-                    labelWidth: 'auto',
-                    labelAlign: 'left',
                     store: 'Years',
                     displayField: 'Year', valueField: 'Year',
-                    bind: { value: (new Date()).getYear() + 1900 } //<-- this should probably be in the model.js
+                    bind: { value: String( (new Date()).getYear() + 1900 ) } //<-- this should probably be in the model.js
                 },
                 {
                     xtype:'spacer',
