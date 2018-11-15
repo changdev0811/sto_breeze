@@ -53,6 +53,108 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                     flex: 2,
                     layout: 'vbox',
                     items: [
+                        // row 1
+                        {
+                            xtype: 'selectfield',
+                            ui: 'reporting admin-text',
+                            userCls: 'admin-fieldset no-side-margin no-border',
+                            value:'Max',
+                            label:'Category:',
+                            labelAlign:'left',
+                            labelWidth:'auto',
+                            options: []//<-- this should probably be in the model.js
+                        },
+
+
+
+
+                        // row 2
+                        {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            items: [
+                                {  
+                                    xtype: 'displayfield',
+                                    ui: 'fyi-display-field',
+                                    userCls: 'admin-fieldset no-side-margin no-border',
+
+                                    value: 'Year Type:',
+                                    //labelAlign: 'left',
+                                    //labelWidth: 'auto',
+                                    //bind: { value: '{employeeName}' },
+                                },
+                                {
+                                    xtype:'spacer',
+                                    width:'10pt',
+                                },
+                                {
+                                    xtype: 'fieldset',
+                                    userCls: 'admin-fieldset no-side-margin',
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype:'checkbox',
+                                            ui:'admin',
+                                            userCls:'tool-check-box',
+                                            name: 'isWorktime',
+                                            //id: 'radio1',
+                                            value: '20',
+                                            boxLabel: 'Anniversary',
+                                            //bodyAlign: 'stretch',
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype:'checkbox',
+                                            ui:'admin',
+                                            userCls:'tool-check-box',
+                                            name: 'isWorktime',
+                                            //id: 'radio1',
+                                            value: '20',
+                                            boxLabel: 'Calendar',
+                                            //bodyAlign: 'stretch',
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype:'checkbox',
+                                            ui:'admin',
+                                            userCls:'tool-check-box',
+                                            name: 'isWorktime',
+                                            //id: 'radio1',
+                                            value: '20',
+                                            boxLabel: 'Fiscal',
+                                            //bodyAlign: 'stretch',
+                                        },
+                                    ]
+                                },
+                            ]
+                        },
+
+
+                        // row 3
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-side-margin',
+                            layout: 'vbox',
+                            flex: 1,
+                            items: []
+                        },
+
+                        // row 4
+                        {
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-side-margin',
+                            layout: 'vbox',
+                            flex: 1,
+                            items: []
+                        },
+
+                        // row 5
                         {
                             xtype: 'fieldset',
                             userCls: 'admin-fieldset no-side-margin',
@@ -62,7 +164,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 ui: 'fyi-display-field',
                             },
                             items: [
-                                // row 1
+                                // sub row 1
                                 {
                                     xtype: 'container',
                                     layout: 'hbox',
@@ -70,6 +172,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     defaults: {
                                         xtype: 'displayfield',
                                         //ui: 'fyi-display-field',
+
                                     },
                                     items: [
                                         {
@@ -78,14 +181,30 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                             boxLabel: 'Carry Over',
                                             //bodyAlign: 'stretch',
                                         },
-
-
-
-
-                                        
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype: 'selectfield',
+                                            ui: 'reporting admin-text',
+                                            value:'Max',
+                                            options: [
+                                                { text: 'No Max', value: 1 },
+                                                { text: 'Max', value: 2 },
+                                            ]//<-- this should probably be in the model.js
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype: 'breeze-textfield',
+                                            ui: 'admin admin-text',
+                                        },   
                                     ]
                                 },
-                                // row 2
+                                // sub row 2
                                 {
                                     xtype: 'container',
                                     layout: 'hbox',
@@ -101,15 +220,27 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                             boxLabel: 'Expires',
                                             //bodyAlign: 'stretch',
                                         },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype: 'datefield',
+                                            userCls: 'admin-fieldset no-padding no-border',
+                                            ui: ['dark-textfield', 'fyi-field','fyi-textfield'],
+                                            reference: 'viewDate',
+                                            picker: {
+                                                xtype: 'datepicker',
+                                                title: 'Select Date'
+                                            },
+                                            //listeners: {
+                                            //    change: 'onViewDateChanged'
+                                            //}
+                                        },
                                     ]
                                 },
-
-
-
                             ]
                         },
-
-
                     ]
                 },
                 // column 2
@@ -128,7 +259,6 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             },
                             items: [
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Employee Name',
                                     labelAlign: 'left',
                                     labelWidth: 'auto',
