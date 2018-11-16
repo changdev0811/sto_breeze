@@ -10,5 +10,23 @@
     $ui: 'employee-accrual-policy-base'
 );
 
-
-
+@include displayfield-ui(
+    $input-color: #ffffff,
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+    $input-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    $ui: 'employee-accrual-policy-display-field',
+);
+@include field-ui(
+    $label-color: map-get($employee-fyi-text-colors,'light'),
+    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+    $label-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    // $label-font-size: 12pt !important,
+    $ui: 'employee-accrual-policy-display-field',
+);

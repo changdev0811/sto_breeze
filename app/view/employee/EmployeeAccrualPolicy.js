@@ -28,6 +28,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
     ui: 'employee-accrual-policy-base',
     layout: 'vbox',
     userCls: 'employee-fyi-container',
+    scrollable:true,
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
@@ -44,7 +45,12 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
             xtype: 'fieldset',
             userCls: 'admin-fieldset no-side-margin',
             title:'Employee Accrual Policy - [CATEGORY]',
+
             flex: 1,
+
+            minWidth:'700pt',
+            minHeight:'400pt',
+
             layout: 'hbox',
             items: [
                 // column 1
@@ -148,6 +154,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     userCls: 'admin-fieldset no-side-margin no-padding no-border',
                                     ui: 'admin admin-text',
                                     //name: 'viewdate_field',
+                                    width:'170pt',
                                     label: 'View Date:',
                                     labelAlign:'left',
                                     labelWidth:'auto',
@@ -163,37 +170,130 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 
                                 {
                                     xtype:'spacer',
-                                    width:'10pt',
+                                    width:'5pt',
                                 },
+                                
                                 {
                                     xtype: 'selectfield',
                                     ui: 'admin admin-text',
                                     userCls: 'admin-fieldset no-padding no-border',
-                                    
+                                    width:'160pt',
                                     label: 'Recording Year:',
                                     labelAlign:'left',
                                     labelWidth:'auto',
-                                    //reference: 'viewDate',
 
-                                    value:'Max',
-                                    options: [
-                                        { text: 'No Max', value: 1 },
-                                        { text: 'Max', value: 2 },
-                                    ]//<-- this should probably be in the model.js
+                                    store: 'Years',
+                                    displayField: 'Year', valueField: 'Year',
+                                    bind: { value: String( (new Date()).getYear() + 1900 ) } //<-- this should probably be in the model.js
                                 },
-                                
-
-
+                                {
+                                    xtype:'spacer',
+                                    width:'5pt',
+                                },
+                                {  
+                                    xtype: 'displayfield',
+                                    ui: 'admin fyi-display-field',
+                                    label: '(00/00/00 - 00/00/00)',
+                                    labelAlign: 'left',
+                                    labelWidth: 'auto',
+                                },
                             ]
                         },
 
                         // row 4
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-side-margin',
+                            userCls: 'admin-fieldset no-side-margin no-padding',
                             layout: 'vbox',
                             flex: 1,
-                            items: []
+                            items: [
+
+                                {
+                                    xtype: 'toolbar',
+                                    ui: 'admin-tree',
+                                    shadow: false,
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            ui: 'reporting',
+                                            boxLabel:'Accrual Rules',
+                                            //bind: {
+                                            //    boxLabel: '{selectedCategory.categoryName} Accrual Rules',
+                                            //    checked: '{selectedCategory.allowAccrual}'
+                                            //},
+                                            //listeners: {
+                                            //    change: 'onCategoriesCheckAllChange'
+                                            //}
+                                        },
+
+                                        { xtype: 'spacer', flex: 1 },
+
+                                        {
+                                            xtype: 'button',
+                                            //text: 'Save for Future Use',
+                                            iconCls: 'x-fas fa-plus',
+                                            ui: 'plain wtr-button',
+                                            bind: {
+                                                disabled: '{!selectedCategory.allowAccrual}'
+                                            }
+                                        },
+                                    ]
+                                },
+
+
+                                {
+                                    xtype: 'grid',
+                                    // == Item ID to make finding tree in panel easier
+                                    itemId: 'grid',
+                                    ui: 'employeeinfo-shift-grid requests-grid',
+                                    flex:1,
+                                    userCls: 'no-background',
+                                    layout: 'hbox',
+                                    hideHeaders: true,
+                                    rootVisible: false,
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            text:'From',
+                                            dataIndex: 'text',
+                                            flex: 2,
+                                        },
+
+                                        {
+                                            xtype: 'gridcolumn',
+                                            text:'To',
+                                            dataIndex: 'text',
+                                            flex: 2,
+                                        },
+                                                                {
+                                            xtype: 'gridcolumn',
+                                            text:'Accrual Information',
+                                            dataIndex: 'text',
+                                            flex: 8,
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            text:'Occurrences',
+                                            dataIndex: 'text',
+                                            flex: 4,
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            text:'Total Time',
+                                            dataIndex: 'text',
+                                            flex: 4,
+                                        },
+                                    ],
+                                    //reference: 'departmentTree',
+                                    //bind: '{departmentsTree}'
+                                }
+
+
+
+
+
+
+                            ]
                         },
 
                         // row 5
@@ -288,7 +388,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                 // column 2
                 {
                     xtype: 'container',
-                    flex: 1,
+                    width:'220pt',
                     layout: 'vbox',
                     items: [
                         {
@@ -297,7 +397,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             layout: 'vbox',
                             defaults: {
                                 xtype: 'displayfield',
-                                ui: 'fyi-display-field',
+                                ui: 'employee-accrual-policy-display-field',
                             },
                             items: [
                                 {  
@@ -316,7 +416,6 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     label: 'Hire Date',
                                     labelAlign: 'left',
                                     labelWidth: 'auto',
-                                    ui: 'fyi-display-field',
                                     bind: { value: '{hireDate}' },
                                 }
                             ]
@@ -345,56 +444,56 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             flex: 1,
                             defaults: {
                                 xtype: 'displayfield',
-                                ui: 'admin fyi-display-field',
+                                ui: 'employee-accrual-policy-display-field',
                             },
                             items: [
                                 {  
                                     label: 'Carried Over',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '+ {carriedOver}' },
                                 },
                                 {  
                                     label: 'Carry Over Expired',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '- {carryOverExpired}' },
                                 },
                                 {  
                                     label: 'Accrued',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '+ {accrued}' },
                                 },
                                 {  
                                     label: 'Adjustments',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '+ {adjustments}' },
                                 },
                                 {  
                                     label: ' ',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '--------------------' },
                                 },
                                 {  
                                     label: 'Allowed',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
 
                                     bind: { value: '{allowed}' },
                                 },
                                 {  
                                     label: 'Recorded',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '- {recorded}' },
                                 },
                                 {  
                                     label: ' ',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '--------------------' },
                                 },
                                 {
@@ -406,7 +505,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 {  
                                     label: 'Remaining',
                                     labelAlign: 'left',
-                                    labelWidth: '120pt',
+                                    labelWidth: '115pt',
                                     bind: { value: '{remaining}' },
                                 },
 
