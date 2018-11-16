@@ -25,7 +25,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
 
 
     title: 'My Accrual Policy',
-    ui: 'employee-fyi-panel',
+    ui: 'employee-accrual-policy-base',
     layout: 'vbox',
     userCls: 'employee-fyi-container',
     // Action buttons shown at bottom of panel

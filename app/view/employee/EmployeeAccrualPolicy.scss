@@ -1,0 +1,14 @@
+@include panel-ui(
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0)
+    ),
+    $header-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($employee-fyi-colors,'base'),
+    $header-background-color: map-get($employee-fyi-colors,'base'),
+    $body-background-color: map-get($employee-fyi-colors,'base'),
+    $ui: 'employee-accrual-policy-base'
+);
+
+
+
