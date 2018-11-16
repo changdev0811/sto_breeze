@@ -26,7 +26,13 @@ $fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
 
 .employee-fyi-accrual-item {
     padding:0pt 15px 0pt 0pt;
+    cursor:pointer;
 }
+
+.employee-fyi-accrual-item:hover {
+    opacity:.75;
+}
+
 
 
 .employee-fyi-accrual-item-layout {
