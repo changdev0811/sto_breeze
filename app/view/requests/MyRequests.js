@@ -106,7 +106,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
                     title: 'Requested Days',
                     tools: [
                         {
-                            iconCls: 'x-fas fa-eye',
+                            iconCls: 'x-fas fa-table',
                             //handler: 'onFyiNavClick'
                         }
                     ],
