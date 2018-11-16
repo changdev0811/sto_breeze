@@ -435,7 +435,7 @@ Ext.define('Breeze.view.main.NavController', {
      */
     onPersonalTimeSheetApproval: function() {
         this.changeContent(
-            Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
+            Ext.create('Breeze.view.employee.TimeSheetApproval', {
                 data: { employee: undefined }
             })
         );
