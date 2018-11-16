@@ -88,7 +88,10 @@ Ext.define('Breeze.widget.navBar.NavTree', {
             !Object.isUnvalued(tree.getSelection()) &&
             info.node.id == tree.getSelection().id
         ){
-            if(info.node.getData()['routeEvent']){
+            if(
+                info.node.getData()['routeEvent'] ||
+                info.node.getData()['routeReclick']
+            ){
                 console.info('Updating selected tree node');
                 tree.setSelection(null);
                 tree.setSelection(info.node);

@@ -6,6 +6,7 @@
 Ext.define('Breeze.view.employee.fyi.AccrualItem', {
     alias: 'widget.employee.fyi.accrualItem',
     extend: 'Ext.dataview.ListItem',
+    controller: 'employee.fyi.accrualitem',
     requires: [
         'Ext.XTemplate'
     ],
@@ -44,8 +45,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
     ],
     updateRecord: function(record){
+        var me = this;
         this.el.on('click', function(){
-            window.location.hash=`personal/accrual_policy/${record.get('CatID')}`;
+            me.getController().onItemClick();
         });
         if(this.isDestroying){
             return null;

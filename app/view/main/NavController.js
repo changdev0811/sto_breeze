@@ -410,6 +410,8 @@ Ext.define('Breeze.view.main.NavController', {
      * Handle personal Accrual Policy route
      */
     onPersonalAccrualPolicy: function( id ) {
+        console.info('Accrual Policy');
+        this.syncNavToRoute('root');
         this.replaceContent(
             'Breeze.view.employee.EmployeeAccrualPolicy', {
                 data: { employee: undefined, catId: id }

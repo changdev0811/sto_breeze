@@ -37,6 +37,7 @@ Ext.define('Breeze.helper.navigation.Personal', {
                         text: 'FYI', leaf: true,
                         iconCls: 'x-fas fa-table',
                         routeRef: 'personal/fyi',
+                        routeReclick: true,
                         id: 'fyi'
                     }, {
                         text: 'Year at a Glance', leaf: true,
