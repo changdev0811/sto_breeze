@@ -6,7 +6,12 @@
 Ext.define('Breeze.view.dashboard.admin.DepartmentAttendance', {
     extend: 'Ext.Panel',
     alias: 'widget.dashboard.admin.departmentAattendance',
-
+    requires: [
+        'Ext.chart.CartesianChart',
+        'Ext.chart.axis.Numeric',
+        'Ext.chart.axis.Category',
+        'Ext.chart.series.Bar'
+    ],
     layout: 'fit',
 
     title: {

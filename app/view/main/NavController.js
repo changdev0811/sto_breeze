@@ -502,9 +502,10 @@ Ext.define('Breeze.view.main.NavController', {
             // );    
             this.replaceContent(ns, {});
         } else {
-            this.changeContent(
-                Ext.create('Breeze.view.dashboard.Admin')
-            );
+            // this.changeContent(
+            //     Ext.create('Breeze.view.dashboard.Admin')
+            // );
+            this.replaceContent('Breeze.view.dashboard.Admin', {});
         }
         // this.changeContent(
         //     Ext.create(ns, {
