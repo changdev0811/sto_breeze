@@ -1,0 +1,38 @@
+@include panel-ui(
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0)
+    ),
+    $header-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($calendar-colors,'base'),
+    $header-background-color: map-get($calendar-colors,'base'),
+    $body-background-color: map-get($calendar-colors,'base'),
+    $ui: 'leave-request-approval-base'
+);
+
+@include displayfield-ui(
+    $input-color: #ffffff,
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+    $input-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    $ui: 'leave-request-approval-display-field',
+);
+@include field-ui(
+    $label-color: map-get($calendar-text-colors,'light'),
+    $focused-label-color: map-get($calendar-text-colors,'light'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+    $label-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    // $label-font-size: 12pt !important,
+    $ui: 'leave-request-approval-display-field',
+);
+
+@include toolbar-ui(
+    $ui: 'leave-request-approval-actions',
+    $background-color: map-get($calendar-colors, 'base'),
+    $horizontal-spacing: 4pt
+);
