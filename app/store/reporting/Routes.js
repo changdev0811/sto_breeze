@@ -277,13 +277,13 @@ Ext.define('Breeze.store.reporting.Routes', {
             "category": "misc",
             "type": "leaverequests",
             "view": "Breeze.view.reporting.misc.LeaveRequests",
-            "key": "LeaveRequestSummary"
+            "key": "LeaveRequests"
         },
         {
             "category": "misc",
             "type": "leaverequestsummary",
             "view": "Breeze.view.reporting.misc.LeaveRequestSummary",
-            "key": "LeaveRequests"
+            "key": "LeaveRequestSummary"
         },
         {
             "category": "misc",
