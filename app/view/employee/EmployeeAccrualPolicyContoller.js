@@ -22,6 +22,10 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicyController', {
             new Date()
         );
 
+        this.lookup('startDate').setValue(
+            new Date()
+        );
+
         //this.displayData(me);
     },
 

@@ -56,7 +56,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         // row 1
                         {
                             xtype: 'selectfield',
-                            ui: 'reporting admin-text',
+                            ui: 'admin admin-text',
                             userCls: 'admin-fieldset no-side-margin no-border',
                             value:'Max',
                             label:'Category:',
@@ -138,11 +138,53 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
 
                         // row 3
                         {
-                            xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-side-margin',
-                            layout: 'vbox',
-                            flex: 1,
-                            items: []
+                            xtype: 'container',
+                            //userCls: 'admin-fieldset no-side-margin no-border',
+                            layout: 'hbox',
+                            //flex: 1,
+                            items: [
+                                {
+                                    xtype: 'datefield',
+                                    userCls: 'admin-fieldset no-side-margin no-padding no-border',
+                                    ui: 'admin admin-text',
+                                    //name: 'viewdate_field',
+                                    label: 'View Date:',
+                                    labelAlign:'left',
+                                    labelWidth:'auto',
+                                    reference: 'viewDate',
+                                    picker: {
+                                        xtype: 'datepicker',
+                                        title: 'Select Date'
+                                    },
+                                    //listeners: {
+                                    //    change: 'onViewDateChanged'
+                                    //}
+                                },
+                                
+                                {
+                                    xtype:'spacer',
+                                    width:'10pt',
+                                },
+                                {
+                                    xtype: 'selectfield',
+                                    ui: 'admin admin-text',
+                                    userCls: 'admin-fieldset no-padding no-border',
+                                    
+                                    label: 'Recording Year:',
+                                    labelAlign:'left',
+                                    labelWidth:'auto',
+                                    //reference: 'viewDate',
+
+                                    value:'Max',
+                                    options: [
+                                        { text: 'No Max', value: 1 },
+                                        { text: 'Max', value: 2 },
+                                    ]//<-- this should probably be in the model.js
+                                },
+                                
+
+
+                            ]
                         },
 
                         // row 4
@@ -228,7 +270,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                             xtype: 'datefield',
                                             userCls: 'admin-fieldset no-padding no-border',
                                             ui: ['dark-textfield', 'fyi-field','fyi-textfield'],
-                                            reference: 'viewDate',
+                                            //reference: 'viewDate',
                                             picker: {
                                                 xtype: 'datepicker',
                                                 title: 'Select Date'
@@ -282,12 +324,12 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         {
                             xtype: 'datefield',
                             userCls: 'admin-fieldset no-padding no-border',
-                            ui: ['dark-textfield', 'fyi-field','fyi-textfield'],
-                            name: 'viewdate_field',
+                            ui: 'admin admin-text',
+                            //name: 'viewdate_field',
                             label: 'Start accruing on:',
                             labelAlign:'left',
                             labelWidth:'auto',
-                            reference: 'viewDate',
+                            reference: 'startDate',
                             picker: {
                                 xtype: 'datepicker',
                                 title: 'Select Date'
@@ -303,46 +345,40 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             flex: 1,
                             defaults: {
                                 xtype: 'displayfield',
-                                ui: 'fyi-display-field',
+                                ui: 'admin fyi-display-field',
                             },
                             items: [
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Carried Over',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '+ {carriedOver}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Carry Over Expired',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '- {carryOverExpired}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Accrued',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '+ {accrued}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Adjustments',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '+ {adjustments}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: ' ',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '--------------------' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Allowed',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
@@ -350,14 +386,12 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     bind: { value: '{allowed}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Recorded',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
                                     bind: { value: '- {recorded}' },
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: ' ',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
@@ -370,7 +404,6 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     bodyAlign: 'stretch',
                                 },
                                 {  
-                                    ui: 'fyi-display-field',
                                     label: 'Remaining',
                                     labelAlign: 'left',
                                     labelWidth: '120pt',
