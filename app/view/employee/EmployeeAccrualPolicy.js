@@ -24,6 +24,20 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
     },
 
 
+    //==[Start of Panel Setup/Styling]====
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
+        },
+        {
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
+        }
+    ],
+
+
+
     title: 'My Accrual Policy',
     ui: 'employee-accrual-policy-base',
     layout: 'vbox',

@@ -81,6 +81,21 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onPersonalFyiRoute',
             before: 'beforeRoute'
         },
+        'personal/accrual_policy/:id': {
+            action: 'onPersonalAccrualPolicy',
+            before: 'beforeRoute'
+        },
+
+        'personal/leave_request_approval': {
+            action: 'onPersonalLeaveRequestApproval',
+            before: 'beforeRoute'
+        },
+
+        'personal/time_sheet_approval': {
+            action: 'onPersonalTimeSheetApproval',
+            before: 'beforeRoute'
+        },
+
         'personal/year_at_a_glance': {
             action: 'onPersonalYaagRoute',
             before: 'beforeRoute'
@@ -386,12 +401,47 @@ Ext.define('Breeze.view.main.NavController', {
      */
     onPersonalFyiRoute: function() {
         this.changeContent(
-            //Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
             Ext.create('Breeze.view.employee.Fyi', {
                 data: { employee: undefined }
             })
         );
     },
+    /**
+     * Handle personal Accrual Policy route
+     */
+    onPersonalAccrualPolicy: function( id ) {
+        this.changeContent(
+            Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
+                data: { employee: undefined }
+            })
+        );
+    },
+
+
+    /**
+     * Handle personal Leave Request Approval route
+     */
+    onPersonalLeaveRequestApproval: function() {
+        this.changeContent(
+            Ext.create('Breeze.view.employee.LeaveRequestApproval', {
+                data: { employee: undefined }
+            })
+        );
+    },
+
+
+    /**
+     * Handle personal Time Sheet Approval route
+     */
+    onPersonalTimeSheetApproval: function() {
+        this.changeContent(
+            Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
+                data: { employee: undefined }
+            })
+        );
+    },
+
+
 
     /**
      * Handle Personal Year At a Glance Route
