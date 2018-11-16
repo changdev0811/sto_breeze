@@ -83,5 +83,9 @@ Ext.define('Breeze.view.employee.FyiController', {
         }).catch(function(err){
             console.log("FYI Error", err);
         });
+    },
+
+    onFyiItemTap: function(){
+        console.info('FYI Item Clicked');
     }
 });

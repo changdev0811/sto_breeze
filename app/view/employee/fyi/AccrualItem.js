@@ -21,7 +21,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 {
                     xtype: 'component',
                     reference: 'categoryName',
-                    userCls: 'employee-fyi-accrual-item-layout',
+                    userCls: 'employee-fyi-accrual-item-layout'
                 },
                 {
                     xtype: 'component',
@@ -44,6 +44,9 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
     ],
     updateRecord: function(record){
+        this.el.on('click', function(){
+            window.location.hash=`personal/accrual_policy/${record.get('CatID')}`;
+        });
         if(this.isDestroying){
             return null;
         }
@@ -105,5 +108,8 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         };
         data.value = (isNaN(data.value))? 0.0 : data.value;
         return data;
+    },
+    listeners: {
+        tap: 'onFyiItemTap'
     }
 });

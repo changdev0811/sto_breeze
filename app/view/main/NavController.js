@@ -83,7 +83,7 @@ Ext.define('Breeze.view.main.NavController', {
         },
         'personal/accrual_policy/:id': {
             action: 'onPersonalAccrualPolicy',
-            before: 'beforeRoute'
+            // before: 'beforeRoute'
         },
 
         'personal/leave_request_approval': {
@@ -410,10 +410,10 @@ Ext.define('Breeze.view.main.NavController', {
      * Handle personal Accrual Policy route
      */
     onPersonalAccrualPolicy: function( id ) {
-        this.changeContent(
-            Ext.create('Breeze.view.employee.EmployeeAccrualPolicy', {
-                data: { employee: undefined }
-            })
+        this.replaceContent(
+            'Breeze.view.employee.EmployeeAccrualPolicy', {
+                data: { employee: undefined, catId: id }
+            }
         );
     },
 

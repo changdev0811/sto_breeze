@@ -14,9 +14,6 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicyController', {
         this.apiClass = Ext.create('Breeze.api.Employee');
         var me = this;        
 
-        // store id of employee to fetch info of
-        this.empId = component.getData().employee;
-
         // Initialize date selector field
         this.lookup('viewDate').setValue(
             new Date()
