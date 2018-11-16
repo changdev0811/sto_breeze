@@ -95,7 +95,9 @@ Ext.define('Breeze.widget.navBar.NavTree', {
             }
         } else {
             // Force other areas to collapse
-            this.onNodeExpand(info.item.getNode());
+            if(info.item.getNode().childNodes.length == 0){
+                this.onNodeExpand(info.item.getNode());
+            }
         }
     },
 
