@@ -42,7 +42,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
             }
         },
         // tpl: 'Work Time Records for {name}'// ({startDate} - {[parent.titleDateEnd]})'
-        tpl: 'Work Time Records for {name} ({start} - {finish})'
+        tpl: 'WorkTime Records for {name} ({start} - {finish})'
     },
     //====[End of Panel Setup/Styling]==
 
@@ -212,10 +212,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                     ui: 'wtr-tabbar',
                     tabBar: {
                         defaultTabUI: 'wtr-tabbar',
-                        shadow: false
+                        shadow: false,
                     },
 
-                    
+                
                     reference: 'wtrContentTabs',
                     flex: 1,
                     margin: '0pt 10pt 0pt 0pt', 

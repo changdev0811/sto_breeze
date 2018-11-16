@@ -139,13 +139,13 @@ $employee-fyi-text-colors: (
 
 // colors
 //$scoped-wtr-base: $base-color;
-$scoped-wtr-base: #57576A;
-$scoped-wtr-medium: #81818F;
-$scoped-wtr-light: #ABABB5;
+$scoped-wtr-base: #575786;//#57576A;
+$scoped-wtr-medium: #8180A5;//#81818F;
+$scoped-wtr-light: #ABABC4;//#ABABB5;
 
 // text
 $scoped-wtr-text-base: #ffffff;
-$scoped-wtr-text-light: #ABABB5;
+$scoped-wtr-text-light: #ABABC4;//#ABABB5;
 
 $wtr-colors: (
     base: $scoped-wtr-base,

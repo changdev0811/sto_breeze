@@ -19,6 +19,7 @@
     $ui: 'employees-side-bar-panel',
     $header-background-color: map-get($side-panel-colors, 'base'),
     $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-padding: map-get($side-panel-text-colors, 'base'),
     $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
     $body-background-color: map-get($side-panel-colors, 'base'),
     $body-color: map-get($side-panel-text-colors, 'base'),
