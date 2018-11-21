@@ -7,13 +7,14 @@
 .employee-fyi-container {
     // padding: 0pt 16pt 16pt 16pt;
     background-color: map-get($employee-fyi-colors,'base');
-    max-width:600pt;
+    //max-width:600pt;
     color: map-get($employee-fyi-text-colors,'base');
 }
 
 
 .fyi-accrual-list {
     margin:15pt 0pt 15pt 0pt;
+    max-width:600pt;
 }
 
 
@@ -61,6 +62,13 @@
     // $label-font-size: 12pt !important,
     $ui: 'fyi-display-field'
 );
+
+@include toolbar-ui(
+    $ui: 'employee-fyi-actions',
+    $background-color: map-get($employee-fyi-colors, 'base'),
+    $horizontal-spacing: 4pt
+);
+
 
 
 // == Panel Version Styling ==

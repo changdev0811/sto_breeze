@@ -6,6 +6,7 @@
 Ext.define('Breeze.view.employee.fyi.AccrualItem', {
     alias: 'widget.employee.fyi.accrualItem',
     extend: 'Ext.dataview.ListItem',
+    controller: 'employee.fyi.accrualitem',
     requires: [
         'Ext.XTemplate'
     ],
@@ -21,7 +22,7 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
                 {
                     xtype: 'component',
                     reference: 'categoryName',
-                    userCls: 'employee-fyi-accrual-item-layout',
+                    userCls: 'employee-fyi-accrual-item-layout'
                 },
                 {
                     xtype: 'component',
@@ -44,6 +45,13 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         }
     ],
     updateRecord: function(record){
+        var me = this;
+        this.el.on('click', function(){
+            me.getController().onItemClick();
+        });
+        if(this.isDestroying){
+            return null;
+        }
         this.lookup('categoryName').setHtml(record.get('CatDesc'));
 
         var recorded = this.normalizedRecordFloat(record,'CatRecorded');
@@ -102,5 +110,8 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         };
         data.value = (isNaN(data.value))? 0.0 : data.value;
         return data;
+    },
+    listeners: {
+        tap: 'onFyiItemTap'
     }
 });

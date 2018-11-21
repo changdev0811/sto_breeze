@@ -3,8 +3,8 @@
  * Classes and UI overrides in this sheet should be specific to items
  * that appear within the Employee Calendar view or its children
  */
-$cal-head-font-size: 12pt;
-$cal-field-font-size: 14pt;
+$cal-head-font-size: map-get($root-font-sizes, 'detail');
+$cal-field-font-size: map-get($root-font-sizes, 'base');
 $cal-body-padding: 4pt 16pt 16pt 16pt;
 
 // Panel UI style for calendar view's containing panel
@@ -22,6 +22,12 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $ui: 'employee-calendar-panel',
     $font-size: $panel-title-font-size
 );
+
+.legend-title {
+    font-size: 14pt;
+    line-height: 14pt;
+    padding:0%; margin: 0%;
+}
 
 .legend-item-dot{
     position: relative;
@@ -47,12 +53,12 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
 .legend {
     margin:20pt 0pt 0pt 0pt;
     border:solid 1px map-get($calendar-colors, 'medium');
+    pointer-events:none;
 }
 
 
 @include dataview-ui(
     $ui: 'calendar-legend',
-    $padding: 0pt 0pt 0pt 0pt,
     $background-color: map-get($calendar-colors, 'base')
 );
 

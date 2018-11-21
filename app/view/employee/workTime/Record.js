@@ -31,6 +31,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 // { type: 'rowexpander' }
                 rowexpander: true
             },
+            // Removed for now because trying to force newly loaded
+            // records to show their punches causes layout issues
+            // listeners: {
+            //     refresh: 'onWorkRecordsUpdated'
+            // },
             itemConfig: {
                 body: {
                     userCls: 'wtr-grid-no-spacer',
@@ -106,23 +111,26 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             columns: [
                 {
                     xtype: 'gridcolumn',
-                    text: '',
                     groupable: false,
                     hideable: false,
                     menu: null,
                     menuDisabled: true,
-                    resizable: false,
-                    tpl: '<span style="padding:0;" class="{Photo}"></span>',
-                    cell: {
-                        encodeHtml: false
+                    // tpl: '<div class="{Photo}"></div>',
+                    renderer: function(val, rec, col, cell){
+                        cell.setTools([{
+                            iconCls: rec.get('Photo')
+                        }]);
                     },
-                    width: '4em',
+                    // padding: '2pt', margin: '2pt',
+                    width: 'auto',
+                    
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     formatter: 'date("m/d/Y")',
                     dataIndex: 'Record_Date',
+                    sortable: true,
                     text: 'Date'
                 },
 
@@ -130,12 +138,17 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time IN',
+                    sortable: true,
                     // dataIndex: 'Start_Time'
                     tpl: [
                         '{[this.formatted(values.Start_Time)]}',
                         {
                             formatted: function(v){
-                                return v.toLocaleTimeString();
+                                if((Object.isUnvalued(v) || v == '')){
+                                    return v;
+                                } else {
+                                    return (moment(v).format('h:mm A'));
+                                }
                             }
                         }
                     ]
@@ -144,12 +157,17 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time OUT',
+                    sortable: true,
                     // dataIndex: 'End_Time'
                     tpl: [
                         '{[this.formatted(values.End_Time)]}',
                         {
                             formatted: function(v){
-                                return v.toLocaleTimeString();
+                                if((Object.isUnvalued(v) || v == '')){
+                                    return v;
+                                } else {
+                                    return (moment(v).format('h:mm A'));
+                                }
                             }
                         }
                     ]
@@ -158,14 +176,16 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Hours',
-                    dataIndex: 'Total_Time_Hours'
+                    dataIndex: 'Total_Time_Hours',
+                    sortable: true
 
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 2,
                     text: 'Project',
-                    dataIndex: 'Project'
+                    dataIndex: 'Project',
+                    sortable: true
                 }
             ]
         },
@@ -187,13 +207,20 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                 {
                     xtype: 'button',
                     ui: 'plain wtr-button',
-                    text: 'Show Punches',
+                    text: 'Show All Punches',
+                    reference: 'showPunchesButton',
+                    data: {
+                        showText: 'Show All Punches',
+                        hideText: 'Hide All Punches'
+                    },
                     listeners: {
                         tap: 'onShowPunches'
                     }
                 },
+                // ===[Approve/Deny Button Container]===
                 {
-                    xtype: 'container',
+                    xtype: 'toolbar',
+                    ui: 'wtr-actions',
                     flex: 1,
                     layout: {
                         type: 'hbox',
@@ -203,19 +230,22 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         {
                             xtype: 'button',
                             text: 'Approve',
-                            ui: 'confirm wtr-button',
+                            ui: 'confirm alt wtr-button wtr-button-alt',
+                            iconCls: 'x-fas fa-check',
                             menu: {
                                 xtype: 'menu',
                                 items: [
                                     {
                                         xtype: 'menuitem',
                                         text: 'Approve',
-                                        itemId: 'mnuApproveRegular'
+                                        itemId: 'mnuApproveRegular',
+                                        iconCls: 'x-fas fa-check-circle'
                                     },
                                     {
                                         xtype: 'menuitem',
                                         text: 'Approve w/ Note',
-                                        itemId: 'mnuApproveWithNote'
+                                        itemId: 'mnuApproveWithNote',
+                                        iconCls: 'x-fas fa-file-check'
                                     }
                                 ]
                             }
@@ -223,19 +253,22 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         {
                             xtype: 'button',
                             text: 'Deny',
-                            ui: 'decline wtr-button',
+                            ui: 'decline alt wtr-button wtr-button-alt',
+                            iconCls: 'x-fas fa-times',
                             menu: {
                                 xtype: 'menu',
                                 items: [
                                     {
                                         xtype: 'menuitem',
                                         text: 'Deny',
-                                        itemId: 'mnuDenyRegular'
+                                        itemId: 'mnuDenyRegular',
+                                        iconCls: 'x-fas fa-times-octagon'
                                     },
                                     {
                                         xtype: 'menuitem',
                                         text: 'Deny w/ Note',
-                                        itemId: 'mnuDenyWithNote'
+                                        itemId: 'mnuDenyWithNote',
+                                        iconCls: 'x-fas fa-file-times'
                                     }
                                 ]
                             }

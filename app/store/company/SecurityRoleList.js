@@ -1,11 +1,11 @@
 /**
  * Store for Security Role List for Company (from ./SecurityRoleList)
  * @class SecurityRoleList
- * @alias Breeze.store.company.SecurityRoleList
+ * @namespace Breeze.store.company.SecurityRoleList
  */
 Ext.define('Breeze.store.company.SecurityRoleList', {
     extend: 'Breeze.store.Base',
-    model: 'Breeze.model.data.SecurityRoleOption',
+    model: 'Breeze.model.company.SecurityRole',
     alias: 'store.company.securityrolelist',
     autoLoad: false,
     listeners: {

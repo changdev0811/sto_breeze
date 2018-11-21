@@ -18,6 +18,19 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
         console.info('Personal dashboard controller init');
         this.loadFyi();
         this.loadInfo();
+        //
+        var me = this;
+        this.lookup('infoDash').getHeader().el.on('click', function(e){
+            me.onInfoNavClick(e);
+        });
+        this.lookup('calDash').getHeader().el.on('click', function(e){
+            me.onCalendarNavClick(e);
+        });
+        this.lookup('fyiDash').getHeader().el.on('click', function(e){
+            me.onFyiNavClick(e);
+        });
+
+
     },
 
     loadFyi: function(){

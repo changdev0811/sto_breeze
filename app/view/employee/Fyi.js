@@ -43,47 +43,41 @@ Ext.define('Breeze.view.employee.Fyi',{
     userCls: 'employee-fyi-container',
 
     items: [
+        
         {
             xtype: 'container',
-            // ui: 'dark-form-container',
-            layout: 'vbox',
-            // flex: 1,
+            layout: {
+                type:'hbox',
+                wrap:true,
+            },
+            // Fixes firefox display bug caused by flex-basis defaulting to 0%
+            //flex: {
+            //    grow: 1,
+            //    shrink: 1,
+            //    basis: 'auto'
+            //},
             defaults: {
                 xtype: 'displayfield',
+                ui: 'fyi-display-field',
                 flex: 1
             },
-            items: [
+            items: [   
+                {  
+                    ui: 'fyi-display-field',
+                    label: 'Employee Name',
+                    bind: { value: '{employeeName}' },
+                    minWidth:'200pt'
+                },
                 {
-                    xtype: 'container',
-                    layout: 'hbox',
-                    // Fixes firefox display bug caused by flex-basis defaulting to 0%
-                    flex: {
-                        grow: 1,
-                        shrink: 1,
-                        basis: 'auto'
-                    },
-                    defaults: {
-                        xtype: 'displayfield',
-                        ui: 'fyi-display-field',
-                        flex: 1
-                    },
-                    items: [   
-                        {  
-                            ui: 'fyi-display-field',
-                            label: 'Employee Name',
-                            flex: 1,
-                            bind: { value: '{employeeName}' }
-                        },
-                        {
-                            label: 'Department',
-                            bind: { value: '{departmentName}' }
-                        },
-                    ]
+                    label: 'Department',
+                    bind: { value: '{departmentName}' },
+                    minWidth:'200pt'
                 },
                 {
                     label: 'Hire Date',
                     ui: 'fyi-display-field',
-                    bind: { value: '{hireDate}' }
+                    bind: { value: '{hireDate}' },
+                    minWidth:'200pt'
                 }
             ]
         },
@@ -96,6 +90,7 @@ Ext.define('Breeze.view.employee.Fyi',{
                     name: 'viewdate_field',
                     label: 'FYI View as of',
                     reference: 'viewDate',
+                    maxWidth:'125pt',
                     picker: {
                         xtype: 'datepicker',
                         title: 'Select Date'
@@ -112,6 +107,9 @@ Ext.define('Breeze.view.employee.Fyi',{
             layout: 'vbox',
             itemConfig: {
                 xtype: 'employee.fyi.accrualItem'
+            },
+            bind: {
+                store: '{employee_fyi}'
             },
             reference: 'fyiDataList',
             ui: 'fyi-accrual-list',

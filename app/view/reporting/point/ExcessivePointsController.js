@@ -1,0 +1,204 @@
+/**
+ * View Controller for Excessive Points reporting criteria view
+ * @class ExcessivePointsController
+ * @namespace Breeze.view.reporting.point.ExcessivePointsController
+ * @alias controller.reporting.point.excessivepoints
+ */
+Ext.define('Breeze.view.reporting.point.ExcessivePointsController', {
+    extend: 'Breeze.controller.Reporting',
+    alias: 'controller.reporting.point.excessivepoints',
+
+    stores: [
+        // 'Breeze.store.category.List'
+    ],
+
+    /**
+     * Called when the view is created
+     */
+    onInit: function (component) {
+
+        console.info('Excessive Points Report view inited');
+
+        var me = this;
+        var vm = me.getViewModel();
+
+        // Create instance of report generation API class
+        this.reportApi = Ext.create(
+            'Breeze.api.reporting.point.ExcessivePoints',
+            {exceptionHandler: this.onReportException}
+        );
+
+        // Load point categories list
+        this.addStoreToViewModel(
+            'Breeze.store.point.List',
+            'pointCatsList',
+            { load: true }
+        );
+
+        // Load employees for tree selector
+        this.addStoreToViewModel(
+            'Breeze.store.reporting.parameters.Employees',
+            'employeesTree',
+            { load: true }
+        );
+
+        // Load departments for tree selector
+        this.addStoreToViewModel(
+            'Breeze.store.reporting.parameters.Departments',
+            'departmentsTree',
+            { load: true }
+        );
+
+        // Load company config
+        this.addStoreToViewModel(
+            'Breeze.store.company.Config',
+            'companyConfig',
+            { load: true }
+        );
+
+        console.info('Store: ', vm.getStore('udcTree'));
+        console.info('Leaving init');
+    },
+
+    /**
+     * Check parameter values and ensure all required fields have been
+     * provided.
+     * 
+     * If errors are found, display appropriate message(s) in error toast popup
+     * 
+     * @return {Boolean} True if validation succeeds, false otherwise
+     */
+    validateParameters: function(){
+        // Make sure view model has latest selected employees and category
+        this.refreshSelectedItems();
+        var valid = true,
+            messages = [],
+            vm = this.getViewModel()
+            vmData = vm.getData();
+        
+        if(vmData.reportParams.pointids == ''){
+            valid = false;
+            messages.push('Please select one or more Point Categories.');
+        }
+
+        if(vmData.reportParams.incids == ''){
+            valid = false;
+            messages.push('Please select a Department or Employee.');
+        }
+
+        if(!valid){
+            // If validation failed, show error(s) in toast message
+            Ext.toast({
+                message: messages.join('<br>'),
+                type: Ext.Toast.ERROR,
+                timeout: 10000
+            });
+        }
+
+        return valid;
+    },
+
+    /**
+     * Refresh values in viewmodel for fields requiring manual attention
+     */
+    refreshSelectedItems: function(){
+        var vm = this.getViewModel(),
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
+            pointCatList = this.lookup('pointCatList');
+
+        // Set myinclist to list of chosen employee IDs
+        vm.set(
+            'reportParams.incids', 
+            this.checkedTreeItems(
+                employeeSelectTree.getComponent('tree'), {
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    forceInt: false
+                }
+            ).join(',')
+        );
+
+        // Set selected point category ids
+        var pointCatRecords = pointCatList.gatherSelected(),
+            selectedPointCats = (pointCatRecords.map((r)=>{
+                return r.getData().PointID;
+            }));
+        vm.set('reportParams.pointids', selectedPointCats.join(','));
+        
+    },
+
+    /**
+     * Handle exception thrown by report store proxy
+     * @param {*} proxy 
+     * @param {*} response 
+     * @param {*} op 
+     * @param {*} eOpts 
+     */
+    onReportException: function(proxy, response, op, eOpts){
+        console.warn('Exception thrown for report: ', response);
+    },
+
+    /**
+     * Build report
+     * @param {String} format Report format ('PDF','EXCEL', 'WORD')
+     */
+    buildReport: function(format){
+        var me = this,
+            params = this.getViewModel().getData().reportParams;
+        me.reportApi.process(params, format).then(
+            function(url){
+                if(typeof url == "string"){
+                    Ext.toast({
+                        message: 'Report Successfully Generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    window.open(url, '_blank');
+                } else {
+                    if(url.Message){
+                        Ext.toast({
+                            message: 'Report Error: <br>' + url.Message,
+                            type: Ext.Toast.ERROR,
+                            timeout: 10000
+                        });
+                    }
+                }
+            }
+        ).catch(function(err){
+            console.warn('Error generating report', err);
+        })
+    },
+
+    //===[Action Button Override Handlers]===
+
+    /**
+     * Overridden handler for 'Print PDF' action button
+     */
+    onPrintPDF: function(c, e, eOpts){
+        console.info('Print PDF Clicked');
+        if(this.validateParameters()){
+            this.buildReport('PDF');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Excel' action button
+     */
+    onPrintExcel: function(c, e, eOpts){
+        console.info('Print Excel Clicked');
+        if(this.validateParameters()){
+            this.buildReport('EXCEL');
+        }
+    },
+
+    /**
+     * Overridden handler for 'Print Word' action button
+     */
+    onPrintWord: function(c, e, eOpts){
+        console.info('Print Word Clicked');
+        if(this.validateParameters()){
+            this.buildReport('WORD');
+        }
+    },
+
+    
+});

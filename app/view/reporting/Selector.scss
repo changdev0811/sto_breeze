@@ -1,0 +1,337 @@
+/**
+ * Report Selector Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Report Selector view or its children
+*/
+
+// Padding to report form sections, based on root panel body padding weights
+.report-section-padding {
+    // See theme package sass/etc/extension/size.scss for function definition
+    // padding: 0pt 4pt 4pt 4pt;
+    padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+    );
+}
+
+// styling applied to reporting-fieldset title
+.reporting-fieldset {
+    border:solid 1px white;
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($reporting-text-colors, 'base');
+        background-color:map-get($reporting-colors, 'row-dark');
+        font-weight:1000;
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
+        );
+    }
+}
+
+.reporting-toolbar {
+    border-left: solid 1px white !important;
+    border-right: solid 1px white !important;
+}
+
+
+
+
+// styling applied to reporting-fieldset title
+.no-padding {
+
+    .x-form-fieldset-body-el {
+        //margin:0;
+        padding:0;
+    }
+
+
+}
+
+// stylying applied to non-Depts/Emps left-hand columns
+.no-side-margin {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0.5)
+    );
+}
+
+// styling applied to reporting-fieldset title
+.no-margin {
+
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
+    );
+}
+
+.no-background {
+    background:transparent !important;
+}
+
+
+.report-action-button {
+    min-width:100pt !important;
+}
+
+
+/** Generic base UI for report form panels **/
+@include panel-ui(
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 1, right: 1, bottom: 0.25)
+    ),
+    $header-background-color: map-get($reporting-colors, 'base'),
+    $header-color: map-get($reporting-text-colors, 'base'),
+    $body-background-color: map-get($reporting-colors, 'base'),
+    $ui: 'reporting-base'
+);
+
+
+@include paneltitle-ui(
+    $ui: 'reporting-base',
+    $font-size: $panel-title-font-size
+);
+
+/** Generic base UI for report form tree views **/
+@include toolbar-ui(
+    $ui: 'reporting-tree',
+    $background-color: map-get($reporting-colors, 'row-dark'),
+    $background-gradient: none,
+    $line-height: 22pt,
+);
+
+
+
+@include treecell-ui(
+    $ui: 'report-tree-column',
+
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $expander-color: map-get($reporting-text-colors, 'base'),
+    // +++ apply icon and expand color here
+);
+
+
+// Space out action buttons at footer of reporting panel
+@include toolbar-ui(
+    $ui: 'reporting-actions',
+    $background-color: map-get($reporting-colors, 'base'),
+    $horizontal-spacing: 4pt
+);
+
+@include ui-extend(
+    $xtype: 'container',
+    $ui: 'reporting-tabs'
+) {
+    border: 1pt solid map-get($root-colors, 'base');
+};
+
+
+@include panel-ui(
+    $ui: 'reporting-tab-panel',
+    $body-background-color: map-get($reporting-colors, 'base')
+);
+
+// Tree grid with border
+@include grid-ui(
+    $ui: 'reporting-tree'
+);
+
+@include ui-extend(
+    $xtype: 'grid',
+    $ui: 'reporting-tree'
+){
+    border: 1pt solid map-get($root-colors, 'base');
+};
+
+/** Reporting Form Fields **/
+@include field-ui(
+    $ui: 'reporting',
+    $label-color: map-get($reporting-text-colors, 'light'),
+    $focused-label-color: map-get($reporting-text-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include trigger-ui(
+    $ui: 'reporting',
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $hovered-icon-color: map-get($reporting-colors, 'dark'),
+    $pressed-icon-color: map-get($reporting-colors, 'medium')
+);
+
+@include checkboxfield-ui(
+    $ui: 'reporting',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $box-label-color: map-get($reporting-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include checkboxfield-ui(
+    $ui: 'reporting-no-padding',
+    $box-label-padding: 0pt 0pt 0pt 5pt !important,
+);
+
+@include radiofield-ui(
+    $ui: 'reporting',
+    $box-label-color: map-get($reporting-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include textfield-ui(
+    $ui: 'reporting-text',
+    $focused-input-underline-color: map-get($reporting-colors, 'dark'),
+    $input-color: map-get($reporting-text-colors, 'base'),
+    $input-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include datetrigger-ui(
+    $ui: 'reporting-date',
+    $icon-color: map-get($reporting-text-colors, 'base'),
+    $hovered-icon-color: map-get($reporting-colors, 'dark'),
+    $pressed-icon-color: map-get($reporting-colors, 'medium')
+);
+
+@include dataview-ui(
+    $background-color :  map-get($reporting-colors, 'base'),
+    $ui: 'employeeinfo-shift-grid'
+)
+
+.employeeinfo-shift-grid {
+    border-top:none;
+    border-left:solid 1px white;
+    border-bottom:solid 1px white;
+    border-right:solid 1px white;
+}
+
+
+@include treecell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'reporting-tree-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+
+// ===[User Categories List Widget Specific]==
+@include listitem-ui(
+    $ui: 'reporting-list-item',
+    $color: map-get($reporting-text-colors, 'base'),
+    $selected-color: map-get($reporting-text-colors, 'base'),
+    $hovered-color: map-get($reporting-text-colors, 'base'),
+    $background-color: map-get($reporting-colors, 'base'),
+    $selected-background-color: map-get($reporting-colors, 'base'),
+    $hovered-background-color: map-get($reporting-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important,
+
+    $padding: 10pt 0pt 10pt 11.6pt
+
+);
+
+
+
+
+@include panel-ui(
+    $ui: 'reporting-list-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include paneltitle-ui(
+    $ui: 'reporting-list-panel',
+    $font-size: map-get($root-font-sizes, 'base')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'reporting-list-panel'
+) {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0.5)
+    );
+};
+
+// Used on tab bodies containing multiple items
+@include panel-ui(
+    $ui: 'reporting-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include panel-ui(
+    $ui: 'reporting-bordered-panel',
+    $background-color: map-get($employee-info-colors, 'base'),
+    $header-background-color: map-get($employee-info-colors, 'base'),
+    $body-background-color: map-get($employee-info-colors, 'base'),
+    $body-color: map-get($employee-info-text-colors, 'base'),
+    // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
+);
+
+@include ui-extend(
+    $xtype: 'panel',
+    $ui: 'reporting-bordered-panel'
+){
+    border: 1pt solid map-get($root-colors, 'base');
+};
+
+// === Selector View Styles ===
+
+// Selector panel style
+@include panel-ui(
+    $ui: 'reporting-selector',
+    $header-background-color: map-get($side-panel-colors, 'base'),
+    $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
+    $body-background-color: map-get($side-panel-colors, 'base'),
+    $body-color: map-get($side-panel-text-colors, 'base'),
+    $body-padding: 8pt 8pt 8pt 8pt,
+    // $header-padding: 8pt 8pt 0pt 8pt
+);
+
+
+// --Selector tree--
+
+// UI type
+@include treelist-ui(
+    $ui: 'reporting-selector'
+);
+
+
+
+
+// Class
+.reporting-selector-tree {
+
+}
+
+
+

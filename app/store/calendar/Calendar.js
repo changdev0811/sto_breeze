@@ -17,22 +17,26 @@ Ext.define('Breeze.store.calendar.Calendar', {
             {
                 id: 'points',
                 title: 'Points',
-                eventType: '[POINTS]'
+                eventType: '[POINTS]',
+                color: '#ff9595'
             },
             {
                 id: 'notes',
                 title: 'Notes',
-                eventType: '[NOTES]'
+                eventType: '[NOTES]',
+                color: '#fecb95'
             },
             {
                 id: 'worktime',
                 title: 'Worked Time',
-                eventType: '[WORKTIME]'
+                eventType: '[WORKTIME]',
+                color: '#9bc796'
             },
             {
                 id: 'adjustments',
                 title: 'Adjustments',
-                eventType: '[ADJUSTMENTS]'
+                eventType: '[ADJUSTMENTS]',
+                color: '#7dc6d1'
             }
         ]
     },
@@ -51,21 +55,28 @@ Ext.define('Breeze.store.calendar.Calendar', {
         cfg = cfg || {};
 
         var categories = cfg.categories;
-        var lookup = cfg.lookup;
-        var start = cfg.startDate;
-        var end = cfg.endDate;
+        var lookup = cfg.lookup,
+            start = cfg.startDate,
+            end = cfg.endDate,
+            utcStart = cfg.utcStartDate,
+            utcEnd = cfg.utcEndDate;
+
 
         var datum = categories.getData().items.map(function(r){
             return {
                 "id": r.get('Category_Code'),
                 "title": r.get('Category_Name'),
-                "startDate": start,
-                "endDate": end,
+                "start": start,
+                "end": end,
                 "color": r.get('Category_Color_HEX'),
                 "eventStore": {
                     // "type": "Breeze.store.calendar.Events",
                     "eventType": r.get('Category_Code'),
-                    "lookup": lookup
+                    "lookup": lookup,
+                    "UTCstart": utcStart,
+                    "UTCend": utcEnd,
+                    "start": start,
+                    "end": end
                 }
             };
         });
@@ -76,12 +87,17 @@ Ext.define('Breeze.store.calendar.Calendar', {
             datum = datum.concat({
                 "id": xtra.id,
                 "title": xtra.title,
-                "startDate": start,
-                "endDate": end,
+                "start": start,
+                "start": end,
+                "color": xtra.color,
                 "eventStore": {
                     // "type": "Breeze.store.calendar.Events",
                     "eventType": xtra.eventType,
-                    "lookup": lookup
+                    "lookup": lookup,
+                    "UTCstart": utcStart,
+                    "UTCend": utcEnd,
+                    "start": start,
+                    "end": end
                 }
             })
         }

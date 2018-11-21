@@ -5,7 +5,7 @@
  */
 
 // Edge margin size for content pane
-$content-edge: 12pt;
+$content-edge: 6pt;
 
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
@@ -51,6 +51,18 @@ $content-edge: 12pt;
             line-height:30pt;
             // margin-left:49.5pt;
             margin-left:36pt;
+        }
+    }
+}
+
+// Override providing highlighting of selected nav icon + text
+.x-treelist-item.x-breeze-navtreeitem.x-treelist-item-selected {
+    & > div > div {
+        & > .x-treelist-item-icon { 
+            color: #ffffff;
+        }
+        & > .x-treelist-item-text {
+            color: #ffffff;
         }
     }
 }

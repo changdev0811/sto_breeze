@@ -63,6 +63,7 @@ Ext.define('Breeze.view.employee.FyiController', {
      * @param {Object} me Reference to controller context
      */
     displayData: function(me){
+        var me = me;
         var viewDate = me.lookup('viewDate').getValue();
         var showScheduled = me.lookup('showScheduled').getChecked();
         me.apiClass.fyi.getFYI(
@@ -76,12 +77,15 @@ Ext.define('Breeze.view.employee.FyiController', {
                 var vm = me.getViewModel();
                 vm.setStores({employee_fyi: data.store});
                 vm.setData(data.data);
-                me.lookup('fyiDataList').setStore(data.store);
             } else {
                 console.log("Error loading FYI data");
             }
         }).catch(function(err){
             console.log("FYI Error", err);
         });
+    },
+
+    onFyiItemTap: function(){
+        console.info('FYI Item Clicked');
     }
 });

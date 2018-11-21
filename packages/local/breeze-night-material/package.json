@@ -33,7 +33,7 @@
          *
          *    "extend": "parent-theme-package",
          */
-        "extend": "theme-material",
+        "extend": "breeze-material",
         /**
          * The toolkit used by this theme (only for "theme" package type).
          *

@@ -11,15 +11,22 @@ Ext.define('Breeze.Application', {
     controllers: ['Breeze.controller.Overseer'],
 
     requires: [
-        'Breeze.helper.Auth'
+        'Breeze.helper.Auth',
+        'Breeze.view.main.employees.Panel',
+        'Breeze.view.reporting.Selector'
     ],
 
     stores: [
+        // Option Lists
         'Breeze.store.option.UserTypes',
         'Breeze.store.option.Genders',
         'Breeze.store.option.Compensation',
+        'Breeze.store.option.CalendarTypes',
+        'Breeze.store.option.Years',
+        // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
-        'Breeze.store.company.Config'
+        'Breeze.store.company.Config',
+        'Breeze.store.option.NewRates'
     ],
 
     defaultToken: 'home',
@@ -44,10 +51,13 @@ Ext.define('Breeze.Application', {
     launch: function(){
         console.log("Launched");
         Breeze.helper.Theme.apply();
+        //======[Testing Mode Block Start]=========
         // TODO: Removing testing check when out of dev
-        var testing = true; // (should be removed later)
+        var testing = Breeze.helper.Base.isTestMode();
         if(testing){
-            Breeze.helper.Auth.setCookies("1","2","5003");
+            // make dummy cookies for test mode, so we
+            // can skip login
+            Breeze.helper.Auth.setCookies("1","2","5001");
             Breeze.helper.Cookie.bake('STOLI','True',null);
         }
         if((Breeze.helper.Auth.isAuthorized() && Breeze.helper.Auth.isLoggedIn()) || testing){

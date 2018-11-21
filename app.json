@@ -220,10 +220,22 @@
             "path": "lib/timely.js",
             "includeInBundle": true
         },
-        // Include dynamic theme loader
+        // JS Class extensions
         {
-            "path": "lib/dynamic_theme.js"
+            "path": "lib/extensions.js",
+            "includeInBundle": true
         },
+        // Time/Minute class
+        {
+            "path": "lib/breeze_time.js",
+            "includeInBundle": true
+        },
+        // Include dynamic theme loader
+        // {
+        //     "path": "lib/dynamic_theme.js",
+        //     "includeInBundle": false,
+        //     "remote": true
+        // },
         // Include html2canvas lib
         {
             "path": "lib/html2canvas.min.js"
@@ -331,6 +343,10 @@
     "development": {
         "watch": {
             "delay": 250
+        },
+        // Enable caching for breakpoint purposes in dev
+        "loader": {
+            "cache": true
         }
     },
     /**

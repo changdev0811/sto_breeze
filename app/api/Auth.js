@@ -194,6 +194,7 @@ Ext.define('Breeze.api.Auth', {
                 if(clearUrlHash){
                     window.location.hash = '';
                 }
+                Breeze.helper.Cookie.delete(auth.fields.loggedIn);
                 window.location.reload();
             },
             function(){

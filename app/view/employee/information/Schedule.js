@@ -20,6 +20,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
         {
             xtype: 'container',
             // userCls: 'employee-info-fieldset',
+            userCls: 'ei-schedule-top-padding',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
@@ -30,40 +31,86 @@ Ext.define('Breeze.view.employee.information.Schedule', {
             },
             items: [
                 {
-                    xtype: 'fieldset',
-                    userCls: 'employee-info-fieldset',
+                    xtype: 'panel',
+                    
+                    // userCls: 'employee-info-fieldset',
+                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
+                    userCls: 'employee-info-grid',
                     title: 'Shift Information',
+                    body:{
+                        style:'background:red!important;',
+                    },
+                    // Tools
+                    tools: {
+                        add: {
+                            iconCls: 'x-fas fa-plus',
+                            // data: {
+                            //     sheet: 'addShiftSegmentActionSheet',
+                            //     // checkHandler: 'canAddShift'
+                            // },
+                            bind: {
+                                // Dynamically disable based on readonly and shift count
+                                disabled: '{!canAddShift}',
+                                hidden: '{readOnly}'
+                            },
+                            // handler: 'onGridAddButton'
+                            handler: 'onAddShiftSegmentDirect'
+                        }
+                    },
                     items: [
+                        // TODO: Figure out how to make combo boxes work as input fields
                         {
                             xtype: 'grid',
-                            height: '200px',
-                            ui: 'employeeinfo-shift-grid',
+                            height: '100pt',
+                            ui: 'employeeinfo-shift-grid employee-info-shift-grid-sized',
                             reference: 'shiftSegmentGrid',
                             userCls: 'employee-info-grid',
                             striped: true,
                             sortable: false,
                             columnResize: false,
                             columnMenu: null,
+                            hideHeaders: true,
                             layout: 'hbox',
+                            bind: {
+                                store: '{shift.segments}'
+                            },
                             // Plugin allowing editability
-                            plugins: [
-                                {
-                                    pluginId: 'shiftEdit',
-                                    type: 'gridcellediting'
-                                }
-                            ],
+                            plugins: {
+                                gridcellediting: true
+                            },
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
-                                    ui: 'employeeinfo-shift-grid',
-                                    align: 'center',
-                                    text: 'Start',
-                                    dataIndex: 'StartTime',
-                                    menuDisabled: true,
-                                    flex: 1,
-                                    /*
-                                    bind: { editable: '{!readOnly}' }
-                                    */
+                                    itemId: 'start',
+                                    ui: 'employeeinfo-shift-grid', menuDisabled: true, 
+                                    align: 'center', flex: 1,
+                                    dataIndex: 'StartMin', tpl: '{StartTime}',
+                                    bind: {
+                                        editable: '{!readOnly}'
+                                    },
+                                    editor: {
+                                        xtype: 'selectfield',
+                                        bind: {
+                                            store: '{shiftChoices}'
+                                        },
+                                        displayField: 'time',
+                                        valueField: 'value',
+                                        listeners: {
+                                            // change: 'onShiftTimeChange',
+                                            select: 'onShiftTimeSelect'
+                                        }
+                                    }
+                                    // editor: {
+                                    //     xtype: 'combobox',
+                                    //     bind: {
+                                    //         store: '{shiftChoices}'
+                                    //     },
+                                    //     displayField: 'time', valueField: 'value',
+                                    //     listeners: {
+                                    //         // change: 'onShiftTimeChange',
+                                    //         select: 'onShiftTimeSelect'
+                                    //     }
+                                    // }
                                 },
                                 {
                                     xtype: 'templatecolumn',
@@ -74,24 +121,40 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    ui: 'employeeinfo-shift-grid',
-                                    align: 'center',
-                                    text: 'Stop',
-                                    dataIndex: 'StopTime',
-                                    menuDisabled: true,
-                                    flex: 1
-                                },
-                                // {
-                                //     ui: 'employeeinfo-shift-grid',
-                                //     cell: {
-                                //         tools: [{
-                                //             type: 'close',
-                                //             ui: 'employeeinfo-tool-delete',
-                                //             zone: 'end'
-                                            
-                                //         }]
-                                //     }
-                                // }
+                                    itemId: 'stop',
+                                    ui: 'employeeinfo-shift-grid', menuDisabled: true,
+                                    align: 'center', flex: 1,
+                                    dataIndex: 'StopMin', tpl: '{StopTime}',
+                                    bind: {
+                                        editable: '{!readOnly}'
+                                    },
+                                    editor: {
+                                        xtype: 'selectfield',
+                                        bind: {
+                                            store: '{shiftChoices}'
+                                        },
+                                        displayField: 'time',
+                                        valueField: 'value',
+                                        listeners: {
+                                            select: 'onShiftTimeSelect'
+                                        }
+                                    },
+                                    cell: {
+                                        toolDefaults: {
+                                            ui: 'employeeinfo-grid-tool',
+                                            zone: 'end',
+                                            bind: {
+                                                hidden: '{readOnly}'
+                                            }
+                                        },
+                                        tools: [
+                                            {
+                                                iconCls: 'x-fas fa-times',
+                                                handler: 'onRemoveShiftSegment'
+                                            }
+                                        ]
+                                    }
+                                }
                             ]
                         }
                     ]
@@ -109,7 +172,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'startup_settings',
                             label: 'Accrual Policy',
-                            bind: { value: '{info.StartUpSettings}' },
+                            bind: { value: '{info.StartUpSettings}', store: '{scheduleList}' },
                             reference: 'accrualPolicy',
                             displayField: 'Name',
                             valueField: 'ID',
@@ -118,7 +181,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             name: 'default_project',
                             label: 'Default Project',
-                            bind: { value: '{info.DefaultProject}' },
+                            bind: { value: '{info.DefaultProject}', store: '{projectList}' },
                             reference: 'defaultProject',
                             displayField: 'Name',
                             valueField: 'ID'
@@ -147,11 +210,17 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             boxLabel: 'Exempt',
                             name: 'exempt_status',
-                            value: 138
+                            value: 138,
+                            bind: {
+                                groupValue: '{info.ExemptStatus}'
+                            }
                         },{
                             boxLabel: 'Non-Exempt',
                             name: 'exempt_status',
-                            value: 139
+                            value: 139,
+                            bind: {
+                                groupValue: '{info.ExemptStatus}'
+                            }
                         }
                     ]
                 },
@@ -170,15 +239,119 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         {
                             boxLabel: 'Days',
                             name: 'recording_mode',
-                            value: 20
+                            value: 20,
+                            bind: {
+                                groupValue: '{info.RecordingMode}'
+                            }
                         },{
                             boxLabel: 'Hours',
                             name: 'recording_mode',
-                            value: 21
+                            value: 21,
+                            bind: {
+                                groupValue: '{info.RecordingMode}'
+                            }
                         }
                     ]
                 }
             ]
-        }
+        },
+        // Add Shift action sheet
+        // This should be in schedule.js, but it refuses to work there
+        // {
+        //     xtype: 'actionsheet',
+        //     reference: 'addShiftSegmentActionSheet',
+        //     title: 'Add Shift Segment',
+        //     closable: false,
+        //     closeAction: 'hide',
+        //     des
+        //     listeners: {
+        //         beforeshow: function () {
+        //             console.info('before shoing');
+        //         }
+        //     },
+        //     // layout: {
+        //     //     type: 'hbox',
+        //     //     // align: 'stretch'
+        //     // },
+        //     items: [
+        //         {
+        //             xtype: 'selectfield',
+        //             itemId: 'startTime',
+        //             label: 'Start',
+        //             // displayField: 'time',
+        //             displayField: 'time',
+        //             valueField: 'value',
+        //             value: '0',
+        //             bind: {
+        //                 store: '{shiftChoices}'
+        //             },
+        //             ignoreReadOnly: true,
+        //             readOnly: false,
+        //             required: true,
+        //             // flex: 1
+        //         },
+        //         {
+        //             xtype: 'selectfield',
+        //             itemId: 'stopTime',
+        //             label: 'Stop Time',
+        //             displayField: 'time',
+        //             valueField: 'value',
+        //             readOnly: false,
+        //             ignoreReadOnly: true,
+        //             bind: {
+        //                 store: '{shiftChoicesFormula}'
+        //             },
+        //             required: true,
+        //             // flex: 1
+        //         },
+        //         {
+        //             xtype: 'container',
+        //             itemId: 'buttons',
+        //             layout: {
+        //                 type: 'hbox',
+        //                 pack: 'end'
+        //             },
+        //             style: 'padding-top: 6pt',
+        //             items: [
+        //                 {
+        //                     itemId: 'add',
+        //                     xtype: 'button',
+        //                     ui: 'confirm alt',
+        //                     text: 'Add',
+        //                     handler: 'onAddShiftSegment'
+        //                 },
+        //                 { xtype: 'spacer', width: 8 },
+        //                 {
+        //                     itemId: 'cancel',
+        //                     xtype: 'button',
+        //                     ui: 'decline alt',
+        //                     text: 'Cancel',
+        //                     handler: function(comp){
+        //                         comp.getParent().getParent().hide();
+        //                     }
+        //                 }
+        //             ]
+        //         }
+        //     ],
+        //     // buttonToolbar: {
+        //     //     ui: 'actionsheet-toolbar',
+        //     //     defaults: {
+        //     //         minWidth: '90pt'
+        //     //     }
+        //     // },
+        //     // buttons: {
+        //     //     add: {
+        //     //         ui: 'confirm alt',
+        //     //         text: 'Add',
+        //     //         handler: 'onAddShiftSegment'
+        //     //     },
+        //     //     cancel: {
+        //     //         ui: 'decline alt',
+        //     //         text: 'Cancel',
+        //     //         controller: 'employee.information',
+        //     //         handler: 'onActionSheetCancel'
+        //     //     }
+        //     // }
+        // },
     ]
 });

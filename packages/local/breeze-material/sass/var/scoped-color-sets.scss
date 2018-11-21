@@ -62,12 +62,12 @@ $root-text-colors: (
 
 
 // ====[Base (root) Set]====
-$scoped-calendar-base: #2C9E85;
-$scoped-calendar-medium: #5BB09D;
-$scoped-calendar-light: #84C4B6;
+$scoped-calendar-base: #709C93;
+$scoped-calendar-medium: #93B5AE;
+$scoped-calendar-light: #B7CEC9;
 
 $scoped-calendar-text-base: #ffffff;
-$scoped-calendar-text-light: #84C4B6;
+$scoped-calendar-text-light: #B7CEC9;
 
 $calendar-colors: (
     base:  $scoped-calendar-base,
@@ -139,13 +139,13 @@ $employee-fyi-text-colors: (
 
 // colors
 //$scoped-wtr-base: $base-color;
-$scoped-wtr-base: #57576A;
-$scoped-wtr-medium: #81818F;
-$scoped-wtr-light: #ABABB5;
+$scoped-wtr-base: #575786;//#57576A;
+$scoped-wtr-medium: #8180A5;//#81818F;
+$scoped-wtr-light: #ABABC4;//#ABABB5;
 
 // text
 $scoped-wtr-text-base: #ffffff;
-$scoped-wtr-text-light: #ABABB5;
+$scoped-wtr-text-light: #ABABC4;//#ABABB5;
 
 $wtr-colors: (
     base: $scoped-wtr-base,
@@ -203,6 +203,167 @@ $toast-colors: (
     success: $scoped-toast-success,
     warn: $scoped-toast-warn,
     error: $scoped-toast-error
+);
+
+// ====[Side Panel]====
+
+// colors
+//$scoped-wtr-base: $base-color;
+$scoped-side-panel-base: #57576A;
+$scoped-side-panel-medium: #81818F;
+$scoped-side-panel-light: #ABABB5;
+$scoped-side-panel-tree: #ffffff;
+
+// text
+$scoped-side-panel-text-base: #ffffff;
+$scoped-side-panel-text-light: #ABABB5;
+$scoped-side-panel-text-icon: $scoped-side-panel-base;
+
+// Side panel colors
+$side-panel-colors: (
+    base: $scoped-side-panel-base,
+    medium: $scoped-side-panel-medium,
+    light: $scoped-side-panel-light,
+    tree: $scoped-side-panel-tree
+);
+
+// Side panel text colors
+$side-panel-text-colors: (
+    base: $scoped-side-panel-text-base,
+    light: $scoped-side-panel-text-light,
+    icon: $scoped-side-panel-text-icon
+);
+
+// ====[Report Form Colors]====
+
+
+$scoped-reporting-base: $scoped-root-lighter;
+$scoped-reporting-light: #C0D8EB;
+$scoped-reporting-medium: #bed9ed;
+$scoped-reporting-dark: #6DAFFF;
+$scoped-reporting-row-dark: #70a5d2;
+$scoped-reporting-row-light: #96bede;
+
+$scoped-reporting-text-base: #ffffff;
+$scoped-reporting-text-light: #C0D8EB;
+$scoped-reporting-text-medium: $scoped-root-base;
+$scoped-reporting-text-dark: $scoped-reporting-text-base;
+
+$reporting-colors: (
+    base: $scoped-reporting-base,
+    light: $scoped-reporting-light,
+    medium: $scoped-reporting-medium,
+    dark: $scoped-reporting-dark,
+    row-dark: $scoped-reporting-row-dark,
+    row-light: $scoped-reporting-row-light
+);
+
+$reporting-text-colors: (
+    base: $scoped-reporting-text-base,
+    light: $scoped-reporting-text-light,
+    medium: $scoped-reporting-text-medium,
+    dark: $scoped-reporting-text-dark
+);
+
+
+
+
+
+// ====[Admin Form Colors]====
+
+$scoped-admin-base: #64a0b4;
+$scoped-admin-light: #DBE9EE;
+$scoped-admin-medium: #96BFCD;
+$scoped-admin-dark: #89B8C8;
+$scoped-admin-row-dark: rgba(255,255,255,.33);
+$scoped-admin-row-light: rgba(255,255,255,.33);
+
+$scoped-admin-text-base: #ffffff;
+$scoped-admin-text-light: rgba(255,255,255,.5);
+$scoped-admin-text-medium: $scoped-root-base;
+$scoped-admin-text-dark: $scoped-reporting-text-base;
+
+
+
+$admin-colors: (
+    base: $scoped-admin-base,
+    light: $scoped-admin-light,
+    medium: $scoped-admin-medium,
+    dark: $scoped-admin-base,
+    row-dark: $scoped-admin-row-dark,
+    row-light: $scoped-admin-row-light
+);
+
+$admin-text-colors: (
+    base: $scoped-admin-text-base,
+    light: $scoped-admin-text-light,
+    medium: $scoped-admin-text-medium,
+    dark: $scoped-admin-text-dark
+);
+
+
+
+
+
+
+// ====[red Colors]====
+
+$scoped-red-base: #DC5E71;
+$scoped-red-light: #E78593;
+$scoped-red-medium: #EFAFB7;
+$scoped-red-row-dark: rgba(255,255,255,.33);
+$scoped-red-row-light: rgba(255,255,255,.33);
+
+$scoped-red-text-base: #ffffff;
+$scoped-red-text-light: #E78593;
+$scoped-red-text-medium: $scoped-root-base;
+$scoped-red-text-dark: $scoped-reporting-text-base;
+
+$red-colors: (
+    base: $scoped-red-base,
+    light: $scoped-red-light,
+    medium: $scoped-red-medium,
+    dark: $scoped-red-base,
+    row-dark: $scoped-red-row-dark,
+    row-light: $scoped-red-row-light
+);
+
+$red-text-colors: (
+    base: $scoped-red-text-base,
+    light: $scoped-red-text-light,
+    medium: $scoped-red-text-medium,
+    dark: $scoped-red-text-dark
+);
+
+
+
+// ====[green Form Colors]====
+
+$scoped-green-base: #229F86;
+$scoped-green-light: #55B8A4;
+$scoped-green-medium: #8FCFC3;
+$scoped-green-row-dark: rgba(255,255,255,.33);
+$scoped-green-row-light: rgba(255,255,255,.33);
+
+$scoped-green-text-base: #ffffff;
+$scoped-green-text-light: #55B8A4;
+$scoped-green-text-medium: $scoped-root-base;
+$scoped-green-text-dark: $scoped-reporting-text-base;
+
+$green-colors: (
+    base: $scoped-green-base,
+    light: $scoped-green-light,
+    medium: $scoped-green-medium,
+    dark: $scoped-green-base,
+    row-dark: $scoped-green-row-dark,
+    row-light: $scoped-green-row-light
+);
+
+$green-text-colors: (
+    base: $scoped-green-text-base,
+    light: $scoped-green-text-light,
+    medium: $scoped-green-text-medium,
+    dark: $scoped-green-text-dark
 );
 
 

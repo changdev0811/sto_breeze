@@ -342,7 +342,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                     labelAlign: 'right',
                                     labelWidth: 'auto',
                                     flex: 1,
-                                    ui: 'employeeinfo-checkbox'
+                                    ui: 'employeeinfo-checkbox',
+                                    bind: {
+                                        checked: '{info.punchPolicy.Subtract_DayOt}'
+                                    }
                                 }
                             ]
                         }
@@ -583,7 +586,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             name: 'InOut_punch',
                                             bodyAlign:'stretch',
                                             boxLabel: 'In/Out board punching without recording time',
-                                            hidden: true
+                                            hidden: true,
+                                            bind: {
+                                                checked: '{info.punchPolicy.InOut_Opt}'
+                                            }
                                         },
                                         {
                                             xtype: 'checkbox',
@@ -636,6 +642,9 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             boxLabel: 'Punch Out for lunch',
                                             listeners: {
                                                 change: 'onPunchForLunchChange'
+                                            },
+                                            bind: {
+                                                checked: '{info.punchPolicy.Auto_LunchPunch}'
                                             }
                                         },
                                         {
@@ -666,6 +675,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'spinnerfield',
                                             maxWidth:'6em',
                                             name: 'lunch_minutes',
+                                            bind: {
+                                                // TODO: Confirm bind is correct
+                                                // value: '{info.punchPolicy.LunchPunch_Hours}'
+                                                value: '{info.punchPolicy.LunchPunch_Seg}'
+                                            },
                                             minValue: 0, maxValue: 999,
                                             decimals: 0, label: null,
                                             inline: true,
@@ -680,6 +694,11 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                                             xtype: 'spinnerfield',
                                             maxWidth:'6em',
                                             name: 'lunch_seg',
+                                            bind: {
+                                                // TODO: Confirm this bind is right
+                                                // value: '{info.punchPolicy.LunchPunch_Seg}'
+                                                value: '{info.punchPolicy.LunchPunch_Hours}'
+                                            },
                                             minValue: 0, maxValue: 24, decimals: 0,
                                             disabled: true
                                         },

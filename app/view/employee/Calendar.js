@@ -43,7 +43,6 @@ Ext.define('Breeze.view.employee.Calendar',{
     ],
 
     items: [
-
         {
             xtype: 'calendar',
             userCls: 'employee-calendar-noedge',
@@ -136,6 +135,17 @@ Ext.define('Breeze.view.employee.Calendar',{
 
             }
         },
+
+        /*
+        {
+            xtype: 'container',
+            layout: 'vbox',
+            userCls:'legend-title',
+            height:'14pt',
+            html:"Legend"
+        },
+        */
+
 
         {
             xtype: 'dataview',

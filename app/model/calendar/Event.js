@@ -12,6 +12,11 @@ Ext.define('Breeze.model.calendar.Event', {
     //     {name: 'finish', type: 'date'}
     // ],
 
+    init: function(){
+        // this.callParent(arguments);
+        console.info('Event init');
+    },
+
     getDescription: function(){
         return this.data.durationDesc;
     },
@@ -28,10 +33,66 @@ Ext.define('Breeze.model.calendar.Event', {
     //     return this.data.finish;
     // },
 
+    /**
+     * Overrides accessor for Event's title
+     * If a title attribute isn't defined, attempts to come up with one
+     * using absenceString attribute, or by looking up the event's category
+     * name
+     */
     getTitle: function(){
-        if(typeof this.data.title == 'undefined'){
-            return this.data.absenceString.split("&lt;")[0];
+        // console.info(this.data.title, this.data.absenceString, this.data.categoryId);
+        if(
+            Object.isUnvalued(this.data['title']) || 
+            (
+                typeof this.data.title == 'string' &&
+                this.data.title.trim().length == 0
+            )
+        ){
+            console.info(this.get('calendarId'), this.getCalendar().get('id'),this.getCalendar().get('title'));
+            return this.getCalendar().get('title');
+            // this.data.title = null;
+            // if(
+            //     !Object.isUnvalued(this.getCalendar()) && 
+            //     !Object.isUnvalued(this.getCalendar().data) && 
+            //     !Object.isUnvalued(this.getCalendar().data.title)
+            // ){
+            //     return this.getCalendar().data.title;
+            // }
+            // /*  No title attribute defined, or the one given is blank
+            //     so we need to build one */
+            // else if(
+            //     typeof this.data.absenceString !== 'undefined' && 
+            //     (
+            //         typeof this.data.absenceString == 'string' && 
+            //         this.data.absenceString.length > 0
+            //     )
+            // ) {
+            //     // Absence string exists and isn't empty, so use that
+            //     return this.data.absenceString.split("&lt;")[0];
+            // } else {
+            //     // No absence string, so use category lookup to set title
+            //     var categories = Breeze.api.company.Category.getNamedStore('compactList');
+
+            //     if(categories !== null) {
+            //         // Categories store loaded successfully
+            //         var eventCatId = this.data.categoryId;
+            //         var idx = categories.findBy(
+            //             (c) => {
+            //                 return (c.getData().Category_Code == eventCatId);
+            //             }
+            //         );
+            //         if(idx !== -1){
+            //             // match found
+            //             return categories.getAt(idx).getData().Category_Name;
+            //         }
+            //     }
+
+            //     // none of the previous return statements in this block fired,
+            //     // so return default
+            //     return 'Unknown Event';
+            // }
         } else {
+            // Event has a title, use that
             return this.data.title;
         }
     },

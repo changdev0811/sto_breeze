@@ -64,7 +64,7 @@ Ext.define('Breeze.api.Punch', {
      * @return {Promise} Promise resolving with status, or rejecting with error
      */
     getAttendanceStatus: function(employeeId){
-        var employeeId = this.defVal(employeeId, this.auth.getCookies().emp);
+        var employeeId = Object.defVal(employeeId, this.auth.getCookies().emp);
         var api = this.api;
         return new Promise(function(resolve, reject){
             api.serviceRequest(

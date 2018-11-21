@@ -9,7 +9,6 @@ Ext.define('Breeze.helper.Store', {
         /**
          * Reference to API helper, used by stores for request urls
          */
-        api: Breeze.helper.DummyApi
-        // api: Breeze.helper.Api
+        api: Breeze.helper.Base.api
     }
 });

@@ -42,7 +42,7 @@ Ext.define('Breeze.api.Employee', {
      * @return {Promise} promise resolving to numerical access level, or rejecting with error
      */
     getAccess: function(reloadCookies){
-        var reloadCookies = this.defVal(reloadCookies,false);
+        var reloadCookies = Object.defVal(reloadCookies,false);
         var auth = this.auth;
         var api = this.api;
         return new Promise(function(resolve, reject){
@@ -99,7 +99,7 @@ Ext.define('Breeze.api.Employee', {
      * @return {Promise} Promise resolving in data object, or rejecting with error
      */
     getHeaderInfo: function(employeeId){
-        var employeeId = this.defVal(employeeId, this.auth.getCookies().emp);
+        var employeeId = Object.defVal(employeeId, this.auth.getCookies().emp);
         var api = this.api;
         return new Promise(function(resolve, reject){
             api.serviceRequest(

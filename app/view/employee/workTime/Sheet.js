@@ -163,7 +163,8 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
         },
         // ===[Approve/Deny Button Container]===
         {
-            xtype: 'container',
+            xtype: 'toolbar',
+            ui: 'wtr-actions',
             layout: {
                 type: 'hbox',
                 pack: 'end'
@@ -172,19 +173,22 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'button',
                     text: 'Approve',
-                    ui: 'confirm wtr-button',
+                    ui: 'confirm alt wtr-button wtr-button-alt',
+                    iconCls: 'x-fas fa-check',
                     menu: {
                         xtype: 'menu',
                         items: [
                             {
                                 xtype: 'menuitem',
                                 text: 'Approve',
-                                itemId: 'mnuApproveRegular'
+                                itemId: 'mnuApproveRegular',
+                                iconCls: 'x-fas fa-check-circle'
                             },
                             {
                                 xtype: 'menuitem',
                                 text: 'Approve w/ Note',
-                                itemId: 'mnuApproveWithNote'
+                                itemId: 'mnuApproveWithNote',
+                                iconCls: 'x-fas fa-file-check'
                             }
                         ]
                     }
@@ -192,19 +196,22 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'button',
                     text: 'Deny',
-                    ui: 'decline wtr-button',
+                    ui: 'decline alt wtr-button wtr-button-alt',
+                    iconCls: 'x-fas fa-times',
                     menu: {
                         xtype: 'menu',
                         items: [
                             {
                                 xtype: 'menuitem',
                                 text: 'Deny',
-                                itemId: 'mnuDenyRegular'
+                                itemId: 'mnuDenyRegular',
+                                iconCls: 'x-fas fa-times-octagon'
                             },
                             {
                                 xtype: 'menuitem',
                                 text: 'Deny w/ Note',
-                                itemId: 'mnuDenyWithNote'
+                                itemId: 'mnuDenyWithNote',
+                                iconCls: 'x-fas fa-file-times'
                             }
                         ]
                     }

@@ -1,0 +1,75 @@
+/**
+ * Breeze.view.main.employees.Panel Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.main.employees.Panel view or its children
+ */
+
+@include displayfield-ui(
+    $ui: 'employees-panel-field',
+    $input-font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+@include field-ui(
+    $ui: 'employees-panel-field',
+    $label-font-size: 0.8 * map-get($root-font-sizes, 'detail')
+);
+
+// Panel
+@include panel-ui(
+    $ui: 'employees-side-bar-panel',
+    $header-background-color: map-get($side-panel-colors, 'base'),
+    $header-color: map-get($side-panel-text-colors, 'base'),
+    $header-padding: map-get($side-panel-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
+    $body-background-color: map-get($side-panel-colors, 'base'),
+    $body-color: map-get($side-panel-text-colors, 'base'),
+    $body-padding: 2pt 8pt 4pt 8pt,
+    // $header-min-height: 24pt
+);
+
+// provides margins for tree control
+.employees-panel-tree {
+    // margin: 8pt;
+}
+
+//==[ Employees Panel Toolbar Styles ]==
+
+/* Toolbar */
+@include toolbar-ui(
+    $ui: 'employees-toolbar',
+    $background-color: map-get($side-panel-colors, 'base')
+);
+
+// @include toolbar-ui(
+//     $ui: 'employees-toolbar-med',
+//     $background-color: map-get($wtr-colors, 'medium')
+// );
+
+/* Info Label */
+@include field-ui(
+    $ui: 'employees-toolbar-display',
+    $label-font-size: 10pt
+);
+
+@include checkboxfield-ui(
+    $ui: 'employees-panel-checkbox',
+    $box-label-font-size: map-get($root-font-sizes, 'detail') !important,
+    $box-label-color: map-get($side-panel-text-colors, 'base'),
+    $checkbox-color: map-get($side-panel-text-colors, 'base'),
+    $checked-checkbox-color: map-get($side-panel-text-colors, 'base'),
+    $disabled-checkbox-color: map-get($side-panel-colors, 'medium')
+);
+
+@include field-ui(
+    $ui: 'employees-panel-checkbox',
+    $label-font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+// @include treelist-ui(
+//     $ui: 'employees-panel-treelist',
+//     $background-color: map-get($side-panel-colors, 'tree'),
+//     $item-font-size: map-get($root-font-sizes, 'detail'),
+//     $item-line-height: map-get($root-font-sizes, 'base'),
+//     $item-icon-color: map-get($side-panel-text-colors, 'icon')
+// )
+

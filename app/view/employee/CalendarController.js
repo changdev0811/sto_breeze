@@ -21,34 +21,53 @@ Ext.define('Breeze.view.employee.CalendarController', {
         // var me = this;
         // var vm = this.getViewModel();
         console.info('Calendar controller initialized');
+        this.getViewModel().set('employeeId', comp.getData().employee);
+        this.companyApi = Ext.create('Breeze.api.Company');
         this.loadCategories();
         // this.loadCalendar();
-        console.info('Loaded stuff');
+        console.info('Loaded stuff', this.getViewModel().get('employeeId'));
     },
 
 
     loadCategories: function(){
         var me = this;
-        this.addStoreToViewModel(
-            'Breeze.store.category.CompactList',
-            'categories',
-            {
-                load: true,
-                loadOpts: { callback: function(success,a,b){
-                    if(success){
-                        console.info('Categories loaded successfully');
-                        me.loadCalendar();
-                    } else {
-                        console.warn('Failed to load categories');
-                    }
-                }}
+        // this.addStoreToViewModel(
+        //     'Breeze.store.category.CompactList',
+        //     'categories',
+        //     {
+        //         load: true,
+        //         loadOpts: { callback: function(success,a,b){
+        //             if(success){
+        //                 console.info('Categories loaded successfully');
+        //                 me.loadCalendar();
+        //             } else {
+        //                 console.warn('Failed to load categories');
+        //             }
+        //         }}
+        //     }
+        // )
+        me.companyApi.category.loadCompactListStore((success, id, store) => {
+            if(!success){
+                // Failed to load
+                console.warn('Failed to load Categories store');
+            } else {
+                // Succeeded!
+                var addedToModel = me.addLoadedStoreToViewModel(store, 'categories');
+                if(addedToModel){
+                    // Successfully added store to view model
+                    console.info('Categories loaded successfully into View Model');
+                    me.loadCalendar();
+                } else {
+                    // Unable to add to view model
+                    console.warn('Failed to add categories to View Model')
+                }
             }
-        )
+        });
     },
 
     loadCalendar: function(){
         var me = this;
-        var vm = this.getViewModel();
+        var vm = me.getViewModel();
 
         // var calStore = Ext.create('Ext.calendar.store.Calendars',
         //     {
@@ -68,21 +87,25 @@ Ext.define('Breeze.view.employee.CalendarController', {
         //         ]
         //     }
         // );
-
+        
+        var calendar = this.lookup('calendarPanel').getView().activeView,
+            start = calendar.getDisplayRange().start,
+            end = calendar.getDisplayRange().end;
         var calStore = Ext.create('Breeze.store.calendar.Calendar',
             {
                 // autoLoad: true,
                 categories: vm.getStore('categories'),
-                // startDate: (new Date()).toISOString(),
+                startDate: start.toLocaleString(),
+                endDate: end.toLocaleString(),
+                utcStartDate: start.toUTC({out: Date.UTC_OUT.STRING}),
+                utcEndDate: end.toUTC({out: Date.UTC_OUT.STRING}),
                 // endDate: (new Date()).toISOString(),
-                lookup: '5003'
+                lookup: vm.get('employeeId')
             }
         ).load({callback: function(r,o,success){
             console.info('Calendar load successful: ', success);
+            vm.setStores({calendar: calStore});
         }});
-
-
-        vm.setStores({calendar: calStore});
 
 
     },
