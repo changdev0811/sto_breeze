@@ -12,6 +12,11 @@ Ext.define('Breeze.model.calendar.Event', {
     //     {name: 'finish', type: 'date'}
     // ],
 
+    init: function(){
+        // this.callParent(arguments);
+        console.info('Event init');
+    },
+
     getDescription: function(){
         return this.data.durationDesc;
     },
@@ -35,47 +40,57 @@ Ext.define('Breeze.model.calendar.Event', {
      * name
      */
     getTitle: function(){
-        console.info(this.data.title, this.data.absenceString, this.data.categoryId);
+        // console.info(this.data.title, this.data.absenceString, this.data.categoryId);
         if(
-            typeof this.data.title == 'undefined' || 
+            Object.isUnvalued(this.data['title']) || 
             (
                 typeof this.data.title == 'string' &&
                 this.data.title.trim().length == 0
             )
         ){
-            /*  No title attribute defined, or the one given is blank
-                so we need to build one */
-            if(
-                typeof this.data.absenceString !== 'undefined' && 
-                (
-                    typeof this.data.absenceString == 'string' && 
-                    this.data.absenceString.length > 0
-                )
-            ) {
-                // Absence string exists and isn't empty, so use that
-                return this.data.absenceString.split("&lt;")[0];
-            } else {
-                // No absence string, so use category lookup to set title
-                var categories = Breeze.api.company.Category.getNamedStore('compactList');
+            console.info(this.get('calendarId'), this.getCalendar().get('id'),this.getCalendar().get('title'));
+            return this.getCalendar().get('title');
+            // this.data.title = null;
+            // if(
+            //     !Object.isUnvalued(this.getCalendar()) && 
+            //     !Object.isUnvalued(this.getCalendar().data) && 
+            //     !Object.isUnvalued(this.getCalendar().data.title)
+            // ){
+            //     return this.getCalendar().data.title;
+            // }
+            // /*  No title attribute defined, or the one given is blank
+            //     so we need to build one */
+            // else if(
+            //     typeof this.data.absenceString !== 'undefined' && 
+            //     (
+            //         typeof this.data.absenceString == 'string' && 
+            //         this.data.absenceString.length > 0
+            //     )
+            // ) {
+            //     // Absence string exists and isn't empty, so use that
+            //     return this.data.absenceString.split("&lt;")[0];
+            // } else {
+            //     // No absence string, so use category lookup to set title
+            //     var categories = Breeze.api.company.Category.getNamedStore('compactList');
 
-                if(categories !== null) {
-                    // Categories store loaded successfully
-                    var eventCatId = this.data.categoryId;
-                    var idx = categories.findBy(
-                        (c) => {
-                            return (c.getData().Category_Code == eventCatId);
-                        }
-                    );
-                    if(idx !== -1){
-                        // match found
-                        return categories.getAt(idx).getData().Category_Name;
-                    }
-                }
+            //     if(categories !== null) {
+            //         // Categories store loaded successfully
+            //         var eventCatId = this.data.categoryId;
+            //         var idx = categories.findBy(
+            //             (c) => {
+            //                 return (c.getData().Category_Code == eventCatId);
+            //             }
+            //         );
+            //         if(idx !== -1){
+            //             // match found
+            //             return categories.getAt(idx).getData().Category_Name;
+            //         }
+            //     }
 
-                // none of the previous return statements in this block fired,
-                // so return default
-                return 'Unknown Event';
-            }
+            //     // none of the previous return statements in this block fired,
+            //     // so return default
+            //     return 'Unknown Event';
+            // }
         } else {
             // Event has a title, use that
             return this.data.title;

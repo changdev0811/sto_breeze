@@ -17,22 +17,26 @@ Ext.define('Breeze.store.calendar.Calendar', {
             {
                 id: 'points',
                 title: 'Points',
-                eventType: '[POINTS]'
+                eventType: '[POINTS]',
+                color: '#ff9595'
             },
             {
                 id: 'notes',
                 title: 'Notes',
-                eventType: '[NOTES]'
+                eventType: '[NOTES]',
+                color: '#fecb95'
             },
             {
                 id: 'worktime',
                 title: 'Worked Time',
-                eventType: '[WORKTIME]'
+                eventType: '[WORKTIME]',
+                color: '#9bc796'
             },
             {
                 id: 'adjustments',
                 title: 'Adjustments',
-                eventType: '[ADJUSTMENTS]'
+                eventType: '[ADJUSTMENTS]',
+                color: '#7dc6d1'
             }
         ]
     },
@@ -85,6 +89,7 @@ Ext.define('Breeze.store.calendar.Calendar', {
                 "title": xtra.title,
                 "start": start,
                 "start": end,
+                "color": xtra.color,
                 "eventStore": {
                     // "type": "Breeze.store.calendar.Events",
                     "eventType": xtra.eventType,
