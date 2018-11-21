@@ -343,6 +343,10 @@
     "development": {
         "watch": {
             "delay": 250
+        },
+        // Enable caching for breakpoint purposes in dev
+        "loader": {
+            "cache": true
         }
     },
     /**
