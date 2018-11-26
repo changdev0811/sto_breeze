@@ -34,18 +34,8 @@ Ext.define('Breeze.view.main.employees.Panel', {
     listeners: {
         initialize: 'onInit'
     },
-    // showAnimation: {
-    //     type: 'reveal',
-    //     direction: 'right',
-    //     duration: 200
-    // },
-    // hideAnimation: {
-    //     type: 'reveal',
-    //     direction: 'left',
-    //     duration: 200
-    // },
 
-    width: '200pt',
+    width: '225pt',
 
     layout: 'vbox',
     ui: 'employees-side-bar-panel',
@@ -163,12 +153,14 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                    bind: {
                                        hidden: '{!permissions.canRemove}',
                                    },
-                                   disabled: true
+                                   disabled: true,
+                                   handler: 'onDeleteEmployeeButton'
                                }
                            ]
                         },
                         {
                             xtype: 'tree',
+                            itemId: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
                             reference: 'employeesEmployeeTree',
@@ -269,12 +261,14 @@ Ext.define('Breeze.view.main.employees.Panel', {
                                    bind: {
                                        hidden: '{!permissions.canRemove}',
                                    },
-                                   disabled: true
+                                   disabled: true,
+                                   handler: 'onDeleteEmployeeButton'
                                }
                             ]
                         },
                         {
                             xtype: 'tree',
+                            itemId: 'tree',
                             userCls: 'employees-panel-tree',
                             flex: 1,
                             // expanderOnly: false,

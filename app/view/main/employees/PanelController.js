@@ -171,6 +171,22 @@ Ext.define('Breeze.view.main.employees.PanelController', {
         this.redirectTo('employees/empinfo/new');
     },
 
+    /**
+     * Handle 'delete' employee button click event
+     */
+    onDeleteEmployeeButton: function(){
+        var api = this.api,
+            record = this.lookup('employeesPanelTabs').getActiveItem()
+            .getComponent('tree').getSelectable().getSelectedRecord();
+        if(!Object.isUnvalued(record)){
+            console.info(record.get('data'));
+        }
+    },
+
+    /**
+     * Try to navigate to selected employee action
+     * @param {Object} nodeRecord 
+     */
     tryPerformingNodeAction: function(nodeRecord){
         var vm = this.getViewModel(),
             data = nodeRecord.getData(),

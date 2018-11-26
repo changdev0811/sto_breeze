@@ -190,7 +190,7 @@ Ext.define('Breeze.view.main.Nav', {
                     reference: 'sidePanelContainer',
                     layout: 'fit',
                     //width: '250pt',
-                    width: '200pt',
+                    width: '225pt',
                     items: [
                         // {
                         //     xtype: 'breeze-employees-panel'
