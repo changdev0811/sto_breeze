@@ -79,43 +79,22 @@ Ext.define('Breeze.view.admin.PointCats', {
                             ]
                         },
                         {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border no-background',
-                            flex:1,
-                            layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
-                                },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-                            bind: '{departmentsTree}'
-                        }, 
+                            xtype: 'breeze-categories-list',
+                            ui: 'admin-shift-grid',
+                            userCls: 'admin-fieldset no-background no-margin no-border',
+                            //reference: 'categoryList',
+                            fieldMode: 'none',
+                            itemConfig: {
+                                ui: 'admin-list-item-select'
+                            },
+                            bind: {
+                                //store: '{categoriesList}',
+                            },
+                            listeners: {
+                                //select: 'onCategorySelect'
+                            },
+                            viewModel: true
+                        } 
                     ]
                 },
 
@@ -156,6 +135,9 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             label: 'Name',
                                             ui: 'admin admin-text',
                                             userCls:'admin-fieldset no-border no-margin',
+                                            bind: {
+                                                value:'{selectedPointCat.PointName}'
+                                            }
                                         },
                                         {
                                             xtype: 'container',
@@ -171,51 +153,48 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     label:'Duration',
                                                     labelAlign:'left',
                                                     labelWidth:'auto',
-                                                    name: 'duration_amount',
                                                     flex: 1,
                                                     style: 'padding-left: 4pt',
+                                                    bind: {
+                                                        value:'{selectedPointCat.DurAmt}'
+                                                    }
                                                 },
                                                 {
                                                     xtype:'spacer',
                                                     width:'10pt',
                                                 },
                                                 {
-                                                    xtype: 'combobox',
+                                                    xtype: 'selectfield',
                                                     flex: 1,
-                                                    name: 'duration_unit',
-                                                    store: Ext.create('Ext.data.Store', {
-                                                        fields: ['code', 'description'],
-                                                        data: [
-                                                            { "code": 48, "description": "Days" },
-                                                            { "code": 49, "description": "Hours" },
-                                                            { "code": 50, "description": "Minutes" }
-                                                        ]
-                                                    }),
                                                     valueField: 'code',
-                                                    displayField: 'description'
+                                                    value:60,
+                                                    displayField: 'description',
+                                                    bind: {
+                                                        //Store DurTypeOptions
+                                                        //getTypeCodeList 15
+                                                        store:'', 
+                                                        value:'{selectedPointCat.DurType}'
+                                                    }
                                                 },
                                             ]
                                         },
                                     ]
                                 },
 
-
-
-
-
-
                                 {
                                     xtype: 'fieldset',
-                                    userCls:'admin-fieldset no-padding',
+                                    userCls:'admin-fieldset',
                                     title: 'Details',
-                                    layout: 'hbox',
+                                    layout: 'fit',
                                     flex:1,
                                     items:[
                                         {
-                                            xtype: 'container',
+                                            xtype: 'textareafield',
+                                            ui: 'admin admin-text',
                                             userCls:'admin-fieldset no-border no-margin',
-                                            flex: 1,
-                                            layout: 'vbox',
+                                            bind: {
+                                                value:'{selectedPointCat.PointDetails}'
+                                            }
                                         },
                                     ]
                                 },
@@ -246,44 +225,57 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 },
                                             ]
                                         },
+
                                         {
-                                            xtype: 'tree',
-                                            // == Item ID to make finding tree in panel easier
-                                            itemId: 'tree',
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls: 'employeeinfo-shift-grid no-border no-background',
+                                            xtype: 'grid',
+                                            ui: 'admin-grid',
+                                            layout:'hbox',
                                             flex:1,
-                                            layout: 'hbox',
-                                            hideHeaders: true,
-                                            rootVisible: false,
+                                            sortable: false, columnResize: false,
+                                            columnMenu: false, hideHeaders: false,
+                                            bind: {
+                                                store: '{pointOccurances}'
+                                            },
+                                            defaults: {
+                                                xtype: 'gridcolumn',                                                
+                                            },
                                             columns: [
                                                 {
-                                                    xtype: 'checkcolumn',
-                                                    cell: {
-                                                        ui: 'admin-tree-column admin-tree-item',
-                                                    },
-                                                    dataIndex: 'checked',
-                                                    minWidth: '2em',
-                                                    width: 'auto',
-                                                    padding: 0,
-                                                    //listeners: {
-                                                    //    checkChange: 'onTreeGridChecked'
-                                                    //}
+                                                    text:'From',
+                                                    flex:1,
+                                                    dataIndex:'occfrom',
+                                                    menuDisabled:true,
+                                                    align:'center'
                                                 },
                                                 {
-                                                    xtype: 'treecolumn',
-                                                    cell: {
-                                                        ui: 'admin-tree-column admin-tree-item',
+                                                    text:'Through',
+                                                    flex:1,
+                                                    tpl: '{occto}',
+                                                    tpl: [
+                                                        '<tpl if="occto==0">&infin;</tpl>',
+                                                        '<tpl if="occto!=0">{occto}</tpl>'
+                                                    ],
+
+
+                                                    dataIndex:'occto',
+                                                    cell:{
+                                                        encodeHtml:false,
                                                     },
-                                                    dataIndex: 'text',
-                                                    flex: 1,
-                                                    layout: {
-                                                        alignment: 'stretch'
-                                                    }
+                                                    menuDisabled:true,
+                                                    align:'center'
+                                                },
+                                                {
+                                                    text:'Value',
+                                                    flex:1,
+                                                    dataIndex:'occvalue',
+                                                    menuDisabled:true,
+                                                    align:'center'
                                                 }
-                                            ],
-                                            bind: '{departmentsTree}'
-                                        }, 
+                                            ]
+                                        }
+
+
+
                                     ]
                                 },
                             ]
