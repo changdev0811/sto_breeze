@@ -18,7 +18,6 @@ Ext.define('Breeze.view.reporting.project.ProjectRecapModel', {
          */
         var data = {
             reportParams: {
-                GroupByDept: true,
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
@@ -30,6 +29,7 @@ Ext.define('Breeze.view.reporting.project.ProjectRecapModel', {
                 dEnd: (new Date()),
                 hhmm_format: true,
                 // Concerning selected departments/ids
+                GroupByDept: true,
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
                 projids: '' // Project IDs

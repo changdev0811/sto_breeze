@@ -80,7 +80,6 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
             }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
