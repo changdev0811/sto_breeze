@@ -129,41 +129,6 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
                                     viewModel: true
                                 }
                             ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            layout: 'vbox',
-                            title: 'Submission Type',
-                            userCls: 'reporting-fieldset no-margin',
-
-                            defaults: {
-                                bodyAlign: 'stretch',
-                                ui: 'reporting',
-                                xtype: 'breeze-checkbox'
-                            },
-                            items: [
-                                {
-                                    name: 'approved_option',
-                                    inline: true,
-                                    label: '',
-                                    checked: true,
-                                    boxLabel: 'Approved Time',
-                                    bind: '{reportParams.submit_approve}'
-                                },
-                                {
-                                    name: 'submitted_option',
-                                    label: '',
-                                    labelMinWidth: 0,
-                                    boxLabel: 'Submitted Time',
-                                    bind: '{reportParams.submit_submit}'
-                                },
-                                {
-                                    name: 'unsubmitted_option',
-                                    label: '',
-                                    boxLabel: 'Un-Submitted Time',
-                                    bind: '{reportParams.submit_unsubmit}'
-                                }
-                            ]
                         }
                     ]
                 },
