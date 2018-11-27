@@ -87,7 +87,7 @@ Ext.define('Breeze.api.Employees', {
                 (resp) => {
                     var r = api.decodeJsonResponse(resp);
                     if(r.success == true){
-                        resolve(true);
+                        resolve(r.info.join(''));
                     } else {
                         reject(r.err);
                     }

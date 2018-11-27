@@ -11,6 +11,7 @@ Ext.define('Breeze.view.main.employees.PanelController', {
     requires: [
         'Breeze.store.employees.Departments',
         'Breeze.store.employees.Employees',
+        'Ext.MessageBox'
     ],
     /**
      * Called when the view is created
@@ -176,10 +177,47 @@ Ext.define('Breeze.view.main.employees.PanelController', {
      */
     onDeleteEmployeeButton: function(){
         var api = this.api,
+            me = this,
             record = this.lookup('employeesPanelTabs').getActiveItem()
-            .getComponent('tree').getSelectable().getSelectedRecord();
+            .getComponent('tree').getSelectable().getSelectedRecord(),
+            empId = record.get('data'),
+            empName = record.get('text'),
+            // Inner function used to perform actual deletion
+            performDelete = function(){
+                api.delete(empId).then(function(resp){
+                    Ext.toast({
+                        message: resp,
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    me.onRefreshTool();
+                }).catch(function(err){
+                    Ext.toast({
+                        message: err,
+                        type: Ext.Toast.ERROR,
+                        timeout: 10000
+                    });
+                });
+            };
         if(!Object.isUnvalued(record)){
-            console.info(record.get('data'));
+            api.canDelete(empId).then(function(resp){
+                Ext.Msg.confirm(
+                    'Confirm Delete',
+                    `Are you sure you want to delete ${empName}`,
+                    (button, val, opt) => {
+                        if(button == 'yes'){
+                            performDelete();
+                        }
+                    }
+                )
+            }).catch(function(err){
+                // canDelete returned error or false
+                Ext.toast({
+                    message: err,
+                    type: Ext.Toast.ERROR,
+                    timeout: 10000
+                });
+            });
         }
     },
 
