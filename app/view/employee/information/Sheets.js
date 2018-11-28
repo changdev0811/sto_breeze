@@ -2,6 +2,9 @@ Ext.define('Breeze.view.employee.information.Sheets', {
     extend: 'Breeze.widget.actionsheet.MultipleMode',
     alias: 'widget.employee.information.sheets',
     title: 'Add Supervised Employee',
+    listeners: {
+        hide: 'onActionSheetHide'
+    },
     data: {
         modes: {
             supervisor: {
@@ -34,7 +37,7 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             bind: {
                 store: '{choices.supervising}'
             },
-            required: true
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'container',
@@ -74,7 +77,7 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             bind: {
                 store: '{choices.supervisedEmployees}'
             },
-            required: true
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'container',
@@ -114,7 +117,7 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             bind: {
                 store: '{choices.supervisedDepartments}'
             },
-            required: true
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'selectfield',
@@ -125,7 +128,7 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             bind: {
                 store: '{securityRoles}'
             },
-            required: true
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'container',
@@ -160,17 +163,11 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             xtype: 'selectfield',
             itemId: 'startTime',
             label: 'Start',
-            // displayField: 'time',
             displayField: 'time',
             valueField: 'value',
-            // value: '0',
-            // bind: {
-            //     store: '{shiftChoices}'
-            // },
             store: 'accrualShiftChoices',
             ignoreReadOnly: true,
-            required: true,
-            // flex: 1
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'selectfield',
@@ -180,8 +177,7 @@ Ext.define('Breeze.view.employee.information.Sheets', {
             valueField: 'value',
             ignoreReadOnly: true,
             store: 'accrualShiftChoices',
-            required: true,
-            // flex: 1
+            required: true, errorTarget: 'under'
         },
         {
             xtype: 'container',

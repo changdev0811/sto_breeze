@@ -76,11 +76,11 @@ Ext.define('Breeze.widget.actionsheet.MultipleMode', {
     },
 
     /**
-     * Removes component from main viewport, triggering destroy
+     * Remove sheet from shared Viewport without triggering destroy
      */
     removeFromViewport: function(){
-        if(Ext.Viewport.getItems().indexOf(this) !== -1){
-            Ext.Viewport.remove(this,true);
+        if(Ext.Viewport.getItems().contains(this)){
+            Ext.Viewport.remove(this,false);
         }
     }
 

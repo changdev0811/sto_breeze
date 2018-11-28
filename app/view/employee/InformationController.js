@@ -960,59 +960,6 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
     },
 
-    // onAddShiftSegment: function(comp){
-    //     console.info('Add shift segment');
-    //     var vm = this.getViewModel(),
-    //         segments = vm.get('shift.segments'),
-    //         sheet = comp.getParent().getParent(),
-    //         startField = sheet.getComponent('startTime'),
-    //         stopField = sheet.getComponent('stopTime'),
-    //         startRec = startField.getRecord(),
-    //         stopRec = stopField.getRecord();
-        
-    //     if(startField.validate() && stopField.validate()){
-    //         var unique = 
-    //             (startRec.get('value') !== stopRec.get('value')),
-    //             noOverlap = !this.checkForShiftTimeOverlap(
-    //                 null,
-    //                 startRec.get('value'),
-    //                 stopRec.get('value')
-    //             );
-            
-    //         if(unique && noOverlap){
-    //             // All good, ready to add new shift segment row
-    //             var newRecord = {
-    //                 StartTime: (Breeze.fromMinutes(startRec.get('value')).asTime()),
-    //                 StartMin: startRec.get('value'),
-    //                 StopTime: (Breeze.fromMinutes(stopRec.get('value')).asTime()),
-    //                 StopMin: stopRec.get('value')
-    //             };
-    //             segments.loadData([newRecord], true);
-    //             segments.commitChanges();
-
-    //             sheet.hide();
-    //             startField.clearValue();
-    //             stopField.clearValue();
-    //         }
-    //     }
-
-    // },
-
-    /**
-     * @deprecated
-     */
-    onAddShiftSegmentDirect: function(){
-        var vm = this.getViewModel(),
-            segments = vm.get('shift.segments');
-        
-        segments.loadData([
-            {StartTime: '12:00AM', StartMin: 0, StopTime: '12:30AM', StopMin: 30}
-        ], true);
-        segments.commitChanges();
-    },
-
-
-
     /**
      * Handles 'add' button click in 'Add shift segment' action sheet.
      * Adds shift segment to schedule
@@ -1028,21 +975,36 @@ Ext.define('Breeze.view.employee.InformationController', {
         if(startField.validate() && stopField.validate()){
             var start = startField.getSelection().getData(),
                 stop = stopField.getSelection().getData();
-            segments.loadData([
-                {
-                    StartTime: start.time,
-                    StartMin: start.value,
-                    StopTime: stop.time,
-                    StopMin: stop.value
-                }
-            ], true);
-            segments.commitChanges();
-            // Close action sheet and reset values to empty
-            sheet.hide();
-            startField.clearValue();
-            stopField.clearValue();
+            if(
+                // TODO: Update after learning if start and stop shift times can be the same
+                // start.value !== stop.value &&
+                !this.checkForShiftTimeOverlap(null, start.value, stop.value)
+            ){
+                // Times aren't overlapping and aren't the same
+                segments.loadData([
+                    {
+                        StartTime: start.time,
+                        StartMin: start.value,
+                        StopTime: stop.time,
+                        StopMin: stop.value
+                    }
+                ], true);
+                segments.commitChanges();
+                // Close action sheet and reset values to empty
+                sheet.hide();
+                startField.clearValue();
+                stopField.clearValue();
 
-            sheet.removeFromViewport();
+                
+            } else {
+                // Times overlap or are the same
+                // TODO: Update after learning if start and stop shift times can be the same
+                // if(start.value == stop.value){
+                //     startField.setError('Start and Stop ')
+                // }
+                startField.setError('Time overlapps with existing shift');
+                stopField.setError('Time overlapps with existing shift');
+            }
         }
             
         console.info('Add shift');
@@ -1070,6 +1032,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      * 
      * @param {Object} comp Component event originated from
      * @param {Object} tool Tool component firing event
+     * @deprecated
      */
     onGridAddButtonOld: function(comp, tool){
         var actSheet = this.lookup(tool.getData().sheet),
@@ -1273,6 +1236,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             supField.clearValue();
+            
         }
         
         console.info('Add employee');
@@ -1311,8 +1275,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             deptField.clearValue();
-            roleField.clearValue();
-        
+            roleField.clearValue();        
         }
         
         
@@ -1410,7 +1373,13 @@ Ext.define('Breeze.view.employee.InformationController', {
         var sheet = comp.getParent().getParent();
         sheet.hide();
         // Dispose of action sheet
-        sheet.removeFromViewport();
+        // sheet.removeFromViewport();
+        // sheet.close();
+    },
+
+    onActionSheetHide: function(src, eOpts){
+        console.info('Hidden!');
+        src.removeFromViewport();
     },
 
     // TODO: Finish implementing data binding for layoffs
