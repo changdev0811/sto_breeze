@@ -114,6 +114,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                                 var rightsCheckId = vm.get('employeeId')
                                 if (vm.get('employeeId') == 'new') {
                                     vm.set('newEmployee', true);
+                                    vm.set('form.canRevert',false);
                                     // New employee, use id of 0
                                     rightsCheckId = 0;
                                 }
@@ -1699,7 +1700,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     onRevertButtonTap: function(comp, e){
-        console.info('Revert button pressed');
+        this.onRefreshTool();
     },
 
     /**

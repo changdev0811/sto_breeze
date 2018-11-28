@@ -48,7 +48,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 // Validation error message text
                 validationMessage: '',
                 // whether changes have been made that can be reverted
-                canRevert: false
+                canRevert: true
             },
     
             // ==[Error Messages]==
