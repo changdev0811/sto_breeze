@@ -176,7 +176,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                 xtype: 'datepicker',
                                 title: 'Select Layoff Effective Date',
                                 listeners: {
-                                    cancel: function(comp){
+                                    cancel: function (comp) {
                                         console.info('cancel picker');
                                         comp.hide();
                                     },
@@ -201,7 +201,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 }
             ]
         },
-        
+
         // Container for list tabs
         {
             xtype: 'container',
@@ -250,10 +250,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 disabled: '{readOnly}'
                                             },
                                             data: {
-                                                // reference to actionsheet button shows
-                                                sheet: 'supervisorAddActionSheet',
+                                                // Mode for filtering what is shown in multi actionsheet
+                                                sheetMode: 'supervisor',
                                                 // Name of function used to make sure its ok to add
-                                                checkHandler: 'canAddCompanySupervisor'
+                                                checkHandler: 'canAddCompanySupervisor',
+                                                // xtype/alias of multisheet component
+                                                componentType: 'employee.information.sheets'
 
                                             },
                                             handler: 'onGridAddButton'
@@ -360,9 +362,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 disabled: '{readOnly}'
                                             },
                                             data: {
-                                                sheet: 'employeeAddActionSheet',
+                                                // Mode for filtering what is shown in multi actionsheet
+                                                sheetMode: 'supervisedEmployee',
                                                 // Name of function used to make sure its ok to add
-                                                checkHandler: 'canAddCompanyEmployee'
+                                                checkHandler: 'canAddCompanyEmployee',
+                                                // xtype/alias of multisheet component
+                                                componentType: 'employee.information.sheets'
                                             },
                                             handler: 'onGridAddButton'
                                         }
@@ -384,7 +389,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             userCls: 'employee-info-grid',
                                             reference: 'employeesListGrid',
                                             plugins: {
-                                                
+
                                                 gridcellediting: true
                                             },
                                             columns: [
@@ -470,10 +475,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                                                 disabled: '{readOnly}'
                                             },
                                             data: {
-                                                // reference to actionsheet button shows
-                                                sheet: 'departmentAddActionSheet',
+                                                // Mode for filtering what is shown in multi actionsheet
+                                                sheetMode: 'department',
                                                 // Name of function used to make sure its ok to add
-                                                checkHandler: null
+                                                checkHandler: null,
+                                                // xtype/alias of multisheet component
+                                                componentType: 'employee.information.sheets',
                                             },
                                             handler: 'onGridAddButton'
                                         }
@@ -569,145 +576,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 }
             ]
         },
-        //===[Action Sheets for adding grid items]===
-        // Add to Supervisors action sheet
-        {
-            xtype: 'actionsheet',
-            reference: 'supervisorAddActionSheet',
-            title: 'Add Supervisor',
-            items: [
-                {
-                    xtype: 'selectfield',
-                    label: 'Supervisor',
-                    itemId: 'supervisor',
-                    displayField: 'displayName',
-                    valueField: 'personId',
-                    bind: {
-                        store: '{choices.supervising}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'container',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'end'
-                    },
-                    style: 'padding-top: 6pt',
-                    items: [
-                        {
-                            xtype: 'button',
-                            ui: 'confirm alt',
-                            text: 'Add',
-                            handler: 'onCompanyAddSupervisor'
-                        },
-                        { xtype: 'spacer', width: 8 },
-                        {
-                            xtype: 'button',
-                            ui: 'decline alt',
-                            text: 'Cancel',
-                            handler: 'onActionSheetCancel'
-                        }
-                    ]
-                }
-            ]
-        },
-        // Add to Supervised Employees action sheet
-        {
-            xtype: 'actionsheet',
-            reference: 'employeeAddActionSheet',
-            title: 'Add Supervised Employee',
-            items: [
-                {
-                    xtype: 'selectfield',
-                    label: 'Employee Name',
-                    itemId: 'employee',
-                    displayField: 'displayName',
-                    valueField: 'personId',
-                    bind: { 
-                        store: '{choices.supervisedEmployees}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'container',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'end'
-                    },
-                    style: 'padding-top: 6pt',
-                    items: [
-                        {
-                            xtype: 'button',
-                            ui: 'confirm alt',
-                            text: 'Add',
-                            handler: 'onCompanyAddEmployee'
-                        },
-                        { xtype: 'spacer', width: 8 },
-                        {
-                            xtype: 'button',
-                            ui: 'decline alt',
-                            text: 'Cancel',
-                            handler: 'onActionSheetCancel'
-                        }
-                    ]
-                }
-            ]
-        },
-        // Add to Supervised Departments action sheet
-        {
-            xtype: 'actionsheet',
-            reference: 'departmentAddActionSheet',
-            title: 'Add Department',
-            items: [
-                {
-                    xtype: 'selectfield',
-                    itemId: 'department',
-                    label: 'Department',
-                    displayField: 'departmentName',
-                    valueField: 'departmentId',
-                    bind: { 
-                        store: '{choices.supervisedDepartments}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'selectfield',
-                    itemId: 'role',
-                    label: 'Role',
-                    displayField: 'Role_Name',
-                    valueField: 'Role_Id',
-                    bind: { 
-                        store: '{securityRoles}'
-                    },
-                    required: true
-                },
-                {
-                    xtype: 'container',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'end'
-                    },
-                    style: 'padding-top: 6pt',
-                    items: [
-                        {
-                            xtype: 'button',
-                            ui: 'confirm alt',
-                            text: 'Add',
-                            handler: 'onCompanyAddDepartment'
-                        },
-                        { xtype: 'spacer', width: 8 },
-                        {
-                            xtype: 'button',
-                            ui: 'decline alt',
-                            text: 'Cancel',
-                            handler: 'onActionSheetCancel'
-                        }
-                    ]
-                }
-            ]
-        },
-          
+
         // Layoff effective date picker
         // {
         //     xtype: 'datepicker',

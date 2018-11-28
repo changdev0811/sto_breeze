@@ -183,7 +183,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     loadStores: function(callback){
         var vm = this.getViewModel();
-
+        // this.buildShiftChoices();
         vm.setStores({
             departments: Ext.create('Breeze.store.company.DepartmentList'),
             scheduleList: Ext.create('Breeze.store.accrual.ScheduleList'),
@@ -246,6 +246,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     /**
      * Load data into ShiftSegment store
      * @param {Object} vm ViewModel reference
+     * @deprecated
      */
     loadShiftSegments: function(vm){
         var shiftSegments = vm.getStore('shiftSegments');
@@ -485,20 +486,28 @@ Ext.define('Breeze.view.employee.InformationController', {
             model: 'Breeze.model.accrual.ShiftSegment',
             data: shiftSegs
         }, 'shift.segments' );
-
-        // Make shift choice list available to actionSheets, which can't use formula
-        var choices = (function(){
-            return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
-                return b}().map(function(b){var a=Math.floor(b/60)%12;
-                var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
-                .toZeroPaddedString(2)+c;return{value:b,time:a}});
-        })();
-        this.addLoadedStoreToViewModel({
-            model: 'Breeze.model.employee.schedule.ShiftTime',
-            data: choices
-        }, 'shiftChoices');
     },
 
+    /**
+     * Constructs shift time choices store
+     * @deprecated In favor of shared store
+     * @todo TODO: Remove method
+     */
+    buildShiftChoices: function(){
+        // var vm = this.getViewModel();
+
+        // // Make shift choice list available to actionSheets, which can't use formula
+        // var choices = (function(){
+        //     return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
+        //         return b}().map(function(b){var a=Math.floor(b/60)%12;
+        //         var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
+        //         .toZeroPaddedString(2)+c;return{value:b,time:a}});
+        // })();
+        // this.addLoadedStoreToViewModel({
+        //     model: 'Breeze.model.employee.schedule.ShiftTime',
+        //     data: choices
+        // }, 'shiftChoices');
+    },
 
     //===[Company Tab Grid choice store builders/updaters]==
 
@@ -989,6 +998,9 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     // },
 
+    /**
+     * @deprecated
+     */
     onAddShiftSegmentDirect: function(){
         var vm = this.getViewModel(),
             segments = vm.get('shift.segments');
@@ -997,6 +1009,43 @@ Ext.define('Breeze.view.employee.InformationController', {
             {StartTime: '12:00AM', StartMin: 0, StopTime: '12:30AM', StopMin: 30}
         ], true);
         segments.commitChanges();
+    },
+
+
+
+    /**
+     * Handles 'add' button click in 'Add shift segment' action sheet.
+     * Adds shift segment to schedule
+     * @param {Object} comp 
+     */
+    onAddShiftSegment: function(comp){
+        var vm = this.getViewModel(),
+            segments = vm.get('shift.segments'),
+            sheet = comp.getParent().getParent(),
+            startField = sheet.getComponent('startTime'),
+            stopField = sheet.getComponent('stopTime');
+        
+        if(startField.validate() && stopField.validate()){
+            var start = startField.getSelection().getData(),
+                stop = stopField.getSelection().getData();
+            segments.loadData([
+                {
+                    StartTime: start.time,
+                    StartMin: start.value,
+                    StopTime: stop.time,
+                    StopMin: stop.value
+                }
+            ], true);
+            segments.commitChanges();
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            startField.clearValue();
+            stopField.clearValue();
+
+            sheet.removeFromViewport();
+        }
+            
+        console.info('Add shift');
     },
 
     onRemoveShiftSegment: function(grid, info){
@@ -1022,9 +1071,10 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp Component event originated from
      * @param {Object} tool Tool component firing event
      */
-    onGridAddButton: function(comp, tool){
+    onGridAddButtonOld: function(comp, tool){
         var actSheet = this.lookup(tool.getData().sheet),
             checkHandler = tool.getData().checkHandler,
+            multiSheetMode = tool.getData().sheetMode,
             canShow = true;
         
         if(!Object.isUnvalued(checkHandler)){
@@ -1032,12 +1082,54 @@ Ext.define('Breeze.view.employee.InformationController', {
             canShow = this[checkHandler]();
         }
         
+        if(!Object.isUnvalued(multiSheetMode)){
+            // sheetMode indicates sheet is a breeze multi actionsheet
+            // apply mode to sheet before displaying
+            actSheet.setMode(multiSheetMode);
+        }
+
         if(canShow){
             actSheet.show();
         }
 
         console.info('Handling add button click for company grid');
-    },    
+    },
+    
+    /**
+     * Handle click event for '+' tool button on grid panels
+     * list grid panel titles (New method using per-use instantiation)
+     * 
+     * Uses data included in tools in view to decide which action sheet
+     * to display, and whether some condition must be met first
+     * 
+     * @param {Object} comp Component event originated from
+     * @param {Object} tool Tool component firing event
+     */
+    onGridAddButton: function (comp,tool){
+        var configData = tool.getData();
+        var { componentType, checkHandler, sheetMode } = configData,
+            canShow = true,
+            component = null;
+
+        component = Ext.create({
+            xtype: componentType,
+            controller: this,
+            viewModel: this.getViewModel()
+        });
+
+        if(!Object.isUnvalued(checkHandler)){
+            canShow = this[checkHandler]();
+        }
+
+        if(!Object.isUnvalued(sheetMode)){
+            component.setMode(sheetMode);
+        }
+
+        if(canShow){
+            var sheet = Ext.Viewport.add(component);
+            sheet.show();
+        }
+    },
 
     //==[Edit Cell Change Events]==
 
@@ -1142,11 +1234,11 @@ Ext.define('Breeze.view.employee.InformationController', {
             chosenSupers.commitChanges();
             // Refresh available choices
             this.buildSupervisorChoices();
+            
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            supField.clearValue();
         }
-        
-        // Close action sheet and reset values to empty
-        sheet.hide();
-        supField.clearValue();
         
         console.info('Add supervisor');
     },
@@ -1177,11 +1269,11 @@ Ext.define('Breeze.view.employee.InformationController', {
             chosenSupers.commitChanges();
             // Refresh available choices
             this.buildSupervisorChoices();
+
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            supField.clearValue();
         }
-        
-        // Close action sheet and reset values to empty
-        sheet.hide();
-        supField.clearValue();
         
         console.info('Add employee');
     },
@@ -1315,7 +1407,10 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp Firing component
      */
     onActionSheetCancel: function(comp){
-        comp.getParent().getParent().hide();
+        var sheet = comp.getParent().getParent();
+        sheet.hide();
+        // Dispose of action sheet
+        sheet.removeFromViewport();
     },
 
     // TODO: Finish implementing data binding for layoffs
