@@ -763,6 +763,9 @@ Ext.define('Breeze.view.employee.InformationController', {
                 ShiftStopTimes: 'StopTime'
             }
         );
+
+        var startSegs = [], stopSegs = [];
+
         // Extract combos
         var combos = {ShiftSegComboStartTimes: [], ShiftSegComboStopTimes: []},
             segItems = segments.getData().items;
@@ -771,11 +774,16 @@ Ext.define('Breeze.view.employee.InformationController', {
                 shiftSegVal: itm.get('StartMin'),
                 shiftSegStr: itm.get('StartTime')
             });
+            startSegs.push(itm.get('StartMin'));
             combos.ShiftSegComboStopTimes.push({
                 shiftSegVal: itm.get('StopMin'),
                 shiftSegStr: itm.get('StopTime')
             });
+            stopSegs.push(itm.get('StopMin'));
         }
+
+        vm.set('info.ShiftStartSegments', startSegs);
+        vm.set('info.ShiftStopSegments', stopSegs);
 
         // Copy Arrays
         copyData(segments);
@@ -982,6 +990,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 // start.value !== stop.value &&
                 !this.checkForShiftTimeOverlap(null, start.value, stop.value)
             ){
+                console.info('Shift accepted');
                 // Times aren't overlapping and aren't the same
                 segments.loadData([
                     {
@@ -992,6 +1001,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                     }
                 ], true);
                 segments.commitChanges();
+                this.copyShiftSegmentsToModel();
                 // Close action sheet and reset values to empty
                 sheet.hide();
                 startField.clearValue();

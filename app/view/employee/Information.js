@@ -11,7 +11,8 @@ Ext.define('Breeze.view.employee.Information', {
         'Ext.tab.Panel',
         'Breeze.view.employee.InformationController',
         'Breeze.view.employee.InformationModel',
-        'Breeze.widget.actionsheet.MultipleMode'
+        'Breeze.widget.actionsheet.MultipleMode',
+        'Breeze.view.employee.information.Sheets'
     ],
     
     //==[Start of Panel Setup/Styling]====
