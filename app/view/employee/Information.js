@@ -11,17 +11,7 @@ Ext.define('Breeze.view.employee.Information', {
         'Ext.tab.Panel',
         'Breeze.view.employee.InformationController',
         'Breeze.view.employee.InformationModel',
-        // 'Breeze.view.employee.information.General',
-        // 'Breeze.view.employee.information.Company',
-        // 'Breeze.view.employee.information.Schedule',
-        // 'Breeze.view.employee.information.Security',
-        // 'Breeze.view.employee.information.PunchPolicy',
-        // 'Breeze.view.employee.information.SideBar',
-        // 'Breeze.plugin.form.ReadOnly',
-        // 'Breeze.widget.field.Text',
-        // 'Breeze.widget.field.Checkbox',
-        // 'Breeze.widget.field.Email',
-        // 'Breeze.widget.field.Password',
+        'Breeze.widget.actionsheet.MultipleMode'
     ],
     
     //==[Start of Panel Setup/Styling]====

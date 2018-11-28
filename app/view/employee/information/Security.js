@@ -86,9 +86,9 @@ Ext.define('Breeze.view.employee.information.Security', {
                             xtype: 'breeze-password',
                             name: 'create_password',
                             bind: { 
-                                value: '{initialPassword}',
-                                required: '{newEmployee}',
+                                value: '{initialPassword}'
                             },
+                            required: true,
                             label: 'New Password'
                         }
                     ]

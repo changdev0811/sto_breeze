@@ -74,6 +74,54 @@ Ext.define('Breeze.view.employee.information.SideBar', {
         },
         {
             xtype: 'dialog',
+            ui:'light-themed-dialog',
+            reference: 'notesEditorDialog',
+            minWidth: '300pt',
+            minHeight: '300pt',
+            layout: 'fit',
+            title:{
+                text:'Notes',
+                ui:'light-themed-dialog'
+            },
+            tools: [
+                {
+                    iconCls: 'x-fa fa-times',
+                    ui: 'light-themed-dialog',
+                    handler: 'onCloseNotesDialog'
+                }
+            ],
+            items:[
+                {
+                    xtype: 'textareafield',
+                    flex: 1,
+                    border: true,
+                    label: '',
+                    bind: '{tempNotes}',
+                    placeholder: "No notes are currently recorded."
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Submit',
+                    ui: 'action alt',
+                    handler: 'onSubmitNotesButton'
+                },
+                {
+                    xtype: 'spacer',
+                    width: '8pt'
+                },
+                {
+                    text: 'Clear',
+                    ui: 'decline alt',
+                    handler: 'onClearNotesButton',
+                    bind: {
+                        disabled: '{!hasTempNotes}'
+                    }
+                }
+            ]
+        },
+        {
+            xtype: 'dialog',
             width: '400pt', height: '400pt',
             ui: 'light-themed-dialog employeeinfo-dialog',
             reference: 'profilePictureEditorDialog',

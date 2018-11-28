@@ -114,6 +114,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                                 var rightsCheckId = vm.get('employeeId')
                                 if (vm.get('employeeId') == 'new') {
                                     vm.set('newEmployee', true);
+                                    vm.set('form.canRevert',false);
                                     // New employee, use id of 0
                                     rightsCheckId = 0;
                                 }
@@ -129,6 +130,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                                             callback: function (success, rec, opt) {
                                                 if (success) {
                                                     var rights = vm.get('securityRights').getAt(0).getData();
+                                                    vm.set('securityRightsSet', rights);
                                                     // Set read only state based on super admin, new record, or employee rights
                                                     if (
                                                         vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
@@ -183,7 +185,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     loadStores: function(callback){
         var vm = this.getViewModel();
-
+        // this.buildShiftChoices();
         vm.setStores({
             departments: Ext.create('Breeze.store.company.DepartmentList'),
             scheduleList: Ext.create('Breeze.store.accrual.ScheduleList'),
@@ -246,6 +248,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     /**
      * Load data into ShiftSegment store
      * @param {Object} vm ViewModel reference
+     * @deprecated
      */
     loadShiftSegments: function(vm){
         var shiftSegments = vm.getStore('shiftSegments');
@@ -485,20 +488,28 @@ Ext.define('Breeze.view.employee.InformationController', {
             model: 'Breeze.model.accrual.ShiftSegment',
             data: shiftSegs
         }, 'shift.segments' );
-
-        // Make shift choice list available to actionSheets, which can't use formula
-        var choices = (function(){
-            return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
-                return b}().map(function(b){var a=Math.floor(b/60)%12;
-                var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
-                .toZeroPaddedString(2)+c;return{value:b,time:a}});
-        })();
-        this.addLoadedStoreToViewModel({
-            model: 'Breeze.model.employee.schedule.ShiftTime',
-            data: choices
-        }, 'shiftChoices');
     },
 
+    /**
+     * Constructs shift time choices store
+     * @deprecated In favor of shared store
+     * @todo TODO: Remove method
+     */
+    buildShiftChoices: function(){
+        // var vm = this.getViewModel();
+
+        // // Make shift choice list available to actionSheets, which can't use formula
+        // var choices = (function(){
+        //     return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
+        //         return b}().map(function(b){var a=Math.floor(b/60)%12;
+        //         var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
+        //         .toZeroPaddedString(2)+c;return{value:b,time:a}});
+        // })();
+        // this.addLoadedStoreToViewModel({
+        //     model: 'Breeze.model.employee.schedule.ShiftTime',
+        //     data: choices
+        // }, 'shiftChoices');
+    },
 
     //===[Company Tab Grid choice store builders/updaters]==
 
@@ -951,52 +962,54 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
     },
 
-    // onAddShiftSegment: function(comp){
-    //     console.info('Add shift segment');
-    //     var vm = this.getViewModel(),
-    //         segments = vm.get('shift.segments'),
-    //         sheet = comp.getParent().getParent(),
-    //         startField = sheet.getComponent('startTime'),
-    //         stopField = sheet.getComponent('stopTime'),
-    //         startRec = startField.getRecord(),
-    //         stopRec = stopField.getRecord();
-        
-    //     if(startField.validate() && stopField.validate()){
-    //         var unique = 
-    //             (startRec.get('value') !== stopRec.get('value')),
-    //             noOverlap = !this.checkForShiftTimeOverlap(
-    //                 null,
-    //                 startRec.get('value'),
-    //                 stopRec.get('value')
-    //             );
-            
-    //         if(unique && noOverlap){
-    //             // All good, ready to add new shift segment row
-    //             var newRecord = {
-    //                 StartTime: (Breeze.fromMinutes(startRec.get('value')).asTime()),
-    //                 StartMin: startRec.get('value'),
-    //                 StopTime: (Breeze.fromMinutes(stopRec.get('value')).asTime()),
-    //                 StopMin: stopRec.get('value')
-    //             };
-    //             segments.loadData([newRecord], true);
-    //             segments.commitChanges();
-
-    //             sheet.hide();
-    //             startField.clearValue();
-    //             stopField.clearValue();
-    //         }
-    //     }
-
-    // },
-
-    onAddShiftSegmentDirect: function(){
+    /**
+     * Handles 'add' button click in 'Add shift segment' action sheet.
+     * Adds shift segment to schedule
+     * @param {Object} comp 
+     */
+    onAddShiftSegment: function(comp){
         var vm = this.getViewModel(),
-            segments = vm.get('shift.segments');
+            segments = vm.get('shift.segments'),
+            sheet = comp.getParent().getParent(),
+            startField = sheet.getComponent('startTime'),
+            stopField = sheet.getComponent('stopTime');
         
-        segments.loadData([
-            {StartTime: '12:00AM', StartMin: 0, StopTime: '12:30AM', StopMin: 30}
-        ], true);
-        segments.commitChanges();
+        if(startField.validate() && stopField.validate()){
+            var start = startField.getSelection().getData(),
+                stop = stopField.getSelection().getData();
+            if(
+                // TODO: Update after learning if start and stop shift times can be the same
+                // start.value !== stop.value &&
+                !this.checkForShiftTimeOverlap(null, start.value, stop.value)
+            ){
+                // Times aren't overlapping and aren't the same
+                segments.loadData([
+                    {
+                        StartTime: start.time,
+                        StartMin: start.value,
+                        StopTime: stop.time,
+                        StopMin: stop.value
+                    }
+                ], true);
+                segments.commitChanges();
+                // Close action sheet and reset values to empty
+                sheet.hide();
+                startField.clearValue();
+                stopField.clearValue();
+
+                
+            } else {
+                // Times overlap or are the same
+                // TODO: Update after learning if start and stop shift times can be the same
+                // if(start.value == stop.value){
+                //     startField.setError('Start and Stop ')
+                // }
+                startField.setError('Time overlapps with existing shift');
+                stopField.setError('Time overlapps with existing shift');
+            }
+        }
+            
+        console.info('Add shift');
     },
 
     onRemoveShiftSegment: function(grid, info){
@@ -1021,10 +1034,12 @@ Ext.define('Breeze.view.employee.InformationController', {
      * 
      * @param {Object} comp Component event originated from
      * @param {Object} tool Tool component firing event
+     * @deprecated
      */
-    onGridAddButton: function(comp, tool){
+    onGridAddButtonOld: function(comp, tool){
         var actSheet = this.lookup(tool.getData().sheet),
             checkHandler = tool.getData().checkHandler,
+            multiSheetMode = tool.getData().sheetMode,
             canShow = true;
         
         if(!Object.isUnvalued(checkHandler)){
@@ -1032,12 +1047,54 @@ Ext.define('Breeze.view.employee.InformationController', {
             canShow = this[checkHandler]();
         }
         
+        if(!Object.isUnvalued(multiSheetMode)){
+            // sheetMode indicates sheet is a breeze multi actionsheet
+            // apply mode to sheet before displaying
+            actSheet.setMode(multiSheetMode);
+        }
+
         if(canShow){
             actSheet.show();
         }
 
         console.info('Handling add button click for company grid');
-    },    
+    },
+    
+    /**
+     * Handle click event for '+' tool button on grid panels
+     * list grid panel titles (New method using per-use instantiation)
+     * 
+     * Uses data included in tools in view to decide which action sheet
+     * to display, and whether some condition must be met first
+     * 
+     * @param {Object} comp Component event originated from
+     * @param {Object} tool Tool component firing event
+     */
+    onGridAddButton: function (comp,tool){
+        var configData = tool.getData();
+        var { componentType, checkHandler, sheetMode } = configData,
+            canShow = true,
+            component = null;
+
+        component = Ext.create({
+            xtype: componentType,
+            controller: this,
+            viewModel: this.getViewModel()
+        });
+
+        if(!Object.isUnvalued(checkHandler)){
+            canShow = this[checkHandler]();
+        }
+
+        if(!Object.isUnvalued(sheetMode)){
+            component.setMode(sheetMode);
+        }
+
+        if(canShow){
+            var sheet = Ext.Viewport.add(component);
+            sheet.show();
+        }
+    },
 
     //==[Edit Cell Change Events]==
 
@@ -1142,11 +1199,11 @@ Ext.define('Breeze.view.employee.InformationController', {
             chosenSupers.commitChanges();
             // Refresh available choices
             this.buildSupervisorChoices();
+            
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            supField.clearValue();
         }
-        
-        // Close action sheet and reset values to empty
-        sheet.hide();
-        supField.clearValue();
         
         console.info('Add supervisor');
     },
@@ -1177,11 +1234,12 @@ Ext.define('Breeze.view.employee.InformationController', {
             chosenSupers.commitChanges();
             // Refresh available choices
             this.buildSupervisorChoices();
+
+            // Close action sheet and reset values to empty
+            sheet.hide();
+            supField.clearValue();
+            
         }
-        
-        // Close action sheet and reset values to empty
-        sheet.hide();
-        supField.clearValue();
         
         console.info('Add employee');
     },
@@ -1219,8 +1277,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             deptField.clearValue();
-            roleField.clearValue();
-        
+            roleField.clearValue();        
         }
         
         
@@ -1315,7 +1372,16 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp Firing component
      */
     onActionSheetCancel: function(comp){
-        comp.getParent().getParent().hide();
+        var sheet = comp.getParent().getParent();
+        sheet.hide();
+        // Dispose of action sheet
+        // sheet.removeFromViewport();
+        // sheet.close();
+    },
+
+    onActionSheetHide: function(src, eOpts){
+        console.info('Hidden!');
+        src.removeFromViewport();
     },
 
     // TODO: Finish implementing data binding for layoffs
@@ -1384,11 +1450,28 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     //==[Sidebar methods]==
+
+    /**
+     * Handle notes button event, displaying read only
+     * or editor dialog based on user's permissions
+     * @param {*} ref 
+     * @param {*} x 
+     * @param {*} eOpts 
+     */
     onNotesButtonTap: function(ref, x, eOpts){
+        var vm = this.getViewModel();
         console.info("[onNotesButtonTap]");
         //notesDialog
         var view = this.getView(),
+            dialog = null;
+        if(vm.get('securityRightsSet.Add_Notes')){
+            // If user has security access to add notes, show notes editor
+            dialog = this.lookup('notesEditorDialog');
+            vm.set('tempNotes', vm.get('info.Notes'));
+        } else {
+            // Else show read-only notes dialog
             dialog = this.lookup('notesDialog');
+        }
         if (!dialog) {
             dialog = Ext.apply({ ownerCmp: view }, view.dialog);
             dialog = Ext.create(dialog);
@@ -1396,8 +1479,33 @@ Ext.define('Breeze.view.employee.InformationController', {
         dialog.show();
     },
 
+    /**
+     * Handle notes dialog close event
+     * @param {*} dialog 
+     * @param {*} e 
+     * @param {*} eOpts 
+     */
     onCloseNotesDialog: function(dialog, e, eOpts){
         dialog.hide();
+    },
+
+    /**
+     * Handle 'clear' button click in notes editor dialog
+     * @param {*} ref 
+     */
+    onClearNotesButton: function(ref){
+        var vm = this.getViewModel();
+        vm.set('tempNotes',"");
+    },
+
+    /**
+     * Handle 'submit' button click in notes editor dialog
+     * Copies temporary notes value from view model to actual notes value
+     */
+    onSubmitNotesButton: function(dlg){
+        var vm = this.getViewModel();
+        vm.set('info.Notes', vm.get('tempNotes'));
+        dlg.getParent().getParent().hide();
     },
 
     onEditProfilePictureTap: function(ref, e, eOpts){
@@ -1508,30 +1616,65 @@ Ext.define('Breeze.view.employee.InformationController', {
 
 
         // Collect tab containers we need to check for required fields
-        var employeeTab = this.lookup('employeeTab'),
-            employeeValid = true,
-            companyTab = this.lookup('companyTab'),
-            companyValid = true,
-            securityTab = this.lookup('securityTab'),
-            securityValid = true;
-        
+        var pages = {
+            employee: {
+                tab: this.lookup('employeeTab'),
+                errCount: 0,
+                valid: true
+            },
+            company: {
+                tab: this.lookup('companyTab'),
+                errCount: 0,
+                valid: true
+            },
+            security: {
+                tab: this.lookup('securityTab'),
+                errCount: 0,
+                valid: true
+            }
+        };
+            
         ['first_name', 'last_name'].forEach((f)=>{
-            var partValid = employeeTab.down(`[name=${f}]`).validate();
-            employeeValid = employeeValid && partValid;
+            var partValid = pages.employee.tab.down(`[name=${f}]`).validate();
+            pages.employee.valid = pages.employee.valid && partValid;
+            pages.employee.errCount += ((partValid)? 0 : 1);
         });
         ['department'].forEach((f)=>{
-            var partValid = companyTab.down(`[name=${f}]`).validate();
-            companyValid = companyValid && partValid;
+            var partValid = pages.company.tab.down(`[name=${f}]`).validate();
+            pages.company.valid = pages.company.valid && partValid;
+            pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = securityTab.down(`[name=${f}]`).validate();
-            securityValid = securityValid && partValid
+            var partValid = pages.security.tab.down(`[name=${f}]`).validate();
+            pages.security.valid = pages.security.valid && partValid;
+            pages.security.errCount += ((partValid)? 0 : 1);
         });
         if(vm.get('newEmployee')){
-            securityValid = securityValid && securityTab.down(`[name=create_password]`);
+            pages.security.valid = pages.security.valid && 
+                pages.security.tab.down(`[name=create_password]`).validate();
+            if(!pages.security.valid){
+                pages.security.errCount = 1;
+            }
         }
 
-        return employeeValid && companyValid && securityValid;
+        // Update badge text for tabs with missing fields
+        Object.values(pages).forEach((page)=>{
+            if(!page.valid){
+                page.tab.tab.setBadgeText(Math.max(1,page.errCount));
+            } else {
+                page.tab.tab.setBadgeText(null);
+            }
+        });
+
+        var valid = pages.employee.valid && pages.company.valid && pages.security.valid;
+
+        if(valid){
+            vm.set('form.validationMessage','');
+        } else {
+            vm.set('form.validationMessage', 'One or more required fields are missing');
+        }
+
+        return pages.employee.valid && pages.company.valid && pages.security.valid;
 
     },
 
@@ -1600,7 +1743,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     onRevertButtonTap: function(comp, e){
-        console.info('Revert button pressed');
+        this.onRefreshTool();
     },
 
     /**

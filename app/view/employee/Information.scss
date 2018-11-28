@@ -231,3 +231,13 @@ $ei-field-font-size: map-get($root-font-sizes, 'base');
     $ui: 'employee-info-tab-panel',
     $body-background-color: map-get($employee-info-colors, 'base')
 );
+
+
+//===[Tab Badges Coloring]==
+@include tab-ui(
+    $ui: 'employeeInfoTabs',
+    $badge-background-color: $alert-color,
+    $badge-color: #ffffff,
+    $badge-top: 2pt !important, 
+    $badge-right: -2pt !important
+);
