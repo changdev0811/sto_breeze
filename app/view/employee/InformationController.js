@@ -1572,30 +1572,65 @@ Ext.define('Breeze.view.employee.InformationController', {
 
 
         // Collect tab containers we need to check for required fields
-        var employeeTab = this.lookup('employeeTab'),
-            employeeValid = true,
-            companyTab = this.lookup('companyTab'),
-            companyValid = true,
-            securityTab = this.lookup('securityTab'),
-            securityValid = true;
-        
+        var pages = {
+            employee: {
+                tab: this.lookup('employeeTab'),
+                errCount: 0,
+                valid: true
+            },
+            company: {
+                tab: this.lookup('companyTab'),
+                errCount: 0,
+                valid: true
+            },
+            security: {
+                tab: this.lookup('securityTab'),
+                errCount: 0,
+                valid: true
+            }
+        };
+            
         ['first_name', 'last_name'].forEach((f)=>{
-            var partValid = employeeTab.down(`[name=${f}]`).validate();
-            employeeValid = employeeValid && partValid;
+            var partValid = pages.employee.tab.down(`[name=${f}]`).validate();
+            pages.employee.valid = pages.employee.valid && partValid;
+            pages.employee.errCount += ((partValid)? 0 : 1);
         });
         ['department'].forEach((f)=>{
-            var partValid = companyTab.down(`[name=${f}]`).validate();
-            companyValid = companyValid && partValid;
+            var partValid = pages.company.tab.down(`[name=${f}]`).validate();
+            pages.company.valid = pages.company.valid && partValid;
+            pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = securityTab.down(`[name=${f}]`).validate();
-            securityValid = securityValid && partValid
+            var partValid = pages.security.tab.down(`[name=${f}]`).validate();
+            pages.security.valid = pages.security.valid && partValid;
+            pages.security.errCount += ((partValid)? 0 : 1);
         });
         if(vm.get('newEmployee')){
-            securityValid = securityValid && securityTab.down(`[name=create_password]`);
+            pages.security.valid = pages.security.valid && 
+                pages.security.tab.down(`[name=create_password]`).validate();
+            if(!pages.security.valid){
+                pages.security.errCount = 1;
+            }
         }
 
-        return employeeValid && companyValid && securityValid;
+        // Update badge text for tabs with missing fields
+        Object.values(pages).forEach((page)=>{
+            if(!page.valid){
+                page.tab.tab.setBadgeText(Math.max(1,page.errCount));
+            } else {
+                page.tab.tab.setBadgeText(null);
+            }
+        });
+
+        var valid = pages.employee.valid && pages.company.valid && pages.security.valid;
+
+        if(valid){
+            vm.set('form.validationMessage','');
+        } else {
+            vm.set('form.validationMessage', 'One or more required fields are missing');
+        }
+
+        return pages.employee.valid && pages.company.valid && pages.security.valid;
 
     },
 
