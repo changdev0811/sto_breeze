@@ -27,6 +27,8 @@ Ext.define('Breeze.view.employee.InformationModel', {
             companyConfig: {
     
             },
+            // Holdes notes before committing changes
+            tempNotes: "",
             // ==[Company tab list visibility]==
             lists: {
                 supervisors: {
@@ -197,10 +199,31 @@ Ext.define('Breeze.view.employee.InformationModel', {
     },
 
     formulas: {
-        hireDate: function (get) {
-            return Ext.util.Format.date(
-                get('info.HireDate'), "m/d/Y"
-            );
+        hireDate: {
+            get: function (get) {
+                return Ext.util.Format.date(
+                    get('info.HireDate'), "m/d/Y"
+                );
+            },
+            set: function(value){
+                this.set(
+                    'info.HireDate',
+                    (new Date(value)).toLocaleString()
+                );
+            }
+        },
+        terminationDate: {
+            get: function (get) {
+                return Ext.util.Format.date(
+                    get('info.TerminationDate'), "m/d/Y"
+                );
+            },
+            set: function(value){
+                this.set(
+                    'info.TerminationDate',
+                    (new Date(value)).toLocaleString()
+                );
+            }
         },
         overtime_day1: {
             get: function (get) {
@@ -283,9 +306,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-        hideNotesButton: function (get) {
-            var notes = get('info.Notes');
-            return (typeof notes == 'undefined' || notes == null || notes === "") ? true : false;
+        hasTempNotes: function (get) {
+            var notes = get('tempNotes');
+            return (typeof notes == 'undefined' || notes == null || notes === "") ? false : true;
         },
 
         employeeNotes: function (get) {

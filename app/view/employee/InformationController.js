@@ -130,6 +130,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                                             callback: function (success, rec, opt) {
                                                 if (success) {
                                                     var rights = vm.get('securityRights').getAt(0).getData();
+                                                    vm.set('securityRightsSet', rights);
                                                     // Set read only state based on super admin, new record, or employee rights
                                                     if (
                                                         vm.get('accessLevel') == Breeze.api.Employee.accessLevel.SUPER_ADMIN ||
@@ -1449,11 +1450,28 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     //==[Sidebar methods]==
+
+    /**
+     * Handle notes button event, displaying read only
+     * or editor dialog based on user's permissions
+     * @param {*} ref 
+     * @param {*} x 
+     * @param {*} eOpts 
+     */
     onNotesButtonTap: function(ref, x, eOpts){
+        var vm = this.getViewModel();
         console.info("[onNotesButtonTap]");
         //notesDialog
         var view = this.getView(),
+            dialog = null;
+        if(vm.get('securityRightsSet.Add_Notes')){
+            // If user has security access to add notes, show notes editor
+            dialog = this.lookup('notesEditorDialog');
+            vm.set('tempNotes', vm.get('info.Notes'));
+        } else {
+            // Else show read-only notes dialog
             dialog = this.lookup('notesDialog');
+        }
         if (!dialog) {
             dialog = Ext.apply({ ownerCmp: view }, view.dialog);
             dialog = Ext.create(dialog);
@@ -1461,8 +1479,33 @@ Ext.define('Breeze.view.employee.InformationController', {
         dialog.show();
     },
 
+    /**
+     * Handle notes dialog close event
+     * @param {*} dialog 
+     * @param {*} e 
+     * @param {*} eOpts 
+     */
     onCloseNotesDialog: function(dialog, e, eOpts){
         dialog.hide();
+    },
+
+    /**
+     * Handle 'clear' button click in notes editor dialog
+     * @param {*} ref 
+     */
+    onClearNotesButton: function(ref){
+        var vm = this.getViewModel();
+        vm.set('tempNotes',"");
+    },
+
+    /**
+     * Handle 'submit' button click in notes editor dialog
+     * Copies temporary notes value from view model to actual notes value
+     */
+    onSubmitNotesButton: function(dlg){
+        var vm = this.getViewModel();
+        vm.set('info.Notes', vm.get('tempNotes'));
+        dlg.getParent().getParent().hide();
     },
 
     onEditProfilePictureTap: function(ref, e, eOpts){
