@@ -59,7 +59,7 @@ Ext.define('Breeze.api.admin.Roles', {
             replacementRoleId = Object.defVal(
                 replacementRoleId, ''
             );
-        return new Promise((resolve, reject){
+        return new Promise((resolve, reject)=>{
             api.serviceRequest(
                 'DeleteSupervisorRole',
                 {
@@ -91,7 +91,7 @@ Ext.define('Breeze.api.admin.Roles', {
                     })
                 }
             )
-        })
+        });
     },
 
     /**
