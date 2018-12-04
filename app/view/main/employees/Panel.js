@@ -105,7 +105,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         // Info + action
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-toolbar', docked: 'top',
+                            ui: 'employees-toolbar', docked: 'bottom',
                             shadow: false,
                             reference: 'employeesEmployeeToolbar',
                             defaults: {
@@ -215,7 +215,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                         },
                         {
                             xtype: 'toolbar',
-                            ui: 'employees-toolbar', docked: 'top',
+                            ui: 'employees-toolbar', docked: 'bottom',
                             reference: 'employeesDepartmentToolbar',
                             defaults: {
                                 xtype: 'displayfield',

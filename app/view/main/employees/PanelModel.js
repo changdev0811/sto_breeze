@@ -29,6 +29,9 @@ Ext.define('Breeze.view.main.employees.PanelModel', {
             canRemove: true
         },
 
+        // 'Type' of view to show when selecting employee node
+        defaultEmployeeAction: 'Cal',
+
         // Employee counts
         counts: {
             active: 0,

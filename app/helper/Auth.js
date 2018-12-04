@@ -36,7 +36,10 @@ Ext.define('Breeze.helper.Auth', {
             if(this.authInterval == null){
                 this.authInterval = window.setInterval(
                     function(){
-                        Breeze.helper.Auth.isAuthorized(true);
+                        var auth = Breeze.helper.Auth.isAuthorized(true);
+                        if(auth){
+                            Breeze.helper.Auth.reloadCookies(30);
+                        }
                     },
                     600000
                 );
@@ -131,11 +134,22 @@ Ext.define('Breeze.helper.Auth', {
         },
 
         /**
-         * from homemade.js refreshTimeout
+         * from homemade.js refreshTimeout (kindof)
+         * Should check auth, if interval defined, restart after reloading
+         * cookies
+         * If auth check fails, check method will force page reload anyway
          * @todo TODO: Implement refreshTimeout
          */
         refreshTimeout: function(){
-
+            if(Breeze.helper.Auth.isAuthorized(true)){
+                if(!Object.isUnvalued(this.authInterval)){
+                    window.clearInterval(this.authInterval);
+                    Breeze.helper.Auth.reloadCookies(30);
+                }
+                this.startAuthCheckTimer();
+            } else {
+                // reloaded page because not authorized
+            }
         }
     
     }

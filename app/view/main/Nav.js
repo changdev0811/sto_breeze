@@ -44,7 +44,11 @@ Ext.define('Breeze.view.main.Nav', {
                     height: '64pt',
                     width: '170pt',
                     selfAlign: '',
-                    src: 'resources/img/breeze_logo.svg'
+                    style: 'cursor: pointer',
+                    src: 'resources/img/breeze_logo.svg',
+                    listeners: {
+                        tap: 'onLogoTap'
+                    }
                 },
                 {
                     xtype: 'container',

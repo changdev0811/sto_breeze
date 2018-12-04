@@ -120,7 +120,7 @@ Ext.define('Breeze.view.main.NavController', {
         },
         'home': {
             action: 'onHomeRoute',
-            // before: 'beforeRoute'
+            before: 'beforeRoute'
         },
         'employees/:act/:id': {
             action: 'onEmployeesViewRoute',
@@ -259,6 +259,10 @@ Ext.define('Breeze.view.main.NavController', {
 
     // ===[Event Handlers]===
 
+    onLogoTap: function(){
+        this.redirectTo('home');
+    },
+
     /**
      * Handles user clicking on sidebar toggle button
      */
@@ -370,7 +374,8 @@ Ext.define('Breeze.view.main.NavController', {
         } catch (err) {
             console.warn('refresh err', err);
         }
-        
+        // Reset logout timeout timer
+        Breeze.helper.Auth.refreshTimeout();
         action.resume();
     },
 

@@ -148,9 +148,13 @@ Ext.define('Breeze.view.main.employees.PanelController', {
      */
     onEmployeesTreeSelect: function(comp){
         this.updateRemoveEmployeeButton(comp,'employeesEmployeeToolbar');
-        this.tryPerformingNodeAction(
-            comp.getSelectable().getSelectedRecord()
-        )
+        if(this.tryPerformingDefaultEmployeeAction(comp)){
+            // tryPerformingDefaultEmployeeAction handles things
+        } else {
+            this.tryPerformingNodeAction(
+                comp.getSelectable().getSelectedRecord()
+            );
+        }
     },
 
     /**
@@ -160,9 +164,13 @@ Ext.define('Breeze.view.main.employees.PanelController', {
      */
     onDepartmentsTreeSelect: function(comp){
         this.updateRemoveEmployeeButton(comp,'employeesDepartmentToolbar');
-        this.tryPerformingNodeAction(
-            comp.getSelectable().getSelectedRecord()
-        )
+        if(this.tryPerformingDefaultEmployeeAction(comp)){
+            // tryPerformingDefaultEmployeeAction handles things
+        } else {
+            this.tryPerformingNodeAction(
+                comp.getSelectable().getSelectedRecord()
+            );
+        }
     },
 
     /**
@@ -219,6 +227,28 @@ Ext.define('Breeze.view.main.employees.PanelController', {
                 });
             });
         }
+    },
+
+    /**
+     * Try navigating to default employee subview on first
+     * expanding click of employee name in tree
+     * @param {Object} tree Tree component being operated on
+     */
+    tryPerformingDefaultEmployeeAction: function(tree){
+        var defAction = this.getViewModel().get('defaultEmployeeAction'),
+            performed = false,
+            rec = tree.getSelectable().getSelectedRecord();
+        
+        if(rec.get('type') == 'Emp' && rec.isExpanded()){
+            let actRec = rec.findChildBy((c)=>{return c.get('type') == defAction;});
+            if(actRec){
+                tree.getSelectable().deselectAll();
+                tree.getSelectable().setSelectedRecord(actRec);
+                performed = true;
+            }
+        }
+
+        return performed;
     },
 
     /**
