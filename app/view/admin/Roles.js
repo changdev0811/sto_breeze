@@ -127,7 +127,7 @@ Ext.define('Breeze.view.admin.Roles', {
 
                     layout: 'vbox',
                     buttons: {
-                        apply: { text: 'Apply', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:175pt;' },
+                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:175pt;' },
                     },
                     buttonToolbar: {
                         xtype: 'toolbar',

@@ -26,6 +26,16 @@ Ext.define('Breeze.view.admin.SAOptions', {
     ui: 'admin-base',
     title: 'Super Admin Options',
 
+    buttonAlign: 'right',
+    buttons: {
+        apply: { text: 'Save',  ui: 'save alt', style:'width:175pt;' },
+    },
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'admin-actions',
+        shadow: false
+    },
+
     // Body contents
     items: [
 
@@ -53,15 +63,15 @@ Ext.define('Breeze.view.admin.SAOptions', {
 
 
                     layout: 'vbox',
-                    buttonAlign: 'right',
-                    buttons: {
-                        apply: { text: 'Apply',  ui: 'action', style:'width:175pt;' },
-                    },
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
+                    // buttonAlign: 'right',
+                    // buttons: {
+                    //     apply: { text: 'Save',  ui: 'action', style:'width:175pt;' },
+                    // },
+                    // buttonToolbar: {
+                    //     xtype: 'toolbar',
+                    //     ui: 'admin-actions',
+                    //     shadow: false
+                    // },
                     items:[
                         {
                             xtype: 'container',

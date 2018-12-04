@@ -46,7 +46,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        apply: { name: 'apply_button_container', text: 'Apply', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:125pt' },
+        apply: { text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'confirm alt', style: 'width:125pt' },
     },
     // Adjust action button toolbar spacing and appearance with UI and shadow
     buttonToolbar: {

@@ -131,7 +131,7 @@ Ext.define('Breeze.view.admin.PointCats', {
 
                     layout: 'hbox',
                     buttons: {
-                        apply: { text: 'Apply', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:125pt'},
+                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
                     },
                     buttonToolbar: {
                         xtype: 'toolbar',

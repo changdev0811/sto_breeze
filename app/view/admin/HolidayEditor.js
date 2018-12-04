@@ -345,7 +345,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             items:[
                 {
                     xtype: 'button',
-                    text: 'Apply Holiday Schedule',
+                    text: 'Save Holiday Schedule',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
                     style:'width:175pt;'

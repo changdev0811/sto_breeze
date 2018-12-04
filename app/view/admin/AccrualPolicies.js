@@ -28,8 +28,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        save: { name: 'save_button', text: 'Save Accrual Policy', handler: 'onSavePolicy', ui: 'action', style: 'width:200pt' },
-        apply: { name: 'apply_button_container', text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:200pt' },
+        save: { text: 'Save', handler: 'onSavePolicy', ui: 'confirm alt', style: 'width:200pt' },
+        apply: { text: 'Save and Apply to Employees', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:200pt' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow

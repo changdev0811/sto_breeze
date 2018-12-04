@@ -834,8 +834,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 },
                                 {
                                     xtype: 'button',
-                                    text: 'Save Punch Policy',
-                                    ui: 'action',
+                                    text: 'Save',
+                                    ui: 'confirm alt',
                                     width:'175pt'                   
                                 },
 
