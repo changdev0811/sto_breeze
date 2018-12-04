@@ -85,13 +85,12 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         },
                                         {
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
+                                            handler: 'onCreatePolicyButton'
                                         },
                                         {
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-minus',
                                             ui: 'plain wtr-button',
                                         },
@@ -112,7 +111,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         }
                                     },
                                     bind: {
-                                        store: '{scheduleList}',
+                                        store: '{policiesList}',
                                     },
                                     viewModel: true,
                                     listeners: {
@@ -124,10 +123,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         {
                             xtype: 'breeze-textfield',
                             label: 'Setting Name',
-                            name: 'setting_name_label',
+                            // name: 'setting_name_label',
                             ui: 'admin admin-text',
                             userCls: 'admin-fieldset no-border',
-
+                            bind: '{policyData.Name}'
                         },
                         {
                             xtype: 'fieldset',
@@ -201,7 +200,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         },
                                         {
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
                                         }
@@ -212,7 +210,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     ui: 'admin-grid',
                                     height: '100%',
                                     sortable: false, columnResize: false,
-                                    columnMenu: false, hideHeaders: true,
+                                    columnMenu: false, hideHeaders: false,
                                     bind: {
                                         store: '{policySegments}'
                                     },
@@ -220,19 +218,36 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         xtype: 'gridcolumn',
                                         menuDisabled: true
                                     },
+                                    layout: 'vbox',
                                     columns: [
                                         {
                                             tpl: '{StartTime}',
-                                            dataIndex: 'StartSegment'
+                                            text: 'Start',
+                                            dataIndex: 'StartSegment',
+                                            flex: 1
                                         },
-                                        {
-                                            xtype: 'templatecolumn',
-                                            tpl: ['-'],
-                                            width: '2em'
-                                        },
+                                        // {
+                                        //     xtype: 'templatecolumn',
+                                        //     tpl: ['-'],
+                                        //     width: '2em'
+                                        // },
                                         {
                                             tpl: '{StopTime}',
-                                            dataIndex: 'StopSegment'
+                                            text: 'Stop',
+                                            dataIndex: 'StopSegment',
+                                            flex: 1,
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onRemoveShiftSegment'
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -835,6 +850,74 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     ]
                 },
 
+            ]
+        },
+        //====[Dialogs]=====
+        /* Create Accrual Policy Dialog */
+        {
+            xtype: 'dialog',
+            ui: 'light-themed-dialog',
+            reference: 'createPolicyDialog',
+            title: 'Create New Accrual Policy',
+            layout: 'vbox',
+            buttons: [
+                {
+                    xtype: 'button',
+                    text: 'Create',
+                    ui: 'action alt'
+                },
+                {
+                    xtype: 'spacer', width: '8pt'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Cancel',
+                    ui: 'decline alt',
+                    handler: 'onCreatePolicyDlgCancel'
+                }
+            ],
+            items: [
+                {
+                    xtype: 'breeze-textfield',
+                    itemId: 'policyName',
+                    label: 'Policy Name',
+                    required: true
+                },
+                {
+                    xtype: 'containerfield',
+                    itemId: 'createOption',
+                    layout: 'vbox',
+                    defaults: {
+                        bodyAlign: 'stretch',
+                        xtype: 'radio'
+                    },
+                    items: [
+                        {
+                            name: 'option',
+                            boxLabel: 'Create from scratch using default values',
+                            value: 1, checked: true
+                        },
+                        {
+                            name: 'option',
+                            boxLabel: 'Copy an existing Accrual Policy',
+                            reference: 'createDlgCopyExisting',
+                            value: 2
+                        }
+                    ]
+                },
+                {
+                    xtype: 'selectfield',
+                    label: 'Copy From',
+                    itemId: 'policySource',
+                    // TODO: Update default copied accrual to match selection before show
+                    value: null,
+                    bind: {
+                        hidden: '{!createDlgCopyExisting.checked}',
+                        store: '{policiesList}'
+                    },
+                    displayField: 'Name',
+                    valueField: 'ID'
+                }
             ]
         }
     ]

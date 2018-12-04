@@ -16,20 +16,27 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Called when the view is created
      */
     onInit: function (component) {
-
+        var me = this;
         // Load User-Defined Categories list store
-        this.addStoreToViewModel(
+        me.addStoreToViewModel(
             'Breeze.store.category.List',
             'categoriesList',
             { load: true }
         );
 
         // load accrual policies
-        // TODO: possibly replace with getAccrualPoliciesTree
-        this.addStoreToViewModel(
+        // TODO: Replace store with one specific to accrual policy listing
+        me.addStoreToViewModel(
             'Breeze.store.accrual.ScheduleList',
-            'scheduleList',
-            { load: true }
+            'policiesList',
+            { load: true, loadOpts: {
+                callback: function(records, op, success){
+                    this.lookup('policyList').getSelectable().setSelectedRecord(
+                        records[0]
+                    );
+                },
+                scope: me
+            } }
         );
 
         console.info('Accrual policies controller inited');
@@ -46,8 +53,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onPolicySelect: function(list, record, eOpts){
         var vm = this.getViewModel(),
-            me = this;
-
+            me = this,
+            cats = this.lookup('categoryList');        
         // this.loadStore(
         //     'Breeze.store.accrual.Policy',
         //     { scheduleId: record.get('ID') }
@@ -101,7 +108,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     }
                 }
             }
-        )
+        );
+        // TODO: Auto select first category on policy select if none chosen
+        // if(cats.getSelectionCount()==0){
+        //     // If no category is selected, auto select the first one
+        //     cats.getSelectable().setSelectedRecord(
+        //         vm.get('categoriesList').getAt(0)
+        //     );
+        // }
     },
 
     onCategorySelect: function(list, record, eOpts){
@@ -115,8 +129,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
 
     // TODO: Implement add policy handler
-    onAddPolicy: function(comp){
 
+    onCreatePolicyButton: function(){
+        this.lookup('createPolicyDialog').show();
+    },
+
+    /**
+     * Handle 'cancel' button click event for 'Create Policy' dialog
+     * @param {Object} comp Button firing event
+     */
+    onCreatePolicyDlgCancel: function(comp){
+        var dlg = comp.getParent().getParent();
+        dlg.getComponent('policyName').clear();
+        dlg.hide();
     },
 
     // TODO: Implement delete policy handler

@@ -47,7 +47,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     data: {
-        selectedCategory: null    
+        selectedCategory: null
     },
 
     stores: {
