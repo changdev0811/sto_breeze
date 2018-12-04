@@ -111,8 +111,6 @@ Ext.define('Breeze.view.admin.UDC', {
 
                     minHeight:'420pt',
 
-
-
                     layout: 'vbox',
                     buttons: {
                         save: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:175pt;' },
@@ -135,14 +133,42 @@ Ext.define('Breeze.view.admin.UDC', {
                                     //name: 'project_name',
                                     ui: 'admin admin-text',
                                     userCls:'admin-fieldset no-border no-margin',
+                                    bind: {
+                                        value:'{selectedCat.Category_Name}'
+                                    }
                                 },
                                 {
-                                    xtype: 'breeze-textfield',
-                                    label: 'Abbreviation',
-                                    //name: 'project_name',
-                                    ui: 'admin admin-text',
-                                    userCls:'admin-fieldset no-border no-margin',
-                                },
+                                    xtype:'container',
+                                    layout:'hbox',
+                                    items:[
+                                        {
+                                            xtype: 'breeze-textfield',
+                                            label: 'Abbreviation',
+                                            flex:1,
+                                            //name: 'project_name',
+                                            ui: 'admin admin-text',
+                                            userCls:'admin-fieldset no-border no-margin',
+                                            bind: {
+                                                value:'{selectedCat.Category_Abbreviated}'
+                                            }
+                                        },
+                                        {
+                                            xtype:'spacer',
+                                            width:'10pt',
+                                        },
+                                        {
+                                            xtype: 'breeze-textfield',
+                                            label: 'Paycode',
+                                            flex:1,
+                                            //name: 'project_name',
+                                            ui: 'admin admin-text',
+                                            userCls:'admin-fieldset no-border no-margin',
+                                            bind: {
+                                                value:'{selectedCat.Pay_Code}'
+                                            }
+                                        },
+                                    ]
+                                }
                             ]
                         },
                         {
@@ -168,6 +194,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             value: '20',
                                             boxLabel: 'Allowed Category',
                                             bodyAlign: 'stretch',
+                                            bind: '{selectedCat.isAllowed}'
                                         },
                                     ]
                                 },
@@ -191,24 +218,30 @@ Ext.define('Breeze.view.admin.UDC', {
                                             labelAlign:'left',
                                             labelWidth:'auto',
                                             label:'Leave Requested Minimum Use',
+                                            bind: {
+                                                value:'{selectedCat.minUse_Amount}'
+                                            }
+
                                         },
                                         {
                                             xtype:'spacer',
                                             width:'10pt',
                                         },
                                         {
-                                            xtype: 'combobox',
+                                            xtype: 'selectfield',
                                             ui: 'admin admin-text',
                                             userCls:'admin-fieldset no-border no-margin',
-
                                             flex: 2,
-                                            //name: 'category_new_rate',
-                                            allowBlank: false,
-                                            editable: false,
-                                            displayField: 'Description',
-                                            forceSelection: true,
-                                            queryMode: 'local',
-                                            valueField: 'ID'
+                                            name: 'minUse_Unit',
+                                            
+                                            bind: {
+                                                store: '{minUseUnit}',
+                                                value:'{selectedCat.minUse_Unit}'
+                                            },
+
+
+                                            valueField: 'code',
+                                            displayField: 'description'
                                         },
                                         {
                                             xtype:'spacer',
@@ -235,7 +268,10 @@ Ext.define('Breeze.view.admin.UDC', {
                                             minValue: 0,
                                             labelAlign:'left',
                                             labelWidth:'auto',
-                                            label:'Leave Requested Minimum Use',
+                                            label:'Days Before Use',
+                                            bind: {
+                                                value:'{selectedCat.minUse_waitDays}'
+                                            }
                                         },
                                     ]
                                 },
@@ -264,6 +300,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             value: '20',
                                             boxLabel: 'Paid Category',
                                             bodyAlign: 'stretch',
+                                            bind: '{selectedCat.isPaid}'
                                         },
                                     ]
                                 },
@@ -275,6 +312,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                     value: '20',
                                     boxLabel: 'Count as OverTime',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedCat.isOverTime}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -284,6 +322,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                     value: '20',
                                     boxLabel: 'Count Toward Accruals',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedCat.isAccrued}'
                                 },
                             ]
                         },
@@ -317,6 +356,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             value: '20',
                                             boxLabel: 'Include in Leave Request',
                                             bodyAlign: 'stretch',
+                                            bind: '{selectedCat.isLeaveRequest}'
                                         },
                                         {
                                             xtype:'spacer',

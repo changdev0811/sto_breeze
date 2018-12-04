@@ -148,6 +148,9 @@ Ext.define('Breeze.view.admin.Roles', {
                                     name: 'project_name',
                                     ui: 'admin admin-text',
                                     userCls:'admin-fieldset no-border no-side-margin',
+                                    bind: {
+                                        value: '{selectedRole.Role_Name}',
+                                    },
                                 },
                             ]
                         },
@@ -179,6 +182,8 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Add Employee',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Add_Employee}'
+
                                 },
                                 {
                                     xtype:'checkbox',
@@ -186,6 +191,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Delete Employee',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Delete_Employee}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -194,6 +200,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Edit Employee',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Edit_Employee}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -202,6 +209,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'View SSN',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.View_SSN}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -210,6 +218,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'View Compensation',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.View_Compensation}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -218,6 +227,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Employee Category Adjust',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Employee_Category_Adjust}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -226,6 +236,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Adjustments',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Adjustments}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -234,6 +245,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Leave Approvial',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Leave_Approval}'
                                 },
                                 {
                                     xtype:'checkbox',
@@ -242,10 +254,99 @@ Ext.define('Breeze.view.admin.Roles', {
                                     value: '20',
                                     boxLabel: 'Modify Recorded Time',
                                     bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Modify_Recorded_Time}'
                                 },
-
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Manage Points',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Manage_Points}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Add Notes',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Add_Notes}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Employee Reports',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Employee_Reports}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Department Reports',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Department_Reports}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Project Maintenance',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Project_Maintenance}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Deduction Maintenance',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Deduction_Maintenance}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Export Payroll',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Export_Payroll}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Payroll Template Maintenance',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Payroll_Template_Maintenance}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Worktime Maintenance',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Worktime_Maintenance}'
+                                },
+                                {
+                                    xtype:'checkbox',
+                                    ui:'admin',
+                                    name: 'isOT',
+                                    value: '20',
+                                    boxLabel: 'Worktime Approvial',
+                                    bodyAlign: 'stretch',
+                                    bind: '{selectedRole.Worktime_Approvial}'
+                                },
                             ]
-
                         }
                     ]
                 },
