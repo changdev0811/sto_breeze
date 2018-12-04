@@ -35,6 +35,23 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     //    pdf: { text: 'Save Accrual Policy', /* handler: 'onPrintPDF',*/ ui: 'action' },
     //    excel: { text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'action' },
     //},
+    buttons: [
+        {
+            xtype: 'button',
+            text: 'Apply Holiday Schedule',
+            ui: 'action',
+            style:'width:175pt;'
+        }, 
+        {
+            xtype: 'spacer',
+        },
+        {
+            xtype: 'button',
+            ui: 'confirm alt',
+            text: 'Save',
+            style:'width:175pt;'
+        }
+    ],
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
     buttonToolbar: {
@@ -337,38 +354,35 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             ]
         },
 
-        {
-            xtype: 'toolbar',
-            ui:'admin-fieldset',
-            userCls:'admin-fieldset no-border no-padding no-background',
-            shadow: false,
-            items:[
-                {
-                    xtype: 'button',
-                    text: 'Apply Holiday Schedule',
-                    ui: 'action',                   
-                    userCls:'admin-fieldset-no-border',
-                    style:'width:175pt;'
+        // {
+        //     xtype: 'toolbar',
+        //     ui:'admin-fieldset',
+        //     userCls:'admin-fieldset no-border no-padding no-background',
+        //     shadow: false,
+        //     items:[
+        //         {
+        //             xtype: 'button',
+        //             text: 'Save Holiday Schedule',
+        //             ui: 'action',                   
+        //             userCls:'admin-fieldset-no-border',
+        //             style:'width:175pt;'
 
-                },
-                {
-                    xtype:'spacer',
-                    flex:1,
-                },
-                {
-                    xtype: 'button',
-                    text: 'save',
-                    ui: 'action',                   
-                    userCls:'admin-fieldset-no-border',
-                    style:'width:175pt;'
+        //         },
+        //         {
+        //             xtype:'spacer',
+        //             flex:1,
+        //         },
+        //         {
+        //             xtype: 'button',
+        //             text: 'save',
+        //             ui: 'action',                   
+        //             userCls:'admin-fieldset-no-border',
+        //             style:'width:175pt;'
 
-                },
+        //         },
 
-            ]
-        }
-
-
-
+        //     ]
+        // }
 
     ]
 });

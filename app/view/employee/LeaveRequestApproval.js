@@ -46,9 +46,9 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
     // Action buttons shown at bottom of panel
     buttonAlign: 'center',
     buttons: {
-        notes: { weight:1, name: 'apply_button_container', iconCls: 'x-fa fa-file-alt', /* handler: 'onPrintExcel',*/ ui:'alt', style: 'width:auto;' },
-        edit:  { weight:2, name: 'apply_button_container', iconCls: 'x-fa fa-edit', /* handler: 'onPrintExcel',*/    ui:'alt', style: 'width:auto;' },
-        apply: { weight:3, name: 'apply_button_container', text: 'Apply', /* handler: 'onPrintExcel',*/ ui: 'action', style: 'width:125pt' },
+        notes: { weight:1, iconCls: 'x-fa fa-file-alt', /* handler: 'onPrintExcel',*/ ui:'alt', style: 'width:auto;' },
+        edit:  { weight:2, iconCls: 'x-fa fa-edit', /* handler: 'onPrintExcel',*/    ui:'alt', style: 'width:auto;' },
+        apply: { weight:3, text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'confirm alt', style: 'width:125pt' },
     },
     // Adjust action button toolbar spacing and appearance with UI and shadow
     buttonToolbar: {

@@ -112,7 +112,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 },
                 {
                     text: 'Clear',
-                    ui: 'decline alt',
+                    ui: 'action alt',
                     handler: 'onClearNotesButton',
                     bind: {
                         disabled: '{!hasTempNotes}'
@@ -132,7 +132,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             buttons: [
                 {
                     text: 'Remove Picture',
-                    ui: 'decline',
+                    ui: 'action',
                     bind: {
                         disabled: '{!hasCustomProfilePicture}'
                     },
@@ -143,14 +143,19 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 },
                 {
                     text: 'Upload',
-                    ui: 'action',
+                    ui: 'confirm alt',
                     handler: 'onUploadProfilePicture',
                     bind: {
                         disabled: '{!pictureFileField.value}'
                     }
                 },
                 {
+                    xtype: 'spacer',
+                    width: '8pt'
+                },
+                {
                     text: 'Cancel',
+                    ui: 'action',
                     handler: 'onCancelProfilePictureEdit'
                 }
             ],
