@@ -76,15 +76,15 @@ Ext.define('Breeze.view.employee.Information', {
             handler: 'onSaveButtonTap'
         },
         // Discard changes button
-        {
-            itemId: 'revertButton', text: 'Revert',
-            // ui: 'decline alt',
-            ui: 'decline raised alt', weight: 5,
-            bind: {
-                disabled: '{!form.canRevert}'
-            },
-            handler: 'onRevertButtonTap'
-        }
+        // {
+        //     itemId: 'revertButton', text: 'Revert',
+        //     // ui: 'decline alt',
+        //     ui: 'decline raised alt', weight: 5,
+        //     bind: {
+        //         disabled: '{!form.canRevert}'
+        //     },
+        //     handler: 'onRevertButtonTap'
+        // }
     ],
 
     items: [
