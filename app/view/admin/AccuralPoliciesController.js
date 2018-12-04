@@ -140,8 +140,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onCreatePolicyDlgCancel: function(comp){
         var dlg = comp.getParent().getParent();
-        dlg.getComponent('policyName').clear();
         dlg.hide();
+        dlg.getComponent('policyName').clearValue();
     },
 
     // TODO: Implement delete policy handler

@@ -863,8 +863,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             buttons: [
                 {
                     xtype: 'button',
-                    text: 'Create',
-                    ui: 'action alt'
+                    text: 'Save',
+                    ui: 'confirm alt'
                 },
                 {
                     xtype: 'spacer', width: '8pt'
@@ -918,6 +918,33 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     displayField: 'Name',
                     valueField: 'ID'
                 }
+            ]
+        },
+        /* Add Shift Segment Dialog */
+        {
+            xtype: 'dialog',
+            ui: 'light-themed-dialog',
+            reference: 'addShiftDialog',
+            title: 'Add Shift Segment',
+            layout: 'vbox',
+            buttons: [
+                {
+                    xtype: 'button',
+                    text: 'Save',
+                    ui: 'confirm alt'
+                },
+                {
+                    xtype: 'spacer', width: '8pt'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Cancel',
+                    ui: 'decline alt',
+                    // handler: 'onCreatePolicyDlgCancel'
+                }
+            ],
+            items: [
+               
             ]
         }
     ]
