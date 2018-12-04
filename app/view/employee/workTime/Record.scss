@@ -115,10 +115,10 @@ $employee-wtr-records-icon-total-size: 32px;
     background-color: yellow;
     // punch in body panel
     & > .punch-in {
-       @include wtr-body-panel($confirm-color);
+       @include wtr-body-panel(#5E8A9B);
     }
     // punch out body panel
     & > .punch-out {
-        @include wtr-body-panel($alert-color);
+        @include wtr-body-panel(#A17393);
     }
 }
