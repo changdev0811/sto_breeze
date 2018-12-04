@@ -374,7 +374,8 @@ Ext.define('Breeze.view.main.NavController', {
         } catch (err) {
             console.warn('refresh err', err);
         }
-        
+        // Reset logout timeout timer
+        Breeze.helper.Auth.refreshTimeout();
         action.resume();
     },
 
