@@ -161,8 +161,8 @@ $wtr-text-colors: (
 
 // ====[Punch Clock Button[===
 
-$scoped-punchclock-in:     $confirm-color;
-$scoped-punchclock-out:    $alert-color;
+$scoped-punchclock-in:     #239F86;
+$scoped-punchclock-out:    #DC5E71;
 // use punched in as base, just for consistency
 $scoped-punchclock-base:        $scoped-punchclock-in;
 
