@@ -42,13 +42,15 @@ Ext.define('Breeze.model.calendar.Event', {
     getTitle: function(){
         // console.info(this.data.title, this.data.absenceString, this.data.categoryId);
         if(
-            Object.isUnvalued(this.data['title']) || 
             (
-                typeof this.data.title == 'string' &&
-                this.data.title.trim().length == 0
-            )
+                Object.isUnvalued(this.data['title']) || 
+                (
+                    typeof this.data.title == 'string' &&
+                    this.data.title.trim().length == 0
+                )
+            ) && !Object.isUnvalued(this.getCalendar())
         ){
-            console.info(this.get('calendarId'), this.getCalendar().get('id'),this.getCalendar().get('title'));
+            // console.info(this.get('calendarId'), this.getCalendar().get('id'),this.getCalendar().get('title'));
             return this.getCalendar().get('title');
             // this.data.title = null;
             // if(

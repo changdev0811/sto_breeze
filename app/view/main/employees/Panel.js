@@ -164,6 +164,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             userCls: 'employees-panel-tree',
                             flex: 1,
                             reference: 'employeesEmployeeTree',
+                            singleExpand: true,
                             rootVisible: false,
                             bind: {
                                 // store: '{employeesTree}'
@@ -274,6 +275,7 @@ Ext.define('Breeze.view.main.employees.Panel', {
                             // expanderOnly: false,
                             reference: 'employeesDepartmentTree',
                             rootVisible: false,
+                            singleExpand: true,
                             bind: {
                                 store: '{departmentsList}'
                             },
