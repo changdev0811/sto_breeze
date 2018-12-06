@@ -24,6 +24,20 @@ Ext.define('Breeze.view.admin.Roles', {
     ui: 'admin-base',
     title: 'Supervisor Roles',
 
+    // Action buttons shown at bottom of panel
+    buttonAlign: 'right',
+    buttons: {
+        save: { text: 'Save', handler: 'onSavePolicy', ui: 'confirm alt', style: 'width:200pt' },
+    },
+
+    // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'admin-actions',
+        shadow: false
+    },
+
+
     // Body contents
     items: [
 
@@ -118,7 +132,7 @@ Ext.define('Breeze.view.admin.Roles', {
                 {
                     xtype: 'panel',
                     ui: 'admin-sub',
-                    userCls:'admin-fieldset no-border',
+                    userCls:'admin-fieldset no-border no-margin',
                     flex: 2,
 
                     // +++ fixed width +++
@@ -126,14 +140,7 @@ Ext.define('Breeze.view.admin.Roles', {
                     maxWidth:'400pt',
 
                     layout: 'vbox',
-                    buttons: {
-                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:175pt;' },
-                    },
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
+
                     items:[
                        
                         {
