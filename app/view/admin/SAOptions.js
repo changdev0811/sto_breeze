@@ -10,11 +10,11 @@ Ext.define('Breeze.view.admin.SAOptions', {
 
     // View Model
     viewModel: {
-        type: 'admin.punchpolicies'
+        type: 'admin.saoptions'
     },
 
     // Controller
-    controller: 'admin.punchpolicies',
+    controller: 'admin.saoptions',
     listeners: {
         initialize: 'onInit'
     },
@@ -82,7 +82,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                 {
                                     xtype: 'component',
                                     userCls: 'employeeinfo-label admin-label',
-                                    html: 'Employee License [SEATS]',
+                                    html: 'Employee License [SEATS]', /* {ConfigInfo.EmployeesLicensed} */
                                 },
                                 {
                                     xtype:'spacer',
@@ -91,7 +91,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                 {
                                     xtype: 'component',
                                     userCls: 'employeeinfo-label admin-label',
-                                    html: 'Renewal Date [DATE]',
+                                    html: 'Renewal Date [DATE]', /* {CompanyInfo.renewal_date} */
                                 },
                                 {
                                     xtype:'spacer',
@@ -154,27 +154,34 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     xtype: 'breeze-textfield',
                                                                     label: 'Company Name',
                                                                     ui: 'admin admin-text',
+                                                                    bind:{
+                                                                        value:'{ConfigInfo.CompanyName}'
+                                                                    }
+
                                                                 },
                                                                 {
-                                                                    xtype: 'combobox',
-                                                                    label:'Fiscal Date',
-                                                                    allowBlank: false,
-                                                                    editable: false,
-                                                                    displayField: 'Description',
-                                                                    forceSelection: true,
-                                                                    queryMode: 'local',
-                                                                    valueField: 'ID'
+                                                                    xtype: 'datefield',
+                                                                    //bodyAlign: 'stretch',
+                                                                    ui: 'admin admin-text reporting-date',
+                                                                    //name: 'Fiscal Date',
+                                                                    label: 'Fiscal Date',
+                                                                    picker: {
+                                                                        xtype: 'datepicker',
+                                                                        title: 'Fiscal Date'
+                                                                    },
+                                                                    bind:'{ConfigInfo.FiscDate}'
+                                                                    
                                                                 },
                                                                 {
-                                                                    xtype: 'combobox',
-                                                                    label:'Home TimeZone',
-                                                                    allowBlank: false,
-                                                                    editable: false,
-                                                                    displayField: 'Description',
-                                                                    forceSelection: true,
-                                                                    queryMode: 'local',
-                                                                    valueField: 'ID'
-                                                                }
+                                                                    xtype: 'selectfield',
+                                                                    label:'Home TimeZone',                                                                    
+                                                                    bind: {
+                                                                        store: '{TimeZoneOptions}',
+                                                                        value:'{ConfigInfo.TimeZone_ID}'
+                                                                    },
+                                                                    valueField: 'Timezone_id',
+                                                                    displayField: 'description'
+                                                                },
                                                             ]
                                                         }
                                                     ]
@@ -193,29 +200,23 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio1',
-                                                                    value: '20',
                                                                     boxLabel: 'Company Logo in Report Header',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.RepLogo}'
                                                                 },
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio2',
-                                                                    value: '20',
                                                                     boxLabel: 'Company Name in Report Title',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.RepComp}'
                                                                 },
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio3',
-                                                                    value: '20',
                                                                     boxLabel: 'Signature Lines in Report Footer',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.RepSignature}'
                                                                 },
                                                             ]
                                                         },
@@ -233,6 +234,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     value: '20',
                                                                     boxLabel: 'Enforce Password Complexity',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.PasswordComplexity}'
                                                                 },
                                                                 {
                                                                     xtype:'checkbox',
@@ -242,6 +244,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     value: '20',
                                                                     boxLabel: 'Disable SSN Field',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.DisableSSN}'
                                                                 }
                                                             ]
                                                         }
@@ -289,18 +292,18 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     layout:'vbox',
                                                                     items:[
                                                                         {
-                                                                            xtype: 'combobox',
-                                                                            ui: 'admin admin-text',
-                                                                            width:'160pt',
-                                                                            label:'Carry Over Effective Year',
-                                                                            allowBlank: false,
-                                                                            editable: false,
-                                                                            displayField: 'Description',
-                                                                            forceSelection: true,
-                                                                            queryMode: 'local',
-                                                                            valueField: 'ID'
-
-                                                                        },
+                                                                            xtype: 'selectfield',
+                                                                            bodyAlign: 'stretch',
+                                                                            ui: 'admin admin-text admin-date',
+                                                                            name: 'year',
+                                                                            label: 'Carry Over Effective Year',
+                                                                            labelWidth: 'auto',
+                                                                            //labelAlign: 'left',
+                                                                            store: 'Years',
+                                                                            bind: { value: '{ConfigInfo.CarryYear}' },
+                                                                            displayField: 'Year',
+                                                                            valueField: 'Year',
+                                                                        }
                                                                     ]
                                                                 },
                                                                 {
@@ -319,11 +322,20 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                             flex: 1,
                                                                             name: 'recording_year_type',
                                                                             boxLabel: 'Used Time Only',
+                                                                            value: 0,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.RecMode}'
+                                                                            }
+
                                                                         },
                                                                         {
                                                                             flex: 1,
                                                                             name: 'recording_year_type',
                                                                             boxLabel: 'Used and Negative Time',
+                                                                            value:  1,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.RecMode}'
+                                                                            }
                                                                         },
                                                                     ]
                                                                 }                                                                
@@ -349,18 +361,31 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             items:[
                                                                 {
                                                                     flex: 1,
-                                                                    name: 'recording_year_type',
+                                                                    name: 'Accrual_Cap_Option',
                                                                     boxLabel: 'Skip accrual that would exceed cap',
+                                                                    value: 0,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.AccrualCapOption}'
+                                                                    }
+
                                                                 },
                                                                 {
                                                                     flex: 1,
-                                                                    name: 'recording_year_type',
+                                                                    name: 'Accrual_Cap_Option',
                                                                     boxLabel: 'Allow accrual that would exceed cap',
+                                                                    value: 1,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.AccrualCapOption}'
+                                                                    }
                                                                 },
                                                                 {
                                                                     flex: 1,
-                                                                    name: 'recording_year_type',
+                                                                    name: 'Accrual_Cap_Option',
                                                                     boxLabel: 'Prorate accrual that would exceed cap',
+                                                                    value: 2,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.AccrualCapOption}'
+                                                                    }
                                                                 }
                                                             ]
                                                         },
@@ -399,6 +424,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     value: '20',
                                                                     boxLabel: 'Suppress Accrual Caps when applying Balance Caps',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.BalanceCapOption}'
                                                                 },
                                                             ]
                                                         },
@@ -416,6 +442,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     value: '20',
                                                                     boxLabel: 'Calculate Years of Service From Hire Date',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.HireDateYOS}'
                                                                 },
                                                             ]
                                                         }
@@ -458,12 +485,11 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype: 'spinnerfield',
                                                     name: 'auto_close_shift',
                                                     width:'75pt',
-                                                    minValue: 0, maxValue: 24, value: 1,
-                                                    //bind: { value: '{info.punchPolicy.Auto_Close_Shift}' }
+                                                    minValue: 0, 
+                                                    bind: { value: '{ConfigInfo.ConflictLimit}' }
                                                 },
                                             ]
                                         },
-
                                         {
                                             xtype: 'fieldset',
                                             userCls:'admin-fieldset no-margin no-border',
@@ -492,15 +518,23 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     items: [
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'recording_year_type',
+                                                                            name: 'ConflictOpt',
                                                                             boxLabel: 'Employee Department',
+                                                                            value: 0,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.ConflictOpt}'
+                                                                            }
                                                                         },
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'recording_year_type',
+                                                                            name: 'ConflictOpt',
                                                                             boxLabel: 'All Departments',
+                                                                            value: 1,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.ConflictOpt}'
+                                                                            }
                                                                         },
-
+                                                                        
                                                                     ]
                                                                 },
                                                                 {
@@ -515,13 +549,21 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     items: [
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'recording_year_type',
+                                                                            name: 'LeaveApproveOpt',
                                                                             boxLabel: 'Instant',
+                                                                            value: 0,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.LeaveApproveOpt}'
+                                                                            }
                                                                         },
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'recording_year_type',
+                                                                            name: 'LeaveApproveOpt',
                                                                             boxLabel: 'Require Login',
+                                                                            value: 1,
+                                                                            bind: {
+                                                                                groupValue: '{ConfigInfo.LeaveApproveOpt}'
+                                                                            }
                                                                         },
 
                                                                     ]
@@ -540,24 +582,44 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             },
                                                             items: [
                                                                 {
-                                                                    name: 'recording_year_type',
+                                                                    name: 'LeaveApproveMode',
                                                                     boxLabel: 'All Supervisors',
+                                                                    value:122,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.LeaveApproveMode}'
+                                                                    }
                                                                 },
                                                                 {
-                                                                    name: 'recording_year_type',
+                                                                    name: 'LeaveApproveMode',
                                                                     boxLabel: 'Any Supervisor',
+                                                                    value:120,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.LeaveApproveMode}'
+                                                                    }
                                                                 },
                                                                 {
-                                                                    name: 'recording_year_type',
+                                                                    name: 'LeaveApproveMode',
                                                                     boxLabel: 'Any Super Admin',
+                                                                    value:121,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.LeaveApproveMode}'
+                                                                    }
                                                                 },
                                                                 {
-                                                                    name: 'recording_year_type',
+                                                                    name: 'LeaveApproveMode',
                                                                     boxLabel: 'First Supervisor',
+                                                                    value:130,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.LeaveApproveMode}'
+                                                                    }
                                                                 },
                                                                 {
-                                                                    name: 'recording_year_type',
+                                                                    name: 'LeaveApproveMode',
                                                                     boxLabel: 'Vote',
+                                                                    value:123,
+                                                                    bind: {
+                                                                        groupValue: '{ConfigInfo.LeaveApproveMode}'
+                                                                    }
                                                                 },
                                                             ]
                                                         },
@@ -571,46 +633,38 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                 ui: 'admin admin-text'
                                                             },          
                                                             items:[
-                                                                
                                                                 {
-                                                                    xtype: 'combobox',
+                                                                    xtype: 'selectfield',
                                                                     label:'Pending Requests',
-                                                                    allowBlank: false,
-                                                                    editable: false,
-                                                                    displayField: 'Description',
-                                                                    forceSelection: true,
-                                                                    queryMode: 'local',
-                                                                    valueField: 'ID'
+                                                                    bind: {
+                                                                        store: '{pendingCancellationStore}',
+                                                                        value:'{ConfigInfo.CancelLeavePending}'
+                                                                    },
+                                                                    valueField: 'Code',
+                                                                    displayField: 'Description'
                                                                 },
                                                                 {
-                                                                    xtype: 'combobox',
+                                                                    xtype: 'selectfield',
                                                                     label:'Approved Requests - Future',
-                                                                    allowBlank: false,
-                                                                    editable: false,
-                                                                    displayField: 'Description',
-                                                                    forceSelection: true,
-                                                                    queryMode: 'local',
-                                                                    valueField: 'ID'
+                                                                    bind: {
+                                                                        store: '{CancellationStore}',
+                                                                        value:'{ConfigInfo.CancelLeaveNotTaken}'
+                                                                    },
+                                                                    valueField: 'Code',
+                                                                    displayField: 'Description'
                                                                 },
                                                                 {
-                                                                    xtype: 'combobox',
+                                                                    xtype: 'selectfield',
                                                                     label:'Approved Requests - Past',
-                                                                    allowBlank: false,
-                                                                    editable: false,
-                                                                    displayField: 'Description',
-                                                                    forceSelection: true,
-                                                                    queryMode: 'local',
-                                                                    valueField: 'ID'
+                                                                    bind: {
+                                                                        store: '{CancellationStore}',
+                                                                        value:'{ConfigInfo.CancelLeaveAfterTaken}'
+                                                                    },
+                                                                    valueField: 'Code',
+                                                                    displayField: 'Description'
                                                                 },
-                                                                
-
-
-
                                                             ]
                                                         }
-                                                        
-
-
                                                     ]
                                                 },
                                                 // row 2
@@ -627,24 +681,20 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio7',
-                                                                    value: '20',
                                                                     boxLabel: 'Employees may not request leave exceeding their allowed time.',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.EnforceAllowed}'
+
                                                                 },
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio8',
-                                                                    value: '20',
                                                                     boxLabel: 'Employees may request leave in the past.',
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.RequestLeaveInPast}'
                                                                 },
                                                             ]
                                                         },
-
                                                         {
                                                             xtype:'fieldset',
                                                             userCls:'admin-fieldset',
@@ -654,63 +704,21 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio9',
-                                                                    value: '20',
                                                                     boxLabel: "Email Supervisors when their employees' requests have been approved.",
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.LeaveApprovalEmailSupervisor}',
                                                                 },
                                                                 {
                                                                     xtype:'checkbox',
                                                                     ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    //id: 'radio10',
-                                                                    value: '20',
                                                                     boxLabel: "Email Supervisors when their employees' requests have been denied.",
                                                                     bodyAlign: 'stretch',
+                                                                    bind: '{ConfigInfo.LeaveDenialEmailSupervisor}',
                                                                 },
                                                             ]
                                                         }
-
-
                                                     ]
                                                 },
-                                                // row 3
-                                                /*
-                                                {
-                                                    xtype: 'container',
-                                                    layout:'vbox',
-                                                    items:[
-                                                        {
-                                                            xtype:'fieldset',
-                                                            userCls:'admin-fieldset no-side-margin',
-                                                            flex:1,
-                                                            title:'Leave Response Notification Options',
-                                                            items:[
-                                                                {
-                                                                    xtype:'checkbox',
-                                                                    ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    id: 'radio9',
-                                                                    value: '20',
-                                                                    boxLabel: "Email Supervisors when their employees' requests have been approved.",
-                                                                    bodyAlign: 'stretch',
-                                                                },
-                                                                {
-                                                                    xtype:'checkbox',
-                                                                    ui:'admin',
-                                                                    //name: 'isWorktime',
-                                                                    id: 'radio10',
-                                                                    value: '20',
-                                                                    boxLabel: "Email Supervisors when their employees' requests have been denied.",
-                                                                    bodyAlign: 'stretch',
-                                                                },
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                                */
-
                                             ]
                                         }
                                     ]
@@ -737,17 +745,64 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     defaults: {
                                                         bodyAlign: 'stretch',
                                                         ui: 'admin',
-                                                        xtype: 'radio'
+                                                        xtype: 'radio',
                                                     },
                                                     items: [
                                                         {
-                                                            name: 'recording_year_type',
+                                                            name: 'PointExpirationType',
                                                             boxLabel: 'Expiration Date',
+                                                            value:134,
+                                                            bind: {
+                                                                groupValue: '{ConfigInfo.PointExpirationType}'
+                                                            }
+                                                            /* +++ hide rolling_options +++ */
                                                         },
                                                         {
-                                                            name: 'recording_year_type',
+                                                            name: 'PointExpirationType',
                                                             boxLabel: 'Rolling Expiration',
+                                                            value:135,
+                                                            bind: {
+                                                                groupValue: '{ConfigInfo.PointExpirationType}'
+                                                            }
+                                                            /* +++ show rolling_options +++ */
                                                         },
+                                                        {
+                                                            
+                                                            /* +++ show / hide based on radio selection above. 134 = show +++ */
+                                                            xtype:'container',
+                                                            name: 'rolling_options',
+                                                            layout:'hbox',
+                                                            defaults: {
+                                                                ui: 'admin admin-text'
+                                                            },
+                                                            items:[
+                                                                {
+                                                                    xtype: 'spinnerfield',
+                                                                    flex: 1,
+                                                                    style: 'padding-left: 4pt',
+                                                                    decimals: 0,
+                                                                    minValue: 0,
+                                                                    //bind: {
+                                                                    //    value: '{ConfigInfo.PointRollingDuration}' /* PointRollingDuration.split(',')[0] */
+                                                                    //}
+                                                                },
+                                                                {
+                                                                    xtype: 'spacer',
+                                                                    width: '10pt'
+                                                                },
+                                                                {
+                                                                    xtype: 'selectfield',
+                                                                    flex: 2,
+                                                                    displayField: 'Description',
+                                                                    valueField: 'ID',
+                                                                    bind: {
+                                                                        store: '{OptionList}',
+                                                                        //value:'{ConfigInfo.PointRollingDuration}' /* PointRollingDuration.split(',')[1] */
+                                                                    },
+
+                                                                },
+                                                            ]
+                                                        }
                                                     ]
                                                 },
                                             ]
@@ -775,7 +830,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype: 'breeze-textfield',
                                                     label: 'Employee Number',
                                                     ui: 'admin admin-text',
-                                                    valueField: 'ID'
+                                                    valueField: 'ID',
+                                                    bind:{
+                                                        value:'{ConfigInfo.Captions.EmployeeNumber}'
+                                                    }
                                                 },
                                                 {
                                                     xtype:'spacer',
@@ -785,7 +843,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype: 'breeze-textfield',
                                                     label: 'Project Singular',
                                                     ui: 'admin admin-text',
-                                                    valueField: 'ID'
+                                                    valueField: 'ID',
+                                                    bind:{
+                                                        value:'{ConfigInfo.Captions.ProjectSingle}'
+                                                    }
                                                 },
                                                 {
                                                     xtype:'spacer',
@@ -795,7 +856,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype: 'breeze-textfield',
                                                     label: 'Project Plural',
                                                     ui: 'admin admin-text',
-                                                    valueField: 'ID'
+                                                    valueField: 'ID',
+                                                    bind:{
+                                                        value:'{ConfigInfo.Captions.ProjectPlural}'
+                                                    }
                                                 },
                                             ]
                                         }
@@ -819,17 +883,36 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                 width:'300pt'
                                             },
                                             items:[
-                                                {
-                                                    xtype: 'combobox',
-                                                    width:'160pt',
-                                                    label:'Work week starts',
-                                                    allowBlank: false,
-                                                    editable: false,
-                                                    displayField: 'Description',
-                                                    forceSelection: true,
-                                                    queryMode: 'local',
-                                                    valueField: 'ID'
+                                                
 
+                                                {
+                                                    xtype: 'selectfield',
+                                                    label:'Work week starts',
+                                                    labelAlign: 'left',
+                                                    labelWidth: 'auto',
+
+                                                    displayField: 'value',
+                                                    valueField: 'id',
+                                                    bind: {
+                                                        store: '{daysOfWeek}',
+                                                        value:'{ConfigInfo.StartOfWeek}' /* PointRollingDuration.split(',')[1] */
+                                                    },
+                                                },
+
+                                                
+                                                {
+                                                    xtype:'spacer',
+                                                    height:'20pt'
+                                                },
+                                                            
+                                                {
+                                                    xtype: 'breeze-textfield',
+                                                    label: 'Export Code',
+                                                    labelAlign: 'left',
+                                                    ui: 'admin admin-text',
+                                                    bind:{
+                                                        value:'{ConfigInfo.ExportCode}'
+                                                    }
                                                 },
                                                 {
                                                     xtype:'spacer',
@@ -838,11 +921,9 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                 {
                                                     xtype:'checkbox',
                                                     ui:'admin',
-                                                    //name: 'isWorktime',
-                                                    // id: 'radio11',
-                                                    value: '20',
                                                     boxLabel: 'SA can Punch Station in Kiosk Mode',
                                                     bodyAlign: 'stretch',
+                                                    bind: '{ConfigInfo.SAKioskMode}',
                                                 },
 
                                             ]
