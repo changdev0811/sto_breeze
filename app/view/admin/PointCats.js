@@ -20,12 +20,26 @@ Ext.define('Breeze.view.admin.PointCats', {
     },
 
 
+    // Action buttons shown at bottom of panel
+    buttonAlign: 'right',
+    buttons: {
+        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
+    },
 
+    // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'admin-actions',
+        shadow: false
+    },
 
     // Layout and base styles
     layout: 'hbox',
     ui: 'admin-base',
     title: 'Point Categories',
+
+
+            scrollable:true,
 
     // Body contents
     items: [
@@ -36,8 +50,12 @@ Ext.define('Breeze.view.admin.PointCats', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+
+                    minHeight:'420pt',
+
+
+
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
             items: [
 
                 // Column 1
@@ -49,6 +67,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                     // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
+                    //minHeight:'420pt',
 
                     layout: 'vbox',
                     items:[
@@ -82,16 +101,21 @@ Ext.define('Breeze.view.admin.PointCats', {
                             xtype: 'breeze-categories-list',
                             ui: 'admin-shift-grid',
                             userCls: 'admin-fieldset no-background no-margin no-border',
-                            //reference: 'categoryList',
+                            reference: 'pointCatsList',
                             fieldMode: 'none',
                             itemConfig: {
-                                ui: 'admin-list-item-select'
+                                ui: 'admin-list-item-select',
+                                templates: {
+                                    radioValue: '{record.PintID}',
+                                    itemData: { name: '{record.PointName} '},
+                                    itemTpl: '{name}'
+                                }
                             },
                             bind: {
-                                //store: '{categoriesList}',
+                                store: '{pointCats}',
                             },
                             listeners: {
-                                //select: 'onCategorySelect'
+                                select: 'onPointCatSelect'
                             },
                             viewModel: true
                         } 
@@ -107,16 +131,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                     // +++ fixed width +++
                     minWidth:'500pt',
                     maxWidth:'500pt',
+                    //minHeight:'420pt',
 
                     layout: 'hbox',
-                    buttons: {
-                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
-                    },
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
+
                     items:[
                         {
                             xtype:'container',
@@ -168,11 +186,12 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     flex: 1,
                                                     valueField: 'code',
                                                     value:60,
-                                                    displayField: 'description',
+                                                    displayField: 'Description',
+                                                    valueField: 'ID',
+                                                    store:'DurationTypes', 
                                                     bind: {
                                                         //Store DurTypeOptions
                                                         //getTypeCodeList 15
-                                                        store:'', 
                                                         value:'{selectedPointCat.DurType}'
                                                     }
                                                 },
@@ -187,6 +206,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                     title: 'Details',
                                     layout: 'fit',
                                     flex:1,
+                                    minHeight:'100pt',
                                     items:[
                                         {
                                             xtype: 'textareafield',

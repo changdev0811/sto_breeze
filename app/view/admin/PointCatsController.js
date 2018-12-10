@@ -17,6 +17,28 @@ Ext.define('Breeze.view.admin.PointCatsController', {
      */
     onInit: function (component) {
 
+        var me = this;
+
+        // Load Point Cats store
+        this.addStoreToViewModel(
+            'Breeze.store.point.ListApi',
+            'pointCats',
+            { load: true, loadOpts: {
+
+                    // Callback fired when store load completes
+                    callback:function(records, op, success){
+                        // Mark first item in list selected
+                        if(success){
+                            this.lookup('pointCatsList').getSelectable().setSelectedRecord(records[0]);
+                        }
+                    },
+                    scope: me
+                } 
+            }
+        );
+
+
+
         // Load User-Defined Categories list store
         this.addStoreToViewModel(
             'Breeze.store.category.List',
@@ -24,8 +46,32 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             { load: true }
         );
 
+
+
+
+
+
+
    
     },
+
+    // === [Event Handlers] ===
+    /**
+    *
+    * Updates selected point cat record and loads associated 
+    • UDC items
+    * 
+    * @param {object} list Source list component
+    * @param {object} record Selected record
+    */
+    onPointCatSelect:function(list, record){
+
+        var me = this,
+            vm = me.getViewModel();
+
+        vm.set('selectedPointID', record.get('PointID'));
+
+    }
 
   
 

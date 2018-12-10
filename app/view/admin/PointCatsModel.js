@@ -32,7 +32,7 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
 
     data: {
     	// TODO: change to null
-    	selectedPointID: 1
+    	selectedPointID: null
     },
 
     formulas: {
@@ -45,6 +45,7 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
 
     stores: {
         // TODO: Remove when API dummy is available
+        /*
         pointCats: {
             data: [
                 {
@@ -66,6 +67,7 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
                 }
             ]
         },
+        */
         pointOccurances: {
             fields: ['occfrom','occto','occvalue'],
             data: [
