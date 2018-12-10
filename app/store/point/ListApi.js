@@ -9,7 +9,7 @@
 Ext.define('Breeze.store.point.ListApi', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.point.Category',
-    alias: 'store.point.list',
+    alias: 'store.point.listapi',
     autoLoad: false,
     listeners: {
         beforeload: function () {

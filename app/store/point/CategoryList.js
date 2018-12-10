@@ -9,7 +9,7 @@
 Ext.define('Breeze.store.point.CategoryList', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.data.InfoObj',
-    alias: 'store.point.list',
+    alias: 'store.point.udclist',
     autoLoad: false,
     config: {
         pointID: null
