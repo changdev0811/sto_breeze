@@ -33,7 +33,7 @@ Ext.define('Breeze.view.admin.AuditController', {
     onSearchTextChange: function(field, newVal){
         var vm = this.getViewModel(),
             history = vm.get('auditHistory');
-        console.info('Search text', newVal);
+        // console.info('Search text', newVal);
         if(newVal.trim()==''){
             history.clearFilter();
         } else {
