@@ -24,6 +24,19 @@ Ext.define('Breeze.view.admin.UDC', {
     ui: 'admin-base',
     title: 'User Defined Categories',
 
+    // Action buttons shown at bottom of panel
+    buttonAlign: 'right',
+    buttons: {
+        save: { text: 'Save', handler: 'onSavePolicy', ui: 'confirm alt', style: 'width:200pt' },
+    },
+
+    // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'admin-actions',
+        shadow: false
+    },
+
     // Body contents
     items: [
 
@@ -112,14 +125,7 @@ Ext.define('Breeze.view.admin.UDC', {
                     minHeight:'420pt',
 
                     layout: 'vbox',
-                    buttons: {
-                        save: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'action', style:'width:175pt;' },
-                    },
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
+
                     items:[
                         {
                             xtype:'fieldset',
