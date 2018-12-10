@@ -26,6 +26,9 @@ Ext.define('Breeze.view.admin.Departments', {
 
     title: 'Departments',
 
+    // +++ Allow h scroll when panel is too small +++
+    scrollable: 'y',
+
 
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
@@ -50,8 +53,11 @@ Ext.define('Breeze.view.admin.Departments', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
-            // +++ Allow h scroll when panel is too small +++
-            scrollable: 'x',
+            minHeight:'420pt',
+
+    // +++ Allow h scroll when panel is too small +++
+    scrollable: 'x',
+
             items: [
 
                 // Column 1

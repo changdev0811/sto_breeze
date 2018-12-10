@@ -51,7 +51,7 @@ Ext.define('Breeze.view.admin.PointCats', {
             flex: 1,
             layout: 'hbox',
 
-                    minHeight:'420pt',
+            minHeight:'420pt',
 
 
 
