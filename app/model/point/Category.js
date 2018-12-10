@@ -8,6 +8,7 @@
 Ext.define('Breeze.model.point.Category', {
     extend: 'Breeze.model.Base',
     alias: 'model.point.category',
+    requires:['Breeze.model.point.category.Occurence'],
     fields: [
         { name: 'PointName', type: 'string' },
         { name: 'PointID', type: 'integer' },
@@ -17,5 +18,12 @@ Ext.define('Breeze.model.point.Category', {
         { name: 'DurType', type: 'integer' },
         { name: 'AbsenceCats', type: 'string' },
         { name: 'PointDetails', type: 'string' }
+    ],
+    hasMany:[
+        {
+            model:'Breeze.model.point.category.Occurence',
+            name:'Occurences'
+        }
+
     ]
 });

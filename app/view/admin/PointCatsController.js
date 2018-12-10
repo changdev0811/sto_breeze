@@ -70,10 +70,13 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             vm = me.getViewModel();
 
         vm.set('selectedPointID', record.get('PointID'));
-
+        me.addLoadedStoreToViewModel({
+            model:'Breeze.model.point.category.Occurence',
+            data:record.get('Occurences')
+        }, 'occurenceValues');
     }
 
-  
+    
 
 
     

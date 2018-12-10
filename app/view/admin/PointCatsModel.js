@@ -68,24 +68,6 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
             ]
         },
         */
-        pointOccurances: {
-            fields: ['occfrom','occto','occvalue'],
-            data: [
-                {
-                    "occfrom": 1,
-                    "occto": 0,
-                    "occvalue": 0
-                },
-                {
-                    "occfrom": 2,
-                    "occto": 3,
-                    "occvalue": 4
-                }
-            ]
-        }
     }
-
-
-
 
 });

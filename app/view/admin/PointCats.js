@@ -254,7 +254,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             sortable: false, columnResize: false,
                                             columnMenu: false, hideHeaders: false,
                                             bind: {
-                                                store: '{pointOccurances}'
+                                                store: '{occurenceValues}'
                                             },
                                             defaults: {
                                                 xtype: 'gridcolumn',                                                
