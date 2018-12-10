@@ -82,7 +82,12 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                 {
                                     xtype: 'component',
                                     userCls: 'employeeinfo-label admin-label',
-                                    html: 'Employee License [SEATS]', /* {ConfigInfo.EmployeesLicensed} */
+                                    
+
+                                    bind:{
+                                        html: 'Employee License {ConfigInfo.EmployeesLicensed}'
+                                    }
+
                                 },
                                 {
                                     xtype:'spacer',
@@ -91,7 +96,9 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                 {
                                     xtype: 'component',
                                     userCls: 'employeeinfo-label admin-label',
-                                    html: 'Renewal Date [DATE]', /* {CompanyInfo.renewal_date} */
+                                    bind:{
+                                        html: 'Renewal Date {CompanyInfo.renewal_date}'
+                                    }
                                 },
                                 {
                                     xtype:'spacer',

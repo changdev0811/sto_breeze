@@ -160,7 +160,7 @@ Ext.define('Breeze.view.admin.SAOptionsModel', {
             "status_code":3,
             "employee_licenses":100,
             "AMOSId":"9999999",
-            "renewal_date":"5/22/2019 10:06:00 AM",
+            "renewal_date":new Date('5/22/2019 10:06:00 AM'),
             "salesperson":"UnKnown",
             "note":"",
             "amount":0.00,
