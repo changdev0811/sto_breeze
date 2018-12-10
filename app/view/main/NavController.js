@@ -142,6 +142,10 @@ Ext.define('Breeze.view.main.NavController', {
     },
 
     init: function(component){
+
+
+        var me = this;
+
         this.router = Ext.create('Breeze.helper.routing.TreeRouter', {controller: this});
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
@@ -169,6 +173,11 @@ Ext.define('Breeze.view.main.NavController', {
         this.loadEmployee();
         this.loadPunchSettings();
         this.updateAttendanceStatus();
+
+
+
+
+
     },
 
     loadNavigation: function(){
@@ -272,7 +281,7 @@ Ext.define('Breeze.view.main.NavController', {
         var navTree = this.lookup('navSideMenuTree');
         var sideBar = this.lookup('navSideBar');
         // update layout of punch clock
-        this.lookup('navPunchClock').setMicro(collapsed);
+        //this.lookup('navPunchClock').setMicro(collapsed);
         // If button's collapsed state isn't the same as
         // the nav tree's micro property, update the navtree
         // if(collapsed !== navTree.micro){
