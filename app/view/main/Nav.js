@@ -37,6 +37,7 @@ Ext.define('Breeze.view.main.Nav', {
             height:'64pt',
             layout: 'hbox',
 
+
             items: [
                 {
                     xtype: 'image',
@@ -50,70 +51,28 @@ Ext.define('Breeze.view.main.Nav', {
                         tap: 'onLogoTap'
                     }
                 },
+
+                // +++ Bread crumbs go in here +++
                 {
-                    xtype: 'container',
-                    flex: 1,
-                    layout: 'vbox',
-                    items: [
-                        // Company Name
-                        {
-                            xtype: 'component',
-                            flex: 1,
-                            style: '',
-                            userCls: 'main-nav-company-name',
-                            reference: 'navHeaderCompanyName',
-                            bind: {
-                                html: '{header.business}'
-                            }
-                        },
-                        // User Name
-                        {
-                            xtype: 'component',
-                            flex: 1,
-                            style: '',
-                            userCls: 'main-nav-user-name',
-                            reference: 'navHeaderUserName',
-                            bind: {
-                                html: '{header.fullname}'
-                            }
-                        }
-                    ]
+                    xtype:'container',
+                    flex:1
                 },
                 {
-                    xtype: 'button',
-                    ui:'mainNavUserButton',
-                    userCls:'main-nav-user-button',
-                    buttonType: 'icon',
-                    iconCls: 'x-fas fa-user',
-                    text: '',
-                    menu:{
-                        xtype: 'menu',
-                        items:[
-                            {  
-                                xtype: 'menucheckitem',
-                                text: 'Enable Night Mode',
-                                bind: {
-                                    checked: '{nightMode}'
-                                },
-                                listeners: {
-                                    checkChange: 'onMenuNightModeChange'
-                                }
-                            },
-                            {
-                               xtype: 'menuitem',
-                               text:'User Preferences',
-                               iconCls:'x-fas fa-user-cog',
-                               separator: true
-                            //    icon: 'resources/icons/user-cog.svg'
-                            }, {
-                               xtype: 'menuitem',
-                               text:'Sign Out',
-                               iconCls:'x-fas fa-sign-out',
-                               handler: 'onMenuSignOut'
-                            }
-                        ]
+                    xtype: 'breeze-punchbutton',
+                    reference: 'navPunchClock',
+                    bind: {
+                        hidden: '{!hasKron || (!canQuickPunch && !canPunch)}',
+                        allowed: {
+                            quick: '{canQuickPunch}',
+                            regular: '{canPunch}'
+                        },
+                        clockedIn: '{isClockedIn}'
+                    },
+                    listeners: {
+                        punch: 'onPunch'
                     }
-                }
+                },
+
             ]
 
         },
@@ -123,6 +82,7 @@ Ext.define('Breeze.view.main.Nav', {
             layout: 'hbox',
             userCls: 'full-content',
             items: [
+                
                 {
 
                     xtype: 'container',
@@ -134,21 +94,7 @@ Ext.define('Breeze.view.main.Nav', {
                     reference: 'navSideBar',
                     userCls:['main-nav-side-bar'],
                     items: [
-                        {
-                            xtype: 'breeze-punchbutton',
-                            reference: 'navPunchClock',
-                            bind: {
-                                hidden: '{!hasKron || (!canQuickPunch && !canPunch)}',
-                                allowed: {
-                                    quick: '{canQuickPunch}',
-                                    regular: '{canPunch}'
-                                },
-                                clockedIn: '{isClockedIn}'
-                            },
-                            listeners: {
-                                punch: 'onPunch'
-                            }
-                        },
+
                         {
                             xtype: 'container',
                             flex: 1,
@@ -164,6 +110,99 @@ Ext.define('Breeze.view.main.Nav', {
                                         tap: 'onSideNavToggle'
                                     }
                                 },
+
+                                {
+                                    xtype:'container',
+                                    layout:'hbox',
+                                    height:'64pt',
+                                    items:[
+                                            
+                                            {
+                                                xtype: 'image',
+                                                height: '32pt',
+                                                width: '32pt',
+                                                src:'resources/photos/default_user.png',
+                                                //bind: {
+                                                //    src: '{profilePicture}'
+                                                //},
+                                                reference: 'infoProfilePicture',
+                                                userCls: 'main-info-profile-picture'
+                                            },
+
+                                            {
+                                                xtype: 'container',
+                                                flex: 1,
+                                                layout: 'vbox',
+                                                items: [
+                                                    // Company Name
+                                                    {
+                                                        xtype: 'component',
+                                                        flex: 1,
+                                                        style: '',
+                                                        userCls: 'main-nav-company-name',
+                                                        reference: 'navHeaderCompanyName',
+                                                        bind: {
+                                                            html: '{header.business}'
+                                                        }
+                                                    },
+                                                    // User Name
+                                                    {
+                                                        xtype: 'component',
+                                                        flex: 1,
+                                                        style: '',
+                                                        userCls: 'main-nav-user-name',
+                                                        reference: 'navHeaderUserName',
+                                                        bind: {
+                                                            html: '{header.fullname}'
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                xtype: 'button',
+                                                menuAlign: 'tr',
+                                                ui:'mainNavUserButton',
+                                                userCls:'main-nav-user-button',
+                                                text: '',
+                                                arrow: false,
+                                                iconCls: 'x-fa fa-angle-right',
+                                                menu:{
+                                                    xtype: 'menu',
+                                                    items:[
+                                                        {  
+                                                            xtype: 'menucheckitem',
+                                                            text: 'Enable Night Mode',
+                                                            bind: {
+                                                                checked: '{nightMode}'
+                                                            },
+                                                            listeners: {
+                                                                checkChange: 'onMenuNightModeChange'
+                                                            }
+                                                        },
+                                                        {
+                                                           xtype: 'menuitem',
+                                                           text:'User Preferences',
+                                                           iconCls:'x-fas fa-user-cog',
+                                                           separator: true
+                                                        //    icon: 'resources/icons/user-cog.svg'
+                                                        }, {
+                                                           xtype: 'menuitem',
+                                                           text:'Sign Out',
+                                                           iconCls:'x-fas fa-sign-out',
+                                                           handler: 'onMenuSignOut'
+                                                        }
+                                                    ]
+                                                }
+                                            },
+
+
+
+
+
+                                    ]
+                                },
+
+
                                 {
                                     // Side navigation menu tree
                                     xtype: 'breeze.navbar.navtree',

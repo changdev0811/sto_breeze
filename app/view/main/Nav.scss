@@ -12,12 +12,15 @@ $content-edge: 6pt;
     // overflow-y: auto;
     margin-left: 8pt;
     &.micro {
-        width: 70pt;
+        width: 80pt;
         // Style for treelist container in micro mode (container of subitems)
         .x-treelist-container {
+                
+
             .x-treelist-item-text {
                 // Hide 'micro' mode text
                 width: 0px;
+
             }
         }
         // Style for tree list container (root) in micro mode
@@ -26,8 +29,17 @@ $content-edge: 6pt;
                 // Make 'micro' mode items text width 0 to hide
                 width: 0px;
 
+
             }
         }
+
+
+        .x-treelist-item-expander{
+            margin-right:28pt;
+
+        }
+
+
     }
     &.normal {
         // minWidth: 200pt;
@@ -38,6 +50,7 @@ $content-edge: 6pt;
     // smaller subitems
     .x-treelist-item-expander{
         //display:none;
+        margin-right:5pt;
     }
 
     .x-treelist-container {
@@ -72,15 +85,17 @@ $content-edge: 6pt;
 }
 
 .main-nav-company-name {
+    margin-left:10pt !important;
     color:#ffffff;
-    text-align: right;
+    text-align: left;
     font-size: 16pt;
     font-weight: 600;
     padding-top:14pt;
 }
 .main-nav-user-name {
+    margin-left:10pt !important;
     color:#ffffff;
-    text-align: right;
+    text-align: left;
     font-size: 12pt;
     font-weight: 400;
     padding-bottom:10pt;
@@ -90,17 +105,24 @@ $content-edge: 6pt;
     background-color: $base-color;
     // Width for side bar when 'micro' (collapsed)
     &.micro {
-        width: 130px;
+        width: 80px;
     }
 }
 
 .main-nav-user-button {
-
+    
     .x-icon-el {
         width:32pt;
         height:32pt;
     }
 }
+
+.main-info-profile-picture {
+    margin:16pt 0pt 16pt 5pt;
+    border-radius: 50% 50% 50% 50%;
+    border: 1pt solid white;
+}
+
 
 // Content panel
 .main-content {
@@ -123,3 +145,9 @@ $content-edge: 6pt;
     }
 }
 
+
+@include button-ui(
+    $ui: 'mainNavUserButton',
+    $arrow-icon-size: 10pt,
+    $icon-font-size: 10pt
+);

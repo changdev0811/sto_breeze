@@ -156,7 +156,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
             userCls: 'breeze-punch-button',
             ui: ['punchclock-button', 'punchclock-button-sm'],
             arrow: false,
-            iconCls: 'x-fas fa-angle-right',
+            iconCls: 'x-fas fa-angle-down',
             menu: {
                 xtype: 'menu',
                 floated: true,
