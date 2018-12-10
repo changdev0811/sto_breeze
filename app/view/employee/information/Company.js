@@ -43,20 +43,24 @@ Ext.define('Breeze.view.employee.information.Company', {
                     label: 'Hire Date',
                     // bind: { value: '{info.HireDate}' },
                     bind: { value: '{hireDate}' },
-                    picker: {
-                        xtype: 'datepicker',
-                        title: 'Select Hire Date'
-                    },
+                    // edgePicker: {},
+                    picker: 'auto'
+                    // picker: {
+                    //     xtype: 'datepicker',
+                    //     title: 'Select Hire Date'
+                    // },
                 },
                 {
                     xtype: 'datefield',
                     name: 'date_of_termination',
                     label: 'Termination Date',
                     bind: { value: '{info.TerminationDate}' },
-                    picker: {
-                        xtype: 'datepicker',
-                        title: 'Select Termination Date'
-                    },
+                    // edgePicker: {},
+                    picker: 'auto'
+                    // picker: {
+                    //     xtype: 'datepicker',
+                    //     title: 'Select Termination Date'
+                    // },
                 },
                 {
                     name: 'customer_employee_id',
