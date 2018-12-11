@@ -91,10 +91,11 @@ Ext.define('Breeze.view.employee.Fyi',{
                     label: 'FYI View as of',
                     reference: 'viewDate',
                     maxWidth:'125pt',
-                    picker: {
-                        xtype: 'datepicker',
-                        title: 'Select Date'
-                    },
+                    edgePicker: {},
+                    // picker: {
+                    //     xtype: 'datepicker',
+                    //     title: 'Select Date'
+                    // },
                     listeners: {
                         change: 'onViewDateChanged'
                     }
