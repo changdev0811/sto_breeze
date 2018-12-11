@@ -236,6 +236,8 @@ Ext.define('Breeze.view.admin.PointCats', {
                                         {
                                             xtype: 'toolbar',
                                             ui:'admin-tree',
+                                            // Reference so we can enable/disable items
+                                            reference: 'occurrenceValuesTools',
                                             shadow: false,
                                             items:[
                                                 { 
@@ -250,10 +252,12 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 {
                                                     xtype: 'button',
                                                     iconCls:'x-fas fa-plus',
-                                                    ui: 'plain wtr-button',                   
+                                                    ui: 'plain wtr-button',
+                                                    handler: 'onOccurrenceValueAdd'              
                                                 },
                                                 {
                                                     xtype: 'button',
+                                                    itemId: 'remove',
                                                     iconCls:'x-fas fa-minus',
                                                     ui: 'plain wtr-button',                   
                                                 },
@@ -346,7 +350,9 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 }
                                             ],
                                             listeners:{
-                                                beforeEdit:'onOccurrenceValueBeforeEdit'
+                                                beforeedit:'onOccurrenceValueBeforeEdit',
+                                                edit: 'onOccurrenceValuePostEdit',
+                                                select: 'onOccurrenceValueSelect'
                                             }
 
 

@@ -88,7 +88,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         catList.getSelectable().select(selectedRecords,false,true);    
     },
 
-
+    // === [Event Handlers] ===
 
     /**
     * Event handler for occurrence values From grid item change
@@ -148,7 +148,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var location = comp.getParent().getLocation(),
         record = location.cell.getRecord(),
         recordIndex = record.store.indexOf(record),
-        lastIndex = record.store.getCount(),
+        lastIndex = record.store.getTotalCount() - 1,
         isLast = (
             (record.store.getCount() - 1) == recordIndex
         ),
@@ -182,12 +182,14 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             comp.resumeEvent('change');
             return false;
         }
-
     },
 
 
     /**
     * Fires before entering editor for grid
+    * 
+    * Prevents last 'through' column from being editable
+    * 
     * @param {Object} location Current grid location
     */
     onOccurrenceValueBeforeEdit:function(location){
@@ -196,10 +198,92 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                 return false;
             }
         }
+    },
+
+    /**
+     * Fired on completion of occurrence value cell edit
+     * 
+     * Performs data tidying
+     * 
+     * @param {Object} location 
+     */
+    onOccurrenceValuePostEdit: function(location){
+        var record = location.record,
+            index = location.recordIndex,
+            store = record.store,
+            lastIndex = record.store.getTotalCount() - 1;
+        
+        if(index > 0){
+            /*
+                Make sure previous record's to value is
+                this record's from value - 1
+            */
+            store.getAt(index - 1).set(
+                'occto', record.get('occfrom') - 1
+            );
+        }
+
+        if(index < lastIndex){
+            /*
+                Make sure next record's from value is
+                this record's to value + 1
+            */
+            store.getAt(index + 1).set(
+                'occfrom', record.get('occto') + 1
+            );
+        }
+
+        // enforce last row's 'to' being 0 (∞)
+        store.getAt(lastIndex).set(
+            'occto', 0
+        );
+
+        // Save changes
+        store.commitChanges();
+    },
+
+    /**
+     * @todo TODO: Implement onOccurrenceValueSelect
+     */
+    onOccurrenceValueSelect: function(){
 
     },
 
-    // === [Event Handlers] ===
+    /**
+     * Event handler for Occurrence Values 'add' button
+     * Adds new row to grid, auto populating values and
+     * adjusting values of previous row
+     */
+    onOccurrenceValueAdd: function(){
+        var vm = this.getViewModel(),
+            occurrences = vm.get('occurrenceValues'),
+            // Current last occurrence record
+            // currentLast = occurrences.getAt(
+            //     occurrences.getTotalCount() - 1
+            // );
+            currentLast = occurrences.last();
+        
+        // Create new occurrence record, prev from + 1, to ∞
+        var newOcc = {
+            occfrom: currentLast.get('occfrom') + 1,
+            occto: 0,
+            value: 0
+        };
+
+        // Update previous last item with to value of from + 1,
+        // forcing store to commit after update        
+        currentLast.set({
+            occfrom: currentLast.get('occfrom'),
+            occto: currentLast.get('occfrom') + 1,
+            value: currentLast.get('value')
+        }, {commit: true});
+
+        // Add new occurrence record
+        occurrences.add(newOcc);
+        // Commit store record changes
+        occurrences.commitChanges();
+    },
+
     /**
     *
     * Updates selected point cat record and loads associated 
