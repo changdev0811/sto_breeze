@@ -317,7 +317,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                         min:0,
                                                         required:true,
                                                         listeners:{
-                                                            //change: 'onOccurrenceThroughChange'
+                                                            change: 'onOccurrenceThroughChange'
                                                         }
                                                     }
                                                 },

@@ -148,12 +148,41 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var location = comp.getParent().getLocation(),
         record = location.cell.getRecord(),
         recordIndex = record.store.indexOf(record),
+        lastIndex = record.store.getCount(),
         isLast = (
             (record.store.getCount() - 1) == recordIndex
         ),
         fromValue = record.get('occfrom'),
         isValid = true,
         message = '';
+
+        if( isLast ){
+            if( newValue !== 0 ){
+                isValid = false;
+                message = 'Occurrence must be through 0 (infinity) for the last interval.';
+            }
+        }else if( newValue < fromValue ){
+            isValid = false;
+            message = 'The occurrance through year can\'t be before the occurrance from interval.';
+        }else if( recordIndex < lastIndex - 1  ){
+            if(newValue >= record.store.getAt(recordIndex + 1).get('occto')){
+                isValid = false;
+                message = 'This occurrance can\'t completely overwrite the next interval.';
+            }
+        }
+
+        if( !isValid ){
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: message,
+                timeout: 10000
+            });
+            comp.suspendEvent('change');
+            comp.setValue(oldValue);
+            comp.resumeEvent('change');
+            return false;
+        }
+
     },
 
 
