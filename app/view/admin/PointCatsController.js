@@ -96,8 +96,8 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     * Preforms validation logic
     *
     * @param {Object} comp Selected Component
-    * @param {Object} newVal New Value
-    * @param {Object} oldVal Old Value
+    * @param {Object} newValue New Value
+    * @param {Object} oldValue Old Value
     * @param {Object} eOpts Event options
     */
     onOccurrenceFromChange:function(comp, newValue, oldValue, eOpts){
@@ -140,12 +140,20 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     * Preforms validation logic
     *
     * @param {Object} comp Selected Component
-    * @param {Object} newVal New Value
-    * @param {Object} oldVal Old Value
+    * @param {Object} newValue New Value
+    * @param {Object} oldValue Old Value
     * @param {Object} eOpts Event options
     */
-    onOccurrenceThroughChange:function(comp, newVal, oldVal, eOpts){
-
+    onOccurrenceThroughChange:function(comp, newValue, oldValue, eOpts){
+        var location = comp.getParent().getLocation(),
+        record = location.cell.getRecord(),
+        recordIndex = record.store.indexOf(record),
+        isLast = (
+            (record.store.getCount() - 1) == recordIndex
+        ),
+        fromValue = record.get('occfrom'),
+        isValid = true,
+        message = '';
     },
 
 
