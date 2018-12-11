@@ -35,12 +35,12 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
     	selectedPointID: null
     },
 
-    formulas: {
-    	selectedPointCat: function(get){
-    		var cat = get('pointCats').findRecord('PointID', get('selectedPointID'));
-    		return cat;
-    	}
-    },
+    //formulas: {
+    //	selectedPointCat: function(get){
+    //		var cat = get('pointCats').findRecord('PointID', get('selectedPointID'));
+    //		return cat;
+    //	}
+    //},
 
 
     stores: {

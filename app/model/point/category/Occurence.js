@@ -3,7 +3,7 @@ Ext.define('Breeze.model.point.category.Occurence', {
     fields: [
         {name:'occfrom',    type:'integer'},
         {name:'occto',      type:'integer'},
-        {name:'occvalue',   type:'integer'}
+        {name:'occvalue',   type:'number'}
     ],
     proxy:{
         type: 'memory',

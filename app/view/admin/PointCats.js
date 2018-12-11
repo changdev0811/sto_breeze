@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.PointCats', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.pointcats',
 
+    requires: [ 
+        // Plugin for editable grid
+        'Ext.grid.plugin.CellEditing'
+    ],
+
     // View Model
     viewModel: {
         type: 'admin.pointcats'
@@ -235,7 +240,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             items:[
                                                 { 
                                                     xtype: 'component', 
-                                                    html: 'Occurrence Value',
+                                                    html: 'Occurrence Values',
                                                     userCls:'admin-title-toolbar', 
                                                 },
                                                 {
@@ -263,44 +268,88 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             sortable: false, columnResize: false,
                                             columnMenu: false, hideHeaders: false,
                                             bind: {
-                                                store: '{occurenceValues}'
+                                                store: '{occurrenceValues}'
                                             },
                                             defaults: {
                                                 xtype: 'gridcolumn',                                                
                                             },
+                                            // Plugin for editable grid 
+                                            plugins: {
+                                                gridcellediting: true
+                                            },
+
                                             columns: [
                                                 {
                                                     text:'From',
+                                                    itemId: 'from',
                                                     flex:1,
                                                     dataIndex:'occfrom',
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:0,
+                                                        min:1,
+                                                        required:true,
+                                                        listeners:{
+                                                            change: 'onOccurrenceFromChange'
+                                                        }
+                                                    }
                                                 },
                                                 {
-                                                    text:'Through',
+                                                    text:'To',
+                                                    itemId: 'through',
                                                     flex:1,
                                                     tpl: '{occto}',
                                                     tpl: [
                                                         '<tpl if="occto==0">&infin;</tpl>',
                                                         '<tpl if="occto!=0">{occto}</tpl>'
                                                     ],
-
-
                                                     dataIndex:'occto',
                                                     cell:{
                                                         encodeHtml:false,
                                                     },
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:0,
+                                                        min:0,
+                                                        required:true,
+                                                        listeners:{
+                                                            //change: 'onOccurrenceThroughChange'
+                                                        }
+                                                    }
                                                 },
                                                 {
                                                     text:'Value',
+                                                    itemId: 'value',
                                                     flex:1,
+                                                    // force 2 decimal display
+                                                    tpl: [
+                                                        '{[this.rounded(values.occvalue)]}',
+                                                        {
+                                                            rounded: function(value){
+                                                                return Math.round((value + 0.00001) * 100) / 100;
+                                                            }
+                                                        }
+
+                                                    ],
                                                     dataIndex:'occvalue',
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:2,
+                                                        required:true,
+                                                    }
                                                 }
-                                            ]
+                                            ],
+                                            listeners:{
+                                                beforeEdit:'onOccurrenceValueBeforeEdit'
+                                            }
+
+
                                         }
 
 

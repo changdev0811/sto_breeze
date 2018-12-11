@@ -8,8 +8,8 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.admin.pointcats',
 
-    stores: [
-        // 'Breeze.store.category.List'
+    requires: [
+        'Breeze.api.admin.PointCats'
     ],
 
     /**
@@ -20,7 +20,8 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var me = this,
             vm = this.getViewModel(),
             companyConfig = Ext.getStore('CompanyConfig');
-
+        
+        this.api = Ext.create('Breeze.api.admin.PointCats');
 
         companyConfig.load({ 
             callback: function(records, op, success){
@@ -87,6 +88,80 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         catList.getSelectable().select(selectedRecords,false,true);    
     },
 
+
+
+    /**
+    * Event handler for occurrence values From grid item change
+    *
+    * Preforms validation logic
+    *
+    * @param {Object} comp Selected Component
+    * @param {Object} newVal New Value
+    * @param {Object} oldVal Old Value
+    * @param {Object} eOpts Event options
+    */
+    onOccurrenceFromChange:function(comp, newValue, oldValue, eOpts){
+        var location = comp.getParent().getLocation(),
+            record = location.cell.getRecord(),
+            recordIndex = record.store.indexOf(record),
+            toValue = record.get('occto'),
+            isValid = true,
+            message = '';
+
+        if(toValue !== 0 && newValue > toValue){
+            isValid = false;
+            message = 'The occurrance from can\'t be after the occurrence to.';
+        }else if( recordIndex > 0 ){
+            var prevRecord = record.store.getAt(recordIndex - 1);
+            if(newValue <= prevRecord.get('occfrom')){
+                console.log("D");
+                isValid = false;
+                message = 'This interval can\'t completely overwrite the previous interval.';
+            }
+        }
+        if(!isValid){
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: message,
+                timeout: 10000
+            });
+            comp.suspendEvent('change');
+            comp.setValue(oldValue);
+            comp.resumeEvent('change');
+            return false;
+        }
+
+    },
+
+
+    /**
+    * Event handler for occurrence values Through grid item change
+    *
+    * Preforms validation logic
+    *
+    * @param {Object} comp Selected Component
+    * @param {Object} newVal New Value
+    * @param {Object} oldVal Old Value
+    * @param {Object} eOpts Event options
+    */
+    onOccurrenceThroughChange:function(comp, newVal, oldVal, eOpts){
+
+    },
+
+
+    /**
+    * Fires before entering editor for grid
+    * @param {Object} location Current grid location
+    */
+    onOccurrenceValueBeforeEdit:function(location){
+        if(location.column.getItemId() == "through"){
+            if(location.record.store.getTotalCount() - 1 <= location.recordIndex){
+                return false;
+            }
+        }
+
+    },
+
     // === [Event Handlers] ===
     /**
     *
@@ -101,12 +176,19 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var me = this,
             vm = me.getViewModel();
 
-        vm.set('selectedPointID', record.get('PointID'));
+        if(vm.get('occurrencesValues')){
+            // remove occurance value records if they exist
+            vm.get('occurrencesValues').removeAll();
+        }
 
+        // Occurrence is spelled wrong in the model, anything defined
+        // only here is correctly spelled :)
         me.addLoadedStoreToViewModel({
             model:'Breeze.model.point.category.Occurence',
-            data:record.get('Occurences')
-        }, 'occurenceValues');
+            data:Ext.clone(record.get('Occurences'))
+        }, 'occurrenceValues');
+
+        vm.set('selectedPointCat', record.getData());
 
         me.addStoreToViewModel(
             'Breeze.store.point.CategoryList',
