@@ -38,21 +38,35 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         );
 
 
-
         // Load User-Defined Categories list store
         this.addStoreToViewModel(
             'Breeze.store.category.List',
             'categoriesList',
             { load: true }
         );
-
-
-
-
-
-
-
    
+    },
+
+    /**
+    * Updates which items in UDC list are checked based on loaded
+    * point cat information
+    */
+    syncCheckedCategories: function(){
+        var me = this,
+            selectedCats = me.getViewModel().get('pointCatCategories'),
+            catList = this.lookup('categoryList'),
+            cats = catList.getStore();
+
+        // reset all categories
+        catList.changeAllCheckboxes(false);
+
+        var ids = selectedCats.query('checked',true).items.map((r)=>{
+                return r.get('data');
+            }),
+            selectedRecords = cats.queryBy((r)=>{
+                return ids.includes(r.get('Category_Id'));
+            }).items;
+        catList.getSelectable().select(selectedRecords,false,true);    
     },
 
     // === [Event Handlers] ===
@@ -70,10 +84,33 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             vm = me.getViewModel();
 
         vm.set('selectedPointID', record.get('PointID'));
+
         me.addLoadedStoreToViewModel({
             model:'Breeze.model.point.category.Occurence',
             data:record.get('Occurences')
         }, 'occurenceValues');
+
+        me.addStoreToViewModel(
+            'Breeze.store.point.CategoryList',
+            'pointCatCategories',
+            { 
+                load:true, 
+                createOpys: {
+                    pointID:record.get('PointID')
+                },
+                loadOpts: {
+                    callback:function(records, op, success){
+                        if(success){
+                            // Update which UDC are checked
+                            this.syncCheckedCategories();
+                        }
+                    },
+                    scope: me
+ 
+                },
+            }
+        )
+
     }
 
     
