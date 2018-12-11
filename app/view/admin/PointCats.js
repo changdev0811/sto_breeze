@@ -161,6 +161,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             xtype: 'container',
                                             userCls:'admin-fieldset no-border no-margin',
                                             layout:'hbox',
+                                            hidden:true,
+                                            bind:{
+                                                hidden:'{hideDuration}'
+                                            },
                                             defaults: {
                                                 ui: 'admin admin-text'
                                             },
@@ -241,6 +245,11 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 {
                                                     xtype: 'button',
                                                     iconCls:'x-fas fa-plus',
+                                                    ui: 'plain wtr-button',                   
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    iconCls:'x-fas fa-minus',
                                                     ui: 'plain wtr-button',                   
                                                 },
                                             ]

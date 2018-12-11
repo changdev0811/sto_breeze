@@ -17,7 +17,25 @@ Ext.define('Breeze.view.admin.PointCatsController', {
      */
     onInit: function (component) {
 
-        var me = this;
+        var me = this,
+            vm = this.getViewModel(),
+            companyConfig = Ext.getStore('CompanyConfig');
+
+
+        companyConfig.load({ 
+            callback: function(records, op, success){
+                if(success){
+                    // Set VM attributes indicating if duration
+                    //fields should be visible
+                    vm.set(
+                        'hideDuration',
+                        companyConfig.getAt(0).get('PointExpirationType') == 135
+                    );
+                }
+            }
+        });
+
+
 
         // Load Point Cats store
         this.addStoreToViewModel(
@@ -95,7 +113,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             'pointCatCategories',
             { 
                 load:true, 
-                createOpys: {
+                createOpts: {
                     pointID:record.get('PointID')
                 },
                 loadOpts: {
@@ -107,9 +125,9 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                     },
                     scope: me
  
-                },
+                }
             }
-        )
+        );
 
     }
 
