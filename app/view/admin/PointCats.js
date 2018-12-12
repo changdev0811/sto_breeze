@@ -236,8 +236,6 @@ Ext.define('Breeze.view.admin.PointCats', {
                                         {
                                             xtype: 'toolbar',
                                             ui:'admin-tree',
-                                            // Reference so we can enable/disable items
-                                            reference: 'occurrenceValuesTools',
                                             shadow: false,
                                             items:[
                                                 { 
@@ -255,12 +253,12 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     ui: 'plain wtr-button',
                                                     handler: 'onOccurrenceValueAdd'              
                                                 },
-                                                {
-                                                    xtype: 'button',
-                                                    itemId: 'remove',
-                                                    iconCls:'x-fas fa-minus',
-                                                    ui: 'plain wtr-button',                   
-                                                },
+                                                // {
+                                                //     xtype: 'button',
+                                                //     itemId: 'remove',
+                                                //     iconCls:'x-fas fa-minus',
+                                                //     ui: 'plain wtr-button',                   
+                                                // },
                                             ]
                                         },
 
@@ -346,6 +344,18 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                         xtype:'spinnerfield',
                                                         decimals:2,
                                                         required:true,
+                                                    },
+                                                    cell: {
+                                                        toolDefaults: {
+                                                            ui: 'admin-tool-delete',
+                                                            zone: 'end'
+                                                        },
+                                                        tools: [
+                                                            {
+                                                                iconCls: 'x-fa fa-times',
+                                                                handler: 'onOccurrenceValueRemove'
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ],

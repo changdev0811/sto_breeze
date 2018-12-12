@@ -148,7 +148,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var location = comp.getParent().getLocation(),
         record = location.cell.getRecord(),
         recordIndex = record.store.indexOf(record),
-        lastIndex = record.store.getTotalCount() - 1,
+        lastIndex = record.store.getCount() - 1,
         isLast = (
             (record.store.getCount() - 1) == recordIndex
         ),
@@ -194,7 +194,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     */
     onOccurrenceValueBeforeEdit:function(location){
         if(location.column.getItemId() == "through"){
-            if(location.record.store.getTotalCount() - 1 <= location.recordIndex){
+            if(location.record.store.getCount() - 1 <= location.recordIndex){
                 return false;
             }
         }
@@ -211,7 +211,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var record = location.record,
             index = location.recordIndex,
             store = record.store,
-            lastIndex = record.store.getTotalCount() - 1;
+            lastIndex = record.store.getCount() - 1;
         
         if(index > 0){
             /*
@@ -245,8 +245,8 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     /**
      * @todo TODO: Implement onOccurrenceValueSelect
      */
-    onOccurrenceValueSelect: function(){
-
+    onOccurrenceValueSelect: function(location){
+        this.lookup()
     },
 
     /**
@@ -259,7 +259,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             occurrences = vm.get('occurrenceValues'),
             // Current last occurrence record
             // currentLast = occurrences.getAt(
-            //     occurrences.getTotalCount() - 1
+            //     occurrences.getCount() - 1
             // );
             currentLast = occurrences.last();
         
@@ -282,6 +282,45 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         occurrences.add(newOcc);
         // Commit store record changes
         occurrences.commitChanges();
+    },
+
+    /**
+     * Handle remove tool click event from Occurrence Values
+     * grid item
+     * @param {Object} grid 
+     * @param {Object} info 
+     */
+    onOccurrenceValueRemove: function(grid, info){
+        var record = info.record,
+            store = record.store,
+            rowCount = store.getCount(),
+            index = store.indexOf(record);
+        if(rowCount > 1){
+            /*
+                Previous record gets deleted items duration,
+                unless it is the first
+            */ 
+            if(index == 0){
+                store.getAt(1).set('occfrom', 1);
+            } else {
+                store.getAt(index - 1).set(
+                    'occto', record.get('occto')
+                );
+            }
+            // remove record
+            store.remove([record]);
+        } else {
+            /*
+                Reset only remaining row to defaults
+            */
+           record.set({
+               occfrom: 1,
+               occto: 0,
+               value: 0
+           });
+        }
+
+        store.commitChanges();
     },
 
     /**
