@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.restoreemployee',
 
+    // View Model
+    viewModel: {
+        type: 'admin.restoreemployee'
+    },
+
     // Layout and base styles
     layout: 'vbox',
     ui: 'admin-base',
@@ -38,20 +43,25 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
             },
             items:[
                 {
-                    xtype: 'combobox',
+                    xtype: 'selectfield',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset no-border',
-                    labelAlign:'left',
-                    labelWidth:'auto',
+                    labelAlign: 'left',
+                    labelWidth: 'auto',
                     label:'Employee to Restore',
-                    allowBlank: false,
-                    editable: false,
-                    displayField: 'Description',
-                    forceSelection: true,
-                    queryMode: 'local',
-                    valueField: 'ID'
 
+                    displayField: 'text',
+                    valueField: 'id',
+                    bind: {
+                        store: '{EmployeeOnlyTreeStoreDeleted}',
+                        //value:'{ConfigInfo.StartOfWeek}' /* PointRollingDuration.split(',')[1] */
+                    },
                 },
+
+
+
+
+
             ]
         },
     ]
