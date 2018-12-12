@@ -13,6 +13,12 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
         type: 'admin.restoreemployee'
     },
 
+        // Controller
+    controller: 'admin.restoreemployee',
+    listeners: {
+        initialize: 'onInit'
+    },
+
     // Layout and base styles
     layout: 'vbox',
     ui: 'admin-base',
