@@ -8,7 +8,7 @@ Ext.define('Breeze.view.admin.PointCats', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.pointcats',
 
-    requires: [ 
+    requires: [
         // Plugin for editable grid
         'Ext.grid.plugin.CellEditing'
     ],
@@ -81,10 +81,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                             ui:'admin-tree',
                             shadow: false,
                             items:[
-                                { 
-                                    xtype: 'component', 
+                                {
+                                    xtype: 'component',
                                     html: 'Point Categories',
-                                    userCls:'admin-title-toolbar', 
+                                    userCls:'admin-title-toolbar',
                                 },
                                 {
                                     xtype:'spacer',
@@ -93,12 +93,13 @@ Ext.define('Breeze.view.admin.PointCats', {
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
+                                    handler: 'onPointCatAdd'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
                                 },
                             ]
                         },
@@ -123,7 +124,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                 select: 'onPointCatSelect'
                             },
                             viewModel: true
-                        } 
+                        }
                     ]
                 },
 
@@ -147,7 +148,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                             flex: 1,
                             layout: 'vbox',
                             items:[
-                                
+
                                 {
                                     xtype:'fieldset',
                                     userCls:'admin-fieldset',
@@ -197,7 +198,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     value:60,
                                                     displayField: 'Description',
                                                     valueField: 'ID',
-                                                    store:'DurationTypes', 
+                                                    store:'DurationTypes',
                                                     bind: {
                                                         //Store DurTypeOptions
                                                         //getTypeCodeList 15
@@ -238,10 +239,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             ui:'admin-tree',
                                             shadow: false,
                                             items:[
-                                                { 
-                                                    xtype: 'component', 
+                                                {
+                                                    xtype: 'component',
                                                     html: 'Occurrence Values',
-                                                    userCls:'admin-title-toolbar', 
+                                                    userCls:'admin-title-toolbar',
                                                 },
                                                 {
                                                     xtype:'spacer',
@@ -251,13 +252,13 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     xtype: 'button',
                                                     iconCls:'x-fas fa-plus',
                                                     ui: 'plain wtr-button',
-                                                    handler: 'onOccurrenceValueAdd'              
+                                                    handler: 'onOccurrenceValueAdd'
                                                 },
                                                 // {
                                                 //     xtype: 'button',
                                                 //     itemId: 'remove',
                                                 //     iconCls:'x-fas fa-minus',
-                                                //     ui: 'plain wtr-button',                   
+                                                //     ui: 'plain wtr-button',
                                                 // },
                                             ]
                                         },
@@ -265,6 +266,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                         {
                                             xtype: 'grid',
                                             ui: 'admin-grid',
+                                            reference: 'occurrenceValuesGrid',
                                             layout:'hbox',
                                             flex:1,
                                             sortable: false, columnResize: false,
@@ -273,9 +275,9 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 store: '{occurrenceValues}'
                                             },
                                             defaults: {
-                                                xtype: 'gridcolumn',                                                
+                                                xtype: 'gridcolumn',
                                             },
-                                            // Plugin for editable grid 
+                                            // Plugin for editable grid
                                             plugins: {
                                                 gridcellediting: true
                                             },
@@ -361,8 +363,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             ],
                                             listeners:{
                                                 beforeedit:'onOccurrenceValueBeforeEdit',
-                                                edit: 'onOccurrenceValuePostEdit',
-                                                select: 'onOccurrenceValueSelect'
+                                                edit: 'onOccurrenceValuePostEdit'
                                             }
 
 
@@ -374,7 +375,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                 },
                             ]
                         },
-                        { 
+                        {
                             xtype: 'fieldset',
                             title: 'Tie to Absence',
                             userCls:'admin-fieldset no-padding',

@@ -17,8 +17,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
      */
     onInit: function (component) {
 
-        var me = this,
-            vm = this.getViewModel(),
+        var vm = this.getViewModel(),
             companyConfig = Ext.getStore('CompanyConfig');
         
         this.api = Ext.create('Breeze.api.admin.PointCats');
@@ -36,7 +35,26 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             }
         });
 
+        this.loadPointCats();
 
+        // Load User-Defined Categories list store
+        this.addStoreToViewModel(
+            'Breeze.store.category.List',
+            'categoriesList',
+            { load: true }
+        );
+   
+    },
+
+    /**
+     * Load point cats, at select first or specific by ID
+     * after load
+     * @param {String} selectSpecific Optional point ID value
+     */
+    loadPointCats: function(selectSpecific){
+        var me = this,
+            vm = this.getViewModel(),
+            selectId = Object.defVal(selectSpecific, null);
 
         // Load Point Cats store
         this.addStoreToViewModel(
@@ -48,22 +66,18 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                     callback:function(records, op, success){
                         // Mark first item in list selected
                         if(success){
-                            this.lookup('pointCatsList').getSelectable().setSelectedRecord(records[0]);
+                            var record = records[0];
+                            if(selectId){
+                                record = vm.get('pointCats').queryRecord('PointID', selectId);
+                            }
+                            this.lookup('pointCatsList').getSelectable()
+                                .setSelectedRecord(record);
                         }
                     },
                     scope: me
                 } 
             }
         );
-
-
-        // Load User-Defined Categories list store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-   
     },
 
     /**
@@ -243,13 +257,6 @@ Ext.define('Breeze.view.admin.PointCatsController', {
     },
 
     /**
-     * @todo TODO: Implement onOccurrenceValueSelect
-     */
-    onOccurrenceValueSelect: function(location){
-        this.lookup()
-    },
-
-    /**
      * Event handler for Occurrence Values 'add' button
      * Adds new row to grid, auto populating values and
      * adjusting values of previous row
@@ -371,8 +378,34 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             }
         );
 
-    }
+    },
 
+    /**
+     * Handle point cat add button click event
+     */
+    onPointCatAdd: function(){
+        var me = this,
+            grid = this.lookup('occurrenceValuesGrid');
+        
+        // Call API add method
+        this.api.add().then((r)=>{
+            /*  Successful, so reload point cats and
+                select newly created item */
+            me.loadPointCats(r.id);
+            Ext.toast({
+                type: Ext.Toast.SUCCESS,
+                message: r.message,
+                timeout: 10000
+            });
+        }).catch((e)=>{
+            // Failure, show error
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 10000
+            });
+        });
+    }
     
 
 
