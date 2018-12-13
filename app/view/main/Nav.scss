@@ -149,5 +149,17 @@ $content-edge: 6pt;
 @include button-ui(
     $ui: 'mainNavUserButton',
     $arrow-icon-size: 10pt,
-    $icon-font-size: 10pt
+    $icon-font-size: 10pt,
+
+
+    $background-color : rgba(44,65,90,0.25),
+    $hovered-background-color : transparent,
+    $pressed-background-color : transparent,
+    $focused-background-color : transparent,
+    $disabled-background-color : transparent,
+
+
+
+
+
 );

@@ -166,6 +166,17 @@ Ext.define('Breeze.view.main.Nav', {
                                                 text: '',
                                                 arrow: false,
                                                 iconCls: 'x-fa fa-angle-right',
+                                            },
+
+                                            /* Actual button */
+                                            {
+                                                xtype: 'button',
+                                                menuAlign: 'tr',
+                                                ui:'mainNavUserButton',
+                                                userCls:'main-nav-user-button',
+                                                style:'position:absolute; height:64pt; width:220pt; right:0pt',
+                                                text: '',
+                                                arrow: false,
                                                 menu:{
                                                     xtype: 'menu',
                                                     items:[
