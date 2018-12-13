@@ -241,18 +241,37 @@ Ext.define('Breeze.view.main.Nav', {
                     ],
                     hidden: true
                 },
+
+
                 {
-                    xtype: 'navigationview',
+                    xtype:'container',
+                    layout:'vbox',
                     flex: 3,
-                    userCls: 'main-content',
-                    reference: 'contentContainer',
-                    scrollable: 'vertical',
-                    navigationBar: false,
-                    layout: {
-                        animation: 'fade'
-                    }
-                    // layout: 'fit'
+                    items:[
+
+                        {
+                            xtype:'breeze-employees-subnav',
+                            
+                        },
+
+
+                        {
+                            xtype: 'navigationview',
+                            userCls: 'main-content',
+                            flex: 1,
+                            reference: 'contentContainer',
+                            scrollable: 'vertical',
+                            navigationBar: false,
+                            layout: {
+
+                                animation: 'fade'
+                            }
+                            // layout: 'fit'
+                        }
+
+                    ]
                 }
+
             ]
         }
     ]
