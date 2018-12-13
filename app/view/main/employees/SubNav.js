@@ -1,6 +1,6 @@
 /**
  * Employees SubNav view
- * @class Panel
+ * @class SubNav
  * @namespace Breeze.view.main.employees.SubNav
  * @alias widget.main.employees.subnav
  */

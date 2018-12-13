@@ -709,7 +709,8 @@ Ext.define('Breeze.view.main.NavController', {
             !type
         ){
             vm.set('sidePanel.type', null);
-            panelContainer.setHidden(true);
+            // panelContainer.setHidden(true);
+            vm.set('sidePanel.shown', false);
             panelContainer.removeAll();
             return null;
         }
@@ -719,7 +720,8 @@ Ext.define('Breeze.view.main.NavController', {
             panelContainer.items.length == 0 ||
             (currentType !== type.id || !show)
         ){
-            panelContainer.setHidden(!show);
+            // panelContainer.setHidden(!show);
+            vm.set('sidePanel.shown', show);
             if(type){
                 if(show && currentType !== type.id){
                     panelContainer.removeAll();
