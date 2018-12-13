@@ -31,179 +31,37 @@ Ext.define('Breeze.view.main.NavModel', {
                 info: {}
             }
         },
+        /**
+         * Data for employees views (views showing view of other users, with side panel)
+         */
         employeesView: {
-            args: null,
-            id: null
+            // neither of the following are currently used
+            args: null, id: null,
+            // Whether to use employees panel sub nav bar
+            useSubNav: true,
+            /**
+             * Data specific to dynamic sub-navigation menu tied to employees panel
+             */
+            subNav: {
+                currentAction: null
+            }
         },
         // Side panel content tracking
         sidePanel: {
-            type: null
+            // Whether side panel is visible
+            shown: false,
+            // Either reporting or employees
+            type: null,
+            // If side panel is currently visible
+            /**
+             * Actively selected item id (user id for employees, report for reporting)
+             * (not used for reporting at this time) 
+             **/
+            activeItemId: null
         }
     },
 
-    stores: {
-        /**
-         * Navigation items (expanded) for personal mode
-         */
-        // personalNav: {
-        //     type: 'tree',
-        //     root: {
-        //         children: [
-        //             /*{
-        //                 text: 'Dashboard', leaf: true,
-        //                 iconCls: 'x-fas fa-tachometer'
-        //             },*/ {
-        //                 text: 'Personal',
-        //                 iconCls: 'x-fas fa-user',
-        //                 // routeAct: false,
-        //                 routeRef: 'personal',
-        //                 id: 'personal',
-        //                 children: [
-        //                     {
-        //                         text: 'Download PunchStation', leaf: true,
-        //                         iconCls: 'x-fas fa-cloud-download-alt',
-        //                         routeRef: 'download/punch_station',
-        //                         id: 'punchstation'
-        //                     },
-        //                     {
-        //                         text: 'Calendar', leaf: true,
-        //                         iconCls: 'x-fas fa-calendar',
-        //                         id: 'calendar',
-		// 						routeRef: 'personal/calendar'
-        //                     }, {
-        //                         text: 'Employee Information', leaf: true,
-        //                         iconCls: 'x-fas fa-id-card',
-        //                         routeRef: 'personal/info',
-        //                         id: 'employeeInfo'
-        //                     }, {
-        //                         text: 'FYI', leaf: true,
-        //                         iconCls: 'x-fas fa-table',
-        //                         routeRef: 'personal/fyi',
-        //                         id: 'fyi'
-        //                     }, {
-        //                         text: 'Year at a Glance', leaf: true,
-        //                         iconCls: 'x-fas fa-eye',
-        //                         routeRef: 'personal/year_at_a_glance',
-        //                         id: 'yaag'
-        //                     }, {
-        //                         text: 'WorkTime Records', leaf: true,
-        //                         iconCls: 'x-fas fa-calendar-check-o',
-        //                         routeRef: 'personal/worktime_records',
-        //                         id: 'wtr'
-        //                     }
-        //                 ]
-        //             }, {
-        //                 text: 'My Requests', leaf: true,
-        //                 iconCls: 'x-fas fa-retweet',
-        //                 routeRef: 'personal/requests',
-        //                 id: 'myRequests'
-        //             },  {
-        //                 text: 'Reports', leaf: true,
-        //                 iconCls: 'x-fas fa-bar-chart',
-        //                 routeRef: 'personal/reports',
-        //                 id: 'reports'
-        //             },  {
-        //                 text: 'Help', leaf: true,
-        //                 iconCls: 'x-fas fa-question-circle',
-        //                 routeRef: 'help',
-        //                 id: 'help'
-        //             }
-        //         ]
-        //     }
-        // },
-        /**
-         * Navigation items (micro) for personal mode
-         */
-        // personalNavMicro: {
-        //     type: 'tree',
-        //     root: {
-        //         children: [
-        //             /*{
-        //                 text: 'Dashboard', leaf: true,
-        //                 iconCls: 'x-fas fa-tachometer'
-        //             },*/ 
-        //             {
-        //                 text: 'Personal',
-        //                 iconCls: 'x-fas fa-user',
-        //                 // routeAct: false,
-        //                 routeRef: 'personal',
-        //                 id: 'personal'
-        //             },
-        //             {
-        //                 text: 'Download PunchStation', //leaf: true,
-        //                 iconCls: 'x-fas fa-cloud-download',
-        //                 routeRef: 'download/punch_station',
-        //                 id: 'personal',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             },
-        //             {
-        //                 text: 'Calendar', leaf: true,
-        //                 iconCls: 'x-fas fa-calendar',
-        //                 id: 'personal',
-		// 				routeRef: 'personal/calendar',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             }, {
-        //                 text: 'Employee Information', leaf: true,
-        //                 iconCls: 'x-fas fa-id-card',
-        //                 routeRef: 'personal/info',
-        //                 id: 'personal',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             }, {
-        //                 text: 'FYI', leaf: true,
-        //                 iconCls: 'x-fas fa-table',
-        //                 routeRef: 'personal/fyi',
-        //                 id: 'personal',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             }, {
-        //                 text: 'Year at a Glance', leaf: true,
-        //                 iconCls: 'x-fas fa-eye',
-        //                 routeRef: 'personal/year_at_a_glance',
-        //                 id: 'personal',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             }, {
-        //                 text: 'WorkTime Records', leaf: true,
-        //                 iconCls: 'x-fas fa-calendar-check-o',
-        //                 routeRef: 'personal/worktime_records',
-        //                 id: 'personal',
-        //                 extra: {
-        //                     parent: 'personal',
-        //                     size: '12pt'
-        //                 }
-        //             }, {
-        //                 // text: 'My Requests', leaf: true,
-        //                 iconCls: 'x-fas fa-retweet',
-        //                 routeRef: 'personal/requests',
-        //                 id: 'myRequests'
-        //             },  {
-        //                 text: 'Reports', leaf: true,
-        //                 iconCls: 'x-fas fa-bar-chart',
-        //                 routeRef: 'personal/reports',
-        //                 id: 'reports'
-        //             },  {
-        //                 text: 'Help', leaf: true,
-        //                 iconCls: 'x-fas fa-question-circle',
-        //                 routeRef: 'help',
-        //                 id: 'help'
-        //             }
-        //         ]
-        //     }
-        // }
-    },
+    stores: {},
 
     formulas: {
         hasKron: function(get){
@@ -228,6 +86,22 @@ Ext.define('Breeze.view.main.NavModel', {
             return (
                 get('punch.status') == Breeze.api.Punch.status.IN
             );
+        },
+
+        /**
+         * Formula used to decide whether employees panel sub navbar
+         * is hidden or not
+         * @param {Function} get 
+         */
+        hideEmployeesSubNav: function(get){
+            if(
+                get('employeesView.useSubNav') &&
+                (get('sidePanel.shown') && get('sidePanel.type') == 'employees')
+            ){
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 });

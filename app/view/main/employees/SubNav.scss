@@ -1,0 +1,89 @@
+/**
+ * Employees Panel SubNav Bar Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Employees Panel SubNav Bar view or its children
+ */
+
+@include button-ui(
+    $ui: 'sub-nav-button',
+    $background-color : transparent,
+    $hovered-background-color : transparent,
+    $pressed-background-color : transparent,
+    $focused-background-color : transparent,
+    $disabled-background-color : transparent,
+    $color :  #959595 ,
+    $hovered-color :  #2C415A ,
+    $pressed-color :  #2C415A ,
+    $focused-color :  #2C415A ,
+    $disabled-color : #2C415A ,
+    $border-style : solid,
+    $border-width : 0pt 0pt 2pt 0pt,
+    $padding : 0pt 0pt 2pt 0pt,
+);
+
+@include button-ui(
+    $ui: 'calIcon',
+    $border-color : transparent,
+    $hovered-border-color : transparent,
+    $pressed-border-color : #719C93,
+    $focused-border-color : #719C93,
+    $disabled-border-color : #719C93,
+);
+
+.calIcon {
+	color: #719C93 !important;
+}
+
+
+@include button-ui(
+    $ui: 'empInfIcon',
+    $border-color : transparent,
+    $hovered-border-color : transparent,
+    $pressed-border-color : #498DC6,
+    $focused-border-color : #498DC6,
+    $disabled-border-color : #498DC6,
+);
+
+.empInfIcon {
+	color: #498DC6 !important;
+}
+
+@include button-ui(
+    $ui: 'fyiIcon',
+    $border-color : transparent,
+    $hovered-border-color : transparent,
+    $pressed-border-color : #48667F,
+    $focused-border-color : #48667F,
+    $disabled-border-color : #48667F,
+);
+
+.fyiIcon {
+	color: #48667F !important;
+}
+
+@include button-ui(
+    $ui: 'yearAtGlanceIcon',
+    $border-color : transparent,
+    $hovered-border-color : transparent,
+    $pressed-border-color : #64A0B4,
+    $focused-border-color : #64A0B4,
+    $disabled-border-color : #64A0B4,
+);
+
+.yearAtGlanceIcon {
+	color: #64A0B4 !important;
+}
+
+@include button-ui(
+    $ui: 'worktimeRecIcon',
+    $border-color : transparent,
+    $hovered-border-color : transparent,
+    $pressed-border-color : #575786,
+    $focused-border-color : #575786,
+    $disabled-border-color : #575786,
+);
+
+.worktimeRecIcon {
+	color: #575786 !important;
+}
+
