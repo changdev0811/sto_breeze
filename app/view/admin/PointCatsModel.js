@@ -32,19 +32,20 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
 
     data: {
     	// TODO: change to null
-    	selectedPointID: 1
+    	selectedPointID: null
     },
 
-    formulas: {
-    	selectedPointCat: function(get){
-    		var cat = get('pointCats').findRecord('PointID', get('selectedPointID'));
-    		return cat;
-    	}
-    },
+    //formulas: {
+    //	selectedPointCat: function(get){
+    //		var cat = get('pointCats').findRecord('PointID', get('selectedPointID'));
+    //		return cat;
+    //	}
+    //},
 
 
     stores: {
         // TODO: Remove when API dummy is available
+        /*
         pointCats: {
             data: [
                 {
@@ -66,24 +67,7 @@ Ext.define('Breeze.view.admin.PointCatsModel', {
                 }
             ]
         },
-        pointOccurances: {
-            fields: ['occfrom','occto','occvalue'],
-            data: [
-                {
-                    "occfrom": 1,
-                    "occto": 0,
-                    "occvalue": 0
-                },
-                {
-                    "occfrom": 2,
-                    "occto": 3,
-                    "occvalue": 4
-                }
-            ]
-        }
+        */
     }
-
-
-
 
 });

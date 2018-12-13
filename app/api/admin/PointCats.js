@@ -9,8 +9,10 @@ Ext.define('Breeze.api.admin.PointCats', {
 
     /**
      * Add Point Category
-     * @return {Promise} promise resolving with ID of created category
-     *      or rejecting with error toast message
+     * @return {Promise} promise resolving with object
+     *      containing ID of created category and
+     *      success message, or rejecting with error 
+     *      toast message
      * @api addPointCategory
      */
     add: function () {
@@ -23,7 +25,10 @@ Ext.define('Breeze.api.admin.PointCats', {
                 function (resp) {
                     var rsp = api.decodeJsonResponse(resp);
                     if(rsp.success){
-                        resolve(rsp.err);
+                        resolve({
+                            id: rsp.err,
+                            message: rsp.info.join('')
+                        });
                     } else {
                         reject({
                             type: Ext.Toast.ERROR,

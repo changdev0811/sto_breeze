@@ -23,6 +23,7 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.Compensation',
         'Breeze.store.option.CalendarTypes',
         'Breeze.store.option.Years',
+        'Breeze.store.option.DurationTypes',
         // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
         'Breeze.store.company.Config',

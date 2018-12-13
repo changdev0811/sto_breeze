@@ -9,7 +9,7 @@ Ext.define('Breeze.view.admin.STIMessage', {
     alias: 'widget.admin.stimessage',
 
     // Layout and base styles
-    layout: 'vbox',
+    layout: 'fit',
     ui: 'admin-base',
 
     title: 'SoftTime Online Release Notes',
@@ -25,14 +25,21 @@ Ext.define('Breeze.view.admin.STIMessage', {
 
     // Body contents
     items: [
-
-        {
-            xtype: 'container',
-            userCls:'admin-fieldset',
-            flex: 1,
-            layout: 'vbox',
+        {               
+            xtype: 'panel',
+            userCls: 'admin-fieldset',
+            scroll: 'both',
+            items: [
+                {
+                    id: 'iframe',
+                    scroll: "vertical",
+                    layout: 'fit',
+                    width: '100%',
+                    height: '100%',
+                    html: '<iframe style="position:absolute; width:100%; height:100%; left:0; top:0;"  src="../resources/ReleaseNotes.pdf"></iframe>'
+                }
+            ]
         },
-
     ]
 
 });

@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.PointCats', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.pointcats',
 
+    requires: [
+        // Plugin for editable grid
+        'Ext.grid.plugin.CellEditing'
+    ],
+
     // View Model
     viewModel: {
         type: 'admin.pointcats'
@@ -20,12 +25,26 @@ Ext.define('Breeze.view.admin.PointCats', {
     },
 
 
+    // Action buttons shown at bottom of panel
+    buttonAlign: 'right',
+    buttons: {
+        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
+    },
 
+    // Adjust action button toolbar spacing and appearance with UI and shadow
+    buttonToolbar: {
+        xtype: 'toolbar',
+        ui: 'admin-actions',
+        shadow: false
+    },
 
     // Layout and base styles
     layout: 'hbox',
     ui: 'admin-base',
     title: 'Point Categories',
+
+
+            scrollable:true,
 
     // Body contents
     items: [
@@ -36,8 +55,12 @@ Ext.define('Breeze.view.admin.PointCats', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
+
+            minHeight:'420pt',
+
+
+
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
             items: [
 
                 // Column 1
@@ -49,6 +72,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                     // +++ fixed width +++
                     minWidth:'150pt',
                     maxWidth:'200pt',
+                    //minHeight:'420pt',
 
                     layout: 'vbox',
                     items:[
@@ -57,10 +81,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                             ui:'admin-tree',
                             shadow: false,
                             items:[
-                                { 
-                                    xtype: 'component', 
+                                {
+                                    xtype: 'component',
                                     html: 'Point Categories',
-                                    userCls:'admin-title-toolbar', 
+                                    userCls:'admin-title-toolbar',
                                 },
                                 {
                                     xtype:'spacer',
@@ -69,12 +93,13 @@ Ext.define('Breeze.view.admin.PointCats', {
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
+                                    handler: 'onPointCatAdd'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
                                 },
                             ]
                         },
@@ -82,19 +107,24 @@ Ext.define('Breeze.view.admin.PointCats', {
                             xtype: 'breeze-categories-list',
                             ui: 'admin-shift-grid',
                             userCls: 'admin-fieldset no-background no-margin no-border',
-                            //reference: 'categoryList',
+                            reference: 'pointCatsList',
                             fieldMode: 'none',
                             itemConfig: {
-                                ui: 'admin-list-item-select'
+                                ui: 'admin-list-item-select',
+                                templates: {
+                                    radioValue: '{record.PintID}',
+                                    itemData: { name: '{record.PointName} '},
+                                    itemTpl: '{name}'
+                                }
                             },
                             bind: {
-                                //store: '{categoriesList}',
+                                store: '{pointCats}',
                             },
                             listeners: {
-                                //select: 'onCategorySelect'
+                                select: 'onPointCatSelect'
                             },
                             viewModel: true
-                        } 
+                        }
                     ]
                 },
 
@@ -107,16 +137,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                     // +++ fixed width +++
                     minWidth:'500pt',
                     maxWidth:'500pt',
+                    //minHeight:'420pt',
 
                     layout: 'hbox',
-                    buttons: {
-                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
-                    },
-                    buttonToolbar: {
-                        xtype: 'toolbar',
-                        ui: 'admin-actions',
-                        shadow: false
-                    },
+
                     items:[
                         {
                             xtype:'container',
@@ -124,7 +148,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                             flex: 1,
                             layout: 'vbox',
                             items:[
-                                
+
                                 {
                                     xtype:'fieldset',
                                     userCls:'admin-fieldset',
@@ -143,6 +167,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             xtype: 'container',
                                             userCls:'admin-fieldset no-border no-margin',
                                             layout:'hbox',
+                                            hidden:true,
+                                            bind:{
+                                                hidden:'{hideDuration}'
+                                            },
                                             defaults: {
                                                 ui: 'admin admin-text'
                                             },
@@ -168,11 +196,12 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                     flex: 1,
                                                     valueField: 'code',
                                                     value:60,
-                                                    displayField: 'description',
+                                                    displayField: 'Description',
+                                                    valueField: 'ID',
+                                                    store:'DurationTypes',
                                                     bind: {
                                                         //Store DurTypeOptions
                                                         //getTypeCodeList 15
-                                                        store:'', 
                                                         value:'{selectedPointCat.DurType}'
                                                     }
                                                 },
@@ -187,6 +216,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                     title: 'Details',
                                     layout: 'fit',
                                     flex:1,
+                                    minHeight:'100pt',
                                     items:[
                                         {
                                             xtype: 'textareafield',
@@ -209,10 +239,10 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             ui:'admin-tree',
                                             shadow: false,
                                             items:[
-                                                { 
-                                                    xtype: 'component', 
-                                                    html: 'Occurrence Value',
-                                                    userCls:'admin-title-toolbar', 
+                                                {
+                                                    xtype: 'component',
+                                                    html: 'Occurrence Values',
+                                                    userCls:'admin-title-toolbar',
                                                 },
                                                 {
                                                     xtype:'spacer',
@@ -221,57 +251,122 @@ Ext.define('Breeze.view.admin.PointCats', {
                                                 {
                                                     xtype: 'button',
                                                     iconCls:'x-fas fa-plus',
-                                                    ui: 'plain wtr-button',                   
+                                                    ui: 'plain wtr-button',
+                                                    handler: 'onOccurrenceValueAdd'
                                                 },
+                                                // {
+                                                //     xtype: 'button',
+                                                //     itemId: 'remove',
+                                                //     iconCls:'x-fas fa-minus',
+                                                //     ui: 'plain wtr-button',
+                                                // },
                                             ]
                                         },
 
                                         {
                                             xtype: 'grid',
                                             ui: 'admin-grid',
+                                            reference: 'occurrenceValuesGrid',
                                             layout:'hbox',
                                             flex:1,
                                             sortable: false, columnResize: false,
                                             columnMenu: false, hideHeaders: false,
                                             bind: {
-                                                store: '{pointOccurances}'
+                                                store: '{occurrenceValues}'
                                             },
                                             defaults: {
-                                                xtype: 'gridcolumn',                                                
+                                                xtype: 'gridcolumn',
                                             },
+                                            // Plugin for editable grid
+                                            plugins: {
+                                                gridcellediting: true
+                                            },
+
                                             columns: [
                                                 {
                                                     text:'From',
+                                                    itemId: 'from',
                                                     flex:1,
                                                     dataIndex:'occfrom',
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:0,
+                                                        min:1,
+                                                        required:true,
+                                                        listeners:{
+                                                            change: 'onOccurrenceFromChange'
+                                                        }
+                                                    }
                                                 },
                                                 {
-                                                    text:'Through',
+                                                    text:'To',
+                                                    itemId: 'through',
                                                     flex:1,
                                                     tpl: '{occto}',
                                                     tpl: [
                                                         '<tpl if="occto==0">&infin;</tpl>',
                                                         '<tpl if="occto!=0">{occto}</tpl>'
                                                     ],
-
-
                                                     dataIndex:'occto',
                                                     cell:{
                                                         encodeHtml:false,
                                                     },
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:0,
+                                                        min:0,
+                                                        required:true,
+                                                        listeners:{
+                                                            change: 'onOccurrenceThroughChange'
+                                                        }
+                                                    }
                                                 },
                                                 {
                                                     text:'Value',
+                                                    itemId: 'value',
                                                     flex:1,
+                                                    // force 2 decimal display
+                                                    tpl: [
+                                                        '{[this.rounded(values.occvalue)]}',
+                                                        {
+                                                            rounded: function(value){
+                                                                return Math.round((value + 0.00001) * 100) / 100;
+                                                            }
+                                                        }
+
+                                                    ],
                                                     dataIndex:'occvalue',
                                                     menuDisabled:true,
-                                                    align:'center'
+                                                    align:'center',
+                                                    editor:{
+                                                        xtype:'spinnerfield',
+                                                        decimals:2,
+                                                        required:true,
+                                                    },
+                                                    cell: {
+                                                        toolDefaults: {
+                                                            ui: 'admin-tool-delete',
+                                                            zone: 'end'
+                                                        },
+                                                        tools: [
+                                                            {
+                                                                iconCls: 'x-fa fa-times',
+                                                                handler: 'onOccurrenceValueRemove'
+                                                            }
+                                                        ]
+                                                    }
                                                 }
-                                            ]
+                                            ],
+                                            listeners:{
+                                                beforeedit:'onOccurrenceValueBeforeEdit',
+                                                edit: 'onOccurrenceValuePostEdit'
+                                            }
+
+
                                         }
 
 
@@ -280,7 +375,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                 },
                             ]
                         },
-                        { 
+                        {
                             xtype: 'fieldset',
                             title: 'Tie to Absence',
                             userCls:'admin-fieldset no-padding',
