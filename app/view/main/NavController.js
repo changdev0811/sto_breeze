@@ -377,6 +377,8 @@ Ext.define('Breeze.view.main.NavController', {
             console.warn('Sync error: ', err);
         }
         
+        this.lookup('breadCrumbs').bakeCrumb('x','x');
+
         // ensure side panel isn't visible
         try{
             this.refreshSidePanel(false);

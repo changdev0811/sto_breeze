@@ -54,7 +54,8 @@ Ext.define('Breeze.view.main.Nav', {
 
                 // +++ Bread crumbs go in here +++
                 {
-                    xtype: 'container',
+                    xtype: 'breeze-history-bread',
+                    reference: 'breadCrumbs',
                     flex: 1
                 },
                 {

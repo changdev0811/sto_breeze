@@ -1,0 +1,28 @@
+/*
+    Styling rules for History Bread breadcrumb widget
+*/
+
+.breeze-history-bread {
+    vertical-align: bottom;
+    background-color: $base-color;
+    color: map-get($root-text-colors, 'base');
+    & .crumb {
+        // padding: 8pt;
+        & > a {
+            color: map-get($root-text-colors, 'base');
+        }
+        & > div {
+            color: map-get($root-text-colors, 'light');
+        }
+        &:after {
+            content: "\232a" !important;
+            // font-size: 75%;
+            vertical-align: middle;
+            margin-left: 0.7em !important;
+        }
+        &:last-child:after{
+            content: "" !important;
+            margin-left: 0 !important;
+        }
+    }
+  }
