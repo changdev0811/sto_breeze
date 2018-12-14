@@ -4,7 +4,7 @@ Ext.define('Breeze.widget.history.BreadModel', {
     stores: {
         crumbs: {
             model: 'Breeze.model.data.HistoryCrumb',
-            data: [{label: 'X', hash: 'z'}]
+            data: []
         }
     }
 });

@@ -19,10 +19,10 @@ Ext.define('Breeze.widget.history.Bread', {
     layout: 'hbox',
     itemTpl: [
         '<div class="crumb">',
-        '<tpl if="{active}">',
-        '<a href="{hash}">{label}</a>',
+        '<tpl if="!active">',
+        '<div><a href="{hash}">{label}</a></div>',
         '<tpl else>',
-        '<div>{label}</div>',
+        '<span>{label}</span>',
         '</tpl>',
         '</div>'
     ],
@@ -37,7 +37,7 @@ Ext.define('Breeze.widget.history.Bread', {
         var vm = this.getViewModel(),
             crumbs = vm.get('crumbs');
         
-        if(crumbs.getCount() > this.getMaxLength()){
+        if(crumbs.getCount() > this.getMaxLength()-1){
             crumbs.remove(crumbs.getAt(0));
         }
         if(crumbs.getCount() > 0) {

@@ -8,21 +8,31 @@
     color: map-get($root-text-colors, 'base');
     & .crumb {
         // padding: 8pt;
-        & > a {
+        & a {
             color: map-get($root-text-colors, 'base');
+            text-decoration: underline;
+            &:hover{
+                color: map-get($root-text-colors, 'light');
+            }
         }
         & > div {
             color: map-get($root-text-colors, 'light');
+            &:after {
+                content: "\232a" !important;
+                // font-size: 75%;
+                vertical-align: middle;
+                margin-left: 0.7em !important;
+            }
         }
-        &:after {
-            content: "\232a" !important;
-            // font-size: 75%;
-            vertical-align: middle;
-            margin-left: 0.7em !important;
-        }
-        &:last-child:after{
-            content: "" !important;
-            margin-left: 0 !important;
-        }
+        // &:after {
+        //     content: "\232a" !important;
+        //     // font-size: 75%;
+        //     vertical-align: middle;
+        //     margin-left: 0.7em !important;
+        // }
+        // &:nth-last-child(1):after{
+        //     content: "o" !important;
+        //     margin-left: 0;
+        // }
     }
   }
