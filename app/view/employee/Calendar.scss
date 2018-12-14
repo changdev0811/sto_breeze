@@ -182,11 +182,13 @@ $cal-body-padding: 4pt 16pt 16pt 16pt;
     $ui: 'employee-calendar-form'
 );
 
-@include button-ui(
-
-    $ui: 'alt'
-)
-
 .cancel-button{
     padding:0pt 5pt 0pt 5pt;
+}
+
+// Loading mask style
+.calendar-loading-mask {
+    color: white !important;
+    font-size: 18pt;
+    width: auto;
 }
