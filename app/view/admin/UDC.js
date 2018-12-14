@@ -105,6 +105,9 @@ Ext.define('Breeze.view.admin.UDC', {
                                     bind: {
                                         store: '{categoriesList}',
                                     },
+                                    listeners: {
+                                        select: 'onCatSelect'
+                                    },
                                     viewModel: true
                                 } 
                             ]
@@ -170,7 +173,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             ui: 'admin admin-text',
                                             userCls:'admin-fieldset no-border no-margin',
                                             bind: {
-                                                value:'{selectedCat.Pay_Code}'
+                                                value:'{selectedCat.Category_Paycode}'
                                             }
                                         },
                                     ]
@@ -195,6 +198,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             xtype:'checkbox',
                                             ui:'admin',
                                             userCls:'tool-check-box',
+                                            reference:'allowedCategoreCheck',
                                             name: 'isWorktime',
                                             id: 'radio1',
                                             value: '20',
@@ -210,6 +214,10 @@ Ext.define('Breeze.view.admin.UDC', {
                                     ui: 'admin-base',
                                     userCls:'admin-fieldset no-border',
                                     layout: 'hbox',
+                                    hidden:true,
+                                    bind:{
+                                        hidden:'{!allowedCategoreCheck.checked}',
+                                    },
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
@@ -239,15 +247,14 @@ Ext.define('Breeze.view.admin.UDC', {
                                             userCls:'admin-fieldset no-border no-margin',
                                             flex: 2,
                                             name: 'minUse_Unit',
-                                            
+                                            store: 'MinimumUseUnits',
                                             bind: {
-                                                store: '{minUseUnit}',
                                                 value:'{selectedCat.minUse_Unit}'
                                             },
 
 
-                                            valueField: 'code',
-                                            displayField: 'description'
+                                            valueField: 'ID',
+                                            displayField: 'Description'
                                         },
                                         {
                                             xtype:'spacer',
@@ -261,6 +268,10 @@ Ext.define('Breeze.view.admin.UDC', {
                                     ui: 'admin-base',
                                     userCls:'admin-fieldset no-border',
                                     layout: 'hbox',
+                                    hidden:true,
+                                    bind:{
+                                        hidden:'{!allowedCategoreCheck.checked}',
+                                    },
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
@@ -301,6 +312,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             xtype:'checkbox',
                                             ui:'admin',
                                             userCls:'tool-check-box',
+                                            reference:'PaidCategoryCheck',
                                             name: 'isWorktime',
                                             id: 'radio2',
                                             value: '20',
@@ -318,7 +330,13 @@ Ext.define('Breeze.view.admin.UDC', {
                                     value: '20',
                                     boxLabel: 'Count as OverTime',
                                     bodyAlign: 'stretch',
-                                    bind: '{selectedCat.isOverTime}'
+                                    hidden:true,
+                                    bind:{
+                                        checked:'{selectedCat.isOverTime}',
+                                        hidden:'{!PaidCategoryCheck.checked}',
+                                    },
+
+
                                 },
                                 {
                                     xtype:'checkbox',
@@ -328,7 +346,11 @@ Ext.define('Breeze.view.admin.UDC', {
                                     value: '20',
                                     boxLabel: 'Count Toward Accruals',
                                     bodyAlign: 'stretch',
-                                    bind: '{selectedCat.isAccrued}'
+                                    hidden:true,
+                                    bind:{
+                                        checked:'{selectedCat.isAccrued}',
+                                        hidden:'{!PaidCategoryCheck.checked}',
+                                    },
                                 },
                             ]
                         },

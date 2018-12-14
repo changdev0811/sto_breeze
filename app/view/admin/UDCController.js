@@ -16,18 +16,59 @@ Ext.define('Breeze.view.admin.UDCController', {
      * Called when the view is created
      */
     onInit: function (component) {
-
+        
         // Load User-Defined Categories list store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
+        this.loadCats();
+
 
    
     },
 
-  
+
+    /**
+     * Load cats, at select first or specific by ID
+     * after load
+     * @param {String} selectSpecific Category_Code value
+     */
+    loadCats: function(selectSpecific){
+        var me = this,
+            vm = this.getViewModel(),
+            selectId = Object.defVal(selectSpecific, null);
+
+        // Load Point Cats store
+        this.addStoreToViewModel(
+            'Breeze.store.category.List',
+            'categoriesList',
+            { load: true, loadOpts: {
+
+                    // Callback fired when store load completes
+                    callback:function(records, op, success){
+                        // Mark first item in list selected
+                        if(success){
+                            var record = records[0];
+                            if(selectId){
+                                record = vm.get('categoriesList').queryRecord('Category_Code', selectId);
+                            }
+                            this.lookup('categoryList').getSelectable()
+                                .setSelectedRecord(record);
+                        }
+                    },
+                    scope: me
+                } 
+            }
+        );
+    },
+
+
+
+
+
+
+    onCatSelect:function(list, record){
+        var me = this,
+            vm = me.getViewModel();
+            vm.set('selectedCat', record.getData());
+    },
 
 
     

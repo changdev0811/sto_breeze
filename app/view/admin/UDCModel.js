@@ -14,18 +14,22 @@ Ext.define('Breeze.view.admin.UDCModel', {
 
     data: {
     	// TODO: change to null
-    	selectedCategoryID: "1"
+    	selectedCat: null
     },
 
+
+    /*
     formulas: {
     	selectedCat: function(get){
     		var cat = get('cats').findRecord('Category_Id', get('selectedCategoryID'));
     		return cat;
     	},
     },
+    */
 
 	stores: {
         // TODO: Remove when API dummy is available
+        /*
         cats: {
             data: [
             	{
@@ -35,7 +39,7 @@ Ext.define('Breeze.view.admin.UDCModel', {
 					"Category_Order": 0,
 					"Category_Code": "",
 					"HexColor": "#000000",
-					"Pay_Code": "PayCode", /* <-- NEW */
+					"Category_Paycode": "PayCode", //<-- NEW 
 					"Picture_Path": "",
 					"Picture_Abbreviated": "",
 					"isAllowed": true,
@@ -54,7 +58,8 @@ Ext.define('Breeze.view.admin.UDCModel', {
 				}
             ]
         },
-        minUseUnit:{
+
+                minUseUnit:{
         	fields: ['code', 'description'],
             data: [
                 { "code": 48, "description": "Days" },
@@ -63,6 +68,7 @@ Ext.define('Breeze.view.admin.UDCModel', {
 
             ]
         }
+        */
     }
 
 });
