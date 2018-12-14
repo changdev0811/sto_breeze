@@ -11,7 +11,8 @@ Ext.define('Breeze.view.employee.CalendarController', {
 
     requires: [
         'Breeze.store.category.CompactList',
-        'Breeze.model.calendar.Event'
+        'Breeze.model.calendar.Event',
+        'Ext.LoadMask'
     ],
 
     /**
@@ -31,21 +32,7 @@ Ext.define('Breeze.view.employee.CalendarController', {
 
     loadCategories: function(){
         var me = this;
-        // this.addStoreToViewModel(
-        //     'Breeze.store.category.CompactList',
-        //     'categories',
-        //     {
-        //         load: true,
-        //         loadOpts: { callback: function(success,a,b){
-        //             if(success){
-        //                 console.info('Categories loaded successfully');
-        //                 me.loadCalendar();
-        //             } else {
-        //                 console.warn('Failed to load categories');
-        //             }
-        //         }}
-        //     }
-        // )
+      
         me.companyApi.category.loadCompactListStore((success, id, store) => {
             if(!success){
                 // Failed to load
@@ -69,28 +56,15 @@ Ext.define('Breeze.view.employee.CalendarController', {
         var me = this;
         var vm = me.getViewModel();
 
-        // var calStore = Ext.create('Ext.calendar.store.Calendars',
-        //     {
-        //         autoLoad: true,
-        //         eventStoreDefaults: {
-        //             model: 'Breeze.model.calendar.Event',
-        //             proxy: {
-        //                 type: 'ajax',
-        //                 url: 'resources/calendar/absences.json'
-        //             }
-        //         },
-        //         data: [
-        //             {
-        //                 "id": 1,
-        //                 "title": "Default"
-        //             }
-        //         ]
-        //     }
-        // );
+        console.info('Calendar Load Start');
         
-        var calendar = this.lookup('calendarPanel').getView().activeView,
+        var calendarCmp = this.lookup('calendarPanel'),
+            calendar = calendarCmp.getView().activeView,
             start = calendar.getDisplayRange().start,
             end = calendar.getDisplayRange().end;
+
+        this.showLoadingMask(true);
+
         var calStore = Ext.create('Breeze.store.calendar.Calendar',
             {
                 // autoLoad: true,
@@ -103,13 +77,57 @@ Ext.define('Breeze.view.employee.CalendarController', {
                 lookup: vm.get('employeeId')
             }
         ).load({callback: function(r,o,success){
-            console.info('Calendar load successful: ', success);
+            // console.info('Calendar load successful: ', success);
+            
+            // Add event listeners for detecting when all events finish updating
+            calStore.getEventSource().on({
+                datachanged: function(){
+                    console.info('datachanged');
+                    this.showLoadingMask(true);
+                }, 
+                refresh: function(){
+                    console.info('refresh');
+                    this.showLoadingMask(false);
+                },
+                // beforeupdate: function(){
+                //     console.info('beforeupdate');
+                //     this.showLoadingMask(true);
+                // },
+                // endupdate: function(){
+                //     console.info('endupdate');
+                //     this.showLoadingMask(true);
+                // },
+                scope: me
+            });
+            
             vm.setStores({calendar: calStore});
         }});
+    },
 
-
+    showLoadingMask: function(shown){
+        var cmp = this.lookup('calendarPanel').getView().activeView;
+        if(shown){
+            cmp.setMasked({
+                xtype: 'loadmask',
+                message: 'Loading Events',
+                messageCls: 'calendar-loading-mask'
+            });
+        } else {
+            cmp.unmask();
+        }
     },
 
     // === [Event Handlers] ===
 
+    onPrevMonthButton: function(){
+        console.info("Prev");
+        this.showLoadingMask(true);
+        this.lookup('calendarPanel').navigate(
+            -1, Ext.Date.MONTH
+        );
+    }
+
+    // onEventsLoadedForMonth: function(){
+    //     this.lookup('calendarPanel').unmask();
+    // }
 });

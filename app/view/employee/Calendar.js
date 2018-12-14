@@ -56,10 +56,7 @@ Ext.define('Breeze.view.employee.Calendar',{
                 switcher: null,
                 createButtonPosition: null,
                 createButton: {hidden: true, style: 'display: none'},
-                menuButton: {hidden: true, style: 'display: none'},
-                nextButton: {
-                    text: 'i'
-                }
+                menuButton: {hidden: true, style: 'display: none'}
             },
             switcher: {},
             titleBar: {
@@ -71,9 +68,10 @@ Ext.define('Breeze.view.employee.Calendar',{
                         iconCls: 'x-fa fa-angle-left',
                         ui: "calendarMonthSelectionButton",
                         weight: '-5',
-                        handler: function(c){
-                            c.getParent().getParent().getParent().navigate(-1,Ext.Date.MONTH);
-                        }
+                        // handler: function(c){
+                        //     c.getParent().getParent().getParent().navigate(-1,Ext.Date.MONTH);
+                        // }
+                        handler: 'onPrevMonthButton'
                     },
                     {
                         xtype: 'button',

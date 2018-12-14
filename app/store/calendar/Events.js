@@ -7,6 +7,8 @@ Ext.define('Breeze.store.calendar.Events', {
     extend: 'Ext.calendar.store.Events',
     alias: 'store.calendar.events',
 
+    autoLoad: true,
+
     config: {
         eventType: null,
         lookup: null,
