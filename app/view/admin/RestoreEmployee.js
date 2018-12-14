@@ -39,7 +39,7 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
             ui: 'admin-sub',
             layout:'fit',
             buttons: {
-                save: { text: 'Restore Employee', /*handler: 'onPrintPDF',*/ ui: 'action', },
+                save: { reference:'restoreButton', disabled:true, text: 'Restore Employee', handler:'onRestoreButtonTap', ui: 'action', },
             },
             buttonAlign: 'right',
             buttonToolbar: {
@@ -52,16 +52,20 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
                     xtype: 'selectfield',
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset no-border',
+                    reference:'deletedEmployeesSelectField',
                     labelAlign: 'left',
                     labelWidth: 'auto',
+                    placeholder: 'Select employee to restore',
                     label:'Employee to Restore',
-
                     displayField: 'text',
-                    valueField: 'id',
+                    valueField: 'data',
                     bind: {
-                        store: '{EmployeeOnlyTreeStoreDeleted}',
-                        //value:'{ConfigInfo.StartOfWeek}' /* PointRollingDuration.split(',')[1] */
+                        store: '{Employees}',
                     },
+                    listeners:{
+                        select:'onEmployeeSelect'
+                    }
+
                 },
 
 
