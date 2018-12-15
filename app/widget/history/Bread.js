@@ -1,5 +1,8 @@
 /**
  * Historical Breadcrumbs widget
+ * 
+ * Relies on views having 'crumbTitle' config property 
+ * 
  * @class Bread
  * @namespace Breeze.widget.history.Bread
  * @extends Ext.dataview.DataView
@@ -7,7 +10,7 @@
  * @xtype breeze-history-bread
  */
 Ext.define('Breeze.widget.history.Bread', {
-    extend: 'Ext.dataview.DataView',
+    extend: 'Ext.dataview.Component',
     alias: 'widget.breeze.history.bread',
     xtype: 'breeze-history-bread',
 
@@ -45,6 +48,11 @@ Ext.define('Breeze.widget.history.Bread', {
 
     //===[Manipulation Methods]===
 
+    /**
+     * Add crumb to right, removing first if max size exceeded
+     * @param {String} label Label for new history item
+     * @param {String} hash URL hash for item link
+     */
     bakeCrumb: function(label, hash){
         var vm = this.getViewModel(),
             crumbs = vm.get('crumbs');

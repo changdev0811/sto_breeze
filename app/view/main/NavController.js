@@ -776,6 +776,13 @@ Ext.define('Breeze.view.main.NavController', {
         }
     },
 
+    /**
+     * Replaces content view with component instantiated
+     * after current content component has been destroyed
+     * 
+     * @param {String} ns Namespace of view to construct
+     * @param {Object} args Optional config object
+     */
     replaceContent: function(ns, args){
         var container = this.lookup('contentContainer');
 
@@ -792,9 +799,9 @@ Ext.define('Breeze.view.main.NavController', {
         }
 
         var newContent = Ext.create(ns, args);
+        this.prepareCrumb(newContent);
         container.push(newContent);
         container.setActiveItem(newContent);
-
     },
 
     /**
@@ -815,14 +822,28 @@ Ext.define('Breeze.view.main.NavController', {
 
     },
 
-    prepareCrumb: function(){
-        var label = 'Unknown';
-        try{
-            label = this.lookup('contentContainer')
-                .getActiveItem().getCrumbTitle();
-        } catch(ex) {
-            // couldn't get label
+    /**
+     * Automatically determine title and url hash
+     * for current view and add it to breadcrumbs
+     * @param {Object} content Optionally provided content instance
+     */
+    prepareCrumb: function(content){
+        var label = 'Unknown',
+            content = content;
+        
+        if(Object.isUnvalued(content)){
+            content = this.lookup('contentContainer')
+            .getActiveItem(); 
         }
+
+        try{
+            if(content && content['getCrumbTitle']){
+                label = content.getCrumbTitle();
+            }
+        } catch (ex) {
+            console.warn(ex);
+        }
+    
         this.lookup('breadCrumbs').bakeCrumb(
             label,
             `#${Ext.History.currentToken}`
@@ -833,16 +854,17 @@ Ext.define('Breeze.view.main.NavController', {
      * Change content of container, disposing of previous content
      * @param {Object} container Container component to change content of
      * @param {Object} content Content component to put into container
+     * @deprecated
      */
-    changeContainerContent: function(container, content){
-        if(content && content !== null){
-            var old = container.getActiveItem();
-            container.setActiveItem(content);
-            if(typeof old !== 'undefined'){
-                container.remove(old);
-            }
-        }
-    },
+    // changeContainerContent: function(container, content){
+    //     if(content && content !== null){
+    //         var old = container.getActiveItem();
+    //         container.setActiveItem(content);
+    //         if(typeof old !== 'undefined'){
+    //             container.remove(old);
+    //         }
+    //     }
+    // },
 
     syncNavToRoute: function(route){
         var tree = this.lookup('navSideMenuTree');

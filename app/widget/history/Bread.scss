@@ -9,27 +9,29 @@
     color: map-get($root-text-colors, 'base');
     font-size: map-get($root-font-sizes, 'detail');
 
-    & .crumb-data-item {
-        display: inline-block;
-    }
-
+    // Crumb item element
     & .crumb {
-        // padding: 8pt;
-        & a {
-            color: map-get($root-text-colors, 'base');
-            text-decoration: underline;
-            &:hover{
-                color: map-get($root-text-colors, 'light');
-            }
-        }
+        // Element containing link and divider
         & > div {
-            color: map-get($root-text-colors, 'light');
+            // Crumb links
+            & > a {
+                color: map-get($root-text-colors, 'base');
+                text-decoration: underline;
+                &:hover{
+                    color: map-get($root-text-colors, 'light');
+                }
+            }
+            // Divider symbol
             &:after {
                 content: "\232a" !important;
                 // font-size: 75%;
                 vertical-align: middle;
                 margin-left: 0.7em !important;
             }
+        }
+        // Current location name
+        & > span {
+            color: map-get($root-text-colors, 'light');
         }
     }
   }

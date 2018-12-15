@@ -7,6 +7,11 @@ Ext.define('Breeze.view.dashboard.Admin', {
     extend: 'Ext.Container',
     alias: 'widget.dashboard.admin',
     userCls:'admin-content',
+
+    config: {
+        crumbTitle: 'Admin'
+    },
+
     requires: [
         'Breeze.view.dashboard.AdminController',
         'Breeze.view.dashboard.AdminModel'
