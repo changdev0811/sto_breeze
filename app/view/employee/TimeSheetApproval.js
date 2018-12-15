@@ -5,6 +5,11 @@
 Ext.define('Breeze.view.employee.TimeSheetApproval',{
     extend: 'Ext.Panel',
     alias: 'widget.employee.timesheetapproval',
+
+    config: {
+        crumbTitle: 'Time Sheet Approval',
+    },
+
     requires: [
         'Breeze.view.employee.FyiController',
         'Breeze.view.employee.FyiModel',

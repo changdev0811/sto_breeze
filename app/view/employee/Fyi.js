@@ -5,6 +5,10 @@
 Ext.define('Breeze.view.employee.Fyi',{
     extend: 'Ext.Panel',
     
+    config: {
+        crumbTitle: 'FYI',
+    },
+    
     requires: [
         'Breeze.view.employee.FyiController',
         'Breeze.view.employee.FyiModel',

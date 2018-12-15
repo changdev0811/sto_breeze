@@ -4,8 +4,15 @@
 
 .breeze-history-bread {
     vertical-align: bottom;
+    padding-bottom: 6pt;
     background-color: $base-color;
     color: map-get($root-text-colors, 'base');
+    font-size: map-get($root-font-sizes, 'detail');
+
+    & .crumb-data-item {
+        display: inline-block;
+    }
+
     & .crumb {
         // padding: 8pt;
         & a {
@@ -24,15 +31,5 @@
                 margin-left: 0.7em !important;
             }
         }
-        // &:after {
-        //     content: "\232a" !important;
-        //     // font-size: 75%;
-        //     vertical-align: middle;
-        //     margin-left: 0.7em !important;
-        // }
-        // &:nth-last-child(1):after{
-        //     content: "o" !important;
-        //     margin-left: 0;
-        // }
     }
   }

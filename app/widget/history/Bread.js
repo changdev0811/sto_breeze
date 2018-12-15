@@ -1,13 +1,21 @@
+/**
+ * Historical Breadcrumbs widget
+ * @class Bread
+ * @namespace Breeze.widget.history.Bread
+ * @extends Ext.dataview.DataView
+ * @alias breeze.history.bread
+ * @xtype breeze-history-bread
+ */
 Ext.define('Breeze.widget.history.Bread', {
     extend: 'Ext.dataview.DataView',
     alias: 'widget.breeze.history.bread',
     xtype: 'breeze-history-bread',
 
-    controller: 'breeze.history.bread',
     viewModel: { type: 'breeze.history.bread' },
 
     config: {
-        maxLength: 5
+        // Max number of items shown and remembered
+        maxLength: 4
     },
 
     constructor: function(){
@@ -16,7 +24,11 @@ Ext.define('Breeze.widget.history.Bread', {
 
     userCls: 'breeze-history-bread',
 
-    layout: 'hbox',
+    layout: {
+        type: 'hbox',
+        align: 'end'
+    },
+
     itemTpl: [
         '<div class="crumb">',
         '<tpl if="!active">',

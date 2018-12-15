@@ -7,6 +7,10 @@ Ext.define('Breeze.view.employee.Information', {
     extend: 'Ext.Panel',
     alias: 'widget.employee.information',
 
+    config: {
+        crumbTitle: 'Employee Info',
+    },
+
     requires: [
         'Ext.tab.Panel',
         'Breeze.view.employee.InformationController',

@@ -377,8 +377,6 @@ Ext.define('Breeze.view.main.NavController', {
             console.warn('Sync error: ', err);
         }
         
-        this.lookup('breadCrumbs').bakeCrumb('x',action);
-
         // ensure side panel isn't visible
         try{
             this.refreshSidePanel(false);
@@ -802,26 +800,33 @@ Ext.define('Breeze.view.main.NavController', {
     /**
      * Swap contents of body content container
      * @param {Object} newContent New view / component to show in content container
-     * @param {Boolean} modalMode If true, treat view as 'modal' (disable menus); default false
      */
-    changeContent: function(newContent, modalMode){
-        var modalMode = Object.defVal(modalMode, false);
-
+    changeContent: function(newContent){
         var container = this.lookup('contentContainer');
         
         if(newContent && newContent !== null){
-            //     container.add(newContent);
             var old = container.getActiveItem();
             container.setActiveItem(newContent);
+            this.prepareCrumb();
             if(typeof old !== 'undefined'){
                 container.remove(old);
             }
         }
-        
-        if(modalMode){
-            // TODO: Change what menus are shown / enabled
-        }
 
+    },
+
+    prepareCrumb: function(){
+        var label = 'Unknown';
+        try{
+            label = this.lookup('contentContainer')
+                .getActiveItem().getCrumbTitle();
+        } catch(ex) {
+            // couldn't get label
+        }
+        this.lookup('breadCrumbs').bakeCrumb(
+            label,
+            `#${Ext.History.currentToken}`
+        );
     },
 
     /**
