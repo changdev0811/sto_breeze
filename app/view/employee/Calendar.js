@@ -5,6 +5,11 @@
 Ext.define('Breeze.view.employee.Calendar',{
     extend: 'Ext.Panel',
     alias: 'widget.employee.calendar',
+
+    config: {
+        crumbTitle: 'Calendar',
+    },
+
     requires: [
         'Breeze.view.employee.CalendarController',
         'Breeze.view.employee.CalendarModel',

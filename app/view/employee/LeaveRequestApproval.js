@@ -5,6 +5,11 @@
 Ext.define('Breeze.view.employee.LeaveRequestApproval',{
     extend: 'Ext.Panel',
     alias: 'widget.employee.leaverequestapproval',
+
+    config: {
+        crumbTitle: 'Leave Request Approval',
+    },
+    
     requires: [
         'Breeze.view.employee.FyiController',
         'Breeze.view.employee.FyiModel',

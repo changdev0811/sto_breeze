@@ -8,6 +8,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     extend: 'Ext.Panel',
     alias: 'widget.employee.worktimerecords',
     
+    config: {
+        crumbTitle: 'WorkTime Records',
+    },
+        
     requires: [
         'Ext.ux.google.Map'
     ],

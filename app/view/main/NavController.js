@@ -776,6 +776,13 @@ Ext.define('Breeze.view.main.NavController', {
         }
     },
 
+    /**
+     * Replaces content view with component instantiated
+     * after current content component has been destroyed
+     * 
+     * @param {String} ns Namespace of view to construct
+     * @param {Object} args Optional config object
+     */
     replaceContent: function(ns, args){
         var container = this.lookup('contentContainer');
 
@@ -792,50 +799,72 @@ Ext.define('Breeze.view.main.NavController', {
         }
 
         var newContent = Ext.create(ns, args);
+        this.prepareCrumb(newContent);
         container.push(newContent);
         container.setActiveItem(newContent);
-
     },
 
     /**
      * Swap contents of body content container
      * @param {Object} newContent New view / component to show in content container
-     * @param {Boolean} modalMode If true, treat view as 'modal' (disable menus); default false
      */
-    changeContent: function(newContent, modalMode){
-        var modalMode = Object.defVal(modalMode, false);
-
+    changeContent: function(newContent){
         var container = this.lookup('contentContainer');
         
         if(newContent && newContent !== null){
-            //     container.add(newContent);
             var old = container.getActiveItem();
             container.setActiveItem(newContent);
+            this.prepareCrumb();
             if(typeof old !== 'undefined'){
                 container.remove(old);
             }
         }
+
+    },
+
+    /**
+     * Automatically determine title and url hash
+     * for current view and add it to breadcrumbs
+     * @param {Object} content Optionally provided content instance
+     */
+    prepareCrumb: function(content){
+        var label = 'Unknown',
+            content = content;
         
-        if(modalMode){
-            // TODO: Change what menus are shown / enabled
+        if(Object.isUnvalued(content)){
+            content = this.lookup('contentContainer')
+            .getActiveItem(); 
         }
 
+        try{
+            if(content && content['getCrumbTitle']){
+                label = content.getCrumbTitle();
+            }
+        } catch (ex) {
+            console.warn(ex);
+        }
+    
+        this.lookup('breadCrumbs').bakeCrumb(
+            label,
+            `#${Ext.History.currentToken}`
+        );
     },
 
     /**
      * Change content of container, disposing of previous content
      * @param {Object} container Container component to change content of
      * @param {Object} content Content component to put into container
+     * @deprecated
      */
-    changeContainerContent: function(container, content){
-        if(content && content !== null){
-            var old = container.getActiveItem();
-            container.setActiveItem(content);
-            if(typeof old !== 'undefined'){
-                container.remove(old);
-            }
-        }
-    },
+    // changeContainerContent: function(container, content){
+    //     if(content && content !== null){
+    //         var old = container.getActiveItem();
+    //         container.setActiveItem(content);
+    //         if(typeof old !== 'undefined'){
+    //             container.remove(old);
+    //         }
+    //     }
+    // },
 
     syncNavToRoute: function(route){
         var tree = this.lookup('navSideMenuTree');
