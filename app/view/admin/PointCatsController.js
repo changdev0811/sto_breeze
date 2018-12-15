@@ -131,9 +131,9 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             duration_type: point.DurType,
             duration_amount: point.DurAmt,
             // placeholders
-            occfroms: [],
-            occtos: [],
-            occvalues: [],
+            occfrom: [],
+            occto: [],
+            occvalue: [],
             selcats: ''
         };
 
@@ -144,15 +144,15 @@ Ext.define('Breeze.view.admin.PointCatsController', {
 
         // build lists of occurrence values from grid
         occurrences.each((o)=>{
-            params.occfroms.push(o.get('occfrom'));
-            params.occtos.push(o.get('occto'));
-            params.occvalues.push(o.get('occvalue'));
+            params.occfrom.push(o.get('occfrom'));
+            params.occto.push(o.get('occto'));
+            params.occvalue.push(o.get('occvalue'));
         })
 
         // turn occurrence lists into strings
-        params.occfroms = params.occfroms.join(',');
-        params.occtos = params.occtos.join(',');
-        params.occvalues = params.occvalues.join(',');
+        params.occfrom = params.occfrom.join(',');
+        params.occto = params.occto.join(',');
+        params.occvalue = params.occvalue.join(',');
         
         return params;
     },
