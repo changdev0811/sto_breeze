@@ -67,8 +67,8 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                         // Mark first item in list selected
                         if(success){
                             var record = records[0];
-                            if(selectId){
-                                record = vm.get('pointCats').queryRecords('PointID', selectId);
+                            if(!Object.isUnvalued(selectId)){
+                                record = vm.get('pointCats').queryRecords('PointID', selectId)[0];
                             }
                             this.lookup('pointCatsList').getSelectable()
                                 .setSelectedRecord(record);
@@ -100,6 +100,61 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                 return ids.includes(r.get('Category_Id'));
             }).items;
         catList.getSelectable().select(selectedRecords,false,true);    
+    },
+
+    /**
+     * Collect parameters used for update
+     * @return {Object} false if no point is selected, otherwise object
+     *      with update data gathered and named for update call
+     */
+    collectParams: function(){
+        var vm = this.getViewModel(),
+            // selected point
+            point = vm.get('selectedPointCat'),
+            // occurrences grid store
+            occurrences = vm.get('occurrenceValues'),
+            // selected category records
+            cats = this.lookup('categoryList').gatherSelected();
+
+        // abort if point is undefined
+        if(Object.isUnvalued(point)){
+            return false;
+        }
+
+        // Build update params object
+        var params = {
+            // pull props from selected point cat into new param obj
+            // using the names the update method expects
+            point_name: point.PointName,
+            point_details: point.PointDetails,
+            point_id: point.PointID,
+            duration_type: point.DurType,
+            duration_amount: point.DurAmt,
+            // placeholders
+            occfroms: [],
+            occtos: [],
+            occvalues: [],
+            selcats: ''
+        };
+
+        // gather selected category ids into string using map
+        params.selcats = cats.map((r)=>{
+            return r.get('Category_Id')
+        }).join(',');
+
+        // build lists of occurrence values from grid
+        occurrences.each((o)=>{
+            params.occfroms.push(o.get('occfrom'));
+            params.occtos.push(o.get('occto'));
+            params.occvalues.push(o.get('occvalue'));
+        })
+
+        // turn occurrence lists into strings
+        params.occfroms = params.occfroms.join(',');
+        params.occtos = params.occtos.join(',');
+        params.occvalues = params.occvalues.join(',');
+        
+        return params;
     },
 
     // === [Event Handlers] ===
@@ -146,7 +201,6 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         }
 
     },
-
 
     /**
     * Event handler for occurrence values Through grid item change
@@ -197,7 +251,6 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             return false;
         }
     },
-
 
     /**
     * Fires before entering editor for grid
@@ -343,9 +396,9 @@ Ext.define('Breeze.view.admin.PointCatsController', {
         var me = this,
             vm = me.getViewModel();
 
-        if(vm.get('occurrencesValues')){
+        if(vm.get('occurrenceValues')){
             // remove occurance value records if they exist
-            vm.get('occurrencesValues').removeAll();
+            vm.get('occurrenceValues').removeAll();
         }
 
         // Occurrence is spelled wrong in the model, anything defined
@@ -450,6 +503,35 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                 timeout: 10000
             });
         });
+    },
+
+    /**
+     * Handle save button click event
+     */
+    onSaveButton: function(){
+        var params = this.collectParams(),
+            me = this;
+
+        // Perform update call only if params isn't null
+        if(params){
+            // Make API call
+            this.api.update(params).then((r)=>{
+                // Show success toast
+                Ext.toast({
+                    type: Ext.Toast.SUCCESS,
+                    message: r,
+                    timeout: 10000
+                });
+                me.loadPointCats(params.point_id);
+            }).catch((e)=>{
+                // Show error/warning toast
+                Ext.toast({
+                    type: e.type,
+                    message: e.message,
+                    timeout: 10000
+                });
+            });
+        }
     }
     
 

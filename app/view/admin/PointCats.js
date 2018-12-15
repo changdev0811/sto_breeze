@@ -32,7 +32,7 @@ Ext.define('Breeze.view.admin.PointCats', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt'},
+        apply: { text: 'Save', handler: 'onSaveButton', ui: 'confirm alt', style:'width:125pt'},
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -61,8 +61,6 @@ Ext.define('Breeze.view.admin.PointCats', {
             layout: 'hbox',
 
             minHeight:'420pt',
-
-
 
             // +++ Allow h scroll when panel is too small +++
             items: [
