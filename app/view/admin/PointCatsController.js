@@ -68,7 +68,7 @@ Ext.define('Breeze.view.admin.PointCatsController', {
                         if(success){
                             var record = records[0];
                             if(selectId){
-                                record = vm.get('pointCats').queryRecord('PointID', selectId);
+                                record = vm.get('pointCats').queryRecords('PointID', selectId);
                             }
                             this.lookup('pointCatsList').getSelectable()
                                 .setSelectedRecord(record);
@@ -355,8 +355,11 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             data:Ext.clone(record.get('Occurences'))
         }, 'occurrenceValues');
 
+        // Store copy of current point category for binding display
+        // Prevents changes from showing in list
         vm.set('selectedPointCat', record.getData());
 
+        // Update checked point categories store
         me.addStoreToViewModel(
             'Breeze.store.point.CategoryList',
             'pointCatCategories',
@@ -399,6 +402,48 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             });
         }).catch((e)=>{
             // Failure, show error
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 10000
+            });
+        });
+    },
+
+    /**
+     * Event handler for delete point category button
+     */
+    onPointCatDelete: function(){
+        var me = this,
+            record = this.getViewModel().get('selectedPointCat');
+        
+        if(Object.isUnvalued(record)){
+            /* 
+                If the record doesn't exist, for some reason
+                nothing was selected, so abort
+            */
+            return false;
+        }
+
+        // Make API call
+        this.api.delete(record.PointID).then((r)=>{
+            // Show success toast
+            Ext.toast({
+                type: Ext.Toast.SUCCESS,
+                message: r,
+                timeout: 10000
+            });
+            /* 
+                Normally, we'd use the onRefreshTool method from
+                the base view controller, but this is a case where
+                the new item made available by refresh needs to start
+                selected, so instead the loadPointCats function is
+                implemented as so to be able to accept a target id and
+                still refresh
+            */
+           me.loadPointCats(r.id);
+        }).catch((e)=>{
+            // Show error/warning toast
             Ext.toast({
                 type: e.type,
                 message: e.message,

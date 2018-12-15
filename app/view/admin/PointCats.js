@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.PointCats', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.pointcats',
 
+    config: {
+        crumbTitle: 'Point Categories'
+    },
+
     requires: [
         // Plugin for editable grid
         'Ext.grid.plugin.CellEditing'
@@ -100,6 +104,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-minus',
                                     ui: 'plain wtr-button',
+                                    handler: 'onPointCatDelete'
                                 },
                             ]
                         },
