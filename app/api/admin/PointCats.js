@@ -24,7 +24,7 @@ Ext.define('Breeze.api.admin.PointCats', {
                 true, false,
                 function (resp) {
                     var rsp = api.decodeJsonResponse(resp);
-                    if(rsp.success){
+                    if (rsp.success) {
                         resolve({
                             id: rsp.err,
                             message: rsp.info.join('')
@@ -49,33 +49,80 @@ Ext.define('Breeze.api.admin.PointCats', {
     },
 
     /**
-     * TODO: Implement delete
+     * Delete point category
+     * @param {Object} pointId Category ID of point to delete
+     * @return {Promise} Promise resolving with success message
+     *      or rejecting with Toast error message
      * @api deletePointCategory
      */
-    delete: function (point) {
+    delete: function (pointId) {
         var api = this.api;
         return new Promise((resolve, reject) => {
             api.serviceRequest(
                 'deletePointCategory',
                 {
-                    point_id: pointId
+                    pointcat_id: pointId
                 },
                 true, false,
                 function (resp) {
-
+                    var rsp = api.decodeJsonResponse(resp);
+                    if (rsp.success) {
+                        resolve(
+                            rsp.info.join('')
+                        );
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: rsp.err,
+                            error: rsp.err
+                        });
+                    }
                 },
                 function (err) {
-
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
                 }
             )
         });
     },
 
     /**
-     * TODO: implement update
+     * Update point category API call
+     * @param {Object} params Set of properly named update params
+     * @return {Promise} Promise resolving with success message on success,
+     *      or rejecting with error toast data on fail
      * @api updatePointCategory
      */
-    update: function () {
-
+    update: function (params) {
+        var api = this.api;
+        return new Promise((resolve, reject) => {
+            api.serviceRequest(
+                'updatePointCategory',
+                params,
+                true, false,
+                function (resp) {
+                    var rsp = api.decodeJsonResponse(resp);
+                    if (rsp.success) {
+                        resolve(rsp.info.join(''));
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: rsp.err,
+                            error: rsp.err
+                        });
+                    }
+                },
+                function (err) {
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
+                }
+            );
+        });
     }
 });
