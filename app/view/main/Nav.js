@@ -18,6 +18,7 @@ Ext.define('Breeze.view.main.Nav', {
         'Ext.menu.Menu',
         'Ext.menu.Item',
         'Breeze.widget.navBar.NavTree',
+        'Breeze.widget.history.Bread',
         'Ext.Toolbar',
         'Ext.Img',
         'Ext.Button'
