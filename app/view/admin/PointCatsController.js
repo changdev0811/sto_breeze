@@ -134,11 +134,11 @@ Ext.define('Breeze.view.admin.PointCatsController', {
             occfrom: [],
             occto: [],
             occvalue: [],
-            selcats: ''
+            absencecats: ''
         };
 
         // gather selected category ids into string using map
-        params.selcats = cats.map((r)=>{
+        params.absencecats = cats.map((r)=>{
             return r.get('Category_Id')
         }).join(',');
 
