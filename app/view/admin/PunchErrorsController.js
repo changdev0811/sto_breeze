@@ -1,12 +1,12 @@
 /**
- * View Controller for Roles Admin view
- * @class ProjectsController
- * @namespace Breeze.view.admin.RolesController
- * @alias controller.admin.roles
+ * View Controller for Punch Errors Admin view
+ * @class PunchErrorsController
+ * @namespace Breeze.view.admin.ProjectsController
+ * @alias controller.admin.projects
  */
-Ext.define('Breeze.view.admin.RolesController', {
+Ext.define('Breeze.view.admin.PunchErrorsController', {
     extend: 'Breeze.controller.Base',
-    alias: 'controller.admin.roles',
+    alias: 'controller.admin.puncherrors',
 
     stores: [
         // 'Breeze.store.category.List'
@@ -28,11 +28,7 @@ Ext.define('Breeze.view.admin.RolesController', {
     },
 
   
-    //===[Event Handlers]===
-    onRolesSelect: function(list, record){
-        vm = this.getViewModel();
-        vm.set('selectedRoleID', record.data.id);
-    },
+
 
     
 });
