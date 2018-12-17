@@ -97,7 +97,7 @@ Ext.define('Breeze.view.admin.Roles', {
                             xtype: 'breeze-categories-list',
                             ui: 'admin-shift-grid',
                             flex: 1,
-                            reference: 'departments',
+                            reference: 'rolesList',
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             itemId: 'selectList',
                             fieldMode: 'none',
@@ -121,7 +121,8 @@ Ext.define('Breeze.view.admin.Roles', {
                                 store: '{roles}',
                             },
                             listeners: {
-                                select: 'onRolesSelect'
+                                select: 'onRolesSelect',
+                                storechange: 'onRolesStoreChange',
                             },
                             viewModel: true
                         },                        

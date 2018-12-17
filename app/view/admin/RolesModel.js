@@ -21,8 +21,6 @@ Ext.define('Breeze.view.admin.RolesModel', {
 	formulas: {
     	selectedRole: function(get){
     		var role = get('roles').findRecord('id', get('selectedRoleID'));
-    		console.log("MOOSE!!!");
-    		console.log(role.data);
     		return role.get('data');
     	},
 

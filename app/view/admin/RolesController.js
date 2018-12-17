@@ -24,6 +24,7 @@ Ext.define('Breeze.view.admin.RolesController', {
         //    { load: true }
         //);
 
+
    
     },
 
@@ -33,6 +34,10 @@ Ext.define('Breeze.view.admin.RolesController', {
         vm = this.getViewModel();
         vm.set('selectedRoleID', record.data.id);
     },
+
+    onRolesStoreChange: function(list){
+        list.select( 0, true );
+    }
 
     
 });
