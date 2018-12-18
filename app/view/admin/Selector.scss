@@ -312,7 +312,44 @@
     );
 };
 
+.projects-grid {
+    border:none;
+    //border-left:solid 1px white;
+    //border-bottom:solid 1px white;
+    //border-right:solid 1px white;
+}
 
+.projects-grid  .x-font-icon {
+    color:white;
+    width:auto;
+    margin:0pt 5pt 0pt 0pt;
+}
+
+
+.projects-grid .expander-el {
+    color:white;
+    margin:0pt 0pt 0pt 0pt;
+}
+
+
+
+
+@include dataview-ui(
+    $background-color :  transparent,
+    $ui: 'projects-grid'
+);
+
+@include listitem-ui(
+    $ui: 'projects-grid',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'medium'),
+    $hovered-background-color: map-get($admin-colors, 'light'),
+    $font-size: map-get($root-font-sizes, 'detail') !important,
+    $padding: 10pt 0pt 10pt 11.6pt
+);
 
 // ===[User Categories List Widget Specific]== (SELECT VERSION)
 @include listitem-ui(

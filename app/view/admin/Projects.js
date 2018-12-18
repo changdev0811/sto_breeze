@@ -86,8 +86,8 @@ Ext.define('Breeze.view.admin.Projects', {
                             xtype: 'tree',
                             // == Item ID to make finding tree in panel easier
                             reference: 'projectsTree',
-                            // ui: 'employeeinfo-shift-grid',
-                            // userCls: 'employeeinfo-shift-grid no-border ',
+                            ui: 'projects-grid',
+                            userCls: 'projects-grid no-border ',
                             flex: 1,
                             layout: 'hbox',
                             hideHeaders: true,
