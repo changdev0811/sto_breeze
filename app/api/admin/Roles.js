@@ -29,14 +29,35 @@ Ext.define('Breeze.api.admin.Roles', {
                     if(r.success){
                         // return bool indicating if role is in use
                         // true means yes, false means no
-                        resolve(r.err > 1);
+                        var canDelete = (parseInt(r.err) < 1),
+                            items = [];
+                        if(!canDelete){
+                            for(var i=0;i<r.info.length;i+=2){
+                                items.push({
+                                    role: r.info[i],
+                                    name: r.info[i+1]
+                                });
+                            }
+                        }
+                        resolve({
+                            ok: canDelete,
+                            items: items
+                        });
                     } else {
-                        reject({err: r.err, info: r.info});
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: r.err,
+                            err: r.err, 
+                            info: r.info
+                        });
                     }
                 },
                 function(err){
                     reject({
-                        err: err, info: null
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        err: err, 
+                        info: null
                     });
                 }
             )
@@ -114,7 +135,7 @@ Ext.define('Breeze.api.admin.Roles', {
                     } else {
                         reject({
                             type: Ext.Toast.ERROR,
-                            message: 'Error',
+                            message: r.err,
                             error: e.err
                         });
                     }

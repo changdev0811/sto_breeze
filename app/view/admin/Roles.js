@@ -31,7 +31,7 @@ Ext.define('Breeze.view.admin.Roles', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        save: { text: 'Save', handler: 'onSavePolicy', ui: 'confirm alt', style: 'width:200pt' },
+        save: { text: 'Save', handler: 'onSave', ui: 'confirm alt', style: 'width:200pt' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -86,12 +86,14 @@ Ext.define('Breeze.view.admin.Roles', {
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
+                                    handler: 'onRoleAdd'
                                 },
                                 {
                                     xtype: 'button',
                                     iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    ui: 'plain wtr-button',
+                                    handler: 'onRoleRemove'
                                 },
                             ]
                         },
@@ -198,5 +200,51 @@ Ext.define('Breeze.view.admin.Roles', {
                 },
             ]
         }
-    ]
+    ],
+
+    dialog: {
+        xtype: 'dialog',
+        // width: '400pt', height: '400pt',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+        title: 'Supervisor Role Conflict',
+
+        items: [
+            {
+                xtype: 'component',
+                html: [
+                    'The role you are trying to delete is currently ',
+                    'in use. <br> Select a role to replace the role you are deleting:'
+                ]
+            },
+            {
+                xtype: 'selectfield',
+                bind: {
+                    options: '{replacementRoles}',
+                    value: '{replacementRole}'
+                },
+                ui: 'employeeinfo-dialog-field',
+                value: null,
+                autoSelect: true,
+                valueField: 'role',
+                displayField: 'name',
+                itemId: 'replacementSelect'
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Confirm',
+                ui: 'action alt',
+                handler: 'onReplaceDialogConfirm'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onReplaceDialogCancel'
+            }
+        ]
+    }
 });
