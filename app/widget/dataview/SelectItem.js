@@ -31,7 +31,8 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
         templates: {
             radioValue: '',
             itemData: {},
-            itemTpl: ''
+            itemTpl: '',
+            checkedBind: null
         }
     },
 
@@ -47,6 +48,9 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
         this.buildItems();
     },
 
+    items: [],
+    tpl: '',
+
 
     //===[Private Methods]===
 
@@ -56,16 +60,18 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
             var items = [];
             switch (this.getParent().getFieldMode()) {
                 case 'check':
-                    items.push(
-                        {
-                            xtype: 'breeze-checkbox',
-                            itemId: this.fieldIds.check,
-                            ui: this.getCheckboxUi(),
-                            padding: '1em',
-                            listeners: this.getFieldListeners(),
-                            style: 'pointer-events: none'
-                        }
-                    );
+                    var c = {
+                        xtype: 'breeze-checkbox',
+                        itemId: this.fieldIds.check,
+                        ui: this.getCheckboxUi(),
+                        padding: '1em',
+                        listeners: this.getFieldListeners(),
+                        style: 'pointer-events: none'
+                    };
+                    if(this.getTemplates()['checkedBind']){
+                        c.bind = {checked: this.getTemplates().checkedBind};
+                    }
+                    items.push(c);
                     break;
                 case 'radio':
                     items.push(
@@ -103,8 +109,8 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
                         // '</div>{nameText}</div>'
                 }
             );
-
             this.setItems(items);
+            this.setTpl('');
             // this.getComponent('label').setData({labelCls: this.getLabelCls()});
         }
     }

@@ -21,7 +21,7 @@ Ext.define('Breeze.widget.dataview.SelectList', {
         fieldMode: 'radio',
         maximumSelectionCount: 1,
         // Template for display
-        template: null, // {radioValue, itemData, tpl}
+        template: null, // {radioValue, itemData, tpl},
     },
 
     fieldIds: {
