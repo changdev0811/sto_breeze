@@ -8,5 +8,9 @@ Ext.define('Breeze.view.admin.ProjectsModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.admin.projects',
 
+    data: {
+        allProjects: true,
+        projectID: 0
+    }
 
 });

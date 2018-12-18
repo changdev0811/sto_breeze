@@ -32,150 +32,153 @@ Ext.define('Breeze.view.admin.Projects', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable: 'x',
             items: [
                 // Column 1
                 {
                     xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
+                    userCls: 'admin-fieldset no-padding',
                     flex: 1,
 
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'200pt',
+                    minWidth: '150pt',
+                    maxWidth: '200pt',
 
                     layout: 'vbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'toolbar',
-                            ui:'admin-tree',
+                            ui: 'admin-tree',
                             shadow: false,
-                            items:[
-                                { 
-                                    xtype: 'component', 
+                            items: [
+                                {
+                                    xtype: 'component',
                                     html: 'Projects',
-                                    userCls:'admin-title-toolbar', 
+                                    userCls: 'admin-title-toolbar',
                                 },
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    xtype: 'spacer',
+                                    flex: 1,
                                 },
                                 {
                                     xtype: 'button',
-                                    iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    iconCls: 'x-fas fa-plus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'onProjectAdd'
+                                },
+                                {
+                                    xtype: 'button',
+                                    iconCls: 'x-fas fa-minus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'onProjectRemove',
+                                    reference: 'removeProjectButton',
+                                    bind: {
+                                        disabled: '{allProjects}'
+                                    }
                                 },
                             ]
                         },
                         {
                             xtype: 'tree',
                             // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border no-background',
-                            flex:1,
+                            reference: 'projectsTree',
+                            // ui: 'employeeinfo-shift-grid',
+                            // userCls: 'employeeinfo-shift-grid no-border ',
+                            flex: 1,
                             layout: 'hbox',
                             hideHeaders: true,
                             rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
-                                },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-                            bind: '{departmentsTree}'
-                        }, 
+
+                            bind: '{projects}',
+                            listeners: {
+                                select: 'onProjectSelect',
+                                deselect: 'onProjectDeselect'
+                            }
+                        },
                     ]
                 },
                 // Column 2
                 {
                     xtype: 'panel',
                     ui: 'admin-sub',
-                    userCls:'admin-fieldset',
+                    userCls: 'admin-fieldset',
                     flex: 2,
 
                     // +++ fixed width +++
-                    minWidth:'500pt',
-                    maxWidth:'500pt',
+                    minWidth: '500pt',
+                    maxWidth: '500pt',
 
                     layout: 'vbox',
                     buttons: {
-                        apply: { text: 'Save', /*handler: 'onPrintPDF',*/ ui: 'confirm alt', style:'width:125pt;' },
+                        apply: { 
+                            text: 'Save', handler: 'onSave', 
+                            ui: 'confirm alt', style: 'width:125pt;',
+                            bind: {
+                                disabled: '{allProjects}'
+                            }
+                        },
                     },
                     buttonToolbar: {
                         xtype: 'toolbar',
                         ui: 'admin-actions',
                         shadow: false
                     },
-                    items:[
+                    items: [
                         {
-                            xtype:'fieldset',
-                            userCls:'admin-fieldset no-margin',
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-margin',
                             layout: 'vbox',
-                            items:[
+                            bind: {
+                                hidden: '{allProjects}'
+                            },
+                            items: [
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Name',
-                                    name: 'project_name',
+                                    // name: 'project_name',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset-no-border',
+                                    userCls: 'admin-fieldset-no-border',
+                                    bind: '{projectData.Name}'
                                 },
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Description',
-                                    name: 'description',
+                                    // name: 'description',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset-no-border',
+                                    userCls: 'admin-fieldset-no-border',
+                                    bind: '{projectData.Description}'
                                 },
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Code',
-                                    name: 'project_code',
+                                    // name: 'project_code', 
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset-no-border',
+                                    userCls: 'admin-fieldset-no-border',
+                                    bind: '{projectData.Code}'
                                 },
                                 {
-                                    xtype:'checkbox',
-                                    ui:'admin',
-                                    name: 'isWorktime',
+                                    xtype: 'checkbox',
+                                    ui: 'admin',
+                                    // name: 'isWorktime',
                                     id: 'radio1',
                                     value: '20',
                                     boxLabel: 'Counts as Time Worked',
                                     bodyAlign: 'stretch',
+                                    bind: {
+                                        checked: '{projectData.IsWorktime}'
+                                    }
                                 },
                                 {
-                                    xtype:'checkbox',
-                                    ui:'admin',
+                                    xtype: 'checkbox',
+                                    ui: 'admin',
                                     name: 'isOT',
                                     id: 'radio2',
                                     value: '20',
                                     boxLabel: 'Counts as Overtime',
                                     bodyAlign: 'stretch',
+                                    bind: {
+                                        checked: '{projectData.IsOT}'
+                                    }
                                 },
                             ]
                         }

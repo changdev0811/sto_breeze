@@ -252,6 +252,28 @@
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
+@include treecell-ui(
+    $ui: 'admin-tree-item-selectable',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'medium'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'admin-tree-item-selectable',
+    $color: map-get($admin-text-colors, 'base'),
+    $selected-color: map-get($admin-text-colors, 'base'),
+    $hovered-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'medium'),
+    $hovered-background-color: map-get($admin-colors, 'base'),
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
 
 
 // ===[User Categories List Widget Specific]==
