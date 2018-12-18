@@ -35,8 +35,29 @@ Ext.define('Breeze.view.admin.RolesController', {
      * Called when record item is selected 
      */
     onRolesSelect: function(list, record){
-        vm = this.getViewModel();
-        vm.set('selectedRoleID', record.data.id);
+        var me = this,
+            vm = me.getViewModel(),
+            roleId = record.get('data');
+        
+        vm.set('roleName', record.get('text'));
+
+        this.lookup('rightsList').changeAllCheckboxes(false);
+        
+        me.addStoreToViewModel(
+            'Breeze.store.company.SecurityRightsList',
+            'rights',
+            { 
+                load: true, 
+                createOpts: { roleId: roleId },
+                loadOpts: {
+                    callback: function(records, op, success){
+                        if(success){
+
+                        }
+                    }
+                }
+            }
+        );
     },
 
     /**
