@@ -194,8 +194,8 @@ Ext.define('Breeze.view.admin.ProjectsController', {
         
         this.api.update(
             id, data.Name, data.Code,
-            data.Description, data.isWorktime,
-            data.isOT, data.Hourly_Comp
+            data.Description, data.IsWorktime,
+            data.IsOT, data.Hourly_Comp
         ).then((res)=>{
             Ext.toast({
                 type: res.type,
