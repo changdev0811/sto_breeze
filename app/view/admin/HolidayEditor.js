@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.holidayeditor',
 
+    config: {
+        crumbTitle: 'Holiday Editor'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.holidayeditor'

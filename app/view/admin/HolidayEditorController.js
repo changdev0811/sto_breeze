@@ -16,19 +16,17 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * Called when the view is created
      */
     onInit: function (component) {
-
-        // Load User-Defined Categories list store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
-   
+           
     },
 
-  
+    loadHolidays: function(year){
+        var me = this;
 
+        this.addStoreToViewModel(
+            'Breeze.store.record.Holidays',
+            'holidays',
+            { load: true, createOpts: { year: year } }
+        );
+    }
 
-    
 });
