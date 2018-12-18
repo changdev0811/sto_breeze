@@ -12,6 +12,10 @@ Ext.define('Breeze.view.admin.HolidayEditorModel', {
         'Breeze.model.data.Condition'
     ],
 
+    data: {
+        currentYear: (new Date()).getYear() + 1900
+    },
+
     stores: {
         // Week
         week: {

@@ -89,7 +89,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     labelWidth:'auto',
                     store: 'Years',
                     displayField: 'Year', valueField: 'Year',
-                    bind: { value: String( (new Date()).getYear() + 1900 ) } //<-- this should probably be in the model.js
+                    bind: { value: '{currentYear}' }
                 },
                 {
                     xtype:'spacer',
@@ -270,14 +270,13 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
                                 {
                                     xtype: 'breeze-checkbox',
-                                    name: 'overtime_opt1',
                                     boxLabel: 'Floating Holiday?',
-                                    name: 'floatingHoliday',
                                     labelWidth: 'auto',
-                                    ui: 'employeeinfo-checkbox',
+                                    // ui: 'employeeinfo-checkbox',
+                                    ui: 'admin admin-text',
                                     userCls: 'employee-info-general-field no-margin no-padding',
                                     bodyAlign: 'stretch',
-                                    reference: 'otCheck1',
+                                    reference: 'checkFloating',
                                     bind: {
                                         //checked: '{info.punchPolicy.Ot_Opt1}'
                                     },
@@ -293,18 +292,18 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     defaults: {
                                         ui: 'reporting admin-text'
                                     },
+                                    bind: {
+                                        hidden: '{!checkFloating.checked}'
+                                    },
                                     items: [
                                         {
                                             xtype: 'selectfield',
                                             name: 'week',
                                             flex: 2,
-                                            options: [
-                                                { text: '1st', value: 1 },
-                                                { text: '2nd', value: 2 },
-                                                { text: '3rd', value: 3 },
-                                                { text: '4th', value: 4 },
-                                                { text: '5th', value: 5 },
-                                            ]//<-- this should probably be in the model.js
+                                            displayField: 'text', valueField: 'data',
+                                            bind: {
+                                                store: '{week}'
+                                            }
                                         },
                                         {
                                             xtype: 'container',
@@ -314,15 +313,10 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                             xtype: 'selectfield',
                                             name: 'day',
                                             flex: 3,
-                                            options: [
-                                                { text: 'Sunday',       value: 1 },
-                                                { text: 'Monday',       value: 2 },
-                                                { text: 'Tuesday',      value: 3 },
-                                                { text: 'Wednesday',    value: 4 },
-                                                { text: 'Thursday',     value: 5 },
-                                                { text: 'Friday',       value: 6 },
-                                                { text: 'Saturday',     value: 7 },
-                                            ]//<-- this should probably be in the model.js
+                                            displayField: 'text', valueField: 'data',
+                                            bind: {
+                                                store: '{weekday}'
+                                            }
                                         },
                                         {
                                             xtype: 'container',
@@ -332,20 +326,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                             xtype: 'selectfield',
                                             name: 'month',
                                             flex: 3,
-                                            options: [
-                                                { text: 'January', value: 1 },
-                                                { text: 'February', value: 2 },
-                                                { text: 'March', value: 3 },
-                                                { text: 'April', value: 4 },
-                                                { text: 'May', value: 5 },
-                                                { text: 'June', value: 6 },
-                                                { text: 'July', value: 7 },
-                                                { text: 'August', value: 8 },
-                                                { text: 'September', value: 9 },
-                                                { text: 'October', value: 10 },
-                                                { text: 'November', value: 11 },
-                                                { text: 'December', value: 12 },
-                                            ]//<-- this should probably be in the model.js
+                                            bind: {
+                                                store: '{month}'
+                                            }
                                         },
 
 
