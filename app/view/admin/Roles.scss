@@ -1,0 +1,15 @@
+/**
+ * Admin Departments Stylesheet
+ * Classes and UI overrides in this sheet should be specific to 
+ * items that appear within the Admin Departments view and subviews
+*/
+
+.admin-roles-icon {
+    @extend .x-icon-el;
+    @extend .x-font-icon;
+    @extend .x-fa;
+    @extend .fa-badge-check;
+    padding-right: 8pt;
+    font-size: 14pt;
+    line-height: 16pt;
+}

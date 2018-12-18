@@ -60,7 +60,10 @@ Ext.define('Breeze.view.admin.Roles', {
                     minWidth:'200pt',
                     maxWidth:'200pt',
 
-                    layout: 'vbox',
+                    layout: {
+                        type: 'vbox',
+                        alignment: 'stretch'
+                    },
                     items:[
                         {
                             xtype: 'toolbar',
@@ -88,44 +91,41 @@ Ext.define('Breeze.view.admin.Roles', {
                                 },
                             ]
                         },
+                        
+
                         {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border no-background',
-                            flex:1,
-                            layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
+                            xtype: 'breeze-categories-list',
+                            ui: 'admin-shift-grid',
+                            flex: 1,
+                            reference: 'rolesList',
+                            userCls: 'admin-fieldset no-background no-margin no-border',
+                            itemId: 'selectList',
+                            fieldMode: 'none',
+                            itemConfig: {
+                                ui: 'admin-list-item-select',
+                                templates: {
+                                    radioValue: '{record.id}',
+                                    /* record has a record.text value. */
+                                    /* If record.text has a value it auto populates title before icon */
+                                    /* I manually added record.name and removed record.text */
+                                    //itemData: { name: '{record.text}' },
+                                    itemData: { name: '{record.text}' },
+                                    itemTpl: [
+                                        '<div class="breeze-dataview-select-item-label">',
+                                        '<div class="admin-roles-icon"></div>',
+                                        '{name}</div>'
+                                    ]
                                 },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-                            bind: '{departmentsTree}'
-                        }, 
+                            },
+                            bind: {
+                                store: '{roles}',
+                            },
+                            listeners: {
+                                select: 'onRolesSelect',
+                                storechange: 'onRolesStoreChange',
+                            },
+                            viewModel: true
+                        },                        
                     ]
                 },
                 // Column 2
