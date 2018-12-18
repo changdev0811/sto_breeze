@@ -26,6 +26,9 @@ Ext.define('Breeze.view.admin.Projects', {
     // Layout and base styles
     layout: 'hbox',
     ui: 'admin-base',
+    bind: {
+        title: '{companyConfigData.Captions.ProjectPlural}'
+    },
     title: 'Projects',
 
     // Body contents

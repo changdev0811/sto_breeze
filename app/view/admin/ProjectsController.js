@@ -16,10 +16,24 @@ Ext.define('Breeze.view.admin.ProjectsController', {
      * Called when the view is created
      */
     onInit: function (component) {
+        var me = this,
+            vm = this.getViewModel();
         this.api = Ext.create('Breeze.api.admin.Projects');
         
         var me = this;
-        
+        this.addStoreToViewModel(
+            'Breeze.store.company.Config',
+            'companyConfig',
+            { load: true, loadOpts: {
+                callback: function(records, op, success){
+                    if(success){
+                        vm.set('companyConfigData', records[0].getData());
+                    }
+                },
+                scope: me
+            }}
+        );
+
         this.addStoreToViewModel(
             'Breeze.store.tree.company.Projects',
             'projects',
@@ -131,24 +145,42 @@ Ext.define('Breeze.view.admin.ProjectsController', {
 
     onProjectRemove: function(){
         var me = this,
-            vm = this.getViewModel();
+            vm = this.getViewModel(),
+            projectText = vm.get('companyConfigData.Captions'),
+            treeItem = this.lookup('projectsTree').getSelectable().getSelectedRecord();
         
-        this.api.delete(vm.get('projectID')).then((r)=>{
-            Ext.toast({
-                type: r.type,
-                message: r.message,
-                timeout: 10000
+        var finishRemove = () => {
+            this.api.delete(vm.get('projectID')).then((r)=>{
+                Ext.toast({
+                    type: r.type,
+                    message: r.message,
+                    timeout: 10000
+                });
+                vm.set('allProjects',true);
+                vm.set('projectID',0);
+                me.onRefreshTool();
+            }).catch((e)=>{
+                Ext.toast({
+                    type: e.type,
+                    message: e.message,
+                    timeout: 10000
+                });
             });
-            vm.set('allProjects',true);
-            vm.set('projectID',0);
-            me.onRefreshTool();
-        }).catch((e)=>{
-            Ext.toast({
-                type: e.type,
-                message: e.message,
-                timeout: 10000
-            });
-        });
+        };
+
+        if(!treeItem.isLeaf()){
+            Ext.Msg.confirm(
+                `Deleting ${projectText.ProjectSingle}`,
+                `Deleting this ${projectText.ProjectSingle} will also delete all child ${projectText.ProjectPlural}.  Would you like to continue?`,
+                function(answer){
+                    if(answer=='yes'){
+                        finishRemove();
+                    }
+                }
+            );
+        } else {
+            finishRemove();
+        }
     },
 
     /**
