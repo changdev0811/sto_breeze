@@ -109,7 +109,7 @@ Ext.define('Breeze.view.admin.Roles', {
                                     /* If record.text has a value it auto populates title before icon */
                                     /* I manually added record.name and removed record.text */
                                     //itemData: { name: '{record.text}' },
-                                    itemData: { name: '{record.name}' },
+                                    itemData: { name: '{record.text}' },
                                     itemTpl: [
                                         '<div class="breeze-dataview-select-item-label">',
                                         '<div class="admin-roles-icon"></div>',

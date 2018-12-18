@@ -32,8 +32,8 @@ Ext.define('Breeze.view.admin.RolesModel', {
             data:[
 				{
 					"id":"1",
-					//"text":"Full Supervisor", //<-- had to remove to prevent label before and after icon
-					"name":"Full Supervisor", // <-- +++ this is and added item +++
+					"text":"Full Supervisor", //<-- had to remove to prevent label before and after icon
+					//"name":"Full Supervisor", // <-- +++ this is and added item +++
 					"iconCls":"fal fa-badge-check fa-2x fa-fw sto-skyblue",
 					"leaf":"true",
 					"d":null,
@@ -71,8 +71,8 @@ Ext.define('Breeze.view.admin.RolesModel', {
 				},
 				{
 					"id":"2",
-					//"text":"Limited Supervisor", //<-- had to remove to prevent label before and after icon
-					"name":"Limited Supervisor", // <-- +++ this is and added item +++
+					"text":"Limited Supervisor", //<-- had to remove to prevent label before and after icon
+					//"name":"Limited Supervisor", // <-- +++ this is and added item +++
 					"iconCls":"fal fa-badge-check fa-2x fa-fw sto-skyblue",
 					"leaf":"true",
 					"d":null,
@@ -110,8 +110,8 @@ Ext.define('Breeze.view.admin.RolesModel', {
 				},
 				{
 					"id":"3",
-					//"text":"Read Only Supervisor", //<-- had to remove to prevent label before and after icon
-					"name":"Read Only Supervisor", // <-- +++ this is and added item +++
+					"text":"Read Only Supervisor", //<-- had to remove to prevent label before and after icon
+					//"name":"Read Only Supervisor", // <-- +++ this is and added item +++
 					"iconCls":"fal fa-badge-check fa-2x fa-fw sto-skyblue",
 					"leaf":"true",
 					"d":null,

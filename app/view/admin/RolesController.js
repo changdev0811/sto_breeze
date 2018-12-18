@@ -30,13 +30,23 @@ Ext.define('Breeze.view.admin.RolesController', {
 
   
     //===[Event Handlers]===
+
+    /**
+     * Called when record item is selected 
+     */
     onRolesSelect: function(list, record){
         vm = this.getViewModel();
         vm.set('selectedRoleID', record.data.id);
     },
 
+    /**
+     * Called when store is change 
+     */
     onRolesStoreChange: function(list){
+        // if first started select 0 or item removed
         list.select( 0, true );
+        // +++ if saved, keep current selection
+        // +++ if new created, select it
     }
 
     
