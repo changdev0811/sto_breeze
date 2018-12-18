@@ -8,24 +8,24 @@ Ext.define('Breeze.view.admin.RolesController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.admin.roles',
 
-    stores: [
-        // 'Breeze.store.category.List'
+    requires: [
+        'Breeze.api.admin.Roles'
     ],
 
     /**
      * Called when the view is created
      */
     onInit: function (component) {
+        var vm = this.getViewModel(),
+            me = this;
 
-        // Load User-Defined Categories list store
-        //this.addStoreToViewModel(
-        //    'Breeze.store.category.List',
-        //    'categoriesList',
-        //    { load: true }
-        //);
+        this.api = Ext.create('Breeze.api.admin.Roles');
 
-
-   
+        this.addStoreToViewModel(
+            'Breeze.store.company.SupervisorRoleList',
+            'roles',
+            { load: true }
+        );
     },
 
   

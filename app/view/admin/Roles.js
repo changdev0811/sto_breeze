@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.Roles', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.roles',
 
+    config: {
+        crumbTitle: 'Supervisor Roles'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.roles'
@@ -94,27 +98,19 @@ Ext.define('Breeze.view.admin.Roles', {
                         
 
                         {
-                            xtype: 'breeze-categories-list',
+                            xtype: 'breeze-select-list',
                             ui: 'admin-shift-grid',
                             flex: 1,
                             reference: 'rolesList',
                             userCls: 'admin-fieldset no-background no-margin no-border',
-                            itemId: 'selectList',
+                            itemId: 'roleList',
                             fieldMode: 'none',
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {
-                                    radioValue: '{record.id}',
-                                    /* record has a record.text value. */
-                                    /* If record.text has a value it auto populates title before icon */
-                                    /* I manually added record.name and removed record.text */
-                                    //itemData: { name: '{record.text}' },
+                                    radioValue: '{record.data}',
                                     itemData: { name: '{record.text}' },
-                                    itemTpl: [
-                                        '<div class="breeze-dataview-select-item-label">',
-                                        '<div class="admin-roles-icon"></div>',
-                                        '{name}</div>'
-                                    ]
+                                    itemTpl: ''
                                 },
                             },
                             bind: {
@@ -122,7 +118,6 @@ Ext.define('Breeze.view.admin.Roles', {
                             },
                             listeners: {
                                 select: 'onRolesSelect',
-                                storechange: 'onRolesStoreChange',
                             },
                             viewModel: true
                         },                        

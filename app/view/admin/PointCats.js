@@ -115,7 +115,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {
-                                    radioValue: '{record.PintID}',
+                                    radioValue: '{record.PointID}',
                                     itemData: { name: '{record.PointName} '},
                                     itemTpl: '{name}'
                                 }
