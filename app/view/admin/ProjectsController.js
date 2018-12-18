@@ -155,6 +155,30 @@ Ext.define('Breeze.view.admin.ProjectsController', {
      * Event handler for save button click
      */
     onSave: function(){
-
+        var vm = this.getViewModel(),
+            data = vm.get('projectData'),
+            id = vm.get('projectID'),
+            me = this;
+        
+        this.api.update(
+            id, data.Name, data.Code,
+            data.Description, data.isWorktime,
+            data.isOT, data.Hourly_Comp
+        ).then((res)=>{
+            Ext.toast({
+                type: res.type,
+                message: res.message,
+                timeout: 10000
+            });
+            vm.set('allProjects',true);
+            vm.set('projectID',0);
+            me.onRefreshTool();
+        }).catch((er)=>{
+            Ext.toast({
+                type: er.type,
+                message: er.message,
+                timeout: 10000
+            });
+        });
     }    
 });

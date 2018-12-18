@@ -8,16 +8,16 @@
 Ext.define('Breeze.api.admin.Projects', {
     extend: 'Breeze.api.Base',
 
-    add: function(parentId){
+    add: function (parentId) {
         var api = this.api;
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             api.serviceRequest(
                 'addProject',
                 { parent_id: parentId },
                 true, false,
-                function(r){
+                function (r) {
                     var resp = api.decodeJsonResponse(r);
-                    if(resp.success){
+                    if (resp.success) {
                         resolve({
                             type: Ext.Toast.SUCCESS,
                             message: resp.info.join('')
@@ -30,7 +30,7 @@ Ext.define('Breeze.api.admin.Projects', {
                         });
                     }
                 },
-                function(err){
+                function (err) {
                     reject({
                         type: Ext.Toast.ERROR,
                         message: 'Unknown error',
@@ -48,18 +48,18 @@ Ext.define('Breeze.api.admin.Projects', {
      * based on success/failure
      * @api removeProject
      */
-    delete: function(projectId){
+    delete: function (projectId) {
         var api = this.api;
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             api.serviceRequest(
                 'removeProject',
                 { project_id: projectId },
                 true, false,
-                function(r){
+                function (r) {
                     var resp = api.decodeJsonResponse(r);
-                    if(resp.success){
+                    if (resp.success) {
                         resolve({
-                            type: Ext.Toast.SUCCESS,
+                            type: Ext.Toast.INFO,
                             message: resp.info.join('')
                         });
                     } else {
@@ -70,7 +70,7 @@ Ext.define('Breeze.api.admin.Projects', {
                         });
                     }
                 },
-                function(err){
+                function (err) {
                     reject({
                         type: Ext.Toast.ERROR,
                         message: 'Unknown error',
@@ -81,7 +81,45 @@ Ext.define('Breeze.api.admin.Projects', {
         })
     },
 
-    update: function(){
+    update: function (id, name, code, description, worktime, ot, hourlyComp) {
+        var api = this.api;
+        return new Promise((resolve, reject) => {
+            api.serviceRequest(
+                'UpdateProjectInformation',
+                {
+                    projectName: name,
+                    projectCode: code,
+                    projectDesc: description,
+                    projectId: id,
+                    isWorktime: worktime,
+                    isOT: ot,
+                    hourly_comp: hourlyComp
+                },
+                true, false,
+                function (r) {
+                    var resp = api.decodeJsonResponse(r);
+                    if (resp.success) {
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: resp.info.join('')
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Unable to save changes',
+                            error: SpeechRecognitionResult.err
+                        });
+                    }
+                },
+                function (err) {
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
+                }
+            );
+        });
 
     }
 
