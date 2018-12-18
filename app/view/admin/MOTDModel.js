@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.MOTDModel', {
 
     data: {
         // ID of selected department
-        motdText: null
+        motd: null
     },
 
     formulas: {
@@ -18,14 +18,14 @@ Ext.define('Breeze.view.admin.MOTDModel', {
          * get the MODT HTML 
          * return MOTD striped of HTML tags and decode entities
          */
-        motdText: function(get){
-        	var str = get('MOTD').MOTDhtml;
-				str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-				str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-			var element = document.createElement('div');
-				element.innerHTML = str;
-			return element.textContent	
-        }
+        // motdText: function(get){
+        // 	var str = get('MOTD').MOTDhtml;
+		// 		str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+		// 		str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+		// 	var element = document.createElement('div');
+		// 		element.innerHTML = str;
+		// 	return element.textContent	
+        // }
     },
 
 

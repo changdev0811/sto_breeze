@@ -55,7 +55,7 @@ Ext.define('Breeze.view.admin.MOTD', {
                     flex:1,
                     userCls:'admin-fieldset no-border no-margin',
                     bind:{
-                        value:'{motdText}'
+                        value:'{motd}'
                     }
 
                 },
