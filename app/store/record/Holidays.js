@@ -19,7 +19,7 @@ Ext.define('Breeze.store.record.Holidays', {
 	},
 	proxy: {
 		type: 'ajax',
-		url : Breeze.helper.Store.api.url('getHolidaysForYear'),
+		url : Breeze.helper.Store.api.url('GetHolidaysForYear'),
 		headers: { 'Content-Type': 'application/json;' },
 		actionMethods: {
 			create : 'POST',

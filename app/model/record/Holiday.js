@@ -10,7 +10,7 @@ Ext.define('Breeze.model.record.Holiday', {
         { name: 'holiday_Date', type: 'date' },
         { name: 'float_Day', type: 'integer' },
         { name: 'float_Week', type: 'integer' },
-        { name: 'percentage', type: 'numeric' },
+        { name: 'percentage', type: 'number' },
         { name: 'unique_Number', type: 'integer' },
         { name: 'isMultiDay', type: 'boolean' }
     ]

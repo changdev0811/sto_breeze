@@ -61,6 +61,24 @@ Ext.define('Breeze.view.admin.HolidayEditorModel', {
     			{ text: "December", data: '11'},
     		]
         }
+    },
+
+    formulas: {
+        holidayPercentage: {
+            get: function(get){
+                return get('holidayData.percentage') * 100.0;
+            },
+            set: function(value){
+                this.set(
+                    'holidayData.percentage',
+                    value / 100.0
+                );
+            }
+        },
+        holidayFloats: function(get){
+            return (get('holidayData.float_Day') !== 0 || get('holidayData.float_Week') !== 0);
+        }
     }
+
 
 });
