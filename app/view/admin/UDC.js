@@ -395,12 +395,17 @@ Ext.define('Breeze.view.admin.UDC', {
 
                                         {
                                             xtype: 'button',
-                                            ui:'col-btn',
+                                            ui:'plain',
+                                            userCls:'col-btn',
                                             reference: 'colorBtn',
                                             width:'24pt',
                                             height:'24pt',
                                             menuAlign: 'tr',
                                             arrow: false,
+                                            bind:{
+                                                // +++ need to bind to current category's color +++
+                                                style:'background-color:{catCol};',
+                                            },
                                             menu: {
                                                 xtype: 'menu',
                                                 userCls:'col-menu',
@@ -420,6 +425,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                                     },
                                                 ]
                                             }
+
                                         },
                                         {
                                             xtype:'spacer',

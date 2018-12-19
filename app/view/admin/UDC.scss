@@ -5,24 +5,13 @@
 */
 
 
-@include button-ui(
-    $ui: 'col-btn',
-    $arrow-icon-size: 10pt,
-    $icon-font-size: 10pt,
 
-
-    $background-color : rgba(255,255,255,1),
-    $hovered-background-color : rgba(255,255,255,1),
-    $pressed-background-color : rgba(255,255,255,1),
-    $focused-background-color : rgba(255,255,255,1),
-    $disabled-background-color : rgba(255,255,255,1),
-	$border-radius : 50%,
-
-
-
-
-);
-
+.col-btn {
+  border: solid 1px rgba(127,127,127,.33);
+  margin:5pt;
+  border-radius : 50%;
+  box-shadow: 0pt 3pt 3pt rgba(0,0,0,0.33);
+}
 
 
 .col-menu {

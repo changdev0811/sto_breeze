@@ -71,14 +71,16 @@ Ext.define('Breeze.view.admin.UDCController', {
     },
 
     onColorSelect:function(obj, record, eOpts){
+        // update model color
         var vm = this.getViewModel();
-        var btn = this.lookup('colorBtn');
-        // record is the color object
-        // +++ change button background color
-                // +++ beter to tie the button color to the model
-                // +++ update model color, button to change automaticly
-        // +++ close button menu
+            vm.set('catCol', record.data.hex);
+            // +++ need to update to current category's color instead of catCol +++
+
+        // close button menu
+        this.lookup('colorBtn').getMenu().hide();
+
 
     },
+
     
 });

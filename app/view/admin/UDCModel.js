@@ -14,7 +14,8 @@ Ext.define('Breeze.view.admin.UDCModel', {
 
     data: {
     	// TODO: change to null
-    	selectedCat: null
+        selectedCat: null,
+        catCol: '#00ff00'
     },
 
 
