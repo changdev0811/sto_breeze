@@ -8,6 +8,8 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.holidayeditor',
 
+    requires: ['Breeze.widget.panel.MiniCalendarSingle'],
+
     config: {
         crumbTitle: 'Holiday Editor'
     },
@@ -267,13 +269,17 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     }
                                 },
                                 {
-                                    xtype: 'panel.minicalendar',
+                                    xtype: 'panel.minicalendarsingle',
                                     reference: 'weekSelector',
+                                    userCls: 'admin-mini-calendar',
                                     ui: 'minicalendar-admin',//'wtr-small',,
                                     collapsed: true,
                                     margin: '10pt 10pt 0pt 10pt',
                                     listeners: {
                                         //change: 'onWeekChange'
+                                    },
+                                    bind: {
+                                        value: '{holidayData.holiday_Date}'
                                     }
                                 },
 
