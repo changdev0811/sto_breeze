@@ -55,6 +55,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             xtype: 'button',
             ui: 'confirm alt',
             text: 'Save',
+            handler: 'onSaveButton',
             style:'width:175pt;'
         }
     ],
@@ -271,7 +272,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                 },
                                 {
                                     xtype: 'panel.minicalendarsingle',
-                                    reference: 'weekSelector',
+                                    reference: 'dateSelector',
                                     userCls: 'admin-mini-calendar',
                                     ui: 'minicalendar-admin',//'wtr-small',,
                                     collapsed: true,

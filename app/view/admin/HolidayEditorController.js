@@ -18,8 +18,8 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      */
     onInit: function (component) {
         var me = this,
-            vm = me.getViewModel(),
-            api = Ext.create('Breeze.api.admin.HolidayEditor');
+            vm = me.getViewModel();
+        this.api = Ext.create('Breeze.api.admin.HolidayEditor');
         
         this.loadHolidays(vm.get('currentYear'));
     },
@@ -33,8 +33,14 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      */
     loadHolidays: function(year, id){
         var me = this,
-            id = Object.defVal(id, -1);
+            id = Object.defVal(id, -1),
+            dateSelector = me.lookup('dateSelector');
+        
+        // Restrict date selector range
+        dateSelector.setMinDate(new Date(`1/1/${year}`));
+        dateSelector.setMaxDate(new Date(`12/31/${year}`));
 
+        
         // TODO: Finish selection of row by ID
         this.addStoreToViewModel(
             'Breeze.store.record.Holidays',
@@ -45,6 +51,11 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
                     callback: function(records, op, success){
                         if(success && records.length > 0){
                             var record = records[0];
+                            if(!Object.isUnvalued(id)){
+                                record = records.find((r)=>{
+                                    return r.get('unique_Number') == id;
+                                });
+                            }
                             this.lookup('holidaysGrid').getSelectable()
                                 .setSelectedRecord(record);
                         }
@@ -139,9 +150,18 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
             data.float_Day,
             data.float_Week
         ).then((r)=>{
-            // TODO: Finish implementing save button event handler
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 5000
+            });
+            me.loadHolidays(vm.get('currentYear'),data.unique_Number);
         }).catch((e)=>{
-
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 5000
+            });
         });
 
 
