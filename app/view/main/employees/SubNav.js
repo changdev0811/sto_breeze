@@ -6,8 +6,24 @@
  */
 Ext.define('Breeze.view.main.employees.SubNav', {
     extend: 'Ext.Container',
-    alias: 'widget.main.employees.SubNav',
+    alias: 'widget.main.employees.subnav',
     xtype: 'breeze-employees-subnav',
+
+
+    
+    controller: 'main.employees.subnav',
+    viewModel: {
+        type: 'main.employees.subnav'
+    },
+
+    listeners: {
+        initialize: 'onInit'
+    },
+
+
+
+
+
 
     layout: 'hbox',
     //height:'auto',
