@@ -8,6 +8,12 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.holidayeditor',
 
+    requires: ['Breeze.widget.panel.MiniCalendarSingle'],
+
+    config: {
+        crumbTitle: 'Holiday Editor'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.holidayeditor'
@@ -39,6 +45,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         {
             xtype: 'button',
             text: 'Apply Holiday Schedule',
+            handler: 'onApplySchedule',
             ui: 'action',
             style:'width:175pt;'
         }, 
@@ -49,6 +56,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             xtype: 'button',
             ui: 'confirm alt',
             text: 'Save',
+            handler: 'onSaveButton',
             style:'width:175pt;'
         }
     ],
@@ -58,6 +66,66 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         xtype: 'toolbar',
         ui: 'admin-actions',
         shadow: false
+    },
+
+    dialog: {
+        xtype: 'dialog',
+        // width: '400pt', height: '400pt',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+        title: 'Save Forward',
+
+        items: [
+            {
+                xtype: 'containerfield',
+                itemId: 'forwardMode',
+                reference: 'forwardMode',
+                layout: 'vbox',
+                bind: {
+                    values: {
+                        mode: false
+                    }
+                },
+
+                items: [
+                    {
+                        xtype: 'radio',
+                        name: 'mode',
+                        bodyAlign: 'stretch',
+                        value: false,
+                        boxLabel: 'Next Year',
+                        bind: {
+                            groupValue: '{forwardMode.mode}'
+                        }
+                    },
+                    {
+                        xtype: 'radio',
+                        name: 'mode',
+                        bodyAlign: 'stretch',
+                        value: true,
+                        boxLabel: 'All Future Years',
+                        bind: {
+                            groupValue: '{forwardMode.mode}'
+                        }
+                    }
+                ]
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Confirm',
+                ui: 'action alt',
+                handler: 'onSaveForFuture'
+            },
+            // {
+            //     xtype: 'spacer', width: '8pt'
+            // },
+            // {
+            //     text: 'Cancel',
+            //     ui: 'decline alt',
+            //     handler: 'onFutureSaveDialogCancel'
+            // }
+        ]
     },
 
     // Body contents
@@ -77,15 +145,16 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 {
                     xtype: 'selectfield',
                     ui: 'reporting reporting-text reporting-date',
-
-                    //name: 'recYear',
                     width:'200pt',
                     label:'Holidays for Year',
                     labelAlign:'left',
                     labelWidth:'auto',
                     store: 'Years',
                     displayField: 'Year', valueField: 'Year',
-                    bind: { value: String( (new Date()).getYear() + 1900 ) } //<-- this should probably be in the model.js
+                    bind: { value: '{currentYear}' },
+                    listeners: {
+                        select: 'onYearChange'
+                    }
                 },
                 {
                     xtype:'spacer',
@@ -95,6 +164,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 {
                     xtype: 'button',
                     text: 'Save for Future Use',
+                    handler: 'showFutureSaveDialog',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
                     style:'width:150pt;'
@@ -127,8 +197,8 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                     flex: 1,
 
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'200pt',
+                    minWidth:'250pt',
+                    maxWidth:'350pt',
 
                     minHeight:'420pt',
 
@@ -159,50 +229,57 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
                                             iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
+                                            ui: 'plain wtr-button',
+                                            handler: 'onAddHoliday'            
                                         },
 
                                     ]
                                 },
                                 {
-                                    xtype: 'tree',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'tree',
-                                    ui: 'employeeinfo-shift-grid',
-                                    userCls: 'employeeinfo-shift-grid no-border no-background',
-                                    flex:1,
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
+                                    xtype: 'grid',
+                                    ui: 'admin-grid',
+                                    height: '100%',
+                                    reference: 'holidaysGrid',
+                                    // sortable: false, 
+                                    columnResize: false,
+                                    columnMenu: false, hideHeaders: false,
+                                    selectable: { mode: 'single' },
+                                    bind: {
+                                        store: '{holidays}'
+                                    },
+                                    defaults: {
+                                        xtype: 'gridcolumn',
+                                        menuDisabled: true
+                                    },
+                                    layout: 'vbox',
                                     columns: [
                                         {
-                                            xtype: 'checkcolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'checked',
-                                            minWidth: '2em',
-                                            width: 'auto',
-                                            padding: 0,
-                                            //listeners: {
-                                            //    checkChange: 'onTreeGridChecked'
-                                            //}
-                                        },
+                                            xtype: 'datecolumn',
+                                            dataIndex: 'holiday_Date',
+                                            text: 'Date',
+                                            width: 125                                   },
                                         {
-                                            xtype: 'treecolumn',
-                                            cell: {
-                                                ui: 'admin-tree-column admin-tree-item',
-                                            },
-                                            dataIndex: 'text',
+                                            text: 'Holiday Name',
+                                            dataIndex: 'holiday_Name',
                                             flex: 1,
-                                            layout: {
-                                                alignment: 'stretch'
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onRemoveHoliday'
+                                                    }
+                                                ]
                                             }
                                         }
                                     ],
-
-                                    bind: '{departmentsTree}'
-                                },
+                                    listeners: {
+                                        select: 'onHolidaySelect'
+                                    }
+                                }
                             ]
                         },
                     ]
@@ -236,71 +313,80 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Holiday Name',
-                                    name:'holiday_Name',
                                     ui: 'admin admin-text',
+                                    required: true,
                                     userCls:'admin-fieldset no-border no-margin',
-
+                                    bind: {
+                                        value: '{holidayData.holiday_Name}'
+                                    }
                                 },
                                 {
                                     xtype: 'spinnerfield',
                                     ui: 'admin admin-text',
                                     userCls:'admin-fieldset no-border no-margin',
                                     label:'Percentage',
-                                    name: 'percentage',
                                     maxValue: 100,
                                     minValue: 0,
+                                    decimals: 2,
                                     labelAlign:'left',
                                     labelWidth:'auto',
-                                    name: 'duration_amount',
+                                    bind: {
+                                        value: '{holidayPercentage}'
+                                    }
                                 },
                                 {
-                                    xtype: 'panel.minicalendar',
-                                    reference: 'weekSelector',
+                                    xtype: 'panel.minicalendarsingle',
+                                    reference: 'dateSelector',
+                                    userCls: 'admin-mini-calendar',
                                     ui: 'minicalendar-admin',//'wtr-small',,
                                     collapsed: true,
                                     margin: '10pt 10pt 0pt 10pt',
                                     listeners: {
-                                        //change: 'onWeekChange'
+                                        dateselect: 'onHolidayCalendarDateSelect'
+                                    },
+                                    bind: {
+                                        value: '{holidayData.holiday_Date}'
                                     }
                                 },
 
                                 {
                                     xtype: 'breeze-checkbox',
-                                    name: 'overtime_opt1',
                                     boxLabel: 'Floating Holiday?',
-                                    name: 'floatingHoliday',
                                     labelWidth: 'auto',
-                                    ui: 'employeeinfo-checkbox',
+                                    // ui: 'employeeinfo-checkbox',
+                                    ui: 'admin admin-text',
                                     userCls: 'employee-info-general-field no-margin no-padding',
                                     bodyAlign: 'stretch',
-                                    reference: 'otCheck1',
+                                    reference: 'checkFloating',
                                     bind: {
-                                        //checked: '{info.punchPolicy.Ot_Opt1}'
+                                        checked: '{floatingDate}'
                                     },
                                     listeners: {
-                                        //change: 'onOvertime1Change'
+                                        change: 'onFloatingHolidayToggle'
                                     }
                                 },
                                 {
                                     xtype:'container',
-                                    name: 'floatOptions',
                                     layout:'hbox',
                                     userCls: 'employee-info-general-field',
                                     defaults: {
                                         ui: 'reporting admin-text'
                                     },
+                                    bind: {
+                                        hidden: '{!checkFloating.checked}'
+                                    },
                                     items: [
                                         {
                                             xtype: 'selectfield',
-                                            name: 'week',
                                             flex: 2,
-                                            options: [
-                                                { text: '1st', value: 1 },
-                                                { text: '2nd', value: 2 },
-                                                { text: '3rd', value: 3 },
-                                                { text: '4th', value: 4 },
-                                                { text: '5th', value: 5 },
-                                            ]//<-- this should probably be in the model.js
+                                            displayField: 'text', valueField: 'data',
+                                            bind: {
+                                                store: '{week}',
+                                                value: '{holidayData.float_Week}'
+                                            },
+                                            listeners: {
+                                                change: 'onFloatingHolidayWeekChange'
+                                            }
                                         },
                                         {
                                             xtype: 'container',
@@ -308,17 +394,15 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                         },
                                         {
                                             xtype: 'selectfield',
-                                            name: 'day',
                                             flex: 3,
-                                            options: [
-                                                { text: 'Sunday',       value: 1 },
-                                                { text: 'Monday',       value: 2 },
-                                                { text: 'Tuesday',      value: 3 },
-                                                { text: 'Wednesday',    value: 4 },
-                                                { text: 'Thursday',     value: 5 },
-                                                { text: 'Friday',       value: 6 },
-                                                { text: 'Saturday',     value: 7 },
-                                            ]//<-- this should probably be in the model.js
+                                            displayField: 'text', valueField: 'data',
+                                            bind: {
+                                                store: '{weekday}',
+                                                value: '{holidayData.float_Day}'
+                                            },
+                                            listeners: {
+                                                change: 'onFloatingHolidayDayChange'
+                                            }
                                         },
                                         {
                                             xtype: 'container',
@@ -326,22 +410,15 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                         },
                                         {
                                             xtype: 'selectfield',
-                                            name: 'month',
+                                            reference: 'floatMonth',
                                             flex: 3,
-                                            options: [
-                                                { text: 'January', value: 1 },
-                                                { text: 'February', value: 2 },
-                                                { text: 'March', value: 3 },
-                                                { text: 'April', value: 4 },
-                                                { text: 'May', value: 5 },
-                                                { text: 'June', value: 6 },
-                                                { text: 'July', value: 7 },
-                                                { text: 'August', value: 8 },
-                                                { text: 'September', value: 9 },
-                                                { text: 'October', value: 10 },
-                                                { text: 'November', value: 11 },
-                                                { text: 'December', value: 12 },
-                                            ]//<-- this should probably be in the model.js
+                                            displayField: 'text', valueField: 'data',
+                                            bind: {
+                                                store: '{month}',
+                                            },
+                                            listeners: {
+                                                change: 'onFloatingHolidayMonthChange'
+                                            }
                                         },
 
 
