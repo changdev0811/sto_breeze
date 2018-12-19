@@ -67,8 +67,8 @@ Ext.define('Breeze.api.admin.HolidayEditor', {
         year, name, percentage, date, uniqueNumber, floating,
         floatingDay, floatingWeek
     ){
-        var floatingDay = Object.defVal(floatingDay, 0, true),
-            floatingWeek = Object.defVal(floatingWeek, 0, true),
+        var floatingDay = Object.defVal(floatingDay, 0, true) + 1,
+            floatingWeek = Object.defVal(floatingWeek, 0, true) + 1,
             api = this.api;
         if(!floating){
             floatingDay = 0;
