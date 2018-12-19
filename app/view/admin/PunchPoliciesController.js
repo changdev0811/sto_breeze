@@ -8,8 +8,8 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.admin.punchpolicies',
 
-    stores: [
-        // 'Breeze.store.category.List'
+    requires: [
+        'Breeze.api.admin.PunchPolicies'
     ],
 
     /**
@@ -17,15 +17,45 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
      */
     onInit: function (component) {
 
-        // Load User-Defined Categories list store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
+        var me = this,
+            vm = this.getViewModel();
+        
+        this.api = Ext.create('Breeze.api.admin.PunchPolicies');
+        this.loadPolicies();
    
     },
+
+    /**
+     * (re)load policies
+     * @param {Object} selectedId Optional ID of policy to highlight after load
+     */
+    loadPolicies: function(selectedId){
+        var selectedId = Object.defVal(selectedId, null, true),
+            me = this;
+
+        this.addStoreToViewModel(
+            'Breeze.store.record.punchPolicies.DetailList',
+            'policies',
+            { 
+                load: true,
+                loadOpts: {
+                    callback: function(records, op, success){
+                        if(success){
+                            var record = records[0];
+                            if(selectedId !== null){
+                                record = records.find((r)=>{
+                                    return r.get('policy_id');
+                                });
+                                this.lookup('policyList').getSelectable()
+                                    .setSelectedRecord(record);
+                            }
+                        }
+                    },
+                    scope: me
+                }
+            }
+        );
+    }
 
   
 
