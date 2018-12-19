@@ -249,6 +249,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     xtype: 'breeze-textfield',
                                     label: 'Holiday Name',
                                     ui: 'admin admin-text',
+                                    required: true,
                                     userCls:'admin-fieldset no-border no-margin',
                                     bind: {
                                         value: '{holidayData.holiday_Name}'

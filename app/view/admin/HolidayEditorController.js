@@ -9,7 +9,8 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     alias: 'controller.admin.holidayeditor',
 
     requires: [
-        'Breeze.store.record.Holidays'
+        'Breeze.store.record.Holidays',
+        'Breeze.api.admin.HolidayEditor'
     ],
 
     /**
@@ -17,9 +18,10 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      */
     onInit: function (component) {
         var me = this,
-            vm = me.getViewModel();
+            vm = me.getViewModel(),
+            api = Ext.create('Breeze.api.admin.HolidayEditor');
         
-        this.loadHolidays(2018);
+        this.loadHolidays(vm.get('currentYear'));
     },
 
     /**
@@ -29,9 +31,11 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * 
      * @param {(String|Number)} year Year to load data for
      */
-    loadHolidays: function(year){
-        var me = this;
+    loadHolidays: function(year, id){
+        var me = this,
+            id = Object.defVal(id, -1);
 
+        // TODO: Finish selection of row by ID
         this.addStoreToViewModel(
             'Breeze.store.record.Holidays',
             'holidays',
@@ -40,8 +44,9 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
                 loadOpts: {
                     callback: function(records, op, success){
                         if(success && records.length > 0){
+                            var record = records[0];
                             this.lookup('holidaysGrid').getSelectable()
-                                .selectRange(0,0,false);
+                                .setSelectedRecord(record);
                         }
                     },
                     scope: me
@@ -114,6 +119,32 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
                 null, null, newVal, null
             );
         }
+    },
+
+    /**
+     * handler for Save button click event
+     */
+    onSaveButton: function(){
+        var vm = this.getViewModel(),
+            data = vm.get('holidayData'),
+            me = this;
+
+        this.api.update(
+            vm.get('currentYear'),
+            data.holiday_Name,
+            data.percentage,
+            data.holiday_Date,
+            data.unique_Number,
+            vm.get('floatingDate'),
+            data.float_Day,
+            data.float_Week
+        ).then((r)=>{
+            // TODO: Finish implementing save button event handler
+        }).catch((e)=>{
+
+        });
+
+
     },
 
     // ===[Helper]==
