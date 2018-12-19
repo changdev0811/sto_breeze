@@ -92,12 +92,53 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
         }
     },
 
-    onFloatingHolidaySelectChange: function(cmp){
-        console.info('Floating holiday selectors changed');
+    onFloatingHolidayWeekChange: function(c,newVal,oldVal){
+        if(newVal !== oldVal){
+            this.floatsFromSelectFields(
+                newVal, null, null, null
+            );
+        }
+    },
+
+    onFloatingHolidayDayChange: function(c,newVal,oldVal){
+        if(newVal !== oldVal){
+            this.floatsFromSelectFields(
+                null, newVal, null, null
+            );
+        }
+    },
+
+    onFloatingHolidayMonthChange: function(c,newVal,oldVal){
+        if(newVal !== oldVal){
+            this.floatsFromSelectFields(
+                null, null, newVal, null
+            );
+        }
     },
 
     // ===[Helper]==
 
+    floatsFromSelectFields: function(week,day,month,year){
+        var vm = this.getViewModel(),
+            week = Object.defVal(
+                week, vm.get('holidayData.float_Week'), true
+            ),
+            day = Object.defVal(
+                day, vm.get('holidayData.float_Day'), true
+            ),
+            month = Object.defVal(
+                month, vm.get('holidayData.holiday_Date').getMonth(),
+                true
+            ),
+            year = Object.defVal(
+                year, vm.get('currentYear'), true
+            );
+        vm.set('holidayData.holiday_Date',
+            this.computeFloating(
+                week, day, month, year
+            )
+        );
+    },
     floatsFromPickerDate: function(){
         var vm = this.getViewModel(),
             date = vm.get('holidayData.holiday_Date');

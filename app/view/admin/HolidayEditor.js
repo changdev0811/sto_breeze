@@ -319,7 +319,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                                 value: '{holidayData.float_Week}'
                                             },
                                             listeners: {
-                                                change: 'onFloatingHolidaySelectChange'
+                                                change: 'onFloatingHolidayWeekChange'
                                             }
                                         },
                                         {
@@ -335,7 +335,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                                 value: '{holidayData.float_Day}'
                                             },
                                             listeners: {
-                                                change: 'onFloatingHolidaySelectChange'
+                                                change: 'onFloatingHolidayDayChange'
                                             }
                                         },
                                         {
@@ -351,7 +351,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                                 store: '{month}',
                                             },
                                             listeners: {
-                                                change: 'onFloatingHolidaySelectChange'
+                                                change: 'onFloatingHolidayMonthChange'
                                             }
                                         },
 
