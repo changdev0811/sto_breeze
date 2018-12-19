@@ -390,21 +390,42 @@ Ext.define('Breeze.view.admin.UDC', {
                                             xtype:'spacer',
                                             width:'20pt',
                                         },
+
+
+
                                         {
-                                            xtype: 'combobox',
-                                            ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
-                                            label:'Category Color',
-                                            labelAlign:'left',
-                                            labelWidth:'auto',
-                                            flex: 2,
-                                            //name: 'category_new_rate',
-                                            allowBlank: false,
-                                            editable: false,
-                                            displayField: 'Description',
-                                            forceSelection: true,
-                                            queryMode: 'local',
-                                            valueField: 'ID'
+                                            xtype: 'button',
+                                            ui:'plain',
+                                            userCls:'col-btn',
+                                            reference: 'colorBtn',
+                                            width:'24pt',
+                                            height:'24pt',
+                                            menuAlign: 'tr',
+                                            arrow: false,
+                                            bind:{
+                                                // +++ need to bind to current category's color +++
+                                                style:'background-color:{catCol};',
+                                            },
+                                            menu: {
+                                                xtype: 'menu',
+                                                userCls:'col-menu',
+                                                items: [
+                                                    {
+                                                        xtype:'dataview',
+                                                        userCls:'col-sel',
+                                                        scrollable:false,
+                                                        inline: true,
+                                                        bind:{
+                                                            store:'{colors}',
+                                                        },
+                                                        itemTpl: '<div class="col-sq" style="background-color:{hex};">',
+                                                        listeners:{
+                                                            select:'onColorSelect'
+                                                        }
+                                                    },
+                                                ]
+                                            }
+
                                         },
                                         {
                                             xtype:'spacer',

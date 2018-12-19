@@ -70,6 +70,17 @@ Ext.define('Breeze.view.admin.UDCController', {
             vm.set('selectedCat', record.getData());
     },
 
+    onColorSelect:function(obj, record, eOpts){
+        // update model color
+        var vm = this.getViewModel();
+            vm.set('catCol', record.data.hex);
+            // +++ need to update to current category's color instead of catCol +++
+
+        // close button menu
+        this.lookup('colorBtn').getMenu().hide();
+
+
+    },
 
     
 });
