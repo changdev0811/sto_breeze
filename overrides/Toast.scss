@@ -22,3 +22,8 @@
      $ui: 'toast-error',
      $background-color: map-get($toast-colors, 'error')
  );
+
+ .x-toast {
+    top: -14px;
+    margin:0px; 
+}

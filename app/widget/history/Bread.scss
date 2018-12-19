@@ -7,7 +7,7 @@
     padding-bottom: 6pt;
     background-color: $base-color;
     color: map-get($root-text-colors, 'base');
-    font-size: map-get($root-font-sizes, 'detail');
+    font-size: $scoped-root-font-size-bread;
 
     // Crumb item element
     & .crumb {
