@@ -74,7 +74,7 @@ Ext.define('Breeze.api.admin.HolidayEditor', {
             floatingDay = 0;
             floatingWeek = 0;
         }
-            
+        
         if(!floating){
             date = date.setFullYear(year);
         }
@@ -86,7 +86,7 @@ Ext.define('Breeze.api.admin.HolidayEditor', {
                     recording_year: year,
                     holiday_name: name,
                     percentage: percentage,
-                    holiday_date: date.toUTC(),
+                    holiday_date: new Date(date).toUTC(),
                     unique_number: uniqueNumber,
                     float_week: floatingWeek,
                     float_day: floatingDay
