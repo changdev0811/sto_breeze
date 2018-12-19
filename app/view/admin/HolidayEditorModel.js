@@ -13,7 +13,7 @@ Ext.define('Breeze.view.admin.HolidayEditorModel', {
     ],
 
     data: {
-        currentYear: (new Date()).getYear() + 1900,
+        currentYear: null,
         floatingDate: false
     },
 

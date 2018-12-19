@@ -19,9 +19,11 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     onInit: function (component) {
         var me = this,
             vm = me.getViewModel();
+            vm.set('currentYear', (new Date()).getYear() + 1900);
+            // changing current year automatically fires loadHolidays
         this.api = Ext.create('Breeze.api.admin.HolidayEditor');
 
-        this.loadHolidays(vm.get('currentYear'));
+        // this.loadHolidays(vm.get('currentYear'));
     },
 
     /**
@@ -33,7 +35,6 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      */
     loadHolidays: function (year, id) {
         var me = this,
-            id = Object.defVal(id, -1),
             dateSelector = me.lookup('dateSelector');
 
         // Restrict date selector range
@@ -151,6 +152,15 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     },
 
     /**
+     * Handle event fired when year dropdown value changes
+     */
+    onYearChange: function(){
+        var vm = this.getViewModel();
+
+        this.loadHolidays(vm.get('currentYear'));
+    },
+
+    /**
      * handler for Save button click event
      */
     onSaveButton: function () {
@@ -209,12 +219,86 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     },
 
     onAddHoliday: function () {
-
+        var me = this,
+            vm = this.getViewModel();
+        this.api.applyToEmployees(vm.get('currentYear')).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 5000
+            });
+            // Reload 
+            me.loadHolidays(vm.get('currentYear'), r.id);
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 5000
+            });
+        });
     },
 
-    onSaveForFuture: function () {
-        // var me = this;
-        // this.api.apply
+    onRemoveHoliday: function () {
+        var me = this,
+            vm = this.getViewModel();
+        this.api.delete(vm.get('holidayData.unique_Number')).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 5000
+            });
+            // Reload 
+            me.loadHolidays(vm.get('currentYear'));
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 5000
+            });
+        });
+    },
+
+    showFutureSaveDialog: function(){
+        var view = this.getView(),
+            dialog = this.dialog;
+
+        if(!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.dialog);
+            this.dialog = dialog = Ext.create(dialog);
+        }
+        
+        dialog.show();
+    },
+
+
+    onFutureSaveDialogCancel: function(){
+        this.dialog.hide();
+    },
+
+
+    onSaveForFuture: function (btn) {
+        
+        var me = this,
+            vm = this.getViewModel(),
+            allYears = this.lookup('forwardMode').getValues().mode;
+        this.dialog.hide();
+        this.api.appendToYear(vm.get('currentYear'), allYears).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 5000
+            });
+            // Reload 
+            me.loadHolidays(vm.get('currentYear'));
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 5000
+            });
+        });
     },
 
     // ===[Helper]==

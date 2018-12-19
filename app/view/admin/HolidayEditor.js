@@ -68,6 +68,66 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         shadow: false
     },
 
+    dialog: {
+        xtype: 'dialog',
+        // width: '400pt', height: '400pt',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+        title: 'Save Forward',
+
+        items: [
+            {
+                xtype: 'containerfield',
+                itemId: 'forwardMode',
+                reference: 'forwardMode',
+                layout: 'vbox',
+                bind: {
+                    values: {
+                        mode: false
+                    }
+                },
+
+                items: [
+                    {
+                        xtype: 'radio',
+                        name: 'mode',
+                        bodyAlign: 'stretch',
+                        value: false,
+                        boxLabel: 'Next Year',
+                        bind: {
+                            groupValue: '{forwardMode.mode}'
+                        }
+                    },
+                    {
+                        xtype: 'radio',
+                        name: 'mode',
+                        bodyAlign: 'stretch',
+                        value: true,
+                        boxLabel: 'All Future Years',
+                        bind: {
+                            groupValue: '{forwardMode.mode}'
+                        }
+                    }
+                ]
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Confirm',
+                ui: 'action alt',
+                handler: 'onSaveForFuture'
+            },
+            // {
+            //     xtype: 'spacer', width: '8pt'
+            // },
+            // {
+            //     text: 'Cancel',
+            //     ui: 'decline alt',
+            //     handler: 'onFutureSaveDialogCancel'
+            // }
+        ]
+    },
+
     // Body contents
     items: [
         // Top 1
@@ -85,15 +145,16 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 {
                     xtype: 'selectfield',
                     ui: 'reporting reporting-text reporting-date',
-
-                    //name: 'recYear',
                     width:'200pt',
                     label:'Holidays for Year',
                     labelAlign:'left',
                     labelWidth:'auto',
                     store: 'Years',
                     displayField: 'Year', valueField: 'Year',
-                    bind: { value: '{currentYear}' }
+                    bind: { value: '{currentYear}' },
+                    listeners: {
+                        select: 'onYearChange'
+                    }
                 },
                 {
                     xtype:'spacer',
@@ -103,7 +164,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 {
                     xtype: 'button',
                     text: 'Save for Future Use',
-                    handler: 'onSaveForFuture',
+                    handler: 'showFutureSaveDialog',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
                     style:'width:150pt;'
@@ -209,7 +270,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                                 tools: [
                                                     {
                                                         iconCls: 'x-fas fa-times',
-                                                        handler: 'onRemoveScheduleHoliday'
+                                                        handler: 'onRemoveHoliday'
                                                     }
                                                 ]
                                             }
