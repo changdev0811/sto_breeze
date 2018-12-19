@@ -86,7 +86,7 @@ Ext.define('Breeze.api.admin.HolidayEditor', {
                     recording_year: year,
                     holiday_name: name,
                     percentage: percentage,
-                    holiday_date: date,
+                    holiday_date: date.toUTC(),
                     unique_number: uniqueNumber,
                     float_week: floatingWeek,
                     float_day: floatingDay

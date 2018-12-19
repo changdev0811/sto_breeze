@@ -221,7 +221,7 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     onAddHoliday: function () {
         var me = this,
             vm = this.getViewModel();
-        this.api.applyToEmployees(vm.get('currentYear')).then((r) => {
+        this.api.add(vm.get('currentYear')).then((r) => {
             Ext.toast({
                 type: r.type,
                 message: r.message,
