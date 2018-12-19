@@ -20,7 +20,7 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
         var me = this,
             vm = me.getViewModel();
         this.api = Ext.create('Breeze.api.admin.HolidayEditor');
-        
+
         this.loadHolidays(vm.get('currentYear'));
     },
 
@@ -31,28 +31,28 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * 
      * @param {(String|Number)} year Year to load data for
      */
-    loadHolidays: function(year, id){
+    loadHolidays: function (year, id) {
         var me = this,
             id = Object.defVal(id, -1),
             dateSelector = me.lookup('dateSelector');
-        
+
         // Restrict date selector range
         dateSelector.setMinDate(new Date(`1/1/${year}`));
         dateSelector.setMaxDate(new Date(`12/31/${year}`));
 
-        
+
         // TODO: Finish selection of row by ID
         this.addStoreToViewModel(
             'Breeze.store.record.Holidays',
             'holidays',
-            { 
+            {
                 load: true, createOpts: { year: year },
                 loadOpts: {
-                    callback: function(records, op, success){
-                        if(success && records.length > 0){
+                    callback: function (records, op, success) {
+                        if (success && records.length > 0) {
                             var record = records[0];
-                            if(!Object.isUnvalued(id)){
-                                record = records.find((r)=>{
+                            if (!Object.isUnvalued(id)) {
+                                record = records.find((r) => {
                                     return r.get('unique_Number') == id;
                                 });
                             }
@@ -68,22 +68,35 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
 
     // ===[Event Handlers]===
 
-    onHolidaySelect: function(grid, record, opts){
+    onHolidaySelect: function (grid, record, opts) {
         var vm = this.getViewModel();
 
         vm.set('holidayData', Ext.clone(record.getData()));
+
         vm.set('floatingDate',
             (
-                vm.get('holidayData.float_Day') !== 0 || 
+                vm.get('holidayData.float_Day') !== 0 ||
                 vm.get('holidayData.float_Week') !== 0
             )
         );
+        if (vm.get('floatingDate')) {
+            // Adjust float day and week
+            vm.set(
+                'holidayData.float_Week',
+                Math.max(0, vm.get('holidayData.float_Week') - 1)
+            );
+            vm.set(
+                'holidayData.float_Day',
+                Math.max(0, vm.get('holidayData.float_Day') - 1)
+            );
+        }
+        this.lookup('dateSelector').setValue(vm.get('holidayData.holiday_Date'));
     },
 
-    onHolidayCalendarDateSelect: function(picker){
+    onHolidayCalendarDateSelect: function (picker) {
         var vm = this.getViewModel(),
             date = picker.getValue();
-        
+
         vm.set('holidayData.holiday_Date', date);
         this.floatsFromPickerDate();
     },
@@ -94,38 +107,43 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * @param {Boolean} newVal 
      * @param {Boolean} oldVal 
      */
-    onFloatingHolidayToggle: function(cmp, newVal, oldVal){
+    onFloatingHolidayToggle: function (cmp, newVal, oldVal) {
         var vm = this.getViewModel();
-        if(newVal !== oldVal){
-            if(newVal){
+        if (newVal !== oldVal) {
+            if (newVal) {
                 // Calculate floating date values
                 this.floatsFromPickerDate();
             } else {
+                var date = vm.get('holidayData.holiday_Date');
                 // Reset floating date values
-                vm.set('holidayData.float_Day',0);
-                vm.set('holidayData.float_Week',0);
+                vm.set('holidayData.float_Day', 0);
+                vm.set('holidayData.float_Week', 0);
+                vm.set('holidayData.holiday_Date', date);
+                this.lookup('dateSelector').setValue(date);
             }
         }
     },
 
-    onFloatingHolidayWeekChange: function(c,newVal,oldVal){
-        if(newVal !== oldVal){
+    onFloatingHolidayWeekChange: function (c, newVal, oldVal) {
+        var floating = this.getViewModel().get('floatingDate');
+        if (floating && newVal !== oldVal) {
             this.floatsFromSelectFields(
                 newVal, null, null, null
             );
         }
     },
 
-    onFloatingHolidayDayChange: function(c,newVal,oldVal){
-        if(newVal !== oldVal){
+    onFloatingHolidayDayChange: function (c, newVal, oldVal) {
+        var floating = this.getViewModel().get('floatingDate');
+        if (floating && newVal !== oldVal) {
             this.floatsFromSelectFields(
                 null, newVal, null, null
             );
         }
     },
 
-    onFloatingHolidayMonthChange: function(c,newVal,oldVal){
-        if(newVal !== oldVal){
+    onFloatingHolidayMonthChange: function (c, newVal, oldVal) {
+        if (newVal !== oldVal) {
             this.floatsFromSelectFields(
                 null, null, newVal, null
             );
@@ -135,7 +153,7 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     /**
      * handler for Save button click event
      */
-    onSaveButton: function(){
+    onSaveButton: function () {
         var vm = this.getViewModel(),
             data = vm.get('holidayData'),
             me = this;
@@ -149,14 +167,14 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
             vm.get('floatingDate'),
             data.float_Day,
             data.float_Week
-        ).then((r)=>{
+        ).then((r) => {
             Ext.toast({
                 type: r.type,
                 message: r.message,
                 timeout: 5000
             });
-            me.loadHolidays(vm.get('currentYear'),data.unique_Number);
-        }).catch((e)=>{
+            me.loadHolidays(vm.get('currentYear'), data.unique_Number);
+        }).catch((e) => {
             Ext.toast({
                 type: e.type,
                 message: e.message,
@@ -165,6 +183,38 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
         });
 
 
+    },
+
+    /**
+     * Event handler for 'apply holiday schedule' button
+     */
+    onApplySchedule: function () {
+        var me = this,
+            vm = this.getViewModel();
+        this.api.applyToEmployees(vm.get('currentYear')).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 5000
+            });
+            // Reload 
+            me.loadHolidays(vm.get('currentYear'));
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 5000
+            });
+        });
+    },
+
+    onAddHoliday: function () {
+
+    },
+
+    onSaveForFuture: function () {
+        // var me = this;
+        // this.api.apply
     },
 
     // ===[Helper]==
@@ -177,7 +227,7 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * @param {*} month 
      * @param {*} year 
      */
-    floatsFromSelectFields: function(week,day,month,year){
+    floatsFromSelectFields: function (week, day, month, year) {
         var vm = this.getViewModel(),
             week = Object.defVal(
                 week, vm.get('holidayData.float_Week'), true
@@ -203,12 +253,12 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      * Calculate floating holiday select field values
      * from current date picker value
      */
-    floatsFromPickerDate: function(){
+    floatsFromPickerDate: function () {
         var vm = this.getViewModel(),
             date = vm.get('holidayData.holiday_Date');
         vm.set(
             'holidayData.float_Week',
-            Math.floor((date.getDate()-1)/7)
+            Math.floor((date.getDate() - 1) / 7)
         );
         vm.set(
             'holidayData.float_Day',
@@ -228,7 +278,7 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
      */
     computeFloating(week, day, month, year) {
         var date = new Date((+month + 1) + '/1/' + year)
-    
+
         if (week != 4) { //if week is not 'last'
             date.setDate(1);
             var i = 1;

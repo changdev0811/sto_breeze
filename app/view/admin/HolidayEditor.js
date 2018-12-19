@@ -45,6 +45,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
         {
             xtype: 'button',
             text: 'Apply Holiday Schedule',
+            handler: 'onApplySchedule',
             ui: 'action',
             style:'width:175pt;'
         }, 
@@ -102,6 +103,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                 {
                     xtype: 'button',
                     text: 'Save for Future Use',
+                    handler: 'onSaveForFuture',
                     ui: 'action',                   
                     userCls:'admin-fieldset-no-border',
                     style:'width:150pt;'
@@ -166,7 +168,8 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                             xtype: 'button',
                                             //text: 'Save for Future Use',
                                             iconCls:'x-fas fa-plus',
-                                            ui: 'plain wtr-button',                   
+                                            ui: 'plain wtr-button',
+                                            handler: 'onAddHoliday'            
                                         },
 
                                     ]
