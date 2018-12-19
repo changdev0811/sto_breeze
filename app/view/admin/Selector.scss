@@ -345,8 +345,8 @@
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
     $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'medium'),
-    $hovered-background-color: map-get($admin-colors, 'light'),
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
@@ -358,8 +358,8 @@
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
     $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'medium'),
-    $hovered-background-color: map-get($admin-colors, 'light'),
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
@@ -412,7 +412,7 @@
 @include gridrow-ui(
     $ui: 'admin-grid',
     $background-color: transparent,
-    $selected-background-color: map-get($admin-colors, 'row-dark')
+    $selected-background-color: map-get($admin-colors, 'row-light')
 );
 
 @include headercontainer-ui(
