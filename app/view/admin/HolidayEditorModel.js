@@ -13,7 +13,8 @@ Ext.define('Breeze.view.admin.HolidayEditorModel', {
     ],
 
     data: {
-        currentYear: (new Date()).getYear() + 1900
+        currentYear: (new Date()).getYear() + 1900,
+        floatingDate: false
     },
 
     stores: {
@@ -74,9 +75,6 @@ Ext.define('Breeze.view.admin.HolidayEditorModel', {
                     value / 100.0
                 );
             }
-        },
-        holidayFloats: function(get){
-            return (get('holidayData.float_Day') !== 0 || get('holidayData.float_Week') !== 0);
         }
     }
 

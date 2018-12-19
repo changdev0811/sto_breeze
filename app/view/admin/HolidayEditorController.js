@@ -55,7 +55,94 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
     onHolidaySelect: function(grid, record, opts){
         var vm = this.getViewModel();
 
-        vm.set('holidayData', Ext.clone(record.getData()));        
+        vm.set('holidayData', Ext.clone(record.getData()));
+        vm.set('floatingDate',
+            (
+                vm.get('holidayData.float_Day') !== 0 || 
+                vm.get('holidayData.float_Week') !== 0
+            )
+        );
+    },
+
+    onHolidayCalendarDateSelect: function(picker){
+        var vm = this.getViewModel(),
+            date = picker.getValue();
+        
+        vm.set('holidayData.holiday_Date', date);
+        this.floatsFromPickerDate();
+    },
+
+    /**
+     * Handle floating holiday checkbox value change event
+     * @param {Object} cmp 
+     * @param {Boolean} newVal 
+     * @param {Boolean} oldVal 
+     */
+    onFloatingHolidayToggle: function(cmp, newVal, oldVal){
+        var vm = this.getViewModel();
+        if(newVal !== oldVal){
+            if(newVal){
+                // Calculate floating date values
+                this.floatsFromPickerDate();
+            } else {
+                // Reset floating date values
+                vm.set('holidayData.float_Day',0);
+                vm.set('holidayData.float_Week',0);
+            }
+        }
+    },
+
+    onFloatingHolidaySelectChange: function(cmp){
+        console.info('Floating holiday selectors changed');
+    },
+
+    // ===[Helper]==
+
+    floatsFromPickerDate: function(){
+        var vm = this.getViewModel(),
+            date = vm.get('holidayData.holiday_Date');
+        vm.set(
+            'holidayData.float_Week',
+            Math.floor((date.getDate()-1)/7)
+        );
+        vm.set(
+            'holidayData.float_Day',
+            date.getDay()
+        );
+        this.lookup('floatMonth').setValue(
+            date.getMonth()
+        );
+    },
+
+    /**
+     * From homemade/computeFloatingDate
+     * @param {*} week 
+     * @param {*} day 
+     * @param {*} month 
+     * @param {*} year 
+     */
+    computeFloating(week, day, month, year) {
+        var date = new Date((+month + 1) + '/1/' + year)
+    
+        if (week != 4) { //if week is not 'last'
+            date.setDate(1);
+            var i = 1;
+            //get the right week day
+            while (date.getDay() != day) {
+                date.setDate(++i);
+            }
+            date.setDate(i + (7 * week));
+        } else {
+            date.setMonth(date.getMonth() + 1);
+            date.setDate(0);
+            var i = (date.getDate() - 6);
+            date.setDate(i);
+            //get the right week day
+            while (date.getDay() != day) {
+                date.setDate(++i);
+            }
+        }
+        return date
     }
 
 });

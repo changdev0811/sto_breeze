@@ -33,10 +33,10 @@ Ext.define('Breeze.widget.panel.MiniCalendarSingle', {
 
 
 
-    // onDateClick: function(e){
-    //     var me = this;
-    //     this.callParent([e]);
-    //     this.fireEvent('dateselect', me);
-    // },
+    onDateClick: function(e){
+        var me = this;
+        this.callParent([e]);
+        this.fireEvent('dateselect', me);
+    },
 
 });
