@@ -36,6 +36,18 @@ Text Colors:    $<scope-name>-text-colors (base, light, medium, dark)
 -------------------------------------*/
 
 
+// ====[Employee Nav Colors]====
+
+$scoped-employee-nav-text-base: #ffffff;
+$scoped-employee-nav-text-dark: #959595;
+
+$employee-nav-text-colors: (
+    base: $scoped-employee-nav-text-base,
+    dark: $scoped-employee-nav-text-dark
+);
+
+
+
 // ====[Base (root) Set]====
 
 $scoped-content-base: #223042;
