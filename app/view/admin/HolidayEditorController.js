@@ -118,6 +118,14 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
 
     // ===[Helper]==
 
+    /**
+     * Calculate floating holiday date from changed
+     * select field values
+     * @param {*} week 
+     * @param {*} day 
+     * @param {*} month 
+     * @param {*} year 
+     */
     floatsFromSelectFields: function(week,day,month,year){
         var vm = this.getViewModel(),
             week = Object.defVal(
@@ -139,6 +147,11 @@ Ext.define('Breeze.view.admin.HolidayEditorController', {
             )
         );
     },
+
+    /**
+     * Calculate floating holiday select field values
+     * from current date picker value
+     */
     floatsFromPickerDate: function(){
         var vm = this.getViewModel(),
             date = vm.get('holidayData.holiday_Date');
