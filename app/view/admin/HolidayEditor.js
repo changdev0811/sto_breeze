@@ -131,51 +131,7 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
     // Body contents
     items: [
         // Top 1
-        {
-            xtype: 'container',
-            layout: 'hbox',
-            // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
-            userCls:'admin-fieldset no-border',
-            defaults: {
-                ui: 'admin admin-text',
-            },
-            items: [
 
-                {
-                    xtype: 'selectfield',
-                    ui: 'reporting reporting-text reporting-date',
-                    width:'200pt',
-                    label:'Holidays for Year',
-                    labelAlign:'left',
-                    labelWidth:'auto',
-                    store: 'Years',
-                    displayField: 'Year', valueField: 'Year',
-                    bind: { value: '{currentYear}' },
-                    listeners: {
-                        select: 'onYearChange'
-                    }
-                },
-                {
-                    xtype:'spacer',
-                    width:'20pt',
-
-                },
-                {
-                    xtype: 'button',
-                    text: 'Save for Future Use',
-                    handler: 'showFutureSaveDialog',
-                    ui: 'action',                   
-                    userCls:'admin-fieldset-no-border',
-                    style:'width:150pt;'
-
-                },
-                {
-                    xtype:'container',
-                    flex:2
-                }
-            ]
-        },
         // Bottom
         {
             xtype:'panel',
@@ -190,9 +146,9 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
             items:[
                 // Column 1
                 {
-                    xtype:'panel',
-                    ui:'admin-sub',
-                    userCls:'admin-fieldset no-padding no-border',
+                    xtype:'container',
+                    //ui:'admin-sub',
+                    //userCls:'admin-fieldset  no-border',
                     layout:'vbox',
                     flex: 1,
 
@@ -204,9 +160,61 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
 
 
                     items:[
+                        
+                        {
+                            xtype: 'fieldset',
+                            layout: 'vbox',
+                            // +++ Allow h scroll when panel is too small +++
+                            scrollable:'x',
+                            //userCls:'admin-fieldset no-border',
+
+                            userCls:'admin-fieldset',
+
+
+                            title:'Holidays for Year',
+                            defaults: {
+                                ui: 'admin admin-text',
+                            },
+                            items: [
+
+                                {
+                                    xtype: 'selectfield',
+                                    ui: 'reporting reporting-text reporting-date',
+                                    width:'200pt',
+                                    label:'',
+                                    labelAlign:'left',
+                                    labelWidth:'auto',
+                                    store: 'Years',
+                                    displayField: 'Year', valueField: 'Year',
+                                    bind: { value: '{currentYear}' },
+                                    listeners: {
+                                        select: 'onYearChange'
+                                    }
+                                },
+                                {
+                                    xtype:'spacer',
+                                    height:'5pt',
+
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Save for Future Use',
+                                    handler: 'showFutureSaveDialog',
+                                    ui: 'action',                   
+                                    userCls:'admin-fieldset-no-border',
+                                    style:'width:150pt;'
+
+                                },
+                                {
+                                    xtype:'container',
+                                    flex:2
+                                }
+                            ]
+                        },
+
                         {    
                             xtype: 'fieldset',
-                            userCls:'admin-fieldset no-side-margin',
+                            userCls:'admin-fieldset no-padding',
                             flex: 1,
                             layout: 'vbox',
 
@@ -242,13 +250,15 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     reference: 'holidaysGrid',
                                     // sortable: false, 
                                     columnResize: false,
-                                    columnMenu: false, hideHeaders: false,
+                                    columnMenu: false, 
+                                    hideHeaders: false,
                                     selectable: { mode: 'single' },
                                     bind: {
                                         store: '{holidays}'
                                     },
                                     defaults: {
                                         xtype: 'gridcolumn',
+                                        userCls:'no-border',
                                         menuDisabled: true
                                     },
                                     layout: 'vbox',
