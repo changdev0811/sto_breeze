@@ -29,6 +29,13 @@ Ext.define('Breeze.api.admin.SuperAdminOptions', {
                 }
             )
         });
+    },
+
+    /**
+     * @api UpdateCompanyConfig
+     */
+    update: function(){
+
     }
 
 });
