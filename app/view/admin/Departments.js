@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.Departments', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.departments',
 
+    config: {
+        crumbTitle: 'Departments'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.departments'
@@ -29,6 +33,38 @@ Ext.define('Breeze.view.admin.Departments', {
     // +++ Allow h scroll when panel is too small +++
     scrollable: 'y',
 
+    addSupervisorDialog: {
+        xtype: 'dialog',
+        title: 'Add Supervisor',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                disabled: true,
+                itemId: 'add',
+                // handler: 'onPolicyAdd'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onAddSupervisorDialogCancel'
+            }
+        ]
+    },
 
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
@@ -111,7 +147,7 @@ Ext.define('Breeze.view.admin.Departments', {
                             xtype: 'breeze-categories-list',
                             ui: 'admin-shift-grid',
                             flex: 1,
-                            reference: 'departments',
+                            reference: 'departmentsList',
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             itemId: 'selectList',
                             fieldMode: 'none',
@@ -165,14 +201,13 @@ Ext.define('Breeze.view.admin.Departments', {
                                     userCls: 'admin-fieldset no-border no-margin',
                                     name: 'DeptName',
                                     bind: {
-                                        value: '{selectedDepartment.Name}'
+                                        value: '{departmentData.Name}'
                                     }
                                 },
                                 {
                                     xtype: 'spinnerfield',
                                     ui: 'admin admin-text',
                                     userCls: 'admin-fieldset no-border no-margin',
-                                    name: 'numConflictLimit',
                                     decimals: 0,
                                     minValue: 0,
                                     labelAlign: 'left',
@@ -211,13 +246,14 @@ Ext.define('Breeze.view.admin.Departments', {
                                             //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
+                                            handler: 'showAddSupervisorDialog'
                                         },
-                                        {
-                                            xtype: 'button',
-                                            //text: 'Save for Future Use',
-                                            iconCls: 'x-fas fa-minus',
-                                            ui: 'plain wtr-button'
-                                        },
+                                        // {
+                                        //     xtype: 'button',
+                                        //     //text: 'Save for Future Use',
+                                        //     iconCls: 'x-fas fa-minus',
+                                        //     ui: 'plain wtr-button'
+                                        // },
 
                                     ]
                                 },
@@ -250,16 +286,6 @@ Ext.define('Breeze.view.admin.Departments', {
                                             dataIndex: 'supervisorId',
                                             tpl: '{Name}',
                                             menuDisabled: true,
-                                            // align:'center',
-                                            // editor:{
-                                            //     xtype:'spinnerfield',
-                                            //     decimals:0,
-                                            //     min:1,
-                                            //     required:true,
-                                            //     listeners:{
-                                            //         change: 'onOccurrenceFromChange'
-                                            //     }
-                                            // }
                                         },
                                         {
                                             text: 'Role',
@@ -275,7 +301,22 @@ Ext.define('Breeze.view.admin.Departments', {
                                                 displayField: 'Role_Name',
                                                 bind: {
                                                     store: '{roles}'
+                                                },
+                                                listeners: {
+                                                    select: 'onEditSupervisorRoleSelect'
                                                 }
+                                            },
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onRemoveSupervisor',
+                                                    }
+                                                ]
                                             }
                                         },
                                     ],
