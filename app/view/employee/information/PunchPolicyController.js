@@ -180,48 +180,48 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 
         // calculate labels
         var tLowTime1 = tRefTime1;
-	    while (this.roundPunchTime(Ext.Date.add(tLowTime1, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime1.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tLowTime1, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime1.toString()) {
 	        tLowTime1 = Ext.Date.add(tLowTime1, Ext.Date.SECOND, -60);
 	    }
 
         var tHighTime1 = tRefTime1;
-	    while (this.roundPunchTime(Ext.Date.add(tHighTime1, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime1.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tHighTime1, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime1.toString()) {
 	        tHighTime1 = Ext.Date.add(tHighTime1, Ext.Date.SECOND, 60);
         }
         
-        var refText1 = this.getTimePart(tRefTime1);
-	    var lowText1 = this.getTimePart(tLowTime1);
-	    var highText1 = this.getTimePart(tHighTime1);
+        var refText1 = BreezeTime.util.getPart(tRefTime1);
+	    var lowText1 = BreezeTime.util.getPart(tLowTime1);
+	    var highText1 = BreezeTime.util.getPart(tHighTime1);
 
 	    //Second label line
 	    var tLowTime2 = tRefTime2;
-	    while (this.roundPunchTime(Ext.Date.add(tLowTime2, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime2.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tLowTime2, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime2.toString()) {
 	        tLowTime2 = Ext.Date.add(tLowTime2, Ext.Date.SECOND, -60);
 	    }
 
 	    var tHighTime2 = tRefTime2;
-	    while (this.roundPunchTime(Ext.Date.add(tHighTime2, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime2.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tHighTime2, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime2.toString()) {
 	        tHighTime2 = Ext.Date.add(tHighTime2, Ext.Date.SECOND, 60);
 	    }
 
-	    var refText2 = this.getTimePart(tRefTime2);
-	    var lowText2 = this.getTimePart(tLowTime2);
-	    var highText2 = this.getTimePart(tHighTime2);
+	    var refText2 = BreezeTime.util.getPart(tRefTime2);
+	    var lowText2 = BreezeTime.util.getPart(tLowTime2);
+	    var highText2 = BreezeTime.util.getPart(tHighTime2);
 
 	    //Third label line
 	    var tLowTime3 = tRefTime3;
-	    while (this.roundPunchTime(Ext.Date.add(tLowTime3, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime3.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tLowTime3, Ext.Date.SECOND, -60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime3.toString()) {
 	        tLowTime3 = Ext.Date.add(tLowTime3, Ext.Date.SECOND, -60);
 	    }
 
 	    var tHighTime3 = tRefTime3;
-	    while (this.roundPunchTime(Ext.Date.add(tHighTime3, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime3.toString()) {
+	    while (BreezeTime.util.roundPunch(Ext.Date.add(tHighTime3, Ext.Date.SECOND, 60), nRoundMinutes, nOffsetSeconds).toString() == tRefTime3.toString()) {
 	        tHighTime3 = Ext.Date.add(tHighTime3, Ext.Date.SECOND, 60);
 	    }
 
-	    var refText3 = this.getTimePart(tRefTime3);
-	    var lowText3 = this.getTimePart(tLowTime3);
-	    var highText3 = this.getTimePart(tHighTime3);
+	    var refText3 = BreezeTime.util.getPart(tRefTime3);
+	    var lowText3 = BreezeTime.util.getPart(tLowTime3);
+	    var highText3 = BreezeTime.util.getPart(tHighTime3);
 
         var roundPrev1 = this.lookup('roundPrev1');
         var roundPrev2 = this.lookup('roundPrev2');
@@ -243,88 +243,6 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 	        roundPrev3.setHtml("Punches between " + lowText3 + " and " + highText3 + " will round to " + refText3);
 	        roundPrev3.show();
 	    }
-    },
-
-    /**
-     * Ported from EmployeeInfo.js view
-     */
-    roundPunchTime: function (tPunchTime, nRoundMinutes, nOffsetSeconds) {
-	    nOffsetSeconds = nOffsetSeconds * 60;
-
-	    tPunchTime = this.normalizeTime(tPunchTime, "Minutes");
-
-	    var tOffsetTime = Ext.Date.add(tPunchTime, Ext.Date.SECOND, (nOffsetSeconds * -1));
-
-	    var resetOffSetTime = this.resetDay(tOffsetTime);
-	    var nSecondInDay = Math.abs(((tOffsetTime - resetOffSetTime) / 1000).toFixed());
-
-	    var a = (nSecondInDay / nRoundMinutes / 60);
-	    var b = (nSecondInDay / nRoundMinutes / 60).toFixed();
-	    var nRoundedSeconds = (nSecondInDay / nRoundMinutes / 60).toFixed() * nRoundMinutes * 60;
-
-	    var tRoundTime = Ext.Date.add(resetOffSetTime, Ext.Date.SECOND, nRoundedSeconds);
-
-	    return tRoundTime;
-    },
-    
-    /**
-     * Ported from EmployeeInfo.js view
-     */
-    getTimePart: function (tTime) {
-	    return Ext.Date.format(tTime, 'g:i A');
-    },
-    
-    /**
-     * Ported from EmployeeInfo.js view
-     */
-    normalizeTime: function (tTime, cUnits, optRound) {
-	    if (tTime == '') {
-	        return tTime;
-	    }
-
-	    var Yr = tTime.getFullYear();
-	    var Mnth = tTime.getMonth() + 1;
-	    var Dy = tTime.getDate();
-	    var HH = tTime.getHours();
-	    var MM = tTime.getMinutes();
-	    var SS = tTime.getSeconds();
-	    var AddSeconds = 0
-
-	    switch (cUnits) {
-	        case "Hours":
-	            if (optRound && MM >= 30) {
-	                AddSeconds = 60 * 60
-	            }
-	            MM = 0
-	            SS = 0
-	            break;
-	        case "Minutes":
-	            if (optRound && SS >= 30) {
-	                AddSeconds = 60
-	            }
-	            SS = 0
-	            break;
-	        default:
-	            break;
-	    }
-
-	    var tNewTime = new Date(Yr + "-" + Mnth + "-" + Dy + " " + HH + ":" + MM + ":" + SS + " AM");
-	    //var tNewTime = Ext.Date.parse( Yr + "-" + Mnth + "-" + Dy + " " + HH + ":" +  MM + ":" + SS + " AM", "Y-m-d g:i:s A");
-
-	    tNewTime = Ext.Date.add(tNewTime, Ext.Date.SECOND, AddSeconds);
-
-	    return tNewTime
-    },
-    
-    /**
-     * Ported from EmployeeInfo.js view
-     */
-    resetDay: function (tTime) {
-	    var Yr = tTime.getFullYear();
-	    var Mnth = tTime.getMonth() + 1;
-	    var Dy = tTime.getDate();
-
-	    return new Date(Yr + "-" + Mnth + "-" + Dy + " 12:00:00 AM");
-	},
+    }
 
 });

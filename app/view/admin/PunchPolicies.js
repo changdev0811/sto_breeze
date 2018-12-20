@@ -8,6 +8,9 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.punchpolicies',
 
+    config: {
+        crumbTitle: 'Punch Policies'
+    },
 
     // View Model
     viewModel: {
@@ -20,12 +23,134 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
         initialize: 'onInit'
     },
 
+    addTemplateDialog: {
+        xtype: 'dialog',
+        title: 'Add Policy',
+        ui: 'light-themed-dialog employeeinfo-dialog',
 
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'breeze-select-list',
+                // ui: 'admin-shift-grid',
+                flex: 1,
+                itemId: 'templateList',
+                // userCls: 'admin-fieldset no-background no-margin no-border',
+                fieldMode: 'none',
+                selectMode: 'single',
+                preventDeselect: true,
+                itemConfig: {
+                    // ui: 'admin-list-item-select',
+                    templates: {
+                        radioValue: '{record.policy_id}',
+                        itemData: { name: '{record.policy_name}' },
+                        itemTpl: '{name}'
+                    }
+                },
+                bind: {
+                    store: '{policies}',
+                },
+                listeners: {
+                    select: 'onTemplateSelect'
+                },
+                viewModel: true
+            },
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                disabled: true,
+                itemId: 'add',
+                handler: 'onPolicyAdd'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onAddTemplateDialogCancel'
+            }
+        ]
+
+    },
+
+    applyToEmployeesDialog: {
+        xtype: 'dialog',
+        bind: {
+            title: 'Apply {policyData.policy_name}'
+        },
+        ui: 'light-themed-dialog employeeinfo-dialog',
+        layout: 'vbox',
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'component',
+                html: 'Apply to Employees'
+            },
+            {
+                xtype: 'breeze-select-list',
+                // ui: 'admin-shift-grid',
+                flex: 1,
+                itemId: 'employeesList',
+                // userCls: 'admin-fieldset no-background no-margin no-border',
+                fieldMode: 'check',
+                // selectMode: 'single',
+                preventDeselect: false,
+                itemConfig: {
+                    ui: 'admin-list-item-select',
+                    templates: {
+                        radioValue: '{record.id}',
+                        itemData: { name: '{record.fullName}' },
+                        itemTpl: '{name}'
+                    },
+                },
+                bind: {
+                    store: '{targetEmployees}',
+                },
+                listeners: {
+                    select: 'onEmployeeSelect',
+                    deselect: 'onEmployeeSelect',
+                },
+                viewModel: true
+            },
+        ],
+
+        buttons: [
+            {
+                text: 'Apply',
+                ui: 'confirm alt',
+                disabled: true,
+                itemId: 'add',
+                handler: 'onPolicyApply'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onApplyToEmployeesDialogCancel'
+            }
+        ]
+    },
 
     // Layout and base styles
     layout: 'hbox',
     ui: 'admin-base',
     title: 'Punch Policies',
+
+
 
     // Body contents
     items: [
@@ -36,95 +161,83 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:'x',
+            scrollable: 'x',
             items: [
 
                 // Column 1
-                {    
+                {
                     xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
+                    userCls: 'admin-fieldset no-padding',
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'200pt',
-                    maxWidth:'200pt',
+                    minWidth: '200pt',
+                    maxWidth: '200pt',
                     layout: 'vbox',
 
 
-                    items:[
+                    items: [
                         {
                             xtype: 'toolbar',
-                            ui:'admin-tree',
-                                    shadow: false,
+                            ui: 'admin-tree',
+                            shadow: false,
 
-                            items:[
+                            items: [
 
-                                { 
-                                    xtype: 'component', 
+                                {
+                                    xtype: 'component',
                                     html: 'Punch Policies',
-                                    userCls:'admin-title-toolbar', 
+                                    userCls: 'admin-title-toolbar',
                                 },
 
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
+                                    xtype: 'spacer',
+                                    flex: 1,
 
-                                },
-
-                                {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
                                 },
 
                                 {
                                     xtype: 'button',
                                     //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    iconCls: 'x-fas fa-plus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'showAddTemplateDialog'
+                                },
+
+                                {
+                                    xtype: 'button',
+                                    //text: 'Save for Future Use',
+                                    iconCls: 'x-fas fa-minus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'onPolicyRemove'
 
                                 },
                             ]
                         },
 
                         {
-                            xtype: 'tree',
-                            // == Item ID to make finding tree in panel easier
-                            itemId: 'tree',
-                            ui: 'employeeinfo-shift-grid',
-                            userCls: 'employeeinfo-shift-grid no-border no-background',
-                            flex:1,
-                            layout: 'hbox',
-                            hideHeaders: true,
-                            rootVisible: false,
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'checked',
-                                    minWidth: '2em',
-                                    width: 'auto',
-                                    padding: 0,
-                                    //listeners: {
-                                    //    checkChange: 'onTreeGridChecked'
-                                    //}
+                            xtype: 'breeze-select-list',
+                            ui: 'admin-shift-grid',
+                            flex: 1,
+                            reference: 'policyList',
+                            userCls: 'admin-fieldset no-background no-margin no-border',
+                            fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
+                            itemConfig: {
+                                ui: 'admin-list-item-select',
+                                templates: {
+                                    radioValue: '{record.policy_id}',
+                                    itemData: { name: '{record.policy_name}' },
+                                    itemTpl: '{name}'
                                 },
-                                {
-                                    xtype: 'treecolumn',
-                                    cell: {
-                                        ui: 'admin-tree-column admin-tree-item',
-                                    },
-                                    dataIndex: 'text',
-                                    flex: 1,
-                                    layout: {
-                                        alignment: 'stretch'
-                                    }
-                                }
-                            ],
-
-                            bind: '{departmentsTree}'
+                            },
+                            bind: {
+                                store: '{policies}',
+                            },
+                            listeners: {
+                                select: 'onPolicySelect',
+                            },
+                            viewModel: true
                         },
                     ]
                 },
@@ -133,28 +246,30 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                 {
                     xtype: 'panel',
                     ui: 'admin-sub',
-                    userCls:'admin-fieldset',
+                    userCls: 'admin-fieldset',
                     flex: 2,
                     // +++ fixed width +++
-                    maxWidth:'600pt',
-                    minWidth:'500pt',
+                    maxWidth: '600pt',
+                    minWidth: '500pt',
                     layout: 'vbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'breeze-textfield',
                             label: 'Name',
                             ui: 'admin admin-text',
-                            userCls:'admin-fieldset no-border',
+                            userCls: 'admin-fieldset no-border',
+                            bind: '{policyData.policy_name}'
                         },
                         {
                             xtype: 'tabpanel',
+                            reference: 'policyTabs',
                             /* +++ New layout:{}, +++ */
                             layout: {
                                 animation: 'fade'
                             },
                             /* +++ Update to ui: +++ */
                             ui: 'wtr-tabbar',
-                            userCls:'admin-fieldset no-border',
+                            userCls: 'admin-fieldset no-border',
 
                             /* +++ New tabBar:{}, +++ */
                             tabBar: {
@@ -164,8 +279,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                             flex: 1,
 
                             defaults: {
-                                ui:'admin-sub',
-                                style:'background:transparent;'
+                                ui: 'admin-sub',
+                                style: 'background:transparent;'
                             },
 
                             items: [
@@ -173,7 +288,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Overtime Tab]===========
                                 {
                                     title: 'Overtime',
-                                    reference: 'overtimeTab',
+                                    itemId: 'overtimeTab',
                                     xtype: 'container',
                                     items: [
                                         {
@@ -216,7 +331,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             userCls: 'employee-info-general-field admin-label',
                                                             ui: 'employeeinfo-textfield'
                                                         }
-                                                    ]    
+                                                    ]
                                                 },
                                                 {
                                                     defaults: {
@@ -227,53 +342,51 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                     items: [
                                                         {
                                                             xtype: 'breeze-checkbox',
-                                                            name: 'overtime_opt1',
                                                             boxLabel: 'Overtime 1',
                                                             labelWidth: 'auto',
-                                                            ui: 'employeeinfo-checkbox',
+                                                            ui: 'admin-checkbox',
                                                             bodyAlign: 'stretch',
                                                             reference: 'otCheck1',
+                                                            itemId: 'overtime1',
+                                                            checked: false, // default to unchecked
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Ot_Opt1}'
-                                                            },
-                                                            listeners: {
-                                                                //change: 'onOvertime1Change'
+                                                                checked: '{overtime1Checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_day1',
+                                                            // name: 'overtime_day1',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 24,
                                                             // bind: '{info.punchPolicy.Ot_Day1}'
                                                             bind: {
-                                                                //value: '{overtime_day1}',
-                                                                //hidden: '{!otCheck1.checked}'
+                                                                value: '{overtimeDaily1}',
+                                                                hidden: '{!otCheck1.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_week1',
+                                                            // name: 'overtime_week1',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 168,
                                                             // bind: '{info.punchPolicy.Ot_Week1}'
-                                                            bind: { 
-                                                                //value: '{overtime_week1}',
-                                                                //hidden: '{!otCheck1.checked}'
+                                                            bind: {
+                                                                value: '{overtimeWeekly1}',
+                                                                hidden: '{!otCheck1.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_rate1',
+                                                            // name: 'overtime_rate1',
                                                             decimals: 2,
-                                                            bind: { 
-                                                                //value: '{info.punchPolicy.Ot_Rate1}',
-                                                                //hidden: '{!otCheck1.checked}'
+                                                            bind: {
+                                                                value: '{policyData.Ot_Rate1}',
+                                                                hidden: '{!otCheck1.checked}'
                                                             }
                                                         }
-                                                    ]    
+                                                    ]
                                                 },
                                                 {
                                                     defaults: {
@@ -284,57 +397,55 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                     items: [
                                                         {
                                                             xtype: 'breeze-checkbox',
-                                                            name: 'overtime_opt2',
                                                             boxLabel: 'Overtime 2',
                                                             labelWidth: 'auto',
                                                             bodyAlign: 'stretch',
-                                                            ui: 'employeeinfo-checkbox',
+                                                            ui: 'admin-checkbox',
                                                             reference: 'otCheck2',
+                                                            itemId: 'overtime2',
+                                                            checked: false, // default to unchecked
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Ot_Opt2}',
-                                                                //readOnly: '{!otCheck1.checked}',
-                                                            },
-                                                            listeners: {
-                                                                change: 'onOvertime2Change'
+                                                                checked: '{overtime2Checked}',
+                                                                disabled: '{!overtime2Enabled}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_day2',
+                                                            // name: 'overtime_day2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 24,
                                                             // bind: '{info.punchPolicy.Ot_Day1}'
                                                             bind: {
-                                                                //value: '{overtime_day2}',
-                                                                //hidden: '{!otCheck2.checked}',
-                                                                //disabled: '{!otCheck2.checked}'
+                                                                value: '{overtimeDaily2}',
+                                                                hidden: '{!otCheck2.checked}',
+                                                                disabled: '{!otCheck2.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_week2',
+                                                            // name: 'overtime_week2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 168,
                                                             // bind: '{info.punchPolicy.Ot_Week1}'
                                                             bind: {
-                                                                //value: '{overtime_week2}',
-                                                                //hidden: '{!otCheck2.checked}',
-                                                                //disabled: '{!otCheck2.checked}'
+                                                                value: '{overtimeWeekly2}',
+                                                                hidden: '{!otCheck2.checked}',
+                                                                disabled: '{!otCheck2.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
                                                             decimals: 2,
-                                                            name: 'overtime_rate2',
+                                                            // name: 'overtime_rate2',
                                                             bind: {
-                                                                //value: '{info.punchPolicy.Ot_Rate2}',
-                                                                //hidden: '{!otCheck2.checked}',
-                                                                //disabled: '{!otCheck2.checked}'
+                                                                value: '{policyData.Ot_Rate2}',
+                                                                hidden: '{!otCheck2.checked}',
+                                                                disabled: '{!otCheck2.checked}'
                                                             }
                                                         }
-                                                    ]    
+                                                    ]
                                                 },
                                                 {
                                                     defaults: {
@@ -345,58 +456,55 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                     items: [
                                                         {
                                                             xtype: 'breeze-checkbox',
-                                                            name: 'overtime_opt3',
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Overtime 3',
                                                             labelWidth: 'auto',
-                                                            ui: 'employeeinfo-checkbox',
+                                                            ui: 'admin-checkbox',
                                                             reference: 'otCheck3',
+                                                            itemId: 'overtime3',
+                                                            checked: false, // default to unchecked
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Ot_Opt3}',
-                                                                //readOnly: '{!otCheck1.checked && !otCheck2.checked}',
-                                                            },
-                                                            listeners: {
-                                                                change: 'onOvertime3Change'
+                                                                checked: '{overtime3Checked}',
+                                                                disabled: '{!overtime3Enabled}'
                                                             }
-                                                            
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_day3',
+                                                            // name: 'overtime_day2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 24,
                                                             // bind: '{info.punchPolicy.Ot_Day1}'
                                                             bind: {
-                                                                //value: '{overtime_day3}',
-                                                                //hidden: '{!otCheck3.checked}',
-                                                                //disabled: '{!otCheck3.checked}'
+                                                                value: '{overtimeDaily3}',
+                                                                hidden: '{!otCheck3.checked}',
+                                                                disabled: '{!otCheck3.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_week3',
+                                                            // name: 'overtime_week2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 168,
                                                             // bind: '{info.punchPolicy.Ot_Week1}'
-                                                            bind: { 
-                                                                //value: '{overtime_week3}',
-                                                                //hidden: '{!otCheck3.checked}',
-                                                                //disabled: '{!otCheck3.checked}'
+                                                            bind: {
+                                                                value: '{overtimeWeekly3}',
+                                                                hidden: '{!otCheck3.checked}',
+                                                                disabled: '{!otCheck3.checked}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
                                                             decimals: 2,
-                                                            name: 'overtime_rate3',
+                                                            // name: 'overtime_rate2',
                                                             bind: {
-                                                                //value: '{info.punchPolicy.Ot_Rate3}',
-                                                                //hidden: '{!otCheck3.checked}',
-                                                                //disabled: '{!otCheck3.checked}'
+                                                                value: '{policyData.Ot_Rate3}',
+                                                                hidden: '{!otCheck3.checked}',
+                                                                disabled: '{!otCheck3.checked}'
                                                             }
                                                         }
-                                                    ]    
+                                                    ]
                                                 },
                                                 {
                                                     defaults: {
@@ -407,63 +515,70 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                     items: [
                                                         {
                                                             xtype: 'breeze-checkbox',
-                                                            name: 'overtime_opt4',
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Overtime 4',
                                                             labelWidth: 'auto',
-                                                            ui: 'employeeinfo-checkbox',
+                                                            ui: 'admin-checkbox',
                                                             reference: 'otCheck4',
+                                                            itemId: 'overtime4',
+                                                            checked: false, // default to unchecked
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Ot_Opt4}',
-                                                                //readOnly: '{!otCheck1.checked && !otCheck2.checked && !otCheck3.checked}',
-                                                                //// disabled: '{!otCheck1.checked && !otCheck2.checked && !otCheck3.checked}'
+                                                                checked: '{policyData.Ot_Opt4}',
+                                                                disabled: '{!otCheck3.checked}'
+                                                            },
+                                                            listeners: {
+                                                                change: 'onOvertimeChange'
                                                             }
-                                                            
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_day4',
+                                                            // name: 'overtime_day2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 24,
                                                             // bind: '{info.punchPolicy.Ot_Day1}'
-                                                            bind: { value: '{overtime_day4}',
-                                                            hidden: '{!otCheck4.checked}',
-                                                            disabled: '{!otCheck4.checked}' }
+                                                            bind: {
+                                                                value: '{overtimeDaily4}',
+                                                                hidden: '{!otCheck4.checked}',
+                                                                disabled: '{!otCheck4.checked}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'overtime_week4',
+                                                            // name: 'overtime_week2',
                                                             decimals: 2,
                                                             minValue: 0,
                                                             maxValue: 168,
                                                             // bind: '{info.punchPolicy.Ot_Week1}'
-                                                            bind: { 
-                                                                //value: '{overtime_week4}',
-                                                                //hidden: '{!otCheck4.checked}',
-                                                                //disabled: '{!otCheck4.checked}'
-                                                             }
+                                                            bind: {
+                                                                value: '{overtimeWeekly4}',
+                                                                hidden: '{!otCheck4.checked}',
+                                                                disabled: '{!otCheck4.checked}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
                                                             decimals: 2,
-                                                            name: 'overtime_rate4',
-                                                            bind: { 
-                                                                //value: '{info.punchPolicy.Ot_Rate4}' ,
-                                                                //hidden: '{!otCheck4.checked}',
-                                                                //disabled: '{!otCheck4.checked}'
+                                                            // name: 'overtime_rate2',
+                                                            bind: {
+                                                                value: '{policyData.Ot_Rate4}',
+                                                                hidden: '{!otCheck4.checked}',
+                                                                disabled: '{!otCheck4.checked}'
                                                             }
                                                         }
-                                                    ]    
+                                                    ]
                                                 },
                                                 {
                                                     xtype: 'breeze-checkbox',
                                                     label: 'Deduct Daily Overtime from Weekly Overtime',
-                                                    name: 'subtract_DayOt',
+                                                    // name: 'subtract_DayOt',
                                                     labelAlign: 'right',
                                                     labelWidth: 'auto',
                                                     flex: 1,
-                                                    ui: 'employeeinfo-checkbox'
+                                                    ui: 'employeeinfo-checkbox',
+                                                    bind: {
+                                                        checked: '{policyData.Subtract_DayOt}'
+                                                    }
                                                 }
                                             ]
                                         }
@@ -473,12 +588,13 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Rounding Rules Tab]===========
                                 {
                                     title: 'Rounding Rules',
-                                    reference: 'roundingTab',
+                                    itemId: 'roundingTab',
                                     xtype: 'container',
+                                    userCls: 'admin-padded-tab-body',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             layout: 'vbox',
                                             title: 'Punch Rounding',
                                             items: [
@@ -499,12 +615,9 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'selectfield',
                                                             store: 'PunchRoundingIncrements',
-                                                            name: 'rounding_inc',
                                                             displayField: 'name',
-                                                            // label: 'Round punch to nearest increment of',
                                                             valueField: 'value',
-                                                            // flex: 1,
-                                                            //bind: '{info.punchPolicy.Round_Increment}',
+                                                            bind: '{policyData.Round_Increment}',
                                                             listeners: {
                                                                 //change: 'onRoundingIncChange'
                                                             }
@@ -533,10 +646,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'spinnerfield',
                                                             store: 'PunchRoundingIncrements',
-                                                            name: 'rounding_off',
-                                                            // label: 'Minute(s)',
                                                             inline: true,
-                                                            //bind: { value: '{info.punchPolicy.Round_Offset}' },
+                                                            bind: { 
+                                                                value: '{policyData.Round_Offset}',
+                                                                disabled: '{!roundingOffsetEnabled}'
+                                                            },
                                                             listeners: {
                                                                 //change: 'onRoundingOffChange'
                                                             }
@@ -560,20 +674,27 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev1',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            // reference: 'roundPrev1',
+                                                            // html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule1}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev2',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule2}',
+                                                                hidden: '{policyData.Round_Increment == 1}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev3',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule3}',
+                                                                hidden: '{policyData.Round_Increment == 1}'
+                                                            }
                                                         },
                                                     ]
                                                 }
@@ -584,11 +705,12 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Punch Options Tab]===========
                                 {
                                     title: 'Punch Options',
+                                    userCls: 'admin-padded-tab-body',
                                     layout: 'vbox',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Punch Options',
                                             items: [
                                                 {
@@ -602,23 +724,23 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'allow_punch_regular',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'allow_punch_regular',
+                                                            bodyAlign: 'stretch',
                                                             flex: 1,
                                                             boxLabel: 'Allow Regular Punch In/Out',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Allow_RegularPunch}'
+                                                                checked: '{policyData.Allow_RegularPunch}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'allow_punch_quick',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'allow_punch_quick',
+                                                            bodyAlign: 'stretch',
                                                             flex: 1,
                                                             boxLabel: 'Allow Quick Punch In/Out',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Allow_QuickPunch}'
+                                                                checked: '{policyData.Allow_QuickPunch}'
                                                             }
                                                         }
                                                     ]
@@ -640,9 +762,9 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            name: 'auto_close_shift',
+                                                            // name: 'auto_close_shift',
                                                             minValue: 0, maxValue: 24, value: 1,
-                                                            //bind: { value: '{info.punchPolicy.Auto_Close_Shift}' }
+                                                            bind: { value: '{policyData.Auto_Close_Shift}' }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -655,7 +777,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                         },
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Other',
                                             items: [
                                                 {
@@ -671,56 +793,65 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'can_adjust_punches',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'can_adjust_punches',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'Can adjust time records',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Adjust_Punches}'
+                                                                checked: '{policyData.Can_Adjust_Punches}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'can_add_notes',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'can_add_notes',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'Can add notes to punches',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Add_Notes}'
+                                                                checked: '{policyData.Can_Add_Notes}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'can_use_timesheets',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'can_use_timesheets',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'Can use time sheets',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Use_TimeSheets}'
+                                                                checked: '{policyData.Can_Use_TimeSheets}'
                                                             }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'InOut_punch',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'InOut_punch',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'In/Out board punching without recording time',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Use_InOut}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'can_add_projects',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'can_add_projects',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'Can add Projects',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Add_Projects}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
-                                                            name: 'can_edit_notes',
-                                                            bodyAlign:'stretch',
+                                                            // name: 'can_edit_notes',
+                                                            bodyAlign: 'stretch',
                                                             boxLabel: 'Can edit/delete employee notes',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Edit_Notes}'
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -733,11 +864,12 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 {
                                     title: 'Deductions',
                                     layout: 'vbox',
+                                    userCls: 'admin-padded-tab-body',
                                     reference: 'deductionsTab',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Automatic Deductions',
                                             items: [
                                                 {
@@ -752,11 +884,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             xtype: 'checkbox',
                                                             ui: 'employeeinfo-checkbox',
                                                             name: 'punch_out_lunch',
-                                                            bodyAlign:'stretch',
+                                                            bodyAlign: 'stretch',
                                                             flex: 1,
                                                             boxLabel: 'Punch Out for lunch',
-                                                            listeners: {
-                                                                //change: 'onPunchForLunchChange'
+                                                            bind: {
+                                                                checked: '{policyData.Auto_LunchPunch}'
                                                             }
                                                         },
                                                         {
@@ -785,12 +917,16 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            maxWidth:'6em',
-                                                            name: 'lunch_minutes',
+                                                            maxWidth: '6em',
+                                                            // name: 'lunch_minutes',
                                                             minValue: 0, maxValue: 999,
                                                             decimals: 0, label: null,
                                                             inline: true,
-                                                            disabled: true
+                                                            disabled: true,
+                                                            bind: {
+                                                                disabled: '{!policyData.Auto_LunchPunch}',
+                                                                value: '{policyData.LunchPunch_Seg}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -799,10 +935,14 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         },
                                                         {
                                                             xtype: 'spinnerfield',
-                                                            maxWidth:'6em',
-                                                            name: 'lunch_seg',
+                                                            maxWidth: '6em',
+                                                            // name: 'lunch_seg',
                                                             minValue: 0, maxValue: 24, decimals: 0,
-                                                            disabled: true
+                                                            disabled: true,
+                                                            bind: {
+                                                                disabled: '{!policyData.Auto_LunchPunch}',
+                                                                value: '{policyData.LunchPunch_Hours}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -824,35 +964,37 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
 
                         {
                             xtype: 'toolbar',
-                            ui:'admin-tree',
-                            userCls:'no-background',
+                            ui: 'admin-tree',
+                            userCls: 'no-background',
                             shadow: false,
-                            items:[
+                            items: [
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
+                                    xtype: 'spacer',
+                                    flex: 1,
                                 },
                                 {
                                     xtype: 'button',
                                     text: 'Save',
                                     ui: 'confirm alt',
-                                    width:'175pt'                   
+                                    width: '175pt',
+                                    handler: 'onSave'
                                 },
 
                                 {
-                                    xtype:'spacer',
-                                    width:'5pt',
+                                    xtype: 'spacer',
+                                    width: '5pt',
                                 },
 
                                 {
                                     xtype: 'button',
                                     text: 'Save and Apply Punch Policy to Employees',
-                                    ui: 'action',   
-                                    width:'275pt'              
+                                    ui: 'action',
+                                    width: '275pt',
+                                    handler: 'showApplyToEmployeesDialog'
                                 },
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
+                                    xtype: 'spacer',
+                                    flex: 1,
                                 },
 
                             ]

@@ -9,7 +9,10 @@ Ext.define('Breeze.view.main.employees.SubNav', {
     alias: 'widget.main.employees.subnav',
     xtype: 'breeze-employees-subnav',
 
-
+    requires: [
+        'Breeze.view.main.employees.SubNavController',
+        'Breeze.view.main.employees.SubNavModel'
+    ],
     
     controller: 'main.employees.subnav',
     viewModel: {

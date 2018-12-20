@@ -32,6 +32,22 @@
             $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
         );
     }
+
+}
+
+// Fieldset without background-filled title
+.admin-fieldset-clear {
+    .x-form-fieldset-title{
+        background-color: transparent !important;
+    }
+}
+
+// Padded edges for admin tab view body container
+.admin-padded-tab-body{
+    padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.75, left: 0.75, right: 0.75, bottom: 0)
+    );
 }
 
 .admin-toolbar {
@@ -447,3 +463,22 @@
 );
 
 .admin-mini-calendar { .x-tool.x-component > .x-icon-el.x-font-icon{ color: #ffffff } }
+
+// Extra form fields
+
+@include field-ui(
+    $label-color: map-get($admin-text-colors, 'base'),
+    $focused-label-color: map-get($admin-text-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'base'),
+    $disabled-label-color: darken(map-get($admin-text-colors, 'base'), 25%),
+    $ui: 'admin-checkbox'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: map-get($admin-text-colors, 'base'),
+    $checked-checkbox-color: map-get($admin-text-colors, 'base'),
+    $box-label-color: map-get($admin-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'base'),
+    $disabled-checkbox-color: darken(map-get($admin-text-colors, 'base'), 25%),
+    $ui: 'admin-checkbox'
+);

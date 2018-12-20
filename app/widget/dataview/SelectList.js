@@ -20,8 +20,10 @@ Ext.define('Breeze.widget.dataview.SelectList', {
         */
         fieldMode: 'radio',
         maximumSelectionCount: 1,
+        selectMode: 'multi',
         // Template for display
         template: null, // {radioValue, itemData, tpl},
+        preventDeselect: false
     },
 
     fieldIds: {
@@ -39,6 +41,11 @@ Ext.define('Breeze.widget.dataview.SelectList', {
     initialize: function () {
         var me = this;
         me.callParent();
+        this.getSelectable().setMode(this.getSelectMode());
+        
+        if(this.getPreventDeselect()){
+            this.getSelectable().setDeselectable(false);
+        }
         // me.hookSelectEvent();
         console.info('UDC Initialized');
     },
@@ -111,7 +118,6 @@ Ext.define('Breeze.widget.dataview.SelectList', {
      *  item
      */
     onItemDeselect: function (records) {
-        // console.info('deselect');
         var record = (Array.isArray(records)) ? records[0] : records,
             item = this.getItem(record);
         switch (this.getFieldMode()) {
@@ -127,8 +133,23 @@ Ext.define('Breeze.widget.dataview.SelectList', {
                     field.setChecked(false);
                 }
                 break;
+            // default:
+            //     if(this.getPreventDeselect()){
+            //         // this.callParent(arguments);
+            //         // if(this.getSelectable().getSelectedRecords().)
+            //         this.getSelectable().select(
+            //             records[0], false, true
+            //         );
+            //         return false;
+            //     }
+            //     break;
         }
-
+        // Spoof deselect event if a listener exists
+        if(
+            this.events.deselect
+        ){
+            this.events.deselect.fire(this,records);
+        }
         this.callParent(arguments);
     },
 
