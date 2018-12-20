@@ -66,12 +66,13 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
 
     //===[Event Handlers]===
     onPolicySelect: function (list, record) {
-        var me = this;
+        var vm = this.getViewModel();
 
-        this.copyRecordToViewModelData(
-            record,
-            'policyData'
-        );
+        // this.copyRecordToViewModelData(
+        //     record,
+        //     'policyData'
+        // );
+        vm.set('policyData', Ext.clone(record.getData()));
 
     },
 

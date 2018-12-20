@@ -322,7 +322,7 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
             allowRegular: 'Allow_RegularPunch',
             allowQuick: 'Allow_QuickPunch',
             punchStart: 'Auto_PunchIn',
-            punchExt: 'Auto_PunchOut',
+            punchExit: 'Auto_PunchOut',
             punchLunch: 'Auto_LunchPunch',
             lunchMinutes: 'LunchPunch_Seg',
             lunchHours: 'LunchPunch_Hours',
