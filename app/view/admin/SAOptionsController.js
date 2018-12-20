@@ -89,6 +89,9 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
         var configInfoParams = Ext.clone(vm.get('configData')),
             modified = false,
             fisc = vm.get('configData.FiscDate');
+    
+        // Remove repo type prop carried over from raw API response
+        delete configInfoParams.__type;
 
         this.api.update(
             configInfoParams,

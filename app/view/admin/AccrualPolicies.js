@@ -102,6 +102,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     userCls: 'admin-fieldset no-background no-margin no-border',
                                     reference: 'policyList',
                                     fieldMode: 'none',
+                                    selectMode: 'single',
+                                    preventDeselect: true,
                                     itemConfig: {
                                         ui: 'admin-list-item-select',
                                         templates: {
@@ -280,6 +282,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             reference: 'categoryList',
                             fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
                             itemConfig: {
                                 ui: 'admin-list-item-select'
                             },
