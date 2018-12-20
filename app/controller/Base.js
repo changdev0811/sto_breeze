@@ -78,6 +78,34 @@ Ext.define('Breeze.controller.Base', {
     },
 
     /**
+     * Load store without saving in viewmodel, so result can be used in callback
+     * loading it with a callback
+     * @param {String} storeNamespace Namespace/path/alias of store
+     * @param {Object} options Optional options:
+     *  - load: boolean indicating if store should be loaded
+     *  - createOpts: object to pass to create call (options)
+     *  - loadOpts: object to pass to load call, can include callback
+     *      e.g. callback: function(success, records, op)
+     */
+    loadStoreForViewModel: function(storeNamespace, options){
+        var vm = this.getViewModel();
+        var options = (typeof options == 'undefined')? {} : options;
+        var store = null;
+        store = Ext.create(
+            storeNamespace,
+            (typeof options.createOpts == 'undefined')? {} : options.createOpts
+        );
+        // vm.setStores(stores);
+        if(options.load){
+            if(options.loadOpts){
+                store.load(options.loadOpts);
+            } else {
+                store.load();
+            }
+        }
+    },
+
+    /**
      * Copy data from object or existing record directly to named data item
      * in view model, optionally cloning to decouple
      * 
@@ -90,7 +118,7 @@ Ext.define('Breeze.controller.Base', {
      *      true)
      * @return {Boolean} True if data was successfully set, false otherwise
      */
-    copyRecordToViewModelData: function(recordSource, dataName, replace, clone){
+    copyRecordToViewModel: function(recordSource, dataName, replace, clone){
         var replace = Object.defVal(replace, true),
             clone = Object.defVal(clone, true),
             // default to using getData

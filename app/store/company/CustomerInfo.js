@@ -4,7 +4,7 @@
  * @class CustomerInfo
  * @namespace Breeze.store.company.CustomerInfo
  */
-Ext.define('Breeze.store.company.Config', {
+Ext.define('Breeze.store.company.CustomerInfo', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.company.CustomerInfo',
     autoLoad: false,

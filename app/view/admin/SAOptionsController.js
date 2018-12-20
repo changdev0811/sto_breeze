@@ -8,8 +8,8 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.admin.saoptions',
 
-    stores: [
-        // 'Breeze.store.category.List'
+    requires: [
+        'Breeze.api.admin.SuperAdminOptions'
     ],
 
     /**
@@ -17,18 +17,64 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
      */
     onInit: function (component) {
 
-        // Load User-Defined Categories list store
+        var me = this,
+            vm = this.getViewModel();
+
+        this.api = Ext.create('Breeze.api.admin.SuperAdminOptions');
+
         this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
+            'Breeze.store.option.TimeZones',
+            'timeZones',
             { load: true }
         );
 
-   
+        this.addStoreToViewModel(
+            'Breeze.store.company.Config',
+            'companyConfig',
+            {
+                load: true,
+                loadOpts: {
+                    callback: function(records, op, success){
+                        vm.set('configData', Ext.clone(records[0].getData()));
+                    },
+                    scope: me
+                }
+            }
+        );
+
+        var custId = Breeze.helper.Auth.getCookies().cust;
+
+        this.loadStoreForViewModel(
+            'Breeze.store.company.CustomerInfo',
+            { 
+                load: true,
+                createOpts: { customerId: custId },
+                loadOpts: {
+                    callback: function(records, op, success){
+                        if(success){
+                            this.copyRecordToViewModel(
+                                records[0].getData(),
+                                'customerData'
+                            );
+                        }
+                    },
+                    scope: me
+                }
+            }
+        ),
+
+        this.api.timeKronStatus().then((r)=>{
+            if(!r){
+                // Remove Captions tab if timeKronStatus returns false
+                var tabs = me.lookup('saTabs');
+                tabs.remove(tabs.getComponent('captionsTab'));
+            }
+        })
+
     },
 
-  
 
 
-    
+
+
 });
