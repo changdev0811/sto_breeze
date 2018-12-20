@@ -112,6 +112,8 @@ Ext.define('Breeze.view.admin.PointCats', {
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             reference: 'pointCatsList',
                             fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {

@@ -29,6 +29,46 @@ Ext.define('Breeze.api.admin.SuperAdminOptions', {
                 }
             )
         });
+    },
+
+    /**
+     * @api UpdateCompanyConfig
+     */
+    update: function(params, modified, fiscalDate){
+        var api = this.api;
+        return new Promise((resolve, reject) => {
+            api.serviceRequest(
+                'UpdateCompanyConfig',
+                {
+                    ConfigInfo: Ext.JSON.encode(params),
+                    Modified: modified,
+                    FiscDate: fiscalDate
+                },
+                true, false,
+                function (r) {
+                    var resp = api.decodeJsonResponse(r);
+                    if (resp.success) {
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Super Administrator options updated successfully'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err,
+                            error: resp.info
+                        });
+                    }
+                },
+                function (err) {
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
+                }
+            )
+        });
     }
 
 });
