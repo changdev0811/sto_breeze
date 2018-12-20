@@ -40,7 +40,7 @@ Ext.define('Breeze.api.admin.SuperAdminOptions', {
             api.serviceRequest(
                 'UpdateCompanyConfig',
                 {
-                    ConfigInfo: JSON.encode(params),
+                    ConfigInfo: Ext.JSON.encode(params),
                     Modified: modified,
                     FiscDate: fiscalDate
                 },
