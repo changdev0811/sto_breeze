@@ -142,11 +142,39 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype: 'container',
                                                     layout:'hbox',
                                                     items:[
+
                                                         {
                                                             xtype:'fieldset',
-                                                            userCls:'admin-fieldset no-side-margin no-border',
+                                                            userCls:'admin-fieldset no-side-margin',
+                                                            height:'150pt',
                                                             flex:1,
-                                                            items:[]
+                                                            layout:'vbox',
+                                                            title:'Company Logo',
+                                                            layout: 'vbox',
+                                                            items: [
+
+                                                                {
+                                                                    xtype: 'image',
+                                                                    //ui: 'admin admin-text',
+                                                                    flex:1,
+                                                                    bind: {
+                                                                        src: '{info.Photo}'
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'filefield',
+                                                                    ui: 'admin admin-text',
+                                                                    name: 'photo_upload',
+                                                                    accept: 'image/*',
+                                                                    reference: 'pictureFileField',
+                                                                    itemId: 'imageFile',
+                                                                    label: 'Picture File',
+                                                                    //ui: 'employeeinfo-dialog-field'
+                                                                }
+                                                            ]
+
+
+                                                        
                                                         },
                                                         {
                                                             xtype:'fieldset',
@@ -749,36 +777,56 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                     xtype:'fieldset',
                                                     userCls:'admin-fieldset no-side-margin',
                                                     title:'Point Expiration Type',
-                                                    defaults: {
-                                                        bodyAlign: 'stretch',
-                                                        ui: 'admin',
-                                                        xtype: 'radio',
-                                                    },
                                                     items: [
+
+
                                                         {
-                                                            name: 'PointExpirationType',
-                                                            boxLabel: 'Expiration Date',
-                                                            value:134,
+                                                            xtype:'containerfield',
+                                                            layout:'vbox',
+                                                            itemId:'PointExpirationType',
+                                                            reference:'PointExpirationType',
                                                             bind: {
-                                                                groupValue: '{ConfigInfo.PointExpirationType}'
-                                                            }
-                                                            /* +++ hide rolling_options +++ */
-                                                        },
-                                                        {
-                                                            name: 'PointExpirationType',
-                                                            boxLabel: 'Rolling Expiration',
-                                                            value:135,
-                                                            bind: {
-                                                                groupValue: '{ConfigInfo.PointExpirationType}'
-                                                            }
-                                                            /* +++ show rolling_options +++ */
+                                                                values:{
+                                                                    expirationType: '{ConfigInfo.PointExpirationType}'
+                                                                }
+                                                            },
+                                                            defaults:{
+                                                                bodyAlign: 'stretch',
+                                                                ui: 'admin',
+                                                                xtype: 'radio',
+                                                            },
+                                                            items:[
+                                                                {
+                                                                    name: 'expirationType',
+                                                                    boxLabel: 'Expiration Date',
+                                                                    value:134,
+                                                                    bind: {
+                                                                        groupValue: '{PointExpirationType.expirationType}'
+                                                                    }
+                                                                    /* +++ hide rolling_options +++ */
+                                                                },
+                                                                {
+                                                                    name: 'expirationType',
+                                                                    boxLabel: 'Rolling Expiration',
+                                                                    reference: 'rollingOptionRadio',
+                                                                    value:135,
+                                                                    bind: {
+                                                                        groupValue: '{PointExpirationType.expirationType}'
+                                                                    }
+                                                                    /* +++ show rolling_options +++ */
+                                                                },
+                                                            ]
                                                         },
                                                         {
                                                             
-                                                            /* +++ show / hide based on radio selection above. 134 = show +++ */
+                                                            /* +++ show / hide based on radio selection above. 135 = show +++ */
                                                             xtype:'container',
                                                             name: 'rolling_options',
                                                             layout:'hbox',
+                                                            hidden:true,
+                                                            bind:{
+                                                                hidden:'{!rollingOptionRadio.checked}'
+                                                            },
                                                             defaults: {
                                                                 ui: 'admin admin-text'
                                                             },

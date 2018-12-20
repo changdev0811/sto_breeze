@@ -48,8 +48,8 @@ Ext.define('Breeze.view.admin.Projects', {
                     flex: 1,
 
                     // +++ fixed width +++
-                    minWidth: '150pt',
-                    maxWidth: '200pt',
+                    minWidth: '200pt',
+                    maxWidth: '220pt',
 
                     layout: 'vbox',
                     items: [
@@ -112,8 +112,8 @@ Ext.define('Breeze.view.admin.Projects', {
                     flex: 2,
 
                     // +++ fixed width +++
-                    minWidth: '500pt',
-                    maxWidth: '500pt',
+                    minWidth: '400pt',
+                    maxWidth: '400pt',
 
                     layout: 'vbox',
                     buttons: {
