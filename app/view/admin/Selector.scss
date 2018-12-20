@@ -433,6 +433,9 @@
 
 );
 
+
+
+
 @include dataview-ui(
     $ui: 'admin-grid',
     $background-color: transparent,
@@ -442,6 +445,15 @@
     $trigger-background-color: map-get($admin-colors, 'row-light'),
 
 )
+
+@include checkcell-ui(
+    $ui: 'admin-grid',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $disabled-checkbox-color: #ffffff,
+);
+
+
 
 @include gridcell-ui(
     $ui: 'admin-grid',
