@@ -149,6 +149,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                         },
                         {
                             xtype: 'tabpanel',
+                            reference: 'policyTabs',
                             /* +++ New layout:{}, +++ */
                             layout: {
                                 animation: 'fade'
@@ -174,7 +175,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Overtime Tab]===========
                                 {
                                     title: 'Overtime',
-                                    reference: 'overtimeTab',
+                                    itemId: 'overtimeTab',
                                     xtype: 'container',
                                     items: [
                                         {
@@ -234,6 +235,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             bodyAlign: 'stretch',
                                                             reference: 'otCheck1',
                                                             itemId: 'overtime1',
+                                                            checked: false, // default to unchecked
                                                             bind: {
                                                                 checked: '{overtime1Checked}'
                                                             }
@@ -288,6 +290,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             ui: 'admin-checkbox',
                                                             reference: 'otCheck2',
                                                             itemId: 'overtime2',
+                                                            checked: false, // default to unchecked
                                                             bind: {
                                                                 checked: '{overtime2Checked}',
                                                                 disabled: '{!overtime2Enabled}'
@@ -346,6 +349,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             ui: 'admin-checkbox',
                                                             reference: 'otCheck3',
                                                             itemId: 'overtime3',
+                                                            checked: false, // default to unchecked
                                                             bind: {
                                                                 checked: '{overtime3Checked}',
                                                                 disabled: '{!overtime3Enabled}'
@@ -404,10 +408,10 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             ui: 'admin-checkbox',
                                                             reference: 'otCheck4',
                                                             itemId: 'overtime4',
+                                                            checked: false, // default to unchecked
                                                             bind: {
                                                                 checked: '{policyData.Ot_Opt4}',
-                                                                disabled: '{!otCheck3.checked}',
-                                                                readOnly: '{!otCheck3.checked}'
+                                                                disabled: '{!otCheck3.checked}'
                                                             },
                                                             listeners: {
                                                                 change: 'onOvertimeChange'
@@ -458,7 +462,10 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                     labelAlign: 'right',
                                                     labelWidth: 'auto',
                                                     flex: 1,
-                                                    ui: 'employeeinfo-checkbox'
+                                                    ui: 'employeeinfo-checkbox',
+                                                    bind: {
+                                                        checked: '{policyData.Subtract_DayOt}'
+                                                    }
                                                 }
                                             ]
                                         }
@@ -468,12 +475,13 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Rounding Rules Tab]===========
                                 {
                                     title: 'Rounding Rules',
-                                    reference: 'roundingTab',
+                                    itemId: 'roundingTab',
                                     xtype: 'container',
+                                    userCls: 'admin-padded-tab-body',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             layout: 'vbox',
                                             title: 'Punch Rounding',
                                             items: [
@@ -494,12 +502,9 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'selectfield',
                                                             store: 'PunchRoundingIncrements',
-                                                            // name: 'rounding_inc',
                                                             displayField: 'name',
-                                                            // label: 'Round punch to nearest increment of',
                                                             valueField: 'value',
-                                                            // flex: 1,
-                                                            //bind: '{info.punchPolicy.Round_Increment}',
+                                                            bind: '{policyData.Round_Increment}',
                                                             listeners: {
                                                                 //change: 'onRoundingIncChange'
                                                             }
@@ -528,10 +533,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'spinnerfield',
                                                             store: 'PunchRoundingIncrements',
-                                                            // name: 'rounding_off',
-                                                            // label: 'Minute(s)',
                                                             inline: true,
-                                                            //bind: { value: '{info.punchPolicy.Round_Offset}' },
+                                                            bind: { 
+                                                                value: '{policyData.Round_Offset}',
+                                                                disabled: '{!roundingOffsetEnabled}'
+                                                            },
                                                             listeners: {
                                                                 //change: 'onRoundingOffChange'
                                                             }
@@ -555,20 +561,27 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev1',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            // reference: 'roundPrev1',
+                                                            // html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule1}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev2',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule2}',
+                                                                hidden: '{policyData.Round_Increment == 1}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'component',
                                                             userCls: 'employeeinfo-label admin-label',
-                                                            reference: 'roundPrev3',
-                                                            html: 'Punches between 7 and 8 am round to 8 AM'
+                                                            bind: {
+                                                                html: '{roundingRule3}',
+                                                                hidden: '{policyData.Round_Increment == 1}'
+                                                            }
                                                         },
                                                     ]
                                                 }

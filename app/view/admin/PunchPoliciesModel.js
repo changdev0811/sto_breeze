@@ -23,80 +23,80 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
     formulas: {
         //===[Overtime Value Formulas]===
         overtimeDaily1: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Day1') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day1', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeDaily2: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Day2') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day2', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeDaily3: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Day3') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day3', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeDaily4: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Day4') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day4', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeWeekly1: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Week1') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day1', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeWeekly2: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Week2') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day2', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeWeekly3: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Week3') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day3', Math.round(value * 60 * 60)
                 );
             }
         },
         overtimeWeekly4: {
-            get: function(get){
+            get: function (get) {
                 return (get('policyData.Ot_Week4') / 60 / 60);
             },
-            set: function(value){
+            set: function (value) {
                 this.set(
                     'policyData.Ot_Day4', Math.round(value * 60 * 60)
                 );
@@ -107,7 +107,7 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
             bind: {
                 ot1: '{policyData.Ot_Opt1}'
             },
-            get: function(data){
+            get: function (data) {
                 return data.ot1;
             }
         },
@@ -116,17 +116,17 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
                 ot1: '{policyData.Ot_Opt1}',
                 ot2: '{policyData.Ot_Opt2}'
             },
-            get: function(data){
+            get: function (data) {
                 return data.ot1 && data.ot2;
             }
         },
         overtime1Checked: {
-            get: function(get){
+            get: function (get) {
                 return get('policyData.Ot_Opt1');
             },
-            set: function(value){
-                this.set('policyData.Ot_Opt1',value);
-                if(!value){
+            set: function (value) {
+                this.set('policyData.Ot_Opt1', value);
+                if (!value) {
                     this.setMultiple(
                         [
                             'policyData.Ot_Opt2',
@@ -139,12 +139,12 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
             }
         },
         overtime2Checked: {
-            get: function(get){
+            get: function (get) {
                 return get('policyData.Ot_Opt2');
             },
-            set: function(value){
-                this.set('policyData.Ot_Opt2',value);
-                if(!value){
+            set: function (value) {
+                this.set('policyData.Ot_Opt2', value);
+                if (!value) {
                     this.setMultiple(
                         [
                             'policyData.Ot_Opt3',
@@ -156,18 +156,141 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
             }
         },
         overtime3Checked: {
-            get: function(get){
+            get: function (get) {
                 return get('policyData.Ot_Opt3');
             },
-            set: function(value){
-                this.set('policyData.Ot_Opt3',value);
-                if(!value){
-                    this.set('policyData.Ot_Opt4',false);
+            set: function (value) {
+                this.set('policyData.Ot_Opt3', value);
+                if (!value) {
+                    this.set('policyData.Ot_Opt4', false);
                 }
             }
+        },
+
+        //===[Rounding Rule Formulas]===
+        roundingOffsetEnabled: function (get) {
+            return (get('policyData.Round_Increment') !== 1);
+        },
+        // Formulas for populating rounding preview time text
+        roundingRule1: {
+            bind: {
+                roundTo: '{policyData.Round_Increment}',
+                offset: '{policyData.Round_Offset}'
+            },
+            get: function (data) {
+
+                console.info('data: ', JSON.stringify(data));
+                if (data.roundTo == 1) {
+                    return "Punches will not be rounded";
+                } else {
+
+
+                    var baseDate = new Date('1/1/2000 08:00:00 AM');
+
+                    var refT = Ext.Date.add(
+                        baseDate, Ext.Date.SECOND, data.roundTo * -60
+                    );
+
+                    var lowTime = refT, highTime = refT;
+
+                    while (BreezeTime.util.roundPunch(
+                        Ext.Date.add(lowTime, Ext.Date.SECOND, -60),
+                        data.roundTo,
+                        data.offset
+                    ).toString() == refT.toString()) {
+                        lowTime = Ext.Date.add(lowTime, Ext.Date.SECOND, -60);
+                    }
+
+                    while (BreezeTime.util.roundPunch(
+                        Ext.Date.add(highTime, Ext.Date.SECOND, 60),
+                        data.roundTo,
+                        data.offset
+                    ).toString() == refT.toString()) {
+                        highTime = Ext.Date.add(highTime, Ext.Date.SECOND, 60);
+                    }
+
+                    var text = BreezeTime.util.getPart(refT),
+                        low = BreezeTime.util.getPart(lowTime),
+                        high = BreezeTime.util.getPart(highTime);
+
+                    return `Punches between ${low} and ${high} will round to ${text}`;
+                }
+
+            }
+        },
+        roundingRule2: {
+            bind: {
+                roundTo: '{policyData.Round_Increment}',
+                offset: '{policyData.Round_Offset}'
+            },
+            get: function (data) {
+                var baseDate = new Date('1/1/2000 08:00:00 AM');
+
+                var refT = baseDate;
+
+                var lowTime = refT, highTime = refT;
+
+                while (BreezeTime.util.roundPunch(
+                    Ext.Date.add(lowTime, Ext.Date.SECOND, -60),
+                    data.roundTo,
+                    data.offset
+                ).toString() == refT.toString()) {
+                    lowTime = Ext.Date.add(lowTime, Ext.Date.SECOND, -60);
+                }
+
+                while (BreezeTime.util.roundPunch(
+                    Ext.Date.add(highTime, Ext.Date.SECOND, 60),
+                    data.roundTo,
+                    data.offset
+                ).toString() == refT.toString()) {
+                    highTime = Ext.Date.add(highTime, Ext.Date.SECOND, 60);
+                }
+
+                var text = BreezeTime.util.getPart(refT),
+                    low = BreezeTime.util.getPart(lowTime),
+                    high = BreezeTime.util.getPart(highTime);
+
+                return `Punches between ${low} and ${high} will round to ${text}`;
+            },
+        },
+        roundingRule3: {
+            bind: {
+                roundTo: '{policyData.Round_Increment}',
+                offset: '{policyData.Round_Offset}'
+            },
+            get: function (data) {
+                var baseDate = new Date('1/1/2000 08:00:00 AM');
+
+                var refT = Ext.Date.add(
+                    baseDate, Ext.Date.SECOND, data.roundTo * 60
+                );
+
+                var lowTime = refT, highTime = refT;
+
+                while (BreezeTime.util.roundPunch(
+                    Ext.Date.add(lowTime, Ext.Date.SECOND, -60),
+                    data.roundTo,
+                    data.offset
+                ).toString() == refT.toString()) {
+                    lowTime = Ext.Date.add(lowTime, Ext.Date.SECOND, -60);
+                }
+
+                while (BreezeTime.util.roundPunch(
+                    Ext.Date.add(highTime, Ext.Date.SECOND, 60),
+                    data.roundTo,
+                    data.offset
+                ).toString() == refT.toString()) {
+                    highTime = Ext.Date.add(highTime, Ext.Date.SECOND, 60);
+                }
+
+                var text = BreezeTime.util.getPart(refT),
+                    low = BreezeTime.util.getPart(lowTime),
+                    high = BreezeTime.util.getPart(highTime);
+
+                return `Punches between ${low} and ${high} will round to ${text}`;
+            }
+
         }
-        
-        
     }
 
 });
