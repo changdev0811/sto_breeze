@@ -8,4 +8,39 @@
 Ext.define('Breeze.api.admin.PunchPolicies', {
     extend: 'Breeze.api.Base',
 
+    /**
+     * @api /addPunchPolicy
+     */
+    add: function(){
+
+    },
+
+    /**
+     * @api /deletePunchPolicy
+     */
+    delete: function(){
+
+    },
+
+    /**
+     * @api /UpdatePunchPolicyInformation
+     */
+    update: function(){
+
+    },
+
+    /**
+     * @api /getPunchPolicyEmployees
+     */
+    applicableEmployees: function(){
+
+    },
+
+    /**
+     * @api /applyPunchPolicyToEmployees
+     */
+    applyToEmployees: function(){
+
+    }
+
 });

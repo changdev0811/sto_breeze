@@ -444,3 +444,22 @@
 );
 
 .admin-mini-calendar { .x-tool.x-component > .x-icon-el.x-font-icon{ color: #ffffff } }
+
+// Extra form fields
+
+@include field-ui(
+    $label-color: map-get($admin-text-colors, 'base'),
+    $focused-label-color: map-get($admin-text-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'base'),
+    $disabled-label-color: darken(map-get($admin-text-colors, 'base'), 25%),
+    $ui: 'admin-checkbox'
+);
+
+@include checkboxfield-ui(
+    $checkbox-color: map-get($admin-text-colors, 'base'),
+    $checked-checkbox-color: map-get($admin-text-colors, 'base'),
+    $box-label-color: map-get($admin-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'base'),
+    $disabled-checkbox-color: darken(map-get($admin-text-colors, 'base'), 25%),
+    $ui: 'admin-checkbox'
+);
