@@ -32,7 +32,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
 
     buttonAlign: 'right',
     buttons: {
-        apply: { text: 'Save', ui: 'confirm alt', style: 'width:175pt;' },
+        apply: { text: 'Save', ui: 'confirm alt', style: 'width:175pt;', handler: 'onSave' },
     },
     buttonToolbar: {
         xtype: 'toolbar',

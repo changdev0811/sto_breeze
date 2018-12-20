@@ -17,7 +17,7 @@ Ext.define('Breeze.store.company.CustomerInfo', {
             this.provideAuthCookieToProxy();
             this.useJsonParams();
             this.getProxy().extraParams.product = this.getProduct();
-            this.getProxy().extraParams.cust_id = this.getCustomerId();
+            this.getProxy().extraParams.customer_id = this.getCustomerId();
         }
     },
     proxy: {
