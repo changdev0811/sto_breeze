@@ -360,24 +360,25 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: transparent,
+    $background-color: map-get($admin-colors, 'base'),
     $selected-background-color: map-get($admin-colors, 'row-light'),
     $hovered-background-color: map-get($admin-colors, 'row-light'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
-
+/*
 @include gridcell-ui(
     $ui: 'projects-grid',
 
 
-    $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'row-light'),
-    $hovered-background-color: map-get($admin-colors, 'row-light'),
-    $sorted-background-color: map-get($admin-colors, 'row-light'),
-    $trigger-background-color: map-get($admin-colors, 'row-light'),
+    //$background-color: transparent,//map-get($admin-colors, 'base'),
+    //$selected-background-color: map-get($admin-colors, 'row-light'),
+    //$hovered-background-color: map-get($admin-colors, 'row-light'),
+    //$sorted-background-color: map-get($admin-colors, 'row-light'),
+    //$trigger-background-color: map-get($admin-colors, 'row-light'),
     $color: map-get($admin-text-colors, 'base'),
 );
+*/
 
 
 
