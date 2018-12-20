@@ -8,7 +8,7 @@
     background-color: $base-color;
     color: map-get($root-text-colors, 'base');
     font-size: $scoped-root-font-size-bread;
-
+    padding:0;
     // Crumb item element
     & .crumb {
         // Element containing link and divider
@@ -23,10 +23,14 @@
             }
             // Divider symbol
             &:after {
-                content: "\232a" !important;
+
+
+                content: ">" !important;
                 // font-size: 75%;
                 vertical-align: middle;
                 margin-left: 0.7em !important;
+                margin-right: 0.7em !important;
+                width:auto;
             }
         }
         // Current location name
