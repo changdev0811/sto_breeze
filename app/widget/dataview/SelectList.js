@@ -118,7 +118,6 @@ Ext.define('Breeze.widget.dataview.SelectList', {
      *  item
      */
     onItemDeselect: function (records) {
-        // console.info('deselect');
         var record = (Array.isArray(records)) ? records[0] : records,
             item = this.getItem(record);
         switch (this.getFieldMode()) {
@@ -145,7 +144,12 @@ Ext.define('Breeze.widget.dataview.SelectList', {
             //     }
             //     break;
         }
-
+        // Spoof deselect event if a listener exists
+        if(
+            this.events.deselect
+        ){
+            this.events.deselect.fire(this,records);
+        }
         this.callParent(arguments);
     },
 

@@ -289,8 +289,57 @@ Ext.define('Breeze.view.admin.PunchPoliciesModel', {
 
                 return `Punches between ${low} and ${high} will round to ${text}`;
             }
-
         }
+    },
+
+    /**
+     * Construct object containing params to be passed into save API call
+     * @return {Object} Parameters
+     */
+    saveParameters: function(){
+        var params = {
+            policyName: 'policy_name',
+            policyId: 'policy_id',
+            otOpt1: 'Ot_Opt1',
+            otOpt2: 'Ot_Opt2',
+            otOpt3: 'Ot_Opt3',
+            otOpt4: 'Ot_Opt4',
+            otDay1: 'Ot_Day1',
+            otDay2: 'Ot_Day2',
+            otDay3: 'Ot_Day3',
+            otDay4: 'Ot_Day4',
+            otWeek1: 'Ot_Week1',
+            otWeek2: 'Ot_Week2',
+            otWeek3: 'Ot_Week3',
+            otWeek4: 'Ot_Week4',
+            otRate1: 'Ot_Rate1',
+            otRate2: 'Ot_Rate2',
+            otRate3: 'Ot_Rate3',
+            otRate4: 'Ot_Rate4',
+            subtractDayOt: 'Subtract_DayOt',
+            roundingInc: 'Round_Increment',
+            roundingOff: 'Round_Offset',
+            allowRegular: 'Allow_RegularPunch',
+            allowQuick: 'Allow_QuickPunch',
+            punchStart: 'Auto_PunchIn',
+            punchExt: 'Auto_PunchOut',
+            punchLunch: 'Auto_LunchPunch',
+            lunchMinutes: 'LunchPunch_Seg',
+            lunchHours: 'LunchPunch_Hours',
+            autoCloseShift: 'Auto_Close_Shift',
+            addProjects: 'Can_Add_Projects',
+            addNotes: 'Can_Add_Notes',
+            editNotes: 'Can_Edit_Notes',
+            useTimesheets: 'Can_Use_TimeSheets',
+            adjustPunches: 'Can_Adjust_Punches',
+            useInOut: 'Can_Use_InOut',
+            punchInOut: 'InOut_Opt'
+        };
+        var paramKeys = Object.keys(params);
+        for(var i=0,p=paramKeys[0];i<paramKeys.length;i++,p=paramKeys[i]){
+            params[p] = this.get(`policyData.${params[p]}`);
+        }
+        return params;
     }
 
 });

@@ -75,45 +75,62 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
 
     },
 
-    onPolicyRemove: function(cmp){        
-
+    onPolicyRemove: function () {
+        var me = this,
+            vm = this.getViewModel(),
+            policyId = vm.get('policyData.policy_id');
+        this.api.delete(policyId).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            me.loadPolicies();
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+        });
     },
 
     /**
      * Call add policy API method when 'add' is clicked in template dialog
      * @param {Object} cmp 
      */
-    onPolicyAdd: function(cmp){
+    onPolicyAdd: function (cmp) {
         var me = this,
             vm = this.getViewModel(),
             dlg = cmp.getParent().getParent(),
             templateId = dlg.getComponent('templateList').getSelectable()
                 .getSelectedRecord().get('policy_id');
-        
+
         // hide dialog
         dlg.hide();
-        
+
         // make api call
-        this.api.add(templateId).then((r)=>{
+        this.api.add(templateId).then((r) => {
             Ext.toast({
                 type: r.type,
                 message: r.message,
                 timeout: 8000
             });
             me.loadPolicies(parseInt(r.id));
-        }).catch((e)=>{
+        }).catch((e) => {
             Ext.toast({
                 type: r.type,
-                message: r.message
+                message: r.message,
+                timeout: 8000
             });
-        })
+        });
     },
 
-    onShowAddTemplateDialog: function(){
+    showAddTemplateDialog: function () {
         var view = this.getView(),
             dialog = this.addTemplateDialog;
 
-        if(!dialog){
+        if (!dialog) {
             dialog = Ext.apply({
                 ownerCmp: view
             }, view.addTemplateDialog);
@@ -132,16 +149,115 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
      * @param {*} list 
      * @param {*} record 
      */
-    onTemplateSelect: function(list, record){
+    onTemplateSelect: function (list, record) {
         list.getParent().getButtons().getComponent('add').setDisabled(Object.isUnvalued(record));
     },
 
-    onAddTemplateDialogCancel: function(){
+    onAddTemplateDialogCancel: function () {
         this.addTemplateDialog.hide();
     },
 
-    onSave: function(){
-        console.info('save');
+    showApplyToEmployeesDialog: function () {
+        var view = this.getView(),
+            dialog = this.applyToEmployeesDialog,
+            vm = this.getViewModel(),
+            me = this,
+            params = vm.saveParameters();
+
+        this.api.update(params).then((r) => {
+            me.api.applicableEmployees(vm.get('policyData.policy_id')).then((r) => {
+                vm.set('targetEmployees', r);
+                if (!dialog) {
+                    dialog = Ext.apply({
+                        ownerCmp: view
+                    }, view.applyToEmployeesDialog);
+                    me.applyToEmployeesDialog = dialog = Ext.create(dialog);
+                }
+    
+                dialog.getButtons().getComponent('add').setDisabled(
+                    dialog.getComponent('employeesList').gatherSelected().length == 0
+                );
+    
+                dialog.show();
+            }).catch((e) => {
+                console.warn('Error showing apply to employees dialog', e);
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'Unable to get Employees',
+                    timeout: 8000
+                });
+            });
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+        });
+    },
+
+    /**
+     * Update whether 'add' button is enabled when an employee is selected
+     * @param {*} list 
+     * @param {*} record 
+     */
+    onEmployeeSelect: function (list, record) {
+        list.getParent().getButtons().getComponent('add').setDisabled(
+            list.gatherSelected().length == 0
+        );
+    },
+
+    onApplyToEmployeesDialogCancel: function () {
+        this.applyToEmployeesDialog.hide();
+    },
+
+    onPolicyApply: function(){
+        var dialog = this.applyToEmployeesDialog,
+            vm = this.getViewModel(),
+            me = this,
+            employees = dialog.getComponent('employeesList').getSelectable()
+                .getSelectedRecords().map((r)=>{return r.get('id')});
+            
+        this.api.applyToEmployees(
+            vm.get('policyData.policy_id'),
+            employees.join(',')
+        ).then((r)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            dialog.hide();
+            me.loadPolicies(parseInt(vm.get('policyData.policy_id')));
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+            dialog.hide();
+        });
+    },
+
+    onSave: function () {
+        var me = this,
+            vm = this.getViewModel(),
+            params = vm.saveParameters();
+
+        this.api.update(params).then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            me.loadPolicies(parseInt(vm.get('policyData.policy_id')));
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+        });
     }
 
 

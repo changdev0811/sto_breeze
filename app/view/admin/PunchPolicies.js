@@ -86,7 +86,63 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
         xtype: 'dialog',
         bind: {
             title: 'Apply {policyData.policy_name}'
-        }
+        },
+        ui: 'light-themed-dialog employeeinfo-dialog',
+        layout: 'vbox',
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'component',
+                html: 'Apply to Employees'
+            },
+            {
+                xtype: 'breeze-select-list',
+                // ui: 'admin-shift-grid',
+                flex: 1,
+                itemId: 'employeesList',
+                // userCls: 'admin-fieldset no-background no-margin no-border',
+                fieldMode: 'check',
+                // selectMode: 'single',
+                preventDeselect: false,
+                itemConfig: {
+                    ui: 'admin-list-item-select',
+                    templates: {
+                        radioValue: '{record.id}',
+                        itemData: { name: '{record.fullName}' },
+                        itemTpl: '{name}'
+                    },
+                },
+                bind: {
+                    store: '{targetEmployees}',
+                },
+                listeners: {
+                    select: 'onEmployeeSelect',
+                    deselect: 'onEmployeeSelect',
+                },
+                viewModel: true
+            },
+        ],
+
+        buttons: [
+            {
+                text: 'Apply',
+                ui: 'confirm alt',
+                disabled: true,
+                itemId: 'add',
+                handler: 'onPolicyApply'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onApplyToEmployeesDialogCancel'
+            }
+        ]
     },
 
     // Layout and base styles
@@ -144,7 +200,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-plus',
                                     ui: 'plain wtr-button',
-                                    handler: 'onShowAddTemplateDialog'
+                                    handler: 'showAddTemplateDialog'
                                 },
 
                                 {
@@ -152,6 +208,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-minus',
                                     ui: 'plain wtr-button',
+                                    handler: 'onPolicyRemove'
 
                                 },
                             ]
@@ -769,7 +826,10 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             // name: 'InOut_punch',
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'In/Out board punching without recording time',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Use_InOut}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
@@ -777,7 +837,10 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             // name: 'can_add_projects',
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Can add Projects',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Add_Projects}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'checkbox',
@@ -785,7 +848,10 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             // name: 'can_edit_notes',
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Can edit/delete employee notes',
-                                                            hidden: true
+                                                            hidden: true,
+                                                            bind: {
+                                                                checked: '{policyData.Can_Edit_Notes}'
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -923,7 +989,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     xtype: 'button',
                                     text: 'Save and Apply Punch Policy to Employees',
                                     ui: 'action',
-                                    width: '275pt'
+                                    width: '275pt',
+                                    handler: 'showApplyToEmployeesDialog'
                                 },
                                 {
                                     xtype: 'spacer',
