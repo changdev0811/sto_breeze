@@ -67,6 +67,12 @@ Ext.define('Breeze.view.admin.SAOptionsModel', {
             ]        
         }
 
+    },
+
+    formulas: {
+        renewalDate: function(get){
+            return Ext.util.Format.date(get('customerData.renewal_date'), 'm-d-Y');
+        }
     }
 
 });

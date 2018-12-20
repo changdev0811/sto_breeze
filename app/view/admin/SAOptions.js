@@ -101,7 +101,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                     xtype: 'component',
                                     userCls: 'employeeinfo-label admin-label',
                                     bind: {
-                                        html: 'Renewal Date {customerData.renewal_date}'
+                                        html: 'Renewal Date {renewalDate}'
                                     }
                                 },
                                 {
@@ -204,10 +204,8 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     ui: 'admin admin-text reporting-date',
                                                                     //name: 'Fiscal Date',
                                                                     label: 'Fiscal Date',
-                                                                    picker: {
-                                                                        xtype: 'datepicker',
-                                                                        title: 'Fiscal Date'
-                                                                    },
+                                                                    edgePicker: {},
+                                                                    dateFormat: 'm/d',
                                                                     bind: '{configData.FiscDate}'
 
                                                                 },

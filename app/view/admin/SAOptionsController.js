@@ -9,8 +9,17 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
     alias: 'controller.admin.saoptions',
 
     requires: [
-        'Breeze.api.admin.SuperAdminOptions'
+        'Breeze.api.admin.SuperAdminOptions',
+        'Breeze.mixin.CommonToolable'
     ],
+
+    mixins: {
+        commonToolable: 'Breeze.mixin.CommonToolable'
+    },
+
+    config: {
+        injectTools: true
+    },
 
     /**
      * Called when the view is created
@@ -72,6 +81,35 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
         })
 
     },
+
+    onSave: function(){
+        var me = this,
+            vm = this.getViewModel();
+
+        var configInfoParams = Ext.clone(vm.get('configData')),
+            modified = false,
+            fisc = vm.get('configData.FiscDate');
+
+        this.api.update(
+            configInfoParams,
+            modified,
+            fisc
+        ).then((r)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            this.onRefreshTool();
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+        });
+
+    }
 
 
 
