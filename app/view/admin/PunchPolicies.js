@@ -23,9 +23,62 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
         initialize: 'onInit'
     },
 
-    chooseTemplateDialog: {
+    addTemplateDialog: {
         xtype: 'dialog',
-        title: 'Add Policy'
+        title: 'Add Policy',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'breeze-select-list',
+                // ui: 'admin-shift-grid',
+                flex: 1,
+                itemId: 'templateList',
+                // userCls: 'admin-fieldset no-background no-margin no-border',
+                fieldMode: 'none',
+                selectMode: 'single',
+                preventDeselect: true,
+                itemConfig: {
+                    // ui: 'admin-list-item-select',
+                    templates: {
+                        radioValue: '{record.policy_id}',
+                        itemData: { name: '{record.policy_name}' },
+                        itemTpl: '{name}'
+                    }
+                },
+                bind: {
+                    store: '{policies}',
+                },
+                listeners: {
+                    select: 'onTemplateSelect'
+                },
+                viewModel: true
+            },
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                disabled: true,
+                itemId: 'add',
+                handler: 'onPolicyAdd'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onAddTemplateDialogCancel'
+            }
+        ]
 
     },
 
@@ -91,6 +144,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-plus',
                                     ui: 'plain wtr-button',
+                                    handler: 'onShowAddTemplateDialog'
                                 },
 
                                 {
@@ -110,6 +164,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                             reference: 'policyList',
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {
@@ -592,11 +648,12 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 //========[Punch Options Tab]===========
                                 {
                                     title: 'Punch Options',
+                                    userCls: 'admin-padded-tab-body',
                                     layout: 'vbox',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Punch Options',
                                             items: [
                                                 {
@@ -615,7 +672,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             flex: 1,
                                                             boxLabel: 'Allow Regular Punch In/Out',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Allow_RegularPunch}'
+                                                                checked: '{policyData.Allow_RegularPunch}'
                                                             }
                                                         },
                                                         {
@@ -626,7 +683,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             flex: 1,
                                                             boxLabel: 'Allow Quick Punch In/Out',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Allow_QuickPunch}'
+                                                                checked: '{policyData.Allow_QuickPunch}'
                                                             }
                                                         }
                                                     ]
@@ -650,7 +707,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             xtype: 'spinnerfield',
                                                             // name: 'auto_close_shift',
                                                             minValue: 0, maxValue: 24, value: 1,
-                                                            //bind: { value: '{info.punchPolicy.Auto_Close_Shift}' }
+                                                            bind: { value: '{policyData.Auto_Close_Shift}' }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -663,7 +720,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                         },
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Other',
                                             items: [
                                                 {
@@ -683,7 +740,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Can adjust time records',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Adjust_Punches}'
+                                                                checked: '{policyData.Can_Adjust_Punches}'
                                                             }
                                                         },
                                                         {
@@ -693,7 +750,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Can add notes to punches',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Add_Notes}'
+                                                                checked: '{policyData.Can_Add_Notes}'
                                                             }
                                                         },
                                                         {
@@ -703,7 +760,7 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             bodyAlign: 'stretch',
                                                             boxLabel: 'Can use time sheets',
                                                             bind: {
-                                                                //checked: '{info.punchPolicy.Can_Use_TimeSheets}'
+                                                                checked: '{policyData.Can_Use_TimeSheets}'
                                                             }
                                                         },
                                                         {
@@ -741,11 +798,12 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                 {
                                     title: 'Deductions',
                                     layout: 'vbox',
+                                    userCls: 'admin-padded-tab-body',
                                     reference: 'deductionsTab',
                                     items: [
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'employee-info-fieldset',
+                                            userCls: 'admin-fieldset-clear',
                                             title: 'Automatic Deductions',
                                             items: [
                                                 {
@@ -763,8 +821,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             bodyAlign: 'stretch',
                                                             flex: 1,
                                                             boxLabel: 'Punch Out for lunch',
-                                                            listeners: {
-                                                                //change: 'onPunchForLunchChange'
+                                                            bind: {
+                                                                checked: '{policyData.Auto_LunchPunch}'
                                                             }
                                                         },
                                                         {
@@ -798,7 +856,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             minValue: 0, maxValue: 999,
                                                             decimals: 0, label: null,
                                                             inline: true,
-                                                            disabled: true
+                                                            disabled: true,
+                                                            bind: {
+                                                                disabled: '{!policyData.Auto_LunchPunch}',
+                                                                value: '{policyData.LunchPunch_Seg}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -810,7 +872,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                                             maxWidth: '6em',
                                                             // name: 'lunch_seg',
                                                             minValue: 0, maxValue: 24, decimals: 0,
-                                                            disabled: true
+                                                            disabled: true,
+                                                            bind: {
+                                                                disabled: '{!policyData.Auto_LunchPunch}',
+                                                                value: '{policyData.LunchPunch_Hours}'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'label',
@@ -844,7 +910,8 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     xtype: 'button',
                                     text: 'Save',
                                     ui: 'confirm alt',
-                                    width: '175pt'
+                                    width: '175pt',
+                                    handler: 'onSave'
                                 },
 
                                 {

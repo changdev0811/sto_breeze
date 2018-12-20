@@ -38,8 +38,7 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
      * @param {Object} selectedId Optional ID of policy to highlight after load
      */
     loadPolicies: function (selectedId) {
-        var selectedId = Object.defVal(selectedId, null, true),
-            me = this;
+        var me = this;
 
         this.addStoreToViewModel(
             'Breeze.store.record.punchPolicies.DetailList',
@@ -48,11 +47,11 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
                 load: true,
                 loadOpts: {
                     callback: function (records, op, success) {
-                        if (success) {
+                        if (success && records.length > 0) {
                             var record = records[0];
-                            if (selectedId !== null) {
+                            if (!Object.isUnvalued(selectedId)) {
                                 record = records.find((r) => {
-                                    return r.get('policy_id');
+                                    return r.get('policy_id') == selectedId;
                                 });
                             }
                             this.lookup('policyList').getSelectable()
@@ -75,6 +74,77 @@ Ext.define('Breeze.view.admin.PunchPoliciesController', {
         );
 
     },
+
+    onPolicyRemove: function(cmp){        
+
+    },
+
+    /**
+     * Call add policy API method when 'add' is clicked in template dialog
+     * @param {Object} cmp 
+     */
+    onPolicyAdd: function(cmp){
+        var me = this,
+            vm = this.getViewModel(),
+            dlg = cmp.getParent().getParent(),
+            templateId = dlg.getComponent('templateList').getSelectable()
+                .getSelectedRecord().get('policy_id');
+        
+        // hide dialog
+        dlg.hide();
+        
+        // make api call
+        this.api.add(templateId).then((r)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            me.loadPolicies(parseInt(r.id));
+        }).catch((e)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message
+            });
+        })
+    },
+
+    onShowAddTemplateDialog: function(){
+        var view = this.getView(),
+            dialog = this.addTemplateDialog;
+
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addTemplateDialog);
+            this.addTemplateDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.getButtons().getComponent('add').setDisabled(
+            dialog.getComponent('templateList').getSelectionCount() == 0
+        );
+        dialog.show();
+    },
+
+
+    /**
+     * Update whether 'add' button is enabled when a template is selected
+     * @param {*} list 
+     * @param {*} record 
+     */
+    onTemplateSelect: function(list, record){
+        list.getParent().getButtons().getComponent('add').setDisabled(Object.isUnvalued(record));
+    },
+
+    onAddTemplateDialogCancel: function(){
+        this.addTemplateDialog.hide();
+    },
+
+    onSave: function(){
+        console.info('save');
+    }
+
+
 
     //===[Display/Calculation Functions]===
 
