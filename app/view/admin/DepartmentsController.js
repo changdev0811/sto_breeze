@@ -36,14 +36,33 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             'departmentConfig',
             { load: false }
         );
+
+        this.addStoreToViewModel(
+            'Breeze.store.company.SecurityRoleList',
+            'roles',
+            { load: true }
+        );
+
+        this.addStoreToViewModel(
+            'Breeze.store.company.department.Employees',
+            'employees',
+            { load: false }
+        );
    
     },
 
     //===[Event Handlers]===
 
     onDepartmentSelect: function(list, selectedRecord){
-        var vm = this.getViewModel();
+        var vm = this.getViewModel(),
+            me = this;
         if(!Object.isUnvalued(selectedRecord)){
+            
+            this.copyRecordToViewModel(
+                selectedRecord.getData(),
+                'departmentData'
+            );
+
             var dConfig = vm.get('departmentConfig');
             
             // Force proxy to update so params take effect
@@ -52,14 +71,33 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
 
             // Reload store
             dConfig.load({callback: function(s){
-                vm.set('conflictLimit', dConfig.getAt(0).get('ConflictLimit'));
+                me.copyRecordToViewModel(
+                    dConfig.getAt(0).get('ConflictLimit'),
+                    'conflictLimit'
+                );
             }});
 
+            var employees = vm.get('employees');
+
+            employees.updateProxy(employees.getProxy());
+            employees.setDepartmentId(selectedRecord.get('Id'));
+
+            employees.load();
+            
+            // vm.get('supervisorList').load();
+
+            this.addStoreToViewModel(
+                'Breeze.store.company.department.Supervisors',
+                'supervisors',
+                { 
+                    load: true, 
+                    createOpts: { departmentId: vm.get('departmentData.Id')}
+                }
+            );
+            
             // Update seleected department id value
             vm.set('selectedDepartmentId', selectedRecord.get('Id'));
         }
-    }
-
-
+    },
     
 });
