@@ -242,13 +242,15 @@ Ext.define('Breeze.view.admin.HolidayEditor', {
                                     reference: 'holidaysGrid',
                                     // sortable: false, 
                                     columnResize: false,
-                                    columnMenu: false, hideHeaders: false,
+                                    columnMenu: false, 
+                                    hideHeaders: false,
                                     selectable: { mode: 'single' },
                                     bind: {
                                         store: '{holidays}'
                                     },
                                     defaults: {
                                         xtype: 'gridcolumn',
+                                        userCls:'no-border',
                                         menuDisabled: true
                                     },
                                     layout: 'vbox',

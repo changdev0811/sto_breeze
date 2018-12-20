@@ -281,6 +281,7 @@ Ext.define('Breeze.view.admin.PointCats', {
                                             },
                                             defaults: {
                                                 xtype: 'gridcolumn',
+                                                userCls:'no-border',
                                             },
                                             // Plugin for editable grid
                                             plugins: {

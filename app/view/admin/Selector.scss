@@ -234,7 +234,7 @@
 );
 
 @include dataview-ui(
-    $background-color :  map-get($admin-colors, 'base'),
+    $background-color :  map-get($admin-text-colors, 'base'),
     $ui: 'admin-shift-grid'
 )
 
@@ -250,9 +250,9 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'base'),
-    $hovered-background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: transparent,
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
@@ -262,9 +262,9 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'base'),
-    $hovered-background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: transparent,
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
@@ -273,9 +273,9 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
     $selected-background-color: map-get($admin-colors, 'medium'),
-    $hovered-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: transparent,
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
@@ -285,9 +285,9 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
     $selected-background-color: map-get($admin-colors, 'medium'),
-    $hovered-background-color: map-get($admin-colors, 'base'),
+    $hovered-background-color: transparent,
     $font-size: map-get($root-font-sizes, 'detail') !important
 );
 
@@ -298,18 +298,18 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
-    $selected-background-color: map-get($admin-colors, 'base'),
-    $hovered-background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: transparent,
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
 
 @include panel-ui(
     $ui: 'admin-list-panel',
-    $background-color: map-get($admin-colors, 'base'),
-    $header-background-color: map-get($admin-colors, 'base'),
-    $body-background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
+    $header-background-color: transparent,
+    $body-background-color: transparent,
     $body-color: map-get($admin-text-colors, 'base'),
     // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
@@ -360,12 +360,26 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
     $selected-background-color: map-get($admin-colors, 'row-light'),
     $hovered-background-color: map-get($admin-colors, 'row-light'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
     $padding: 10pt 0pt 10pt 11.6pt
 );
+
+@include gridcell-ui(
+    $ui: 'projects-grid',
+
+
+    $background-color: map-get($admin-colors, 'base'),
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+    $color: map-get($admin-text-colors, 'base'),
+);
+
+
 
 
 
@@ -376,7 +390,7 @@
     $color: map-get($admin-text-colors, 'base'),
     $selected-color: map-get($admin-text-colors, 'base'),
     $hovered-color: map-get($admin-text-colors, 'base'),
-    $background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
     $selected-background-color: map-get($admin-colors, 'row-light'),
     $hovered-background-color: map-get($admin-colors, 'row-light'),
     $font-size: map-get($root-font-sizes, 'detail') !important,
@@ -385,9 +399,9 @@
 
 @include panel-ui(
     $ui: 'admin-list-panel-select',
-    $background-color: map-get($admin-colors, 'base'),
-    $header-background-color: map-get($admin-colors, 'base'),
-    $body-background-color: map-get($admin-colors, 'base'),
+    $background-color: transparent,
+    $header-background-color: transparent,
+    $body-background-color: transparent,
     $body-color: map-get($admin-text-colors, 'base'),
     // $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
@@ -409,34 +423,63 @@
 // === Data Grid Styling ===
 
 @include grid-ui(
-    $ui: 'admin-grid'
+    $ui: 'admin-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+
 );
 
 @include dataview-ui(
     $ui: 'admin-grid',
-    $background-color: transparent
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+
 )
 
 @include gridcell-ui(
     $ui: 'admin-grid',
+
+
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+
+
+
     $padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
         // $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
         $weights: (top: 0.5, left: 0.5, right: 0.5, bottom: 0.5)
     ),
     $color: map-get($admin-text-colors, 'base'),
-    $background-color: transparent
 );
 
 @include gridrow-ui(
     $ui: 'admin-grid',
     $background-color: transparent,
-    $selected-background-color: map-get($admin-colors, 'row-light')
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+
 );
 
 @include headercontainer-ui(
     $ui: 'admin-grid',
-    $background-color: transparent
+    $background-color: transparent,
+    $selected-background-color: map-get($admin-colors, 'row-light'),
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+
 );
 
 @include gridcolumn-ui(
@@ -446,7 +489,12 @@
         $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
     ),
     $color: map-get($admin-text-colors, 'base'),
-    $background-color: transparent
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: map-get($admin-colors, 'row-light'),
+    $sorted-background-color: map-get($admin-colors, 'row-light'),
+    $trigger-background-color: map-get($admin-colors, 'row-light'),
+    $sort-icon-color: map-get($admin-text-colors, 'base'),
 );
 
 @include rowheader-ui(
@@ -457,7 +505,7 @@
     ),
     $color: map-get($admin-text-colors, 'base'),
     $background-color:mix(
-        map-get($admin-colors, 'base'),
+        transparent,
         map-get($admin-colors, 'row-dark')
     )
 );
