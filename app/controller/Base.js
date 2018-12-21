@@ -112,41 +112,39 @@ Ext.define('Breeze.controller.Base', {
      * @param {(Ext.data.Record|Object)} recordSource Data record source (model record
      *      or regular object)
      * @param {String} dataName Name to use for storage in viw model
-     * @param {Boolean} replace Whether to allow replacing existing value 
-     *      (default true)
-     * @param {Boolean} clone Whether to clone data before storing (Default 
-     *      true)
-     * @return {Boolean} True if data was successfully set, false otherwise
      */
-    copyRecordToViewModel: function(recordSource, dataName, replace, clone){
-        var replace = Object.defVal(replace, true),
-            clone = Object.defVal(clone, true),
-            // default to using getData
-            data = true,
-            vm = this.getViewModel();
+    copyRecordToViewModel: function(recordSource, dataName){
+        // var replace = Object.defVal(replace, true),
+        //     clone = Object.defVal(clone, true),
+        //     // default to using getData
+        //     data = true,
+        //     vm = this.getViewModel();
 
-        // decide whether getData should be used based on recordSource
-        // data type
-        if(
-            recordSource.__proto__['alternateClassName'] &&
-            recordSource.__proto__.alternateClassName == 'Ext.data.Record'
-        ) {
-            data = true;
-        } else {
-            data = false;
-        }
+        // // decide whether getData should be used based on recordSource
+        // // data type
+        // if(
+        //     recordSource.__proto__['alternateClassName'] &&
+        //     recordSource.__proto__.alternateClassName == 'Ext.data.Record'
+        // ) {
+        //     data = true;
+        // } else {
+        //     data = false;
+        // }
 
-        // Data to be written, either direct object or using .getData()
-        var srcData = (data)? recordSource.getData() : recordSource
+        // // Data to be written, either direct object or using .getData()
+        // var srcData = (data)? recordSource.getData() : recordSource
         
-        if(!replace && !Object.isUnvalued(vm.get(dataName))){
-            return false;
-        } else {
-            var dataVal = (clone)? Ext.clone(srcData) : srcData;
-            vm.set(dataName, dataVal);
-            return true;
-        }
-
+        // if(!replace && !Object.isUnvalued(vm.get(dataName))){
+        //     return false;
+        // } else {
+        //     var dataVal = (clone)? Ext.clone(srcData) : srcData;
+        //     vm.set(dataName, dataVal);
+        //     return true;
+        // }
+        this.getViewModel().set(
+            dataName,
+            Ext.clone(recordSource)
+        );
     },
 
     /**

@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.Departments', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.departments',
 
+    config: {
+        crumbTitle: 'Departments'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.departments'
@@ -29,11 +33,70 @@ Ext.define('Breeze.view.admin.Departments', {
     // +++ Allow h scroll when panel is too small +++
     scrollable: 'y',
 
+    addSupervisorDialog: {
+        xtype: 'dialog',
+        title: 'Add Supervisor',
+        ui: 'light-themed-dialog employeeinfo-dialog',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Supervisor',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'supervisorSelector',
+                value: null,
+                autoSelect: true,
+                displayField: 'name', valueField: 'id',
+                required: true
+            },
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Role',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'roleSelector',
+                value: null,
+                autoSelect: true,
+                displayField: 'Role_Name', valueField: 'Role_Id',
+                required: true,
+                bind: {
+                    store: '{roles}'
+                }
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                handler: 'onAddSupervisor'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'action alt',
+                handler: 'onAddSupervisorDialogCancel'
+            }
+        ]
+    },
 
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        apply: { text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'confirm alt', style: 'width:125pt' },
+        apply: { text: 'Save', handler: 'onSave', ui: 'confirm alt', style: 'width:125pt' },
     },
 
 
@@ -53,10 +116,10 @@ Ext.define('Breeze.view.admin.Departments', {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
-            minHeight:'420pt',
+            minHeight: '420pt',
 
-    // +++ Allow h scroll when panel is too small +++
-    scrollable: 'x',
+            // +++ Allow h scroll when panel is too small +++
+            scrollable: 'x',
 
             items: [
 
@@ -86,7 +149,11 @@ Ext.define('Breeze.view.admin.Departments', {
                                     flex: 1,
                                     ui: "solo",
                                     //userCls:'admin-fieldset no-border no-margin no-padding',
-                                    placeholder: "Search"
+                                    placeholder: "Search",
+                                    listeners: {
+                                        action: 'onSearch',
+                                        clearicontap: 'onSearch'
+                                    }
                                 },
                                 {
                                     xtype: 'spacer',
@@ -102,7 +169,8 @@ Ext.define('Breeze.view.admin.Departments', {
                                     xtype: 'button',
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
+                                    ui: 'plain wtr-button',
+                                    handler: 'onRemoveDepartment'
                                 },
                             ]
                         },
@@ -111,10 +179,12 @@ Ext.define('Breeze.view.admin.Departments', {
                             xtype: 'breeze-categories-list',
                             ui: 'admin-shift-grid',
                             flex: 1,
-                            reference: 'departments',
+                            reference: 'departmentsList',
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             itemId: 'selectList',
                             fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {
@@ -163,14 +233,13 @@ Ext.define('Breeze.view.admin.Departments', {
                                     userCls: 'admin-fieldset no-border no-margin',
                                     name: 'DeptName',
                                     bind: {
-                                        value: '{selectedDepartment.Name}'
+                                        value: '{departmentData.Name}'
                                     }
                                 },
                                 {
                                     xtype: 'spinnerfield',
                                     ui: 'admin admin-text',
                                     userCls: 'admin-fieldset no-border no-margin',
-                                    name: 'numConflictLimit',
                                     decimals: 0,
                                     minValue: 0,
                                     labelAlign: 'left',
@@ -209,19 +278,88 @@ Ext.define('Breeze.view.admin.Departments', {
                                             //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
+                                            handler: 'showAddSupervisorDialog'
                                         },
-                                        {
-                                            xtype: 'button',
-                                            //text: 'Save for Future Use',
-                                            iconCls: 'x-fas fa-minus',
-                                            ui: 'plain wtr-button'
-                                        },
-        
+                                        // {
+                                        //     xtype: 'button',
+                                        //     //text: 'Save for Future Use',
+                                        //     iconCls: 'x-fas fa-minus',
+                                        //     ui: 'plain wtr-button'
+                                        // },
+
                                     ]
                                 },
-                                // TODO: add supervisors grid
+                                {
+                                    xtype: 'grid',
+                                    ui: 'admin-grid',
+                                    reference: 'supervisorsGrid',
+                                    layout: 'hbox',
+                                    flex: 1,
+                                    sortable: false, columnResize: false,
+                                    columnMenu: false, hideHeaders: false,
+                                    bind: {
+                                        store: '{supervisors}'
+                                    },
+                                    defaults: {
+                                        xtype: 'gridcolumn',
+                                    },
+                                    // Plugin for editable grid
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
+                                    selectable: {
+                                        mode: 'single'
+                                    },
+                                    columns: [
+                                        {
+                                            text: 'Name',
+                                            itemId: 'name',
+                                            flex: 1,
+                                            dataIndex: 'supervisorId',
+                                            tpl: '{Name}',
+                                            menuDisabled: true,
+                                        },
+                                        {
+                                            text: 'Role',
+                                            itemId: 'role',
+                                            flex: 1,
+                                            tpl: '{Role_Name}',
+                                            dataIndex: 'roleId',
+                                            menuDisabled: true,
+                                            // align:'center',
+                                            editor: {
+                                                xtype: 'selectfield',
+                                                valueField: 'Role_Id',
+                                                displayField: 'Role_Name',
+                                                bind: {
+                                                    store: '{roles}'
+                                                },
+                                                listeners: {
+                                                    select: 'onEditSupervisorRoleSelect'
+                                                }
+                                            },
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onRemoveSupervisor',
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                    ],
+                                    listeners: {
+                                        // beforeedit: 'onSupervisorBeforeEdit',
+                                        // edit: 'onSupervisorPostEdit'
+                                    }
+                                }
 
                             ]
+
                         },
                         //===[Employees]
                         {
@@ -232,7 +370,29 @@ Ext.define('Breeze.view.admin.Departments', {
                             layout: 'fit',
                             items: [
 
-                                //TODO: Add Employees Grid
+                                {
+                                    xtype: 'breeze-categories-list',
+                                    ui: 'admin-shift-grid',
+                                    flex: 1,
+                                    userCls: 'admin-fieldset no-background no-margin no-border',
+                                    fieldMode: 'none',
+                                    selectMode: 'single',
+                                    preventDeselect: false,
+                                    itemConfig: {
+                                        ui: 'admin-list-item-select',
+                                        templates: {
+                                            itemData: { name: '{record.text}' },
+                                            itemTpl: [
+                                                '<div class="breeze-dataview-select-item-label">',
+                                                '{name}</div>'
+                                            ]
+                                        }
+                                    },
+                                    bind: {
+                                        store: '{employees}',
+                                    },
+                                    viewModel: true
+                                }
 
                             ]
                         },

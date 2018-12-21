@@ -99,6 +99,8 @@ Ext.define('Breeze.view.admin.UDC', {
                                     userCls: 'admin-fieldset no-background no-margin no-border',
                                     reference: 'categoryList',
                                     fieldMode: 'none',
+                                    selectMode: 'single',
+                                    preventDeselect: true,
                                     itemConfig: {
                                         ui: 'admin-list-item-select'
                                     },
