@@ -208,7 +208,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-minus',
                                     ui: 'plain wtr-button',
-                                    handler: 'onPolicyRemove'
+                                    handler: 'onPolicyRemove',
+                                    disabled:true,
+                                    bind:{
+                                        disabled:'{policyData.IsFixed}',
+                                    }
 
                                 },
                             ]
@@ -258,7 +262,11 @@ Ext.define('Breeze.view.admin.PunchPolicies', {
                             label: 'Name',
                             ui: 'admin admin-text',
                             userCls: 'admin-fieldset no-border',
-                            bind: '{policyData.policy_name}'
+                            disabled:true,
+                            bind: {
+                                value:'{policyData.policy_name}',
+                                disabled:'{policyData.IsFixed}',
+                            }
                         },
                         {
                             xtype: 'tabpanel',
