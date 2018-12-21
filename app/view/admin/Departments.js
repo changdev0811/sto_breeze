@@ -245,6 +245,7 @@ Ext.define('Breeze.view.admin.Departments', {
                                 {
                                     xtype: 'spinnerfield',
                                     ui: 'admin admin-text',
+                                    width:'210pt',
                                     //userCls: 'admin-fieldset no-border no-margin',
                                     decimals: 0,
                                     minValue: 0,
