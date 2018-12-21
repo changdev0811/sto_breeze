@@ -25,9 +25,19 @@ Ext.define('Breeze.view.admin.PunchErrorsController', {
      * Called when the view is created
      */
     onInit: function (component) {
-
+        
         this.api = Ext.create('Breeze.api.admin.PunchErrors');
 
+        this.loadErrors();
+
+    },
+
+    loadErrors: function(){
+        this.addStoreToViewModel(
+            'Breeze.store.record.PunchErrors',
+            'punchData',
+            { load: true }
+        );
     },
 
     onRemoveErrors: function(){
@@ -52,14 +62,47 @@ Ext.define('Breeze.view.admin.PunchErrorsController', {
                 message: 'Punch Errors removed successfully',
                 timeout: 8000
             });
-            this.onRefreshTool();
+            me.loadErrors();
         }).catch((e)=>{
             Ext.toast({
                 type: Ext.Toast.ERROR,
                 message: 'Failed to remove one or more Punch Errors',
                 timeout: 10000
             });
-            this.onRefreshTool();
+            me.loadErrors();
+        });
+    },
+
+    onReprocess: function(){
+        console.info('remove error');
+
+        var me = this,
+            vm = this.getViewModel(),
+            grid = this.lookup('errorGrid');
+        
+        var records = grid.getStore().query('checked', true).items;
+
+        var batch = [];
+
+        for(var i=0;i<records.length;i++){
+            var rec = records[i];
+            batch.push(me.api.process(rec.getData));
+        }
+
+        Promise.all(batch).then((r)=>{
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Punch Errors successfully processed',
+                timeout: 8000
+            });
+            me.loadErrors();
+        }).catch((e)=>{
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: 'Failed to process one or more Punch Errors',
+                timeout: 10000
+            });
+            me.loadErrors();
         });
     }
 
