@@ -30,8 +30,37 @@ Ext.define('Breeze.view.admin.PunchErrorsController', {
 
     },
 
+    onRemoveErrors: function(){
+        console.info('remove error');
 
+        var me = this,
+            vm = this.getViewModel(),
+            grid = this.lookup('errorGrid');
+        
+        var records = grid.getStore().query('checked', true).items;
 
+        var batch = [];
 
+        for(var i=0;i<records.length;i++){
+            var rec = records[i];
+            batch.push(me.api.removeError(rec.getData));
+        }
+
+        Promise.all(batch).then((r)=>{
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Punch Errors removed successfully',
+                timeout: 8000
+            });
+            this.onRefreshTool();
+        }).catch((e)=>{
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: 'Failed to remove one or more Punch Errors',
+                timeout: 10000
+            });
+            this.onRefreshTool();
+        });
+    }
 
 });

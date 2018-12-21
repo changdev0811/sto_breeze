@@ -55,17 +55,13 @@ Ext.define('Breeze.view.admin.PunchErrors', {
                     reference: 'errorGrid',
                     layout: 'hbox',
                     flex: 1,
-                    sortable: false, columnResize: false,
+                    sortable: true, columnResize: false,
                     columnMenu: false, hideHeaders: false,
                     bind: {
-                        store: '{supervisors}'
+                        store: '{punchData}'
                     },
                     defaults: {
                         xtype: 'gridcolumn',
-                    },
-                    // Plugin for editable grid
-                    plugins: {
-                        gridcellediting: true
                     },
                     selectable: {
                         mode: 'multi'
@@ -76,57 +72,32 @@ Ext.define('Breeze.view.admin.PunchErrors', {
                             width: 50,
                             itemId: 'check',
                             menu: null,
-                            menuDisabled: true
+                            menuDisabled: true,
+                            dataIndex: 'checked'
                         },
                         {
                             text: 'Employee',
                             itemId: 'employee',
                             flex: 1,
-                            dataIndex: 'supervisorId',
-                            tpl: '{Name}',
+                            dataIndex: 'Employee_Name',
                             menuDisabled: true,
                         },
                         {
+                            xtype: 'datecolumn',
                             text: 'Punch Time',
                             itemId: 'time',
                             flex: 1,
-                            tpl: '{Role_Name}',
-                            dataIndex: 'roleId',
+                            dataIndex: 'Punch_Time',
+                            format: 'Y/m/d H:i:s A',
                             menuDisabled: true,
-                            // align:'center',
-                            editor: {
-                                xtype: 'selectfield',
-                                valueField: 'Role_Id',
-                                displayField: 'Role_Name',
-                                bind: {
-                                    store: '{roles}'
-                                },
-                                listeners: {
-                                    select: 'onEditSupervisorRoleSelect'
-                                }
-                            },
-                            
                         },
                         {
                             text: 'ERROR',
                             itemId: 'error',
                             flex: 2.5,
-                            tpl: '{Role_Name}',
-                            dataIndex: 'roleId',
+                            // tpl: '{Role_Name}',
+                            dataIndex: 'punch_error',
                             menuDisabled: true,
-                            // align:'center',
-                            editor: {
-                                xtype: 'selectfield',
-                                valueField: 'Role_Id',
-                                displayField: 'Role_Name',
-                                bind: {
-                                    store: '{roles}'
-                                },
-                                listeners: {
-                                    select: 'onEditSupervisorRoleSelect'
-                                }
-                            },
-                            
                         },
                     ],
                     listeners: {
@@ -140,8 +111,16 @@ Ext.define('Breeze.view.admin.PunchErrors', {
             xtype: 'panel',
             ui: 'admin-sub',
             buttons: {
-                remove: { text: 'Remove Punch Errors', /*handler: 'onPrintPDF',*/ ui: 'action', style: 'width:175pt;' },
-                reprocess: { text: 'Re-Process', /*handler: 'onPrintPDF',*/ ui: 'action', style: 'width:175pt;' },
+                remove: {
+                    text: 'Remove Punch Errors',
+                    handler: 'onRemoveErrors',
+                    ui: 'action', style: 'width:175pt;'
+                },
+                reprocess: {
+                    text: 'Re-Process',
+                    /*handler: 'onPrintPDF',*/
+                    ui: 'action', style: 'width:175pt;'
+                },
             },
 
             buttonAlign: 'right',
