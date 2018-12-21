@@ -660,7 +660,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                         {
                                                             xtype: 'fieldset',
                                                             userCls: 'admin-fieldset',
-                                                            title: 'Approval Models',
+                                                            title: 'Approval Mode',
                                                             flex: 1,
                                                             items: [
                                                                 {
