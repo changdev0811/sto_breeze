@@ -410,7 +410,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                             arrow: false,
                                             bind:{
                                                 // +++ need to bind to current category's color +++
-                                                style:'background-color:{catCol};',
+                                                style:'background-color:{selectedCat.HexColor};',
                                             },
                                             menu: {
                                                 xtype: 'menu',
