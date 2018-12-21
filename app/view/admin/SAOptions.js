@@ -403,46 +403,45 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             title: 'Accrual Cap Options',
                                                             items: [
                                                                 {
-                                                                    xtypo: 'containerfield',
+                                                                    xtype: 'containerfield',
                                                                     layout: 'vbox',
                                                                     defaults: {
                                                                         bodyAlign: 'stretch',
                                                                         ui: 'admin',
                                                                         xtype: 'radio'
                                                                     },
-                                                                    reference: 'accrualCapOption',
+                                                                    reference: 'capGroup',
                                                                     bind: {
                                                                         values: {
-                                                                            accrualCap: '{configData.AccrualCapOption}'
+                                                                            capOption: '{configData.AccrualCapOption}'
                                                                         }
                                                                     },
                                                                     items: [
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'accrualCap',
+                                                                            name: 'capOption',
                                                                             boxLabel: 'Skip accrual that would exceed cap',
                                                                             value: 0,
                                                                             bind: {
-                                                                                groupValue: '{accrualCapOption.accruaCap}'
+                                                                                groupValue: '{capGroup.capOption}'
                                                                             }
-
                                                                         },
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'accrualCap',
+                                                                            name: 'capOption',
                                                                             boxLabel: 'Allow accrual that would exceed cap',
                                                                             value: 1,
                                                                             bind: {
-                                                                                groupValue: '{accrualCapOption.accruaCap}'
+                                                                                groupValue: '{capGroup.capOption}'
                                                                             }
                                                                         },
                                                                         {
                                                                             flex: 1,
-                                                                            name: 'accrualCap',
+                                                                            name: 'capOption',
                                                                             boxLabel: 'Prorate accrual that would exceed cap',
                                                                             value: 2,
                                                                             bind: {
-                                                                                groupValue: '{accrualCapOption.accruaCap}'
+                                                                                groupValue: '{capGroup.capOption}'
                                                                             }
                                                                         }
                                                                     ]
@@ -525,6 +524,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                             xtype: 'fieldset',
                                             userCls: 'admin-fieldset no-border no-padding',
 
+                                            bind: {
+                                                hidden: '{!conflictScopeAllDepts.checked}'
+                                            },
+
                                             layout: 'hbox',
                                             defaults: {
                                                 userCls: 'employee-info-general-field',
@@ -597,6 +600,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                                 {
                                                                                     flex: 1,
                                                                                     name: 'conflictOpt',
+                                                                                    reference: 'conflictScopeAllDepts',
                                                                                     boxLabel: 'All Departments',
                                                                                     value: 1,
                                                                                     bind: {
@@ -670,7 +674,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     reference: 'appMode',
                                                                     bind: {
                                                                         values: {
-                                                                            leaveMode: '{configData.LeaveApprovMode}'
+                                                                            leaveMode: '{configData.LeaveApproveMode}'
                                                                         }
                                                                     },
                                                                     items: [
@@ -909,6 +913,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     flex: 2,
                                                                     displayField: 'Description',
                                                                     valueField: 'ID',
+                                                                    value: 59,
                                                                     bind: {
                                                                         store: '{OptionList}',
                                                                         //value:'{configData.PointRollingDuration}' /* PointRollingDuration.split(',')[1] */
