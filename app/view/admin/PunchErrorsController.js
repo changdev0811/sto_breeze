@@ -25,14 +25,14 @@ Ext.define('Breeze.view.admin.PunchErrorsController', {
      * Called when the view is created
      */
     onInit: function (component) {
-        
+
         this.api = Ext.create('Breeze.api.admin.PunchErrors');
 
         this.loadErrors();
 
     },
 
-    loadErrors: function(){
+    loadErrors: function () {
         this.addStoreToViewModel(
             'Breeze.store.record.PunchErrors',
             'punchData',
@@ -40,70 +40,86 @@ Ext.define('Breeze.view.admin.PunchErrorsController', {
         );
     },
 
-    onRemoveErrors: function(){
+    onRemoveErrors: function () {
         console.info('remove error');
 
         var me = this,
             vm = this.getViewModel(),
             grid = this.lookup('errorGrid');
-        
+
         var records = grid.getStore().query('checked', true).items;
 
         var batch = [];
 
-        for(var i=0;i<records.length;i++){
+        for (var i = 0; i < records.length; i++) {
             var rec = records[i];
             batch.push(me.api.removeError(rec.getData));
         }
 
-        Promise.all(batch).then((r)=>{
+        if (batch.length == 0) {
             Ext.toast({
-                type: Ext.Toast.INFO,
-                message: 'Punch Errors removed successfully',
+                type: Ext.Toast.WARNING,
+                message: 'No Punches selected',
                 timeout: 8000
             });
-            me.loadErrors();
-        }).catch((e)=>{
-            Ext.toast({
-                type: Ext.Toast.ERROR,
-                message: 'Failed to remove one or more Punch Errors',
-                timeout: 10000
+        } else {
+            Promise.all(batch).then((r) => {
+                Ext.toast({
+                    type: Ext.Toast.INFO,
+                    message: 'Punch Errors removed successfully',
+                    timeout: 8000
+                });
+                me.loadErrors();
+            }).catch((e) => {
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'Failed to remove one or more Punch Errors',
+                    timeout: 10000
+                });
+                me.loadErrors();
             });
-            me.loadErrors();
-        });
+        }
     },
 
-    onReprocess: function(){
+    onReprocess: function () {
         console.info('remove error');
 
         var me = this,
             vm = this.getViewModel(),
             grid = this.lookup('errorGrid');
-        
+
         var records = grid.getStore().query('checked', true).items;
 
         var batch = [];
 
-        for(var i=0;i<records.length;i++){
+        for (var i = 0; i < records.length; i++) {
             var rec = records[i];
             batch.push(me.api.process(rec.getData));
         }
 
-        Promise.all(batch).then((r)=>{
+        if (batch.length == 0) {
             Ext.toast({
-                type: Ext.Toast.INFO,
-                message: 'Punch Errors successfully processed',
+                type: Ext.Toast.WARNING,
+                message: 'No Punches selected',
                 timeout: 8000
             });
-            me.loadErrors();
-        }).catch((e)=>{
-            Ext.toast({
-                type: Ext.Toast.ERROR,
-                message: 'Failed to process one or more Punch Errors',
-                timeout: 10000
+        } else {
+            Promise.all(batch).then((r) => {
+                Ext.toast({
+                    type: Ext.Toast.INFO,
+                    message: 'Punch Errors successfully processed',
+                    timeout: 8000
+                });
+                me.loadErrors();
+            }).catch((e) => {
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'Failed to process one or more Punch Errors',
+                    timeout: 10000
+                });
+                me.loadErrors();
             });
-            me.loadErrors();
-        });
+        }
     }
 
 });

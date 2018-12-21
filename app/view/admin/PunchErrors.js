@@ -118,7 +118,7 @@ Ext.define('Breeze.view.admin.PunchErrors', {
                 },
                 reprocess: {
                     text: 'Re-Process',
-                    /*handler: 'onPrintPDF',*/
+                    handler: 'onReprocess',
                     ui: 'action', style: 'width:175pt;'
                 },
             },
