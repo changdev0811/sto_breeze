@@ -18,7 +18,7 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
     onInit: function (component) {
 
         // Instantiate api class
-        this.apiClass = Ext.create('Breeze.api.admin.Departments');
+        this.api = Ext.create('Breeze.api.admin.Departments');
 
         // Load supervisor list
         this.addStoreToViewModel(
@@ -50,14 +50,17 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
 
     },
 
-    loadDepartments: function (selectId) {
-        var me = this;
+    loadDepartments: function (selectId, searchString) {
+        var me = this,
+            searchString = Object.defVal(searchString, ''),
+            vm = this.getViewModel();
 
         this.addStoreToViewModel(
             'Breeze.store.company.DepartmentList',
             'departmentList',
             {
                 load: true,
+                createOpts: { searchString: searchString },
                 loadOpts: {
                     callback: function (records, op, success) {
                         if (success && records.length > 0) {
@@ -67,8 +70,21 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
                                     return r.get('Id') == selectId;
                                 });
                             }
-                            this.lookup('departmentsList').getSelectable()
-                                .setSelectedRecord(record);
+                            if (searchString == '') {
+                                this.lookup('departmentsList').getSelectable()
+                                    .setSelectedRecord(record);
+                            } else {
+                                this.api.filteredList(searchString).then((r) => {
+                                    var excluded = records.find((rec) => {
+                                        return !r.includes(rec.get('Id').toString());
+                                    });
+                                    vm.get('departmentList').remove(excluded);
+                                    if (records.length - excluded.length > 0) {
+                                        this.lookup('departmentsList').getSelectable()
+                                            .setSelectedRecord(record);
+                                    }
+                                });
+                            }
                         }
                     },
                     scope: me
@@ -80,6 +96,7 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
     //===[Add Supervisor Dialog]===
     showAddSupervisorDialog: function () {
         var view = this.getView(),
+            vm = this.getViewModel();
             dialog = this.addSupervisorDialog;
 
         if (!dialog) {
@@ -89,6 +106,22 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             this.addSupervisorDialog = dialog = Ext.create(dialog);
         }
 
+        var supervisorsInUse = vm.get('supervisors').getData().items.map((r)=>{
+            return r.get('supervisorId').toString();
+        });
+
+        var supervisorsUnused = vm.get('supervisorList').queryBy((r)=>{
+            return !supervisorsInUse.includes(r.get('id').toString());
+        });
+
+        var choices = supervisorsUnused.items.map((r)=>{
+            return {name: r.get('displayName'), id: r.get('id')};
+        });
+
+        dialog.getComponent('supervisorSelector').setOptions(choices);
+
+
+
         dialog.show();
     },
 
@@ -97,6 +130,10 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
     },
 
     //===[Event Handlers]===
+
+    onSearch: function(src){
+        this.loadDepartments(null, src.getValue());
+    },
 
     onDepartmentSelect: function (list, selectedRecord) {
         var vm = this.getViewModel(),
@@ -145,6 +182,59 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             // Update seleected department id value
             vm.set('selectedDepartmentId', selectedRecord.get('Id'));
         }
+    },
+
+    onAddDepartment: function () {
+        this.api.create().then((r) => {
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 8000
+            });
+            me.loadDepartments();
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 8000
+            });
+        });
+    },
+
+    onRemoveDepartment: function () {
+        var me = this,
+            vm = this.getViewModel(),
+            id = vm.get('departmentData.Id');
+
+        this.api.canRemove(id).then((r) => {
+            me.api.remove(id).then((r2) => {
+                Ext.toast({
+                    type: r2.type,
+                    message: r2.message,
+                    timeout: 8000
+                });
+                me.loadDepartments();
+            }).catch((e2) => {
+                Ext.toast({
+                    type: e2.type,
+                    message: e2.message,
+                    timeout: 8000
+                });
+            });
+        }).catch((e) => {
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 12000
+            });
+        });
+    },
+
+    onAddSupervisor: function(){
+        var me = this,
+            vm = this.getViewModel(),
+            dlg = this.addSupervisorDialog;
+        
     },
 
     onEditSupervisorRoleSelect: function (comp, data) {

@@ -44,6 +44,19 @@ Ext.define('Breeze.view.admin.Departments', {
         scrollable: 'y',
 
         items: [
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Supervisor',
+                labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'supervisorSelector',
+                value: null,
+                autoSelect: true,
+                displayField: 'name', valueField: 'id',
+                required: true
+            }
         ],
 
         buttons: [
@@ -122,7 +135,10 @@ Ext.define('Breeze.view.admin.Departments', {
                                     flex: 1,
                                     ui: "solo",
                                     //userCls:'admin-fieldset no-border no-margin no-padding',
-                                    placeholder: "Search"
+                                    placeholder: "Search",
+                                    listeners: {
+                                        action: 'onSearch'
+                                    }
                                 },
                                 {
                                     xtype: 'spacer',
@@ -138,7 +154,8 @@ Ext.define('Breeze.view.admin.Departments', {
                                     xtype: 'button',
                                     //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-minus',
-                                    ui: 'plain wtr-button'
+                                    ui: 'plain wtr-button',
+                                    handler: 'onRemoveDepartment'
                                 },
                             ]
                         },
@@ -295,8 +312,8 @@ Ext.define('Breeze.view.admin.Departments', {
                                             dataIndex: 'roleId',
                                             menuDisabled: true,
                                             // align:'center',
-                                            editor:{
-                                                xtype:'selectfield',
+                                            editor: {
+                                                xtype: 'selectfield',
                                                 valueField: 'Role_Id',
                                                 displayField: 'Role_Name',
                                                 bind: {
