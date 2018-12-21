@@ -49,13 +49,29 @@ Ext.define('Breeze.view.admin.Departments', {
                 // ui: 'reporting reporting-text reporting-date',
                 // width:'200pt',
                 label: 'Supervisor',
-                labelAlign: 'left',
+                // labelAlign: 'left',
                 labelWidth: 'auto',
                 itemId: 'supervisorSelector',
                 value: null,
                 autoSelect: true,
                 displayField: 'name', valueField: 'id',
                 required: true
+            },
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Role',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'roleSelector',
+                value: null,
+                autoSelect: true,
+                displayField: 'Role_Name', valueField: 'Role_Id',
+                required: true,
+                bind: {
+                    store: '{roles}'
+                }
             }
         ],
 
@@ -63,9 +79,7 @@ Ext.define('Breeze.view.admin.Departments', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                disabled: true,
-                itemId: 'add',
-                // handler: 'onPolicyAdd'
+                handler: 'onAddSupervisor'
             },
             {
                 xtype: 'spacer',
@@ -82,7 +96,7 @@ Ext.define('Breeze.view.admin.Departments', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        apply: { text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'confirm alt', style: 'width:125pt' },
+        apply: { text: 'Save', handler: 'onSave', ui: 'confirm alt', style: 'width:125pt' },
     },
 
 
@@ -137,7 +151,8 @@ Ext.define('Breeze.view.admin.Departments', {
                                     //userCls:'admin-fieldset no-border no-margin no-padding',
                                     placeholder: "Search",
                                     listeners: {
-                                        action: 'onSearch'
+                                        action: 'onSearch',
+                                        clearicontap: 'onSearch'
                                     }
                                 },
                                 {

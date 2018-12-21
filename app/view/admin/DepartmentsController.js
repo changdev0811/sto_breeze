@@ -9,8 +9,18 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
     alias: 'controller.admin.departments',
 
     requires: [
-        'Breeze.api.admin.Departments'
+        'Breeze.api.admin.Departments',
+        'Breeze.mixin.CommonToolable'
     ],
+
+    mixins: {
+        commonToolable: 'Breeze.mixin.CommonToolable'
+    },
+
+    config: {
+        // Tell common tools mixin to inject print and refresh tool buttons
+        injectTools: true
+    },
 
     /**
      * Called when the view is created
@@ -105,6 +115,8 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             }, view.addSupervisorDialog);
             this.addSupervisorDialog = dialog = Ext.create(dialog);
         }
+
+        dialog.getComponent('supervisorSelector').setValue(null);
 
         var supervisorsInUse = vm.get('supervisors').getData().items.map((r)=>{
             return r.get('supervisorId').toString();
@@ -235,6 +247,22 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             vm = this.getViewModel(),
             dlg = this.addSupervisorDialog;
         
+        var supervisors = vm.get('supervisors'),
+            superSelect = dlg.getComponent('supervisorSelector'),
+            roleSelect = dlg.getComponent('roleSelector'),
+            superId = superSelect.getValue(),
+            superRec = superSelect.getStore().query('id',superId).getAt(0),
+            roleId = roleSelect.getValue(),
+            roleRec = roleSelect.getStore().query('Role_Id', roleId).getAt(0);
+        
+        supervisors.add({
+            supervisorId: superId,
+            roleId: roleId,
+            Name: superRec.get('name'),
+            Role_Name: roleRec.get('Role_Name')  
+        });
+
+        dlg.hide();
     },
 
     onEditSupervisorRoleSelect: function (comp, data) {
@@ -253,23 +281,12 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             vm = this.getViewModel();
 
         data.record.store.remove(data.record);
-        // this.api.removeSupervisor(
-        //     vm.get('departmentData.Id'),
-        //     data.record.get('supervisorId'),
-        //     data.record.get('roleId')
-        // ).then((r) => {
-        //     Ext.toast({
-        //         type: r.type,
-        //         message: r.message,
-        //         timeout: 8000
-        //     });
-        //     me.loadDepartments(vm.get('departmentData.Id'));
-        // }).catch((e) => {
-        //     Ext.toast({
-        //         type: e.type,
-        //         message: e.message,
-        //         timeout: 8000
-        //     });
-        // });
+    },
+
+    onSave: function(){
+        var me = this,
+            vm = this.getViewModel();
+        
+        console.info('save');
     }
 });
