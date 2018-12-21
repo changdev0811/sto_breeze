@@ -524,6 +524,10 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                             xtype: 'fieldset',
                                             userCls: 'admin-fieldset no-border no-padding',
 
+                                            bind: {
+                                                hidden: '{!conflictScopeAllDepts.checked}'
+                                            },
+
                                             layout: 'hbox',
                                             defaults: {
                                                 userCls: 'employee-info-general-field',
@@ -596,6 +600,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                                 {
                                                                                     flex: 1,
                                                                                     name: 'conflictOpt',
+                                                                                    reference: 'conflictScopeAllDepts',
                                                                                     boxLabel: 'All Departments',
                                                                                     value: 1,
                                                                                     bind: {
@@ -908,6 +913,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                                     flex: 2,
                                                                     displayField: 'Description',
                                                                     valueField: 'ID',
+                                                                    value: 59,
                                                                     bind: {
                                                                         store: '{OptionList}',
                                                                         //value:'{configData.PointRollingDuration}' /* PointRollingDuration.split(',')[1] */
