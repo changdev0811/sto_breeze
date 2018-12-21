@@ -271,7 +271,7 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
         record.set({
             roleId: data.data.Role_Id,
             Role_Name: data.data.Role_Name
-        }, { commit: true });
+        });
 
         record.commit();
     },
@@ -285,8 +285,81 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
 
     onSave: function(){
         var me = this,
-            vm = this.getViewModel();
+            vm = this.getViewModel(),
+            supervisors = vm.get('supervisors'),
+            dept = vm.get('departmentData'),
+            id = dept.get('Id');
         
-        console.info('save');
+        var newSupers = supervisors.getNewRecords(),
+            updatedSupers = supervisors.getModifiedRecords(),
+            removedSupers = supervisors.getRemovedRecords();
+
+        var pending = [];
+
+        // Build new supervisor creation promises
+        for(var i=0;i<newSupers.length;i++){
+            var s = newSupers[i];
+            pending.push(
+                me.api.addSupervisor(
+                    id,
+                    s.get('supervisorId'),
+                    s.get('roleId')
+                )
+            );
+        }
+
+        // Build update supervisor promises
+        for(var i=0;i<updatedSupers.length;i++){
+            var s = updatedSupers[i];
+            pending.push(
+                me.api.updateSupervisor(
+                    id,
+                    s.get('supervisorId'),
+                    s.get('roleId')
+                )
+            );
+        }
+
+        // Build removed supervisor promises
+        for(var i=0;i<removedSupers.length;i++){
+            var s = removedSupers[i];
+            pending.push(
+                me.api.removeSupervisor(
+                    id,
+                    s.get('supervisorId'),
+                    s.get('roleId')
+                )
+            );
+        }
+
+        Promise.all(pending).then((r)=>{
+            me.api.update(
+                id,
+                dept.get('Name'),
+                {ConflictLimit: vm.get('ConflictLimit')}
+            ).then((r2)=>{
+                // Successfull
+                Ext.toast({
+                    type: r2.type,
+                    message: r2.message,
+                    timeout: 8000
+                });
+                me.loadDepartments(id);
+            }).catch((e2)=>{
+                // Update failed
+                Ext.toast({
+                    type: e2.type,
+                    message: e2.message,
+                    timeout: 8000
+                });
+            });
+        }).catch((e)=>{
+            // 1+ Supervisor api operations failed
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: 'Error while updating Supervisors.<br>Unable to save Department.',
+                timeout: 10000
+            });
+        });
     }
 });

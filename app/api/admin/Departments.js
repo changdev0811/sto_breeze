@@ -280,5 +280,47 @@ Ext.define('Breeze.api.admin.Departments', {
                 }
             )
         });
+    },
+
+    /**
+     * @api updateDept
+     */
+    update: function(departmentId, name, config){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'updateDept',
+                { 
+                    department_id: departmentId,
+                    department_name: name,
+                    configinfo: Ext.JSON.encode(config)
+                },
+                true, false,
+                function(r) {
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            // message: resp.info.join('')
+                            message: 'Department updated successfully'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'An error occured while saving changes to the department',
+                            error: resp.err
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        err: err, 
+                        info: null
+                    });
+                }
+            );
+        });
     }
 });
