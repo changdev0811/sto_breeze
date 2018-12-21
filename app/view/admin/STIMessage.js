@@ -8,6 +8,12 @@ Ext.define('Breeze.view.admin.STIMessage', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.stimessage',
 
+    viewModel:{
+        data:{
+            path:Ext.getResourcePath('ReleaseNotes.pdf'),
+        }
+    },
+
 
     config: {
         crumbTitle: 'Release Notes'
@@ -42,7 +48,9 @@ Ext.define('Breeze.view.admin.STIMessage', {
                     layout: 'fit',
                     width: '100%',
                     height: '100%',
-                    html: '<iframe style="position:absolute; width:100%; height:100%; left:0; top:0;"  src="/resources/ReleaseNotes.pdf"></iframe>'
+                    bind:{
+                        html: '<iframe style="position:absolute; width:100%; height:100%; left:0; top:0;"  src="{path}"></iframe>'
+                    }
                 }
             ]
         },
