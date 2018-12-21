@@ -10,6 +10,8 @@ Ext.define('Breeze.model.company.Config', {
     extend: 'Breeze.model.Base',
     alias: 'model.company.config',
     fields: [
+        { name: 'AccrualCapOption', type: 'integer'},
+        { name: 'BalanceCapOption', type: 'boolean' },
         { name: 'CompanyName', type: 'string' },
         { name: 'LogoPath', type: 'string' },
         { name: 'RepLogoPath', type: 'string' },

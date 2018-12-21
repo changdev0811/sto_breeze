@@ -107,6 +107,8 @@ Ext.define('Breeze.view.admin.Roles', {
                             userCls: 'admin-fieldset no-background no-margin no-border',
                             itemId: 'roleList',
                             fieldMode: 'none',
+                            selectMode: 'single',
+                            preventDeselect: true,
                             itemConfig: {
                                 ui: 'admin-list-item-select',
                                 templates: {
