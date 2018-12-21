@@ -89,7 +89,14 @@ Ext.define('Breeze.view.admin.SAOptionsController', {
         var configInfoParams = Ext.clone(vm.get('configData')),
             modified = false,
             fisc = vm.get('configData.FiscDate');
-    
+
+        
+        configInfoParams.AccrualCapOption = this.lookup('capGroup').getValues().capOption;
+        configInfoParams.ConflictOpt = this.lookup('conflictScope').getValues().conflictOpt;
+        configInfoParams.LeaveApproveOpt = this.lookup('appOpt').getValues().leaveApprove;
+        configInfoParams.LeaveApproveMode = this.lookup('appMode').getValues().leaveMode;
+        configInfoParams.PointExpirationType = this.lookup('PointExpirationType').getValues().expirationType;
+        console.info('Save');
         // Remove repo type prop carried over from raw API response
         delete configInfoParams.__type;
 
