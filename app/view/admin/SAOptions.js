@@ -261,7 +261,7 @@ Ext.define('Breeze.view.admin.SAOptions', {
                                                             xtype: 'fieldset',
                                                             userCls: 'admin-fieldset',
                                                             flex: 1,
-                                                            title: 'Securety Options',
+                                                            title: 'Security Options',
                                                             items: [
                                                                 {
                                                                     xtype: 'checkbox',
