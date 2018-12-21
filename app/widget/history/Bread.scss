@@ -8,7 +8,7 @@
     background-color: $base-color;
     color: map-get($root-text-colors, 'base');
     font-size: $scoped-root-font-size-bread;
-    padding:0;
+    padding:0pt 0pt 4pt 0pt;
     // Crumb item element
     & .crumb {
         // Element containing link and divider
