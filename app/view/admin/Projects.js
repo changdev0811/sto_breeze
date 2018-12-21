@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.Projects', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.projects',
 
+    requires: [
+        'Breeze.plugin.grid.ExpandSelect',
+    ],
+
     config: {
         crumbTitle: 'Projects'
     },
@@ -100,7 +104,14 @@ Ext.define('Breeze.view.admin.Projects', {
                             listeners: {
                                 select: 'onProjectSelect',
                                 deselect: 'onProjectDeselect'
+                            },
+                            plugins: {
+                                expandSelect2: {
+                                    type: 'breeze.grid.expandselect'
+                                }
                             }
+
+                            
                         },
                     ]
                 },

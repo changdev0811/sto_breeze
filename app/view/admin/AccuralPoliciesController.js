@@ -110,12 +110,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             }
         );
         // TODO: Auto select first category on policy select if none chosen
-        // if(cats.getSelectionCount()==0){
-        //     // If no category is selected, auto select the first one
-        //     cats.getSelectable().setSelectedRecord(
-        //         vm.get('categoriesList').getAt(0)
-        //     );
-        // }
+        if(cats.getSelectionCount()==0){
+            // If no category is selected, auto select the first one
+            cats.getSelectable().setSelectedRecord(
+                vm.get('categoriesList').getAt(0)
+            );
+        }
     },
 
     onCategorySelect: function(list, record, eOpts){
