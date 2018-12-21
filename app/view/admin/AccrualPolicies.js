@@ -223,7 +223,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     },
                                     defaults: {
                                         xtype: 'gridcolumn',
-                                        menuDisabled: true
+                                        menuDisabled: true,
+                                        userCls:'no-border',
                                     },
                                     layout: 'vbox',
                                     columns: [
@@ -592,8 +593,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     },
                                     defaults: {
                                         cell: {
-                                            ui: 'admin-grid admin-tree-item'
-                                        }
+                                            ui: 'admin-grid admin-tree-item',
+                                        },
+                                        userCls:'no-border',
+
                                     },
                                     defaultType: 'gridcolumn',
                                     columns: [
@@ -779,7 +782,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         cell: {
                                             ui: 'admin-grid admin-tree-item'
                                         },
-                                        draggable: false
+                                        draggable: false,
+                                        userCls:'no-border',
                                     },
                                     defaultType: 'gridcolumn',
                                     columns: [
