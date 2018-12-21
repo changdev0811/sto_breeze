@@ -36,7 +36,7 @@ Ext.define('Breeze.view.admin.STIMessage', {
                     layout: 'fit',
                     width: '100%',
                     height: '100%',
-                    html: '<iframe style="position:absolute; width:100%; height:100%; left:0; top:0;"  src="../resources/ReleaseNotes.pdf"></iframe>'
+                    html: '<iframe style="position:absolute; width:100%; height:100%; left:0; top:0;"  src="/resources/ReleaseNotes.pdf"></iframe>'
                 }
             ]
         },
