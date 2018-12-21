@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetails', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.holidaydetails',
 
+    config: {
+        crumbTitle: 'Holiday Details Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.misc.holidaydetails'

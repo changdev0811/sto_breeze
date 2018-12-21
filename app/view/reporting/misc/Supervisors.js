@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.misc.Supervisors', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.supervisors',
 
+    config: {
+        crumbTitle: 'Supervisors Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.misc.supervisors'

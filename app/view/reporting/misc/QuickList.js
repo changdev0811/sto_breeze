@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.quicklist',
 
+    config: {
+        crumbTitle: 'QuickList Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.misc.quicklist'

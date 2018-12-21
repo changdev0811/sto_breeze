@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.Security', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.security',
 
+    config: {
+        crumbTitle: 'Security Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.security'

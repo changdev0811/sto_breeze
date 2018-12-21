@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.point.PointTotals', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.point.pointtotals',
 
+    config: {
+        crumbTitle: 'Point Totals Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.point.pointtotals'

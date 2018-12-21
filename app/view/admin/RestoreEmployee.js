@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.restoreemployee',
 
+    config: {
+        crumbTitle: 'Restore Employees'
+    },
+
+
     // View Model
     viewModel: {
         type: 'admin.restoreemployee'

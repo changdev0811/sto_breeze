@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.misc.Policy', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.policy',
 
+    config: {
+        crumbTitle: 'Policy Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.misc.policy'

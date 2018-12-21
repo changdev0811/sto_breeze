@@ -9,6 +9,10 @@ Ext.define('Breeze.view.admin.PunchErrors', {
     alias: 'widget.admin.puncherrors',
 
 
+    config: {
+        crumbTitle: 'Punch Errors'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.puncherrors'

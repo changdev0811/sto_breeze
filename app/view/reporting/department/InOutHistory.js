@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.InOutHistory', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.inouthistory',
 
+    config: {
+        crumbTitle: 'In/Out History Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.inouthistory'

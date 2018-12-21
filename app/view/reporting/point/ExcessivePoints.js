@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.point.excessivepoints',
 
+    config: {
+        crumbTitle: 'Excessive Points Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.point.excessivepoints'

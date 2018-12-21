@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.Absence', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.absence',
 
+    config: {
+        crumbTitle: 'Absence Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.absence'

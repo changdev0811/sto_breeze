@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.Fyi', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.fyi',
 
+    config: {
+        crumbTitle: 'Employee FYI Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.fyi'

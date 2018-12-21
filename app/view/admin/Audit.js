@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.Audit', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.audit',
 
+    config: {
+        crumbTitle: 'Audit'
+    },
+
+
     // View Model
     viewModel: {
         type: 'admin.audit'

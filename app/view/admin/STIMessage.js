@@ -8,6 +8,12 @@ Ext.define('Breeze.view.admin.STIMessage', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.stimessage',
 
+
+    config: {
+        crumbTitle: 'Release Notes'
+    },
+
+
     // Layout and base styles
     layout: 'fit',
     ui: 'admin-base',

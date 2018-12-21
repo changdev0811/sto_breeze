@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.InOutBoard', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.inoutboard',
 
+    config: {
+        crumbTitle: 'In/Out Board Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.inoutboard'

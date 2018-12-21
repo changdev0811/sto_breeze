@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.TimeActivity', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.timeactivity',
 
+    config: {
+        crumbTitle: 'Employee Time Activity Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.timeactivity'

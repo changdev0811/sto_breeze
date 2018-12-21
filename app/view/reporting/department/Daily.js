@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.Daily', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.daily',
 
+    config: {
+        crumbTitle: 'Department Daily Report',
+    },
+    
     // View Model
     viewModel: {
         type: 'reporting.department.daily'

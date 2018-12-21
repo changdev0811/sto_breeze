@@ -8,6 +8,11 @@ Ext.define('Breeze.view.reporting.department.ShiftAnalysis', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.shiftanalysis',
 
+    config: {
+        crumbTitle: 'Shift Analysis Report',
+    },
+
+
     // View Model
     viewModel: {
         type: 'reporting.department.shiftanalysis'

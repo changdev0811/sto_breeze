@@ -8,6 +8,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.accrualpolicies',
 
+
+    config: {
+        crumbTitle: 'Accrual Policies'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.accrualpolicies'

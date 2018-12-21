@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.CompanyHistory', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.companyhistory',
 
+    config: {
+        crumbTitle: 'Audit'
+    },
+
     // Layout and base styles
     layout: 'vbox',
     ui: 'admin-base',

@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliation', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.deptreconciliation',
 
+    config: {
+        crumbTitle: 'Department Reconciliaton Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.deptreconciliation'

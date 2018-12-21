@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummary', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.misc.leaverequestsummary',
 
+    config: {
+        crumbTitle: 'Leave Request Summary Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.misc.leaverequestsummary'

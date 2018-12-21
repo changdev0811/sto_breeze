@@ -64,7 +64,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
     items: [
         {
             xtype: 'fieldset',
-            userCls: 'admin-fieldset no-side-margin',
+            userCls: 'leave-request-fieldset no-side-margin',
             title:'Employee Accrual Policy - [CATEGORY]',
 
             flex: 1,
@@ -88,7 +88,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                             items: [
                                 {
                                     xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-side-margin no-padding',
+                                    userCls: 'leave-request-fieldset no-side-margin no-padding',
                                     title:'Leave Requests:',
                                     flex:1,
                                     layout: 'vbox',
@@ -143,7 +143,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                                 },
                                 {
                                     xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-padding',
+                                    userCls: 'leave-request-fieldset no-padding',
                                     title:'Viewing Requests:',
                                     flex:1,
                                     layout: 'vbox',
@@ -180,7 +180,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                                         },
                                         {
                                             xtype: 'fieldset',
-                                            userCls: 'admin-fieldset no-border no-side-margin',
+                                            userCls: 'leave-request-fieldset no-border no-side-margin',
                                             title:'Requested Days',
                                             layout:'vbox',
                                             flex:1,
@@ -238,7 +238,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                         // row 2
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-side-margin no-padding no-border',
+                            userCls: 'leave-request-fieldset no-side-margin no-padding no-border',
 
                             layout: 'hbox',
                             defaults: {
@@ -285,7 +285,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                             items: [
                                 {
                                     xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-side-margin no-padding',
+                                    userCls: 'leave-request-fieldset no-side-margin no-padding',
                                     title:'Current Supervisor Responses',
                                     flex:2,
                                     layout:'vbox',
@@ -323,7 +323,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                                 },
                                 {
                                     xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-padding',
+                                    userCls: 'leave-request-fieldset no-padding',
                                     title:'Request Conflicts:',
                                     flex:3,
                                     layout:'vbox',
@@ -378,7 +378,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
                                 },
                                 {
                                     xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-padding',
+                                    userCls: 'leave-request-fieldset no-padding',
                                     //title:'Leave Requests:',
                                     flex:3,
                                     layout:'vbox',
@@ -386,7 +386,7 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
 
                                         {
                                             xtype: 'toolbar',
-                                            ui: 'admin-tree',
+                                            ui: 'leave-request-tree',
                                             shadow: false,
                                             items: [
                                                 {

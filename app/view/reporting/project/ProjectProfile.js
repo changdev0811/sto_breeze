@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.project.ProjectProfile', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.project.projectprofile',
 
+    config: {
+        crumbTitle: 'Project Profile Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.project.projectprofile'
