@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.timerecap',
 
+    config: {
+        crumbTitle: 'Time Recap Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.timerecap'

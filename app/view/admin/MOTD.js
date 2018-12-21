@@ -7,7 +7,10 @@
 Ext.define('Breeze.view.admin.MOTD', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.motd',
-
+    
+    config: {
+        crumbTitle: 'MOTD'
+    },
 
     // View Model
     viewModel: {

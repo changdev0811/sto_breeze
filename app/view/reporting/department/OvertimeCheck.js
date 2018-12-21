@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.overtimecheck',
 
+    config: {
+        crumbTitle: 'Overtime Check Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.overtimecheck'

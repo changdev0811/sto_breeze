@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHours', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.excessivehours',
 
+    config: {
+        crumbTitle: 'Employee Excessive Hours Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.excessivehours'

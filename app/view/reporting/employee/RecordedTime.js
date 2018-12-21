@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.RecordedTime', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.recordedtime',
 
+    config: {
+        crumbTitle: 'Employee Recorded Time Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.recordedtime'

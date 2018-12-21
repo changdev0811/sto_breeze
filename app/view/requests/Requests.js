@@ -10,6 +10,12 @@ Ext.define('Breeze.view.requests.Requests', {
     extend: 'Ext.Container',
     alias: 'widget.requests.requests',
     controller: 'requests.requests',
+
+
+    config: {
+        crumbTitle: 'My Requests'
+    },
+    
     requires: ['Ext.layout.Card', 'Breeze.view.requests.RequestsController'],
     userCls:'requests-content',
     layout: 'card',

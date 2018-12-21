@@ -36,3 +36,40 @@
     $background-color: map-get($calendar-colors, 'base'),
     $horizontal-spacing: 4pt
 );
+
+// styling applied to admin-fieldset title
+.leave-request-fieldset {
+    border:solid 1px white;
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($admin-text-colors, 'base');
+        background-color:rgba(255,255,255,.33);
+        font-weight:1000;
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
+        );
+    }
+
+}
+
+
+
+
+
+
+/** Generic base UI for report form tree views **/
+@include toolbar-ui(
+    $ui: 'leave-request-tree',
+    $background-color: rgba(255,255,255,.33),
+    $background-gradient: none,
+    $line-height: 22pt,
+);
+
+
+

@@ -10,6 +10,14 @@ Ext.define('Breeze.view.requests.MyRequests', {
 
     userCls:'requests-content',
 
+
+
+    config: {
+        crumbTitle: 'My Requests'
+    },
+
+
+
     // Layout and base styles
     layout: 'hbox',
     scrollable:'x',

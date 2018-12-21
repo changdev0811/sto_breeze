@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.Lateness', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.lateness',
 
+    config: {
+        crumbTitle: 'Employee Lateness Check Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.lateness'

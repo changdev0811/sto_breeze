@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlance', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.employee.yearataglance',
 
+    config: {
+        crumbTitle: 'Employee Year At A Glance Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.employee.yearataglance'

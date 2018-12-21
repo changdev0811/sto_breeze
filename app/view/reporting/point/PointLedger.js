@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.point.PointLedger', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.point.pointledger',
 
+    config: {
+        crumbTitle: 'Point Ledger Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.point.pointledger'

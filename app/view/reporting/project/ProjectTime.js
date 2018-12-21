@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.project.ProjectTime', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.project.projecttime',
 
+    config: {
+        crumbTitle: 'Project Time Summary Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.project.projecttime'

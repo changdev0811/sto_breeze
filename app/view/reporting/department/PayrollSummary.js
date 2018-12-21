@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.payrollsummary',
 
+    config: {
+        crumbTitle: 'Payroll Summary Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.payrollsummary'

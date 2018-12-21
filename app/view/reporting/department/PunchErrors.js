@@ -8,6 +8,10 @@ Ext.define('Breeze.view.reporting.department.PunchErrors', {
     extend: 'Ext.Panel',
     alias: 'widget.reporting.department.puncherrors',
 
+    config: {
+        crumbTitle: 'Punch Errors Report',
+    },
+
     // View Model
     viewModel: {
         type: 'reporting.department.puncherrors'

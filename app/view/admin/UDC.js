@@ -8,6 +8,10 @@ Ext.define('Breeze.view.admin.UDC', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.udc',
 
+    config: {
+        crumbTitle: 'User Defined Categories'
+    },
+
     // View Model
     viewModel: {
         type: 'admin.udc'
