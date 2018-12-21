@@ -272,8 +272,6 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             roleId: data.data.Role_Id,
             Role_Name: data.data.Role_Name
         });
-
-        record.commit();
     },
 
     onRemoveSupervisor: function (grid, data) {
@@ -288,7 +286,7 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
             vm = this.getViewModel(),
             supervisors = vm.get('supervisors'),
             dept = vm.get('departmentData'),
-            id = dept.get('Id');
+            id = dept.Id;
         
         var newSupers = supervisors.getNewRecords(),
             updatedSupers = supervisors.getModifiedRecords(),
@@ -335,8 +333,8 @@ Ext.define('Breeze.view.admin.DepartmentsController', {
         Promise.all(pending).then((r)=>{
             me.api.update(
                 id,
-                dept.get('Name'),
-                {ConflictLimit: vm.get('ConflictLimit')}
+                dept.Name,
+                {ConflictLimit: vm.get('conflictLimit')}
             ).then((r2)=>{
                 // Successfull
                 Ext.toast({
