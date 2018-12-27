@@ -14,7 +14,7 @@ Ext.define('Breeze.api.admin.UDC', {
      * @return {Promise} Promise resolving with true or rejecting with toast
      * @api /isCategoryNameInUse
      */
-    isNameInUse: function () {
+    isNameInUse: function (categoryId, name) {
         var api = this.api;
         return new Promise((resolve, reject) => {
             api.serviceRequest(
@@ -172,10 +172,44 @@ Ext.define('Breeze.api.admin.UDC', {
     },
 
     /**
+     * @param {Object} parameters Updated category record object
+     * @return {Promise} Promise resolving with success toast or rejecting 
+     *      with error toast
      * @api /UpdateCategory
      */
-    update: function () {
-
+    update: function (parameters) {
+        var api = this.api;
+        return new Promise((resolve, reject) => {
+            api.serviceRequest(
+                'UpdateCategory',
+                { CatInfo: Ext.JSON.encode(parameters) },
+                true, false,
+                function (r) {
+                    var resp = api.decodeJsonResponse(r);
+                    if (resp.success) {
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Category updated successfully.'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Error updating category' + (
+                                resp.err !== ""
+                            )? `(${resp.err})` : '',
+                            error: resp.err
+                        });
+                    }
+                },
+                function (err) {
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
+                }
+            );
+        });
     }
 
 });

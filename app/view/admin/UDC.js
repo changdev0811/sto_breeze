@@ -147,8 +147,8 @@ Ext.define('Breeze.view.admin.UDC', {
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Category Name',
-                                    //name: 'project_name',
                                     ui: 'admin admin-text',
+                                    reference: 'categoryNameField',
                                     userCls: 'admin-fieldset no-border no-margin',
                                     bind: {
                                         value: '{categoryData.Category_Name}'

@@ -50,7 +50,7 @@ Ext.define('Breeze.view.admin.UDCController', {
                                 if (selectLast) {
                                     record = records.getAt(records.length - 1);
                                 } else {
-                                    record = vm.get('categoriesList').queryRecord('Category_Code', selectId);
+                                    record = vm.get('categoriesList').queryRecords('Category_Id', selectId)[0];
                                 }
                             }
                             this.lookup('categoryList').getSelectable()
@@ -63,6 +63,7 @@ Ext.define('Breeze.view.admin.UDCController', {
         );
     },
 
+
     //===[Event Handlers]===
 
     onCatSelect: function (list, record) {
@@ -73,12 +74,18 @@ Ext.define('Breeze.view.admin.UDCController', {
         // update model color
         var vm = this.getViewModel();
         vm.set('categoryData.HexColor', record.data.hex);
+        vm.set('categoryData.color_red', record.r);
+        vm.set('categoryData.color_green', record.g);
+        vm.set('categoryData.color_blue', record.b);
         // +++ need to update to current category's color instead of catCol +++
 
         // close button menu
         this.lookup('colorBtn').getMenu().hide();
     },
 
+    /**
+     * Handle add button click event
+     */
     onCategoryAdd: function () {
         var vm = this.getViewModel(),
             me = this;
@@ -90,7 +97,7 @@ Ext.define('Breeze.view.admin.UDCController', {
                 timeout: 'info'
             });
             // Reload categories, focusing on last in list
-            this.loadCats('new');
+            me.loadCats('new');
         }).catch((e) => {
             // Show error message
             Ext.toast({
@@ -101,6 +108,9 @@ Ext.define('Breeze.view.admin.UDCController', {
         });
     },
 
+    /**
+     * Handle remove button click event
+     */
     onCategoryRemove: function () {
         var vm = this.getViewModel(),
             record = vm.get('categoryData');
@@ -145,7 +155,7 @@ Ext.define('Breeze.view.admin.UDCController', {
                     timeout: 'info'
                 });
                 // Reload categories
-                this.loadCats();
+                me.loadCats();
             }).catch((e) => {
                 // Show error message
                 Ext.toast({
@@ -157,8 +167,54 @@ Ext.define('Breeze.view.admin.UDCController', {
         };
     },
 
+    /**
+     * Handle save button click event
+     */
     onSave: function () {
+        var vm = this.getViewModel(),
+            me = this,
+            record = vm.get('categoryData'),
+            catNameField = this.lookup('categoryNameField');
 
+        catNameField.clearInvalid();
+
+        var { Category_Id: catId, Category_Name: catName } = record;
+        
+        this.api.isNameInUse(catId, catName).then((r) => {
+            // Name not in use, allow save
+            doSave();
+        }).catch((e)=>{
+            // Name is in use, show field error and warning toast
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timeout: 'warn'
+            });
+            catNameField.markInvalid('Name is already in use');
+        });
+
+        // Function that performs save, called if name is not in use
+        doSave = () => {
+            var params = Ext.clone(record);
+            params.pichasChanged = false; // no pictures used, so set to false
+            me.api.update(params).then((r) => {
+                // Show success message
+                Ext.toast({
+                    type: r.type,
+                    message: r.message,
+                    timeout: 'info'
+                });
+                // Reload categories
+                me.loadCats(record.Category_Id);
+            }).catch((e) => {
+                // Show error message
+                Ext.toast({
+                    type: r.type,
+                    message: r.message,
+                    timeout: 'error'
+                });
+            });
+        };
     }
 
 
