@@ -24,6 +24,7 @@ Ext.define('Breeze.view.admin.RolesController', {
     },
 
     loadRoles: function(){
+        var me = this;
         this.addStoreToViewModel(
             'Breeze.store.company.SupervisorRoleList',
             'roles',
@@ -204,7 +205,7 @@ Ext.define('Breeze.view.admin.RolesController', {
                 message: 'Supervisor role successfully updated',
                 timeout: 10000
             });
-            this.loadRoles();
+            me.loadRoles();
         }).catch((e)=>{
             Ext.toast({
                 type: e.type,
