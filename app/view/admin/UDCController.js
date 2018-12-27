@@ -74,9 +74,9 @@ Ext.define('Breeze.view.admin.UDCController', {
         // update model color
         var vm = this.getViewModel();
         vm.set('categoryData.HexColor', record.data.hex);
-        vm.set('categoryData.color_red', record.r);
-        vm.set('categoryData.color_green', record.g);
-        vm.set('categoryData.color_blue', record.b);
+        vm.set('categoryData.color_red', record.get('r'));
+        vm.set('categoryData.color_green', record.get('g'));
+        vm.set('categoryData.color_blue', record.get('b'));
         // +++ need to update to current category's color instead of catCol +++
 
         // close button menu
@@ -101,8 +101,8 @@ Ext.define('Breeze.view.admin.UDCController', {
         }).catch((e) => {
             // Show error message
             Ext.toast({
-                type: r.type,
-                message: r.message,
+                type: e.type,
+                message: e.message,
                 timeout: 'error'
             });
         });
@@ -196,7 +196,7 @@ Ext.define('Breeze.view.admin.UDCController', {
         // Function that performs save, called if name is not in use
         doSave = () => {
             var params = Ext.clone(record);
-            params.pichasChanged = false; // no pictures used, so set to false
+            
             me.api.update(params).then((r) => {
                 // Show success message
                 Ext.toast({
@@ -209,8 +209,8 @@ Ext.define('Breeze.view.admin.UDCController', {
             }).catch((e) => {
                 // Show error message
                 Ext.toast({
-                    type: r.type,
-                    message: r.message,
+                    type: e.type,
+                    message: e.message,
                     timeout: 'error'
                 });
             });

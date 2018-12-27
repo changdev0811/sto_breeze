@@ -74,7 +74,7 @@ Ext.define('Breeze.api.admin.UDC', {
                     } else {
                         reject({
                             type: Ext.Toast.ERROR,
-                            message: 'Unable to create category',
+                            message: resp.info.join(''),
                             error: resp.err
                         });
                     }
@@ -182,7 +182,13 @@ Ext.define('Breeze.api.admin.UDC', {
         return new Promise((resolve, reject) => {
             api.serviceRequest(
                 'UpdateCategory',
-                { CatInfo: Ext.JSON.encode(parameters) },
+                { 
+                    CatInfo: Ext.JSON.encode(parameters),
+                    // Always false, as breeze doesn't use category images
+                    pichasChanged: false,
+                    // Blank, as breeze doesn't use category images
+                    tmpPicExt: ''
+                },
                 true, false,
                 function (r) {
                     var resp = api.decodeJsonResponse(r);
