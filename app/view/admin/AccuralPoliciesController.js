@@ -80,6 +80,139 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         )
     },
 
+    //===[Dialog display and event handlers]===
+
+    /**
+     * Display the 'add accrual rule' dialog
+     */
+    showAddAccrualRuleDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.addAccrualRuleDialog;
+
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addAccrualRuleDialog);
+            this.addAccrualRuleDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+    /**
+     * Event handler for 'add' button in new accrual rule dialog
+     */
+    onAddAccrualRule: function(){
+        var dlg = this.addAccrualRuleDialog,
+            nameCmp = dlg.getComponent('ruleName'),
+            name = nameCmp.getValue(),
+            vm = this.getViewModel(),
+            rules = vm.get('selectedCategoryAccrualRules');
+
+        nameCmp.clearInvalid();
+
+        var valid = nameCmp.validate(),
+            unique = true,
+            validChars,
+            errors = ['Unable to add rule'];
+
+        if(valid){
+            unique = !rules.getData().items.map((r)=>{return r.get('ruleName');}).includes(name.trim());
+            validChars = !name.includes('|') && !name.includes(',');
+        }
+
+        if(!unique){
+            nameCmp.markInvalid(`${name} is already a rule for category`);
+            errors.push(`Category already has a rule named '${name}'`)
+        }
+
+        if(!validChars){
+            nameCmp.markInvalid(`Cannot include | or ,`);
+            errors.push('Rule name can\'t contain the \'|\' or \',\' characters.');
+        }
+
+        if(valid && unique && validChars){
+            rules.add({
+                accformDay: 1,
+                accformInc: 0,
+                accformPer: 53,
+                accformUnit: (vm.get('policyData.recordingMode') * 1) + 28,
+                ruleName: name.trim(),
+                svcFrom: 0,
+                svcTo: 0,
+                accrualChanged: false,
+                asMonth: 0,
+                asDay: 0
+            });
+            dlg.hide();
+            nameCmp.setValue("");
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: errors.join('<br>'),
+                timeout: 'error'
+            });
+        }
+
+    },
+
+    /**
+     * Event handler for add accrual rule dialog cancel button
+     */
+    onAddAccrualRuleDialogCancel: function(){
+        this.addAccrualRuleDialog.hide();
+    },
+
+    /**
+     * Display the 'add accrual interval' dialog
+     */
+    showAddAccrualIntervalDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            rules = vm.get('selectedCategoryAccrualRules'),
+            dialog = this.addAccrualIntervalDialog;
+
+        var ruleOptions = Ext.Array.unique(rules.getData().items.map((r)=>{
+            return r.get('ruleName');
+        })).map((n)=>{
+            return {name: n, value: n};
+        });
+
+        if(ruleOptions.length == 0){
+            // Show warning message and abort
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to add Interval. <br> There are currently no Accrual Rules to add an Interval to.',
+                timeout: 'error'
+            });
+            return;
+        }
+
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addAccrualIntervalDialog);
+            this.addAccrualIntervalDialog = dialog = Ext.create(dialog);
+        }
+        
+        dialog.show();
+
+        var names = dialog.getComponent('ruleNames');
+        
+        // Add rule name options
+        names.setValue(null);
+        names.setOptions(ruleOptions);
+    },
+
+    /**
+     * Event handler for add accrual interval dialog cancel button
+     */
+    onAddAccrualIntervalDialogCancel: function(){
+        this.addAccrualIntervalDialog.hide();
+    },
+
+
     // === [Event Listeners] ===
 
     /**
