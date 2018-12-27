@@ -112,8 +112,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     itemConfig: {
                                         ui: 'admin-list-item-select',
                                         templates: {
-                                            radioValue: '{record.ID}',
-                                            itemData: { name: '{record.Name} '},
+                                            radioValue: '{record.data}',
+                                            itemData: { name: '{record.text} '},
                                             itemTpl: '{name}'
                                         }
                                     },
@@ -345,7 +345,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             },
                                             bind: {
                                                 values: {
-                                                    yearType: '{categoryYearType}'
+                                                    yearType: '{selectedCategory.calendarType}'
                                                 }
                                             },
                                             items: [

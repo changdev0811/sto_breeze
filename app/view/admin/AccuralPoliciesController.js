@@ -24,24 +24,62 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             { load: true }
         );
 
-        // load accrual policies
-        // TODO: Replace store with one specific to accrual policy listing
-        me.addStoreToViewModel(
-            'Breeze.store.accrual.ScheduleList',
-            'policiesList',
-            { load: true, loadOpts: {
-                callback: function(records, op, success){
-                    this.lookup('policyList').getSelectable().setSelectedRecord(
-                        records[0]
-                    );
-                },
-                scope: me
-            } }
-        );
+        // Empty store for policy categories
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.policy.Category',
+            data:[]
+        }, 'policyCategories');
 
-        console.info('Accrual policies controller inited');
+        // Empty store for policy segments
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.policy.ShiftSegment',
+            data: [],
+        }, 'policySegments');
+
+        // Empty store for accrual rules
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.policy.Rule',
+            data: [],
+        }, 'selectedCategoryAccrualRules');
+
+        // Empty store for carry over rules
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.policy.CarryOverRule',
+            data: [],
+        }, 'selectedCategoryCarryOverRules');
+
+        // load accrual policies
+        this.loadPolicies();
+        
     },
-    
+
+    loadPolicies: function(policyId = null){
+        var me = this,
+            vm = this.getViewModel();
+
+        this.addStoreToViewModel(
+            'Breeze.store.accrual.ScheduleListAPI',
+            'policiesList',
+            {
+                load: true,
+                loadOpts: {
+                    callback: function(records, op, success){
+                        if(success){
+                            var record = records[0];
+                            if(policyId !== null){
+                                record = vm.get('policiesList').queryRecords("ID", policyId)[0];
+                            }
+                            this.lookup('policyList').getSelectable().setSelectedRecord(
+                                record
+                            );
+                        }
+                    },
+                    scope: me
+                }
+            }
+        )
+    },
+
     // === [Event Listeners] ===
 
     /**
@@ -51,80 +89,79 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} record 
      * @param {Object} eOpts 
      */
-    onPolicySelect: function(list, record, eOpts){
+    onPolicySelect: function(list, record, oOpts){
         var vm = this.getViewModel(),
             me = this,
-            cats = this.lookup('categoryList');        
-        // this.loadStore(
-        //     'Breeze.store.accrual.Policy',
-        //     { scheduleId: record.get('ID') }
-        // ).then((policy)=>{
-        //     vm.set('policyData', policy.getAt(0));
-        //     me.addLoadedStoreToViewModel({
-        //         model: 'Breeze.model.accrual.policy.Category',
-        //         data: policy.getAt(0).getData().Categories,
-        //     }, 'policyCategories');
-        //     me.addLoadedStoreToViewModel({
-        //         model: 'Breeze.model.accrual.policy.ShiftSegment',
-        //         data: policy.getAt(0).getData().shifts,
-        //     }, 'policySegments');
-        //     console.info('Loaded policy');
-        // }).catch(function(){
-        //     console.warn('Unable to load policy information');
-        // });
+            cats = this.lookup('categoryList');
+        if(vm.getStore('policy')){
+            vm.getStore('policy').destroy();
+        }
+        // cats.getSelectable().deselectAll(true);
         this.addStoreToViewModel(
             'Breeze.store.accrual.Policy',
             'policy',
             {
                 createOpts: {
-                    scheduleId: record.get('ID')
+                    scheduleId: record.get('data')
                 },
                 load: true,
                 loadOpts: {
-                    callback: function(success){
+                    callback: function(records, op, success){
                         if(success){
-                            var policy = vm.get('policy');
-                            vm.set('policyData', policy.getAt(0));
-                            me.addLoadedStoreToViewModel({
-                                model: 'Breeze.model.accrual.policy.Category',
-                                data: policy.getAt(0).getData().Categories,
-                            }, 'policyCategories');
-                            // policy.getAt(0).Categories().load();
-                            // policy.getAt(0).Categories().each((c)=>{
-                            //     c.accrualRules().setGroupField('ruleName');
-                            // });
-                            // vm.set('policyCategories', policy.getAt(0).Categories());
-                            vm.get('policyCategories').each((c)=>{
-                                // c.accrualRules().setGroupField('ruleName');
-                            });
-                            me.addLoadedStoreToViewModel({
-                                model: 'Breeze.model.accrual.policy.ShiftSegment',
-                                data: policy.getAt(0).shifts().getData(),
-                            }, 'policySegments');
-                            console.info('Loaded policy');
+                            var policy = vm.get('policy'),
+                                policyRecord = policy.getAt(0);
+                            // store policy record
+                            this.copyRecordToViewModel(
+                                policyRecord.getData(), 'policyData'
+                            );
+                            // store policy category data
+                            vm.get('policyCategories').loadData(
+                                Ext.clone(policyRecord.getData().Categories)
+                            );
+                            // store policy segments
+                            vm.get('policySegments').loadData(
+                                Ext.clone(policyRecord.shifts().getData().items.map((i)=>{return i.getData();}))
+                            );
+                            // Select first category if none selected, else restore
+                            // previously selected category
+                            if(cats.getSelectable().getSelectionCount()==0){
+                                cats.getSelectable().setSelectedRecord(
+                                    vm.get('categoriesList').getAt(0)
+                                );
+                            } else {
+                                var rec = cats.getSelectable().getSelectedRecord();
+                                cats.getSelectable().deselectAll(true);
+                                cats.getSelectable().setSelectedRecord(
+                                    rec
+                                );
+                            }
                         } else {
-                            console.warn('Unable to load policy information');
+                            console.warn('Unable to load selected policy information')
                         }
-                    }
+                    },
+                    scope: me
                 }
             }
         );
-        // TODO: Auto select first category on policy select if none chosen
-        if(cats.getSelectionCount()==0){
-            // If no category is selected, auto select the first one
-            cats.getSelectable().setSelectedRecord(
-                vm.get('categoriesList').getAt(0)
-            );
-        }
     },
 
     onCategorySelect: function(list, record, eOpts){
-        var vm = this.getViewModel();
+        var vm = this.getViewModel(),
+            policyCats = vm.get('policyCategories'),
+            recId = parseInt(record.get('Category_Id'));
 
-        vm.set('categoryId', record.get('Category_Id'));
-        this.lookup('accrualRuleGrid').runRefresh();
-        // vm.set('selectedCategory', vm.get('policyCategories').query)
-        console.info('Category Selected');
+        // vm.set('categoryId', Ext.clone(record.get('Category_Id')));
+        // this.lookup('accrualRuleGrid').runRefresh();
+        // // vm.set('selectedCategory', vm.get('policyCategories').query)
+        // console.info('Category Selected');
+        var rec = policyCats.queryRecords('categoryId', recId)[0];
+        this.copyRecordToViewModel(
+            rec.getData(), 'selectedCategory'
+        );
+        // load selected category's accrual rules
+        vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
+        // load selected category's carry over rules
+        vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
     },
 
 
