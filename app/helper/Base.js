@@ -16,7 +16,7 @@ Ext.define('Breeze.helper.Base', {
      * is used by a build script to automatically force non-dummy mode
      * on build
      ***********************************************************/
-    api: Breeze.helper.Api, /*%api-mode%*/
+    api: Breeze.helper.DummyApi, /*%api-mode%*/
     // api: Breeze.helper.Api
 
     /*******************************************
