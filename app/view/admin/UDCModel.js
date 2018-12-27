@@ -8,14 +8,18 @@ Ext.define('Breeze.view.admin.UDCModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.admin.udc',
 
-    constructor: function(cfg){
-        this.callParent([cfg]);
-    },
-
     data: {
-    	// TODO: change to null
-        selectedCat: null,
-        catCol: '#00ff00'
+    	categoryData: null,
+        catCol: '#00ff00',
+        // Confirmation dialog box message text for deleting categories
+        messages: {
+            confirmDeleteInUse: `This category is in use.<br>
+            Are you sure you want to delete this category?<br>
+            This action cannot be undone (category history will be kept).`,
+            confirmDeleteTiedToPoint: `This category is tied to at least one point category.<br>
+            Are you sure you want to delete this category?<br>
+            This action cannot be undone (category history will be kept).`
+        }
     },
 
 
@@ -29,47 +33,7 @@ Ext.define('Breeze.view.admin.UDCModel', {
     */
 
 	stores: {
-        // TODO: Remove when API dummy is available
-        /*
-        cats: {
-            data: [
-            	{
-					"Category_Id": "1",
-					"Category_Name": "New Category",
-					"Category_Abbreviated": "New Cat",
-					"Category_Order": 0,
-					"Category_Code": "",
-					"HexColor": "#000000",
-					"Category_Paycode": "PayCode", //<-- NEW 
-					"Picture_Path": "",
-					"Picture_Abbreviated": "",
-					"isAllowed": true,
-					"isActive": true,
-					"minUse_Amount": 0,
-					"minUse_Unit": 49,
-					"minUse_waitDays": 0,
-					"ShowName": true,
-					"isLeaveRequest": true,
-					"isPaid": true,
-					"isOverTime": true,
-					"isAccrued": true,
-					"color_red": 0,
-					"color_green": 0,
-					"color_blue": 0
-				}
-            ]
-        },
-
-        minUseUnit:{
-        	fields: ['code', 'description'],
-            data: [
-                { "code": 48, "description": "Days" },
-                { "code": 49, "description": "Hours" },
-                { "code": 50, "description": "Minutes" }
-
-            ]
-        }
-        */
+        // Color presets
          colors:{
             fields: ['hex', 'r', 'g', 'b'],
             data: [

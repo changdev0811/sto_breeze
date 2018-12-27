@@ -5,7 +5,7 @@
  * @alias viewmodel.admin.punchpolicies
  */
 Ext.define('Breeze.view.admin.PunchPoliciesModel', {
-    extend: 'Breeze.viewModel.Base',
+    extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.admin.punchpolicies',
 
 

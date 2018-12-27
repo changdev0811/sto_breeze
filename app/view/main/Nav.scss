@@ -158,9 +158,13 @@ $content-edge: 6pt;
     $pressed-background-color : transparent,
     $focused-background-color : transparent,
     $disabled-background-color : transparent,
+);
 
 
-
-
-
+// Standard breeze-themed dialog
+// Used by Msg class override's themedX methods
+@include dialog-ui(
+    $ui: 'dark-dlg',
+    $header-color: map-get($root-text-colors, 'light'),
+    $header-background-color: map-get($root-colors, 'base')
 );

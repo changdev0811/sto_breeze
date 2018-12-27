@@ -4,6 +4,7 @@
  * Provides:
  *  - Dismissible behavior
  *  - Context-themed styling
+ *  - Name based timeout presets
  * @class Toast
  * @namespace Breeze.Toast
  * @namespace Ext.Toast
@@ -19,7 +20,13 @@ Ext.define('Breeze.Toast', {
         // warning type constants
         WARN: 'warn', WARNING: 'warn',
         // info type constants
-        INFO: 'info', INFORMATION: 'info', SUCCESS: 'info'
+        INFO: 'info', INFORMATION: 'info', SUCCESS: 'info',
+        // Timeout presets, use names in place of value; auto defaults to default
+        TIMEOUTS: {
+            error: 10000,
+            info: 'auto',
+            warn: 'auto'
+        }
     },
 
     config: {
@@ -52,12 +59,16 @@ Ext.define('Breeze.Toast', {
         /* ===[Behavior]=== */
         // Whether toast is dismissable
         dismissIcon: 'x-fa fa-times',
-        dismissable: true
+        dismissable: true,
+        // Default timeout period
+        timeout: 6500
     },
 
 
     showToast: function(config){
         config = config || {};
+        var {timeout} = config;
+        config.timeout = this.resolveTimeout(timeout);
         this.setConfig(config);
         this.callParent([config]);
     },
@@ -136,6 +147,17 @@ Ext.define('Breeze.Toast', {
                     me.onTimeout();
                 }
             });
+        },
+        resolveTimeout: function(to){
+            if(typeof to == 'string'){
+                if(to == 'auto'){
+                    return this.getTimeout();
+                } else {
+                    return this.resolveTimeout(Ext.Toast.TIMEOUTS[to]);
+                }
+            } else {
+                return to;
+            }
         }
 
     }
