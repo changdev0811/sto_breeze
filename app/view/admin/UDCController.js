@@ -26,7 +26,8 @@ Ext.define('Breeze.view.admin.UDCController', {
      * Load cats, at select first or specific by ID
      * after load
      * @param {String} selectSpecific Category_Code value, use 'new'
-     *      to indicate the last loaded record should be selected
+     *      to indicate the last loaded record should be selected, or 
+     *      null to automatically select the first category
      */
     loadCats: function (selectSpecific) {
         var me = this,
@@ -48,7 +49,7 @@ Ext.define('Breeze.view.admin.UDCController', {
                             var record = records[0];
                             if (selectId) {
                                 if (selectLast) {
-                                    record = records.getAt(records.length - 1);
+                                    record = records[records.length - 1];
                                 } else {
                                     record = vm.get('categoriesList').queryRecords('Category_Id', selectId)[0];
                                 }
@@ -112,7 +113,8 @@ Ext.define('Breeze.view.admin.UDCController', {
      * Handle remove button click event
      */
     onCategoryRemove: function () {
-        var vm = this.getViewModel(),
+        var me = this,
+            vm = me.getViewModel(),
             record = vm.get('categoryData');
         this.api.isInUse(record.Category_Id).then((r) => {
             if (r.inUse) {
@@ -130,12 +132,14 @@ Ext.define('Breeze.view.admin.UDCController', {
                         // Perform deletion if user chooses 'yes'
                         if (btn == 'yes') {
                             doDelete();
+                            // me.loadCats();
                         }
                     }
                 );
             } else {
                 // Perform delete without confirmation
                 doDelete();
+                // me.loadCats();
             }
         }).catch((e) => {
             Ext.toast({
@@ -147,6 +151,7 @@ Ext.define('Breeze.view.admin.UDCController', {
 
         // Perform deletion
         var doDelete = () => {
+            // var vm = me.getViewModel();
             this.api.delete(record.Category_Id).then((r) => {
                 // Show success message
                 Ext.toast({
@@ -155,12 +160,13 @@ Ext.define('Breeze.view.admin.UDCController', {
                     timeout: 'info'
                 });
                 // Reload categories
-                me.loadCats();
+                // vm.get('categoriesList').remove(vm.get('categoriesList').queryRecord('Category_Id',rec.Category_Id));
+                me.onRefreshTool();
             }).catch((e) => {
                 // Show error message
                 Ext.toast({
-                    type: r.type,
-                    message: r.message,
+                    type: e.type,
+                    message: e.message,
                     timeout: 'error'
                 });
             });
