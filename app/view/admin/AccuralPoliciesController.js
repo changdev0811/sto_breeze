@@ -537,6 +537,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
     },
 
+    onDeleteShiftSegment: function(grid, info){
+        var store = grid.getStore();
+
+        store.remove([info.record]);
+        store.commitChanges();
+
+        Ext.toast({
+            type: Ext.Toast.INFO,
+            message: 'Shift segment successfully deleted',
+            timeout: 'info'
+        });
+    },
+
 
     // TODO: Implement delete policy handler
     onDeletePolicy: function(comp){

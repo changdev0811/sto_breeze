@@ -230,7 +230,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 tools: [
                                                     {
                                                         iconCls: 'x-fas fa-times',
-                                                        handler: 'onRemoveShiftSegment'
+                                                        handler: 'onDeleteShiftSegment'
                                                     }
                                                 ]
                                             }
