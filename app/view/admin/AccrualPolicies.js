@@ -810,6 +810,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         userCls: 'no-border',
                                     },
                                     defaultType: 'gridcolumn',
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
                                     columns: [
                                         {
                                             itemId: 'from',
@@ -820,7 +823,19 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="svcFrom==0">Hire</tpl>',
                                                 '<tpl if="svcFrom!=0">Year {svcFrom}</tpl>',
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                itemId: 'from',
+                                                xtype: 'numberfield',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateCarryOverFrom'
+                                                },
+                                            }
                                         },
                                         {
                                             itemId: 'through',
@@ -833,7 +848,18 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="svcTo==0">&infin;</tpl>',
                                                 '<tpl if="svcTo!=0">Year {svcTo}</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'numberfield',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateCarryOverFrom'
+                                                },
+                                            }
                                         },
                                         {
                                             itemId: 'over',
@@ -875,7 +901,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '</tpl>'
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        // edit: 'onCarryOverPostEdit'
+                                        beforeedit: 'onCarryOverBeforeEdit'
+                                    }
                                 },
                             ]
                         }

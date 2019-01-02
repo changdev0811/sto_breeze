@@ -444,6 +444,29 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('Validate shift segment');
     },
 
+    validateCarryOverFrom: function(val){
+        console.info('carry over from eval');
+        return true;
+    },
+
+    onCarryOverBeforeEdit: function(location){
+        if(location.column.getItemId() == 'from'){
+            // disable editing from for first carry over rule
+            if(location.recordIndex == 0){
+                return false;
+            }
+        }
+        if(location.column.getItemId() == 'through')
+            //disable editing through if last cary over rule
+            if(location.record.store.getCount() -1 == location.recordIndex){
+                return false;
+            }
+    },
+
+    onCarryOverPostEdit: function(location){
+        console.info('carry over post edit ', )
+    },
+
     // === [Event Listeners] ===
 
     // onShiftTimeChange: function(cmp, newVal, oldVal){
