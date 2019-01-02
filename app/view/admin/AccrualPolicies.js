@@ -44,105 +44,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
         shadow: false
     },
 
-
-    addAccrualRuleDialog: {
-        xtype: 'dialog',
-        title: 'Add Accrual Rule',
-        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
-
-        layout: 'vbox',
-
-        maxHeight: '400pt',
-        scrollable: 'y',
-
-        items: [
-            {
-                xtype: 'textfield',
-                // ui: 'reporting reporting-text reporting-date',
-                // width:'200pt',
-                label: 'New Accrual Rule Name',
-                // labelAlign: 'left',
-                labelWidth: 'auto',
-                itemId: 'ruleName',
-                value: null,
-                required: true
-            }
-        ],
-
-        buttons: [
-            {
-                text: 'Add',
-                ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
-            },
-            {
-                xtype: 'spacer',
-                width: '8pt'
-            },
-            {
-                text: 'Cancel',
-                ui: 'action alt',
-                handler: 'onAddAccrualRuleDialogCancel'
-            }
-        ]
-
-    },
-
-    addAccrualIntervalDialog: {
-        xtype: 'dialog',
-        title: 'Add Accrual Interval',
-        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
-
-        layout: 'vbox',
-
-        maxHeight: '400pt',
-        scrollable: 'y',
-
-        items: [
-            {
-                xtype: 'selectfield',
-                // ui: 'reporting reporting-text reporting-date',
-                // width:'200pt',
-                label: 'Accrual Rule to Add Interval to',
-                // labelAlign: 'left',
-                labelWidth: 'auto',
-                itemId: 'ruleNames',
-                value: null,
-                required: true,
-                autoSelect: true,
-                valueField: 'value',
-                displayField: 'name'
-            }
-        ],
-
-        buttons: [
-            {
-                text: 'Add',
-                ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
-            },
-            {
-                xtype: 'spacer',
-                width: '8pt'
-            },
-            {
-                text: 'Cancel',
-                ui: 'action alt',
-                handler: 'onAddAccrualIntervalDialogCancel'
-            }
-        ]
-
-    },
-
-    addCarryOverRuleDialog: {
-
-    },
-
-    addShiftDialog: {
-
-    },
-
-
     // Body contents
     items: [
 
@@ -166,40 +67,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
                     layout: 'vbox',
                     items: [
-                        // Accrual Policies List
                         {
-                            xtype: 'fieldset',
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel',
                             userCls: 'admin-fieldset no-padding',
+                            title: 'Policies',
                             flex: 1,
                             layout: 'vbox',
-                            items: [
+                            tools: [
                                 {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            html: 'Policies',
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                            handler: 'onCreatePolicyButton'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-minus',
-                                            ui: 'plain wtr-button',
-                                        },
-                                    ]
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'showCreatePolicyDialog'
                                 },
+                                {
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-minus',
+                                }
+                            ],
+                            items: [
+                               
                                 {
                                     xtype: 'breeze-categories-list',
                                     ui: 'admin-shift-grid',
@@ -285,32 +172,23 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             ]
                         },
                         {
-                            xtype: 'fieldset',
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel',
                             userCls: 'admin-fieldset no-padding',
                             flex: 1,
+                            title: {
+                                text: 'Shift Information',
+                                ui: 'admin-fs-panel'
+                            },
+                            tools: [
+                                {
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'showAddShiftSegmentDialog'
+                                }
+                            ],
                             layout: 'vbox',
                             items: [
-                                {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            html: 'Shift Information',
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1,
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                        }
-                                    ]
-                                },
                                 {
                                     xtype: 'grid',
                                     ui: 'admin-grid',
@@ -955,111 +833,244 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     ]
                                 },
                             ]
-                        },
-
-
-
-
-
-                    ]
-                },
-
-            ]
-        },
-        //====[Dialogs]=====
-        /* Create Accrual Policy Dialog */
-        {
-            xtype: 'dialog',
-            ui: 'light-themed-dialog dark-dlg',
-            reference: 'createPolicyDialog',
-            title: 'Create New Accrual Policy',
-            layout: 'vbox',
-            buttons: [
-                {
-                    xtype: 'button',
-                    text: 'Save',
-                    ui: 'confirm alt'
-                },
-                {
-                    xtype: 'spacer', width: '8pt'
-                },
-                {
-                    xtype: 'button',
-                    text: 'Cancel',
-                    ui: 'decline alt',
-                    handler: 'onCreatePolicyDlgCancel'
-                }
-            ],
-            items: [
-                {
-                    xtype: 'breeze-textfield',
-                    itemId: 'policyName',
-                    label: 'Policy Name',
-                    required: true
-                },
-                {
-                    xtype: 'containerfield',
-                    itemId: 'createOption',
-                    layout: 'vbox',
-                    defaults: {
-                        bodyAlign: 'stretch',
-                        xtype: 'radio'
-                    },
-                    items: [
-                        {
-                            name: 'option',
-                            boxLabel: 'Create from scratch using default values',
-                            value: 1, checked: true
-                        },
-                        {
-                            name: 'option',
-                            boxLabel: 'Copy an existing Accrual Policy',
-                            reference: 'createDlgCopyExisting',
-                            value: 2
                         }
                     ]
                 },
-                {
-                    xtype: 'selectfield',
-                    label: 'Copy From',
-                    itemId: 'policySource',
-                    // TODO: Update default copied accrual to match selection before show
-                    value: null,
-                    bind: {
-                        hidden: '{!createDlgCopyExisting.checked}',
-                        store: '{policiesList}'
-                    },
-                    displayField: 'Name',
-                    valueField: 'ID'
-                }
-            ]
-        },
-        /* Add Shift Segment Dialog */
-        {
-            xtype: 'dialog',
-            ui: 'light-themed-dialog',
-            reference: 'addShiftDialog',
-            title: 'Add Shift Segment',
-            layout: 'vbox',
-            buttons: [
-                {
-                    xtype: 'button',
-                    text: 'Save',
-                    ui: 'confirm alt'
-                },
-                {
-                    xtype: 'spacer', width: '8pt'
-                },
-                {
-                    xtype: 'button',
-                    text: 'Cancel',
-                    ui: 'decline alt',
-                    // handler: 'onCreatePolicyDlgCancel'
-                }
-            ],
-            items: [
 
             ]
-        }
-    ]
+        },
+
+    ],
+
+
+    //====[Dialogs]=====
+    /* Create Accrual Policy Dialog */
+    createPolicyDialog: {
+        xtype: 'dialog',
+        ui: 'dark-themed-dialog',
+        reference: 'createPolicyDialog',
+        title: 'Create New Accrual Policy',
+        layout: 'vbox',
+        buttons: [
+            {
+                xtype: 'button',
+                text: 'Save',
+                ui: 'confirm alt'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                xtype: 'button',
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onCreatePolicyDialogCancel'
+            }
+        ],
+        items: [
+            {
+                xtype: 'breeze-textfield',
+                ui: 'dark-themed-dialog-field',
+                itemId: 'policyName',
+                label: 'Policy Name',
+                required: true
+            },
+            {
+                xtype: 'containerfield',
+                itemId: 'createOption',
+                layout: 'vbox',
+                defaults: {
+                    bodyAlign: 'stretch',
+                    xtype: 'radio',
+                    ui: 'dark-themed-dialog-field'
+                },
+                items: [
+                    {
+                        name: 'option',
+                        boxLabel: 'Create from scratch using default values',
+                        value: 1, checked: true
+                    },
+                    {
+                        name: 'option',
+                        boxLabel: 'Copy an existing Accrual Policy',
+                        reference: 'createDlgCopyExisting',
+                        value: 2
+                    }
+                ]
+            },
+            {
+                xtype: 'selectfield',
+                label: 'Copy From',
+                itemId: 'policySource',
+                // TODO: Update default copied accrual to match selection before show
+                value: null,
+                bind: {
+                    hidden: '{!createDlgCopyExisting.checked}',
+                    store: '{policiesList}'
+                },
+                displayField: 'Name',
+                valueField: 'ID'
+            }
+        ]
+    },
+    /* Add Shift Segment Dialog */
+    addShiftSegmentDialog: {
+        xtype: 'dialog',
+        ui: 'dark-themed-dialog',
+        title: 'Add Shift Segment',
+        layout: 'hbox',
+        items: [
+            {
+                xtype: 'combobox',
+                itemId: 'start',
+                label: 'Start',
+                store: 'accrualShiftChoices',
+                displayField: 'time',
+                valueField: 'value',
+                forceSelection: false,
+                required: true,
+                validators: {
+                    type: 'controller',
+                    fn: 'validateShiftTime'
+                }
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                xtype: 'combobox',
+                itemId: 'stop',
+                label: 'Stop',
+                store: 'accrualShiftChoices',
+                displayField: 'time',
+                valueField: 'value',
+                forceSelection: false,
+                required: true,
+                validators: {
+                    type: 'controller',
+                    fn: 'validateShiftTime'
+                }
+            }
+        ],
+        buttons: [
+            {
+                xtype: 'button',
+                text: 'Save',
+                ui: 'confirm alt',
+                handler: 'onAddShiftSegmentDialogSave'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                xtype: 'button',
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onDialogCancel',
+                data: {
+                    // cleanup function after closing dialog
+                    cancelableAction: 'onAddShiftSegmentDialogCancel'
+                }
+            }
+        ]
+    },
+
+    addAccrualRuleDialog: {
+        xtype: 'dialog',
+        title: 'Add Accrual Rule',
+        ui: 'dark-themed-dialog',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'textfield',
+                ui: 'dark-themed-dialog-field',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'New Accrual Rule Name',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'ruleName',
+                value: null,
+                required: true
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                handler: 'onAddAccrualRule'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onAddAccrualRuleDialogCancel'
+            }
+        ]
+
+    },
+
+    addAccrualIntervalDialog: {
+        xtype: 'dialog',
+        title: 'Add Accrual Interval',
+        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Accrual Rule to Add Interval to',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'ruleNames',
+                value: null,
+                required: true,
+                autoSelect: true,
+                valueField: 'value',
+                displayField: 'name'
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                handler: 'onAddAccrualRule'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onAddAccrualIntervalDialogCancel'
+            }
+        ]
+
+    },
+
+    addCarryOverRuleDialog: {
+
+    },
+
+    addShiftDialog: {
+
+    },
 });

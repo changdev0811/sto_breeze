@@ -48,6 +48,14 @@
 	$ui: 'employeeinfo-notes-button'
 );
 
+@include breeze-dialog-text-size-ui(
+	$base-ui: 'employeeinfo-dialog',
+	$field-label-font-size: map-get($root-font-sizes, 'base'),
+	$body-font-size: map-get($root-font-sizes, 'detail')
+);
+
+/* above is equivalent to these two:
+
 @include field-ui(
 	$ui: 'employeeinfo-dialog-field',
 	$label-font-size: map-get($root-font-sizes, 'base')
@@ -57,3 +65,4 @@
 	$ui: 'employeeinfo-dialog',
 	$body-font-size: map-get($root-font-sizes, 'detail')
 );
+*/

@@ -8,9 +8,22 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     extend: 'Breeze.controller.Base',
     alias: 'controller.admin.accrualpolicies',
 
-    stores: [
-        // 'Breeze.store.category.List'
+    requires: [
+        'Breeze.api.admin.AccrualPolicies',
+        'Breeze.mixin.DialogCancelable',
+        'Breeze.mixin.CommonToolable'
     ],
+
+    mixins: {
+        commonToolable: 'Breeze.mixin.CommonToolable',
+        dialogCancelable: 'Breeze.mixin.DialogCancelable'
+    },
+
+    config: {
+        // Make common tool icons available
+        injectTools: true
+    },
+
 
     /**
      * Called when the view is created
@@ -81,6 +94,80 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     //===[Dialog display and event handlers]===
+
+    //--[Create Policy]--
+
+    showCreatePolicyDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.createPolicyDialog;
+        
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.createPolicyDialog);
+            this.createPolicyDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+    /**
+     * Handle 'cancel' button click event for 'Create Policy' dialog
+     * @param {Object} comp Button firing event
+     */
+    onCreatePolicyDialogCancel: function(comp){
+        var dlg = comp.getParent().getParent();
+        dlg.hide();
+        dlg.getComponent('policyName').clearValue();
+    },
+
+    //--[Add Shift]--
+
+    showAddShiftSegmentDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.addShiftSegmentDialog;
+
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addShiftSegmentDialog);
+            this.addShiftSegmentDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+    /**
+     * Method called by dialog cancelable mixin's onDialogCancel method
+     * for shift segment dialog cancel button; resets field values
+     * @param {Object} dlg dialog reference
+     */
+    onAddShiftSegmentDialogCancel: function(dlg){
+        dlg.getComponent('start').clearValue();
+        dlg.getComponent('stop').clearValue();
+        dlg.setError(null);
+    },
+
+    onAddShiftSegmentDialogSave: function(btn){
+        let dlg = btn.getParent().getParent(),
+            start = dlg.getComponent('start'),
+            stop = dlg.getComponent('stop');
+        start.validate();
+        stop.validate();
+        if(start.isValid() && stop.isValid()){
+            // both fields are valid
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Please fix field errors and try again.',
+                timeout: 'warn'
+            });
+        }
+    },
+
+    //--[Add Accrual Rule]--
 
     /**
      * Display the 'add accrual rule' dialog
@@ -164,6 +251,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         this.addAccrualRuleDialog.hide();
     },
 
+
+    //--[Add Accrual Interval Dialog]--
+
     /**
      * Display the 'add accrual interval' dialog
      */
@@ -213,7 +303,32 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
 
+    // === [Validators] ===
+
+    /**
+     * Checks validity of shift info time value
+     * @param {String} value Time string
+     * @return {Boolean} True if valid, false otherwise
+     */
+    validateShiftTime: function(value){
+        if(typeof value == 'number'){
+            // If value is a number, its from the dropdown and is thus valid
+            return true;
+        }
+        return (BreezeTime.isValidFormat(value))?
+            true : 'Expected format: Hour:Minute(AM/PM';
+    },
+
     // === [Event Listeners] ===
+
+    onShiftTimeChange: function(cmp, newVal, oldVal){
+        if(cmp.validate()){
+            // valid
+            console.info('Valid time')
+        } else {
+
+        }
+    },
 
     /**
      * Handle select event from policy list
@@ -297,22 +412,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
     },
 
-
-    // TODO: Implement add policy handler
-
-    onCreatePolicyButton: function(){
-        this.lookup('createPolicyDialog').show();
-    },
-
-    /**
-     * Handle 'cancel' button click event for 'Create Policy' dialog
-     * @param {Object} comp Button firing event
-     */
-    onCreatePolicyDlgCancel: function(comp){
-        var dlg = comp.getParent().getParent();
-        dlg.hide();
-        dlg.getComponent('policyName').clearValue();
-    },
 
     // TODO: Implement delete policy handler
     onDeletePolicy: function(comp){
