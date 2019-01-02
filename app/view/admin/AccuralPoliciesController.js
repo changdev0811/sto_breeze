@@ -550,6 +550,33 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });
     },
 
+    onShiftTimeChange: function(cmp, newVal, oldVal){
+        cmp.validate();
+        if(cmp.isValid() && BreezeTime.resolve(newVal) !== null){
+            cmp.setError(null);
+            var record = cmp.getParent().ownerCmp.getRecord(),
+                start = record.get('StartTime'),
+                stop = record.get('StopTime');
+            if(cmp.getItemId() == 'start'){
+                start = newVal;
+            } else {
+                stop = newVal;
+            }
+            var ok = this.validateShiftSegment(start, stop, record, false);
+            if(ok){
+                var staT = BreezeTime.resolve(start),
+                    stoT = BreezeTime.resolve(stop);
+                record.set({
+                    StartTime: staT.asTime(), StartMin: staT.asMinutes(),
+                    StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
+                }, {commit: true});
+            }
+            console.info('valid');
+            cmp.getParent().cancelEdit();
+        }
+        console.info('shift change');
+    },
+
 
     // TODO: Implement delete policy handler
     onDeletePolicy: function(comp){

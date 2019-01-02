@@ -8,6 +8,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.accrualpolicies',
 
+    requires: [
+        'Ext.grid.plugin.CellEditing'
+    ],
 
     config: {
         crumbTitle: 'Accrual Policies'
@@ -199,6 +202,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     bind: {
                                         store: '{policySegments}'
                                     },
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
                                     defaults: {
                                         xtype: 'gridcolumn',
                                         menuDisabled: true,
@@ -210,7 +216,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: '{StartTime}',
                                             text: 'Start',
                                             dataIndex: 'StartSegment',
-                                            flex: 1
+                                            flex: 1,
+                                            editable: true,
+                                            editor: { 
+                                                xtype: 'combobox',
+                                                itemId: 'start',
+                                                label: 'Start',
+                                                store: 'accrualShiftChoices',
+                                                displayField: 'time',
+                                                valueField: 'value',
+                                                forceSelection: false,
+                                                queryMode: 'local',
+                                                required: true,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateShiftTime'
+                                                },
+                                                listeners: {
+                                                    change: 'onShiftTimeChange'
+                                                }
+                                            }
                                         },
                                         // {
                                         //     xtype: 'templatecolumn',
@@ -233,6 +258,25 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         handler: 'onDeleteShiftSegment'
                                                     }
                                                 ]
+                                            },
+                                            editable: true,
+                                            editor: { 
+                                                xtype: 'combobox',
+                                                itemId: 'stop',
+                                                label: 'Stop',
+                                                store: 'accrualShiftChoices',
+                                                displayField: 'time',
+                                                valueField: 'value',
+                                                forceSelection: false,
+                                                queryMode: 'local',
+                                                required: true,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateShiftTime'
+                                                },
+                                                listeners: {
+                                                    change: 'onShiftTimeChange'
+                                                }
                                             }
                                         }
                                     ]
