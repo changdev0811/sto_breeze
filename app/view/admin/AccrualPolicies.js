@@ -192,6 +192,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'grid',
                                     ui: 'admin-grid',
+                                    reference: 'shiftGrid',
                                     height: '100%',
                                     sortable: false, columnResize: false,
                                     columnMenu: false, hideHeaders: false,
@@ -928,6 +929,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 displayField: 'time',
                 valueField: 'value',
                 forceSelection: false,
+                queryMode: 'local',
                 required: true,
                 validators: {
                     type: 'controller',
@@ -946,6 +948,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 displayField: 'time',
                 valueField: 'value',
                 forceSelection: false,
+                queryMode: 'local',
                 required: true,
                 validators: {
                     type: 'controller',
