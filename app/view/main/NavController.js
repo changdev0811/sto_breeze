@@ -463,6 +463,17 @@ Ext.define('Breeze.view.main.NavController', {
      * Handle Personal Year At a Glance Route
      */
     onPersonalYaagRoute: function(){
+        var vm = this.getViewModel();
+        var emp = vm.get('userId');
+        this.changeContent(
+            Ext.create('Breeze.view.employee.YearAtAGlance', {
+                data: { employee: emp }
+            })
+        );
+    },
+
+    /*
+    onPersonalYaagRoute: function(){
         var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
         var me = this;
         yaag.process().then(
@@ -497,6 +508,7 @@ Ext.define('Breeze.view.main.NavController', {
             }
         )
     },
+    */
 
     /**
      * Handle personal Work Time Records route

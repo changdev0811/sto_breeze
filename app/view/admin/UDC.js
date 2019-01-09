@@ -392,12 +392,18 @@ Ext.define('Breeze.view.admin.UDC', {
                                             bodyAlign: 'stretch',
                                             bind: '{selectedCat.isLeaveRequest}'
                                         },
-                                        {
-                                            xtype:'spacer',
-                                            width:'20pt',
-                                        },
-
-
+                                    ]
+                                },
+                            ]
+                        },
+                        {
+                            xtype:'fieldset',
+                            userCls:'admin-fieldset no-side-margin no-padding',
+                            layout: 'hbox',
+                            defaults:{
+                                userCls:'admin-fieldset no-border no-padding',
+                            },
+                            items:[        
 
                                         {
                                             xtype: 'button',
@@ -434,11 +440,11 @@ Ext.define('Breeze.view.admin.UDC', {
 
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'5pt',
+                                            xtype: 'component',
+                                            userCls: 'employeeinfo-label admin-label no-margin no-padding',
+                                            html: '<span style="font-size:12pt; line-height:14pt;">Choose a color<span>'
                                         },
-                                    ]
-                                },
+                              
                             ]
                         },
                     ]

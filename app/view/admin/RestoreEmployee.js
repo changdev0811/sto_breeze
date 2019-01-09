@@ -58,6 +58,7 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
                     ui: 'admin admin-text',
                     userCls:'admin-fieldset no-border',
                     reference:'deletedEmployeesSelectField',
+                    maxWidth:'350pt',
                     labelAlign: 'left',
                     labelWidth: 'auto',
                     placeholder: 'Select employee to restore',
