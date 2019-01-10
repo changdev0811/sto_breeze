@@ -6,14 +6,14 @@
  * @alias controller.view.dashboard.personal
  */
 Ext.define('Breeze.view.dashboard.PersonalController', {
-    extend: 'Ext.app.ViewController',
+    extend: 'Breeze.controller.Base',
     alias: 'controller.dashboard.personal',
     
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
     ],
 
-    onInit: function(component, eOpts){
+    onInit: function(comp, eOpts){
         this.apiClass = Ext.create('Breeze.api.Employee');
         console.info('Personal dashboard controller init');
         this.loadFyi();
@@ -45,6 +45,12 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
         });  
 
 
+        //        
+        console.info('Calendar controller initialized');
+        this.getViewModel().set('employeeId', comp.getData().employee);
+        this.companyApi = Ext.create('Breeze.api.Company');
+        this.loadCategories();
+
     },
 
     loadFyi: function(){
@@ -71,6 +77,30 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
             }
         ).catch(function(err){
             console.warn('Error getting employee info for dashboard', err);
+        });
+    },
+
+
+
+    loadCategories: function(){
+        var me = this;
+      
+        me.companyApi.category.loadCompactListStore((success, id, store) => {
+            if(!success){
+                // Failed to load
+                console.warn('Failed to load Categories store');
+            } else {
+                // Succeeded!
+                var addedToModel = me.addLoadedStoreToViewModel(store, 'categories');
+                if(addedToModel){
+                    // Successfully added store to view model
+                    console.info('Categories loaded successfully into View Model');
+                    //me.loadCalendar();
+                } else {
+                    // Unable to add to view model
+                    console.warn('Failed to add categories to View Model')
+                }
+            }
         });
     },
 

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.dashboard.personal.Calendar', {
     alias: 'widget.dashboard.personal.calendar',
     userCls:'employee-calendar-dashboard',
     
-            layout: 'vbox',
+    layout: 'vbox',
 
 
     title: {
@@ -138,7 +138,7 @@ Ext.define('Breeze.view.dashboard.personal.Calendar', {
                     inline: true,
                     userCls:'legend' ,
                     /*flex:1,*/
-                    height:'45pt',
+                    height:'auto',
                     padding: '8pt 8pt 0pt 8pt',
                     layout: {
                         type: 'hbox',

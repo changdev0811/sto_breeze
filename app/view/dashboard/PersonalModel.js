@@ -6,6 +6,7 @@ Ext.define('Breeze.view.dashboard.PersonalModel', {
         employeeInfo: {},
         motd: null,
         hideMotd:false,
+        employeeId:null,
     },
 
     stores: {

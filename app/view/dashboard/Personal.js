@@ -14,7 +14,7 @@ Ext.define('Breeze.view.dashboard.Personal', {
 
     requires: [
         'Breeze.view.dashboard.PersonalController',
-        'Breeze.view.dashboard.PersonalModel'
+        'Breeze.view.dashboard.PersonalModel',
     ],
 
     controller: 'dashboard.personal',
@@ -42,17 +42,10 @@ Ext.define('Breeze.view.dashboard.Personal', {
             flex: 1,
             layout: 'hbox',
             items: [
-
-
                 {
                     xtype: 'container',
                     flex: 1,
                     layout: 'vbox',
-
-
-
-
-
                     items: [
                         {
                             xtype: 'dashboard.personal.motd',
