@@ -1,0 +1,35 @@
+/**
+ * Breeze.view.dashboard.personal.Fyi Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the Breeze.view.dashboard.personal.Fyi view or its children
+ */
+
+
+@include panel-ui(
+    $ui: 'employee-motd-dashboard',
+    $background-color: map-get($admin-colors,'base'),
+    $header-background-color: map-get($admin-colors,'base'),
+    $body-background-color: map-get($admin-colors,'base'),
+);
+
+@include paneltitle-ui(
+    $ui: 'employee-motd-dashboard',
+    $font-size: $panel-title-font-size
+);
+
+.employee-motd-dashboard {
+    // height:auto; 
+    margin:6pt 3pt 0pt 0pt;
+    padding:0pt 8pt 0pt 0pt;
+}
+
+.headerCursor {
+    cursor:pointer;
+}
+
+.employee-motd-label{
+    font-size: 14pt;
+    line-height: 18pt;
+}
+
+ 

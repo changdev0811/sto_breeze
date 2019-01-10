@@ -31,6 +31,20 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
         });
 
 
+        // Load MOTD
+        this.motdApi = Ext.create('Breeze.api.admin.MOTD');
+        var vm = this.getViewModel();
+        this.motdApi.get().then((r)=>{
+
+            vm.set('motd', r);
+            let hide = (r == null || r == "" ) ? true : false;
+            vm.set('hideMotd', hide);
+
+        }).catch((err)=>{
+            // Shouldn't be reachable
+        });  
+
+
     },
 
     loadFyi: function(){

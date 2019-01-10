@@ -42,10 +42,32 @@ Ext.define('Breeze.view.dashboard.Personal', {
             flex: 1,
             layout: 'hbox',
             items: [
+
+
                 {
-                    xtype: 'dashboard.personal.fyi',
-                    reference:'fyiDash',
-                    flex: 1
+                    xtype: 'container',
+                    flex: 1,
+                    layout: 'vbox',
+
+
+
+
+
+                    items: [
+                        {
+                            xtype: 'dashboard.personal.motd',
+                            reference:'motdDash',                    
+                            hidden: true,
+                            bind: {
+                                hidden: '{hideMotd}'
+                            },
+                        },
+                        {
+                            xtype: 'dashboard.personal.fyi',
+                            reference:'fyiDash',
+                            flex: 1
+                        },
+                    ]
                 },
 
                 {
