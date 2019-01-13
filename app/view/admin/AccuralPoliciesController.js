@@ -450,10 +450,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     onCarryOverBeforeEdit: function(location){
+        var record = location.record,
+            store = record.store;
         if(location.column.getItemId() == 'from'){
             // disable editing from for first carry over rule
             if(location.recordIndex == 0){
                 return false;
+
+            }
+            if(location.recordIndex == -1){
+                return true;
+            } else if(BreezeTime.resolve(record.get('svcFrom')) !== 0 &&
+            BreezeTime.resolve(record.get('svcFrom') > record.get('svcTo'))){
+                console.warn('Bigger than start');
             }
         }
         if(location.column.getItemId() == 'through')
@@ -465,6 +474,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     onCarryOverPostEdit: function(location){
         console.info('carry over post edit ', )
+
     },
 
     // === [Event Listeners] ===
