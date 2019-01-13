@@ -31,7 +31,7 @@ Ext.define('Breeze.view.admin.UDC', {
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
     buttons: {
-        save: { text: 'Save', handler: 'onSavePolicy', ui: 'confirm alt', style: 'width:200pt' },
+        save: { text: 'Save', handler: 'onSave', ui: 'confirm alt', style: 'width:200pt' },
     },
 
     // Adjust action button toolbar spacing and appearance with UI and shadow
@@ -50,53 +50,55 @@ Ext.define('Breeze.view.admin.UDC', {
             flex: 1,
             layout: 'hbox',
             // +++ Allow h scroll when panel is too small +++
-            scrollable:true,
+            scrollable: true,
             items: [
                 // Column 1
                 {
                     xtype: 'fieldset',
-                    userCls:'admin-fieldset no-padding',
+                    userCls: 'admin-fieldset no-padding',
                     flex: 1,
                     // +++ fixed width +++
-                    minWidth:'150pt',
-                    maxWidth:'200pt',
-                    minHeight:'420pt',
+                    minWidth: '150pt',
+                    maxWidth: '200pt',
+                    minHeight: '420pt',
 
 
                     layout: 'vbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'toolbar',
-                            ui:'admin-tree',
+                            ui: 'admin-tree',
                             shadow: false,
-                            items:[
-                                { 
-                                    xtype: 'component', 
+                            items: [
+                                {
+                                    xtype: 'component',
                                     html: 'Categories',
-                                    userCls:'admin-title-toolbar', 
+                                    userCls: 'admin-title-toolbar',
                                 },
                                 {
-                                    xtype:'spacer',
-                                    flex:1,
-                                },
-                                {
-                                    xtype: 'button',
-                                    iconCls:'x-fas fa-plus',
-                                    ui: 'plain wtr-button',                   
+                                    xtype: 'spacer',
+                                    flex: 1,
                                 },
                                 {
                                     xtype: 'button',
-                                    iconCls:'x-fas fa-minus',
-                                    ui: 'plain wtr-button',                   
+                                    iconCls: 'x-fas fa-plus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'onCategoryAdd'
+                                },
+                                {
+                                    xtype: 'button',
+                                    iconCls: 'x-fas fa-minus',
+                                    ui: 'plain wtr-button',
+                                    handler: 'onCategoryRemove'
                                 },
                             ]
                         },
                         {
-                            xtype:'container',
-                            flex:1,
-                            layout:'vbox',
-                            scrollable:'y',
-                            items:[
+                            xtype: 'container',
+                            flex: 1,
+                            layout: 'vbox',
+                            scrollable: 'y',
+                            items: [
                                 {
                                     xtype: 'breeze-categories-list',
                                     ui: 'admin-shift-grid',
@@ -115,7 +117,7 @@ Ext.define('Breeze.view.admin.UDC', {
                                         select: 'onCatSelect'
                                     },
                                     viewModel: true
-                                } 
+                                }
                             ]
                         }
                     ]
@@ -124,62 +126,62 @@ Ext.define('Breeze.view.admin.UDC', {
                 {
                     xtype: 'panel',
                     ui: 'admin-sub',
-                    userCls:'admin-fieldset no-border',
+                    userCls: 'admin-fieldset no-border',
                     flex: 2,
 
                     // +++ fixed width +++
-                    minWidth:'400pt',
-                    maxWidth:'400pt',
+                    minWidth: '400pt',
+                    maxWidth: '400pt',
 
-                    minHeight:'420pt',
+                    minHeight: '420pt',
 
                     layout: 'vbox',
 
-                    items:[
+                    items: [
                         {
-                            xtype:'fieldset',
+                            xtype: 'fieldset',
                             ui: 'admin admin-text',
-                            userCls:'admin-fieldset no-side-margin',
-                            layout:'vbox',
-                            items:[
+                            userCls: 'admin-fieldset no-side-margin',
+                            layout: 'vbox',
+                            items: [
                                 {
                                     xtype: 'breeze-textfield',
                                     label: 'Category Name',
-                                    //name: 'project_name',
                                     ui: 'admin admin-text',
-                                    userCls:'admin-fieldset no-border no-margin',
+                                    reference: 'categoryNameField',
+                                    userCls: 'admin-fieldset no-border no-margin',
                                     bind: {
-                                        value:'{selectedCat.Category_Name}'
+                                        value: '{categoryData.Category_Name}'
                                     }
                                 },
                                 {
-                                    xtype:'container',
-                                    layout:'hbox',
-                                    items:[
+                                    xtype: 'container',
+                                    layout: 'hbox',
+                                    items: [
                                         {
                                             xtype: 'breeze-textfield',
                                             label: 'Abbreviation',
-                                            flex:1,
+                                            flex: 1,
                                             //name: 'project_name',
                                             ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
+                                            userCls: 'admin-fieldset no-border no-margin',
                                             bind: {
-                                                value:'{selectedCat.Category_Abbreviated}'
+                                                value: '{categoryData.Category_Abbreviated}'
                                             }
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'10pt',
+                                            xtype: 'spacer',
+                                            width: '10pt',
                                         },
                                         {
                                             xtype: 'breeze-textfield',
                                             label: 'Paycode',
-                                            flex:1,
+                                            flex: 1,
                                             //name: 'project_name',
                                             ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
+                                            userCls: 'admin-fieldset no-border no-margin',
                                             bind: {
-                                                value:'{selectedCat.Category_Paycode}'
+                                                value: '{categoryData.Category_Paycode}'
                                             }
                                         },
                                     ]
@@ -187,30 +189,30 @@ Ext.define('Breeze.view.admin.UDC', {
                             ]
                         },
                         {
-                            xtype:'fieldset',
-                            userCls:'admin-fieldset no-side-margin no-padding',
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-side-margin no-padding',
                             layout: 'vbox',
-                            defaults:{
-                                userCls:'admin-fieldset no-border no-padding',
+                            defaults: {
+                                userCls: 'admin-fieldset no-border no-padding',
                             },
-                            items:[          
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
-                                    userCls:'admin-fieldset no-border no-padding no-margin',
+                                    ui: 'admin-tree',
+                                    userCls: 'admin-fieldset no-border no-padding no-margin',
                                     shadow: false,
-                                    items:[
+                                    items: [
                                         {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            userCls:'tool-check-box',
-                                            reference:'allowedCategoreCheck',
+                                            xtype: 'checkbox',
+                                            ui: 'admin',
+                                            userCls: 'tool-check-box',
+                                            reference: 'allowedCategoreCheck',
                                             name: 'isWorktime',
                                             id: 'radio1',
                                             value: '20',
                                             boxLabel: 'Allowed Category',
                                             bodyAlign: 'stretch',
-                                            bind: '{selectedCat.isAllowed}'
+                                            bind: '{categoryData.isAllowed}'
                                         },
                                     ]
                                 },
@@ -218,11 +220,11 @@ Ext.define('Breeze.view.admin.UDC', {
                                     xtype: 'fieldset',
                                     name: 'category_waiting_period_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset no-border',
+                                    userCls: 'admin-fieldset no-border',
                                     layout: 'hbox',
-                                    hidden:true,
-                                    bind:{
-                                        hidden:'{!allowedCategoreCheck.checked}',
+                                    hidden: true,
+                                    bind: {
+                                        hidden: '{!allowedCategoreCheck.checked}',
                                     },
                                     defaults: {
                                         ui: 'admin admin-text'
@@ -231,31 +233,31 @@ Ext.define('Breeze.view.admin.UDC', {
                                         {
                                             xtype: 'spinnerfield',
                                             ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
+                                            userCls: 'admin-fieldset no-border no-margin',
                                             //name: 'numConflictLimit',
                                             allowDecimals: false,
                                             minValue: 0,
-                                            labelAlign:'left',
-                                            labelWidth:'auto',
-                                            label:'Leave Requested Minimum Use',
+                                            labelAlign: 'left',
+                                            labelWidth: 'auto',
+                                            label: 'Leave Requested Minimum Use',
                                             bind: {
-                                                value:'{selectedCat.minUse_Amount}'
+                                                value: '{categoryData.minUse_Amount}'
                                             }
 
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'10pt',
+                                            xtype: 'spacer',
+                                            width: '10pt',
                                         },
                                         {
                                             xtype: 'selectfield',
                                             ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
+                                            userCls: 'admin-fieldset no-border no-margin',
                                             flex: 2,
                                             name: 'minUse_Unit',
                                             store: 'MinimumUseUnits',
                                             bind: {
-                                                value:'{selectedCat.minUse_Unit}'
+                                                value: '{categoryData.minUse_Unit}'
                                             },
 
 
@@ -263,8 +265,8 @@ Ext.define('Breeze.view.admin.UDC', {
                                             displayField: 'Description'
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'5pt',
+                                            xtype: 'spacer',
+                                            width: '5pt',
                                         },
                                     ]
                                 },
@@ -272,11 +274,11 @@ Ext.define('Breeze.view.admin.UDC', {
                                     xtype: 'fieldset',
                                     name: 'category_waiting_period_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset no-border',
+                                    userCls: 'admin-fieldset no-border',
                                     layout: 'hbox',
-                                    hidden:true,
-                                    bind:{
-                                        hidden:'{!allowedCategoreCheck.checked}',
+                                    hidden: true,
+                                    bind: {
+                                        hidden: '{!allowedCategoreCheck.checked}',
                                     },
                                     defaults: {
                                         ui: 'admin admin-text'
@@ -285,15 +287,15 @@ Ext.define('Breeze.view.admin.UDC', {
                                         {
                                             xtype: 'spinnerfield',
                                             ui: 'admin admin-text',
-                                            userCls:'admin-fieldset no-border no-margin',
+                                            userCls: 'admin-fieldset no-border no-margin',
                                             //name: 'numConflictLimit',
                                             allowDecimals: false,
                                             minValue: 0,
-                                            labelAlign:'left',
-                                            labelWidth:'auto',
-                                            label:'Days Before Use',
+                                            labelAlign: 'left',
+                                            labelWidth: 'auto',
+                                            label: 'Days Before Use',
                                             bind: {
-                                                value:'{selectedCat.minUse_waitDays}'
+                                                value: '{categoryData.minUse_waitDays}'
                                             }
                                         },
                                     ]
@@ -301,132 +303,132 @@ Ext.define('Breeze.view.admin.UDC', {
                             ]
                         },
                         {
-                            xtype:'fieldset',
-                            userCls:'admin-fieldset no-side-margin no-padding',
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-side-margin no-padding',
                             layout: 'vbox',
-                            defaults:{
-                                userCls:'admin-fieldset no-border no-padding',
+                            defaults: {
+                                userCls: 'admin-fieldset no-border no-padding',
                             },
-                            items:[
+                            items: [
                                 {
                                     xtype: 'toolbar',
-                                    ui:'admin-tree',
-                                    userCls:'admin-fieldset no-border no-padding no-margin',
+                                    ui: 'admin-tree',
+                                    userCls: 'admin-fieldset no-border no-padding no-margin',
                                     shadow: false,
-                                    items:[
+                                    items: [
                                         {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            userCls:'tool-check-box',
-                                            reference:'PaidCategoryCheck',
+                                            xtype: 'checkbox',
+                                            ui: 'admin',
+                                            userCls: 'tool-check-box',
+                                            reference: 'PaidCategoryCheck',
                                             name: 'isWorktime',
                                             id: 'radio2',
                                             value: '20',
                                             boxLabel: 'Paid Category',
                                             bodyAlign: 'stretch',
-                                            bind: '{selectedCat.isPaid}'
+                                            bind: '{categoryData.isPaid}'
                                         },
                                     ]
                                 },
                                 {
-                                    xtype:'checkbox',
-                                    ui:'admin',
+                                    xtype: 'checkbox',
+                                    ui: 'admin',
                                     name: 'isWorktime',
                                     id: 'radio3',
                                     value: '20',
                                     boxLabel: 'Count as OverTime',
                                     bodyAlign: 'stretch',
-                                    hidden:true,
-                                    bind:{
-                                        checked:'{selectedCat.isOverTime}',
-                                        hidden:'{!PaidCategoryCheck.checked}',
+                                    hidden: true,
+                                    bind: {
+                                        checked: '{categoryData.isOverTime}',
+                                        hidden: '{!PaidCategoryCheck.checked}',
                                     },
 
 
                                 },
                                 {
-                                    xtype:'checkbox',
-                                    ui:'admin',
+                                    xtype: 'checkbox',
+                                    ui: 'admin',
                                     name: 'isWorktime',
                                     id: 'radio4',
                                     value: '20',
                                     boxLabel: 'Count Toward Accruals',
                                     bodyAlign: 'stretch',
-                                    hidden:true,
-                                    bind:{
-                                        checked:'{selectedCat.isAccrued}',
-                                        hidden:'{!PaidCategoryCheck.checked}',
+                                    hidden: true,
+                                    bind: {
+                                        checked: '{categoryData.isAccrued}',
+                                        hidden: '{!PaidCategoryCheck.checked}',
                                     },
                                 },
                             ]
                         },
                         {
-                            xtype:'fieldset',
-                            userCls:'admin-fieldset no-side-margin no-padding',
+                            xtype: 'fieldset',
+                            userCls: 'admin-fieldset no-side-margin no-padding',
                             layout: 'vbox',
-                            defaults:{
-                                userCls:'admin-fieldset no-border no-padding',
+                            defaults: {
+                                userCls: 'admin-fieldset no-border no-padding',
                             },
-                            items:[ 
+                            items: [
                                 {
-                                    xtype:'spacer',
-                                    width:'8pt',
-                                },         
+                                    xtype: 'spacer',
+                                    width: '8pt',
+                                },
                                 {
                                     xtype: 'fieldset',
                                     name: 'category_waiting_period_data',
                                     ui: 'admin-base',
-                                    userCls:'admin-fieldset no-border',
+                                    userCls: 'admin-fieldset no-border',
                                     layout: 'hbox',
                                     defaults: {
                                         ui: 'admin admin-text'
                                     },
                                     items: [
                                         {
-                                            xtype:'checkbox',
-                                            ui:'admin',
+                                            xtype: 'checkbox',
+                                            ui: 'admin',
                                             name: 'isWorktime',
                                             id: 'radio5',
                                             value: '20',
                                             boxLabel: 'Include in Leave Request',
                                             bodyAlign: 'stretch',
-                                            bind: '{selectedCat.isLeaveRequest}'
+                                            bind: '{categoryData.isLeaveRequest}'
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'20pt',
+                                            xtype: 'spacer',
+                                            width: '20pt',
                                         },
 
 
 
                                         {
                                             xtype: 'button',
-                                            ui:'plain',
-                                            userCls:'col-btn',
+                                            ui: 'plain',
+                                            userCls: 'col-btn',
                                             reference: 'colorBtn',
-                                            width:'24pt',
-                                            height:'24pt',
+                                            width: '24pt',
+                                            height: '24pt',
                                             menuAlign: 'tr',
                                             arrow: false,
-                                            bind:{
+                                            bind: {
                                                 // +++ need to bind to current category's color +++
-                                                style:'background-color:{selectedCat.HexColor};',
+                                                style: 'background-color:{categoryData.HexColor};',
                                             },
                                             menu: {
                                                 xtype: 'menu',
-                                                userCls:'col-menu',
+                                                userCls: 'col-menu',
                                                 items: [
                                                     {
-                                                        xtype:'dataview',
-                                                        userCls:'col-sel',
-                                                        scrollable:false,
+                                                        xtype: 'dataview',
+                                                        userCls: 'col-sel',
+                                                        scrollable: false,
                                                         inline: true,
-                                                        bind:{
-                                                            store:'{colors}',
+                                                        bind: {
+                                                            store: '{colors}',
                                                         },
                                                         itemTpl: '<div class="col-sq" style="background-color:{hex};">',
-                                                        listeners:{
-                                                            select:'onColorSelect'
+                                                        listeners: {
+                                                            select: 'onColorSelect'
                                                         }
                                                     },
                                                 ]
@@ -434,8 +436,8 @@ Ext.define('Breeze.view.admin.UDC', {
 
                                         },
                                         {
-                                            xtype:'spacer',
-                                            width:'5pt',
+                                            xtype: 'spacer',
+                                            width: '5pt',
                                         },
                                     ]
                                 },

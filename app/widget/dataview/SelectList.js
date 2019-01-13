@@ -23,7 +23,13 @@ Ext.define('Breeze.widget.dataview.SelectList', {
         selectMode: 'multi',
         // Template for display
         template: null, // {radioValue, itemData, tpl},
-        preventDeselect: false
+        preventDeselect: false,
+        groupHeader: null,
+        groupFooter: null,
+        pinHeaders: false,
+        pinFooters: false,
+        pinnedHeader: null,
+        pinnedFooter: null
     },
 
     fieldIds: {
@@ -89,8 +95,8 @@ Ext.define('Breeze.widget.dataview.SelectList', {
      * @param {Array|Object} records One or more records indicating selected
      *  item
      */
-    onItemSelect: function (records) {
-        // console.info('item select');
+    onItemSelect: function (records, suppressEvent) {
+        // console.info('item select', arguments);
         var record = (Array.isArray(records)) ? records[0] : records,
             item = this.getItem(record);
         switch (this.getFieldMode()) {
@@ -109,6 +115,14 @@ Ext.define('Breeze.widget.dataview.SelectList', {
         }
 
         this.callParent(arguments);
+        // var me = this;
+
+        // if (suppressEvent) {
+        //     me.setItemSelection(record, true);
+        // } else {
+        //     me.fireEventedAction('select', [me, record], 'setItemSelection',
+        //         me, [record, true]);
+        // }
     },
 
     /**
@@ -153,6 +167,7 @@ Ext.define('Breeze.widget.dataview.SelectList', {
         this.callParent(arguments);
     },
 
+
     privates: {
         hookSelectEvent: function () {
             var me = this,
@@ -167,7 +182,11 @@ Ext.define('Breeze.widget.dataview.SelectList', {
                 // Allow multiple selections when using checks
                 this.getSelectable().setMode('multi');
             }
-        }
+        },
+        changeHeaderFooter: function (item, recordIndex, def, enabled) {
+        },
+        changeItemGrouping: function (options) {
+        },
     }
 
 

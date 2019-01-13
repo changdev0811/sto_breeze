@@ -25,6 +25,9 @@ Ext.define('Breeze.controller.Base', {
             storeNamespace, 
             (typeof options.createOpts == 'undefined')? {} : options.createOpts
         );
+        // if(vm.getStore(storeName) !== null){
+        //     vm.get(storeName).destroy();
+        // }
         vm.setStores(stores);
         if(options.load){
             if(options.loadOpts){

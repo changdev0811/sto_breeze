@@ -15,7 +15,7 @@ Ext.define('Breeze.Application', {
         'Breeze.view.main.employees.Panel',
         'Breeze.view.reporting.Selector',
         'Breeze.controller.Base',
-        'Breeze.viewModel.Base'
+        'Breeze.viewmodel.Base'
     ],
 
     stores: [

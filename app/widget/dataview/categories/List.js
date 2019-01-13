@@ -20,7 +20,9 @@ Ext.define('Breeze.widget.dataview.categories.List', {
             or anything else for none
         */
         fieldMode: 'radio',
-        maximumSelectionCount: 1
+        maximumSelectionCount: 1,
+        groupHeader: null,
+        groupFooter: null
     },
 
     fieldIds: {

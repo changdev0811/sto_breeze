@@ -1,10 +1,10 @@
 /**
  * Extended version ViewModel class
  * @class Base
- * @namespace Breeze.viewModel.Base
+ * @namespace Breeze.viewmodel.Base
  * @extends Ext.app.ViewModel
  */
-Ext.define('Breeze.viewModel.Base', {
+Ext.define('Breeze.viewmodel.Base', {
    extend: 'Ext.app.ViewModel',
 
    /**

@@ -543,3 +543,21 @@
     $disabled-checkbox-color: darken(map-get($admin-text-colors, 'base'), 25%),
     $ui: 'admin-checkbox'
 );
+
+// Admin section panel mimicking bordered titled fieldset using toolbar
+@include panel-ui(
+    $ui: 'admin-fs-panel',
+    $header-background-color: map-get($admin-colors, 'row-dark'),
+    $header-color: map-get($admin-text-colors,'base'),
+    $header-font-size: map-get($root-font-sizes, 'detail'),
+    $header-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $header-border-color: white,
+    $header-border-width: 1px 1px 0px 1px !important,
+    $body-border-color: white,
+    $body-border-width: 0px 1px 1px 1px !important,
+    $body-background-color: map-get($admin-colors,'base'),
+    $tool-font-size: 12pt
+);

@@ -8,6 +8,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     extend: 'Ext.Panel',
     alias: 'widget.admin.accrualpolicies',
 
+    requires: [
+        'Ext.grid.plugin.CellEditing'
+    ],
 
     config: {
         crumbTitle: 'Accrual Policies'
@@ -67,40 +70,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
                     layout: 'vbox',
                     items: [
-                        // Accrual Policies List
                         {
-                            xtype: 'fieldset',
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel',
                             userCls: 'admin-fieldset no-padding',
+                            title: 'Policies',
                             flex: 1,
                             layout: 'vbox',
-                            items: [
+                            tools: [
                                 {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            html: 'Policies',
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                            handler: 'onCreatePolicyButton'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-minus',
-                                            ui: 'plain wtr-button',
-                                        },
-                                    ]
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'showCreatePolicyDialog'
                                 },
+                                {
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-minus',
+                                }
+                            ],
+                            items: [
+                               
                                 {
                                     xtype: 'breeze-categories-list',
                                     ui: 'admin-shift-grid',
@@ -112,8 +101,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     itemConfig: {
                                         ui: 'admin-list-item-select',
                                         templates: {
-                                            radioValue: '{record.ID}',
-                                            itemData: { name: '{record.Name} '},
+                                            radioValue: '{record.data}',
+                                            itemData: { name: '{record.text} ' },
                                             itemTpl: '{name}'
                                         }
                                     },
@@ -137,7 +126,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         },
                         {
                             xtype: 'fieldset',
-                            name: 'recording_mode',
+                            // name: 'recording_mode',
                             userCls: 'admin-fieldset',
                             title: 'Recording Mode',
                             height: '45pt',
@@ -186,45 +175,40 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             ]
                         },
                         {
-                            xtype: 'fieldset',
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel',
                             userCls: 'admin-fieldset no-padding',
                             flex: 1,
+                            title: {
+                                text: 'Shift Information',
+                                ui: 'admin-fs-panel'
+                            },
+                            tools: [
+                                {
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'showAddShiftSegmentDialog'
+                                }
+                            ],
                             layout: 'vbox',
                             items: [
                                 {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            html: 'Shift Information',
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1,
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                        }
-                                    ]
-                                },
-                                {
                                     xtype: 'grid',
                                     ui: 'admin-grid',
+                                    reference: 'shiftGrid',
                                     height: '100%',
                                     sortable: false, columnResize: false,
                                     columnMenu: false, hideHeaders: false,
                                     bind: {
                                         store: '{policySegments}'
                                     },
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
                                     defaults: {
                                         xtype: 'gridcolumn',
                                         menuDisabled: true,
-                                        userCls:'no-border',
+                                        userCls: 'no-border',
                                     },
                                     layout: 'vbox',
                                     columns: [
@@ -232,7 +216,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: '{StartTime}',
                                             text: 'Start',
                                             dataIndex: 'StartSegment',
-                                            flex: 1
+                                            flex: 1,
+                                            editable: true,
+                                            editor: { 
+                                                xtype: 'combobox',
+                                                itemId: 'start',
+                                                label: 'Start',
+                                                store: 'accrualShiftChoices',
+                                                displayField: 'time',
+                                                valueField: 'value',
+                                                forceSelection: false,
+                                                queryMode: 'local',
+                                                required: true,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateShiftTime'
+                                                },
+                                                listeners: {
+                                                    change: 'onShiftTimeChange'
+                                                }
+                                            }
                                         },
                                         // {
                                         //     xtype: 'templatecolumn',
@@ -252,9 +255,28 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 tools: [
                                                     {
                                                         iconCls: 'x-fas fa-times',
-                                                        handler: 'onRemoveShiftSegment'
+                                                        handler: 'onDeleteShiftSegment'
                                                     }
                                                 ]
+                                            },
+                                            editable: true,
+                                            editor: { 
+                                                xtype: 'combobox',
+                                                itemId: 'stop',
+                                                label: 'Stop',
+                                                store: 'accrualShiftChoices',
+                                                displayField: 'time',
+                                                valueField: 'value',
+                                                forceSelection: false,
+                                                queryMode: 'local',
+                                                required: true,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateShiftTime'
+                                                },
+                                                listeners: {
+                                                    change: 'onShiftTimeChange'
+                                                }
                                             }
                                         }
                                     ]
@@ -345,7 +367,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             },
                                             bind: {
                                                 values: {
-                                                    yearType: '{categoryYearType}'
+                                                    yearType: '{selectedCategory.calendarType}'
                                                 }
                                             },
                                             items: [
@@ -555,7 +577,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ui: 'plain wtr-button',
                                             bind: {
                                                 disabled: '{!selectedCategory.allowAccrual}'
-                                            }
+                                            },
+                                            handler: 'showAddAccrualRuleDialog'
                                         },
 
                                         {
@@ -565,7 +588,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ui: 'plain wtr-button',
                                             bind: {
                                                 disabled: '{!selectedCategory.allowAccrual}'
-                                            }
+                                            },
+                                            handler: 'showAddAccrualIntervalDialog'
                                         },
                                     ]
                                 },
@@ -595,7 +619,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         cell: {
                                             ui: 'admin-grid admin-tree-item',
                                         },
-                                        userCls:'no-border',
+                                        userCls: 'no-border',
 
                                     },
                                     defaultType: 'gridcolumn',
@@ -631,7 +655,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1,
                                             dataIndex: 'accrualChanged',
                                             tpl: [
-                                               '<tpl if="accformInc!=0">',
+                                                '<tpl if="accformInc!=0">',
                                                 '<tpl if="accformPer==56||accformPer==119">Monthly Special: </tpl>',
                                                 '{accformInc} ',
                                                 '<tpl if="accformUnit==48">Day</tpl>',
@@ -639,89 +663,89 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '<tpl if="accformUnit==50">Minute</tpl>',
                                                 '<tpl if="accformInc!=1">s</tpl> ',
                                                 '<tpl if="accformPer &lt; 115">',
-                                                    '<tpl if="accformPer==51">Weekly on ',
-                                                        '<tpl if="accformDay==1">Sunday</tpl>',
-                                                        '<tpl if="accformDay==2">Monday</tpl>',
-                                                        '<tpl if="accformDay==3">Tuesday</tpl>',
-                                                        '<tpl if="accformDay==4">Wednesday</tpl>',
-                                                        '<tpl if="accformDay==5">Thursday</tpl>',
-                                                        '<tpl if="accformDay==6">Friday</tpl>',
-                                                        '<tpl if="accformDay==7">Saturday</tpl>',
-                                                    '</tpl>',
-                                                    '<tpl if="accformPer==52">BiWeekly on the ',
-                                                        '<tpl if="accformDay &lt; 8"> first </tpl>',
-                                                        '<tpl if="accformDay &gt; 7"> second </tpl>',
-                                                        '<tpl if="accformDay==1||accformDay==8">Sunday</tpl>',
-                                                        '<tpl if="accformDay==2||accformDay==9">Monday</tpl>',
-                                                        '<tpl if="accformDay==3||accformDay==10">Tuesday</tpl>',
-                                                        '<tpl if="accformDay==4||accformDay==11">Wednesday</tpl>',
-                                                        '<tpl if="accformDay==5||accformDay==12">Thursday</tpl>',
-                                                        '<tpl if="accformDay==6||accformDay==13">Friday</tpl>',
-                                                        '<tpl if="accformDay==7||accformDay==14">Saturday</tpl>',
-                                                    '</tpl>',
-                                                    '<tpl if="accformPer==53">Monthly on ',
-                                                        '<tpl if="accformDay!=\'ANNIVERSARY\'">the </tpl>',
-                                                        '{accformDay}',
-                                                        '<tpl if="accformDay==1 ||accformDay==21||accformDay==31">st</tpl>',
-                                                        '<tpl if="accformDay==2 ||accformDay==22">nd</tpl>',
-                                                        '<tpl if="accformDay==3 ||accformDay==23">rd</tpl>',
-                                                        '<tpl if="accformDay!=1 &&accformDay!=2 &&accformDay!=3 &&accformDay!=21&&accformDay!=22&&accformDay!=23&&accformDay!=31&&accformDay!=\'ANNIVERSARY\'">th</tpl>',
-                                                    '</tpl>',
-                                                    '<tpl if="accformPer==54">Quarterly</tpl>',
-                                                    '<tpl if="accformPer==55">Semi-Annually</tpl>',
-                                                    '<tpl if="accformPer==56"> on ',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==1">January</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==2">February</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==3">March</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==4">April</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==5">May</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==6">June</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==7">July</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==8">August</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==9">September</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==10">October</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==11">November</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==12">December</tpl>',
-                                                        ' {msDay}',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ' ,
-                                                            '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
-                                                            '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
-                                                    '</tpl>',
-                                                    '<tpl if="accformPer==114">Annually on {accformDay}</tpl>',
+                                                '<tpl if="accformPer==51">Weekly on ',
+                                                '<tpl if="accformDay==1">Sunday</tpl>',
+                                                '<tpl if="accformDay==2">Monday</tpl>',
+                                                '<tpl if="accformDay==3">Tuesday</tpl>',
+                                                '<tpl if="accformDay==4">Wednesday</tpl>',
+                                                '<tpl if="accformDay==5">Thursday</tpl>',
+                                                '<tpl if="accformDay==6">Friday</tpl>',
+                                                '<tpl if="accformDay==7">Saturday</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer==52">BiWeekly on the ',
+                                                '<tpl if="accformDay &lt; 8"> first </tpl>',
+                                                '<tpl if="accformDay &gt; 7"> second </tpl>',
+                                                '<tpl if="accformDay==1||accformDay==8">Sunday</tpl>',
+                                                '<tpl if="accformDay==2||accformDay==9">Monday</tpl>',
+                                                '<tpl if="accformDay==3||accformDay==10">Tuesday</tpl>',
+                                                '<tpl if="accformDay==4||accformDay==11">Wednesday</tpl>',
+                                                '<tpl if="accformDay==5||accformDay==12">Thursday</tpl>',
+                                                '<tpl if="accformDay==6||accformDay==13">Friday</tpl>',
+                                                '<tpl if="accformDay==7||accformDay==14">Saturday</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer==53">Monthly on ',
+                                                '<tpl if="accformDay!=\'ANNIVERSARY\'">the </tpl>',
+                                                '{accformDay}',
+                                                '<tpl if="accformDay==1 ||accformDay==21||accformDay==31">st</tpl>',
+                                                '<tpl if="accformDay==2 ||accformDay==22">nd</tpl>',
+                                                '<tpl if="accformDay==3 ||accformDay==23">rd</tpl>',
+                                                '<tpl if="accformDay!=1 &&accformDay!=2 &&accformDay!=3 &&accformDay!=21&&accformDay!=22&&accformDay!=23&&accformDay!=31&&accformDay!=\'ANNIVERSARY\'">th</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer==54">Quarterly</tpl>',
+                                                '<tpl if="accformPer==55">Semi-Annually</tpl>',
+                                                '<tpl if="accformPer==56"> on ',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==1">January</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==2">February</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==3">March</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==4">April</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==5">May</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==6">June</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==7">July</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==8">August</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==9">September</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==10">October</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==11">November</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==12">December</tpl>',
+                                                ' {msDay}',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
+                                                '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer==114">Annually on {accformDay}</tpl>',
                                                 '</tpl>',
                                                 '<tpl if="accformPer &gt; 114"> per ',
-                                                    '<tpl if="accformPer!=119">',
-                                                        '<tpl if="accformDay &gt; 1">{accformDay} </tpl>',
-                                                        '<tpl if="accformPer==115">Day</tpl>',
-                                                        '<tpl if="accformPer==116">Week</tpl>',
-                                                        '<tpl if="accformPer==117">Month</tpl>',
-                                                        '<tpl if="accformPer==118">Year</tpl>',
-                                                        '<tpl if="accformPer==140">Worked Hour</tpl>',
-                                                        '<tpl if="accformPer==141">Worked Day</tpl>',
-                                                        '<tpl if="accformDay &gt; 1">s</tpl>',
-                                                    '</tpl>',
-                                                    '<tpl if="accformPer==119">',
-                                                        '{msMonth}',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==1">st</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==2">nd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])==3">rd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[0])!=1 &&eval(accformDay.split(\'-\')[0])!=2 &&eval(accformDay.split(\'-\')[0])!=3">th</tpl>',
-                                                        ' Month on ',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">the </tpl>',
-                                                        '{msDay}',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
-                                                        '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ' ,
-                                                            '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
-                                                            '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
-                                                    '</tpl>',
+                                                '<tpl if="accformPer!=119">',
+                                                '<tpl if="accformDay &gt; 1">{accformDay} </tpl>',
+                                                '<tpl if="accformPer==115">Day</tpl>',
+                                                '<tpl if="accformPer==116">Week</tpl>',
+                                                '<tpl if="accformPer==117">Month</tpl>',
+                                                '<tpl if="accformPer==118">Year</tpl>',
+                                                '<tpl if="accformPer==140">Worked Hour</tpl>',
+                                                '<tpl if="accformPer==141">Worked Day</tpl>',
+                                                '<tpl if="accformDay &gt; 1">s</tpl>',
+                                                '</tpl>',
+                                                '<tpl if="accformPer==119">',
+                                                '{msMonth}',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==1">st</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==2">nd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])==3">rd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[0])!=1 &&eval(accformDay.split(\'-\')[0])!=2 &&eval(accformDay.split(\'-\')[0])!=3">th</tpl>',
+                                                ' Month on ',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">the </tpl>',
+                                                '{msDay}',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
+                                                '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
                                                 '</tpl>',
                                                 '</tpl>',
-                                            '<tpl if="accformInc==0">No Accrual</tpl>'
+                                                '</tpl>',
+                                                '<tpl if="accformInc==0">No Accrual</tpl>'
                                             ]
                                         }
                                     ]
@@ -783,9 +807,12 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ui: 'admin-grid admin-tree-item'
                                         },
                                         draggable: false,
-                                        userCls:'no-border',
+                                        userCls: 'no-border',
                                     },
                                     defaultType: 'gridcolumn',
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
                                     columns: [
                                         {
                                             itemId: 'from',
@@ -796,7 +823,19 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="svcFrom==0">Hire</tpl>',
                                                 '<tpl if="svcFrom!=0">Year {svcFrom}</tpl>',
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                itemId: 'from',
+                                                xtype: 'numberfield',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateCarryOverFrom'
+                                                },
+                                            }
                                         },
                                         {
                                             itemId: 'through',
@@ -809,7 +848,18 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="svcTo==0">&infin;</tpl>',
                                                 '<tpl if="svcTo!=0">Year {svcTo}</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'numberfield',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateCarryOverFrom'
+                                                },
+                                            }
                                         },
                                         {
                                             itemId: 'over',
@@ -827,8 +877,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="allowCarry==false">--</tpl>',
                                                 '<tpl if="allowCarry==true">',
-                                                    '<tpl if="carryOver==0">No Max</tpl>',
-                                                    '<tpl if="carryOver &gt; 0">{carryOver}</tpl>',
+                                                '<tpl if="carryOver==0">No Max</tpl>',
+                                                '<tpl if="carryOver &gt; 0">{carryOver}</tpl>',
                                                 '</tpl>'
                                             ]
                                         },
@@ -840,125 +890,264 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             tpl: [
                                                 '<tpl if="allowCarry==false">--</tpl>',
                                                 '<tpl if="allowCarry==true">',
-                                                    '<tpl if="perAmount==0">No expiration</tpl>',
-                                                    '<tpl if="perAmount!=0">Expires after {perAmount} ',
-                                                        '<tpl if="perUnit==57">day</tpl>',
-                                                        '<tpl if="perUnit==58">week</tpl>',
-                                                        '<tpl if="perUnit==59">month</tpl>',
-                                                        '<tpl if="perUnit==60">year</tpl>',
-                                                        '<tpl if="perAmount!=1">s</tpl>',
-                                                    '</tpl>',
+                                                '<tpl if="perAmount==0">No expiration</tpl>',
+                                                '<tpl if="perAmount!=0">Expires after {perAmount} ',
+                                                '<tpl if="perUnit==57">day</tpl>',
+                                                '<tpl if="perUnit==58">week</tpl>',
+                                                '<tpl if="perUnit==59">month</tpl>',
+                                                '<tpl if="perUnit==60">year</tpl>',
+                                                '<tpl if="perAmount!=1">s</tpl>',
+                                                '</tpl>',
                                                 '</tpl>'
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        // edit: 'onCarryOverPostEdit'
+                                        beforeedit: 'onCarryOverBeforeEdit'
+                                    }
                                 },
                             ]
-                        },
-
-
-
-
-
-                    ]
-                },
-
-            ]
-        },
-        //====[Dialogs]=====
-        /* Create Accrual Policy Dialog */
-        {
-            xtype: 'dialog',
-            ui: 'light-themed-dialog',
-            reference: 'createPolicyDialog',
-            title: 'Create New Accrual Policy',
-            layout: 'vbox',
-            buttons: [
-                {
-                    xtype: 'button',
-                    text: 'Save',
-                    ui: 'confirm alt'
-                },
-                {
-                    xtype: 'spacer', width: '8pt'
-                },
-                {
-                    xtype: 'button',
-                    text: 'Cancel',
-                    ui: 'decline alt',
-                    handler: 'onCreatePolicyDlgCancel'
-                }
-            ],
-            items: [
-                {
-                    xtype: 'breeze-textfield',
-                    itemId: 'policyName',
-                    label: 'Policy Name',
-                    required: true
-                },
-                {
-                    xtype: 'containerfield',
-                    itemId: 'createOption',
-                    layout: 'vbox',
-                    defaults: {
-                        bodyAlign: 'stretch',
-                        xtype: 'radio'
-                    },
-                    items: [
-                        {
-                            name: 'option',
-                            boxLabel: 'Create from scratch using default values',
-                            value: 1, checked: true
-                        },
-                        {
-                            name: 'option',
-                            boxLabel: 'Copy an existing Accrual Policy',
-                            reference: 'createDlgCopyExisting',
-                            value: 2
                         }
                     ]
                 },
-                {
-                    xtype: 'selectfield',
-                    label: 'Copy From',
-                    itemId: 'policySource',
-                    // TODO: Update default copied accrual to match selection before show
-                    value: null,
-                    bind: {
-                        hidden: '{!createDlgCopyExisting.checked}',
-                        store: '{policiesList}'
-                    },
-                    displayField: 'Name',
-                    valueField: 'ID'
-                }
+
             ]
         },
-        /* Add Shift Segment Dialog */
-        {
-            xtype: 'dialog',
-            ui: 'light-themed-dialog',
-            reference: 'addShiftDialog',
-            title: 'Add Shift Segment',
-            layout: 'vbox',
-            buttons: [
-                {
-                    xtype: 'button',
-                    text: 'Save',
-                    ui: 'confirm alt'
+
+    ],
+
+
+    //====[Dialogs]=====
+    /* Create Accrual Policy Dialog */
+    createPolicyDialog: {
+        xtype: 'dialog',
+        ui: 'dark-themed-dialog',
+        reference: 'createPolicyDialog',
+        title: 'Create New Accrual Policy',
+        layout: 'vbox',
+        buttons: [
+            {
+                xtype: 'button',
+                text: 'Save',
+                ui: 'confirm alt'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                xtype: 'button',
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onCreatePolicyDialogCancel'
+            }
+        ],
+        items: [
+            {
+                xtype: 'breeze-textfield',
+                ui: 'dark-themed-dialog-field',
+                itemId: 'policyName',
+                label: 'Policy Name',
+                required: true
+            },
+            {
+                xtype: 'containerfield',
+                itemId: 'createOption',
+                layout: 'vbox',
+                defaults: {
+                    bodyAlign: 'stretch',
+                    xtype: 'radio',
+                    ui: 'dark-themed-dialog-field'
                 },
-                {
-                    xtype: 'spacer', width: '8pt'
+                items: [
+                    {
+                        name: 'option',
+                        boxLabel: 'Create from scratch using default values',
+                        value: 1, checked: true
+                    },
+                    {
+                        name: 'option',
+                        boxLabel: 'Copy an existing Accrual Policy',
+                        reference: 'createDlgCopyExisting',
+                        value: 2
+                    }
+                ]
+            },
+            {
+                xtype: 'selectfield',
+                label: 'Copy From',
+                itemId: 'policySource',
+                // TODO: Update default copied accrual to match selection before show
+                value: null,
+                bind: {
+                    hidden: '{!createDlgCopyExisting.checked}',
+                    store: '{policiesList}'
                 },
-                {
-                    xtype: 'button',
-                    text: 'Cancel',
-                    ui: 'decline alt',
-                    // handler: 'onCreatePolicyDlgCancel'
+                displayField: 'Name',
+                valueField: 'ID'
+            }
+        ]
+    },
+    /* Add Shift Segment Dialog */
+    addShiftSegmentDialog: {
+        xtype: 'dialog',
+        ui: 'dark-themed-dialog',
+        title: 'Add Shift Segment',
+        layout: 'hbox',
+        items: [
+            {
+                xtype: 'combobox',
+                itemId: 'start',
+                label: 'Start',
+                store: 'accrualShiftChoices',
+                displayField: 'time',
+                valueField: 'value',
+                forceSelection: false,
+                queryMode: 'local',
+                required: true,
+                validators: {
+                    type: 'controller',
+                    fn: 'validateShiftTime'
                 }
-            ],
-            items: [
-               
-            ]
-        }
-    ]
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                xtype: 'combobox',
+                itemId: 'stop',
+                label: 'Stop',
+                store: 'accrualShiftChoices',
+                displayField: 'time',
+                valueField: 'value',
+                forceSelection: false,
+                queryMode: 'local',
+                required: true,
+                validators: {
+                    type: 'controller',
+                    fn: 'validateShiftTime'
+                }
+            }
+        ],
+        buttons: [
+            {
+                xtype: 'button',
+                text: 'Save',
+                ui: 'confirm alt',
+                handler: 'onAddShiftSegmentDialogSave'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                xtype: 'button',
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onDialogCancel',
+                data: {
+                    // cleanup function after closing dialog
+                    cancelableAction: 'onAddShiftSegmentDialogCancel'
+                }
+            }
+        ]
+    },
+
+    addAccrualRuleDialog: {
+        xtype: 'dialog',
+        title: 'Add Accrual Rule',
+        ui: 'dark-themed-dialog',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'textfield',
+                ui: 'dark-themed-dialog-field',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'New Accrual Rule Name',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'ruleName',
+                value: null,
+                required: true
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                handler: 'onAddAccrualRule'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onAddAccrualRuleDialogCancel'
+            }
+        ]
+
+    },
+
+    addAccrualIntervalDialog: {
+        xtype: 'dialog',
+        title: 'Add Accrual Interval',
+        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+        scrollable: 'y',
+
+        items: [
+            {
+                xtype: 'selectfield',
+                // ui: 'reporting reporting-text reporting-date',
+                // width:'200pt',
+                label: 'Accrual Rule to Add Interval to',
+                // labelAlign: 'left',
+                labelWidth: 'auto',
+                itemId: 'ruleNames',
+                value: null,
+                required: true,
+                autoSelect: true,
+                valueField: 'value',
+                displayField: 'name'
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Add',
+                ui: 'confirm alt',
+                handler: 'onAddAccrualRule'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onAddAccrualIntervalDialogCancel'
+            }
+        ]
+
+    },
+
+    addCarryOverRuleDialog: {
+
+    },
+
+    addShiftDialog: {
+
+    },
 });

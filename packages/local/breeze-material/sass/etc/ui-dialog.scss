@@ -1,0 +1,30 @@
+/**
+ Dialog styling mixins
+*/
+
+
+/**
+ Generate UI override classes for dialog UI style's body text
+ and input field font sizes
+
+ Generates secondary dialog-ui($ui: $base-ui) and
+ field-ui with ui name '$base-ui' + '-field'
+
+ @param {String} $base-ui UI Name of dialog override
+ @param {Size} $field-label-font-size Font size for field ui type
+ @param {Size} $body-font-size Font size for dialog body text
+*/
+@mixin breeze-dialog-text-size-ui(
+    $base-ui,
+    $field-label-font-size,
+    $body-font-size
+) {
+    @include field-ui(
+        $ui: '#{$base-ui}-field',
+        $label-font-size: $field-label-font-size
+    );
+    @include dialog-ui(
+        $ui: $base-ui,
+        $body-font-size: $body-font-size
+    );
+}

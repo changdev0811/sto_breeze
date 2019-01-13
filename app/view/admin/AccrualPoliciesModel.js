@@ -69,31 +69,31 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     formulas: {
-        selectedCategory: function(get){
-            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-            if(!Object.isUnvalued(cat)){
-                return cat;
-            } else {
-                return cat;
-            }
-        },
+        // selectedCategory: function(get){
+        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+        //     if(!Object.isUnvalued(cat)){
+        //         return cat;
+        //     } else {
+        //         return null;
+        //     }
+        // },
 
-        selectedCategoryAccrualRules: function(get){
-            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-            if(!Object.isUnvalued(cat)){
-                return cat.accrualRules();
-            } else {
-                return null;
-            }
-        },
-        selectedCategoryCarryOverRules: function(get){
-            var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-            if(!Object.isUnvalued(cat)){
-                return cat.carryOverRules();
-            } else {
-                return null;
-            }
-        },
+        // selectedCategoryAccrualRules: function(get){
+        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+        //     if(!Object.isUnvalued(cat)){
+        //         return cat.accrualRules();
+        //     } else {
+        //         return null;
+        //     }
+        // },
+        // selectedCategoryCarryOverRules: function(get){
+        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
+        //     if(!Object.isUnvalued(cat)){
+        //         return cat.carryOverRules();
+        //     } else {
+        //         return null;
+        //     }
+        // },
         categoryYearType: {
             // TODO: Implement category year type set
             // set: function(get){

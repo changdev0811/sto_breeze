@@ -24,3 +24,25 @@
     $ui: 'light-themed-dialog',
     $header-background-color: $scoped-root-lighter
 );
+
+
+//==[Dark Themed Dialog]==
+// Standard breeze-themed dialog
+// Used by Msg class override's themedX methods
+@include dialog-ui(
+    $ui: 'dark-themed-dialog',
+    $header-color: map-get($root-text-colors, 'light'),
+    $header-background-color: map-get($root-colors, 'base'),
+    $background-color: #ffffff,
+    $body-background-color: #ffffff,
+    $body-color: $scoped-root-base,
+    $tool-color: #ffffff,
+    $tool-hovered-color: darken(#ffffff,5%),
+    $tool-pressed-color: $scoped-root-text-base
+);
+
+@include breeze-dialog-text-size-ui(
+    $base-ui: 'dark-themed-dialog',
+    $field-label-font-size: map-get($root-font-sizes, 'base'),
+    $body-font-size: map-get($root-font-sizes, 'detail')
+);
