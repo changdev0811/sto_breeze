@@ -534,9 +534,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Fires before entering edit mode for cell in Carry Over Rules grid
      * Allows editor to be disabled conditionally for specific cells
      * @param {Object} location Object containing location data for targeted cell
+     * @param {Object} editor Reference to active editor instance
      * @return {Boolean} Boolean indicating whether edit can take place
      */
-    onCarryOverBeforeEdit: function(location){
+    onCarryOverBeforeEdit: function(location, editor){
         var record = location.record,
             store = record.store,
             columnItemId = location.column.getItemId();
@@ -604,7 +605,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // ==[Logic specific to 'Carry Over Expiration' column]==
         if(columnItemId == 'expiration'){
-            
+            // TODO: Implement logic for carry over expiration editor
+            console.info('expiration fieldset');
+            return true;
         }
     },
 
@@ -613,7 +616,42 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} location Object with grid cell location info 
      */
     onCarryOverPostEdit: function(location){
+        var record = location.record,
+            store = record.store,
+            columnItemId = location.column.getItemId();
+        
+        // Function to pass into `getItems().findBy()` to find by itemId
+        var findItemById = (item, id)=>{
+            return (item.getItemId() == id);
+        };
+
         console.info('carry over post edit');
+
+        if(columnItemId == 'expiration'){
+            // Get references to expiration container field's child fields
+            let container = location.column.getEditor().getComponent('expirationField'),
+                containerItems = container.getItems(),
+                amountField = containerItems.findBy((i)=>{
+                    return findItemById(i,'amount');
+                }),
+                unitField = containerItems.findBy((i)=>{
+                    return findItemById(i,'unit');
+                });
+            
+            // Store values from record
+            let amount = record.get('perAmount').
+                unit = record.get('perUnit');
+            
+            // Store amount/unit values in row's data object
+            location.row.appendData({
+                perAmount: amount,
+                perUnit: unit
+            });
+
+            // Load record values into sub fields
+            amountField.setValue(amount);
+            unitField.setValue(unit);
+        }
 
     },
 
