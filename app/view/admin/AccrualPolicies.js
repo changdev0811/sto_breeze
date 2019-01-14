@@ -894,12 +894,47 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '<tpl if="perAmount!=1">s</tpl>',
                                                 '</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            /*
+                                                Editor for Carry Over Expiration Column
+                                                Has multiple fields, so editor is a containerfield
+                                            */
+                                            editor: {
+                                                xtype: 'containerfield',
+                                                itemId: 'expirationField',
+                                                label: '', layout: 'hbox',
+                                                items: [
+                                                    {
+                                                        xtype: 'spinnerfield',
+                                                        flex: 1,
+                                                        itemId: 'amount',
+                                                        /* TODO: Decide if labels are needed, 
+                                                            or if placeholder is sufficient */
+                                                        // label: 'Amount',
+                                                        placeholder: 'Amount',
+                                                        // Default to 0, min value 0
+                                                        value: 0, minValue: 0
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        // Flex scale, Add spacing to left of field
+                                                        flex: 1, margin: 'inherit inherit inherit 4pt',
+                                                        itemId: 'unit',
+                                                        /* TODO: Decide if labels are needed, 
+                                                            or if placeholder is sufficient */
+                                                        // label: 'Unit',
+                                                        placeholder: 'Unit',
+                                                        autoSelect: true,
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        store: 'DurationTypes'
+                                                    }
+                                                ]  
+                                            }
                                         }
                                     ],
                                     listeners: {
-                                        // edit: 'onCarryOverPostEdit'
-                                        beforeedit: 'onCarryOverBeforeEdit'
+                                        edit: 'onCarryOverPostEdit',
+                                        beforeedit: 'onCarryOverBeforeEdit',
                                     }
                                 }
                             ]
