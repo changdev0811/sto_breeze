@@ -939,11 +939,24 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         store: 'DurationTypes'
                                                     }
                                                 ]  
+                                            },
+                                            // Delete rule tool
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onDeleteCarryOverRule'
+                                                    }
+                                                ]
                                             }
                                         }
                                     ],
                                     listeners: {
-                                        // edit: 'onCarryOverPostEdit',
+                                        edit: 'onCarryOverPostEdit',
                                         beforeedit: 'onCarryOverBeforeEdit',
                                         beforecompleteedit: 'onCarryOverBeforeEditComplete'
                                     }

@@ -641,33 +641,54 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     /**
      * Fires when exiting cell editor for Carry Over Rules grid
+     * 
+     * Contains logic for auto adjusting From/Through values of records
+     * surrounding the record that was just edited
+     * 
      * @param {Object} location Object with grid cell location info 
      * @param {Object} editor Reference to active editor instance
      */
     onCarryOverPostEdit: function (location, editor) {
         var record = location.record,
+            recIdx = location.recordIndex,
             store = record.store,
             columnItemId = location.column.getItemId(),
-            tempData = location.row.getData(),
             editorComp = editor.getParent();
 
-        // Make sure temp data is at least an object with a temp property
-        tempData = (Object.isUnvalued(tempData)) ? { temp: {} } : tempData;
-
-        console.info('carry over post edit');
-
-        if (columnItemId == 'expiration') {
-            let amount = editor.getComponentInItems('amount'),
-                unit = editor.getComponentInItems('unit'),
-                oldAmount = tempData.temp['perAmount'],
-                oldUnit = tempData.temp['perUnit'];
-
-            console.info('Carry Over Expiration post edit');
+        /*
+            If there is at least one record, make sure the first
+            starts with an svcFrom value of 0
+        */
+        if(store.getCount() > 0){
+            store.getAt(0).set({
+                svcFrom: 0
+            }, { commit: true });
         }
 
-        // Hide editor
-        editorComp.onEditComplete(false, false);
+        /*
+            If record isn't first, make sure previous record's
+            svcTo value is 1 less than this record's svcFrom value
+        */
+        if(recIdx > 0){
+            let prevRecord = store.getAt(recIdx - 1);
+            prevRecord.set({
+                svcTo: record.get('svcFrom') - 1
+            }, { commit: true });
+        }
 
+        /*
+            If record isn't last, make sure following record's
+            svcFrom value is 1 greater than this record's svcTo value
+        */
+        if(recIdx < store.getCount()){
+            let nextRecord = store.getAt(recIdx + 1);
+            nextRecord.set({
+                svcFrom: record.get('svcTo') + 1
+            }, { commit: true });
+        }
+       
+        // Hide editor
+        // editorComp.onEditComplete(false, false);
     },
 
     /**
@@ -806,6 +827,62 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
     },
 
+    /**
+     * Event handler for delete ('x') tool on Carry Over Rules grid rows
+     * @param {Component} grid Grid to which tool firing event belongs to
+     * @param {Object} info Object containing record, event, and source 
+     *      tool references
+     */
+    onDeleteCarryOverRule: function (grid, info) {
+        var store = grid.getStore(),
+            record = info.record,
+            recordIndex = store.indexOf(record);
+        
+        if (store.getCount() > 1) {
+            // Store contains more than 1 rule records
+            if(recordIndex == 0){
+                /* 
+                    Record is first, so set svcFrom of second record to 0
+                */
+                store.getAt(1).set({
+                    svcFrom: 0
+                }, {commit: true});
+            } else {
+                /*
+                    Record isn't first, so set svcTo of previous record to
+                    this record's svcTo value
+                */
+                let prevRecord = store.getAt(recordIndex - 1);
+                prevRecord.set({
+                    svcTo: record.get('svcTo')
+                }, {commit: true});
+            }
+
+            // Remove record selected for deletion
+            store.remove(record);
+            store.commitChanges();
+        } else {
+            /* 
+                Store contains 1 or fewer rule records
+                Keep single record in place, but update its values
+            */
+            // Old code directly modifies first record, not target, so duplicating here
+            let rec = store.getAt(0);
+            rec.set({
+                allowCarry: false,
+                carryOver: -1,
+                perAmount: 0,
+                perUnit: 59
+            }, {commit: true});
+        }
+    },
+
+    /**
+     * Event handler for delete ('x') tool on Shift Segment grid rows
+     * @param {Component} grid Grid to which tool firing event belongs to
+     * @param {Object} info Object containing record, event, and source 
+     *      tool references
+     */
     onDeleteShiftSegment: function (grid, info) {
         var store = grid.getStore();
 
