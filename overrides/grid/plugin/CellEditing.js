@@ -17,7 +17,7 @@ Ext.define('Overrides.grid.plugin.CellEditing', {
 
     addEditorEvents: function (editor, location) {
         editor.on('beforestartedit', function () {
-            var handlerResult = this.getGrid().fireEvent('beforeedit', location);
+            var handlerResult = this.getGrid().fireEvent('beforeedit', location, editor);
             if (handlerResult === false) {
                 editor.hide();
             }

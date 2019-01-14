@@ -639,7 +639,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 });
             
             // Store values from record
-            let amount = record.get('perAmount').
+            let amount = record.get('perAmount'),
                 unit = record.get('perUnit');
             
             // Store amount/unit values in row's data object
