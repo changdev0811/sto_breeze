@@ -398,52 +398,51 @@ Ext.define('Breeze.view.admin.UDC', {
                         },
                         {
                             xtype:'fieldset',
-                            userCls:'admin-fieldset no-side-margin no-padding',
+                            userCls:'admin-fieldset no-side-margin',
                             layout: 'hbox',
-                            defaults:{
-                                userCls:'admin-fieldset no-border no-padding',
-                            },
+
                             items:[        
 
-                                        {
-                                            xtype: 'button',
-                                            ui:'plain',
-                                            userCls:'col-btn',
-                                            reference: 'colorBtn',
-                                            width:'24pt',
-                                            height:'24pt',
-                                            menuAlign: 'tr',
-                                            arrow: false,
-                                            bind:{
-                                                // +++ need to bind to current category's color +++
-                                                style:'background-color:{selectedCat.HexColor};',
+                                {
+                                    xtype: 'component',
+                                    userCls: 'employeeinfo-label admin-label',
+                                    html: '<span style="font-size:12pt; line-height:14pt;">Choose a color:<span>'
+                                },
+                                {
+                                    xtype: 'button',
+                                    ui:'plain',
+                                    userCls:'col-btn',
+                                    reference: 'colorBtn',
+                                    width:'24pt',
+                                    height:'24pt',
+                                    menuAlign: 'tr',
+                                    arrow: false,
+                                    bind:{
+                                        // +++ need to bind to current category's color +++
+                                        style:'background-color:{selectedCat.HexColor};',
+                                    },
+                                    menu: {
+                                        xtype: 'menu',
+                                        userCls:'col-menu',
+                                        items: [
+                                            {
+                                                xtype:'dataview',
+                                                userCls:'col-sel',
+                                                scrollable:false,
+                                                inline: true,
+                                                bind:{
+                                                    store:'{colors}',
+                                                },
+                                                itemTpl: '<div class="col-sq" style="background-color:{hex};">',
+                                                listeners:{
+                                                    select:'onColorSelect'
+                                                }
                                             },
-                                            menu: {
-                                                xtype: 'menu',
-                                                userCls:'col-menu',
-                                                items: [
-                                                    {
-                                                        xtype:'dataview',
-                                                        userCls:'col-sel',
-                                                        scrollable:false,
-                                                        inline: true,
-                                                        bind:{
-                                                            store:'{colors}',
-                                                        },
-                                                        itemTpl: '<div class="col-sq" style="background-color:{hex};">',
-                                                        listeners:{
-                                                            select:'onColorSelect'
-                                                        }
-                                                    },
-                                                ]
-                                            }
+                                        ]
+                                    }
 
-                                        },
-                                        {
-                                            xtype: 'component',
-                                            userCls: 'employeeinfo-label admin-label no-margin no-padding',
-                                            html: '<span style="font-size:12pt; line-height:14pt;">Choose a color<span>'
-                                        },
+                                },
+                                        
                               
                             ]
                         },

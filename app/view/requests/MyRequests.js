@@ -83,6 +83,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
                                 }
                             ]
                         },
+                        /*
                         {
                             xtype:'container',
                             userCls:'requests-fieldset no-border',
@@ -105,6 +106,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
 
 
                         }
+                        */
                     ]
                 },
                 {
@@ -115,7 +117,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-table',
-                            //handler: 'onFyiNavClick'
+                            handler: 'onFyiNavClick'
                         }
                     ],
                     flex: 1,
