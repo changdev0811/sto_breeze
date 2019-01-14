@@ -41,7 +41,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // Empty store for policy categories
         this.addLoadedStoreToViewModel({
             model: 'Breeze.model.accrual.policy.Category',
-            data:[]
+            data: []
         }, 'policyCategories');
 
         // Empty store for policy segments
@@ -64,10 +64,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // load accrual policies
         this.loadPolicies();
-        
+
     },
 
-    loadPolicies: function(policyId = null){
+    loadPolicies: function (policyId = null) {
         var me = this,
             vm = this.getViewModel();
 
@@ -77,10 +77,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             {
                 load: true,
                 loadOpts: {
-                    callback: function(records, op, success){
-                        if(success){
+                    callback: function (records, op, success) {
+                        if (success) {
                             var record = records[0];
-                            if(policyId !== null){
+                            if (policyId !== null) {
                                 record = vm.get('policiesList').queryRecords("ID", policyId)[0];
                             }
                             this.lookup('policyList').getSelectable().setSelectedRecord(
@@ -98,12 +98,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     //--[Create Policy]--
 
-    showCreatePolicyDialog: function(){
+    showCreatePolicyDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             dialog = this.createPolicyDialog;
-        
-        if(!dialog){
+
+        if (!dialog) {
             dialog = Ext.apply({
                 ownerCmp: view
             }, view.createPolicyDialog);
@@ -117,7 +117,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Handle 'cancel' button click event for 'Create Policy' dialog
      * @param {Object} comp Button firing event
      */
-    onCreatePolicyDialogCancel: function(comp){
+    onCreatePolicyDialogCancel: function (comp) {
         var dlg = comp.getParent().getParent();
         dlg.hide();
         dlg.getComponent('policyName').clearValue();
@@ -125,7 +125,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     //--[Add Shift]--
 
-    showAddShiftSegmentDialog: function(){
+    showAddShiftSegmentDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             dialog = this.addShiftSegmentDialog;
@@ -146,7 +146,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * clears validation error indicators
      * @param {Object} dlg dialog reference
      */
-    onAddShiftSegmentDialogCancel: function(dlg){
+    onAddShiftSegmentDialogCancel: function (dlg) {
         let start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop');
         start.clearValue();
@@ -155,15 +155,15 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         stop.setError(null);
     },
 
-    onAddShiftSegmentDialogSave: function(btn){
+    onAddShiftSegmentDialogSave: function (btn) {
         let dlg = btn.getParent().getParent(),
             start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop'),
             segments = this.getViewModel().get('policySegments');
         start.validate();
         stop.validate();
-        if(start.isValid() && stop.isValid()){
-            if(this.validateShiftSegment(start.getValue(), stop.getValue(), null, true)){
+        if (start.isValid() && stop.isValid()) {
+            if (this.validateShiftSegment(start.getValue(), stop.getValue(), null, true)) {
                 // Segment is valid, update store with new item
                 let startT = BreezeTime.resolve(start.getValue()),
                     stopT = BreezeTime.resolve(stop.getValue());
@@ -196,12 +196,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Display the 'add accrual rule' dialog
      */
-    showAddAccrualRuleDialog: function(){
+    showAddAccrualRuleDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             dialog = this.addAccrualRuleDialog;
 
-        if(!dialog){
+        if (!dialog) {
             dialog = Ext.apply({
                 ownerCmp: view
             }, view.addAccrualRuleDialog);
@@ -214,7 +214,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for 'add' button in new accrual rule dialog
      */
-    onAddAccrualRule: function(){
+    onAddAccrualRule: function () {
         var dlg = this.addAccrualRuleDialog,
             nameCmp = dlg.getComponent('ruleName'),
             name = nameCmp.getValue(),
@@ -228,22 +228,22 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             validChars,
             errors = ['Unable to add rule'];
 
-        if(valid){
-            unique = !rules.getData().items.map((r)=>{return r.get('ruleName');}).includes(name.trim());
+        if (valid) {
+            unique = !rules.getData().items.map((r) => { return r.get('ruleName'); }).includes(name.trim());
             validChars = !name.includes('|') && !name.includes(',');
         }
 
         // if(!unique){
-            nameCmp.markInvalid(`${name} is already a rule for category`);
-            errors.push(`Category already has a rule named '${name}'`)
+        nameCmp.markInvalid(`${name} is already a rule for category`);
+        errors.push(`Category already has a rule named '${name}'`)
         // }
 
-        if(!validChars){
+        if (!validChars) {
             nameCmp.markInvalid(`Cannot include | or ,`);
             errors.push('Rule name can\'t contain the \'|\' or \',\' characters.');
         }
 
-        if(valid && unique && validChars){
+        if (valid && unique && validChars) {
             rules.add({
                 accformDay: 1,
                 accformInc: 0,
@@ -271,7 +271,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for add accrual rule dialog cancel button
      */
-    onAddAccrualRuleDialogCancel: function(){
+    onAddAccrualRuleDialogCancel: function () {
         this.addAccrualRuleDialog.hide();
     },
 
@@ -281,19 +281,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Display the 'add accrual interval' dialog
      */
-    showAddAccrualIntervalDialog: function(){
+    showAddAccrualIntervalDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             rules = vm.get('selectedCategoryAccrualRules'),
             dialog = this.addAccrualIntervalDialog;
 
-        var ruleOptions = Ext.Array.unique(rules.getData().items.map((r)=>{
+        var ruleOptions = Ext.Array.unique(rules.getData().items.map((r) => {
             return r.get('ruleName');
-        })).map((n)=>{
-            return {name: n, value: n};
+        })).map((n) => {
+            return { name: n, value: n };
         });
 
-        if(ruleOptions.length == 0){
+        if (ruleOptions.length == 0) {
             // Show warning message and abort
             Ext.toast({
                 type: Ext.Toast.WARN,
@@ -303,17 +303,17 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             return;
         }
 
-        if(!dialog){
+        if (!dialog) {
             dialog = Ext.apply({
                 ownerCmp: view
             }, view.addAccrualIntervalDialog);
             this.addAccrualIntervalDialog = dialog = Ext.create(dialog);
         }
-        
+
         dialog.show();
 
         var names = dialog.getComponent('ruleNames');
-        
+
         // Add rule name options
         names.setValue(null);
         names.setOptions(ruleOptions);
@@ -322,7 +322,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for add accrual interval dialog cancel button
      */
-    onAddAccrualIntervalDialogCancel: function(){
+    onAddAccrualIntervalDialogCancel: function () {
         this.addAccrualIntervalDialog.hide();
     },
 
@@ -332,13 +332,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Automatically adds new carry over rule, adjusting previous
      * last record if exists
      */
-    onAddCarryOverRule: function(){
+    onAddCarryOverRule: function () {
         var me = this,
             vm = me.getViewModel(),
             ruleStore = vm.get('selectedCategoryCarryOverRules');
 
         // success toast message function
-        var successToast = ()=>{
+        var successToast = () => {
             Ext.toast({
                 type: Ext.Toast.INFO,
                 message: 'New Carry Over Rule successfully added.',
@@ -347,19 +347,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         };
 
         // console.info('add carry over rule');
-        
-        if(ruleStore.last()){
+
+        if (ruleStore.last()) {
             // rule store has at least 1 record
             let lastRec = ruleStore.last(),
                 durationEnd = lastRec.get('svcFrom');
-            if(durationEnd == 0){
+            if (durationEnd == 0) {
                 // set end duration to 1 if last record's svcFrom is 0
                 durationEnd = 1;
             }
             // update svcTo of last record
             lastRec.set({
                 svcTo: durationEnd
-            }, {commit: true});
+            }, { commit: true });
             // Add new rule
             let newRule = ruleStore.add({
                 allowCarry: lastRec.get('allowCarry'),
@@ -375,8 +375,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 svcFrom is incremented after adding rule in original code, so 
                 doing the same thing here 
             */
-           newRule.set({svcFrom: durationEnd + 1}, {commit: true});
-           successToast();
+            newRule.set({ svcFrom: durationEnd + 1 }, { commit: true });
+            successToast();
         } else {
             // No carry over rules exist, so create a new generic one
             ruleStore.add({
@@ -400,12 +400,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {String} value Time string
      * @return {Boolean} True if valid, false otherwise
      */
-    validateShiftTime: function(value){
-        if(typeof value == 'number'){
+    validateShiftTime: function (value) {
+        if (typeof value == 'number') {
             // If value is a number, its from the dropdown and is thus valid
             return true;
         }
-        return (BreezeTime.isValidFormat(value))?
+        return (BreezeTime.isValidFormat(value)) ?
             true : 'Expected format: Hour:Minute(AM/PM';
     },
 
@@ -417,15 +417,16 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} record Optional record of updated segment to avoid self-conflict
      * @param {boolean} inDialog Set to true to indicate source is dialog (not used)
      */
-    validateShiftSegment: function(start, stop, record=null, inDialog=false){
-        var resolve = (v)=>{
-            return (typeof v == 'number')?
-            BreezeTime.fromMinutes(v) :
-            BreezeTime.parse(v);},
+    validateShiftSegment: function (start, stop, record = null, inDialog = false) {
+        var resolve = (v) => {
+            return (typeof v == 'number') ?
+                BreezeTime.fromMinutes(v) :
+                BreezeTime.parse(v);
+        },
             vm = this.getViewModel(),
             segments = vm.get('policySegments');
-        
-        var source = (inDialog)? this.addShiftSegmentDialog : this.lookup('shiftGrid');
+
+        var source = (inDialog) ? this.addShiftSegmentDialog : this.lookup('shiftGrid');
 
         var errors = [];
 
@@ -433,36 +434,36 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var validRuleSet = Ext.create('Breeze.helper.data.ValidationRuleSet', {
             rules: {
                 differentTimes: {
-                    fn: (get)=>{
+                    fn: (get) => {
                         return (get('start').asMinutes() !== get('stop').asMinutes());
                     },
-                    passFn: (get, name)=>{
+                    passFn: (get, name) => {
                         console.info(name, ' passed');
                     },
-                    failFn: (get, name)=>{
+                    failFn: (get, name) => {
                         console.warn(name, ' failed');
                         errors.push('Start and stop times must be different');
                     }
                 },
                 noOverlap: {
-                    fn: (get)=>{
+                    fn: (get) => {
                         var ok = true,
                             otherSegs = get('segments').queryRecordsBy(
-                                (r)=>{ return r !== get('record'); }
-                            ).map((r)=>{
+                                (r) => { return r !== get('record'); }
+                            ).map((r) => {
                                 return [r.get('StartSegment'), r.get('StopSegment')];
                             }),
                             // Function for overlap checking
-                            overlaps = (v,r) => {
+                            overlaps = (v, r) => {
                                 return (v >= r[0] && v <= r[1]);
                             };
                         otherSegs.push([get('start').asMinutes(), get('stop').asMinutes()]);
 
-                        otherSegs.forEach((r,i)=>{
-                            otherSegs.forEach((r2,i2)=>{
-                                if(i !== i2){
-                                    r.forEach((v)=>{
-                                        ok &= !overlaps(v,r2);
+                        otherSegs.forEach((r, i) => {
+                            otherSegs.forEach((r2, i2) => {
+                                if (i !== i2) {
+                                    r.forEach((v) => {
+                                        ok &= !overlaps(v, r2);
                                     })
                                 }
                             })
@@ -470,10 +471,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
                         return ok;
                     },
-                    passFn: (get,name)=>{
+                    passFn: (get, name) => {
                         console.info(name, ' passed');
                     },
-                    failFn: (get, name)=>{
+                    failFn: (get, name) => {
                         console.warn(name, ' failed');
                         errors.push('Shift cannot overlap with existing shifts');
                     }
@@ -493,14 +494,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // Run all validation checks
         var res = validRuleSet.runAll(data);
 
-        if(validRuleSet.allPassed(res)){
+        if (validRuleSet.allPassed(res)) {
             return true;
         } else {
             Ext.toast({
                 type: Ext.Toast.WARN,
                 message: [
                     'Please correct the following issues before saving',
-                    '<ul>' + errors.map((i)=>{return `<li>${i}</li>`}) + '</ul>'
+                    '<ul>' + errors.map((i) => { return `<li>${i}</li>` }) + '</ul>'
                 ].join('<br>'),
                 timeout: ['warn', 5000]
             });
@@ -515,8 +516,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New value
      * @return {(Boolean|String)} true if valid, or false / an error string if not
      */
-    validateCarryOverFrom: function(val){
-        console.info('carry over from eval',val);
+    validateCarryOverFrom: function (val) {
+        console.info('carry over from eval', val);
         return true;
     },
 
@@ -525,10 +526,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New value
      * @return {(Boolean|String)} true if valid, or false / an error string if not
      */
-    validateCarryOverThrough: function(val){
-        console.info('carry over through eval',val);
+    validateCarryOverThrough: function (val) {
+        console.info('carry over through eval', val);
         return true;
     },
+
+
+
+    // === [Event Listeners] ===
 
     /**
      * Fires before entering edit mode for cell in Carry Over Rules grid
@@ -537,19 +542,24 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} editor Reference to active editor instance
      * @return {Boolean} Boolean indicating whether edit can take place
      */
-    onCarryOverBeforeEdit: function(location, editor){
+    onCarryOverBeforeEdit: function (location, editor) {
         var record = location.record,
             store = record.store,
             columnItemId = location.column.getItemId();
 
+        // Function to pass into `getItems().findBy()` to find by itemId
+        var findItemById = (item, id) => {
+            return (item.getItemId() == id);
+        };
+
         // clear old temp data stored on row
-        location.row.setData(null);
+        // location.row.setData(null);
 
         // ==[Logic specific to 'From' column]==
-        if(columnItemId == 'from'){
-            
+        if (columnItemId == 'from') {
+
             // store current from value in row's data for later reversion
-            location.row.appendData({temp: {svcFrom: record.get('svcFrom')}});
+            // location.row.appendData({temp: {svcFrom: record.get('svcFrom')}});
 
             console.info('before carry over edit [from]');
 
@@ -579,32 +589,50 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         // ==[Logic specific to 'Carry Over' column]==
-        if(columnItemId == 'allow'){
+        if (columnItemId == 'allow') {
             return true; // always enabled
         }
 
         // ==[Logic specific to 'Carry Max' column]==
-        if(columnItemId == 'max'){
+        if (columnItemId == 'max') {
 
             console.info('before carry over edit [max]');
 
-            if(!record.get('allowCarry')){
+            // Don't allow editing if allowCarry is false
+            if (!record.get('allowCarry')) {
                 // store 0 in temp carryMax value for row
                 location.row.appendData({
-                    temp: { carryMax: 0 }
+                    temp: { carryOver: 0 }
                 });
+                editor.getComponent('maxField').setValue(0);
                 return false;
             } else {
                 // store actual value in temp carryMax value for row
                 location.row.appendData({
-                    temp: { carryMax: record.get('carryMax') }
+                    temp: { carryOver: record.get('carryOver') }
                 });
+                // editor.getComponent('maxField').setValue(record.get('carryMax'));
                 return true;
             }
         }
 
         // ==[Logic specific to 'Carry Over Expiration' column]==
-        if(columnItemId == 'expiration'){
+        if (columnItemId == 'expiration') {
+
+            // Don't allow editing if carry over/allow carry isn't checked
+            if (!record.get('allowCarry')) {
+                return false;
+            }
+
+            // Get references to container field items and sub fields
+            let containerItems = editor.getComponent('expirationField').getItems(),
+                amount = containerItems.findBy((i) => { return findItemById(i, 'amount'); }),
+                unit = containerItems.findBy((i) => { return findItemById(i, 'unit'); });
+
+            // Update amount and unit field values from record
+            amount.setValue(record.get('perAmount'));
+            unit.setValue(record.get('perUnit'));
+
             // TODO: Implement logic for carry over expiration editor
             console.info('expiration fieldset');
             return true;
@@ -614,57 +642,87 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Fires when exiting cell editor for Carry Over Rules grid
      * @param {Object} location Object with grid cell location info 
+     * @param {Object} editor Reference to active editor instance
      */
-    onCarryOverPostEdit: function(location){
+    onCarryOverPostEdit: function (location, editor) {
         var record = location.record,
             store = record.store,
-            columnItemId = location.column.getItemId();
-        
-        // Function to pass into `getItems().findBy()` to find by itemId
-        var findItemById = (item, id)=>{
-            return (item.getItemId() == id);
-        };
+            columnItemId = location.column.getItemId(),
+            tempData = location.row.getData(),
+            editorComp = editor.getParent();
+
+        // Make sure temp data is at least an object with a temp property
+        tempData = (Object.isUnvalued(tempData)) ? { temp: {} } : tempData;
 
         console.info('carry over post edit');
 
-        if(columnItemId == 'expiration'){
-            // Get references to expiration container field's child fields
-            let container = location.column.getEditor().getComponent('expirationField'),
-                containerItems = container.getItems(),
-                amountField = containerItems.findBy((i)=>{
-                    return findItemById(i,'amount');
-                }),
-                unitField = containerItems.findBy((i)=>{
-                    return findItemById(i,'unit');
-                });
-            
-            // Store values from record
-            let amount = record.get('perAmount'),
-                unit = record.get('perUnit');
-            
-            // Store amount/unit values in row's data object
-            location.row.appendData({
-                perAmount: amount,
-                perUnit: unit
-            });
+        if (columnItemId == 'expiration') {
+            let amount = editor.getComponentInItems('amount'),
+                unit = editor.getComponentInItems('unit'),
+                oldAmount = tempData.temp['perAmount'],
+                oldUnit = tempData.temp['perUnit'];
 
-            // Load record values into sub fields
-            amountField.setValue(amount);
-            unitField.setValue(unit);
+            console.info('Carry Over Expiration post edit');
         }
+
+        // Hide editor
+        editorComp.onEditComplete(false, false);
 
     },
 
-    // === [Event Listeners] ===
+    /**
+     * Event handler for grid editor fired before edit completes
+     * @param {Object} location Object with grid cell and data location info
+     * @param {Object} editor Reference to active editor component
+     * @param {Object} values Object with current and start field values
+     */
+    onCarryOverBeforeEditComplete: function (location, editor) {
+        var record = location.record,
+            columnItemId = location.column.getItemId(),
+            tempData = location.row.getData();
 
-    // onShiftTimeChange: function(cmp, newVal, oldVal){
-    //     if(cmp.validate()){
-    //         // valid
-    //         console.info('Valid time')
-    //     } else {
+        // Make sure temp data is at least an object with a temp property
+        tempData = (Object.isUnvalued(tempData)) ? { temp: {} } : tempData;
 
-    //     }
-    // },
+        console.info('Carry over before edit complete');
+
+        // ==[Logic specific to 'Carry Over Expiration' column]==
+        if (columnItemId == 'expiration') {
+            let editorComp = editor.getComponent('expirationField'),
+                amount = editorComp.getComponentInItems('amount'),
+                unit = editorComp.getComponentInItems('unit'),
+                amountVal = amount.getValue(),
+                unitVal = unit.getValue();
+
+            // Check if amount or unit changed
+            if (amountVal !== record.get('perAmount') || unitVal !== record.get('perUnit')) {
+                // If change occured, update record
+                record.set({
+                    perAmount: amountVal,
+                    perUnit: unitVal,
+                    expChanged: true
+                }, { commit: true });
+            }
+        }
+    },
+
+    /**
+     * Change event handler for Carry Over Rules expiration amount editor field.
+     * When value is 0, unit select field is disabled
+     * @param {Object} comp Field component firing event
+     * @param {Number} newValue New field value
+     * @param {Number} oldValue Previous field value
+     * @param {Object} eOpts Event options object
+     */
+    onCarryOverExpirationAmountChange: function(comp, newValue, oldValue, eOpts){
+        var unitField = comp.getParent().getComponent('unit');
+        // Conditionally disable unit field based on value of source field
+        if(newValue == 0){
+            unitField.setDisabled(true);
+        } else {
+            unitField.setDisabled(false);
+        }
+    },
 
     /**
      * Handle select event from policy list
@@ -673,11 +731,11 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} record 
      * @param {Object} eOpts 
      */
-    onPolicySelect: function(list, record, oOpts){
+    onPolicySelect: function (list, record, oOpts) {
         var vm = this.getViewModel(),
             me = this,
             cats = this.lookup('categoryList');
-        if(vm.getStore('policy')){
+        if (vm.getStore('policy')) {
             vm.getStore('policy').destroy();
         }
         // cats.getSelectable().deselectAll(true);
@@ -690,8 +748,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 },
                 load: true,
                 loadOpts: {
-                    callback: function(records, op, success){
-                        if(success){
+                    callback: function (records, op, success) {
+                        if (success) {
                             var policy = vm.get('policy'),
                                 policyRecord = policy.getAt(0);
                             // store policy record
@@ -704,11 +762,11 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                             );
                             // store policy segments
                             vm.get('policySegments').loadData(
-                                Ext.clone(policyRecord.shifts().getData().items.map((i)=>{return i.getData();}))
+                                Ext.clone(policyRecord.shifts().getData().items.map((i) => { return i.getData(); }))
                             );
                             // Select first category if none selected, else restore
                             // previously selected category
-                            if(cats.getSelectable().getSelectionCount()==0){
+                            if (cats.getSelectable().getSelectionCount() == 0) {
                                 cats.getSelectable().setSelectedRecord(
                                     vm.get('categoriesList').getAt(0)
                                 );
@@ -729,7 +787,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         );
     },
 
-    onCategorySelect: function(list, record, eOpts){
+    onCategorySelect: function (list, record, eOpts) {
         var vm = this.getViewModel(),
             policyCats = vm.get('policyCategories'),
             recId = parseInt(record.get('Category_Id'));
@@ -748,7 +806,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
     },
 
-    onDeleteShiftSegment: function(grid, info){
+    onDeleteShiftSegment: function (grid, info) {
         var store = grid.getStore();
 
         store.remove([info.record]);
@@ -761,26 +819,26 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });
     },
 
-    onShiftTimeChange: function(cmp, newVal, oldVal){
+    onShiftTimeChange: function (cmp, newVal, oldVal) {
         cmp.validate();
-        if(cmp.isValid() && BreezeTime.resolve(newVal) !== null){
+        if (cmp.isValid() && BreezeTime.resolve(newVal) !== null) {
             cmp.setError(null);
             var record = cmp.getParent().ownerCmp.getRecord(),
                 start = record.get('StartTime'),
                 stop = record.get('StopTime');
-            if(cmp.getItemId() == 'start'){
+            if (cmp.getItemId() == 'start') {
                 start = newVal;
             } else {
                 stop = newVal;
             }
             var ok = this.validateShiftSegment(start, stop, record, false);
-            if(ok){
+            if (ok) {
                 var staT = BreezeTime.resolve(start),
                     stoT = BreezeTime.resolve(stop);
                 record.set({
                     StartTime: staT.asTime(), StartMin: staT.asMinutes(),
                     StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
-                }, {commit: true});
+                }, { commit: true });
             }
             console.info('valid');
             cmp.getParent().cancelEdit();
@@ -790,17 +848,17 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
 
     // TODO: Implement delete policy handler
-    onDeletePolicy: function(comp){
+    onDeletePolicy: function (comp) {
 
     },
 
     /**
      * Handle 'Save Accrual Policy' button click event
      */
-    onSavePolicy: function(){
+    onSavePolicy: function () {
         console.info('Save policy clicked');
     }
 
 
-    
+
 });

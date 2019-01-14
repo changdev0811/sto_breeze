@@ -852,30 +852,37 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             headerCheckbox: false,
                                             text: 'Carry Over',
                                             dataIndex: 'allowCarry',
-                                            editable: true,
-                                            editor: {
-                                                xtype: 'numberfield',
-                                                decimals: 0,
-                                                required: true,
-                                                minValue: 0,
-                                                validators: {
-                                                    type: 'controller',
-                                                    fn: 'validateCarryOverFrom'
-                                                },
-                                            }
+                                            // editable: true,
+                                            // editor: {
+                                            //     xtype: 'numberfield',
+                                            //     decimals: 0,
+                                            //     required: true,
+                                            //     minValue: 0,
+                                            //     validators: {
+                                            //         type: 'controller',
+                                            //         fn: 'validateCarryOverFrom'
+                                            //     },
+                                            // }
                                         },
                                         {
                                             itemId: 'max',
                                             flex: 1.25,
                                             text: 'Carry Max',
-                                            dataIndex: 'carryMax',
+                                            dataIndex: 'carryOver',
                                             tpl: [
                                                 '<tpl if="allowCarry==false">--</tpl>',
                                                 '<tpl if="allowCarry==true">',
                                                 '<tpl if="carryOver==0">No Max</tpl>',
                                                 '<tpl if="carryOver &gt; 0">{carryOver}</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'maxField',
+                                                decimals: 4,
+                                                minValue: 0
+                                            }
                                         },
                                         {
                                             itemId: 'expiration',
@@ -913,7 +920,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         // label: 'Amount',
                                                         placeholder: 'Amount',
                                                         // Default to 0, min value 0
-                                                        value: 0, minValue: 0
+                                                        value: 0, minValue: 0,
+                                                        listeners: {
+                                                            change: 'onCarryOverExpirationAmountChange'
+                                                        }
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -933,8 +943,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         }
                                     ],
                                     listeners: {
-                                        edit: 'onCarryOverPostEdit',
+                                        // edit: 'onCarryOverPostEdit',
                                         beforeedit: 'onCarryOverBeforeEdit',
+                                        beforecompleteedit: 'onCarryOverBeforeEditComplete'
                                     }
                                 }
                             ]
