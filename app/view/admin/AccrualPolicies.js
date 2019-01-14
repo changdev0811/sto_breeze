@@ -811,7 +811,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ],
                                             editable: true,
                                             editor: {
-                                                itemId: 'from',
                                                 xtype: 'numberfield',
                                                 decimals: 0,
                                                 required: true,
@@ -847,12 +846,23 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             }
                                         },
                                         {
-                                            itemId: 'over',
+                                            itemId: 'allow',
                                             xtype: 'checkcolumn',
                                             flex: 1.25,
                                             headerCheckbox: false,
                                             text: 'Carry Over',
-                                            dataIndex: 'allowCarry'
+                                            dataIndex: 'allowCarry',
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'numberfield',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0,
+                                                validators: {
+                                                    type: 'controller',
+                                                    fn: 'validateCarryOverFrom'
+                                                },
+                                            }
                                         },
                                         {
                                             itemId: 'max',
@@ -868,7 +878,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ]
                                         },
                                         {
-                                            itemId: 'info',
+                                            itemId: 'expiration',
                                             text: 'Carry Over Expiration',
                                             flex: 2.5,
                                             dataIndex: 'expChanged',

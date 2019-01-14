@@ -328,11 +328,69 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
 
     /**
-     * Event handler for add carry over rule tool button
-     * @todo TODO: Implement onAddCarryOverRule
+     * Event handler for add carry over rule tool button.
+     * Automatically adds new carry over rule, adjusting previous
+     * last record if exists
      */
     onAddCarryOverRule: function(){
+        var me = this,
+            vm = me.getViewModel(),
+            ruleStore = vm.get('selectedCategoryCarryOverRules');
 
+        // success toast message function
+        var successToast = ()=>{
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'New Carry Over Rule successfully added.',
+                timeout: 'info'
+            });
+        };
+
+        // console.info('add carry over rule');
+        
+        if(ruleStore.last()){
+            // rule store has at least 1 record
+            let lastRec = ruleStore.last(),
+                durationEnd = lastRec.get('svcFrom');
+            if(durationEnd == 0){
+                // set end duration to 1 if last record's svcFrom is 0
+                durationEnd = 1;
+            }
+            // update svcTo of last record
+            lastRec.set({
+                svcTo: durationEnd
+            }, {commit: true});
+            // Add new rule
+            let newRule = ruleStore.add({
+                allowCarry: lastRec.get('allowCarry'),
+                carryMax: lastRec.get('carryMax'),
+                carryOver: lastRec.get('carryOver'),
+                perAmount: lastRec.get('perAmount'),
+                perUnit: lastRec.get('perUnit'),
+                svcFrom: durationEnd,
+                svcTo: 0,
+                expChanged: false
+            })[0]; // add returns an array, so pull out the first item
+            /*  
+                svcFrom is incremented after adding rule in original code, so 
+                doing the same thing here 
+            */
+           newRule.set({svcFrom: durationEnd + 1}, {commit: true});
+           successToast();
+        } else {
+            // No carry over rules exist, so create a new generic one
+            ruleStore.add({
+                allowCarry: false,
+                carryMax: false,
+                carryOver: -1,
+                perAmount: 0,
+                perUnit: 59,
+                svcFrom: 0,
+                svcTo: 0,
+                expChanged: false
+            });
+            successToast();
+        }
     },
 
     // === [Validators] ===
@@ -471,31 +529,91 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('carry over through eval',val);
         return true;
     },
+
+    /**
+     * Fires before entering edit mode for cell in Carry Over Rules grid
+     * Allows editor to be disabled conditionally for specific cells
+     * @param {Object} location Object containing location data for targeted cell
+     * @return {Boolean} Boolean indicating whether edit can take place
+     */
     onCarryOverBeforeEdit: function(location){
         var record = location.record,
-            store = record.store;
-        if(location.column.getItemId() == 'from'){
-            // disable editing from for first carry over rule
-            if(location.recordIndex == 0){
-                return false;
+            store = record.store,
+            columnItemId = location.column.getItemId();
 
+        // clear old temp data stored on row
+        location.row.setData(null);
+
+        // ==[Logic specific to 'From' column]==
+        if(columnItemId == 'from'){
+            
+            // store current from value in row's data for later reversion
+            location.row.appendData({temp: {svcFrom: record.get('svcFrom')}});
+
+            console.info('before carry over edit [from]');
+
+            // disable editing from for first carry over rule
+            if (location.recordIndex == 0) {
+                return false;
             }
-            if(location.recordIndex == -1){
+            if (location.recordIndex == -1) {
                 return true;
-            } else if(BreezeTime.resolve(record.get('svcFrom')) !== 0 &&
-            BreezeTime.resolve(record.get('svcFrom') > record.get('svcTo'))){
-                console.warn('Bigger than start');
+            } else if (record.get('svcFrom') !== 0 &&
+                (record.get('svcFrom') > record.get('svcTo'))) {
+                // TODO: Handle svc from > svc to
+                console.warn('svcFrom > svcTo');
             }
         }
-        if(location.column.getItemId() == 'through')
+
+        // ==[Logic specific to 'Through' column]==
+        // TODO: Finish 'through' column logic
+        if (columnItemId == 'through') {
+
+            console.info('before carry over edit [through]');
+
             //disable editing through if last cary over rule
-            if(location.record.store.getCount() -1 == location.recordIndex){
+            if (record.store.getCount() - 1 == location.recordIndex) {
                 return false;
             }
+        }
+
+        // ==[Logic specific to 'Carry Over' column]==
+        if(columnItemId == 'allow'){
+            return true; // always enabled
+        }
+
+        // ==[Logic specific to 'Carry Max' column]==
+        if(columnItemId == 'max'){
+
+            console.info('before carry over edit [max]');
+
+            if(!record.get('allowCarry')){
+                // store 0 in temp carryMax value for row
+                location.row.appendData({
+                    temp: { carryMax: 0 }
+                });
+                return false;
+            } else {
+                // store actual value in temp carryMax value for row
+                location.row.appendData({
+                    temp: { carryMax: record.get('carryMax') }
+                });
+                return true;
+            }
+        }
+
+        // ==[Logic specific to 'Carry Over Expiration' column]==
+        if(columnItemId == 'expiration'){
+            
+        }
     },
 
+    /**
+     * Fires when exiting cell editor for Carry Over Rules grid
+     * @param {Object} location Object with grid cell location info 
+     */
     onCarryOverPostEdit: function(location){
-        console.info('carry over post edit ', )
+        console.info('carry over post edit');
 
     },
 
