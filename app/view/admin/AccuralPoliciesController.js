@@ -327,6 +327,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
 
+    /**
+     * Event handler for add carry over rule tool button
+     * @todo TODO: Implement onAddCarryOverRule
+     */
+    onAddCarryOverRule: function(){
+
+    },
+
     // === [Validators] ===
 
     /**
@@ -444,11 +452,25 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('Validate shift segment');
     },
 
+    /**
+     * Validator function for carry over rules 'from' field
+     * @param {Object} val New value
+     * @return {(Boolean|String)} true if valid, or false / an error string if not
+     */
     validateCarryOverFrom: function(val){
-        console.info('carry over from eval');
+        console.info('carry over from eval',val);
         return true;
     },
 
+    /**
+     * Validator function for carry over rules 'through' field
+     * @param {Object} val New value
+     * @return {(Boolean|String)} true if valid, or false / an error string if not
+     */
+    validateCarryOverThrough: function(val){
+        console.info('carry over through eval',val);
+        return true;
+    },
     onCarryOverBeforeEdit: function(location){
         var record = location.record,
             store = record.store;

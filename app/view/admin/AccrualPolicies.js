@@ -753,38 +753,23 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             ]
                         },
 
-
+                        // Carry over rules panel
                         {
-                            xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-padding',
-                            flex: 1,
-                            layout: 'vbox',
-                            items: [
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel', userCls: 'admin-fieldset no-padding',
+                            flex: 1, layout: 'vbox',
+                            bind: {
+                                title: '{selectedCategory.categoryName} Carry Over Rules'
+                            },
+                            tools: [
+                                // Add rule tool button
                                 {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            bind: {
-                                                html: '{selectedCategory.categoryName} Carry Over Rules'
-                                            },
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1,
-
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            //text: 'Save for Future Use',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                        },
-                                    ]
-                                },
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'onAddCarryOverRule'
+                                }
+                            ],
+                            items: [
                                 {
                                     xtype: 'grid',
                                     flex: 1,
@@ -857,7 +842,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 minValue: 0,
                                                 validators: {
                                                     type: 'controller',
-                                                    fn: 'validateCarryOverFrom'
+                                                    fn: 'validateCarryOverThrough'
                                                 },
                                             }
                                         },
@@ -906,7 +891,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         // edit: 'onCarryOverPostEdit'
                                         beforeedit: 'onCarryOverBeforeEdit'
                                     }
-                                },
+                                }
                             ]
                         }
                     ]
