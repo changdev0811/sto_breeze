@@ -40,28 +40,22 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
     // Body contents
     items: [
         {
-            xtype: 'panel',
+            xtype: 'fieldset',
+            userCls:'admin-fieldset no-padding',
+            title:'Employee to Restore',
+            maxWidth:'350pt',
             ui: 'admin-sub',
-            layout:'fit',
-            buttons: {
-                save: { reference:'restoreButton', disabled:true, text: 'Restore Employee', handler:'onRestoreButtonTap', ui: 'action', },
-            },
-            buttonAlign: 'right',
-            buttonToolbar: {
-                xtype: 'toolbar',
-                ui: 'admin-actions',
-                shadow: false
-            },
+            layout:'vbox',
+
             items:[
+
                 {
                     xtype: 'selectfield',
                     ui: 'admin admin-text',
-                    userCls:'admin-fieldset no-border',
+                    margin:'8pt',
                     reference:'deletedEmployeesSelectField',
-                    labelAlign: 'left',
-                    labelWidth: 'auto',
+
                     placeholder: 'Select employee to restore',
-                    label:'Employee to Restore',
                     displayField: 'text',
                     valueField: 'data',
                     bind: {
@@ -73,6 +67,29 @@ Ext.define('Breeze.view.admin.RestoreEmployee', {
 
                 },
 
+                {
+                    xtype: 'toolbar',
+                    userCls:'admin-toolbar-footer',
+                    shadow: false,
+                    buttonAlign: 'right',
+                    items: [
+                        {
+                            xtype:'spacer',
+                            flex:1,
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'plain wtr-button',
+                            reference:'restoreButton', 
+                            disabled:true, 
+                            text: 'Restore Employee', 
+                            handler:'onRestoreButtonTap', 
+                            ui: 'action',
+                                        
+
+                        },
+                    ]
+                },
 
 
 

@@ -125,8 +125,12 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         this.lookup('usage').setUserCls('');
         if(typeof catColor !== 'undefined'){
             var bgColor = Ext.util.Color.fromString(catColor);
-            bgColor.a = 0.25;
+            bgColor.a = 1;
             bar.el.setStyle('background-color',bgColor.toString());
+            bar.el.setStyle('background-image','linear-gradient( rgba(63,63,63,.33), rgba(127,127,127,.25) )');
+
+
+
         }
 
         if(recorded.value <= allowed.value){
@@ -137,8 +141,11 @@ Ext.define('Breeze.view.employee.fyi.AccrualItem', {
         
         if(typeof catColor !== 'undefined'){
             bar.el.child('.x-progress-bar', true).style.backgroundColor = catColor;
+            bar.el.child('.x-progress-bar', true).style.backgroundImage = 'linear-gradient( rgba(255,255,255,.33), rgba(255,255,255,0) )';
+
         }
-        bar.el.child('.x-progress-bar', true).style.backgroundImage = 'none';
+        //bar.el.child('.x-progress-bar', true).style.background33mage = 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.25), rgba(255,255,255,0), rgba(0,0,0,.5))';
+        //bar.el.child('.x-progress-bar', true).style.backgroundImage = 'none';
     },
 
     /**

@@ -52,7 +52,7 @@ $fyi-accrual-color: map-get($employee-fyi-text-colors,'base');
 
 /* Progress bar box shadow */
 .employee-fyi-accrual-value-shadow {
-    box-shadow: 0pt 3pt 3pt rgba(0,0,0,0.33);
+    box-shadow: 0pt 3pt 3pt rgba(0,0,0,.25);
 }
 
 

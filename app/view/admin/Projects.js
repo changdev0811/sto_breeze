@@ -99,11 +99,11 @@ Ext.define('Breeze.view.admin.Projects', {
                             layout: 'hbox',
                             hideHeaders: true,
                             rootVisible: false,
-
                             bind: '{projects}',
                             listeners: {
                                 select: 'onProjectSelect',
-                                deselect: 'onProjectDeselect'
+                                deselect: 'onProjectDeselect',
+                                load: 'onProjectReady',
                             },
                             plugins: {
                                 expandSelect2: {

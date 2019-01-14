@@ -35,8 +35,11 @@ Ext.define('Breeze.store.employees.Routes', {
             method: false
         },
         {
-            action: 'yag', view: '', 
-            method: true
+            //action: 'yag', view: '', 
+            //method: true
+
+            action: 'yag', view: 'Breeze.view.employee.YearAtAGlance', 
+            method: false
         },
         {
             action: 'wtv', view: 'Breeze.view.employee.WorkTimeRecords',

@@ -88,6 +88,11 @@ Ext.define('Breeze.view.admin.ProjectsController', {
      * @param {Object} tree 
      * @param {Array} record 
      */
+
+    onProjectReady: function(){
+        this.lookup('projectsTree').expandAll();
+    },
+
     onProjectSelect: function(tree, record){
         var me = this,
             vm = me.getViewModel();
@@ -111,6 +116,7 @@ Ext.define('Breeze.view.admin.ProjectsController', {
         } else {
             vm.set('projectID', 0);
         }
+
         
     },
 
