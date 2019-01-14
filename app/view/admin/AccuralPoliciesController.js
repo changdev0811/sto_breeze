@@ -601,16 +601,16 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             // Don't allow editing if allowCarry is false
             if (!record.get('allowCarry')) {
                 // store 0 in temp carryMax value for row
-                location.row.appendData({
-                    temp: { carryOver: 0 }
-                });
+                // location.row.appendData({
+                //     temp: { carryOver: 0 }
+                // });
                 editor.getComponent('maxField').setValue(0);
                 return false;
             } else {
                 // store actual value in temp carryMax value for row
-                location.row.appendData({
-                    temp: { carryOver: record.get('carryOver') }
-                });
+                // location.row.appendData({
+                //     temp: { carryOver: record.get('carryOver') }
+                // });
                 // editor.getComponent('maxField').setValue(record.get('carryMax'));
                 return true;
             }
@@ -655,6 +655,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             columnItemId = location.column.getItemId(),
             editorComp = editor.getParent();
 
+
+        
+
         /*
             If there is at least one record, make sure the first
             starts with an svcFrom value of 0
@@ -680,7 +683,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             If record isn't last, make sure following record's
             svcFrom value is 1 greater than this record's svcTo value
         */
-        if(recIdx < store.getCount()){
+        if(recIdx < store.getCount() - 1){
             let nextRecord = store.getAt(recIdx + 1);
             nextRecord.set({
                 svcFrom: record.get('svcTo') + 1
@@ -699,12 +702,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onCarryOverBeforeEditComplete: function (location, editor) {
         var record = location.record,
-            columnItemId = location.column.getItemId(),
-            tempData = location.row.getData();
-
-        // Make sure temp data is at least an object with a temp property
-        tempData = (Object.isUnvalued(tempData)) ? { temp: {} } : tempData;
-
+            columnItemId = location.column.getItemId();
+        
         console.info('Carry over before edit complete');
 
         // ==[Logic specific to 'Carry Over Expiration' column]==
@@ -724,6 +723,16 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     expChanged: true
                 }, { commit: true });
             }
+        }
+
+        // ==[Logic specific to 'from' column]==
+        if(columnItemId == 'from'){
+            console.info('')
+        }
+
+        // ==[Logic specific to 'through' column]==
+        if(columnItemId == 'through'){
+
         }
     },
 
