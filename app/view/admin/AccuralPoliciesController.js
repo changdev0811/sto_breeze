@@ -708,12 +708,103 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         return true;
     },
 
+    /**
+     * Validate changes to Accrual Rule 'from' field in editor
+     * 
+     * If validation fails, displays warning toast
+     * 
+     * @param {Object} location Object with grid and record info
+     * @param {Object} val New field value
+     * @return {Boolean} True if valid, false otherwise
+     */
     validateAccrualRuleFrom: function(location, val){
+        var record = location.record,
+            store = record.store;
+        let valid = true,
+            errors = [],
+            toVal = record.get('svcTo'),
+            // Shorthand for adding error message and syncing valid
+            addErr = (msg) => {
+                valid = false;
+                errors.push(msg);
+            };
+        
+        if(location.recordIndex == 0){
+            if(val !== 0){
+                /*
+                    Record is first rule and svcFrom isn't 0
+                */
+               addErr('Service must be from 0 (hire) for the first interval');
+            }
+        } else if (toVal !== 0 && val > toVal){
+            /*
+                Record's svcTo !== 0 and svcFrom > svcTo
+            */
+           addErr('The service from year can\'t be after the service to year');
+        } else if (location.recordIndex == 1){
 
+        }
     },
 
+    /**
+     * Validate changes to Accrual Rule 'through' field in editor
+     * 
+     * If validation fails, displays warning toast
+     * 
+     * @param {Object} location Object with grid and record info
+     * @param {Object} val New field value
+     * @return {Boolean} True if valid, false otherwise
+     */
     validateAccrualRuleThrough: function(location, val){
+        var record = location.record,
+            store = record.store;
+        let valid = true,
+            errors = [],
+            fromVal = record.get('svcFrom'),
+            // Shorthand for adding error message and syncing valid
+            addErr = (msg) => {
+                valid = false;
+                errors.push(msg);
+            };
+        if (location.recordIndex == store.getCount() - 1) {
+            /*
+                Record is last rule
+            */
+            if (val !== 0) {
+                addErr('Service must be though 0 (infinity) for the last interval');
+            }
+        } else if (val < fromVal) {
+            /*
+                Record's svcTo value is before its svcFrom value
+            */
+           addErr('The service through year can\'t be before the service from year');
+        } else if(location.recordIndex < store.getCount() - 2){
+            /*
+                Record comes before last two rules
+            */
+           let nextRecord = store.getAt(location.recordIndex + 1);
+           if(val >= nextRecord.get('svcTo')){
+               /*
+                    This record's svcTo valie >= the next rule's svcTo value
+               */
+              addErr('This interval can\'t completely overwrite the next interval');
+           }
+        }
 
+        if (!valid) {
+            // If not valid (1 or more errors)
+            
+
+            // Show warning toast for duration of error + 4 seconds
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update Accrual Rule \'Through\' value:',
+                list: errors,
+                timeout: ['error', 4]
+            });
+        }
+
+        return valid;
     },
 
     validateAccrualRuleBeforeComplete: function(location, editor, val, oldVal){
@@ -907,7 +998,79 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
     },
 
+    /**
+     * Fires before entering edit mode for cell in Accrule Rules grid
+     * Allows editor to be disabled conditionally for specific cells
+     * @param {Object} location Object containing location data for targeted cell
+     * @param {Object} editor Reference to active editor instance
+     * @return {Boolean} Boolean indicating whether edit can take place
+     */
     onAccrualRuleBeforeEdit: function(location, editor){
+
+        var record = location.record,
+            store = record.store,
+            columnItemId = location.column.getItemId();
+        
+        // Calculate rule index info
+        var firstRuleIndex = -1,
+            ruleCount = 0,
+            lastRuleIndex = -1;
+        for(var i = 0; i < store.getCount(); i++){
+            if(store.getAt(i).get('ruleName') == record.get('ruleName')){
+                if(ruleCount == 0){
+                    firstRuleIndex = i;
+                }
+                ruleCount++;
+            }
+        }
+
+        lastRuleIndex = firstRuleIndex + (ruleCount - 1);
+
+        // Store rule index info in table row's data object
+        location.row.setData({
+            firstRuleIndex: firstRuleIndex,
+            ruleCount: ruleCount,
+            lastRuleIndex: lastRuleIndex
+        });
+
+        console.info('rule indexes calculated');
+
+        // ==[Logic specific to 'info' column]==
+        if(columnItemId == 'info'){
+            this.onAccrualRuleInfoBeforeEdit(location, editor);
+            return true;
+        }
+
+        // ==[Logic specific to 'from' column]==
+        if(columnItemId == 'from'){
+            if(location.recordIndex == firstRuleIndex){
+                /*
+                    Record is first rule for group, so disable edit
+                */
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        // ==[Logic specific to 'through' column]==
+        if(columnItemId == 'through'){
+            if(location.recordIndex == lastRuleIndex){
+                /*
+                    Record is last rule for group, so disable through edit
+                */
+               return false;
+            } else {
+                return true;
+            }
+        }
+
+    },
+
+    /**
+     * Extracted portion of onAccrualRuleBeforeEdit specific to the 'info' column
+     */
+    onAccrualRuleInfoBeforeEdit: function(location, editor){
         var record = location.record,
             store = record.store,
             container = editor.getComponent('infoField');
@@ -938,7 +1101,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 items[i].setHidden(false);
             }
         };
-
 
         // Set default values
         accformOn.setValue(53);
@@ -1088,7 +1250,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         console.info('On accrual rule before edit');
-
     },
 
     onAccrualRuleBeforeEditComplete: function(location, editor, val, oldVal){
