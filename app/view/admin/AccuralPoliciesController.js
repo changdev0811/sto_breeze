@@ -381,16 +381,18 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 .getColumnForField('accrualChanged').getEditor().getAt(0);
             // Helper for hiding multiple fields within info field container
             multiHide = (itemIds) => {
-                for(var i = 0; i < items.length; i++){
-                    infoFc.getComponentInItems(itemId).setHidden(true);
+                for(var i = 0; i < itemIds.length; i++){
+                    infoFc.getComponentInItems(itemIds[i]).setHidden(true);
                 }
             };
             // Helper for showing multiple fields within info field container
             multiShow = (itemIds) => {
-                for(var i = 0; i < items.length; i++){
-                    infoFc.getComponentInItems(itemId).setHidden(false);
+                for(var i = 0; i < itemIds.length; i++){
+                    infoFc.getComponentInItems(itemIds[i]).setHidden(false);
                 }
             };
+
+        // console.info('Accrual Rule Info Change:', itemId);
 
         // ==[Logic for accformOn change event]==
         // ==[from AccrualInformationEditor.selectAccrualRuleOn]==
@@ -466,8 +468,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // ==[logic fpr onPer change event]==
         // ==[from AccrualInformationEditor.selectOnPer]==
-        if(itemId == 'onPer'){
-            if(newVal == 1){
+        if (itemId == 'onPer') {
+            if (newVal == 1) {
                 // On
                 multiHide([
                     'perX', 'accformPer', 'monthlySpecialPer',
@@ -476,62 +478,64 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 multiShow(['accformOn']);
                 // Determine options to show
                 let afOnVal = infoFc.getComponentInItems('accformOn').getValue();
-                if(afOnVal == 51){
+                if (afOnVal == 51) {
                     // Weekly
                     multiShow(['onWeekly']);
-                } else if(afOnVal == 52){
+                } else if (afOnVal == 52) {
                     // Bi-Weekly
                     multiShow(['onBiWeekly']);
-                } else if(afOnVal == 53) {
+                } else if (afOnVal == 53) {
                     // Monthly
                     multiShow(['monthly31']);
-                } else if(afOnVal == 114){
+                } else if (afOnVal == 114) {
                     // Annually
                     multiShow(['onAnnually']);
-                } else if(afOnVal == 100){
+                } else if (afOnVal == 100) {
                     // Annually (Anniversary)
                     multiShow(['onAnniversary']);
-                } else if(afOnVal == 56){
+                } else if (afOnVal == 56) {
                     // Monthly special
                     multiShow(['monthlySpecialOn']);
-                    
+
                     // Day option choices based off month
                     let msChoice = infoFc.getComponentInItems('monthlySpecialOn').getValue();
 
-                    if(msChoice == '2'){
+                    if (msChoice == '2') {
                         // Feburary - 28 days
                         multiShow(['monthly28']);
-                    } else if(['4','6','9','11'].includes(msChoice)){
+                    } else if (['4', '6', '9', '11'].includes(msChoice)) {
                         // April/June/Sept/Nov - 30 days
                         multiShow(['monthly30']);
                     } else {
                         // All others - 31 days
                         multiShow(['monthly31']);
                     }
+                }
+            } else {
+                // Per
+                multiHide([
+                    'accformOn', 'onWeekly', 'onBiWeekly', 'monthly31',
+                    'monthly30', 'monthly28', 'onAnnually', 'onAnniversary',
+                    'monthlySpecialOn', 'msOn'
+                ]);
+                multiShow(['accformPer']);
+
+                // Determine which options to show
+                let afPer = infoFc.getComponentInItems('accformPer');
+
+                // console.info('afPer', afPer.getValue());
+
+                // TODO: confirm this is correct
+                if (!afPer.getValue()) {
+                    afPer.setValue(117);
+                }
+                if (afPer.getValue() == 119) {
+                    // Monthly Special
+                    multiShow(['monthlySpecialPer', 'msOn', 'monthly31']);
                 } else {
-                    // Per
-                    multiHide([
-                        'accformOn', 'onWeekly','onBiWeekly', 'monthly31',
-                        'monthly30', 'monthly28', 'onAnnually', 'onAnniversary',
-                        'monthlySpecialOn', 'msOn'
-                    ]);
-                    multiShow(['accformPer']);
-
-                    // Determine which options to show
-                    let afPer = infoFc.getComponentInItems('accformPer');
-
-                    // TODO: confirm this is correct
-                    if(!afPer.getValue()){
-                        afPer.setValue(117);
-                    }
-                    if(afPer.getValue() == 119){
-                        // Monthly Special
-                        multiShow(['monthlySpecialPer','msOn','monthly31']);
-                    } else {
-                        // Everything else
-                        multiHide(['monthlySpecialPer']);
-                        multiShow(['perX']);
-                    }
+                    // Everything else
+                    multiHide(['monthlySpecialPer']);
+                    multiShow(['perX']);
                 }
             }
         }
@@ -596,8 +600,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             accformInc: fields.accformInc.getValue(),
             accformUnit: fields.accformUnit.getValue(),
             // Default month and day to 0 unless monthly special
-            msMonth = '0',
-            msDay = '0'
+            msMonth: '0',
+            msDay: '0'
         };
 
         if(fields.onPer.getValue() == 1) {

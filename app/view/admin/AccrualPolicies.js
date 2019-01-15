@@ -783,9 +783,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         decimals: 4,
                                                         style: 'width: 3.5em',
                                                         textAlign: 'center',
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -797,9 +797,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         value: 48,
                                                         // margin: 'inherit inherit inherit 4pt',
                                                         ui: 'admin-ap-small-input',
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     select: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -844,9 +844,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         textAlign: 'center',
                                                         value: 1,
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'accformPer',
@@ -855,7 +855,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         flex: 1,
                                                         hidden: true,
                                                         listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
+                                                            select: 'onAccrualRuleInfoChange'
                                                         }
                                                     }, {
                                                         xtype: 'selectfield',
@@ -865,31 +865,31 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         // flex: 1,
                                                         value: '1',
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'onWeekly',
                                                         bind: { store: '{onWeekly}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '6',
-                                                        // flex: 1,
+                                                        flex: 1,
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'onBiWeekly',
                                                         bind: { store: '{onBiWeekly}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '13',
-                                                        // flex: 1,
+                                                        flex: 1,
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'displayfield',
                                                         itemId: 'msOn',
@@ -902,42 +902,48 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         bind: { store: '{monthly31}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
-                                                        width: 48,
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'monthly30',
                                                         bind: { store: '{monthly30}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
-                                                        width: 48,
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'monthly28',
                                                         bind: { store: '{monthly28}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
-                                                        width: 48,
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'datefield',
                                                         itemId: 'onAnnually',
                                                         dateFormat: 'm/d',
                                                         value: '1/1',
                                                         hidden: true,
-                                                        listeners: {
-                                                            change: 'onAccrualRuleInfoChange'
-                                                        }
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
                                                     }, {
                                                         xtype: 'displayfield',
                                                         itemId: 'onAnniversary',
