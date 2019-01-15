@@ -312,11 +312,60 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         dialog.show();
 
-        var names = dialog.getComponent('ruleNames');
+        var names = dialog.getComponent('ruleName');
 
         // Add rule name options
         names.setValue(null);
         names.setOptions(ruleOptions);
+    },
+
+    /**
+     * Event handler for 'add' button in new accrual interval dialog
+     */
+    onAddAccrualInterval: function () {
+        var dlg = this.addAccrualIntervalDialog,
+            ruleCmp = dlg.getComponent('ruleName'),
+            rule = ruleCmp.getValue(),
+            vm = this.getViewModel(),
+            rules = vm.get('selectedCategoryAccrualRules');
+
+        dlg.hide();
+
+        var lastRuleIndex = -1;
+        for(var i = 0; i < rules.getCount(); i++){
+            if(rules.getAt(i).get('ruleName') == rule){
+                lastRuleIndex = i;
+            }
+        }
+
+        var lastRuleData = rules.getAt(lastRuleIndex).getData(),
+            durationEnd = lastRuleData.svcFrom;
+        if(durationEnd == 0) { durationEnd = 1; }
+
+        rules.getAt(lastRuleIndex).set({
+            svcTo: durationEnd
+        }, { commit: true });
+
+        rules.add({
+            accformDay: lastRuleData.accformDay,
+            accformInc: lastRuleData.accformInc,
+            accformPer: lastRuleData.accformPer,
+            accformUnit: lastRuleData.accformUnit,
+            ruleName: lastRuleData.ruleName.trim(),
+            svcFrom: durationEnd + 1,
+            svcTo: 0,
+            accrualChanged: false,
+            msMonth: lastRuleData.msMonth,
+            msDay: lastRuleData.msDay
+        });
+
+        rules.commitChanges();
+
+        Ext.toast({
+            type: Ext.Toast.INFO,
+            message: 'Successfully added Accrual Rule Interval',
+            timeout: 'info'
+        });
     },
 
     /**
@@ -658,10 +707,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     validateCarryOverBeforeComplete: function (location, editor, val, oldVal) {
         var record = location.record,
-            store = record.store,
             columnItemId = location.column.getItemId();
         
-        console.info('Carry over before edit complete');
+        // console.info('Carry over before edit complete');
 
         // ==[Logic specific to 'Carry Over Expiration' column]==
         if (columnItemId == 'expiration') {
@@ -714,13 +762,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * If validation fails, displays warning toast
      * 
      * @param {Object} location Object with grid and record info
+     * @param {Object} store Reference to store containing record
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateAccrualRuleFrom: function(location, val){
+    validateAccrualRuleFrom: function(location, store, val){
         var record = location.record,
-            store = record.store;
-        let valid = true,
+            rowData = location.row.getData();
+            valid = true,
             errors = [],
             toVal = record.get('svcTo'),
             // Shorthand for adding error message and syncing valid
@@ -729,10 +778,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 errors.push(msg);
             };
         
-        if(location.recordIndex == 0){
+        rowData = (Object.isUnvalued(rowData))? {} : rowData;
+
+        console.info('validate accrual rule [form] row data:', rowData);
+        
+        if(location.recordIndex == rowData.firstRuleIndex){
             if(val !== 0){
                 /*
-                    Record is first rule and svcFrom isn't 0
+                    Record is first rule in named group and svcFrom isn't 0
                 */
                addErr('Service must be from 0 (hire) for the first interval');
             }
@@ -741,9 +794,41 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 Record's svcTo !== 0 and svcFrom > svcTo
             */
            addErr('The service from year can\'t be after the service to year');
-        } else if (location.recordIndex == 1){
-
+        } else if (location.recordIndex == rowData.firstRuleIndex + 1){
+            if(val < 2) {
+                /*
+                    Record is second rule in named group, and svcFrom < 2
+                */
+               addErr('This interval can\'t completely overwrite the first interval');
+            }
+           
+        } else if (location.recordIndex > rowData.firstRuleIndex + 1) {
+            /*
+                Record is 3rd+ rule in named group
+            */
+           let prevRecord = store.getAt(location.recordIndex - 1);
+            if (val <= prevRecord.get('svcFrom')) {
+                /*
+                    Record's svcFrom value <= previous rule's svcFrom value
+                */
+                addErr('This interval can\'t completely overwrite the previous interval');
+            }
         }
+
+        if (!valid) {
+            // If not valid (1 or more errors)
+            
+
+            // Show warning toast for duration of error + 4 seconds
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update Accrual Rule \'From\' value:',
+                list: errors,
+                timeout: ['error', 4]
+            });
+        }
+
+        return valid;
     },
 
     /**
@@ -752,23 +837,27 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * If validation fails, displays warning toast
      * 
      * @param {Object} location Object with grid and record info
+     * @param {Object} store Reference to store containing record
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateAccrualRuleThrough: function(location, val){
+    validateAccrualRuleThrough: function(location, store, val){
         var record = location.record,
-            store = record.store;
-        let valid = true,
+            valid = true,
             errors = [],
             fromVal = record.get('svcFrom'),
             // Shorthand for adding error message and syncing valid
             addErr = (msg) => {
                 valid = false;
                 errors.push(msg);
-            };
-        if (location.recordIndex == store.getCount() - 1) {
+            },
+            rowData = location.row.getData();
+        
+        rowData = (Object.isUnvalued(rowData))? {} : rowData;
+
+        if (location.recordIndex == rowData.lastRuleIndex) {
             /*
-                Record is last rule
+                Record is last rule in named group
             */
             if (val !== 0) {
                 addErr('Service must be though 0 (infinity) for the last interval');
@@ -778,9 +867,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 Record's svcTo value is before its svcFrom value
             */
            addErr('The service through year can\'t be before the service from year');
-        } else if(location.recordIndex < store.getCount() - 2){
+        } else if(location.recordIndex < rowData.lastRuleIndex - 1){
             /*
-                Record comes before last two rules
+                Record comes before last two rules in named group
             */
            let nextRecord = store.getAt(location.recordIndex + 1);
            if(val >= nextRecord.get('svcTo')){
@@ -807,8 +896,43 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         return valid;
     },
 
-    validateAccrualRuleBeforeComplete: function(location, editor, val, oldVal){
+    /**
+     * Multi-field validation method for grid editor fired before edit completes
+     * @param {Object} location Object with grid cell and data location info
+     * @param {Object} store Reference to store containing record
+     * @param {Object} editor Reference to active editor component
+     * @param {Object} val Current field value
+     * @param {Object} oldVal Field value prior to edit
+     * @return {Boolean} True if validation succeeds, false otherwise
+     */
+    validateAccrualRuleBeforeComplete: function(location, store, editor, val, oldVal){
+        var record = location.record,
+            columnItemId = location.column.getItemId();
 
+        // ==[Logic specific to 'from' column]==
+        if(columnItemId == 'from'){
+            let passed = this.validateAccrualRuleFrom(location, store, val);
+            // console.info('before edit complete carry over [from]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('fromField').setValue(oldVal);
+            }
+            return passed;
+        }
+
+        // ==[Logic specific to 'through' column]==
+        if(columnItemId == 'through'){
+            let passed = this.validateAccrualRuleThrough(location, store, val);
+            console.info('before edit complete carry over [through]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('throughField').setValue(oldVal);
+            }
+            return passed;
+        }
+
+        // Default to passing
+        return true;
     },
 
     // === [Event Listeners] ===
@@ -934,46 +1058,46 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 If there is at least one record, make sure the first
                 starts with an svcFrom value of 0
             */
-            if (store.getCount() > 0) {
-                store.getAt(0).set({
-                    svcFrom: 0
-                }, { commit: true });
-                // Set last record's svcTo to 0
-                store.getAt(store.getCount() - 1).set({
-                    svcTo: 0
-                }, { commit: true });
-            }
+           if (store.getCount() > 0) {
+            store.getAt(0).set({
+                svcFrom: 0
+            }, { commit: true });
+            // Set last record's svcTo to 0
+            store.getAt(store.getCount() - 1).set({
+                svcTo: 0
+            }, { commit: true });
+        }
 
-            /*
-                If record isn't first, make sure previous record's
-                svcTo value is 1 less than this record's svcFrom value
-            */
-            if (recIdx > 0) {
-                let prevRecord = store.getAt(recIdx - 1),
-                    // resolve svcFrom from val if current cell is in from 
-                    // column, else pull from record
-                    svcFrom = (location.column.getItemId() == 'from') ?
-                        val : record.get('svcFrom');
-                prevRecord.set({
-                    svcTo: svcFrom - 1
-                    // svcTo: record.get('svcFrom')
-                }, { commit: true });
-            }
+        /*
+            If record isn't first, make sure previous record's
+            svcTo value is 1 less than this record's svcFrom value
+        */
+        if (recIdx > 0) {
+            let prevRecord = store.getAt(recIdx - 1),
+                // resolve svcFrom from val if current cell is in from 
+                // column, else pull from record
+                svcFrom = (location.column.getItemId() == 'from') ?
+                    val : record.get('svcFrom');
+            prevRecord.set({
+                svcTo: svcFrom - 1
+                // svcTo: record.get('svcFrom')
+            }, { commit: true });
+        }
 
-            /*
-                If record isn't last, make sure following record's
-                svcFrom value is 1 greater than this record's svcTo value
-            */
-            if (recIdx < store.getCount() - 1) {
-                let nextRecord = store.getAt(recIdx + 1),
-                    // resolve svcTo from val if current cell is in through 
-                    // column, else pull from record
-                    svcTo = (location.column.getItemId() == 'through') ?
-                        val : record.get('svcTo');
-                nextRecord.set({
-                    svcFrom: svcTo + 1
-                }, { commit: true });
-            }
+        /*
+            If record isn't last, make sure following record's
+            svcFrom value is 1 greater than this record's svcTo value
+        */
+        if (recIdx < store.getCount() - 1) {
+            let nextRecord = store.getAt(recIdx + 1),
+                // resolve svcTo from val if current cell is in through 
+                // column, else pull from record
+                svcTo = (location.column.getItemId() == 'through') ?
+                    val : record.get('svcTo');
+            nextRecord.set({
+                svcFrom: svcTo + 1
+            }, { commit: true });
+        }
         }
        
         // Hide editor
@@ -1252,8 +1376,71 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('On accrual rule before edit');
     },
 
+    /**
+     * Fires when exiting cell editor for Accrual Rules grid
+     * 
+     * Contains logic for auto adjusting From/Through values of records
+     * surrounding the record that was just edited
+     * 
+     * Performs tidy logic only if validation call succeeds
+     * 
+     * @param {Object} location Object with grid cell and data location info
+     * @param {Object} editor Reference to active editor component
+     * @param {Object} val Current field value
+     * @param {Object} oldVal Field value prior to edit
+     */
     onAccrualRuleBeforeEditComplete: function(location, editor, val, oldVal){
-        console.info('Accrual policy before edit complete');
+        var record = location.record,
+            recIdx = location.recordIndex,
+            store = record.store;
+
+        // Perform validation
+        var valid = this.validateAccrualRuleBeforeComplete(location, store, editor, val, oldVal);
+
+        if(valid){
+            let rowData = location.row.getData();
+
+            rowData = (Object.isUnvalued(rowData))? {} : rowData;
+
+            /*
+                If there is at least one record, make sure the first has an
+                svcFrom value of 0 and the last has an svcTo of 0
+            */
+            if (store.getCount() > 0) {
+                store.getAt(0).set({
+                    svcFrom: 0
+                }, { commit: true });
+                store.getAt(rowData.lastRuleIndex).set({
+                    svcTo: 0
+                }, { commit: true });
+            }
+
+            /*
+                Record is not the first rule in the named group.
+                Change previous rule's svcTo value to 1 less than the 
+                current record's svcFrom
+            */
+            if (rowData['firstRuleIndex'] && recIdx > rowData.firstRuleIndex) {
+                let prevRecord = store.getAt(recIdx - 1);
+                prevRecord.set({
+                    svcTo: record.get('svcFrom') - 1
+                }, { commit: true });
+            }
+
+            /*
+                Record is not the last rule in the named group.
+                Change next rule's svcFrom value to 1 more than the 
+                current record's svcTo
+            */
+            if (rowData['lastRuleIndex'] && recIdx < rowData.lastRuleIndex) {
+                let nextRecord = store.getAt(recIdx + 1);
+                nextRecord.set({
+                    svcFrom: record.get('svcTo') + 1
+                }, { commit: true });
+            }
+
+            console.info('onAccrualRuleBeforeEditComplete');
+        }
     },
 
     /**

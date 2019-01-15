@@ -1316,7 +1316,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 label: 'Accrual Rule to Add Interval to',
                 // labelAlign: 'left',
                 labelWidth: 'auto',
-                itemId: 'ruleNames',
+                itemId: 'ruleName',
                 value: null,
                 required: true,
                 autoSelect: true,
@@ -1329,7 +1329,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
+                handler: 'onAddAccrualInterval'
             },
             {
                 xtype: 'spacer',
