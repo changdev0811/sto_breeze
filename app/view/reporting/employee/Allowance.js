@@ -334,10 +334,10 @@ Ext.define('Breeze.view.reporting.employee.Allowance', {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: '',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
+                                    // picker: {
+                                    //     xtype: 'datepicker',
+                                    //     title: ''
+                                    // },
                                     bind: '{reportParams.sdate}'
                                 }
                             ]

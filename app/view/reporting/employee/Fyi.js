@@ -330,10 +330,10 @@ Ext.define('Breeze.view.reporting.employee.Fyi', {
                                     xtype: 'datefield',
                                     name: 'fyi_date',
                                     label: '',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
+                                    // picker: {
+                                    //     xtype: 'datepicker',
+                                    //     title: ''
+                                    // },
                                     bind: '{reportParams.FYIDate}'
                                 }
                             ]
