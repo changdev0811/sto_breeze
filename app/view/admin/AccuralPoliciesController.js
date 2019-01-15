@@ -375,6 +375,101 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         this.addAccrualIntervalDialog.hide();
     },
 
+    onAccrualRuleInfoChange: function(comp, newVal, oldVal){
+        var itemId = comp.getItemId(),
+            infoFc = this.lookup('accrualRuleGrid')
+                .getColumnForField('accrualChanged').getEditor().getAt(0);
+            // Helper for hiding multiple fields within info field container
+            multiHide = (itemIds) => {
+                for(var i = 0; i < items.length; i++){
+                    infoFc.getComponentInItems(itemId).setHidden(true);
+                }
+            };
+            // Helper for showing multiple fields within info field container
+            multiShow = (itemIds) => {
+                for(var i = 0; i < items.length; i++){
+                    infoFc.getComponentInItems(itemId).setHidden(false);
+                }
+            };
+
+        // ==[Logic for accformOn change event]==
+        if(itemId == 'accformOn'){
+            if(newVal == 51){
+                // Show Weekly options
+                multiHide([
+                    'monthlySpecialOn', 'onBiWeekly', 'monthly31',
+                    'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
+                ]);
+                multiShow(['onWeekly']);
+            } else if (newVal == 52){
+                // Show Bi-Weekly options
+                multiHide([
+                    'monthlySpecialOn', 'onWeekly', 'monthly31',
+                    'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
+                ]);
+                multiShow(['onBiWeekly']);
+            } else if(newVal == 53){
+                // Show Monthly options
+                multiHide([
+                    'monthlySpecialOn','onWeekly','onBiWeekly','onAnnually',
+                    'onAnniversary'
+                ]);
+                multiShow(['monthly31']);
+            } else if(newVal == 54 || newVal == 55){
+                // Show Quarterly or Semi-Annually options (none?)
+                multiHide([
+                    'monthlySpecialOn','onWeekly','onBiWeekly','monthly31',
+                    'monthly30','monthly28','onAnnually','onAnniversary'
+                ]);
+            } else if(newVal == 115){
+                // Show Annually options
+                multiHide([
+                    'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
+                    'monthly31', 'monthly30', 'monthly28', 'onAnniversary'
+                ]);
+                multiShow(['onAnnually']);
+            } else if (newVal == 100){
+                // Show Annually (Anniversary) options
+                multiHide([
+                    'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
+                    'monthly31', 'monthly30', 'monthly28', 'onAnnually'
+                ]);
+                multiShow(['onAnniversary']);
+            } else if(newVal == 56){
+                // Show Monthly special options
+                multiHide([
+                    'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
+                    'onAnnually', 'onAnniversary'
+                ]);
+
+                // Day option choices based off month
+                let msChoice = infoFc.getComponentInItems('monthlySpecialOn').getValue();
+
+                if(msChoice == '2'){
+                    // Feburary - 28 days
+                    multiHide(['monthly31','monthly30']);
+                    multiShow(['monthly28']);
+                } else if(['4','6','9','11'].includes(msChoice)){
+                    // April/June/Sept/Nov - 30 days
+                    multiHide(['monthly31','monthly28']);
+                    multiShow(['monthly30']);
+                } else {
+                    // All others - 31 days
+                    multiHide(['monthly30','monthly28']);
+                    multiShow(['monthly31']);
+                }
+
+                multiShow(['monthlySpecialOn']);
+            }
+        }
+
+        // ==[:pgoc fpr onPer change event]==
+        if(itemId == 'onPer'){
+
+        }
+
+    },
+
 
     /**
      * Event handler for add carry over rule tool button.

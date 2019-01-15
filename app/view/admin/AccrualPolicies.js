@@ -782,7 +782,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         // flex: 1,
                                                         decimals: 4,
                                                         style: 'width: 3.5em',
-                                                        textAlign: 'center'
+                                                        textAlign: 'center',
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -793,7 +796,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: 48,
                                                         // margin: 'inherit inherit inherit 4pt',
-                                                        ui: 'admin-ap-small-input'
+                                                        ui: 'admin-ap-small-input',
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -804,7 +810,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: 53,
                                                         style: 'width: 7.5em',
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'onPer',
@@ -812,7 +821,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         bind: { store: '{onPerTypes}' },
                                                         // value: 1,
                                                         style: 'width: 4.5em',
-                                                        ui: 'admin-ap-small-input'
+                                                        ui: 'admin-ap-small-input',
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                         // flex: 1
                                                     }, {
                                                         xtype: 'selectfield',
@@ -820,7 +832,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         hidden: true,
                                                         bind: { store: '{monthlySpecialOnOpt}' },
                                                         displayField: 'Description', valueField: 'ID',
-                                                        value: 1
+                                                        value: 1,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'spinnerfield',
                                                         itemId: 'perX',
@@ -828,14 +843,20 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         style: 'width: 3.5em',
                                                         textAlign: 'center',
                                                         value: 1,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'accformPer',
                                                         bind: { store: '{accrualRatePer}' },
                                                         displayField: 'Description', valueField: 'ID',
                                                         flex: 1,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'monthlySpecialPer',
@@ -843,7 +864,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         // flex: 1,
                                                         value: '1',
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'onWeekly',
@@ -851,7 +875,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '6',
                                                         // flex: 1,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'onBiWeekly',
@@ -859,7 +886,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '13',
                                                         // flex: 1,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'displayfield',
                                                         itemId: 'msOn',
@@ -873,7 +903,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
                                                         width: 48,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'monthly30',
@@ -881,7 +914,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
                                                         width: 48,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'selectfield',
                                                         itemId: 'monthly28',
@@ -889,13 +925,19 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         displayField: 'Description', valueField: 'ID',
                                                         value: '1',
                                                         width: 48,
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'datefield',
                                                         itemId: 'onAnnually',
                                                         dateFormat: 'm/d',
                                                         value: '1/1',
-                                                        hidden: true
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
                                                     }, {
                                                         xtype: 'displayfield',
                                                         itemId: 'onAnniversary',
