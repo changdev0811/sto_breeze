@@ -816,10 +816,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 decimals: 0,
                                                 required: true,
                                                 minValue: 0,
-                                                validators: {
-                                                    type: 'controller',
-                                                    fn: 'validateCarryOverFrom'
-                                                },
+                                                // validators: {
+                                                //     type: 'controller',
+                                                //     fn: 'validateCarryOverFrom'
+                                                // },
                                             }
                                         },
                                         {
@@ -841,10 +841,10 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 decimals: 0,
                                                 required: true,
                                                 minValue: 0,
-                                                validators: {
-                                                    type: 'controller',
-                                                    fn: 'validateCarryOverThrough'
-                                                },
+                                                // validators: {
+                                                //     type: 'controller',
+                                                //     fn: 'validateCarryOverThrough'
+                                                // },
                                             }
                                         },
                                         {
@@ -958,9 +958,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         }
                                     ],
                                     listeners: {
-                                        edit: 'onCarryOverPostEdit',
-                                        beforeedit: 'onCarryOverBeforeEdit',
-                                        beforecompleteedit: 'onCarryOverBeforeEditComplete'
+                                        beforecompleteedit: 'onCarryOverBeforeEditComplete',
+                                        beforeedit: 'onCarryOverBeforeEdit'
                                     }
                                 }
                             ]

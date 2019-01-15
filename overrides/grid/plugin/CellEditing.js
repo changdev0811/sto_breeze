@@ -34,8 +34,8 @@ Ext.define('Overrides.grid.plugin.CellEditing', {
         );
 
         // Event handler for complete (edit)
-        editor.on('complete', function () {
-            this.getGrid().fireEvent('edit', location, editor);
+        editor.on('complete', function (c, currentVal, startVal) {
+            this.getGrid().fireEvent('edit', location, editor, currentVal, startVal);
         }, this, {
                 single: true
             }

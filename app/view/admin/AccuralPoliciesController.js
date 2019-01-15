@@ -512,23 +512,140 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     /**
-     * Validator function for carry over rules 'from' field
-     * @param {Object} val New value
-     * @return {(Boolean|String)} true if valid, or false / an error string if not
+     * Validate changes to Carry Over 'from' field in editor
+     * 
+     * If validation fails, displays warning toast
+     * 
+     * @param {Object} location Object with grid and record info
+     * @param {Object} val New field value
+     * @return {Boolean} True if valid, false otherwise
      */
-    validateCarryOverFrom: function (val) {
-        console.info('carry over from eval', val);
-        return true;
+    validateCarryOverFrom: function(location, val){
+        var record = location.record, store = record.store;
+        let valid = true,
+            errors = [],
+            toVal = record.get('svcTo'),
+            // Shorthand for adding error message and syncing valid
+            addErr = (msg) => {
+                valid = false;
+                errors.push(msg);
+            };
+
+
+        if (location.recordIndex == 0) {
+            /*
+                Record is first rule
+            */
+            if (val == 0) {
+                // Expects 'from' value to be 0 for first item
+            } else {
+                // First item's from value != 0, so add error
+                addErr('Service must be from 0 (hire) for the first interval');
+            }
+        } else if (toVal !== 0 && val > toVal) {
+            /*
+                svcTo isn't 0 and svcFrom is > svcTo
+            */
+            addErr('The service from year can\'t be after the service through year');
+        } else if (location.recordIndex == 1) {
+            /*
+                Record is second rule
+            */
+            if (val < 2) {
+                addErr('This interval can\'t completely overwrite the first interval');
+            }
+        } else if (location.recordIndex > 1) {
+            /*
+                Record is 3rd+ rule
+            */
+            let prevRec = store.getAt(location.recordIndex - 1);
+            if (val <= prevRec.get('svcFrom')) {
+                /*
+                    Previous record's svcFrom value is >= this
+                    record's svcFrom value
+                */
+                addErr('This interval can\'t completely overwrite the previous interval');
+            }
+        }
+
+        if (!valid) {
+            // If not valid (1 or more errors)
+            
+
+            // Show warning toast for duration of error + 4 seconds
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update Carry Over Rule \'From\' value:',
+                list: errors,
+                timeout: ['error', 4]
+            });
+        }
+
+        return valid;
     },
 
     /**
-     * Validator function for carry over rules 'through' field
-     * @param {Object} val New value
-     * @return {(Boolean|String)} true if valid, or false / an error string if not
+     * Validate changes to Carry Over 'through' field in editor
+     * 
+     * If validation fails, displays warning toast
+     * 
+     * @param {Object} location Object with grid and record info
+     * @param {Object} val New field value
+     * @return {Boolean} True if valid, false otherwise
      */
-    validateCarryOverThrough: function (val) {
-        console.info('carry over through eval', val);
-        return true;
+    validateCarryOverThrough: function(location, val){
+        var record = location.record, store = record.store;
+        let valid = true,
+            errors = [],
+            fromVal = record.get('svcFrom'),
+            // Shorthand for adding error message and syncing valid
+            addErr = (msg) => {
+                valid = false;
+                errors.push(msg);
+            };
+        console.info('carry over through valid: ', valid);
+
+        if (location.recordIndex == store.getCount() - 1) {
+            /*
+                Record is the last in the list
+            */
+            if (val !== 0) {
+                /*
+                    svcTo value != 0
+                */
+                addErr('Service must be through 0 (infinity) for the last interval');
+            }
+        } else if (val < fromVal) {
+            /*
+                Record's svcTo value < its svcFrom value
+            */
+            addErr('The service through year can\'t be before the service from year');
+        } else if (location.recordIndex < store.getCount() - 2) {
+            /*
+                Record is before second to last rule
+            */
+            let nextRec = store.getAt(location.recordIndex + 1);
+            if (val >= nextRec.get('svcTo')) {
+                /*
+                    Record's svcTo value >= svcTo value of next rule
+                */
+                addErr('This interval can\'t completely overwrite the next interval');
+            }
+        }
+
+        if (!valid) {
+            // Not valid, one or more errors
+
+            // Show warning toast for duration of error + 4 seconds
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update Carry Over Rule \'Through\' value:',
+                list: errors,
+                timeout: ['error', 4]
+            });
+        }
+
+        return valid;
     },
 
 
@@ -566,11 +683,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             }
             if (location.recordIndex == -1) {
                 return true;
-            } else if (record.get('svcFrom') !== 0 &&
-                (record.get('svcFrom') > record.get('svcTo'))) {
-                // TODO: Handle svc from > svc to
-                console.warn('svcFrom > svcTo');
-            }
+            } 
+            // else if (record.get('svcFrom') !== 0 &&
+            //     (record.get('svcFrom') > record.get('svcTo'))) {
+            //     // TODO: Handle svc from > svc to
+            //     console.warn('svcFrom > svcTo');
+            // }
         }
 
         // ==[Logic specific to 'Through' column]==
@@ -633,46 +751,68 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Contains logic for auto adjusting From/Through values of records
      * surrounding the record that was just edited
      * 
-     * @param {Object} location Object with grid cell location info 
-     * @param {Object} editor Reference to active editor instance
+     * Performs tidy logic only if validation call succeeds
+     * 
+     * @param {Object} location Object with grid cell and data location info
+     * @param {Object} editor Reference to active editor component
+     * @param {Object} val Current field value
+     * @param {Object} oldVal Field value prior to edit
      */
-    onCarryOverPostEdit: function (location, editor) {
+    onCarryOverBeforeEditComplete: function (location, editor, val, oldVal) {
         var record = location.record,
             recIdx = location.recordIndex,
             store = record.store;
             // columnItemId = location.column.getItemId(),
             // editorComp = editor.getParent();
 
-        /*
-            If there is at least one record, make sure the first
-            starts with an svcFrom value of 0
-        */
-        if(store.getCount() > 0){
-            store.getAt(0).set({
-                svcFrom: 0
-            }, { commit: true });
-        }
+        // Perform validation
+        var valid = this.validateCarryOverBeforeComplete(location, editor, val, oldVal);
 
-        /*
-            If record isn't first, make sure previous record's
-            svcTo value is 1 less than this record's svcFrom value
-        */
-        if(recIdx > 0){
-            let prevRecord = store.getAt(recIdx - 1);
-            prevRecord.set({
-                svcTo: record.get('svcFrom') - 1
-            }, { commit: true });
-        }
+        if (valid) {
+            /*
+                If there is at least one record, make sure the first
+                starts with an svcFrom value of 0
+            */
+            if (store.getCount() > 0) {
+                store.getAt(0).set({
+                    svcFrom: 0
+                }, { commit: true });
+                // Set last record's svcTo to 0
+                store.getAt(store.getCount() - 1).set({
+                    svcTo: 0
+                }, { commit: true });
+            }
 
-        /*
-            If record isn't last, make sure following record's
-            svcFrom value is 1 greater than this record's svcTo value
-        */
-        if(recIdx < store.getCount() - 1){
-            let nextRecord = store.getAt(recIdx + 1);
-            nextRecord.set({
-                svcFrom: record.get('svcTo') + 1
-            }, { commit: true });
+            /*
+                If record isn't first, make sure previous record's
+                svcTo value is 1 less than this record's svcFrom value
+            */
+            if (recIdx > 0) {
+                let prevRecord = store.getAt(recIdx - 1),
+                    // resolve svcFrom from val if current cell is in from 
+                    // column, else pull from record
+                    svcFrom = (location.column.getItemId() == 'from') ?
+                        val : record.get('svcFrom');
+                prevRecord.set({
+                    svcTo: svcFrom - 1
+                    // svcTo: record.get('svcFrom')
+                }, { commit: true });
+            }
+
+            /*
+                If record isn't last, make sure following record's
+                svcFrom value is 1 greater than this record's svcTo value
+            */
+            if (recIdx < store.getCount() - 1) {
+                let nextRecord = store.getAt(recIdx + 1),
+                    // resolve svcTo from val if current cell is in through 
+                    // column, else pull from record
+                    svcTo = (location.column.getItemId() == 'through') ?
+                        val : record.get('svcTo');
+                nextRecord.set({
+                    svcFrom: svcTo + 1
+                }, { commit: true });
+            }
         }
        
         // Hide editor
@@ -680,13 +820,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     /**
-     * Event handler for grid editor fired before edit completes
+     * Multi-field validation method for grid editor fired before edit completes
      * @param {Object} location Object with grid cell and data location info
      * @param {Object} editor Reference to active editor component
      * @param {Object} val Current field value
      * @param {Object} oldVal Field value prior to edit
+     * @return {Boolean} True if validation succeeds, false otherwise
      */
-    onCarryOverBeforeEditComplete: function (location, editor, val, oldVal) {
+    validateCarryOverBeforeComplete: function (location, editor, val, oldVal) {
         var record = location.record,
             store = record.store,
             columnItemId = location.column.getItemId();
@@ -714,74 +855,27 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // ==[Logic specific to 'from' column]==
         if(columnItemId == 'from'){
-            console.info('Carry Over Rule before complete edit [from]');
-
-            let valid = true,
-                errors = [],
-                toVal = record.get('svcTo'),
-                // Shorthand for adding error message and syncing valid
-                addErr = (msg)=>{
-                    valid = false;
-                    errors.push(msg);
-                },
-                field = editor.getComponent('fromField');
-                
-
-            if(location.recordIndex == 0){
-                /*
-                    Record is first rule
-                */
-               if(val == 0){
-                   // Expects 'from' value to be 0 for first item
-               } else {
-                   // First item's from value != 0, so add error
-                   addErr('Service must be from 0 (hire) for the first interval');
-               }
-            } else if(toVal !== 0 && val > toVal) {
-                /*
-                    svcTo isn't 0 and svcFrom is > svcTo
-                */
-               addErr('The service from year can\'t be after the service through year');
-            } else if(location.recordIndex == 1){
-                /*
-                    Record is second rule
-                */
-               if(val < 2){
-                   addErr('This interval can\'t completely overwrite the first interval');
-               }
-            } else if(location.recordIndex > 1){
-                /*
-                    Record is 3rd+ rule
-                */
-                let prevRec = store.getAt(location.recordIndex - 1);
-                if(val <= prevRec.get('svcFrom')){
-                    /*
-                        Previous record's svcFrom value is >= this
-                        record's svcFrom value
-                    */
-                   addErr('This interval can\'t completely overwrite the previous interval');
-                }
+            let passed = this.validateCarryOverFrom(location, val);
+            console.info('before edit complete carry over [from]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('fromField').setValue(oldVal);
             }
-
-            if(!valid){
-                // If not valid (1 or more errors)
-                // Reset 'from' value to previous value
-                field.setValue(oldVal);
-
-                // Show warning toast for duration of error + 4 seconds
-                Ext.toast({
-                    type: Ext.Toast.WARN,
-                    message: 'Unable to update Carry Over Rule \'From\' value:',
-                    list: errors,
-                    timeout: ['error',4]
-                });
-            }
+            return passed;
         }
 
         // ==[Logic specific to 'through' column]==
         if(columnItemId == 'through'){
-            console.info('Carry Over Rule before complete edit [through]');
+            let passed = this.validateCarryOverThrough(location, val);
+            console.info('before edit complete carry over [through]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('throughField').setValue(oldVal);
+            }
+            return passed;
         }
+
+        // default return true
     },
 
     /**
@@ -882,6 +976,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
         // load selected category's carry over rules
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
+        vm.get('selectedCategoryCarryOverRules').sort('svcFrom','ASC');
     },
 
     /**
