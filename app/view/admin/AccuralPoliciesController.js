@@ -332,15 +332,15 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         dlg.hide();
 
         var lastRuleIndex = -1;
-        for(var i = 0; i < rules.getCount(); i++){
-            if(rules.getAt(i).get('ruleName') == rule){
+        for (var i = 0; i < rules.getCount(); i++) {
+            if (rules.getAt(i).get('ruleName') == rule) {
                 lastRuleIndex = i;
             }
         }
 
         var lastRuleData = rules.getAt(lastRuleIndex).getData(),
             durationEnd = lastRuleData.svcFrom;
-        if(durationEnd == 0) { durationEnd = 1; }
+        if (durationEnd == 0) { durationEnd = 1; }
 
         rules.getAt(lastRuleIndex).set({
             svcTo: durationEnd
@@ -375,70 +375,70 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         this.addAccrualIntervalDialog.hide();
     },
 
-    onAccrualRuleInfoChange: function(comp, newVal, oldVal){
+    onAccrualRuleInfoChange: function (comp, newVal, oldVal) {
         var itemId = comp.getItemId(),
             infoFc = this.lookup('accrualRuleGrid')
                 .getColumnForField('accrualChanged').getEditor().getAt(0);
-            // Helper for hiding multiple fields within info field container
-            multiHide = (itemIds) => {
-                for(var i = 0; i < itemIds.length; i++){
-                    infoFc.getComponentInItems(itemIds[i]).setHidden(true);
-                }
-            };
-            // Helper for showing multiple fields within info field container
-            multiShow = (itemIds) => {
-                for(var i = 0; i < itemIds.length; i++){
-                    infoFc.getComponentInItems(itemIds[i]).setHidden(false);
-                }
-            };
+        // Helper for hiding multiple fields within info field container
+        multiHide = (itemIds) => {
+            for (var i = 0; i < itemIds.length; i++) {
+                infoFc.getComponentInItems(itemIds[i]).setHidden(true);
+            }
+        };
+        // Helper for showing multiple fields within info field container
+        multiShow = (itemIds) => {
+            for (var i = 0; i < itemIds.length; i++) {
+                infoFc.getComponentInItems(itemIds[i]).setHidden(false);
+            }
+        };
 
         // console.info('Accrual Rule Info Change:', itemId);
 
         // ==[Logic for accformOn change event]==
         // ==[from AccrualInformationEditor.selectAccrualRuleOn]==
-        if(itemId == 'accformOn'){
-            if(newVal == 51){
+        if (itemId == 'accformOn') {
+            if (newVal == 51) {
                 // Show Weekly options
                 multiHide([
                     'monthlySpecialOn', 'onBiWeekly', 'monthly31',
                     'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
                 ]);
                 multiShow(['onWeekly']);
-            } else if (newVal == 52){
+            } else if (newVal == 52) {
                 // Show Bi-Weekly options
                 multiHide([
                     'monthlySpecialOn', 'onWeekly', 'monthly31',
                     'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
                 ]);
                 multiShow(['onBiWeekly']);
-            } else if(newVal == 53){
+            } else if (newVal == 53) {
                 // Show Monthly options
                 multiHide([
-                    'monthlySpecialOn','onWeekly','onBiWeekly','onAnnually',
+                    'monthlySpecialOn', 'onWeekly', 'onBiWeekly', 'onAnnually',
                     'onAnniversary'
                 ]);
                 multiShow(['monthly31']);
-            } else if(newVal == 54 || newVal == 55){
+            } else if (newVal == 54 || newVal == 55) {
                 // Show Quarterly or Semi-Annually options (none?)
                 multiHide([
-                    'monthlySpecialOn','onWeekly','onBiWeekly','monthly31',
-                    'monthly30','monthly28','onAnnually','onAnniversary'
+                    'monthlySpecialOn', 'onWeekly', 'onBiWeekly', 'monthly31',
+                    'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
                 ]);
-            } else if(newVal == 115){
+            } else if (newVal == 115) {
                 // Show Annually options
                 multiHide([
                     'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
                     'monthly31', 'monthly30', 'monthly28', 'onAnniversary'
                 ]);
                 multiShow(['onAnnually']);
-            } else if (newVal == 100){
+            } else if (newVal == 100) {
                 // Show Annually (Anniversary) options
                 multiHide([
                     'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
                     'monthly31', 'monthly30', 'monthly28', 'onAnnually'
                 ]);
                 multiShow(['onAnniversary']);
-            } else if(newVal == 56){
+            } else if (newVal == 56) {
                 // Show Monthly special options
                 multiHide([
                     'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
@@ -448,17 +448,17 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 // Day option choices based off month
                 let msChoice = infoFc.getComponentInItems('monthlySpecialOn').getValue();
 
-                if(msChoice == '2'){
+                if (msChoice == '2') {
                     // Feburary - 28 days
-                    multiHide(['monthly31','monthly30']);
+                    multiHide(['monthly31', 'monthly30']);
                     multiShow(['monthly28']);
-                } else if(['4','6','9','11'].includes(msChoice)){
+                } else if (['4', '6', '9', '11'].includes(msChoice)) {
                     // April/June/Sept/Nov - 30 days
-                    multiHide(['monthly31','monthly28']);
+                    multiHide(['monthly31', 'monthly28']);
                     multiShow(['monthly30']);
                 } else {
                     // All others - 31 days
-                    multiHide(['monthly30','monthly28']);
+                    multiHide(['monthly30', 'monthly28']);
                     multiShow(['monthly31']);
                 }
 
@@ -542,32 +542,32 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // ==[logic for accformPer change event]==
         // ==[from AccrualInformationEditor.selectAccruaRulePer]
-        if(itemId == 'accformPer'){
-            if(newVal == 119){
+        if (itemId == 'accformPer') {
+            if (newVal == 119) {
                 // Monthly Special
                 multiHide(['perX']);
-                multiShow(['monthlySpecialPer','msOn','monthly31']);
+                multiShow(['monthlySpecialPer', 'msOn', 'monthly31']);
             } else {
                 // Everything else
-                multiHide(['monthlySpecialPer','msOn','monthly31']);
+                multiHide(['monthlySpecialPer', 'msOn', 'monthly31']);
                 multiShow(['perX']);
             }
         }
 
         // ==[logic for monthlySpecialOn change event]==
-        if(itemId == 'monthlySpecialOn'){
+        if (itemId == 'monthlySpecialOn') {
             // Day option choices based on month
-            if(newVal == '2'){
+            if (newVal == '2') {
                 // Feb - 28 days
-                multiHide(['monthly31','monthly30']);
+                multiHide(['monthly31', 'monthly30']);
                 multiShow(['monthly28']);
-            } else if (['4','6','9','11'].includes(newVal)){
+            } else if (['4', '6', '9', '11'].includes(newVal)) {
                 // April/June/Sept/Nov - 30 days
-                multiHide(['monthly31','monthly28']);
+                multiHide(['monthly31', 'monthly28']);
                 multiShow(['monthly30']);
             } else {
                 // Others - 31 days
-                multiHide(['monthly30','monthly28']);
+                multiHide(['monthly30', 'monthly28']);
                 multiShow(['monthly31']);
             }
         }
@@ -580,18 +580,18 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} containerField Reference to info column editor's main child
      * @return {Object} Newly constructed Accrual Rule record
      */
-    accrualRuleFromInfoEditor: function(containerField){
+    accrualRuleFromInfoEditor: function (containerField) {
         var fieldNames = [
-            'accformInc','accformUnit','accformOn','onPer',
-            'onWeekly','onBiWeekly','monthly31','monthly30',
-            'monthly28','monthlySpecialOn','monthlySpecialPer',
-            'onAnnually','perX','accformPer'
+            'accformInc', 'accformUnit', 'accformOn', 'onPer',
+            'onWeekly', 'onBiWeekly', 'monthly31', 'monthly30',
+            'monthly28', 'monthlySpecialOn', 'monthlySpecialPer',
+            'onAnnually', 'perX', 'accformPer'
         ];
 
         var fields = {},
             accrualRule = {};
 
-        for(var i=0;i<fieldNames.length;i++){
+        for (var i = 0; i < fieldNames.length; i++) {
             let name = fieldNames[i];
             fields[name] = containerField.getComponentInItems(name);
         }
@@ -604,34 +604,34 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             msDay: '0'
         };
 
-        if(fields.onPer.getValue() == 1) {
+        if (fields.onPer.getValue() == 1) {
             // On
-            if(fields.accformOn.getValue() == 100){
+            if (fields.accformOn.getValue() == 100) {
                 accrualRule.accformPer = 114;
                 accrualRule.accformDay = 'ANNIVERSARY';
             } else {
                 accrualRule.accformPer = fields.accformOn.getValue();
             }
             // Determine which ruleCount to use
-            if(fields.accformOn.getValue() == 51){
+            if (fields.accformOn.getValue() == 51) {
                 // Weekly
                 accrualRule.accformDay = fields.onWeekly.getValue();
-            } else if(fields.accformOn.getValue() == 52){
+            } else if (fields.accformOn.getValue() == 52) {
                 // Bi-Weekly
                 accrualRule.accformDay = fields.onBiWeekly.getValue();
-            } else if(fields.accformOn.getValue() == 53){
+            } else if (fields.accformOn.getValue() == 53) {
                 // Monthly
                 accrualRule.accformDay = fields.monthly31.getValue();
-            } else if(fields.accformOn.getValue() == 56){
+            } else if (fields.accformOn.getValue() == 56) {
                 // Monthly Special
                 let msChoice = fields.monthlySpecialOn.getValue();
                 accrualRule.asMonth = msChoice;
                 // Day option based on month
-                if(msChoice == '2'){
+                if (msChoice == '2') {
                     // Feb - 28 days
                     accrualRule.accformDay = `${msChoice}-${fields.monthly28.getValue()}`;
                     accrualRule.msDay = fields.monthly28.getValue();
-                } else if (['4','6','9','11'].includes(msChoice)){
+                } else if (['4', '6', '9', '11'].includes(msChoice)) {
                     // April/June/Sept/Nov - 30 days
                     accrualRule.accformDay = `${msChoice}-${fields.monthly30.getValue()}`;
                     accrualRule.msDay = fields.monthly30.getValue();
@@ -640,20 +640,20 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     accrualRule.accformDay = `${msChoice}-${fields.monthly31.getValue()}`;
                     accrualRule.msDay = fields.monthly31.getValue();
                 }
-            } else if(fields.accformOn.getValue() == 114){
+            } else if (fields.accformOn.getValue() == 114) {
                 // Annually
-                if(fields.onAnnually.getValue().trim() == ''){
+                if (fields.onAnnually.getValue().trim() == '') {
                     accrualRule.accformDay = 'ANNIVERSARRY';
                 } else {
                     accrualRule.accformDay = fields.onAnnually.getValue();
                 }
-            } else if(fields.accformOn.getValue !== 100){
+            } else if (fields.accformOn.getValue !== 100) {
                 accrualRule.accformDay = ' ';
             }
         } else {
             // Per
             accrualRule.accformPer = fields.accformPer.getValue();
-            if(fields.accformPer.getValue == 119){
+            if (fields.accformPer.getValue == 119) {
                 accrualRule.accformDay = `${fields.monthlySpecialPer.getValue}-${fields.monthly31.getValue()}`;
                 accrualRule.msMonth = fields.monthlySpecialPer.getValue();
                 accrualRule.msDay = fields.monthly31.getValue();
@@ -861,7 +861,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateCarryOverFrom: function(location, val){
+    validateCarryOverFrom: function (location, val) {
         var record = location.record, store = record.store;
         let valid = true,
             errors = [],
@@ -911,7 +911,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         if (!valid) {
             // If not valid (1 or more errors)
-            
+
 
             // Show warning toast for duration of error + 4 seconds
             Ext.toast({
@@ -934,7 +934,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateCarryOverThrough: function(location, val){
+    validateCarryOverThrough: function (location, val) {
         var record = location.record, store = record.store;
         let valid = true,
             errors = [],
@@ -1000,7 +1000,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     validateCarryOverBeforeComplete: function (location, editor, val, oldVal) {
         var record = location.record,
             columnItemId = location.column.getItemId();
-        
+
         // console.info('Carry over before edit complete');
 
         // ==[Logic specific to 'Carry Over Expiration' column]==
@@ -1023,10 +1023,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         // ==[Logic specific to 'from' column]==
-        if(columnItemId == 'from'){
+        if (columnItemId == 'from') {
             let passed = this.validateCarryOverFrom(location, val);
             console.info('before edit complete carry over [from]');
-            if(!passed){
+            if (!passed) {
                 // If validation fails, revert to previous value
                 editor.getComponent('fromField').setValue(oldVal);
             }
@@ -1034,10 +1034,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         // ==[Logic specific to 'through' column]==
-        if(columnItemId == 'through'){
+        if (columnItemId == 'through') {
             let passed = this.validateCarryOverThrough(location, val);
             console.info('before edit complete carry over [through]');
-            if(!passed){
+            if (!passed) {
                 // If validation fails, revert to previous value
                 editor.getComponent('throughField').setValue(oldVal);
             }
@@ -1058,10 +1058,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateAccrualRuleFrom: function(location, store, val){
+    validateAccrualRuleFrom: function (location, store, val) {
         var record = location.record,
             rowData = location.row.getData();
-            valid = true,
+        valid = true,
             errors = [],
             toVal = record.get('svcTo'),
             // Shorthand for adding error message and syncing valid
@@ -1069,36 +1069,36 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 valid = false;
                 errors.push(msg);
             };
-        
-        rowData = (Object.isUnvalued(rowData))? {} : rowData;
+
+        rowData = (Object.isUnvalued(rowData)) ? {} : rowData;
 
         console.info('validate accrual rule [form] row data:', rowData);
-        
-        if(location.recordIndex == rowData.firstRuleIndex){
-            if(val !== 0){
+
+        if (location.recordIndex == rowData.firstRuleIndex) {
+            if (val !== 0) {
                 /*
                     Record is first rule in named group and svcFrom isn't 0
                 */
-               addErr('Service must be from 0 (hire) for the first interval');
+                addErr('Service must be from 0 (hire) for the first interval');
             }
-        } else if (toVal !== 0 && val > toVal){
+        } else if (toVal !== 0 && val > toVal) {
             /*
                 Record's svcTo !== 0 and svcFrom > svcTo
             */
-           addErr('The service from year can\'t be after the service to year');
-        } else if (location.recordIndex == rowData.firstRuleIndex + 1){
-            if(val < 2) {
+            addErr('The service from year can\'t be after the service to year');
+        } else if (location.recordIndex == rowData.firstRuleIndex + 1) {
+            if (val < 2) {
                 /*
                     Record is second rule in named group, and svcFrom < 2
                 */
-               addErr('This interval can\'t completely overwrite the first interval');
+                addErr('This interval can\'t completely overwrite the first interval');
             }
-           
+
         } else if (location.recordIndex > rowData.firstRuleIndex + 1) {
             /*
                 Record is 3rd+ rule in named group
             */
-           let prevRecord = store.getAt(location.recordIndex - 1);
+            let prevRecord = store.getAt(location.recordIndex - 1);
             if (val <= prevRecord.get('svcFrom')) {
                 /*
                     Record's svcFrom value <= previous rule's svcFrom value
@@ -1109,7 +1109,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         if (!valid) {
             // If not valid (1 or more errors)
-            
+
 
             // Show warning toast for duration of error + 4 seconds
             Ext.toast({
@@ -1133,7 +1133,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val New field value
      * @return {Boolean} True if valid, false otherwise
      */
-    validateAccrualRuleThrough: function(location, store, val){
+    validateAccrualRuleThrough: function (location, store, val) {
         var record = location.record,
             valid = true,
             errors = [],
@@ -1144,8 +1144,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 errors.push(msg);
             },
             rowData = location.row.getData();
-        
-        rowData = (Object.isUnvalued(rowData))? {} : rowData;
+
+        rowData = (Object.isUnvalued(rowData)) ? {} : rowData;
 
         if (location.recordIndex == rowData.lastRuleIndex) {
             /*
@@ -1158,23 +1158,23 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             /*
                 Record's svcTo value is before its svcFrom value
             */
-           addErr('The service through year can\'t be before the service from year');
-        } else if(location.recordIndex < rowData.lastRuleIndex - 1){
+            addErr('The service through year can\'t be before the service from year');
+        } else if (location.recordIndex < rowData.lastRuleIndex - 1) {
             /*
                 Record comes before last two rules in named group
             */
-           let nextRecord = store.getAt(location.recordIndex + 1);
-           if(val >= nextRecord.get('svcTo')){
-               /*
-                    This record's svcTo valie >= the next rule's svcTo value
-               */
-              addErr('This interval can\'t completely overwrite the next interval');
-           }
+            let nextRecord = store.getAt(location.recordIndex + 1);
+            if (val >= nextRecord.get('svcTo')) {
+                /*
+                     This record's svcTo valie >= the next rule's svcTo value
+                */
+                addErr('This interval can\'t completely overwrite the next interval');
+            }
         }
 
         if (!valid) {
             // If not valid (1 or more errors)
-            
+
 
             // Show warning toast for duration of error + 4 seconds
             Ext.toast({
@@ -1197,15 +1197,15 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} oldVal Field value prior to edit
      * @return {Boolean} True if validation succeeds, false otherwise
      */
-    validateAccrualRuleBeforeComplete: function(location, store, editor, val, oldVal){
+    validateAccrualRuleBeforeComplete: function (location, store, editor, val, oldVal) {
         var record = location.record,
             columnItemId = location.column.getItemId();
 
         // ==[Logic specific to 'from' column]==
-        if(columnItemId == 'from'){
+        if (columnItemId == 'from') {
             let passed = this.validateAccrualRuleFrom(location, store, val);
             // console.info('before edit complete carry over [from]');
-            if(!passed){
+            if (!passed) {
                 // If validation fails, revert to previous value
                 editor.getComponent('fromField').setValue(oldVal);
             }
@@ -1213,10 +1213,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         // ==[Logic specific to 'through' column]==
-        if(columnItemId == 'through'){
+        if (columnItemId == 'through') {
             let passed = this.validateAccrualRuleThrough(location, store, val);
             console.info('before edit complete carry over [through]');
-            if(!passed){
+            if (!passed) {
                 // If validation fails, revert to previous value
                 editor.getComponent('throughField').setValue(oldVal);
             }
@@ -1250,7 +1250,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // location.row.setData(null);
 
         // ==[Logic specific to 'From' column]==
-        if (columnItemId == 'from') {            
+        if (columnItemId == 'from') {
 
             console.info('before carry over edit [from]');
 
@@ -1260,7 +1260,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             }
             if (location.recordIndex == -1) {
                 return true;
-            } 
+            }
             // else if (record.get('svcFrom') !== 0 &&
             //     (record.get('svcFrom') > record.get('svcTo'))) {
             //     // TODO: Handle svc from > svc to
@@ -1339,8 +1339,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var record = location.record,
             recIdx = location.recordIndex,
             store = record.store;
-            // columnItemId = location.column.getItemId(),
-            // editorComp = editor.getParent();
+        // columnItemId = location.column.getItemId(),
+        // editorComp = editor.getParent();
 
         // Perform validation
         var valid = this.validateCarryOverBeforeComplete(location, editor, val, oldVal);
@@ -1350,48 +1350,48 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 If there is at least one record, make sure the first
                 starts with an svcFrom value of 0
             */
-           if (store.getCount() > 0) {
-            store.getAt(0).set({
-                svcFrom: 0
-            }, { commit: true });
-            // Set last record's svcTo to 0
-            store.getAt(store.getCount() - 1).set({
-                svcTo: 0
-            }, { commit: true });
+            if (store.getCount() > 0) {
+                store.getAt(0).set({
+                    svcFrom: 0
+                }, { commit: true });
+                // Set last record's svcTo to 0
+                store.getAt(store.getCount() - 1).set({
+                    svcTo: 0
+                }, { commit: true });
+            }
+
+            /*
+                If record isn't first, make sure previous record's
+                svcTo value is 1 less than this record's svcFrom value
+            */
+            if (recIdx > 0) {
+                let prevRecord = store.getAt(recIdx - 1),
+                    // resolve svcFrom from val if current cell is in from 
+                    // column, else pull from record
+                    svcFrom = (location.column.getItemId() == 'from') ?
+                        val : record.get('svcFrom');
+                prevRecord.set({
+                    svcTo: svcFrom - 1
+                    // svcTo: record.get('svcFrom')
+                }, { commit: true });
+            }
+
+            /*
+                If record isn't last, make sure following record's
+                svcFrom value is 1 greater than this record's svcTo value
+            */
+            if (recIdx < store.getCount() - 1) {
+                let nextRecord = store.getAt(recIdx + 1),
+                    // resolve svcTo from val if current cell is in through 
+                    // column, else pull from record
+                    svcTo = (location.column.getItemId() == 'through') ?
+                        val : record.get('svcTo');
+                nextRecord.set({
+                    svcFrom: svcTo + 1
+                }, { commit: true });
+            }
         }
 
-        /*
-            If record isn't first, make sure previous record's
-            svcTo value is 1 less than this record's svcFrom value
-        */
-        if (recIdx > 0) {
-            let prevRecord = store.getAt(recIdx - 1),
-                // resolve svcFrom from val if current cell is in from 
-                // column, else pull from record
-                svcFrom = (location.column.getItemId() == 'from') ?
-                    val : record.get('svcFrom');
-            prevRecord.set({
-                svcTo: svcFrom - 1
-                // svcTo: record.get('svcFrom')
-            }, { commit: true });
-        }
-
-        /*
-            If record isn't last, make sure following record's
-            svcFrom value is 1 greater than this record's svcTo value
-        */
-        if (recIdx < store.getCount() - 1) {
-            let nextRecord = store.getAt(recIdx + 1),
-                // resolve svcTo from val if current cell is in through 
-                // column, else pull from record
-                svcTo = (location.column.getItemId() == 'through') ?
-                    val : record.get('svcTo');
-            nextRecord.set({
-                svcFrom: svcTo + 1
-            }, { commit: true });
-        }
-        }
-       
         // Hide editor
         // editorComp.onEditComplete(false, false);
     },
@@ -1404,10 +1404,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Number} oldValue Previous field value
      * @param {Object} eOpts Event options object
      */
-    onCarryOverExpirationAmountChange: function(comp, newValue, oldValue, eOpts){
+    onCarryOverExpirationAmountChange: function (comp, newValue, oldValue, eOpts) {
         var unitField = comp.getParent().getComponent('unit');
         // Conditionally disable unit field based on value of source field
-        if(newValue == 0){
+        if (newValue == 0) {
             unitField.setDisabled(true);
         } else {
             unitField.setDisabled(false);
@@ -1421,19 +1421,19 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} editor Reference to active editor instance
      * @return {Boolean} Boolean indicating whether edit can take place
      */
-    onAccrualRuleBeforeEdit: function(location, editor){
+    onAccrualRuleBeforeEdit: function (location, editor) {
 
         var record = location.record,
             store = record.store,
             columnItemId = location.column.getItemId();
-        
+
         // Calculate rule index info
         var firstRuleIndex = -1,
             ruleCount = 0,
             lastRuleIndex = -1;
-        for(var i = 0; i < store.getCount(); i++){
-            if(store.getAt(i).get('ruleName') == record.get('ruleName')){
-                if(ruleCount == 0){
+        for (var i = 0; i < store.getCount(); i++) {
+            if (store.getAt(i).get('ruleName') == record.get('ruleName')) {
+                if (ruleCount == 0) {
                     firstRuleIndex = i;
                 }
                 ruleCount++;
@@ -1452,14 +1452,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('rule indexes calculated');
 
         // ==[Logic specific to 'info' column]==
-        if(columnItemId == 'info'){
+        if (columnItemId == 'info') {
             this.onAccrualRuleInfoBeforeEdit(location, editor);
             return true;
         }
 
         // ==[Logic specific to 'from' column]==
-        if(columnItemId == 'from'){
-            if(location.recordIndex == firstRuleIndex){
+        if (columnItemId == 'from') {
+            if (location.recordIndex == firstRuleIndex) {
                 /*
                     Record is first rule for group, so disable edit
                 */
@@ -1470,12 +1470,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         }
 
         // ==[Logic specific to 'through' column]==
-        if(columnItemId == 'through'){
-            if(location.recordIndex == lastRuleIndex){
+        if (columnItemId == 'through') {
+            if (location.recordIndex == lastRuleIndex) {
                 /*
                     Record is last rule for group, so disable through edit
                 */
-               return false;
+                return false;
             } else {
                 return true;
             }
@@ -1486,7 +1486,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Extracted portion of onAccrualRuleBeforeEdit specific to the 'info' column
      */
-    onAccrualRuleInfoBeforeEdit: function(location, editor){
+    onAccrualRuleInfoBeforeEdit: function (location, editor) {
         var record = location.record,
             store = record.store,
             container = editor.getComponent('infoField');
@@ -1508,12 +1508,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             msOnLabel = container.getComponentInItems('msOn'),
             onAnniversaryLabel = container.getComponentInItems('onAnniversary');
 
-        var multiHide = (items)=>{
-            for(var i=0;i<items.length;i++){
+        var multiHide = (items) => {
+            for (var i = 0; i < items.length; i++) {
                 items[i].setHidden(true);
             }
-        }, multiShow = (items)=>{
-            for(var i=0;i<items.length;i++){
+        }, multiShow = (items) => {
+            for (var i = 0; i < items.length; i++) {
                 items[i].setHidden(false);
             }
         };
@@ -1531,7 +1531,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         onAnnually.setValue('01/01');
         perX.setValue(1);
         accformPer.setValue(117);
-        
+
         console.info('loaded accrual rule record');
 
         // Set loaded values
@@ -1540,25 +1540,25 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         let accformPerVal = record.get('accformPer');
 
-        if(accformPerVal < 115){
-            
+        if (accformPerVal < 115) {
+
             multiHide([
                 perX, accformPer, monthlySpecialOn,
                 monthlySpecialPer, monthly31, monthly30,
                 monthly28, msOnLabel
             ]);
-            
+
             onPer.setValue(1);
-            if(
-                accformPerVal == 114 && 
+            if (
+                accformPerVal == 114 &&
                 record.get('accformDay') == 'ANNIVERSARY'
-            ){ 
+            ) {
                 accformOn.setValue(100);
             } else {
                 accformOn.setValue(accformPerVal);
             }
             accformOn.show();
-            if(accformPerVal == 51){
+            if (accformPerVal == 51) {
                 /* == Weekly == */
                 onWeekly.setValue(record.get('accformDay'));
                 onWeekly.setHidden(false);
@@ -1567,7 +1567,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     onBiWeekly, monthly31, monthly30, monthly28,
                     onAnnually, onAnniversaryLabel
                 ]);
-            } else if (accformPerVal == 52){
+            } else if (accformPerVal == 52) {
                 /* == Bi-Weekly == */
                 onBiWeekly.setValue(record.get('accformDay'));
                 onBiWeekly.setHidden(false);
@@ -1576,7 +1576,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     onWeekly, monthly31, monthly30, monthly28,
                     onAnnually, onAnniversaryLabel
                 ]);
-            } else if (accformPerVal == 53){
+            } else if (accformPerVal == 53) {
                 /* == Monthly == */
                 monthly31.setValue(record.get('accformDay'));
                 monthly31.setHidden(false);
@@ -1585,9 +1585,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     onWeekly, onBiWeekly, monthly30, monthly28,
                     onAnnually, onAnniversaryLabel
                 ]);
-            } else if (accformPerVal == 114){
+            } else if (accformPerVal == 114) {
                 /* == Annually == */
-                if(record.get('accformDay') == 'ANNIVERSARY'){
+                if (record.get('accformDay') == 'ANNIVERSARY') {
                     onAnniversaryLabel.setHidden(false);
                     onAnnually.setHidden(true);
                 } else {
@@ -1595,13 +1595,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     onAnnually.setHidden(false);
                     onAnniversaryLabel.setHidden(true);
                 }
-                
+
                 multiHide([
                     onWeekly, onBiWeekly, monthly30, monthly31, monthly28
                 ]);
-            } else if (accformPerVal == 56){
+            } else if (accformPerVal == 56) {
                 /* == Monthly Special == */
-                
+
                 let accformDayVal = record.get('accformDay'),
                     msChoice = accformDayVal.split('-')[0];
 
@@ -1611,13 +1611,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 // Day options based on month
 
                 // Feb - 28 days
-                if(msChoice == '2'){
+                if (msChoice == '2') {
                     multiHide([monthly31, monthly30]);
                     monthly28.setValue(accformDayVal.split('-')[1]);
                     monthly28.setHidden(false);
-                } 
+                }
                 // April, June, Sept, Nov - 30 days
-                else if(['4','6','9','11'].includes(msChoice)){
+                else if (['4', '6', '9', '11'].includes(msChoice)) {
                     multiHide([monthly31, monthly28]);
 
                     monthly30.setValue(accformDayVal.split('-')[1]);
@@ -1645,7 +1645,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             let accformDayVal = record.get('accformDay');
 
             // Determine shown options
-            if(accformPerVal == 119){
+            if (accformPerVal == 119) {
                 /* == Monthly Special == */
 
                 monthlySpecialPer.setValue(accformDayVal.split('-')[0]);
@@ -1681,57 +1681,65 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @param {Object} val Current field value
      * @param {Object} oldVal Field value prior to edit
      */
-    onAccrualRuleBeforeEditComplete: function(location, editor, val, oldVal){
+    onAccrualRuleBeforeEditComplete: function (location, editor, val, oldVal) {
         var record = location.record,
             recIdx = location.recordIndex,
             store = record.store;
 
-        // Perform validation
-        var valid = this.validateAccrualRuleBeforeComplete(location, store, editor, val, oldVal);
+        if (location.column.getItemId() == 'info') {
+            var updatedRecordData = this.accrualRuleFromInfoEditor(
+                location.column.getEditor().getAt(0)
+            );
+            record.set(updatedRecordData, {commit: true});
+            console.info('accrual rule before edit complete');
+        } else {
+            // Perform validation
+            var valid = this.validateAccrualRuleBeforeComplete(location, store, editor, val, oldVal);
 
-        if(valid){
-            let rowData = location.row.getData();
+            if (valid) {
+                let rowData = location.row.getData();
 
-            rowData = (Object.isUnvalued(rowData))? {} : rowData;
+                rowData = (Object.isUnvalued(rowData)) ? {} : rowData;
 
-            /*
-                If there is at least one record, make sure the first has an
-                svcFrom value of 0 and the last has an svcTo of 0
-            */
-            if (store.getCount() > 0) {
-                store.getAt(0).set({
-                    svcFrom: 0
-                }, { commit: true });
-                store.getAt(rowData.lastRuleIndex).set({
-                    svcTo: 0
-                }, { commit: true });
+                /*
+                    If there is at least one record, make sure the first has an
+                    svcFrom value of 0 and the last has an svcTo of 0
+                */
+                if (store.getCount() > 0) {
+                    store.getAt(0).set({
+                        svcFrom: 0
+                    }, { commit: true });
+                    store.getAt(rowData.lastRuleIndex).set({
+                        svcTo: 0
+                    }, { commit: true });
+                }
+
+                /*
+                    Record is not the first rule in the named group.
+                    Change previous rule's svcTo value to 1 less than the 
+                    current record's svcFrom
+                */
+                if (rowData['firstRuleIndex'] && recIdx > rowData.firstRuleIndex) {
+                    let prevRecord = store.getAt(recIdx - 1);
+                    prevRecord.set({
+                        svcTo: record.get('svcFrom') - 1
+                    }, { commit: true });
+                }
+
+                /*
+                    Record is not the last rule in the named group.
+                    Change next rule's svcFrom value to 1 more than the 
+                    current record's svcTo
+                */
+                if (rowData['lastRuleIndex'] && recIdx < rowData.lastRuleIndex) {
+                    let nextRecord = store.getAt(recIdx + 1);
+                    nextRecord.set({
+                        svcFrom: record.get('svcTo') + 1
+                    }, { commit: true });
+                }
+
+                console.info('onAccrualRuleBeforeEditComplete');
             }
-
-            /*
-                Record is not the first rule in the named group.
-                Change previous rule's svcTo value to 1 less than the 
-                current record's svcFrom
-            */
-            if (rowData['firstRuleIndex'] && recIdx > rowData.firstRuleIndex) {
-                let prevRecord = store.getAt(recIdx - 1);
-                prevRecord.set({
-                    svcTo: record.get('svcFrom') - 1
-                }, { commit: true });
-            }
-
-            /*
-                Record is not the last rule in the named group.
-                Change next rule's svcFrom value to 1 more than the 
-                current record's svcTo
-            */
-            if (rowData['lastRuleIndex'] && recIdx < rowData.lastRuleIndex) {
-                let nextRecord = store.getAt(recIdx + 1);
-                nextRecord.set({
-                    svcFrom: record.get('svcTo') + 1
-                }, { commit: true });
-            }
-
-            console.info('onAccrualRuleBeforeEditComplete');
         }
     },
 
@@ -1815,7 +1823,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
         // load selected category's carry over rules
         vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
-        vm.get('selectedCategoryCarryOverRules').sort('svcFrom','ASC');
+        vm.get('selectedCategoryCarryOverRules').sort('svcFrom', 'ASC');
     },
 
     /**
@@ -1828,16 +1836,16 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var store = grid.getStore(),
             record = info.record,
             recordIndex = store.indexOf(record);
-        
+
         if (store.getCount() > 1) {
             // Store contains more than 1 rule records
-            if(recordIndex == 0){
+            if (recordIndex == 0) {
                 /* 
                     Record is first, so set svcFrom of second record to 0
                 */
                 store.getAt(1).set({
                     svcFrom: 0
-                }, {commit: true});
+                }, { commit: true });
             } else {
                 /*
                     Record isn't first, so set svcTo of previous record to
@@ -1846,7 +1854,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 let prevRecord = store.getAt(recordIndex - 1);
                 prevRecord.set({
                     svcTo: record.get('svcTo')
-                }, {commit: true});
+                }, { commit: true });
             }
 
             // Remove record selected for deletion
@@ -1864,7 +1872,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 carryOver: -1,
                 perAmount: 0,
                 perUnit: 59
-            }, {commit: true});
+            }, { commit: true });
         }
     },
 
