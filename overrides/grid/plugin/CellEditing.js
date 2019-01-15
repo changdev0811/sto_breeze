@@ -42,9 +42,9 @@ Ext.define('Overrides.grid.plugin.CellEditing', {
         );
 
         // Event handler for before complete (beforecompleteevent)
-        editor.on('beforecomplete', function () {
+        editor.on('beforecomplete', function (c, currentVal, startVal) {
             this.getGrid().fireEvent(
-                'beforecompleteedit', location, editor
+                'beforecompleteedit', location, editor, currentVal, startVal
             );
         }, this, {
                 single: true

@@ -812,6 +812,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             editable: true,
                                             editor: {
                                                 xtype: 'numberfield',
+                                                itemId: 'fromField',
                                                 decimals: 0,
                                                 required: true,
                                                 minValue: 0,
@@ -836,6 +837,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             editable: true,
                                             editor: {
                                                 xtype: 'numberfield',
+                                                itemId: 'throughField',
                                                 decimals: 0,
                                                 required: true,
                                                 minValue: 0,

@@ -556,10 +556,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // location.row.setData(null);
 
         // ==[Logic specific to 'From' column]==
-        if (columnItemId == 'from') {
-
-            // store current from value in row's data for later reversion
-            // location.row.appendData({temp: {svcFrom: record.get('svcFrom')}});
+        if (columnItemId == 'from') {            
 
             console.info('before carry over edit [from]');
 
@@ -600,18 +597,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
             // Don't allow editing if allowCarry is false
             if (!record.get('allowCarry')) {
-                // store 0 in temp carryMax value for row
-                // location.row.appendData({
-                //     temp: { carryOver: 0 }
-                // });
                 editor.getComponent('maxField').setValue(0);
                 return false;
             } else {
-                // store actual value in temp carryMax value for row
-                // location.row.appendData({
-                //     temp: { carryOver: record.get('carryOver') }
-                // });
-                // editor.getComponent('maxField').setValue(record.get('carryMax'));
                 return true;
             }
         }
@@ -651,12 +639,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     onCarryOverPostEdit: function (location, editor) {
         var record = location.record,
             recIdx = location.recordIndex,
-            store = record.store,
-            columnItemId = location.column.getItemId(),
-            editorComp = editor.getParent();
-
-
-        
+            store = record.store;
+            // columnItemId = location.column.getItemId(),
+            // editorComp = editor.getParent();
 
         /*
             If there is at least one record, make sure the first
@@ -698,10 +683,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Event handler for grid editor fired before edit completes
      * @param {Object} location Object with grid cell and data location info
      * @param {Object} editor Reference to active editor component
-     * @param {Object} values Object with current and start field values
+     * @param {Object} val Current field value
+     * @param {Object} oldVal Field value prior to edit
      */
-    onCarryOverBeforeEditComplete: function (location, editor) {
+    onCarryOverBeforeEditComplete: function (location, editor, val, oldVal) {
         var record = location.record,
+            store = record.store,
             columnItemId = location.column.getItemId();
         
         console.info('Carry over before edit complete');
@@ -727,12 +714,73 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         // ==[Logic specific to 'from' column]==
         if(columnItemId == 'from'){
-            console.info('')
+            console.info('Carry Over Rule before complete edit [from]');
+
+            let valid = true,
+                errors = [],
+                toVal = record.get('svcTo'),
+                // Shorthand for adding error message and syncing valid
+                addErr = (msg)=>{
+                    valid = false;
+                    errors.push(msg);
+                },
+                field = editor.getComponent('fromField');
+                
+
+            if(location.recordIndex == 0){
+                /*
+                    Record is first rule
+                */
+               if(val == 0){
+                   // Expects 'from' value to be 0 for first item
+               } else {
+                   // First item's from value != 0, so add error
+                   addErr('Service must be from 0 (hire) for the first interval');
+               }
+            } else if(toVal !== 0 && val > toVal) {
+                /*
+                    svcTo isn't 0 and svcFrom is > svcTo
+                */
+               addErr('The service from year can\'t be after the service through year');
+            } else if(location.recordIndex == 1){
+                /*
+                    Record is second rule
+                */
+               if(val < 2){
+                   addErr('This interval can\'t completely overwrite the first interval');
+               }
+            } else if(location.recordIndex > 1){
+                /*
+                    Record is 3rd+ rule
+                */
+                let prevRec = store.getAt(location.recordIndex - 1);
+                if(val <= prevRec.get('svcFrom')){
+                    /*
+                        Previous record's svcFrom value is >= this
+                        record's svcFrom value
+                    */
+                   addErr('This interval can\'t completely overwrite the previous interval');
+                }
+            }
+
+            if(!valid){
+                // If not valid (1 or more errors)
+                // Reset 'from' value to previous value
+                field.setValue(oldVal);
+
+                // Show warning toast for duration of error + 4 seconds
+                Ext.toast({
+                    type: Ext.Toast.WARN,
+                    message: 'Unable to update Carry Over Rule \'From\' value:',
+                    list: errors,
+                    timeout: ['error',4]
+                });
+            }
         }
 
         // ==[Logic specific to 'through' column]==
         if(columnItemId == 'through'){
-
+            console.info('Carry Over Rule before complete edit [through]');
         }
     },
 
