@@ -393,6 +393,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             };
 
         // ==[Logic for accformOn change event]==
+        // ==[from AccrualInformationEditor.selectAccrualRuleOn]==
         if(itemId == 'accformOn'){
             if(newVal == 51){
                 // Show Weekly options
@@ -463,9 +464,82 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             }
         }
 
-        // ==[:pgoc fpr onPer change event]==
+        // ==[logic fpr onPer change event]==
+        // ==[from AccrualInformationEditor.selectOnPer]==
         if(itemId == 'onPer'){
+            if(newVal == 1){
+                // On
+                multiHide([
+                    'perX', 'accformPer', 'monthlySpecialPer',
+                    'msOn', 'monthly31'
+                ]);
+                multiShow(['accformOn']);
+                // Determine options to show
+                let afOnVal = infoFc.getComponentInItems('accformOn').getValue();
+                if(afOnVal == 51){
+                    // Weekly
+                    multiShow(['onWeekly']);
+                } else if(afOnVal == 52){
+                    // Bi-Weekly
+                    multiShow(['onBiWeekly']);
+                } else if(afOnVal == 53) {
+                    // Monthly
+                    multiShow(['monthly31']);
+                } else if(afOnVal == 114){
+                    // Annually
+                    multiShow(['onAnnually']);
+                } else if(afOnVal == 100){
+                    // Annually (Anniversary)
+                    multiShow(['onAnniversary']);
+                } else if(afOnVal == 56){
+                    // Monthly special
+                    multiShow(['monthlySpecialOn']);
+                    
+                    // Day option choices based off month
+                    let msChoice = infoFc.getComponentInItems('monthlySpecialOn').getValue();
 
+                    if(msChoice == '2'){
+                        // Feburary - 28 days
+                        multiShow(['monthly28']);
+                    } else if(['4','6','9','11'].includes(msChoice)){
+                        // April/June/Sept/Nov - 30 days
+                        multiShow(['monthly30']);
+                    } else {
+                        // All others - 31 days
+                        multiShow(['monthly31']);
+                    }
+                } else {
+                    // Per
+                    multiHide([
+                        'accformOn', 'onWeekly','onBiWeekly', 'monthly31',
+                        'monthly30', 'monthly28', 'onAnnually', 'onAnniversary',
+                        'monthlySpecialOn', 'msOn'
+                    ]);
+                    multiShow(['accformPer']);
+
+                    // Determine which options to show
+                    let afPer = infoFc.getComponentInItems('accformPer');
+
+                    // TODO: confirm this is correct
+                    if(!afPer.getValue()){
+                        afPer.setValue(117);
+                    }
+                    if(afPer.getValue() == 119){
+                        // Monthly Special
+                        multiShow(['monthlySpecialPer','msOn','monthly31']);
+                    } else {
+                        // Everything else
+                        multiHide(['monthlySpecialPer']);
+                        multiShow(['perX']);
+                    }
+                }
+            }
+        }
+
+        // ==[logic for accformPer change event]==
+        // ==[from AccrualInformationEditor.selectAccruaRulePer]
+        if(itemId == 'accformPer'){
+            
         }
 
     },
