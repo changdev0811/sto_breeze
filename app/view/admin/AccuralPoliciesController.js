@@ -539,10 +539,129 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // ==[logic for accformPer change event]==
         // ==[from AccrualInformationEditor.selectAccruaRulePer]
         if(itemId == 'accformPer'){
-            
+            if(newVal == 119){
+                // Monthly Special
+                multiHide(['perX']);
+                multiShow(['monthlySpecialPer','msOn','monthly31']);
+            } else {
+                // Everything else
+                multiHide(['monthlySpecialPer','msOn','monthly31']);
+                multiShow(['perX']);
+            }
+        }
+
+        // ==[logic for monthlySpecialOn change event]==
+        if(itemId == 'monthlySpecialOn'){
+            // Day option choices based on month
+            if(newVal == '2'){
+                // Feb - 28 days
+                multiHide(['monthly31','monthly30']);
+                multiShow(['monthly28']);
+            } else if (['4','6','9','11'].includes(newVal)){
+                // April/June/Sept/Nov - 30 days
+                multiHide(['monthly31','monthly28']);
+                multiShow(['monthly30']);
+            } else {
+                // Others - 31 days
+                multiHide(['monthly30','monthly28']);
+                multiShow(['monthly31']);
+            }
         }
 
     },
+
+    /**
+     * Constructs an arrual rule record from the current data state of the
+     * info column's editor
+     * @param {Object} containerField Reference to info column editor's main child
+     * @return {Object} Newly constructed Accrual Rule record
+     */
+    accrualRuleFromInfoEditor: function(containerField){
+        var fieldNames = [
+            'accformInc','accformUnit','accformOn','onPer',
+            'onWeekly','onBiWeekly','monthly31','monthly30',
+            'monthly28','monthlySpecialOn','monthlySpecialPer',
+            'onAnnually','perX','accformPer'
+        ];
+
+        var fields = {},
+            accrualRule = {};
+
+        for(var i=0;i<fieldNames.length;i++){
+            let name = fieldNames[i];
+            fields[name] = containerField.getComponentInItems(name);
+        }
+
+        accrualRule = {
+            accformInc: fields.accformInc.getValue(),
+            accformUnit: fields.accformUnit.getValue(),
+            // Default month and day to 0 unless monthly special
+            msMonth = '0',
+            msDay = '0'
+        };
+
+        if(fields.onPer.getValue() == 1) {
+            // On
+            if(fields.accformOn.getValue() == 100){
+                accrualRule.accformPer = 114;
+                accrualRule.accformDay = 'ANNIVERSARY';
+            } else {
+                accrualRule.accformPer = fields.accformOn.getValue();
+            }
+            // Determine which ruleCount to use
+            if(fields.accformOn.getValue() == 51){
+                // Weekly
+                accrualRule.accformDay = fields.onWeekly.getValue();
+            } else if(fields.accformOn.getValue() == 52){
+                // Bi-Weekly
+                accrualRule.accformDay = fields.onBiWeekly.getValue();
+            } else if(fields.accformOn.getValue() == 53){
+                // Monthly
+                accrualRule.accformDay = fields.monthly31.getValue();
+            } else if(fields.accformOn.getValue() == 56){
+                // Monthly Special
+                let msChoice = fields.monthlySpecialOn.getValue();
+                accrualRule.asMonth = msChoice;
+                // Day option based on month
+                if(msChoice == '2'){
+                    // Feb - 28 days
+                    accrualRule.accformDay = `${msChoice}-${fields.monthly28.getValue()}`;
+                    accrualRule.msDay = fields.monthly28.getValue();
+                } else if (['4','6','9','11'].includes(msChoice)){
+                    // April/June/Sept/Nov - 30 days
+                    accrualRule.accformDay = `${msChoice}-${fields.monthly30.getValue()}`;
+                    accrualRule.msDay = fields.monthly30.getValue();
+                } else {
+                    // Others - 31 days
+                    accrualRule.accformDay = `${msChoice}-${fields.monthly31.getValue()}`;
+                    accrualRule.msDay = fields.monthly31.getValue();
+                }
+            } else if(fields.accformOn.getValue() == 114){
+                // Annually
+                if(fields.onAnnually.getValue().trim() == ''){
+                    accrualRule.accformDay = 'ANNIVERSARRY';
+                } else {
+                    accrualRule.accformDay = fields.onAnnually.getValue();
+                }
+            } else if(fields.accformOn.getValue !== 100){
+                accrualRule.accformDay = ' ';
+            }
+        } else {
+            // Per
+            accrualRule.accformPer = fields.accformPer.getValue();
+            if(fields.accformPer.getValue == 119){
+                accrualRule.accformDay = `${fields.monthlySpecialPer.getValue}-${fields.monthly31.getValue()}`;
+                accrualRule.msMonth = fields.monthlySpecialPer.getValue();
+                accrualRule.msDay = fields.monthly31.getValue();
+            } else {
+                accrualRule.accformDay = fields.perX.getValue();
+            }
+        }
+
+        return accrualRule;
+
+    },
+
 
 
     /**
