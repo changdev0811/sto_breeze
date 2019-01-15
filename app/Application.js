@@ -27,6 +27,7 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.Years',
         'Breeze.store.option.DurationTypes',
         'Breeze.store.option.MinimumUseUnits',
+        'Breeze.store.option.AccrualRateTypes',
         // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
         'Breeze.store.company.Config',

@@ -648,7 +648,77 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         return valid;
     },
 
+    /**
+     * Multi-field validation method for grid editor fired before edit completes
+     * @param {Object} location Object with grid cell and data location info
+     * @param {Object} editor Reference to active editor component
+     * @param {Object} val Current field value
+     * @param {Object} oldVal Field value prior to edit
+     * @return {Boolean} True if validation succeeds, false otherwise
+     */
+    validateCarryOverBeforeComplete: function (location, editor, val, oldVal) {
+        var record = location.record,
+            store = record.store,
+            columnItemId = location.column.getItemId();
+        
+        console.info('Carry over before edit complete');
 
+        // ==[Logic specific to 'Carry Over Expiration' column]==
+        if (columnItemId == 'expiration') {
+            let editorComp = editor.getComponent('expirationField'),
+                amount = editorComp.getComponentInItems('amount'),
+                unit = editorComp.getComponentInItems('unit'),
+                amountVal = amount.getValue(),
+                unitVal = unit.getValue();
+
+            // Check if amount or unit changed
+            if (amountVal !== record.get('perAmount') || unitVal !== record.get('perUnit')) {
+                // If change occured, update record
+                record.set({
+                    perAmount: amountVal,
+                    perUnit: unitVal,
+                    expChanged: true
+                }, { commit: true });
+            }
+        }
+
+        // ==[Logic specific to 'from' column]==
+        if(columnItemId == 'from'){
+            let passed = this.validateCarryOverFrom(location, val);
+            console.info('before edit complete carry over [from]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('fromField').setValue(oldVal);
+            }
+            return passed;
+        }
+
+        // ==[Logic specific to 'through' column]==
+        if(columnItemId == 'through'){
+            let passed = this.validateCarryOverThrough(location, val);
+            console.info('before edit complete carry over [through]');
+            if(!passed){
+                // If validation fails, revert to previous value
+                editor.getComponent('throughField').setValue(oldVal);
+            }
+            return passed;
+        }
+
+        // default return true
+        return true;
+    },
+
+    validateAccrualRuleFrom: function(location, val){
+
+    },
+
+    validateAccrualRuleThrough: function(location, val){
+
+    },
+
+    validateAccrualRuleBeforeComplete: function(location, editor, val, oldVal){
+
+    },
 
     // === [Event Listeners] ===
 
@@ -820,65 +890,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     /**
-     * Multi-field validation method for grid editor fired before edit completes
-     * @param {Object} location Object with grid cell and data location info
-     * @param {Object} editor Reference to active editor component
-     * @param {Object} val Current field value
-     * @param {Object} oldVal Field value prior to edit
-     * @return {Boolean} True if validation succeeds, false otherwise
-     */
-    validateCarryOverBeforeComplete: function (location, editor, val, oldVal) {
-        var record = location.record,
-            store = record.store,
-            columnItemId = location.column.getItemId();
-        
-        console.info('Carry over before edit complete');
-
-        // ==[Logic specific to 'Carry Over Expiration' column]==
-        if (columnItemId == 'expiration') {
-            let editorComp = editor.getComponent('expirationField'),
-                amount = editorComp.getComponentInItems('amount'),
-                unit = editorComp.getComponentInItems('unit'),
-                amountVal = amount.getValue(),
-                unitVal = unit.getValue();
-
-            // Check if amount or unit changed
-            if (amountVal !== record.get('perAmount') || unitVal !== record.get('perUnit')) {
-                // If change occured, update record
-                record.set({
-                    perAmount: amountVal,
-                    perUnit: unitVal,
-                    expChanged: true
-                }, { commit: true });
-            }
-        }
-
-        // ==[Logic specific to 'from' column]==
-        if(columnItemId == 'from'){
-            let passed = this.validateCarryOverFrom(location, val);
-            console.info('before edit complete carry over [from]');
-            if(!passed){
-                // If validation fails, revert to previous value
-                editor.getComponent('fromField').setValue(oldVal);
-            }
-            return passed;
-        }
-
-        // ==[Logic specific to 'through' column]==
-        if(columnItemId == 'through'){
-            let passed = this.validateCarryOverThrough(location, val);
-            console.info('before edit complete carry over [through]');
-            if(!passed){
-                // If validation fails, revert to previous value
-                editor.getComponent('throughField').setValue(oldVal);
-            }
-            return passed;
-        }
-
-        // default return true
-    },
-
-    /**
      * Change event handler for Carry Over Rules expiration amount editor field.
      * When value is 0, unit select field is disabled
      * @param {Object} comp Field component firing event
@@ -894,6 +905,110 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         } else {
             unitField.setDisabled(false);
         }
+    },
+
+    onAccrualRuleBeforeEdit: function(location, editor){
+        var record = location.record,
+            store = record.store,
+            container = editor.getComponent('infoField');
+
+        console.info('On accrual rule before edit');
+
+        let accformInc = container.getComponentInItems('accformInc'),
+            accformUnit = container.getComponentInItems('accformUnit'),
+            accformOn = container.getComponentInItems('accformOn'),
+            onPer = container.getComponentInItems('onPer'),
+            onWeekly = container.getComponentInItems('onWeekly'),
+            onBiWeekly = container.getComponentInItems('onBiWeekly'),
+            monthly31 = container.getComponentInItems('monthy31'),
+            monthly30 = container.getComponentInItems('monthy30'),
+            monthly28 = container.getComponentInItems('monthy28'),
+            monthlySpecialPer = container.getComponentInItems('monthlySpecialPer'),
+            monthlySpecialOn = container.getComponentInItems('monthlySpecialOn'),
+            onAnnually = container.getComponentInItems('onAnnually'),
+            perX = container.getComponentInItems('perX'),
+            accformPer = container.getComponentInItems('accformPer'),
+            msOnLabel = container.getComponentInItems('msOn'),
+            onAnniversaryLabel = container.getComponentInItems('onAnniversary');
+
+        var multiHide = (items)=>{
+            for(var i=0;i<items.length;i++){
+                items[i].hide();
+            }
+        };
+
+        // Set default values
+        accformOn.setValue(53);
+        onPer.setValue(1);
+        onWeekly.setValue('6');
+        onBiWeekly.setValue('13');
+        monthly31.setValue('1');
+        monthly30.setValue('1');
+        monthly28.setValue('1');
+        monthlySpecialOn.setValue('1');
+        monthlySpecialPer.setValue('1');
+        onAnnually.setValue('01/01');
+        perX.setValue(1);
+        accformPer.setValue(117);
+        
+        // Set loaded values
+        accformInc.setValue(record.get('accformInc'));
+        accformUnit.setValue(record.get('accformUnit'));
+
+        if(record.get('accformPer') < 15){
+            
+            let accformPerVal = record.get('accformPer');
+            
+            multiHide([
+                perX, accformPer, monthlySpecialOn,
+                monthlySpecialPer, monthly31, monthly30,
+                monthly28, msOnLabel
+            ]);
+            
+            onPer.setValue(1);
+            if(
+                accformPerVal == 114 && 
+                record.get('accformDay') == 'ANNIVERSARY'
+            ){ 
+                accformOn.setValue(100);
+            } else {
+                accformOn.setValue(accformPerVal);
+            }
+            accformOn.show();
+            if(accformPerVal == 51){
+                /* == Weekly == */
+                onWeekly.setValue(record.get('accformDay'));
+                onWeekly.show();
+
+                multiHide([
+                    onBiWeekly, monthly31, monthly30, monthly28,
+                    onAnnually, onAnniversaryLabel
+                ]);
+            } else if (accformPerVal == 52){
+                /* == Bi-Weekly == */
+                onBiWeekly.setValue(record.get('accformDay'));
+                onBiWeekly.show();
+
+                multiHide([
+                    onWeekly, monthly31, monthly30, monthly28,
+                    onAnnually, onAnniversaryLabel
+                ]);
+            } else if (accformPerVal == 53){
+                /* == Monthly == */
+                monthly31.setValue(record.get('accformDay'));
+                monthly31.show();
+
+                multiHide([
+                    onWeekly, onBiWeekly, monthly30, monthly28,
+                    onAnnually, onAnniversaryLabel
+                ]);
+            }
+        }
+
+    },
+
+    onAccrualRuleBeforeEditComplete: function(location, editor, val, oldVal){
+
     },
 
     /**

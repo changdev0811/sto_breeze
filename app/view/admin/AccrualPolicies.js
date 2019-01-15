@@ -629,17 +629,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             text: 'From',
                                             dataIndex: 'svcFrom',
                                             menuDisabled: true,
+                                            flex: 1,
                                             tpl: [
                                                 '<tpl if="svcFrom==0">Hire</tpl>',
                                                 '<tpl if="svcFrom!=0">',
                                                 '{svcFrom} Year<tpl if="svcFrom!=1">s</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'fromField',
+                                                decimals: 0,
+                                                minValue: 0
+                                            }
                                         },
                                         {
                                             itemId: 'through',
                                             text: 'Through',
                                             dataIndex: 'svcTo',
+                                            flex: 1,
                                             cell: {
                                                 encodeHtml: false
                                             },
@@ -647,12 +656,20 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '<tpl if="svcTo==0">&infin;</tpl>',
                                                 '<tpl if="svcTo!=0">{svcTo} Year',
                                                 '<tpl if="svcTo!=1">s</tpl></tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'throughField',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0
+                                            }
                                         },
                                         {
                                             itemId: 'info',
                                             text: 'Accrual Information',
-                                            flex: 1,
+                                            flex: 4,
                                             dataIndex: 'accrualChanged',
                                             tpl: [
                                                 '<tpl if="accformInc!=0">',
@@ -746,9 +763,149 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '</tpl>',
                                                 '</tpl>',
                                                 '<tpl if="accformInc==0">No Accrual</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            // Multi-field editor for accrual rule info column
+                                            editor: {
+                                                xtype: 'containerfield',
+                                                itemId: 'infoField',
+                                                label: '', layout: 'hbox',
+                                                items: [
+                                                    {
+                                                        xtype: 'spinnerfield',
+                                                        itemId: 'accformInc', 
+                                                        // flex: 1,
+                                                        width: 48,
+                                                        decimals: 4
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformUnit', 
+                                                        // flex: 2,
+                                                        width: 96,
+                                                        store: 'MinimumUseUnits',
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 48,
+                                                        // margin: 'inherit inherit inherit 4pt',
+                                                        ui: 'admin-ap-small-input'
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformOn',
+                                                        bind: {
+                                                            store: '{accrualRateOn}'
+                                                        },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 53,
+                                                        // flex: 2,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onPer',
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        bind: { store: '{onPerTypes}' },
+                                                        value: 1,
+                                                        width: 64,
+                                                        ui: 'admin-ap-small-input'
+                                                        // flex: 1
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthlySpecialOn',
+                                                        hidden: true,
+                                                        bind: { store: '{monthlySpecialOnOpt}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 1
+                                                    }, {
+                                                        xtype: 'spinnerfield',
+                                                        itemId: 'perX',
+                                                        minValue: 1, decimals: 0,
+                                                        value: 1,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformPer',
+                                                        bind: { store: '{accrualRatePer}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        flex: 2,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthlySpecialPer',
+                                                        bind: { store: '{monthlySpecialPerOpt}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        flex: 1,
+                                                        value: '1',
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onWeekly',
+                                                        bind: { store: '{onWeekly}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '6',
+                                                        flex: 1,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onBiWeekly',
+                                                        bind: { store: '{onBiWeekly}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '13',
+                                                        flex: 1,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'displayfield',
+                                                        itemId: 'msOn',
+                                                        label: '',
+                                                        value: 'on the',
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly31',
+                                                        bind: { store: '{monthly31}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        width: 48,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly30',
+                                                        bind: { store: '{monthly30}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        width: 48,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly28',
+                                                        bind: { store: '{monthly28}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        width: 48,
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'datefield',
+                                                        itemId: 'onAnnually',
+                                                        dateFormat: 'm/d',
+                                                        value: '1/1',
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'displayfield',
+                                                        itemId: 'onAnniversary',
+                                                        value: 'Anniversary',
+                                                        label: '',
+                                                        hidden: true
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    ]
+                                    ],
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
+                                    listeners: {
+                                        beforecompleteedit: 'onAccrualRuleBeforeEditComplete',
+                                        beforeedit: 'onAccrualRuleBeforeEdit'
+                                    }
                                 },
                             ]
                         },
@@ -811,15 +968,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ],
                                             editable: true,
                                             editor: {
-                                                xtype: 'numberfield',
+                                                xtype: 'spinnerfield',
                                                 itemId: 'fromField',
                                                 decimals: 0,
                                                 required: true,
-                                                minValue: 0,
-                                                // validators: {
-                                                //     type: 'controller',
-                                                //     fn: 'validateCarryOverFrom'
-                                                // },
+                                                minValue: 0
                                             }
                                         },
                                         {
@@ -836,15 +989,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ],
                                             editable: true,
                                             editor: {
-                                                xtype: 'numberfield',
+                                                xtype: 'spinnerfield',
                                                 itemId: 'throughField',
                                                 decimals: 0,
                                                 required: true,
-                                                minValue: 0,
-                                                // validators: {
-                                                //     type: 'controller',
-                                                //     fn: 'validateCarryOverThrough'
-                                                // },
+                                                minValue: 0
                                             }
                                         },
                                         {
@@ -853,18 +1002,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             flex: 1.25,
                                             headerCheckbox: false,
                                             text: 'Carry Over',
-                                            dataIndex: 'allowCarry',
-                                            // editable: true,
-                                            // editor: {
-                                            //     xtype: 'numberfield',
-                                            //     decimals: 0,
-                                            //     required: true,
-                                            //     minValue: 0,
-                                            //     validators: {
-                                            //         type: 'controller',
-                                            //         fn: 'validateCarryOverFrom'
-                                            //     },
-                                            // }
+                                            dataIndex: 'allowCarry'
                                         },
                                         {
                                             itemId: 'max',
