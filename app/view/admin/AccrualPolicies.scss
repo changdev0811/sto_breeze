@@ -1,4 +1,5 @@
 @include textfield-ui(
     $ui: 'admin-ap-small-input',
-    $input-font-size: 11pt
+    $input-font-size: 10pt,
+    $input-padding: 1pt 2pt 1pt 2pt
 );

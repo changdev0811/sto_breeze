@@ -912,17 +912,15 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             store = record.store,
             container = editor.getComponent('infoField');
 
-        console.info('On accrual rule before edit');
-
         let accformInc = container.getComponentInItems('accformInc'),
             accformUnit = container.getComponentInItems('accformUnit'),
             accformOn = container.getComponentInItems('accformOn'),
             onPer = container.getComponentInItems('onPer'),
             onWeekly = container.getComponentInItems('onWeekly'),
             onBiWeekly = container.getComponentInItems('onBiWeekly'),
-            monthly31 = container.getComponentInItems('monthy31'),
-            monthly30 = container.getComponentInItems('monthy30'),
-            monthly28 = container.getComponentInItems('monthy28'),
+            monthly31 = container.getComponentInItems('monthly31'),
+            monthly30 = container.getComponentInItems('monthly30'),
+            monthly28 = container.getComponentInItems('monthly28'),
             monthlySpecialPer = container.getComponentInItems('monthlySpecialPer'),
             monthlySpecialOn = container.getComponentInItems('monthlySpecialOn'),
             onAnnually = container.getComponentInItems('onAnnually'),
@@ -933,9 +931,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         var multiHide = (items)=>{
             for(var i=0;i<items.length;i++){
-                items[i].hide();
+                items[i].setHidden(true);
+            }
+        }, multiShow = (items)=>{
+            for(var i=0;i<items.length;i++){
+                items[i].setHidden(false);
             }
         };
+
 
         // Set default values
         accformOn.setValue(53);
@@ -951,13 +954,15 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         perX.setValue(1);
         accformPer.setValue(117);
         
+        console.info('loaded accrual rule record');
+
         // Set loaded values
         accformInc.setValue(record.get('accformInc'));
         accformUnit.setValue(record.get('accformUnit'));
 
-        if(record.get('accformPer') < 15){
-            
-            let accformPerVal = record.get('accformPer');
+        let accformPerVal = record.get('accformPer');
+
+        if(accformPerVal < 115){
             
             multiHide([
                 perX, accformPer, monthlySpecialOn,
@@ -978,7 +983,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             if(accformPerVal == 51){
                 /* == Weekly == */
                 onWeekly.setValue(record.get('accformDay'));
-                onWeekly.show();
+                onWeekly.setHidden(false);
 
                 multiHide([
                     onBiWeekly, monthly31, monthly30, monthly28,
@@ -987,7 +992,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             } else if (accformPerVal == 52){
                 /* == Bi-Weekly == */
                 onBiWeekly.setValue(record.get('accformDay'));
-                onBiWeekly.show();
+                onBiWeekly.setHidden(false);
 
                 multiHide([
                     onWeekly, monthly31, monthly30, monthly28,
@@ -996,19 +1001,98 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             } else if (accformPerVal == 53){
                 /* == Monthly == */
                 monthly31.setValue(record.get('accformDay'));
-                monthly31.show();
+                monthly31.setHidden(false);
 
                 multiHide([
                     onWeekly, onBiWeekly, monthly30, monthly28,
                     onAnnually, onAnniversaryLabel
                 ]);
+            } else if (accformPerVal == 114){
+                /* == Annually == */
+                if(record.get('accformDay') == 'ANNIVERSARY'){
+                    onAnniversaryLabel.setHidden(false);
+                    onAnnually.setHidden(true);
+                } else {
+                    onAnnually.setValue(record.get('accformDay'));
+                    onAnnually.setHidden(false);
+                    onAnniversaryLabel.setHidden(true);
+                }
+                
+                multiHide([
+                    onWeekly, onBiWeekly, monthly30, monthly31, monthly28
+                ]);
+            } else if (accformPerVal == 56){
+                /* == Monthly Special == */
+                
+                let accformDayVal = record.get('accformDay'),
+                    msChoice = accformDayVal.split('-')[0];
+
+                monthlySpecialOn.setValue(msChoice);
+                monthlySpecialOn.setHidden(false);
+
+                // Day options based on month
+
+                // Feb - 28 days
+                if(msChoice == '2'){
+                    multiHide([monthly31, monthly30]);
+                    monthly28.setValue(accformDayVal.split('-')[1]);
+                    monthly28.setHidden(false);
+                } 
+                // April, June, Sept, Nov - 30 days
+                else if(['4','6','9','11'].includes(msChoice)){
+                    multiHide([monthly31, monthly28]);
+
+                    monthly30.setValue(accformDayVal.split('-')[1]);
+                    monthly30.setHidden(false);
+                }
+                // All others - 31 days
+                else {
+                    multiHide([monthly30, monthly28]);
+
+                    monthly31.setValue(accformDayVal.split('-')[1]);
+                    monthly31.setHidden(false);
+                }
+            }
+        } else {
+            multiHide([
+                accformOn, onWeekly, onBiWeekly,
+                monthly31, monthly30, monthly28,
+                onAnnually, onAnniversaryLabel
+            ]);
+
+            onPer.setValue(2);
+            accformPer.setValue(accformPerVal);
+            accformPer.setHidden(false);
+
+            let accformDayVal = record.get('accformDay');
+
+            // Determine shown options
+            if(accformPerVal == 119){
+                /* == Monthly Special == */
+
+                monthlySpecialPer.setValue(accformDayVal.split('-')[0]);
+                monthly31.setValue(accformDayVal.split('-')[1]);
+
+                multiShow([
+                    monthlySpecialPer, monthly31, msOnLabel
+                ]);
+            } else {
+                /* == Everything else == */
+                multiHide([
+                    monthlySpecialPer, monthly31, msOnLabel
+                ]);
+
+                perX.setValue(accformDayVal);
+                perX.setHidden(false);
             }
         }
+
+        console.info('On accrual rule before edit');
 
     },
 
     onAccrualRuleBeforeEditComplete: function(location, editor, val, oldVal){
-
+        console.info('Accrual policy before edit complete');
     },
 
     /**
