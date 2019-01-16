@@ -117,6 +117,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             this.createPolicyDialog = dialog = Ext.create(dialog);
         }
 
+        dialog.getComponent('createOption').setValues({option:1});
+        dialog.getComponent('policySource').setValue(vm.get('policyData.ID'));
+
         dialog.show();
     },
 
@@ -2054,8 +2057,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                         me.api.delete(policyId).then((msg)=>{
                             // Show success message
                             Ext.toast({
-                                type: msg.type,
-                                message: msg.message,
+                                type: Ext.Toast.INFO,
+                                message: 'Accrual Policy successfully deleted.',
                                 timeout: ['info',2]
                             });
                             // Reload policies
@@ -2072,6 +2075,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     }
                     // if user answered no, dialog closes and abort
                 },
+                'dark-themed-dialog',
                 me
             )
         }).catch((err)=>{
@@ -2080,11 +2084,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             Ext.toast({
                 type: err.type,
                 message: err.message,
-                // give bulleted items from error data, if available and array or non empty string
-                list: (
-                    (Array.isArray(err.error))? err.error.join('') :
-                    (typeof err.error == 'string' && err.error.trim().length > 0)? [err.error] : undefined
-                ),
                 timeout: 'error'
             });
         })

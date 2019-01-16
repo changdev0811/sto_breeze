@@ -108,8 +108,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                     } else {
                         reject({
                             type: Ext.Toast.ERROR,
-                            message: 'Unable to Delete',
-                            error: resp.err
+                            message: resp.err
                         });
                     }
                 },

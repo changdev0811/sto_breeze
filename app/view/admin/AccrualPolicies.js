@@ -1256,8 +1256,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     hidden: '{!createDlgCopyExisting.checked}',
                     store: '{policiesList}'
                 },
-                displayField: 'Name',
-                valueField: 'ID'
+                autoSelect: true,
+                displayField: 'text',
+                valueField: 'data'
             }
         ]
     },
