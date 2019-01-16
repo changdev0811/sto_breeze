@@ -12,7 +12,7 @@ Ext.define('Breeze.model.accrual.policy.Rule', {
         {name: 'accformDay',	    type: 'string' },
         {name: 'accformInc',	type: 'number' },
         {name: 'accformPer',	type: 'integer' },
-        {name: 'accformUnit',	    type: 'boolean' },
+        {name: 'accformUnit',	    type: 'integer' },
         {name: 'accrualChanged',	type: 'boolean' },
         {name: 'msDay',	    type: 'string' },
         {name: 'msMonth',	    type: 'string' }

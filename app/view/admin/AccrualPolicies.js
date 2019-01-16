@@ -70,6 +70,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
                     layout: 'vbox',
                     items: [
+                        // Policies
                         {
                             xtype: 'panel',
                             ui: 'admin-fs-panel',
@@ -81,11 +82,15 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-plus',
-                                    handler: 'showCreatePolicyDialog'
+                                    handler: 'showCreatePolicyDialog',
                                 },
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-minus',
+                                    handler: 'onDeletePolicy',
+                                    bind: {
+                                        disabled: '{disabled.deletePolicy}'
+                                    }
                                 }
                             ],
                             items: [
@@ -187,7 +192,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-plus',
-                                    handler: 'showAddShiftSegmentDialog'
+                                    handler: 'showCreateShiftSegmentDialog'
                                 }
                             ],
                             layout: 'vbox',
@@ -235,7 +240,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 listeners: {
                                                     change: 'onShiftTimeChange'
                                                 }
-                                            }
+                                            },
+                                            groupable: false, menu: null, 
+                                            menuDisabled: true, resizable: false
                                         },
                                         // {
                                         //     xtype: 'templatecolumn',
@@ -277,7 +284,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 listeners: {
                                                     change: 'onShiftTimeChange'
                                                 }
-                                            }
+                                            },
+                                            groupable: false, menu: null, 
+                                            menuDisabled: true, resizable: false
                                         }
                                     ]
                                 }
@@ -571,25 +580,27 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         { xtype: 'spacer', flex: 1 },
 
                                         {
+                                            // Add accrual rule
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
                                             bind: {
-                                                disabled: '{!selectedCategory.allowAccrual}'
+                                                // disabled: '{!selectedCategory.allowAccrual}'
+                                                disabled: '{disableCreateAccrualRule}'
                                             },
-                                            handler: 'showAddAccrualRuleDialog'
+                                            handler: 'showCreateAccrualRuleDialog'
                                         },
 
                                         {
+                                            // Add accrual interval
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-clock',
                                             ui: 'plain wtr-button',
                                             bind: {
-                                                disabled: '{!selectedCategory.allowAccrual}'
+                                                // disabled: '{!selectedCategory.allowAccrual}'
+                                                disabled: '{disableCreateAccrualInterval}'
                                             },
-                                            handler: 'showAddAccrualIntervalDialog'
+                                            handler: 'showCreateAccrualIntervalDialog'
                                         },
                                     ]
                                 },
@@ -599,6 +610,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     flex: 1,
                                     sortable: false, striped: false,
                                     columnMenu: null, grouped: true,
+                                    hideHeaders: true,
                                     ui: 'admin-grid', userCls: 'admin-grid',
                                     reference: 'accrualRuleGrid',
                                     hidden: true,
@@ -629,17 +641,26 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             text: 'From',
                                             dataIndex: 'svcFrom',
                                             menuDisabled: true,
+                                            flex: 1,
                                             tpl: [
                                                 '<tpl if="svcFrom==0">Hire</tpl>',
                                                 '<tpl if="svcFrom!=0">',
                                                 '{svcFrom} Year<tpl if="svcFrom!=1">s</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'fromField',
+                                                decimals: 0,
+                                                minValue: 0
+                                            }
                                         },
                                         {
                                             itemId: 'through',
                                             text: 'Through',
                                             dataIndex: 'svcTo',
+                                            flex: 1,
                                             cell: {
                                                 encodeHtml: false
                                             },
@@ -647,144 +668,344 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '<tpl if="svcTo==0">&infin;</tpl>',
                                                 '<tpl if="svcTo!=0">{svcTo} Year',
                                                 '<tpl if="svcTo!=1">s</tpl></tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'throughField',
+                                                decimals: 0,
+                                                required: true,
+                                                minValue: 0
+                                            }
                                         },
                                         {
                                             itemId: 'info',
                                             text: 'Accrual Information',
-                                            flex: 1,
+                                            flex: 4,
                                             dataIndex: 'accrualChanged',
                                             tpl: [
                                                 '<tpl if="accformInc!=0">',
-                                                '<tpl if="accformPer==56||accformPer==119">Monthly Special: </tpl>',
-                                                '{accformInc} ',
-                                                '<tpl if="accformUnit==48">Day</tpl>',
-                                                '<tpl if="accformUnit==49">Hour</tpl>',
-                                                '<tpl if="accformUnit==50">Minute</tpl>',
-                                                '<tpl if="accformInc!=1">s</tpl> ',
-                                                '<tpl if="accformPer &lt; 115">',
-                                                '<tpl if="accformPer==51">Weekly on ',
-                                                '<tpl if="accformDay==1">Sunday</tpl>',
-                                                '<tpl if="accformDay==2">Monday</tpl>',
-                                                '<tpl if="accformDay==3">Tuesday</tpl>',
-                                                '<tpl if="accformDay==4">Wednesday</tpl>',
-                                                '<tpl if="accformDay==5">Thursday</tpl>',
-                                                '<tpl if="accformDay==6">Friday</tpl>',
-                                                '<tpl if="accformDay==7">Saturday</tpl>',
+                                                    '<tpl if="accformPer==56||accformPer==119">Monthly Special: </tpl>',
+                                                    '{accformInc} ',
+                                                    '<tpl if="accformUnit==48">Day</tpl>',
+                                                    '<tpl if="accformUnit==49">Hour</tpl>',
+                                                    '<tpl if="accformUnit==50">Minute</tpl>',
+                                                    '<tpl if="accformInc!=1">s</tpl> ',
+                                                    '<tpl if="accformPer &lt; 115">',
+                                                        '<tpl if="accformPer==51">Weekly on ',
+                                                            '<tpl if="accformDay==1">Sunday</tpl>',
+                                                            '<tpl if="accformDay==2">Monday</tpl>',
+                                                            '<tpl if="accformDay==3">Tuesday</tpl>',
+                                                            '<tpl if="accformDay==4">Wednesday</tpl>',
+                                                            '<tpl if="accformDay==5">Thursday</tpl>',
+                                                            '<tpl if="accformDay==6">Friday</tpl>',
+                                                            '<tpl if="accformDay==7">Saturday</tpl>',
+                                                        '</tpl>',
+                                                        '<tpl if="accformPer==52">BiWeekly on the ',
+                                                            '<tpl if="accformDay &lt; 8"> first </tpl>',
+                                                            '<tpl if="accformDay &gt; 7"> second </tpl>',
+                                                            '<tpl if="accformDay==1||accformDay==8">Sunday</tpl>',
+                                                            '<tpl if="accformDay==2||accformDay==9">Monday</tpl>',
+                                                            '<tpl if="accformDay==3||accformDay==10">Tuesday</tpl>',
+                                                            '<tpl if="accformDay==4||accformDay==11">Wednesday</tpl>',
+                                                            '<tpl if="accformDay==5||accformDay==12">Thursday</tpl>',
+                                                            '<tpl if="accformDay==6||accformDay==13">Friday</tpl>',
+                                                            '<tpl if="accformDay==7||accformDay==14">Saturday</tpl>',
+                                                        '</tpl>',
+                                                        '<tpl if="accformPer==53">Monthly on ',
+                                                            '<tpl if="accformDay!=\'ANNIVERSARY\'">the </tpl>',
+                                                            '{accformDay}',
+                                                            '<tpl if="accformDay==1 ||accformDay==21||accformDay==31">st</tpl>',
+                                                            '<tpl if="accformDay==2 ||accformDay==22">nd</tpl>',
+                                                            '<tpl if="accformDay==3 ||accformDay==23">rd</tpl>',
+                                                            '<tpl if="accformDay!=1 &&accformDay!=2 &&accformDay!=3 &&accformDay!=21&&accformDay!=22&&accformDay!=23&&accformDay!=31&&accformDay!=\'ANNIVERSARY\'">th</tpl>',
+                                                        '</tpl>',
+                                                        '<tpl if="accformPer==54">Quarterly</tpl>',
+                                                        '<tpl if="accformPer==55">Semi-Annually</tpl>',
+                                                        '<tpl if="accformPer==56"> on ',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==1">January</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==2">February</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==3">March</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==4">April</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==5">May</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==6">June</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==7">July</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==8">August</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==9">September</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==10">October</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==11">November</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==12">December</tpl>',
+                                                            ' {msDay}',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
+                                                            '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                            '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
+                                                        '</tpl>',
+                                                        '<tpl if="accformPer==114">Annually on {accformDay}</tpl>',
+                                                    '</tpl>',
+                                                    '<tpl if="accformPer &gt; 114"> per ',
+                                                        '<tpl if="accformPer!=119">',
+                                                            '<tpl if="this.parseInt(accformDay) &gt; 1">{accformDay} </tpl>',
+                                                            '<tpl if="accformPer==115">Day</tpl>',
+                                                            '<tpl if="accformPer===116">Week</tpl>',
+                                                            '<tpl if="accformPer==117">Month</tpl>',
+                                                            '<tpl if="accformPer==118">Year</tpl>',
+                                                            '<tpl if="accformPer==140">Worked Hour</tpl>',
+                                                            '<tpl if="accformPer==141">Worked Day</tpl>',
+                                                            '<tpl if="accformDay &gt; 1">s</tpl>',
+                                                        '</tpl>',
+                                                        '<tpl if="accformPer==119">',
+                                                            '{msMonth}',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==1">st</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==2">nd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])==3">rd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[0])!=1 &&eval(accformDay.split(\'-\')[0])!=2 &&eval(accformDay.split(\'-\')[0])!=3">th</tpl>',
+                                                            ' Month on ',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">the </tpl>',
+                                                            '{msDay}',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
+                                                            '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
+                                                                '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
+                                                                '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
+                                                        '</tpl>',
+                                                    '</tpl>',
                                                 '</tpl>',
-                                                '<tpl if="accformPer==52">BiWeekly on the ',
-                                                '<tpl if="accformDay &lt; 8"> first </tpl>',
-                                                '<tpl if="accformDay &gt; 7"> second </tpl>',
-                                                '<tpl if="accformDay==1||accformDay==8">Sunday</tpl>',
-                                                '<tpl if="accformDay==2||accformDay==9">Monday</tpl>',
-                                                '<tpl if="accformDay==3||accformDay==10">Tuesday</tpl>',
-                                                '<tpl if="accformDay==4||accformDay==11">Wednesday</tpl>',
-                                                '<tpl if="accformDay==5||accformDay==12">Thursday</tpl>',
-                                                '<tpl if="accformDay==6||accformDay==13">Friday</tpl>',
-                                                '<tpl if="accformDay==7||accformDay==14">Saturday</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformPer==53">Monthly on ',
-                                                '<tpl if="accformDay!=\'ANNIVERSARY\'">the </tpl>',
-                                                '{accformDay}',
-                                                '<tpl if="accformDay==1 ||accformDay==21||accformDay==31">st</tpl>',
-                                                '<tpl if="accformDay==2 ||accformDay==22">nd</tpl>',
-                                                '<tpl if="accformDay==3 ||accformDay==23">rd</tpl>',
-                                                '<tpl if="accformDay!=1 &&accformDay!=2 &&accformDay!=3 &&accformDay!=21&&accformDay!=22&&accformDay!=23&&accformDay!=31&&accformDay!=\'ANNIVERSARY\'">th</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformPer==54">Quarterly</tpl>',
-                                                '<tpl if="accformPer==55">Semi-Annually</tpl>',
-                                                '<tpl if="accformPer==56"> on ',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==1">January</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==2">February</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==3">March</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==4">April</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==5">May</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==6">June</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==7">July</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==8">August</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==9">September</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==10">October</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==11">November</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==12">December</tpl>',
-                                                ' {msDay}',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
-                                                '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
-                                                '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformPer==114">Annually on {accformDay}</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformPer &gt; 114"> per ',
-                                                '<tpl if="accformPer!=119">',
-                                                '<tpl if="accformDay &gt; 1">{accformDay} </tpl>',
-                                                '<tpl if="accformPer==115">Day</tpl>',
-                                                '<tpl if="accformPer==116">Week</tpl>',
-                                                '<tpl if="accformPer==117">Month</tpl>',
-                                                '<tpl if="accformPer==118">Year</tpl>',
-                                                '<tpl if="accformPer==140">Worked Hour</tpl>',
-                                                '<tpl if="accformPer==141">Worked Day</tpl>',
-                                                '<tpl if="accformDay &gt; 1">s</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformPer==119">',
-                                                '{msMonth}',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==1">st</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==2">nd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])==3">rd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[0])!=1 &&eval(accformDay.split(\'-\')[0])!=2 &&eval(accformDay.split(\'-\')[0])!=3">th</tpl>',
-                                                ' Month on ',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">the </tpl>',
-                                                '{msDay}',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==1 ||eval(accformDay.split(\'-\')[1])==21||eval(accformDay.split(\'-\')[1])==31">st</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==2 ||eval(accformDay.split(\'-\')[1])==22">nd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])==3 ||eval(accformDay.split(\'-\')[1])==23">rd</tpl>',
-                                                '<tpl if="eval(accformDay.split(\'-\')[1])!=1 &&eval(accformDay.split(\'-\')[1])!=2 &&eval(accformDay.split(\'-\')[1])!=3 ',
-                                                '&&eval(accformDay.split(\'-\')[1])!=21&&eval(accformDay.split(\'-\')[1])!=22&&eval(accformDay.split(\'-\')[1])!=23',
-                                                '&&eval(accformDay.split(\'-\')[1])!=31&&eval(accformDay.split(\'-\')[1])!=\'ANNIVERSARY\'">th</tpl>',
-                                                '</tpl>',
-                                                '</tpl>',
-                                                '</tpl>',
-                                                '<tpl if="accformInc==0">No Accrual</tpl>'
-                                            ]
+                                                '<tpl if="accformInc==0">No Accrual</tpl>',
+                                                {
+                                                    parseInt: function(v){
+                                                        return parseInt(v);
+                                                    }
+                                                }
+                                            ],
+                                            editable: true,
+                                            // Multi-field editor for accrual rule info column
+                                            editor: {
+                                                xtype: 'containerfield',
+                                                itemId: 'infoField',
+                                                label: '', layout: 'hbox',
+                                                items: [
+                                                    {
+                                                        xtype: 'spinnerfield',
+                                                        itemId: 'accformInc', 
+                                                        // flex: 1,
+                                                        decimals: 4,
+                                                        style: 'width: 3.5em',
+                                                        textAlign: 'center',
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformUnit', 
+                                                        // flex: 2,
+                                                        style: 'width: 6em',
+                                                        store: 'MinimumUseUnits',
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 48,
+                                                        // margin: 'inherit inherit inherit 4pt',
+                                                        ui: 'admin-ap-small-input',
+                                                        // TODO: Adjust picker so tool component doens't take up space to increase available space
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformOn',
+                                                        bind: {
+                                                            store: '{accrualRateOn}'
+                                                        },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 53,
+                                                        style: 'width: 7.5em',
+                                                        hidden: true,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onPer',
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        bind: { store: '{onPerTypes}' },
+                                                        // value: 1,
+                                                        style: 'width: 4.5em',
+                                                        ui: 'admin-ap-small-input',
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
+                                                        // flex: 1
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthlySpecialOn',
+                                                        hidden: true,
+                                                        bind: { store: '{monthlySpecialOnOpt}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: 1,
+                                                        listeners: {
+                                                            change: 'onAccrualRuleInfoChange'
+                                                        }
+                                                    }, {
+                                                        xtype: 'spinnerfield',
+                                                        itemId: 'perX',
+                                                        minValue: 1, decimals: 0,
+                                                        style: 'width: 3.5em',
+                                                        textAlign: 'center',
+                                                        value: 1,
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'accformPer',
+                                                        bind: { store: '{accrualRatePer}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        flex: 1,
+                                                        hidden: true,
+                                                        listeners: {
+                                                            select: 'onAccrualRuleInfoChange'
+                                                        }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthlySpecialPer',
+                                                        bind: { store: '{monthlySpecialPerOpt}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        // flex: 1,
+                                                        value: '1',
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onWeekly',
+                                                        bind: { store: '{onWeekly}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '6',
+                                                        flex: 1,
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'onBiWeekly',
+                                                        bind: { store: '{onBiWeekly}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '13',
+                                                        flex: 1,
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'displayfield',
+                                                        itemId: 'msOn',
+                                                        label: '',
+                                                        value: 'on the',
+                                                        hidden: true
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly31',
+                                                        bind: { store: '{monthly31}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly30',
+                                                        bind: { store: '{monthly30}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'selectfield',
+                                                        itemId: 'monthly28',
+                                                        bind: { store: '{monthly28}' },
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        value: '1',
+                                                        // width: 48,
+                                                        flex: 1,
+                                                        textAlign: 'center',
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'datefield',
+                                                        itemId: 'onAnnually',
+                                                        dateFormat: 'm/d',
+                                                        value: '1/1',
+                                                        hidden: true,
+                                                        // listeners: {
+                                                        //     change: 'onAccrualRuleInfoChange'
+                                                        // }
+                                                    }, {
+                                                        xtype: 'displayfield',
+                                                        itemId: 'onAnniversary',
+                                                        value: 'Anniversary',
+                                                        label: '',
+                                                        hidden: true
+                                                    }
+                                                ]
+                                            },
+                                            // Delete interval tool
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onDeleteAccrualInterval'
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    ]
+                                    ],
+                                    plugins: {
+                                        gridcellediting: true
+                                    },
+                                    listeners: {
+                                        beforecompleteedit: 'onAccrualRuleBeforeEditComplete',
+                                        beforeedit: 'onAccrualRuleBeforeEdit'
+                                    }
                                 },
                             ]
                         },
 
-
+                        // Carry over rules panel
                         {
-                            xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-padding',
-                            flex: 1,
-                            layout: 'vbox',
-                            items: [
+                            xtype: 'panel',
+                            ui: 'admin-fs-panel', userCls: 'admin-fieldset no-padding',
+                            flex: 1, layout: 'vbox',
+                            bind: {
+                                title: '{selectedCategory.categoryName} Carry Over Rules'
+                            },
+                            tools: [
+                                // Add rule tool button
                                 {
-                                    xtype: 'toolbar',
-                                    ui: 'admin-tree',
-                                    shadow: false,
-                                    items: [
-                                        {
-                                            xtype: 'component',
-                                            bind: {
-                                                html: '{selectedCategory.categoryName} Carry Over Rules'
-                                            },
-                                            userCls: 'admin-title-toolbar',
-                                        },
-                                        {
-                                            xtype: 'spacer',
-                                            flex: 1,
-
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            //text: 'Save for Future Use',
-                                            iconCls: 'x-fas fa-plus',
-                                            ui: 'plain wtr-button',
-                                        },
-                                    ]
-                                },
+                                    xtype: 'tool',
+                                    iconCls: 'x-fas fa-plus',
+                                    handler: 'onCreateCarryOverRule'
+                                }
+                            ],
+                            items: [
                                 {
                                     xtype: 'grid',
                                     flex: 1,
@@ -826,15 +1047,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ],
                                             editable: true,
                                             editor: {
-                                                itemId: 'from',
-                                                xtype: 'numberfield',
+                                                xtype: 'spinnerfield',
+                                                itemId: 'fromField',
                                                 decimals: 0,
                                                 required: true,
-                                                minValue: 0,
-                                                validators: {
-                                                    type: 'controller',
-                                                    fn: 'validateCarryOverFrom'
-                                                },
+                                                minValue: 0
                                             }
                                         },
                                         {
@@ -851,18 +1068,15 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             ],
                                             editable: true,
                                             editor: {
-                                                xtype: 'numberfield',
+                                                xtype: 'spinnerfield',
+                                                itemId: 'throughField',
                                                 decimals: 0,
                                                 required: true,
-                                                minValue: 0,
-                                                validators: {
-                                                    type: 'controller',
-                                                    fn: 'validateCarryOverFrom'
-                                                },
+                                                minValue: 0
                                             }
                                         },
                                         {
-                                            itemId: 'over',
+                                            itemId: 'allow',
                                             xtype: 'checkcolumn',
                                             flex: 1.25,
                                             headerCheckbox: false,
@@ -873,17 +1087,24 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             itemId: 'max',
                                             flex: 1.25,
                                             text: 'Carry Max',
-                                            dataIndex: 'carryMax',
+                                            dataIndex: 'carryOver',
                                             tpl: [
                                                 '<tpl if="allowCarry==false">--</tpl>',
                                                 '<tpl if="allowCarry==true">',
                                                 '<tpl if="carryOver==0">No Max</tpl>',
                                                 '<tpl if="carryOver &gt; 0">{carryOver}</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            editable: true,
+                                            editor: {
+                                                xtype: 'spinnerfield',
+                                                itemId: 'maxField',
+                                                decimals: 4,
+                                                minValue: 0
+                                            }
                                         },
                                         {
-                                            itemId: 'info',
+                                            itemId: 'expiration',
                                             text: 'Carry Over Expiration',
                                             flex: 2.5,
                                             dataIndex: 'expChanged',
@@ -899,14 +1120,65 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 '<tpl if="perAmount!=1">s</tpl>',
                                                 '</tpl>',
                                                 '</tpl>'
-                                            ]
+                                            ],
+                                            /*
+                                                Editor for Carry Over Expiration Column
+                                                Has multiple fields, so editor is a containerfield
+                                            */
+                                            editor: {
+                                                xtype: 'containerfield',
+                                                itemId: 'expirationField',
+                                                label: '', layout: 'hbox',
+                                                items: [
+                                                    {
+                                                        xtype: 'spinnerfield',
+                                                        flex: 1,
+                                                        itemId: 'amount',
+                                                        /* TODO: Decide if labels are needed, 
+                                                            or if placeholder is sufficient */
+                                                        // label: 'Amount',
+                                                        placeholder: 'Amount',
+                                                        // Default to 0, min value 0
+                                                        value: 0, minValue: 0,
+                                                        listeners: {
+                                                            change: 'onCarryOverExpirationAmountChange'
+                                                        }
+                                                    },
+                                                    {
+                                                        xtype: 'selectfield',
+                                                        // Flex scale, Add spacing to left of field
+                                                        flex: 1, margin: 'inherit inherit inherit 4pt',
+                                                        itemId: 'unit',
+                                                        /* TODO: Decide if labels are needed, 
+                                                            or if placeholder is sufficient */
+                                                        // label: 'Unit',
+                                                        placeholder: 'Unit',
+                                                        autoSelect: true,
+                                                        displayField: 'Description', valueField: 'ID',
+                                                        store: 'DurationTypes'
+                                                    }
+                                                ]  
+                                            },
+                                            // Delete rule tool
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onDeleteCarryOverRule'
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ],
                                     listeners: {
-                                        // edit: 'onCarryOverPostEdit'
+                                        beforecompleteedit: 'onCarryOverBeforeEditComplete',
                                         beforeedit: 'onCarryOverBeforeEdit'
                                     }
-                                },
+                                }
                             ]
                         }
                     ]
@@ -930,7 +1202,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 xtype: 'button',
                 text: 'Save',
-                ui: 'confirm alt'
+                ui: 'confirm alt',
+                handler: 'onCreatePolicy'
             },
             {
                 xtype: 'spacer', width: '8pt'
@@ -983,8 +1256,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     hidden: '{!createDlgCopyExisting.checked}',
                     store: '{policiesList}'
                 },
-                displayField: 'Name',
-                valueField: 'ID'
+                autoSelect: true,
+                displayField: 'text',
+                valueField: 'data'
             }
         ]
     },
@@ -1035,7 +1309,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 xtype: 'button',
                 text: 'Save',
                 ui: 'confirm alt',
-                handler: 'onAddShiftSegmentDialogSave'
+                handler: 'onCreateShiftSegmentDialogSave'
             },
             {
                 xtype: 'spacer', width: '8pt'
@@ -1047,7 +1321,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 handler: 'onDialogCancel',
                 data: {
                     // cleanup function after closing dialog
-                    cancelableAction: 'onAddShiftSegmentDialogCancel'
+                    cancelableAction: 'onCreateShiftSegmentDialogCancel'
                 }
             }
         ]
@@ -1082,7 +1356,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
+                handler: 'onCreateAccrualRule'
             },
             {
                 xtype: 'spacer',
@@ -1091,7 +1365,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Cancel',
                 ui: 'decline alt',
-                handler: 'onAddAccrualRuleDialogCancel'
+                handler: 'onCreateAccrualRuleDialogCancel'
             }
         ]
 
@@ -1100,7 +1374,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     addAccrualIntervalDialog: {
         xtype: 'dialog',
         title: 'Add Accrual Interval',
-        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
 
         layout: 'vbox',
 
@@ -1115,7 +1389,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 label: 'Accrual Rule to Add Interval to',
                 // labelAlign: 'left',
                 labelWidth: 'auto',
-                itemId: 'ruleNames',
+                itemId: 'ruleName',
                 value: null,
                 required: true,
                 autoSelect: true,
@@ -1128,7 +1402,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
+                handler: 'onCreateAccrualInterval'
             },
             {
                 xtype: 'spacer',
@@ -1137,17 +1411,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Cancel',
                 ui: 'decline alt',
-                handler: 'onAddAccrualIntervalDialogCancel'
+                handler: 'onCreateAccrualIntervalDialogCancel'
             }
         ]
 
-    },
-
-    addCarryOverRuleDialog: {
-
-    },
-
-    addShiftDialog: {
-
-    },
+    }
 });

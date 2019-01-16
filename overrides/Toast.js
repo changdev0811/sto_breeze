@@ -5,6 +5,7 @@
  *  - Dismissible behavior
  *  - Context-themed styling
  *  - Name based timeout presets with optional added time
+ *  - Bulleted lists
  * @class Toast
  * @namespace Breeze.Toast
  * @namespace Ext.Toast
@@ -61,13 +62,22 @@ Ext.define('Breeze.Toast', {
         // Warning icon class
         // warnIcon: 'fa-exclamation-triangle',
         warnIcon: 'fa-exclamation',
+
         /* ===[Behavior]=== */
         // Whether toast is dismissable
         dismissIcon: 'x-fa fa-times',
         // can be passed in as boolean
         dismissable: true,
         // Default timeout period
-        timeout: 6500
+        timeout: 6500,
+
+        /* ===[Content Options]=== */
+        // Bulleted list items array (used if list !== null || undefined)
+        list: null,
+        // Optional style classes to apply to list's <ul> element
+        listClass: '',
+        // Optional style classes to apply to list's <li> item elements
+        listItemClass: ''
     },
 
 
@@ -91,15 +101,13 @@ Ext.define('Breeze.Toast', {
 
         this.setUi(styling.ui);
         
+
+        var messageComp = this.generateMessage(value);
+
         var messageItems = [
             icon,
-            {
-                xtype: 'component',
-                html: value,
-                style: 'padding-right: 4pt',
-                flex: 1
-            },   
-        ];
+            messageComp     
+        ];       
 
         if(this.getDismissable()){
             messageItems.push(this.generateDismissButton());
@@ -170,6 +178,48 @@ Ext.define('Breeze.Toast', {
                     me.onTimeout();
                 }
             });
+        },
+        /**
+         * Generate message component, either regular or with bulleted list
+         * @param {String} msg Optional message body (if not given pulls from getMessage())
+         * @return {Object} Message component object
+         */
+        generateMessage: function(msg){
+            var body = Object.defVal(msg,this.getMessage()),
+                listData = this.getList(),
+                messageComp = null;
+            if(Object.isUnvalued(listData)){
+                // No list, so build regular message component
+                messageComp = {
+                    xtype: 'component',
+                    html: body,
+                    style: 'padding-right: 4pt',
+                    flex: 1
+                }
+            } else {
+                let ulClass = this.getListClass(),
+                    liClass = this.getListItemClass();
+                // Have list, so build message comp w/ list
+                messageComp = {
+                    xtype: 'component',
+                    data: {
+                        body: body,
+                        list: listData
+                    },
+                    tpl: [
+                        '<div>{body}</div>',
+                        `<ul class='${ulClass}'>`,
+                            '<tpl for="list">',
+                                (`<li class='${liClass}'>` + '{.}</li>'),
+                            '</tpl>',
+                        '</ul>'
+                    ],
+                    style: 'padding-right: 4pt',
+                    flex: 1
+                }
+            }
+
+            return messageComp;
         },
         /**
          * Resolve actual timeout length, resolving a numeric input,

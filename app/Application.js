@@ -27,6 +27,7 @@ Ext.define('Breeze.Application', {
         'Breeze.store.option.Years',
         'Breeze.store.option.DurationTypes',
         'Breeze.store.option.MinimumUseUnits',
+        'Breeze.store.option.AccrualRateTypes',
         // Other autoload stores
         'Breeze.store.employee.static.PunchRoundingIncrements',
         'Breeze.store.company.Config',
@@ -44,7 +45,7 @@ Ext.define('Breeze.Application', {
     },
 
     onAppUpdate: function () {
-        Ext.Msg.confirm('Application Update', 'This application has an update, reload?',
+        Ext.Msg.themedConfirm('Application Update', 'This application has an update, reload?',
             function (choice) {
                 if (choice === 'yes') {
                     window.location.reload();

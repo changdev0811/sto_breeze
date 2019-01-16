@@ -2,9 +2,14 @@
  * Override for CellEditing plugin allowing additional event
  * listeners to be added.
  * 
- * Credit: http://www.coding-ideas.de/2018/06/06/adding-events-to-cellediting-plugin-in-modern-toolkit/
+ * Events added to owning grid:
+ * - beforeedit: Editor's beforestartedit event (handler params [location, editor])
+ * - edit: Editor's complete event (handler params [location, editor])
+ * - beforecompleteedit: Editor's beforecomplete event (handler params [location, editor])
+ * 
+ * Original: http://www.coding-ideas.de/2018/06/06/adding-events-to-cellediting-plugin-in-modern-toolkit/
  */
-Ext.define('Overrides.grid.plugin.CellEditing', {
+Ext.define('Breeze.overrides.grid.plugin.CellEditing', {
     override: 'Ext.grid.plugin.CellEditing',
 
     getEditor: function (location) {
@@ -16,21 +21,35 @@ Ext.define('Overrides.grid.plugin.CellEditing', {
     },
 
     addEditorEvents: function (editor, location) {
+        // Event handler for beforestartedit (beforeedit)
         editor.on('beforestartedit', function () {
-            var handlerResult = this.getGrid().fireEvent('beforeedit', location);
+            var handlerResult = this.getGrid().fireEvent('beforeedit', location, editor);
             if (handlerResult === false) {
                 editor.hide();
             }
             return handlerResult;
         }, this, {
                 single: true
-            });
+            }
+        );
 
-        editor.on('complete', function () {
-            this.getGrid().fireEvent('edit', location);
+        // Event handler for complete (edit)
+        editor.on('complete', function (c, currentVal, startVal) {
+            this.getGrid().fireEvent('edit', location, editor, currentVal, startVal);
         }, this, {
                 single: true
-            });
+            }
+        );
+
+        // Event handler for before complete (beforecompleteevent)
+        editor.on('beforecomplete', function (c, currentVal, startVal) {
+            this.getGrid().fireEvent(
+                'beforecompleteedit', location, editor, currentVal, startVal
+            );
+        }, this, {
+                single: true
+            }
+        );
     }
 
 });
