@@ -8,6 +8,7 @@
     $background-color: #ffffff,
     $body-background-color: #ffffff,
     $body-color: $scoped-root-base,
+    $body-font-size: map-get($root-font-sizes, 'detail'),
     $tool-color: #ffffff,
     $tool-hovered-color: darken(#ffffff,5%),
     $tool-pressed-color: $scoped-root-text-base,
@@ -37,6 +38,7 @@
     $background-color: #ffffff,
     $body-background-color: #ffffff,
     $body-color: $scoped-root-base,
+    $body-font-size: map-get($root-font-sizes, 'detail'),
     $tool-color: #ffffff,
     $tool-hovered-color: darken(#ffffff,5%),
     $tool-pressed-color: $scoped-root-text-base

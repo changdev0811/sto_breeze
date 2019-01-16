@@ -31,6 +31,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onInit: function (component) {
         var me = this;
+        this.api = Ext.create('Breeze.api.admin.AccrualPolicies');
+
         // Load User-Defined Categories list store
         me.addStoreToViewModel(
             'Breeze.store.category.List',
@@ -71,6 +73,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var me = this,
             vm = this.getViewModel();
 
+        // disable removing policies until load finishes
+        vm.set('disabled.deletePolicy', true);
+
         this.addStoreToViewModel(
             'Breeze.store.accrual.ScheduleListAPI',
             'policiesList',
@@ -86,6 +91,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                             this.lookup('policyList').getSelectable().setSelectedRecord(
                                 record
                             );
+                            // re-enable deleting policies
+                            this.getViewModel().set('disabled.deletePolicy',false);
                         }
                     },
                     scope: me
@@ -120,12 +127,17 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     onCreatePolicyDialogCancel: function (comp) {
         var dlg = comp.getParent().getParent();
         dlg.hide();
-        dlg.getComponent('policyName').clearValue();
+        let name = dlg.getComponent('policyName');
+        name.clearValue();
+        name.clearInvalid();
     },
 
     //--[Add Shift]--
 
-    showAddShiftSegmentDialog: function () {
+    /**
+     * Display the dialog used for creating new shift segments
+     */
+    showCreateShiftSegmentDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             dialog = this.addShiftSegmentDialog;
@@ -146,7 +158,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * clears validation error indicators
      * @param {Object} dlg dialog reference
      */
-    onAddShiftSegmentDialogCancel: function (dlg) {
+    onCreateShiftSegmentDialogCancel: function (dlg) {
         let start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop');
         start.clearValue();
@@ -155,7 +167,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         stop.setError(null);
     },
 
-    onAddShiftSegmentDialogSave: function (btn) {
+    onCreateShiftSegmentDialogSave: function (btn) {
         let dlg = btn.getParent().getParent(),
             start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop'),
@@ -196,7 +208,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Display the 'add accrual rule' dialog
      */
-    showAddAccrualRuleDialog: function () {
+    showCreateAccrualRuleDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             dialog = this.addAccrualRuleDialog;
@@ -214,14 +226,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for 'add' button in new accrual rule dialog
      */
-    onAddAccrualRule: function () {
+    onCreateAccrualRule: function () {
         var dlg = this.addAccrualRuleDialog,
             nameCmp = dlg.getComponent('ruleName'),
             name = nameCmp.getValue(),
             vm = this.getViewModel(),
             rules = vm.get('selectedCategoryAccrualRules');
-
-        nameCmp.clearInvalid();
 
         var valid = nameCmp.validate(),
             unique = true,
@@ -258,6 +268,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             });
             dlg.hide();
             nameCmp.setValue("");
+            nameCmp.clearInvalid();
         } else {
             Ext.toast({
                 type: Ext.Toast.WARN,
@@ -271,7 +282,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for add accrual rule dialog cancel button
      */
-    onAddAccrualRuleDialogCancel: function () {
+    onCreateAccrualRuleDialogCancel: function () {
         this.addAccrualRuleDialog.hide();
     },
 
@@ -281,7 +292,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Display the 'add accrual interval' dialog
      */
-    showAddAccrualIntervalDialog: function () {
+    showCreateAccrualIntervalDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
             rules = vm.get('selectedCategoryAccrualRules'),
@@ -320,9 +331,70 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     /**
+     * Event handler for 'save' button in create new accrual policy dialog
+     */
+    onCreatePolicy: function () {
+        var me = this,
+            dlg = this.createPolicyDialog,
+            nameCmp = dlg.getComponent('policyName'),
+            name = nameCmp.getValue(),
+            option = dlg.getComponent('createOption').getValues().option,
+            sourcePolicy = dlg.getComponent('policySource').getValue(),
+            vm = this.getViewModel(),
+            policies = vm.get('policiesList');
+
+        var valid = nameCmp.validate();
+
+        if(!valid){
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Accrual Policy must have a name',
+                timeout: ['warn',2]
+            });
+            return null;
+        }
+
+        // check if name is unique
+        if(policies.query('text',name.trim()).length > 0){
+            nameCmp.markInvalid('Name already in use');
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: `An Accrual Policy named ${name} already exists`,
+                timeout: ['warn',2]
+            });
+            return null;
+        }
+
+        // make api call
+        var copiedId = 0;
+        if(option == 2){
+            copiedId = sourcePolicy;
+        }
+
+        this.api.create(name,copiedId).then((mewPolicyId)=>{
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Successfully created new Accrual Policy',
+                timeout: 'info'
+            });
+            dlg.hide();
+            nameCmp.clearValue();
+            nameCmp.clearInvalid();
+            me.loadPolicies(newPolicyId);
+        }).catch((err)=>{
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: 'Unable to create policy',
+                // list: [err],
+                timeout: 'error'
+            });
+        })
+    },
+
+    /**
      * Event handler for 'add' button in new accrual interval dialog
      */
-    onAddAccrualInterval: function () {
+    onCreateAccrualInterval: function () {
         var dlg = this.addAccrualIntervalDialog,
             ruleCmp = dlg.getComponent('ruleName'),
             rule = ruleCmp.getValue(),
@@ -331,13 +403,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         dlg.hide();
 
-        var lastRuleIndex = -1;
-        for (var i = 0; i < rules.getCount(); i++) {
-            if (rules.getAt(i).get('ruleName') == rule) {
-                lastRuleIndex = i;
-            }
-        }
-
+        // Get last rule in named group
+        var { lastIndex: lastRuleIndex } = this.collectAccrualRuleInfo(rule);
+        
         var lastRuleData = rules.getAt(lastRuleIndex).getData(),
             durationEnd = lastRuleData.svcFrom;
         if (durationEnd == 0) { durationEnd = 1; }
@@ -371,7 +439,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     /**
      * Event handler for add accrual interval dialog cancel button
      */
-    onAddAccrualIntervalDialogCancel: function () {
+    onCreateAccrualIntervalDialogCancel: function () {
         this.addAccrualIntervalDialog.hide();
     },
 
@@ -673,7 +741,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Automatically adds new carry over rule, adjusting previous
      * last record if exists
      */
-    onAddCarryOverRule: function () {
+    onCreateCarryOverRule: function () {
         var me = this,
             vm = me.getViewModel(),
             ruleStore = vm.get('selectedCategoryCarryOverRules');
@@ -1428,17 +1496,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             columnItemId = location.column.getItemId();
 
         // Calculate rule index info
-        var firstRuleIndex = -1,
-            ruleCount = 0,
-            lastRuleIndex = -1;
-        for (var i = 0; i < store.getCount(); i++) {
-            if (store.getAt(i).get('ruleName') == record.get('ruleName')) {
-                if (ruleCount == 0) {
-                    firstRuleIndex = i;
-                }
-                ruleCount++;
-            }
-        }
+        var ruleInfo = this.collectAccrualRuleInfo(record.get('ruleName'));
+        // Pull values out of returned object via destructuring
+        var {
+            firstIndex: firstRuleIndex,
+            lastIndex: lastRuleIndex,
+            count: ruleCount
+        } = ruleInfo;
 
         lastRuleIndex = firstRuleIndex + (ruleCount - 1);
 
@@ -1826,6 +1890,56 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         vm.get('selectedCategoryCarryOverRules').sort('svcFrom', 'ASC');
     },
 
+    onDeleteAccrualInterval: function(grid, info){
+        var store = grid.getStore(),
+            record = info.record,
+            recordIndex = store.indexOf(record);
+        
+        // Get range info for named group of accrual rules
+        var { 
+            firstIndex: firstRuleIndex, 
+            ruleCount: count
+        } = this.collectAccrualRuleInfo(record.get('ruleName'));
+
+        /*  Was used to disable add interval button if last rule,
+            instead this should automatically get applied by binding and 
+            formula in view model
+        if(store.getCount() == 1){
+            
+        }*/
+
+        // If more than one interval exists for rule
+        if(count > 1){
+            /*
+                If deleted interval is first in rule, set the second
+                interval's svcFrom to 0. Else, set the previous interval's
+                svcTo to match the svcTo value of the interval being deleted
+            */
+            if(recordIndex == firstIndex){
+                // set second interval's from to 0
+                let second = store.getAt(recordIndex + 1);
+                second.set({
+                    svcFrom: 0
+                }, { commit: true });
+            } else {
+                // set previous rule's To to match that of the interval being deleted
+                let prev = store.getAt(recordIndex - 1);
+                prev.set({
+                    svcTo: record.get('svcTo')
+                }, { commit: true });
+            }
+        }
+
+        // Delete interval record
+        store.remove(record);
+
+        Ext.toast({
+            type: Ext.Toast.INFO,
+            message: 'Accrual Rule Interval successfully deleted',
+            timeout: 'info'
+        });
+    },
+
     /**
      * Event handler for delete ('x') tool on Carry Over Rules grid rows
      * @param {Component} grid Grid to which tool firing event belongs to
@@ -1925,7 +2039,55 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     // TODO: Implement delete policy handler
     onDeletePolicy: function (comp) {
-
+        var me = this,
+            policyId = this.getViewModel().get('policyData').ID;
+        
+        this.api.canDelete(policyId).then((policyName)=>{
+            
+            Ext.Msg.themedConfirm(
+                'Delete Accrual Policy',
+                `Are you sure you want to delete: ${policyName}?<br>
+                This action can't be undone!`,
+                (choice) => {
+                    if(choice == 'yes'){
+                        // user picked yes, so move forward
+                        me.api.delete(policyId).then((msg)=>{
+                            // Show success message
+                            Ext.toast({
+                                type: msg.type,
+                                message: msg.message,
+                                timeout: ['info',2]
+                            });
+                            // Reload policies
+                            me.loadPolicies();
+                        }).catch((errMsg)=>{
+                            // Show error message
+                            Ext.toast({
+                                type: errMsg.type,
+                                message: errMsg.message,
+                                timeout: 'error'
+                            });
+                            // Nothing else to do, will exit method
+                        });
+                    }
+                    // if user answered no, dialog closes and abort
+                },
+                me
+            )
+        }).catch((err)=>{
+            // Show error toast
+            // Try to make useful by showing error message, if any
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                // give bulleted items from error data, if available and array or non empty string
+                list: (
+                    (Array.isArray(err.error))? err.error.join('') :
+                    (typeof err.error == 'string' && err.error.trim().length > 0)? [err.error] : undefined
+                ),
+                timeout: 'error'
+            });
+        })
     },
 
     /**
@@ -1933,6 +2095,57 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onSavePolicy: function () {
         console.info('Save policy clicked');
+    },
+
+    // ====[Others]====
+
+    /**
+     * Return range info for accrual intervals based on rule name
+     * 
+     * Logic is used enough to make it worthwhile to put it in its own function
+     * 
+     * @param {String} groupName Group name (rule name) of rules to get range of
+     * @return {Object} Object specifying firstIndex, lastIndex and count
+     */
+    collectAccrualRuleInfo: function(groupName){
+        var rules = this.getViewModel().get('selectedCategoryAccrualRules'),
+            firstIndex = -1,
+            lastIndex = -1,
+            count = -1;
+        
+        for(var i=0; i<rules.getCount(); i++){
+            let rule = rules.getAt(i);
+            if(rule.get('ruleName') == groupName){
+                if(firstIndex == -1){
+                    firstIndex = i;
+                }
+            }
+            count++;
+        }
+
+        return {
+            firstIndex: firstIndex,
+            lastIndex: firstIndex + count,
+            count: count
+        };
+    },
+
+    /**
+     * Counts uniquely named rules out of currently loaded accrual rules
+     * for the selected category
+     * @return {Number} Number of accrual rule names
+     */
+    countAccrualRules: function(){
+        var rules = this.getViewModel().get('selectedCategoryAccrualRules')
+            .getData().items,
+            names = [];
+        
+        rules.forEach((r)=>{
+            let name = r.get('ruleName');
+            if(!names.includes(name)){ names.push(name); }
+        });
+
+        return names.length;
     }
 
 

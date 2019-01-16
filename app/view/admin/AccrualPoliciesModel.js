@@ -47,7 +47,14 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     data: {
-        selectedCategory: null
+        selectedCategory: null,
+        // for easily enabling/disabling buttons based on data bindings
+        disabled: {
+            createAccrualInterval: false,
+            createAccrualRule: false,
+            createCarryOverRule: false,
+            deletePolicy: false
+        }
     },
 
     stores: {
@@ -753,31 +760,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     formulas: {
-        // selectedCategory: function(get){
-        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-        //     if(!Object.isUnvalued(cat)){
-        //         return cat;
-        //     } else {
-        //         return null;
-        //     }
-        // },
-
-        // selectedCategoryAccrualRules: function(get){
-        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-        //     if(!Object.isUnvalued(cat)){
-        //         return cat.accrualRules();
-        //     } else {
-        //         return null;
-        //     }
-        // },
-        // selectedCategoryCarryOverRules: function(get){
-        //     var cat = get('policyCategories').findRecord('categoryId', get('categoryId'));
-        //     if(!Object.isUnvalued(cat)){
-        //         return cat.carryOverRules();
-        //     } else {
-        //         return null;
-        //     }
-        // },
         categoryYearType: {
             // TODO: Implement category year type set
             // set: function(get){
@@ -796,6 +778,36 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 } else {
                     return null;
                 }
+            }
+        },
+        /**
+         * Combines allowAccrual property and disabled.addAccrualRule
+         * to determine if button should be disabled
+         * @param {Function} get 
+         */
+        disableAddAccrualRule: function(get){
+            let allowed = get('selectedCategory.allowAccrual'),
+                disabled = get('disabled.createAccrualRule');
+            return (!allowed || disabled);
+        },
+        /**
+         * Combines allowAccrual property and disabled.addAccrualInterval
+         * to determine if button should be disabled
+         * @param {Function} get 
+         */
+        // disableAddAccrualInterval: function(get){
+        //     let allowed = get('selectedCategory.allowAccrual'),
+        //         disabled = get('disabled.addAccrualInterval');
+        //     return (!allowed || disabled);
+        // }
+        disableAddAccrualInterval: {
+            bind: {
+                allowed: '{selectedCategory.allowAccrual}',
+                disabled: '{disabled.createAccrualInterval}',
+                rules: '{selectedCategoryAccrualRules}'
+            },
+            get: function(data){
+                return (!data.allowed || data.disabled) || !(data.rules.getCount());
             }
         }
     }

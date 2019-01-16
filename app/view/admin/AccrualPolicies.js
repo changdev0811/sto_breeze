@@ -70,6 +70,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
 
                     layout: 'vbox',
                     items: [
+                        // Policies
                         {
                             xtype: 'panel',
                             ui: 'admin-fs-panel',
@@ -81,11 +82,15 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-plus',
-                                    handler: 'showCreatePolicyDialog'
+                                    handler: 'showCreatePolicyDialog',
                                 },
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-minus',
+                                    handler: 'onDeletePolicy',
+                                    bind: {
+                                        disabled: '{disabled.deletePolicy}'
+                                    }
                                 }
                             ],
                             items: [
@@ -187,7 +192,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-plus',
-                                    handler: 'showAddShiftSegmentDialog'
+                                    handler: 'showCreateShiftSegmentDialog'
                                 }
                             ],
                             layout: 'vbox',
@@ -235,7 +240,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 listeners: {
                                                     change: 'onShiftTimeChange'
                                                 }
-                                            }
+                                            },
+                                            groupable: false, menu: null, 
+                                            menuDisabled: true, resizable: false
                                         },
                                         // {
                                         //     xtype: 'templatecolumn',
@@ -277,7 +284,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 listeners: {
                                                     change: 'onShiftTimeChange'
                                                 }
-                                            }
+                                            },
+                                            groupable: false, menu: null, 
+                                            menuDisabled: true, resizable: false
                                         }
                                     ]
                                 }
@@ -571,25 +580,27 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         { xtype: 'spacer', flex: 1 },
 
                                         {
+                                            // Add accrual rule
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-plus',
                                             ui: 'plain wtr-button',
                                             bind: {
-                                                disabled: '{!selectedCategory.allowAccrual}'
+                                                // disabled: '{!selectedCategory.allowAccrual}'
+                                                disabled: '{disableCreateAccrualRule}'
                                             },
-                                            handler: 'showAddAccrualRuleDialog'
+                                            handler: 'showCreateAccrualRuleDialog'
                                         },
 
                                         {
+                                            // Add accrual interval
                                             xtype: 'button',
-                                            //text: 'Save for Future Use',
                                             iconCls: 'x-fas fa-clock',
                                             ui: 'plain wtr-button',
                                             bind: {
-                                                disabled: '{!selectedCategory.allowAccrual}'
+                                                // disabled: '{!selectedCategory.allowAccrual}'
+                                                disabled: '{disableCreateAccrualInterval}'
                                             },
-                                            handler: 'showAddAccrualIntervalDialog'
+                                            handler: 'showCreateAccrualIntervalDialog'
                                         },
                                     ]
                                 },
@@ -599,6 +610,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     flex: 1,
                                     sortable: false, striped: false,
                                     columnMenu: null, grouped: true,
+                                    hideHeaders: true,
                                     ui: 'admin-grid', userCls: 'admin-grid',
                                     reference: 'accrualRuleGrid',
                                     hidden: true,
@@ -797,9 +809,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         value: 48,
                                                         // margin: 'inherit inherit inherit 4pt',
                                                         ui: 'admin-ap-small-input',
-                                                        // listeners: {
-                                                        //     select: 'onAccrualRuleInfoChange'
-                                                        // }
+                                                        // TODO: Adjust picker so tool component doens't take up space to increase available space
                                                     },
                                                     {
                                                         xtype: 'selectfield',
@@ -952,6 +962,19 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         hidden: true
                                                     }
                                                 ]
+                                            },
+                                            // Delete interval tool
+                                            cell: {
+                                                toolDefaults: {
+                                                    ui: 'employeeinfo-grid-tool',
+                                                    zone: 'end'
+                                                },
+                                                tools: [
+                                                    {
+                                                        iconCls: 'x-fas fa-times',
+                                                        handler: 'onDeleteAccrualInterval'
+                                                    }
+                                                ]
                                             }
                                         }
                                     ],
@@ -979,7 +1002,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     xtype: 'tool',
                                     iconCls: 'x-fas fa-plus',
-                                    handler: 'onAddCarryOverRule'
+                                    handler: 'onCreateCarryOverRule'
                                 }
                             ],
                             items: [
@@ -1179,7 +1202,8 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 xtype: 'button',
                 text: 'Save',
-                ui: 'confirm alt'
+                ui: 'confirm alt',
+                handler: 'onCreatePolicy'
             },
             {
                 xtype: 'spacer', width: '8pt'
@@ -1284,7 +1308,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 xtype: 'button',
                 text: 'Save',
                 ui: 'confirm alt',
-                handler: 'onAddShiftSegmentDialogSave'
+                handler: 'onCreateShiftSegmentDialogSave'
             },
             {
                 xtype: 'spacer', width: '8pt'
@@ -1296,7 +1320,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 handler: 'onDialogCancel',
                 data: {
                     // cleanup function after closing dialog
-                    cancelableAction: 'onAddShiftSegmentDialogCancel'
+                    cancelableAction: 'onCreateShiftSegmentDialogCancel'
                 }
             }
         ]
@@ -1331,7 +1355,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                handler: 'onAddAccrualRule'
+                handler: 'onCreateAccrualRule'
             },
             {
                 xtype: 'spacer',
@@ -1340,7 +1364,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Cancel',
                 ui: 'decline alt',
-                handler: 'onAddAccrualRuleDialogCancel'
+                handler: 'onCreateAccrualRuleDialogCancel'
             }
         ]
 
@@ -1349,7 +1373,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
     addAccrualIntervalDialog: {
         xtype: 'dialog',
         title: 'Add Accrual Interval',
-        ui: 'light-themed-dialog employeeinfo-dialog dark-dlg',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
 
         layout: 'vbox',
 
@@ -1377,7 +1401,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Add',
                 ui: 'confirm alt',
-                handler: 'onAddAccrualInterval'
+                handler: 'onCreateAccrualInterval'
             },
             {
                 xtype: 'spacer',
@@ -1386,17 +1410,9 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             {
                 text: 'Cancel',
                 ui: 'decline alt',
-                handler: 'onAddAccrualIntervalDialogCancel'
+                handler: 'onCreateAccrualIntervalDialogCancel'
             }
         ]
 
-    },
-
-    addCarryOverRuleDialog: {
-
-    },
-
-    addShiftDialog: {
-
-    },
+    }
 });

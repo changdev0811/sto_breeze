@@ -73,7 +73,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                 function(response){
                     var resp = api.decodeJsonResponse(response);
                     if(resp.success){
-                        resolve(true);
+                        resolve(resp.err);
                     } else {
                         reject(resp.err);
                     }
@@ -89,7 +89,8 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
     /**
      * Check if policy can be deleted
      * @param {String} id Policy ID
-     * @return {Promise} Promise resolving success or rejecting with error toast
+     * @return {Promise} Promise resolving success or rejecting with error toast, if
+     *      successful, return's policy's name
      * @api canDeleteAccrualPolicy
      */
     canDelete: function(id){
@@ -103,7 +104,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                 function(response){
                     var resp = api.decodeJsonResponse(response);
                     if(resp.success){
-                        resolve(true);
+                        resolve(resp.err);
                     } else {
                         reject({
                             type: Ext.Toast.ERROR,
