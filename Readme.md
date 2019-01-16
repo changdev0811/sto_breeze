@@ -32,6 +32,16 @@ Changes needed before each build / deploy:
 
 - Run ``sencha app clean && sencha app build``
 - Output is in `/build/production/Breeze` directory
+- There is a set of bash scripts (`app-build` and `app-build-cfg`) that work togther to help add some additional automation to the build process. Both need to be given executable permission (e.g. `chmod a+x`). In non-bash environments, the `app-build-cfg` script can still be used by running it with Ruby 2.5.0+
+    - `app-build`
+        - Performs clean operation and then performs production build for both day and night time theme targets
+        - Running with switch `-zip` (e.g. `./app-build -zip`) will cause production build output folder `/build/production/Breeze` to be compressed into `/build/production/breeze.zip` for convenience
+        - Automatically makes use of `app-build-cfg` to switch API helper class code to use live data api helper script then reverts back to dummy api after build completes
+    - `app-build-cfg`
+        - Automatically toggles between having the app use the Dummy API helper script and the live API script. Stores current state in `build_mode.dat`, and relies on a comment being available in `app/helper/Base.js`
+        - Command line switch `--BUILD` forces mode to be changed to Live API
+        - Command line switch `--DEV` forces mode to be changed to Dummy API
+        - If no switch is given, mode is changed to whichever mode is not indicated by the `build_mode.dat` file; if no `build_mode.dat` file exists, nothing happens
 
 ## Notes
 
@@ -39,6 +49,127 @@ Changes needed before each build / deploy:
 - Custom theme `breeze-material` created with themer based on Material theme
 - Repo has `/ext` ignored; will need to use `sencha workspace install` to install framework, or copy contents of Ext 6.5.3 to project
     - Expects premium addons for 6.5.3 to be in `/ext/packages`
+
+
+## Additional Code
+
+### Libraries
+
+Collection of scripts located in `/lib`, most of which are included in the build via sencha's cmd build tool. Some are only for reference, or external libraries copied intact on deploy build.
+
+#### Breeze Time (breeze_time.js)
+
+Globally accessible script (via `BreezeTime` object) that handles conversion between time strings/values and decimal time equivalents. Base constructor accepts hour, minute and period ('AM'/'PM')
+
+Can also be constructed from an integer minute count or from a time string (e.g. `12:01 AM`) using `BreezeTime.resolve`. See documentation comments in `/lib/breeze_time.js` for full details.
+
+#### Dynamic Theme (dynamic_theme.js)
+
+Not actually included in build, and is instead inline in `index.html` in minified form. (Copy of minified version can be found in `/lib/dynamic_theme.min.js`)
+
+Provides logic for checking for presence of a cookie indicating whether to use the regular or night theme, and intercepts Sencha Ext's microloader to tell it wich resource directory to load from
+
+#### Extensions (extensions.js)
+
+Original collection of helper functions extending existing JavaScript objects like `Array`, `Object` and `String`. See in-file doc comments for full details.
+
+#### HTML2Canvas (html2canvas.min.js)
+
+Third party library for creating printable images from page screens via Canvas. Not compiled into `app.js` but is copied intact to deploy `lib` folder.
+
+License blurb from script:
+```
+    html2canvas 1.0.0-alpha.11 <https://html2canvas.hertzen.com>
+    Copyright (c) 2018 Niklas von Hertzen <https://hertzen.com>
+    Released under MIT License
+```
+
+#### md5.js
+
+Provides globaly accessible `send` method which gives back md5 hash for a given string. Used in login proceedure. (Code is minified using `eval` expression. Original code wasn't included in old code base, but might be worth re-minimizing without using eval). Included in `app.js` on build.
+
+#### Moment.js
+
+Both `moment.min.js` and `moment-with-locales.min.js` are included, copied on build rather than being embedded in `app.js`. These libraries provide various time-related functions, and were used by the old code base. 
+
+While both scripts are copied to the output folder by the build config, neither is current loaded or used by Breeze. (kept as reminder that they are available if need arises)
+
+#### Timely.js
+
+Original set of extension to JavaScript's `Date` object, adding `toUTC` and function which gives extra options for converting to UTC strings, and `shortDate` which outputs a MM/DD/YYYY format version of a date being called on, with option to specify separator character. 
+
+Intended as compliment for `app/helper/Time.js` script methods that modify `Date` prototype. `app/helper/Time.js` includes functions both new and ported for old `homemade.js` script related to time/date that do not modify global objects.
+
+### Overrides
+
+Collection of scripts in `/overrides` that 'override' default sencha scripts/components, adding additional functionality or changing existing functions. They are globally used as stand-ins for the components they override
+
+#### Editor.js
+
+| File         | Namespace                 | Overrides    |
+|--------------|---------------------------|--------------|
+| `/Editor.js` | `Breeze.overrides.Editor` | `Ext.Editor` |
+
+Fixes a bug encountered when hooking `editcomplete` event on Grid cell with an editor containing a container field.
+
+#### Msg.js
+
+| File      | Namespace              | Overrides        |
+|-----------|------------------------|------------------|
+| `/Msg.js` | `Breeze.overrides.Msg` | `Ext.MessageBox` |
+
+Adds `themedConfirm` function that duplicates `confirm` but takes an extra arg indicating a `ui` type to set. (Default is `light-themed-dialog`)
+
+#### /mixin/Mashup.js
+
+| File               | Namespace                       | Overrides          |
+|--------------------|---------------------------------|--------------------|
+| `/mixin/Mashup.js` | `Breeze.overrides.mixin.Mashup` | `Ext.mixin.Mashup` |
+
+Fix for mixin class used with Google Maps API, providing authentication token
+
+#### /field/Container.js
+
+
+| File                  | Namespace                          | Overrides             |
+|-----------------------|------------------------------------|-----------------------|
+| `/field/Container.js` | `Breeze.overrides.field.Container` | `Ext.field.Container` |
+
+Adds extra helper function `getComponentInItems` to container fields, mimicking `getComponent` for items inside a container's `items` attribute
+
+#### /grid/plugin/CellEditing.js
+
+| File                          | Namespace                                  | Overrides                     |
+|-------------------------------|--------------------------------------------|-------------------------------|
+| `/grid/plugin/CellEditing.js` | `Breeze.overrides.grid.plugin.CellEditing` | `Ext.grid.plugin.CellEditing` |
+
+Overrides `CellEditing` plugin for grid making it possible to listen for `beforeedit`, `edit`, and `beforecompleteedit` events.
+
+Based off code found at http://www.coding-ideas.de/2018/06/06/adding-events-to-cellediting-plugin-in-modern-toolkit/
+
+#### Toast.js
+
+
+| File        | Namespace                | Overrides   |
+|-------------|--------------------------|-------------|
+| `/Toast.js` | `Breeze.overrides.Toast` | `Ext.Toast` |
+
+Extends built in Toast component so it can accept additional parameters
+
+- `type` indicates a type that changes the background color and displayed indicator icon
+- `list` Optional array of items to display below side regular text as a bulleted list
+
+Also extends timeout attribute so it can accept preset names, (`warn`, `info`, `error`) or a two item array of values to add (e.g. `[warn, 5]` would mean the warning preset duration plus 5 seconds)
+
+See in-file doc comments for full details.
+
+### Mixins
+
+TODO
+
+### Plugins
+
+TODO
 
 ## Readme
 

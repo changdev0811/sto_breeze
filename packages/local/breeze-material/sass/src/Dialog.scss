@@ -10,7 +10,8 @@
     $body-color: $scoped-root-base,
     $tool-color: #ffffff,
     $tool-hovered-color: darken(#ffffff,5%),
-    $tool-pressed-color: $scoped-root-text-base
+    $tool-pressed-color: $scoped-root-text-base,
+    $header-background-color: map-get($employee-info-colors, 'base')
 );
 
 @include paneltitle-ui(

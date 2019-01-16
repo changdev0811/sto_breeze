@@ -45,7 +45,7 @@ Ext.define('Breeze.Application', {
     },
 
     onAppUpdate: function () {
-        Ext.Msg.confirm('Application Update', 'This application has an update, reload?',
+        Ext.Msg.themedConfirm('Application Update', 'This application has an update, reload?',
             function (choice) {
                 if (choice === 'yes') {
                     window.location.reload();

@@ -1,4 +1,4 @@
-Ext.define('Override.mixin.Mashup', {
+Ext.define('Breeze.overrides.mixin.Mashup', {
     override: 'Ext.mixin.Mashup',
     
     onClassMixedIn: function (targetClass) {

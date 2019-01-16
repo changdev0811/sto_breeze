@@ -1,9 +1,13 @@
+/**
+ * Adds 'themedConfirm' function to Ext.Msg
+ */
 Ext.define('Breeze.overrides.Msg', {
    override: 'Ext.MessageBox',
 
    statics: {
        uis: {
-           default: 'dark-dlg'
+           // Default dialog UI theme
+           default: 'light-themed-dialpg'
        }
    },
 

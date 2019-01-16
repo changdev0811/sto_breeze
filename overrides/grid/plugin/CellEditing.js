@@ -7,9 +7,9 @@
  * - edit: Editor's complete event (handler params [location, editor])
  * - beforecompleteedit: Editor's beforecomplete event (handler params [location, editor])
  * 
- * Credit: http://www.coding-ideas.de/2018/06/06/adding-events-to-cellediting-plugin-in-modern-toolkit/
+ * Original: http://www.coding-ideas.de/2018/06/06/adding-events-to-cellediting-plugin-in-modern-toolkit/
  */
-Ext.define('Overrides.grid.plugin.CellEditing', {
+Ext.define('Breeze.overrides.grid.plugin.CellEditing', {
     override: 'Ext.grid.plugin.CellEditing',
 
     getEditor: function (location) {

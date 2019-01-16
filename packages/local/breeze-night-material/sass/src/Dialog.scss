@@ -3,15 +3,16 @@
 //==[Light Themed Dialog]==
 // ui: 'light-themed-dialog'
 
-@include dialog-ui(
-    $ui: 'light-themed-dialog',
-    $background-color: #2B425C,
-    $body-background-color: #2B425C,
-    $body-color: $scoped-root-base,
-    $tool-color: #ffffff,
-    $tool-hovered-color: darken(#ffffff,5%),
-    $tool-pressed-color: $scoped-root-text-base
-);
+// @include dialog-ui(
+//     $ui: 'light-themed-dialog',
+//     $background-color: #2B425C,
+//     $body-background-color: #2B425C,
+//     $body-color: $scoped-root-base,
+//     $tool-color: #ffffff,
+//     $tool-hovered-color: darken(#ffffff,5%),
+//     $tool-pressed-color: $scoped-root-text-base,
+//     $header-background-color: 
+// );
 
 @include paneltitle-ui(
     $ui: 'light-themed-dialog',
