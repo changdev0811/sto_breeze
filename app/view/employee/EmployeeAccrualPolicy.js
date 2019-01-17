@@ -5,6 +5,12 @@
 Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
     extend: 'Ext.Panel',
     alias: 'widget.employee.employeeaccrualpolicy',
+
+    config: {
+        crumbTitle: 'My Accrual Policy',
+    },
+
+    
     requires: [
         'Breeze.view.employee.FyiController',
         'Breeze.view.employee.FyiModel',

@@ -117,7 +117,7 @@ Ext.define('Breeze.view.main.Nav', {
                                 {
                                     xtype: 'container',
                                     layout: 'hbox',
-                                    height: '64pt',
+                                    minHeight: '64pt',
                                     items: [
 
                                         {
@@ -141,6 +141,7 @@ Ext.define('Breeze.view.main.Nav', {
                                                 {
                                                     xtype: 'component',
                                                     flex: 1,
+                                                    width:'136pt',
                                                     style: '',
                                                     userCls: 'main-nav-company-name',
                                                     reference: 'navHeaderCompanyName',
@@ -152,6 +153,7 @@ Ext.define('Breeze.view.main.Nav', {
                                                 {
                                                     xtype: 'component',
                                                     flex: 1,
+                                                    width:'136pt',
                                                     style: '',
                                                     userCls: 'main-nav-user-name',
                                                     reference: 'navHeaderUserName',
@@ -177,7 +179,7 @@ Ext.define('Breeze.view.main.Nav', {
                                             menuAlign: 'tr',
                                             ui: 'mainNavUserButton',
                                             userCls: 'main-nav-user-button',
-                                            style: 'position:absolute; height:64pt; width:220pt; right:0pt',
+                                            style: 'hyphens:auto; position:absolute; height:100%; width:220pt; right:0pt',
                                             text: '',
                                             arrow: false,
                                             menu: {
@@ -208,11 +210,8 @@ Ext.define('Breeze.view.main.Nav', {
                                                 ]
                                             }
                                         }
-
                                     ]
                                 },
-
-
                                 {
                                     // Side navigation menu tree
                                     xtype: 'breeze.navbar.navtree',
