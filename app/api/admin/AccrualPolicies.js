@@ -164,6 +164,39 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                 }
             )
         });
+    },
+
+    /**
+     * Gather Employees and Categories a given Policy can be applied to
+     * @param {String} policyId ID of Policy to gather Apply info for
+     * @return {Promise} Resolves with object containing two stores: employees and
+     *      categories. Rejects with error object.
+     */
+    employeesAndCategoriesForApply: function(policyId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getAccrualPolicyEmployeesAndCategories',
+                {
+                    schedule_id: policyId.toString()
+                },
+                true, false,
+                // Success
+                function(response){
+                    var resp = api.decodeJsonResponse(response),
+                        stores = {
+                            employees: resp.employees,
+                            categories: resp.categories
+                        };
+
+                        resolve(stores);
+                },
+                // Failure
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     }
 
 });

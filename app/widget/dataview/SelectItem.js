@@ -32,6 +32,8 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
             radioValue: '',
             itemData: {},
             itemTpl: '',
+            itemWrappedTpl: undefined,
+            itemWrappedClass: 'breeze-dataview-select-item-label',
             checkedBind: null
         }
     },
@@ -89,6 +91,15 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
                     break;
             }
 
+            var tpl = this.getTemplates().itemTpl;
+
+            // Generate tpl inserted into div with wrap style class
+            if(!Object.isUnvalued(this.getTemplates()['itemWrappedTpl'])){
+                let wrappedClass = this.getTemplates().itemWrappedClass,
+                    innerTpl = this.getTemplates().itemWrappedTpl;
+                tpl = [`<div class='${wrappedClass}'>`,innerTpl,'</div>'].join('');
+            }
+
             items.push(
                 {
                     bind: {
@@ -102,7 +113,7 @@ Ext.define('Breeze.widget.dataview.SelectItem', {
                     itemId: 'label',
                     xtype: 'component',
                     // tpl: '<div class="legend-item-label ' + this.getLabelCls() + '">' +
-                    tpl: this.getTemplates().itemTpl
+                    tpl: tpl
                         // '<div class="usercategories-widget-legend-item-label">' +
                         // '<div class="legend-item-dot" ' +
                         // 'style="background-color:{color}">' +

@@ -22,9 +22,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     config: {
         // Make common tool icons available
-        injectTools: true
+        injectTools: true,
+        // Tell toolable to inject tools into panel component w/ itemId 'form'
+        commonToolsContainer: { itemId: 'form' }
     },
-
 
     /**
      * Called when the view is created
@@ -63,6 +64,18 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             model: 'Breeze.model.accrual.policy.CarryOverRule',
             data: [],
         }, 'selectedCategoryCarryOverRules');
+
+        // Empty store for Save+Apply Employee targets
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.apply.Employee',
+            data: []
+        }, 'applyEmployeeTargets');
+
+        // Empty store for Save+Apply category targets
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.data.InfoObj',
+            data: []
+        }, 'applyCategoryTargets');
 
         // load accrual policies
         this.loadPolicies();
@@ -2116,6 +2129,33 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });  
     },
 
+    onSavePolicyAndApply: function(){
+        var me = this,
+            vm = this.getViewModel(),
+            policy = vm.get('policyData');
+        
+        // Change view to Apply Form
+        var changeView = ()=>{
+            me.getView().setActiveItem(
+                me.getView().getComponent('applyForm')
+            );
+        };
+
+        // Prepare Apply view
+        this.api.employeesAndCategoriesForApply(policy.ID).then((r)=>{
+            let employeeTargets = vm.get('applyEmployeeTargets'),
+                categoryTargets = vm.get('applyCategoryTargets');
+            // Replace employee targets
+            employeeTargets.loadData(r.employees)
+            // Replace category targets
+            categoryTargets.loadData(r.categories);
+            // Show apply form
+            changeView();
+        }).catch((err)=>{
+            console.warn('Encountered error with getAccrualPolicyEmployeesAndCategoies call', err);
+        });
+    },
+
     // ====[Others]====
 
     /**
@@ -2165,7 +2205,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });
 
         return names.length;
-    }
+    },
 
 
 

@@ -127,15 +127,15 @@ Ext.define('Breeze.mixin.CommonToolable', {
             }
 
             if (typeof ref == 'string') {
-                return this.lookup(ref);
+                return this.getView().lookup(ref);
             }
 
             if (typeof ref == 'object') {
                 if (ref['itemId']) {
-                    return this.getComponent(ref.itemId);
+                    return this.getView().getComponent(ref.itemId);
                 }
                 if (ref['reference']) {
-                    return this.lookup(ref.reference);
+                    return this.getView().lookup(ref.reference);
                 }
             }
 
