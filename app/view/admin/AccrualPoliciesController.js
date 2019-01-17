@@ -2129,9 +2129,11 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });  
     },
 
-    onSavePolicyAndApply: function(){
+    onShowSavePolicyAndApply: function(){
         var me = this,
             vm = this.getViewModel(),
+            employees = this.lookup('applyEmployeesList'),
+            categories = this.lookup('applyCategoriesList'),
             policy = vm.get('policyData');
         
         // Change view to Apply Form
@@ -2145,15 +2147,83 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         this.api.employeesAndCategoriesForApply(policy.ID).then((r)=>{
             let employeeTargets = vm.get('applyEmployeeTargets'),
                 categoryTargets = vm.get('applyCategoryTargets');
+            
+            // clear any checked values
+            employees.changeAllCheckboxes(false);
+            categories.changeAllCheckboxes(false);
+
             // Replace employee targets
-            employeeTargets.loadData(r.employees)
+            employeeTargets.loadData(Ext.clone(r.employees));
             // Replace category targets
-            categoryTargets.loadData(r.categories);
+            categoryTargets.loadData(Ext.clone(r.categories));
+
             // Show apply form
             changeView();
         }).catch((err)=>{
             console.warn('Encountered error with getAccrualPolicyEmployeesAndCategoies call', err);
         });
+    },
+
+    onSavePolicyAndApply: function(){
+        var me = this,
+            vm = this.getViewModel(),
+            applyOptions = vm.get('applyOptions'),
+            employees = this.lookup('applyEmployeesList'),
+            categories = this.lookup('applyCategoriesList'),
+            scheduleId = vm.get('policyData').ID;
+
+        var employeeIds = employees.gatherSelected().map((r)=>{return r.get('id')}).join(',');
+        var categoryIds = categories.gatherSelected().map((r)=>{return r.get('data')}).join(',');
+        
+        var finish = () => {
+            // Show success message
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Accrual Policy successfully applied',
+                timeout: 'info'
+            });
+            // Switch back to regular form
+            this.getView().setActiveItem(
+                this.getView().getComponent('form')
+            );
+        };
+
+        var updateProgressBar = (progress) => {
+            // TODO: implement logic to update a progress bar display
+        };
+        
+        var doApply = (progress) => {
+            this.api.apply(
+                scheduleId,
+                employeeIds,
+                categoryIds,
+                applyOptons.applyPast,
+                applyOptions.changeUserShifts,
+                applyOptions.changeUserCategories,
+                progress
+            ).then((r)=>{
+                if(r.done){
+                    finish();
+                } else {
+                    doApply(r.progress);
+                }
+            }).catch((err)=>{
+                // Fail
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'Unable to connect to the server',
+                    timeout: 'error'
+                });
+            });
+        };
+
+        doApply(0);
+    },
+
+    onSavePolicyAndApplyCancelButton: function(){
+        this.getView().setActiveItem(
+            this.getView().getComponent('form')
+        );
     },
 
     // ====[Others]====

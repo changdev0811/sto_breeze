@@ -197,6 +197,45 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                 }
             )
         });
+    },
+
+    apply: function(scheduleId, employees, categories, changePast, changeShifts, changeCats, progress){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'applyAccrualPolicyProgress',
+                {
+                    schedule_id: scheduleId,
+                    employee_ids: employees,
+                    category_ids: categories,
+                    changePastRecords: changePast,
+                    changeUserModifiedSchedule: changeShifts,
+                    changeUserModifiedCategories: changeCats,
+                    progress: progress
+                },
+                true, false,
+                // success
+                function(response){
+                    var resp = api.decodeJsonResponse(response);
+                    if(resp.success){
+                        var iteration = resp.info[0],
+                            total = resp.info[1],
+                            percent = iteration / total;
+                        if(percent == 1){
+                            resolve({done: true});
+                        } else {
+                            resolve({done: false, progress: iteration});
+                        }
+                    } else {
+                        reject(false);
+                    }
+                },
+                // failure
+                function(err){
+                    reject(false);
+                }
+            )
+        });
     }
 
 });

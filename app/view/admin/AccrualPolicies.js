@@ -59,7 +59,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 },
                 apply: { 
                     text: 'Save and Apply to Employees', 
-                    handler: 'onSavePolicyAndApply',
+                    handler: 'onShowSavePolicyAndApply',
                     ui: 'action', 
                     style: 'width:200pt' 
                 },
@@ -1219,13 +1219,37 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             xtype: 'panel',
             itemId: 'applyForm',
 
-            layout: 'hbox',
+            layout: 'vbox',
 
             // ui: 'dark-themed-dialog',
             ui: 'admin-base',
 
             bind: {
                 title: 'Apply {policyData.Name}'
+            },
+
+            // Action buttons shown at bottom of panel
+            buttonAlign: 'center',
+            buttons: {
+                save: { 
+                    text: 'Apply Changes', 
+                    // handler: 'onSavePolicy', 
+                    ui: 'confirm alt', 
+                    style: 'width:200pt' 
+                },
+                apply: { 
+                    text: 'Cancel', 
+                    handler: 'onSavePolicyAndApplyCancelButton',
+                    ui: 'action alt', 
+                    style: 'width:200pt' 
+                },
+            },
+
+            // Adjust action button toolbar spacing and appearance with UI and shadow
+            buttonToolbar: {
+                xtype: 'toolbar',
+                ui: 'admin-actions',
+                shadow: false
             },
 
             items: [
@@ -1252,7 +1276,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         // Employees Checkbox list
                         {
                             xtype: 'panel',
-                            itemId: 'employeesList',
                             scrollable: 'y',
                             ui: 'admin-fs-panel', flex: 1,
                             userCls: 'admin-fieldset no-padding',
@@ -1260,6 +1283,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'breeze-categories-list',
+                                    reference: 'applyEmployeesList',
                                     ui: 'admin-shift-grid',
                                     userCls: 'admin-fieldset no-background no-margin no-border',
                                     fieldMode: 'check',
@@ -1286,7 +1310,6 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         // Categories checkbox list
                         {
                             xtype: 'panel',
-                            itemId: 'categoriesList',
                             scrollable: 'y',
                             ui: 'admin-fs-panel', flex: 1,
                             userCls: 'admin-fieldset no-padding',
@@ -1294,6 +1317,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'breeze-categories-list',
+                                    reference: 'applyCategoriesList',
                                     ui: 'admin-shift-grid',
                                     userCls: 'admin-fieldset no-background no-margin no-border',
                                     fieldMode: 'check',
@@ -1320,37 +1344,45 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     ]
                 },
                 {
-                    xtype: 'containerfield',
-                    reference: 'applyOptions',
+                    xtype: 'container',
                     height: '120pt',
-                    plugins: {
-                        responsive: true
-                    },
-                    // TODO: Determine responsive width at which to change layout
-                    responsiveConfig: {
-                        'width > 960': {
-                            layout: 'hbox'
-                        },
-                        'width <= 960': {
-                            layout: 'vbox'
-                        }
-                    },
-                    defaults: {
-                        xtype: 'checkbox',
-                        ui: 'admin'
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
                     },
                     items: [
                         {
-                            name: 'applyPast',
-                            boxLabel: 'Apply changes to past records'
-                        },
-                        {
-                            name: 'changeUserShifts',
-                            boxLabel: 'Change user-modified shifts'
-                        },
-                        {
-                            name: 'changeUserCats',
-                            boxLabel: 'Change user-modified categories'
+                            xtype: 'fieldset',
+                            ui: 'admin-base',
+                            userCls: 'admin-fieldset',
+                            title: false,
+        
+                            defaults: {
+                                xtype: 'checkbox',
+                                ui: 'admin',
+                                bodyAlign: 'stretch',
+                                style: 'padding-right: 8pt'
+                            },
+                            items: [
+                                {
+                                    boxLabel: 'Apply changes to past records',
+                                    bind: {
+                                        checked: '{applyOptions.applyPast}'
+                                    }
+                                },
+                                {
+                                    boxLabel: 'Change user-modified shifts',
+                                    bind: {
+                                        checked: '{applyOptions.changeUserShifts}'
+                                    }
+                                },
+                                {
+                                    boxLabel: 'Change user-modified categories',
+                                    bind: {
+                                        checked: '{applyOptions.changeUserCats}'
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }

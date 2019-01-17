@@ -10,40 +10,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
 
     constructor: function (cfg) {
         this.callParent([cfg]);
-        this.createEmptyPolicy();
-    },
-
-    createEmptyPolicy: function () {
-        this.setData({
-            policy: {
-                accDay: '',
-                accInc: '',
-                accMS: '',
-                accPer: '',
-                accRuleName: '',
-                accSvcFrom: '',
-                accSvcTo: '',
-                accUnit: '',
-                accrualCapAmounts: '0',
-                accrualCapUnits: '49',
-                allowAccrual: '0',
-                balanceCapAmounts: '0',
-                balanceCapUnits: '49',
-                carExpAmt: '0',
-                carExpUnit: '59',
-                carOver: '-1',
-                carSvcFrom: '0',
-                carSvcTo: '0',
-                carCalTypes: '46',
-                catIds: '',
-                catWaitRates: '44',
-                recMode: '20',
-                schedName: '',
-                scheduleId: '',
-                shiftStartSegments: '',
-                shiftStopSegments: ''
-            }
-        });
     },
 
     data: {
@@ -54,6 +20,12 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
             createAccrualRule: false,
             createCarryOverRule: false,
             deletePolicy: false
+        },
+        // Option binding for checkboxes in 'Apply to Employees' subview
+        applyOptions: {
+            applyPast: false,
+            changeUserShifts: false,
+            changeUserCategories: false
         }
     },
 
