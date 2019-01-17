@@ -13,7 +13,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     },
 
     data: {
-        selectedCategory: null,
+        // selectedCategory: null,
         // for easily enabling/disabling buttons based on data bindings
         disabled: {
             createAccrualInterval: false,
@@ -813,7 +813,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
             carSvcFrom: '',
             carSvcTo: '',
             carOver: '',
-            carExpAmount: '',
+            carExpAmt: '',
             carExpUnit: '',
             accrualCapAmounts: '',
             accrualCapUnits: '',
@@ -885,7 +885,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 let carryOverParams = {
                     carSvcFrom: 'svcFrom',
                     carSvcTo: 'svcTo',
-                    carExpAmount: 'perAmount',
+                    carExpAmt: 'perAmount',
                     carExpUnit: 'perUnit',
                     carOver: (rec) => {
                         if(rec.get('allowCarry')){

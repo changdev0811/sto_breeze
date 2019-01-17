@@ -1898,6 +1898,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var rec = policyCats.queryRecords('categoryId', recId)[0];
         this.copyRecordToViewModel(
             rec.getData(), 'selectedCategory'
+            // ,'Breeze.model.accrual.policy.Category'
         );
         // load selected category's accrual rules
         vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
@@ -2165,6 +2166,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     onSavePolicyAndApply: function(){
+        console.info('SavePolicy and Apply');
         var me = this,
             vm = this.getViewModel(),
             applyOptions = vm.get('applyOptions'),
@@ -2197,7 +2199,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 scheduleId,
                 employeeIds,
                 categoryIds,
-                applyOptons.applyPast,
+                applyOptions.applyPast,
                 applyOptions.changeUserShifts,
                 applyOptions.changeUserCategories,
                 progress

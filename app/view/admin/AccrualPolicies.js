@@ -100,6 +100,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     xtype: 'panel',
                                     ui: 'admin-fs-panel',
                                     userCls: 'admin-fieldset no-padding',
+                                    scrollable: 'y',
                                     title: 'Policies',
                                     flex: 1,
                                     layout: 'vbox',
@@ -560,19 +561,11 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                 {
                                                     xtype: 'selectfield',
                                                     flex: 2,
-                                                    // name: 'category_balance_cap_unit',
-                                                    store: Ext.create('Ext.data.Store', {
-                                                        fields: ['code', 'description'],
-                                                        data: [
-                                                            { "code": 48, "description": "Days" },
-                                                            { "code": 49, "description": "Hours" },
-                                                            { "code": 50, "description": "Minutes" }
-                                                        ]
-                                                    }),
                                                     valueField: 'code',
                                                     displayField: 'description',
                                                     bind: {
-                                                        value: '{selectedCategory.balanceCapUnit}'
+                                                        value: '{selectedCategory.balanceCapUnit}',
+                                                        store: '{accrualCapUnit}'
                                                     }
                                                 },
                                             ]
@@ -1233,7 +1226,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
             buttons: {
                 save: { 
                     text: 'Apply Changes', 
-                    // handler: 'onSavePolicy', 
+                    handler: 'onSavePolicyAndApply',
                     ui: 'confirm alt', 
                     style: 'width:200pt' 
                 },
