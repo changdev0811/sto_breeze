@@ -2094,10 +2094,26 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      */
     onSavePolicy: function () {
         var vm = this.getViewModel(),
-            params = vm.saveParameters();
+            params = vm.saveParameters(),
+            me = this;
 
-        console.info('save policy');
-        
+        this.api.save(params).then((r)=>{
+            // Show success message
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+            // Reload policies, selecting saved policy
+            me.loadPolicies(parseInt(r.policyId));
+        }).catch((err)=>{
+            // Show error message
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                timeout: 'error'
+            });
+        });  
     },
 
     // ====[Others]====

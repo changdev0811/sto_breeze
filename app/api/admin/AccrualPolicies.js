@@ -27,7 +27,8 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                     if(response.success){
                         resolve({
                             type: Ext.Toast.INFO,
-                            message: response.err
+                            message: response.err,
+                            policyId: params.scheduleId
                         });
                     } else {
                         if(response.err !== 'You are not authenticated'){
