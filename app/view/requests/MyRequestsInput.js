@@ -91,9 +91,9 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                         xtype: 'datepicker',
                                         title: 'Select Date'
                                     },
-                                    //listeners: {
-                                    //    change: 'onViewDateChanged'
-                                    //}
+                                    listeners: {
+                                        //change: ''
+                                    }
                                 },
 
                                 {
@@ -101,46 +101,39 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                     width:'20pt'
                                 },
 
-
                                 {
-                                    xtype:'fieldset',
-                                    //title:'percentage',
-                                    ui:'admin-fieldset',
-                                    items:[
-                                        {
-                                            xtype:'containerfield',
-                                            layout:'hbox',
-                                            
-                                            defaults:{
-                                                bodyAlign: 'stretch',
-                                                ui: 'requests-input',
-                                                padding:'0pt 5pt 0pt 5,t',
-                                            },
-                                            items:[
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'start',
-                                                    boxLabel: '100%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'start',
-                                                    boxLabel: '75%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'start',
-                                                    boxLabel: '50%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'start',
-                                                    boxLabel: '25%',
-                                                },
-                                            ]
-                                        }
-                                    ]
-                                }
+                                    xtype: 'spinnerfield',
+                                    ui: 'requests-text-input',
+                                    //flex: 1,
+                                    style: 'padding-left: 4pt',
+                                    name: 'request-start-hours',
+                                    label: 'Hours',
+                                    decimals: 0,
+                                    minValue: 1,
+                                    maxValue: 24,
+                                    value:24,
+                                    bind: {
+                                        //value: '',
+                                        //minValue: '',
+                                        //maxValue: ''
+                                    }
+                                },
+                                {
+                                    xtype:'spacer',
+                                    width:'20pt'
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'requests-input',
+                                    userCls:'requests-radio-input',
+                                    boxLabel:'All Day',
+                                    bind: {
+                                        //checked: ''
+                                    },
+                                    listeners: {
+                                        //change: ''
+                                    }
+                                },
                             ]
                         },
                         {
@@ -159,56 +152,48 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                         xtype: 'datepicker',
                                         title: 'Select Date'
                                     },
-                                    //listeners: {
-                                    //    change: 'onViewDateChanged'
-                                    //}
+                                    listeners: {
+                                        //change: ''
+                                    }
                                 },
-
                                 {
                                     xtype:'spacer',
                                     width:'20pt'
                                 },
-
-
                                 {
-                                    xtype:'fieldset',
-                                    //title:'percentage',
-                                    ui:'admin-fieldset',
-                                    items:[
-                                        {
-                                            xtype:'containerfield',
-                                            layout:'hbox',
-                                            
-                                            defaults:{
-                                                bodyAlign: 'stretch',
-                                                ui: 'requests-input',
-                                                padding:'0pt 5pt 0pt 5,t',
-                                            },
-                                            items:[
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'end',
-                                                    boxLabel: '100%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'end',
-                                                    boxLabel: '75%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'end',
-                                                    boxLabel: '50%',
-                                                },
-                                                {
-                                                    xtype: 'radio',
-                                                    name: 'end',
-                                                    boxLabel: '25%',
-                                                },
-                                            ]
-                                        }
-                                    ]
-                                }
+                                    xtype: 'spinnerfield',
+                                    ui: 'requests-text-input',
+                                    //flex: 1,
+                                    style: 'padding-left: 4pt',
+                                    name: 'request-end-hours',
+                                    label: 'Hours',
+                                    decimals: 0,
+                                    minValue: 1,
+                                    maxValue: 24,
+                                    value:24,
+                                    bind: {
+                                        //value: '',
+                                        //minValue: '',
+                                        //maxValue: ''
+                                    }
+                                },
+                                {
+                                    xtype:'spacer',
+                                    width:'20pt'
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    ui: 'requests-input',
+                                    userCls:'requests-radio-input',
+                                    boxLabel:'All Day',
+                                    bind: {
+                                        //checked: ''
+                                    },
+                                    listeners: {
+                                        //change: ''
+                                    }
+                                },
+                               
                             ]
                         },
                         {
@@ -235,7 +220,6 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     title: 'Work Days Requested',
                     layout: 'fit',
                     items:[
-
                         {
                             xtype:'container',
                             userCls:'requests-fieldset-input',
@@ -272,18 +256,10 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                                 }
                             ]
                         },
-
-
-
                     ]
-
-
-
                 }
             ],
         },
-
-
     ]
 });
 

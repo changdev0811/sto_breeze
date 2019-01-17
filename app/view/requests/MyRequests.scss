@@ -95,6 +95,10 @@
     $pressed-icon-color: map-get($root-colors, 'base'),
 );
 
+
+.requests-radio-input{
+    margin:20pt 0pt 0pt 0pt;
+}
 .requests-calendar-panel {
     height:auto; 
     margin:0pt 0pt 0pt 0pt;
