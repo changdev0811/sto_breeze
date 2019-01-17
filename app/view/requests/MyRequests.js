@@ -155,7 +155,7 @@ Ext.define('Breeze.view.requests.MyRequests', {
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            text:'Percent',
+                                            text:'Hours',
                                             dataIndex: 'text',
                                             flex: 5,
                                         },
