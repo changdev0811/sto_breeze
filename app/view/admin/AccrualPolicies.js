@@ -358,7 +358,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                             items: [
                                 {
                                     xtype: 'fieldset',
-                                    name: 'category_recording_year_type',
+                                    // name: 'category_recording_year_type',
                                     userCls: 'admin-fieldset no-margin',
                                     title: 'Recording Year Type',
                                     layout: 'hbox',
@@ -426,7 +426,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                             xtype: 'spinnerfield',
                                             flex: 1,
                                             style: 'padding-left: 4pt',
-                                            name: 'category_new_time',
+                                            // name: 'category_new_time',
                                             decimals: 0,
                                             minValue: 0,
                                             bind: {
@@ -440,7 +440,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                         {
                                             xtype: 'selectfield',
                                             flex: 2,
-                                            name: 'category_new_rate',
+                                            // name: 'category_new_rate',
                                             displayField: 'Description',
                                             valueField: 'ID',
                                             store: 'NewRates',

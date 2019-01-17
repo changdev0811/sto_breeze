@@ -2093,7 +2093,11 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Handle 'Save Accrual Policy' button click event
      */
     onSavePolicy: function () {
-        console.info('Save policy clicked');
+        var vm = this.getViewModel(),
+            params = vm.saveParameters();
+
+        console.info('save policy');
+        
     },
 
     // ====[Others]====
