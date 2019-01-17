@@ -2239,26 +2239,25 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @return {Object} Object specifying firstIndex, lastIndex and count
      */
     collectAccrualRuleInfo: function(groupName){
-        var rules = this.getViewModel().get('selectedCategoryAccrualRules'),
-            firstIndex = -1,
-            lastIndex = -1,
-            count = -1;
-        
+        var rules = this.getViewModel().get('selectedCategoryAccrualRules');
+        var info = {firstIndex: Number.POSITIVE_INFINITY, lastIndex: -1, count: 0};
+
         for(var i=0; i<rules.getCount(); i++){
-            let rule = rules.getAt(i);
-            if(rule.get('ruleName') == groupName){
-                if(firstIndex == -1){
-                    firstIndex = i;
+            let rec = rules.getAt(i);
+            if(rec.get('ruleName') == groupName){
+                if(i<info.firstIndex){
+                    // update first occurrence
+                    info.firstIndex = i;
                 }
+                // Increase count
+                info.count++;
             }
-            count++;
         }
 
-        return {
-            firstIndex: firstIndex,
-            lastIndex: firstIndex + count,
-            count: count
-        };
+        // Calculate last index
+        info.lastIndex = info.firstIndex + info.count - 1;
+
+        return info;
     },
 
     /**

@@ -1,0 +1,16 @@
+{
+  "name": "sto_breeze",
+  "version": "1.0.0",
+  "description": "breeze rebuild of STO",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:venturesti/sto_breeze.git",
+  "author": "Wade Harkins <wade@ventureinteractive.com>",
+  "license": "NONE",
+  "private": true,
+  "devDependencies": {
+    "jasmine": "^3.3.1"
+  },
+  "dependencies": {
+    "gulp-cli": "^2.0.1"
+  }
+}
