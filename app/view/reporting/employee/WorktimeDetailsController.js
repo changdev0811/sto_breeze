@@ -28,13 +28,6 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
         // Load employees for tree selector
         this.addStoreToViewModel(
             'Breeze.store.reporting.parameters.Employees',
@@ -105,11 +98,6 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == ''){
-            valid = false;
-            messages.push('Please select a Category.')
-        }
-
         // Validation check for Projects
         if(vmData.reportParams.projids == ''){
             valid = false;
@@ -135,7 +123,6 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
             employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList'),
             projectList = this.lookup('projectList');
 
         // Set myinclist to list of chosen employee IDs
@@ -149,24 +136,9 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
             ).join(',')
         );
         
-        // Categories list method gatherSelected returns array of all records selected
-        var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
-            // get array of selected categories, using map to filter out the IDs
-            /*  TODO: +++Note: the following needs to have 'return' in the 
-                body-- might be missing elsewhere
-            */
-            selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
-        
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
-            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+            selectedProjects = projectRecords.map((r)=>r.getData().ID);
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
