@@ -50,11 +50,29 @@ Ext.define('Breeze.api.Punch', {
     },
 
     /**
-     * TODO: Implement getPolicyForEmployee
+     * Implements getPolicyForEmployee
      * @api getPunchPolicyForEmp
      */
     getPolicyForEmployee: function(employeeId){
-        
+        var api = this.api,
+            cookie = this.cookie.getCookies();
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getPunchPolicyForEmp',
+                {
+                    employee_id: Object.defVal(employeeId, cookie.emp),
+                    asof: new Date()
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(resp)
+                    resolve(resp.d);
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
     },
 
     /**

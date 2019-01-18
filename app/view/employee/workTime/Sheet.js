@@ -24,7 +24,7 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
             itemConfig: {
                 xtype: 'gridrow'
             },
-            sortable: false,
+            // sortable: false,
             // columnLines: true,
             // plugins: {
             //     // { type: 'rowexpander' }
@@ -160,6 +160,11 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
 
                 }
             ]
+        },
+        {
+            xtype: 'grid',
+            ui: 'employee-worktime-records-grid',
+            userCls: 'employee-worktime-records-grid',
         },
         // ===[Approve/Deny Button Container]===
         {

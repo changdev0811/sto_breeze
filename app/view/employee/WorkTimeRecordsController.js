@@ -20,6 +20,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
+        this.punchApi = Ext.create('Breeze.api.Punch');
         var weekSelect = this.lookup('weekSelector');
         weekSelect.setValue(weekSelect.getValue());
 
@@ -30,6 +31,21 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         } else {
             vm.set('employeeId', this.api.auth.getCookies().emp);
         }
+
+        // if(component.getData().navViewModel){
+        //     // Make view model inherit from main nav view model
+        //     vm.setParent(component.getData().navViewModel);
+        // }
+
+        // Load security rights
+        this.addStoreToViewModel(
+            'Breeze.store.employee.SecRights',
+            'secRights',
+            {
+                load: true,
+                createOpts: { employeeId: vm.get('employeeId') }
+            }
+        );
 
         this.loadEmployee();
         this.loadProjects();
@@ -60,15 +76,22 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Load flat projects list into view model
      */
     loadProjects: function(){
-        var me = this;
-        this.companyApi.project.flatList().then(
-            function(store){
-                me.getViewModel().setStores({projects: store});
-                me.loadTimeSheetRecords();
+        // var me = this;
+        // this.companyApi.project.flatList().then(
+        //     function(store){
+        //         me.getViewModel().setStores({projects: store});
+        //         me.loadTimeSheetRecords();
+        //     }
+        // ).catch(function(e){
+        //     console.warn('Failed to load projects list');
+        // })
+        this.addStoreToViewModel(
+            'Breeze.store.company.FlatProjectList',
+            'projects',
+            {
+                load: true
             }
-        ).catch(function(e){
-            console.warn('Failed to load projects list');
-        })
+        );
     },
 
     /**
@@ -124,7 +147,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
-            me.getViewModel().setStores({workTimeRecords: store});
+            //me.getViewModel().setStores({workTimeRecords: store});
+            me.addLoadedStoreToViewModel(store, 'workTimeRecords');
             me.updateShowPunchesButton(false);
             console.info('WorkTimeRecord loaded');
         }).catch(function(err){
@@ -138,6 +162,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     loadTimeSheetRecords: function(){
         var me = this;
         var vm = me.getViewModel();
+        console.info('before time sheet load');
         var start = vm.get('startDate');
         var end = vm.get('endDate');
         // TODO: Add live date data for ajax call in place of dummy dates
@@ -148,11 +173,20 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             start,
             end,
             'workTimeSheetStore'
-        ).then(function(store){
+        ).then((store)=>{
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             // me.getViewModel().set('timeSheetRecords', store);
-            me.getViewModel().setStores({timeSheetRecords: store});
+            // me.getViewModel().setStores({timeSheetRecords: store});
+            // me.addLoadedStoreToViewModel(store, 'timeSheet');
+            me.addLoadedStoreToViewModel({
+                model: 'Breeze.model.record.timeSheet.Record',
+                data: store.getAt(0).get('Records')
+            }, 'timeSheetRecords');
+            me.addLoadedStoreToViewModel({
+                model: 'Breeze.model.record.timeSheet.Record',
+                data: store.getAt(0).get('SummaryRecords')
+            }, 'timeSheetSummary');
             console.info('TimeSheet View loaded');
         }).catch(function(err){
             console.warn('Failed loading time sheet records: ', err);

@@ -63,10 +63,10 @@ Ext.define('Breeze.view.employee.LeaveRequestApproval',{
     },
     items: [
         {
-            xtype: 'fieldset',
-            userCls: 'leave-request-fieldset no-side-margin',
-            title:'Employee Accrual Policy - [CATEGORY]',
-
+            // xtype: 'fieldset',
+            // userCls: 'leave-request-fieldset no-side-margin',
+            // title:'Employee Accrual Policy - [CATEGORY]',
+            xtype:'container',
             flex: 1,
 
             minWidth:'700pt',

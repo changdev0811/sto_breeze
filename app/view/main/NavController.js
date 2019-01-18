@@ -249,9 +249,10 @@ Ext.define('Breeze.view.main.NavController', {
         this.punchClass.getCurrentPolicy().then(
             function(data){
                 var vm = me.getViewModel();
-                vm.set('punch.policy', data);
+                vm.set('punch.policy', data.info);
+                vm.set('punch.hasTimeKron', data.hasTimeKron);
             }
-        )
+        );
     },
 
     /**
@@ -518,7 +519,14 @@ Ext.define('Breeze.view.main.NavController', {
         var emp = vm.get('userId');
         this.changeContent(
             Ext.create('Breeze.view.employee.WorkTimeRecords', {
-                data: { employee: emp }
+                data: { 
+                    employee: emp, 
+                    // navViewModel: vm 
+                },
+                viewModel: {
+                    // tell view model to use navmodel as parent
+                    parent: vm
+                }
             })
         );
     },
@@ -654,7 +662,7 @@ Ext.define('Breeze.view.main.NavController', {
             // this.changeContent(view);
             this.replaceContent(
                 plan.view,
-                { data: { employee: id } }
+                { data: { employee: id }, viewModel: { parent: vm } }
             );
         }
 
