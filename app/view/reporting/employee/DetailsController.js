@@ -166,7 +166,8 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
         
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
-            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+            // selectedProjects = projectRecords.map((r)=>{return r.getData;});           // I dont understand why it is.
+            selectedProjects = projectRecords.map((r)=>{return r.getData().ID;});
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
