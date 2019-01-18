@@ -199,7 +199,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
         });
     },
 
-    apply: function(scheduleId, employees, categories, changePast, changeShifts, changeCats, progress){
+    apply: function(scheduleId, employees, categories, changePast, changeShifts, changeCats, progress, promiseBind){
         var api = this.api;
         return new Promise((resolve, reject)=>{
             api.serviceRequest(
@@ -213,9 +213,13 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                     changeUserModifiedCategories: changeCats,
                     progress: progress
                 },
-                true, false,
+                true, true,
                 // success
                 function(response){
+                    if(promiseBind){
+                        resolve.bind(promiseBind);
+                        reject.bind(promiseBind);
+                    }
                     var resp = api.decodeJsonResponse(response);
                     if(resp.success){
                         var iteration = resp.info[0],
@@ -232,6 +236,9 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                 },
                 // failure
                 function(err){
+                    if(promiseBind){
+                        reject.bind(promiseBind);
+                    }
                     reject(false);
                 }
             )

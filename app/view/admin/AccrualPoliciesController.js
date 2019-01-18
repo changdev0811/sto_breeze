@@ -2136,7 +2136,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             policy = vm.get('policyData');
         
         // hide progress bar
-        vm.set('applyAndSave.progress',-1);
+        vm.set('saveAndApply.progress',-1);
 
         // Change view to Apply Form
         var changeView = ()=>{
@@ -2177,14 +2177,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         var employeeIds = employees.gatherSelected().map((r)=>{return r.get('id')}).join(',');
         var categoryIds = categories.gatherSelected().map((r)=>{return r.get('data')}).join(',');
-        
-        var validate = () => {
-            let valid = true,
-                errors = [];
-            if(employeeIds.length == 0){
-                
-            }
-        };
 
         /**
          * Function called when save and apply is done
@@ -2197,6 +2189,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 message: 'Accrual Policy successfully applied',
                 timeout: 'info'
             });
+            updateProgressBar(1);
             // Switch back to regular form
             this.getView().setActiveItem(
                 this.getView().getComponent('form')
@@ -2209,32 +2202,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             vm.set('saveAndApply.progress', progress);
         };
         
-        /**
-         * Performs save operation, which if successful will start
-         * apply operation
-         */
-        var doSave = () => {
-            this.api.save(vm.saveParameters()).then((r)=>{
-                // Show success message
-                Ext.toast({
-                    type: r.type,
-                    message: r.message,
-                    timeout: 'info'
-                });
-                // reset progress bar value
-                updateProgressBar(0);
-                // start applying
-                doApply(0);
-            }).catch((err)=>{
-                // Show error message
-                Ext.toast({
-                    type: err.type,
-                    message: err.message,
-                    timeout: 'error'
-                });
-            });  
-        };
-
         /**
          * Recurisve function that calls apply api method
          * Calls itself over until progress is 1.
@@ -2269,7 +2236,26 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         };
 
         // Start the process
-        doSave();
+        this.api.save(vm.saveParameters()).then((r)=>{
+            // Show success message
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+            // reset progress bar value
+            updateProgressBar(0);
+            console.info('pre apply');
+            // start applying
+            doApply(0);
+        }).catch((err)=>{
+            // Show error message
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                timeout: 'error'
+            });
+        });
     },
 
     onSavePolicyAndApplyCancelButton: function(){
