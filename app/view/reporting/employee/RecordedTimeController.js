@@ -81,7 +81,7 @@ Ext.define('Breeze.view.reporting.employee.RecordedTimeController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == null){
+        if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -120,9 +120,9 @@ Ext.define('Breeze.view.reporting.employee.RecordedTimeController', {
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
             // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            // selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            selectedCategories = categoryRecords.map((r)=>r.getData().Category_Id);
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',
