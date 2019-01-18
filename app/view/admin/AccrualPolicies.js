@@ -1268,12 +1268,28 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                     items: [
                         // Employees Checkbox list
                         {
-                            xtype: 'panel',
+                            xtype: 'fieldset',
                             scrollable: 'y',
-                            ui: 'admin-fs-panel', flex: 1,
+                            // ui: 'admin-fs-panel', flex: 1,
+                            ui: 'admin-base', flex: 1,
                             userCls: 'admin-fieldset no-padding',
                             title: 'Employees',
                             items: [
+                                {
+                                    xtype: 'toolbar',
+                                    ui: 'admin-tree', userCls: 'no-background', shadow: false,
+                                    items: [
+                                        {
+                                            xtype: 'checkbox', 
+                                            data: { list: 'applyEmployeesList' },
+                                            ui: 'reporting', bodyAlign: 'stretch',
+                                            boxLabel: 'Check All Employees',
+                                            listeners: {
+                                                change: 'onSavePolicyAndApplyCheckAllChange'
+                                            }
+                                        }
+                                    ]
+                                },
                                 {
                                     xtype: 'breeze-categories-list',
                                     reference: 'applyEmployeesList',
@@ -1283,7 +1299,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     selectMode: 'multi',
                                     preventDeselect: false,
                                     itemConfig: {
-                                        ui: 'admin-list-item-select',
+                                        ui: 'admin-list-item-select admin-list-item-select-no-bg',
                                         templates: {
                                             radioValue: '{record.id}',
                                             itemData: { name: '{record.displayName} ' },
@@ -1302,12 +1318,27 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                         },
                         // Categories checkbox list
                         {
-                            xtype: 'panel',
+                            xtype: 'fieldset',
                             scrollable: 'y',
-                            ui: 'admin-fs-panel', flex: 1,
+                            ui: 'admin-base', flex: 1,
                             userCls: 'admin-fieldset no-padding',
                             title: 'Categories',
                             items: [
+                                {
+                                    xtype: 'toolbar',
+                                    ui: 'admin-tree', userCls: 'no-background', shadow: false,
+                                    items: [
+                                        {
+                                            xtype: 'checkbox',
+                                            data: { list: 'applyCategoriesList' },
+                                            ui: 'reporting', bodyAlign: 'stretch',
+                                            boxLabel: 'Check All Categories',
+                                            listeners: {
+                                                change: 'onSavePolicyAndApplyCheckAllChange'
+                                            }
+                                        }
+                                    ]
+                                },
                                 {
                                     xtype: 'breeze-categories-list',
                                     reference: 'applyCategoriesList',
@@ -1317,7 +1348,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                     selectMode: 'multi',
                                     preventDeselect: false,
                                     itemConfig: {
-                                        ui: 'admin-list-item-select',
+                                        ui: 'admin-list-item-select admin-list-item-select-no-bg',
                                         templates: {
                                             radioValue: '{record.data}',
                                             itemData: { name: '{record.text} ' },
@@ -1338,7 +1369,7 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                 },
                 {
                     xtype: 'container',
-                    height: '120pt',
+                    height: '120pt', style: 'padding-top: 14pt',
                     layout: {
                         type: 'vbox',
                         align: 'center'
@@ -1360,22 +1391,39 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                 {
                                     boxLabel: 'Apply changes to past records',
                                     bind: {
-                                        checked: '{applyOptions.applyPast}'
+                                        checked: '{saveAndApply.options.applyPast}'
                                     }
                                 },
                                 {
                                     boxLabel: 'Change user-modified shifts',
                                     bind: {
-                                        checked: '{applyOptions.changeUserShifts}'
+                                        checked: '{saveAndApply.options.changeUserShifts}'
                                     }
                                 },
                                 {
                                     boxLabel: 'Change user-modified categories',
                                     bind: {
-                                        checked: '{applyOptions.changeUserCats}'
+                                        checked: '{saveAndApply.options.changeUserCats}'
                                     }
                                 }
                             ]
+                        }
+                    ]
+                },
+                {
+                    xtype: 'container',
+                    userCls: 'admin-ap-progress-container',
+                    items: [
+                        {
+                            xtype: 'progress',
+                            ui: 'admin-ap-progress',
+                            shadowCls: 'admin-ap-progress-shadow',
+                            shadow: true,
+                            bind: {
+                                hidden: '{saveAndApply.progress < 0}',
+                                value: '{saveAndApply.progress}'
+                            },
+                            textTpl: '{percent}%'
                         }
                     ]
                 }

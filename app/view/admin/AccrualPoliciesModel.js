@@ -8,9 +8,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
     extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.admin.accrualpolicies',
 
-    constructor: function (cfg) {
-        this.callParent([cfg]);
-    },
+    // constructor: function (cfg) {
+    //     this.callParent([cfg]);
+    // },
 
     data: {
         // selectedCategory: null,
@@ -21,11 +21,16 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
             createCarryOverRule: false,
             deletePolicy: false
         },
-        // Option binding for checkboxes in 'Apply to Employees' subview
-        applyOptions: {
-            applyPast: false,
-            changeUserShifts: false,
-            changeUserCategories: false
+        
+        saveAndApply: {
+            // Option binding for checkboxes in 'Apply to Employees' subview
+            options: {
+                applyPast: false,
+                changeUserShifts: false,
+                changeUserCategories: false
+            },
+            // Apply progress bar value
+            progress: 0.5
         }
     },
 

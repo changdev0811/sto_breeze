@@ -853,8 +853,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         var source = (inDialog) ? this.addShiftSegmentDialog : this.lookup('shiftGrid');
 
-        var errors = [];
-
         // Create Validation rule set
         var validRuleSet = Ext.create('Breeze.helper.data.ValidationRuleSet', {
             rules: {
@@ -867,7 +865,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     },
                     failFn: (get, name) => {
                         console.warn(name, ' failed');
-                        errors.push('Start and stop times must be different');
+                        // errors.push('Start and stop times must be different');
+                        return 'Start and stop times must be different';
                     }
                 },
                 noOverlap: {
@@ -901,7 +900,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     },
                     failFn: (get, name) => {
                         console.warn(name, ' failed');
-                        errors.push('Shift cannot overlap with existing shifts');
+                        // errors.push('Shift cannot overlap with existing shifts');
+                        return 'Shift cannot overlap with existing shifts';
                     }
                 }
             }
@@ -924,10 +924,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         } else {
             Ext.toast({
                 type: Ext.Toast.WARN,
-                message: [
-                    'Please correct the following issues before saving',
-                    '<ul>' + errors.map((i) => { return `<li>${i}</li>` }) + '</ul>'
-                ].join('<br>'),
+                message: 'Please correct the following issues before saving',
+                list: validRuleSet.getErrors(),
                 timeout: ['warn', 5000]
             });
             return false;
@@ -2137,6 +2135,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             categories = this.lookup('applyCategoriesList'),
             policy = vm.get('policyData');
         
+        // hide progress bar
+        vm.set('applyAndSave.progress',-1);
+
         // Change view to Apply Form
         var changeView = ()=>{
             me.getView().setActiveItem(
@@ -2169,7 +2170,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('SavePolicy and Apply');
         var me = this,
             vm = this.getViewModel(),
-            applyOptions = vm.get('applyOptions'),
+            applyOptions = vm.get('saveAndApply.options'),
             employees = this.lookup('applyEmployeesList'),
             categories = this.lookup('applyCategoriesList'),
             scheduleId = vm.get('policyData').ID;
@@ -2177,6 +2178,18 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var employeeIds = employees.gatherSelected().map((r)=>{return r.get('id')}).join(',');
         var categoryIds = categories.gatherSelected().map((r)=>{return r.get('data')}).join(',');
         
+        var validate = () => {
+            let valid = true,
+                errors = [];
+            if(employeeIds.length == 0){
+                
+            }
+        };
+
+        /**
+         * Function called when save and apply is done
+         * Shows success message and returns view to main form
+         */
         var finish = () => {
             // Show success message
             Ext.toast({
@@ -2188,12 +2201,46 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             this.getView().setActiveItem(
                 this.getView().getComponent('form')
             );
+            // Reload policies, selecting saved policy
+            me.loadPolicies(parseInt(scheduleId));
         };
 
         var updateProgressBar = (progress) => {
-            // TODO: implement logic to update a progress bar display
+            vm.set('saveAndApply.progress', progress);
         };
         
+        /**
+         * Performs save operation, which if successful will start
+         * apply operation
+         */
+        var doSave = () => {
+            this.api.save(vm.saveParameters()).then((r)=>{
+                // Show success message
+                Ext.toast({
+                    type: r.type,
+                    message: r.message,
+                    timeout: 'info'
+                });
+                // reset progress bar value
+                updateProgressBar(0);
+                // start applying
+                doApply(0);
+            }).catch((err)=>{
+                // Show error message
+                Ext.toast({
+                    type: err.type,
+                    message: err.message,
+                    timeout: 'error'
+                });
+            });  
+        };
+
+        /**
+         * Recurisve function that calls apply api method
+         * Calls itself over until progress is 1.
+         * When finished, calls finish()
+         * @param {Number} progress Progress value. 0 = start, 1 = done
+         */
         var doApply = (progress) => {
             this.api.apply(
                 scheduleId,
@@ -2207,7 +2254,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 if(r.done){
                     finish();
                 } else {
-                    doApply(r.progress);
+                    // fire method that updates progress display
+                    updateProgressBar(r.progress);
+                    doApply(r.iteration);
                 }
             }).catch((err)=>{
                 // Fail
@@ -2219,13 +2268,25 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             });
         };
 
-        doApply(0);
+        // Start the process
+        doSave();
     },
 
     onSavePolicyAndApplyCancelButton: function(){
         this.getView().setActiveItem(
             this.getView().getComponent('form')
         );
+    },
+
+    /**
+     * Event listener shared by both 'check all' checkboxes on the save and 
+     * apply view. Makes use of data attribute on checkboxes to find list to update
+     * @param {Object} field Source checkbox
+     * @param {Boolean} checked Checked state
+     */
+    onSavePolicyAndApplyCheckAllChange: function(field, checked){
+        var list = this.lookup(field.getData().list);
+        list.changeAllCheckboxes(checked);
     },
 
     // ====[Others]====

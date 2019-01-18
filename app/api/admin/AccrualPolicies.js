@@ -224,7 +224,7 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                         if(percent == 1){
                             resolve({done: true});
                         } else {
-                            resolve({done: false, progress: iteration});
+                            resolve({done: false, iteration: iteration, progress: percent});
                         }
                     } else {
                         reject(false);
