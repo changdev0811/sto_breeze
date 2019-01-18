@@ -46,7 +46,9 @@ Ext.define('Breeze.view.reporting.employee.TimesheetModel', {
                 showhours: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                weeks_str: '',
+                weeks_strUtc: ''
             }
         };
         this.setData(data);

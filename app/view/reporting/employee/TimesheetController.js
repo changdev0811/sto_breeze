@@ -28,13 +28,6 @@ Ext.define('Breeze.view.reporting.employee.TimesheetController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
         // Load employees for tree selector
         this.addStoreToViewModel(
             'Breeze.store.reporting.parameters.Employees',
@@ -79,6 +72,12 @@ Ext.define('Breeze.view.reporting.employee.TimesheetController', {
         if(vmData.reportParams.incids == ''){
             valid = false;
             messages.push('Please select a Department or Employee.');
+        }
+
+        // checking if weeks are selected or not
+        if(vmData.reportParams.weeks_str == '') {
+            valid = false;
+            messages.push('Please select one or more weeks');
         }
 
         if(!valid){
@@ -156,8 +155,7 @@ Ext.define('Breeze.view.reporting.employee.TimesheetController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
@@ -169,7 +167,20 @@ Ext.define('Breeze.view.reporting.employee.TimesheetController', {
                 }
             ).join(',')
         );
-        
+
+        var weekStore = vm.get('selectedWeeks'),
+            weeksStr = weekStore.data.items.map((r)=>r.data.start),
+            weeksStrUtc = weekStore.data.items.map((r)=>new Date(r.data.start).toUTCString());
+
+        vm.set(
+            'reportParams.weeks_str',
+            weeksStr.join(',')
+        );
+
+        vm.set(
+            'reportParams.weeks_strUtc',
+            weeksStrUtc.join('*')
+        );
     },
 
     /**
