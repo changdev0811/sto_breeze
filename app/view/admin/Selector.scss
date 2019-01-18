@@ -402,6 +402,12 @@
     $padding: 10pt 0pt 10pt 11.6pt
 );
 
+// Use along with admin-list-item-select to remove selected state bg color
+@include listitem-ui(
+    $ui: 'admin-list-item-select-no-bg',
+    $selected-background-color: transparent
+);
+
 @include panel-ui(
     $ui: 'admin-list-panel-select',
     $background-color: transparent,

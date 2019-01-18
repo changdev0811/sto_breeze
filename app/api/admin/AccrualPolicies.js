@@ -27,7 +27,8 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                     if(response.success){
                         resolve({
                             type: Ext.Toast.INFO,
-                            message: response.err
+                            message: response.err,
+                            policyId: params.scheduleId
                         });
                     } else {
                         if(response.err !== 'You are not authenticated'){
@@ -160,6 +161,85 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
                         message: 'Error',
                         error: err
                     });
+                }
+            )
+        });
+    },
+
+    /**
+     * Gather Employees and Categories a given Policy can be applied to
+     * @param {String} policyId ID of Policy to gather Apply info for
+     * @return {Promise} Resolves with object containing two stores: employees and
+     *      categories. Rejects with error object.
+     */
+    employeesAndCategoriesForApply: function(policyId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getAccrualPolicyEmployeesAndCategories',
+                {
+                    schedule_id: policyId.toString()
+                },
+                true, false,
+                // Success
+                function(response){
+                    var resp = api.decodeJsonResponse(response),
+                        stores = {
+                            employees: resp.employees,
+                            categories: resp.categories
+                        };
+
+                        resolve(stores);
+                },
+                // Failure
+                function(err){
+                    reject(err);
+                }
+            )
+        });
+    },
+
+    apply: function(scheduleId, employees, categories, changePast, changeShifts, changeCats, progress, promiseBind){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'applyAccrualPolicyProgress',
+                {
+                    schedule_id: scheduleId,
+                    employee_ids: employees,
+                    category_ids: categories,
+                    changePastRecords: changePast,
+                    changeUserModifiedSchedule: changeShifts,
+                    changeUserModifiedCategories: changeCats,
+                    progress: progress
+                },
+                true, true,
+                // success
+                function(response){
+                    if(promiseBind){
+                        resolve.bind(promiseBind);
+                        reject.bind(promiseBind);
+                    }
+                    var resp = api.decodeJsonResponse(response);
+                    if(resp.success){
+                        var iteration = resp.info[0],
+                            total = resp.info[1],
+                            percent = iteration / total;
+                        if(percent == 1){
+                            resolve({done: true});
+                        } else {
+                            resolve({done: false, iteration: iteration, progress: percent});
+                        }
+                    } else {
+                        reject(false);
+                    }
+                },
+                // failure
+                function(err){
+                    if(promiseBind){
+                        reject.bind(promiseBind);
+                    }
+                    reject(false);
                 }
             )
         });

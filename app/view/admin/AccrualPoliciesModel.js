@@ -5,55 +5,32 @@
  * @alias viewmodel.admin.accrualpolicies
  */
 Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
-    extend: 'Ext.app.ViewModel',
+    extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.admin.accrualpolicies',
 
-    constructor: function (cfg) {
-        this.callParent([cfg]);
-        this.createEmptyPolicy();
-    },
-
-    createEmptyPolicy: function () {
-        this.setData({
-            policy: {
-                accDay: '',
-                accInc: '',
-                accMS: '',
-                accPer: '',
-                accRuleName: '',
-                accSvcFrom: '',
-                accSvcTo: '',
-                accUnit: '',
-                accrualCapAmounts: '0',
-                accrualCapUnits: '49',
-                allowAccrual: '0',
-                balanceCapAmounts: '0',
-                balanceCapUnits: '49',
-                carExpAmt: '0',
-                carExpUnit: '59',
-                carOver: '-1',
-                carSvcFrom: '0',
-                carSvcTo: '0',
-                carCalTypes: '46',
-                catIds: '',
-                catWaitRates: '44',
-                recMode: '20',
-                schedName: '',
-                scheduleId: '',
-                shiftStartSegments: '',
-                shiftStopSegments: ''
-            }
-        });
-    },
+    // constructor: function (cfg) {
+    //     this.callParent([cfg]);
+    // },
 
     data: {
-        selectedCategory: null,
+        // selectedCategory: null,
         // for easily enabling/disabling buttons based on data bindings
         disabled: {
             createAccrualInterval: false,
             createAccrualRule: false,
             createCarryOverRule: false,
             deletePolicy: false
+        },
+        
+        saveAndApply: {
+            // Option binding for checkboxes in 'Apply to Employees' subview
+            options: {
+                applyPast: false,
+                changeUserShifts: false,
+                changeUserCategories: false
+            },
+            // Apply progress bar value
+            progress: 0.5
         }
     },
 
@@ -810,6 +787,135 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
                 return (!data.allowed || data.disabled) || !(data.rules.getCount());
             }
         }
+    },
+
+    saveParameters: function(){
+        var policy = this.get('policyData'),
+            shifts = this.get('policySegments'),
+            category = this.get('selectedCategory'),
+            rules = this.get('selectedCategoryAccrualRules'),
+            carryOvers = this.get('selectedCategoryCarryOverRules');
+        
+        var params = {
+            scheduleId: '',
+            schedName: '',
+            recMode: '',
+            shiftStartSegments: '',
+            shiftStopSegments: '',
+            catIds: '',
+            catCalTypes: '',
+            catWaitTimes: '',
+            catWaitRates: '',
+            allowAccrual: '',
+            accSvcFrom: '',
+            accSvcTo: '',
+            accRuleName: '',
+            accInc: '',
+            accUnit: '',
+            accPer: '',
+            accDay: '',
+            accMS: '',
+            carSvcFrom: '',
+            carSvcTo: '',
+            carOver: '',
+            carExpAmt: '',
+            carExpUnit: '',
+            accrualCapAmounts: '',
+            accrualCapUnits: '',
+            balanceCapAmounts: '',
+            balanceCapUnits: ''
+        };
+
+        // Assign values pulled from policyData
+        Object.assign(
+            params, {
+                recMode: policy.recordingMode.toString(),
+                schedName: policy.Name,
+                scheduleId: policy.ID.toString()
+            }
+        );
+
+        // Output names with source prop names for mapFromRecords
+        var shiftParams = {
+            shiftStartSegments: 'StartSegment',
+            shiftStopSegments: 'StopSegment'
+        };
+
+        Object.assign(
+            params, this.mapFromRecords(shiftParams, shifts)
+        );
+
+        if(category.isAllowed){
+            // Output names with source prop names for mapFromRecords
+            let catParams = {
+                catIds: 'categoryId',
+                catWaitRates: 'newRate',
+                catWaitTimes: 'newTime',
+                catCalTypes: 'calendarType',
+                accrualCapAmounts: 'accrualCapAmount',
+                accrualCapUnits: 'accrualCapUnit',
+                balanceCapAmounts: 'balanceCapAmount',
+                balanceCapUnits: 'balanceCapUnit'
+            };
+            Object.assign(
+                params,
+                this.mapFromRecord(catParams, category, true, true)
+            );
+            
+            // Accrual Rules
+            if(category.allowAccrual){
+                params.allowAccrual = '1';
+                // Output names with source prop names for mapFromRecords
+                let ruleParams = {
+                    accSvcFrom: 'svcFrom',
+                    accSvcTo: 'svcTo',
+                    accUnit: 'accformUnit',
+                    accRuleName: 'ruleName',
+                    accPer: 'accformPer',
+                    accDay: 'accformDay',
+                    accInc: 'accformInc'
+                };
+                Object.assign(
+                    params,
+                    this.mapFromRecords(ruleParams, rules)
+                );
+            } else {
+                // Accrual Rules not allowed
+                params.allowAccrual = '0';
+            }
+
+            // Carry Over Rules
+            if(carryOvers.getCount() > 0){
+                // Output names with source prop names for mapFromRecords
+                let carryOverParams = {
+                    carSvcFrom: 'svcFrom',
+                    carSvcTo: 'svcTo',
+                    carExpAmt: 'perAmount',
+                    carExpUnit: 'perUnit',
+                    carOver: (rec) => {
+                        if(rec.get('allowCarry')){
+                            return rec.get('carryOvr');
+                        } else {
+                            return '-1';
+                        }
+                    }
+                };
+
+                Object.assign(
+                    params, this.mapFromRecords(carryOverParams, carryOvers)
+                );
+            } else {
+                // Category not allowed
+                Object.assign(
+                    params, {
+                        catWaitTimes: '0', catWaitRates: '44', allowAccrual: '0'
+                    }
+                );
+            }
+        }
+
+        return params;
+
     }
 
 });

@@ -228,6 +228,9 @@ Ext.define('Breeze.Toast', {
          * 'warn') or numeric values (e.g. ['warn',1000] would be 1 second 
          * longer than the warn template))
          * 
+         * If time intervals in array are less than 10, they are multiplied
+         * by 1000 (assuming 1 = 1 second)
+         * 
          * Uses recursion to resolve templates and arrays
          * 
          * @param {(String|Array|Number)} to Timeout value to resolve
@@ -241,8 +244,15 @@ Ext.define('Breeze.Toast', {
                     return this.resolveTimeout(Ext.Toast.TIMEOUTS[to]);
                 }
             } else if(Array.isArray(to)){
+                let times = to.map((v)=>{
+                    if(typeof v == 'number' && v < 10){
+                        return v * 1000;
+                    } else {
+                        return v;
+                    }
+                });
                 // it's an array, meaning add values together
-                return this.resolveTimeout(to[0]) + this.resolveTimeout(to[1]);
+                return this.resolveTimeout(times[0]) + this.resolveTimeout(times[1]);
             } else {
                 return to;
             }

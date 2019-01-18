@@ -22,9 +22,10 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
     config: {
         // Make common tool icons available
-        injectTools: true
+        injectTools: true,
+        // Tell toolable to inject tools into panel component w/ itemId 'form'
+        commonToolsContainer: { itemId: 'form' }
     },
-
 
     /**
      * Called when the view is created
@@ -63,6 +64,18 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             model: 'Breeze.model.accrual.policy.CarryOverRule',
             data: [],
         }, 'selectedCategoryCarryOverRules');
+
+        // Empty store for Save+Apply Employee targets
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.apply.Employee',
+            data: []
+        }, 'applyEmployeeTargets');
+
+        // Empty store for Save+Apply category targets
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.data.InfoObj',
+            data: []
+        }, 'applyCategoryTargets');
 
         // load accrual policies
         this.loadPolicies();
@@ -840,8 +853,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
 
         var source = (inDialog) ? this.addShiftSegmentDialog : this.lookup('shiftGrid');
 
-        var errors = [];
-
         // Create Validation rule set
         var validRuleSet = Ext.create('Breeze.helper.data.ValidationRuleSet', {
             rules: {
@@ -854,7 +865,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     },
                     failFn: (get, name) => {
                         console.warn(name, ' failed');
-                        errors.push('Start and stop times must be different');
+                        // errors.push('Start and stop times must be different');
+                        return 'Start and stop times must be different';
                     }
                 },
                 noOverlap: {
@@ -888,7 +900,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     },
                     failFn: (get, name) => {
                         console.warn(name, ' failed');
-                        errors.push('Shift cannot overlap with existing shifts');
+                        // errors.push('Shift cannot overlap with existing shifts');
+                        return 'Shift cannot overlap with existing shifts';
                     }
                 }
             }
@@ -911,10 +924,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         } else {
             Ext.toast({
                 type: Ext.Toast.WARN,
-                message: [
-                    'Please correct the following issues before saving',
-                    '<ul>' + errors.map((i) => { return `<li>${i}</li>` }) + '</ul>'
-                ].join('<br>'),
+                message: 'Please correct the following issues before saving',
+                list: validRuleSet.getErrors(),
                 timeout: ['warn', 5000]
             });
             return false;
@@ -1885,6 +1896,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         var rec = policyCats.queryRecords('categoryId', recId)[0];
         this.copyRecordToViewModel(
             rec.getData(), 'selectedCategory'
+            // ,'Breeze.model.accrual.policy.Category'
         );
         // load selected category's accrual rules
         vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
@@ -2093,7 +2105,174 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * Handle 'Save Accrual Policy' button click event
      */
     onSavePolicy: function () {
-        console.info('Save policy clicked');
+        var vm = this.getViewModel(),
+            params = vm.saveParameters(),
+            me = this;
+
+        this.api.save(params).then((r)=>{
+            // Show success message
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+            // Reload policies, selecting saved policy
+            me.loadPolicies(parseInt(r.policyId));
+        }).catch((err)=>{
+            // Show error message
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                timeout: 'error'
+            });
+        });  
+    },
+
+    onShowSavePolicyAndApply: function(){
+        var me = this,
+            vm = this.getViewModel(),
+            employees = this.lookup('applyEmployeesList'),
+            categories = this.lookup('applyCategoriesList'),
+            policy = vm.get('policyData');
+        
+        // hide progress bar
+        vm.set('saveAndApply.progress',-1);
+
+
+        // Prepare and display apply view
+        var showApplyView = () => {
+            // Prepare Apply view
+            this.api.employeesAndCategoriesForApply(policy.ID).then((r)=>{
+                let employeeTargets = vm.get('applyEmployeeTargets'),
+                    categoryTargets = vm.get('applyCategoryTargets');
+                
+                // clear any checked values
+                employees.changeAllCheckboxes(false);
+                categories.changeAllCheckboxes(false);
+
+                // Replace employee targets
+                employeeTargets.loadData(Ext.clone(r.employees));
+                // Replace category targets
+                categoryTargets.loadData(Ext.clone(r.categories));
+
+                // Show apply form
+                me.getView().setActiveItem(
+                    me.getView().getComponent('applyForm')
+                );
+            }).catch((err)=>{
+                console.warn('Encountered error with getAccrualPolicyEmployeesAndCategoies call', err);
+            });
+        };
+
+        // Save
+        this.api.save(vm.saveParameters()).then((r) => {
+            // Show success message
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+            // Prepare apply view and switch
+            showApplyView();
+        }).catch((err) => {
+            // Show error message
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                timeout: 'error'
+            });
+        });
+    },
+
+    onSavePolicyAndApply: function(){
+        console.info('SavePolicy and Apply');
+        var me = this,
+            vm = this.getViewModel(),
+            applyOptions = vm.get('saveAndApply.options'),
+            employees = this.lookup('applyEmployeesList'),
+            categories = this.lookup('applyCategoriesList'),
+            scheduleId = vm.get('policyData').ID;
+
+        var employeeIds = employees.gatherSelected().map((r)=>{return r.get('id')}).join(',');
+        var categoryIds = categories.gatherSelected().map((r)=>{return r.get('data')}).join(',');
+
+        /**
+         * Function called when save and apply is done
+         * Shows success message and returns view to main form
+         */
+        var finish = () => {
+            // Show success message
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Accrual Policy successfully applied',
+                timeout: 'info'
+            });
+            updateProgressBar(1);
+            // Switch back to regular form
+            this.getView().setActiveItem(
+                this.getView().getComponent('form')
+            );
+            // Reload policies, selecting saved policy
+            me.loadPolicies(parseInt(scheduleId));
+        };
+
+        var updateProgressBar = (progress) => {
+            vm.set('saveAndApply.progress', progress);
+        };
+        
+        /**
+         * Recurisve function that calls apply api method
+         * Calls itself over until progress is 1.
+         * When finished, calls finish()
+         * @param {Number} progress Progress value. 0 = start, 1 = done
+         */
+        var doApply = (progress) => {
+            this.api.apply(
+                scheduleId,
+                employeeIds,
+                categoryIds,
+                applyOptions.applyPast,
+                applyOptions.changeUserShifts,
+                applyOptions.changeUserCategories,
+                progress
+            ).then((r)=>{
+                if(r.done){
+                    finish();
+                } else {
+                    // fire method that updates progress display
+                    updateProgressBar(r.progress);
+                    doApply(r.iteration);
+                }
+            }).catch((err)=>{
+                // Fail
+                Ext.toast({
+                    type: Ext.Toast.ERROR,
+                    message: 'Unable to connect to the server',
+                    timeout: 'error'
+                });
+            });
+        };
+
+        updateProgressBar(0);
+        doApply(0);
+
+    },
+
+    onSavePolicyAndApplyCancelButton: function(){
+        this.getView().setActiveItem(
+            this.getView().getComponent('form')
+        );
+    },
+
+    /**
+     * Event listener shared by both 'check all' checkboxes on the save and 
+     * apply view. Makes use of data attribute on checkboxes to find list to update
+     * @param {Object} field Source checkbox
+     * @param {Boolean} checked Checked state
+     */
+    onSavePolicyAndApplyCheckAllChange: function(field, checked){
+        var list = this.lookup(field.getData().list);
+        list.changeAllCheckboxes(checked);
     },
 
     // ====[Others]====
@@ -2107,26 +2286,25 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
      * @return {Object} Object specifying firstIndex, lastIndex and count
      */
     collectAccrualRuleInfo: function(groupName){
-        var rules = this.getViewModel().get('selectedCategoryAccrualRules'),
-            firstIndex = -1,
-            lastIndex = -1,
-            count = -1;
-        
+        var rules = this.getViewModel().get('selectedCategoryAccrualRules');
+        var info = {firstIndex: Number.POSITIVE_INFINITY, lastIndex: -1, count: 0};
+
         for(var i=0; i<rules.getCount(); i++){
-            let rule = rules.getAt(i);
-            if(rule.get('ruleName') == groupName){
-                if(firstIndex == -1){
-                    firstIndex = i;
+            let rec = rules.getAt(i);
+            if(rec.get('ruleName') == groupName){
+                if(i<info.firstIndex){
+                    // update first occurrence
+                    info.firstIndex = i;
                 }
+                // Increase count
+                info.count++;
             }
-            count++;
         }
 
-        return {
-            firstIndex: firstIndex,
-            lastIndex: firstIndex + count,
-            count: count
-        };
+        // Calculate last index
+        info.lastIndex = info.firstIndex + info.count - 1;
+
+        return info;
     },
 
     /**
@@ -2145,7 +2323,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         });
 
         return names.length;
-    }
+    },
 
 
 

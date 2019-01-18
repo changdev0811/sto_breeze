@@ -27,7 +27,8 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
         */
         rules: {},
         // Auto populated in constructor
-        ruleNames: []
+        ruleNames: [],
+        errors: []
     },
 
     /**
@@ -48,10 +49,14 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
      * executing passFn or failFn if defined for rule
      * @param {String} ruleName Name of rule to run
      * @param {Object} values Object containing key named variables accessible by get
+     * @param {Boolean} preserveErrors If true, allows error messages to accumulate between runs
      * @return {Boolean} True for pass, fail for fail; undefined if invalid rule 
      *  name given
      */
-    run: function (ruleName, values) {
+    run: function (ruleName, values, preserveErrors=false) {
+        if(!preserveErrors){
+            this.setErrors([]);
+        }
         /**
          * Helper function passed to rule functions allowing named lookup of values
          * included in values param
@@ -77,7 +82,10 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
             } else {
                 // Rule test failed, run failFn if defined
                 if (rule[failFn]) {
-                    rule[failFn](get, ruleName);
+                    let error = rule[failFn](get, ruleName);
+                    if(error){
+                        this.addError(error);
+                    }
                 }
                 // Return fail bool
                 return false;
@@ -93,13 +101,14 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
      * @return {Object} Test results, stored under rule names
      */
     runAll: function (values) {
+        this.setErrors([]);
         var get = function (name) { return values[name]; },
             names = this.getRuleNames(),
             results = {};
 
         for (var i = 0; i < names.length; i++) {
             let name = names[i];
-            results[name] = this.run(name, values);
+            results[name] = this.run(name, values, true);
         }
 
         return results;
@@ -117,6 +126,12 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
             passed = passed && result[names[i]];
         }
         return passed;
+    },
+
+    privates: {
+        addError: function(message){
+            this.setErrors(this.getErrors().push(message));
+        }
     }
 
 });

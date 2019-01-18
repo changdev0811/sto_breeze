@@ -1,6 +1,53 @@
+/**
+    Style rules for Admin > Accrual Policies view
+*/
+
+// Attempt to make in-grid editor fields smaller
 @include textfield-ui(
     $ui: 'admin-ap-small-input',
     $input-font-size: 10pt,
     $input-padding: 1pt 2pt 1pt 2pt
 );
+
+// Progress Bar
+
+@include progress-ui(
+    $ui: 'admin-ap-progress',
+    $min-height: 20pt,
+    $background-color: $base-color,
+    $bar-background-color: $confirm-color,
+    $front-color: #ffffff,
+    $back-color: map-get($root-text-colors, 'base'),
+    $text-font-size: map-get($root-font-sizes, 'base'),
+    $text-line-height: 20pt
+);
+
+.x-progress-bar.x-progress-bar-admin-ap-progress,
+.x-progress.x-progress-admin-ap-progress {
+    background-image: linear-gradient(
+        rgba(127,127,127,.25),rgba(63,63,63,.33)
+    ) !important;
+}
+
+.x-progress.x-progress-admin-ap-progress {
+    border-radius: 5pt;
+}
+
+.admin-ap-progress-container {
+    padding: 10pt;
+}
+
+.admin-ap-progress-shadow {
+    box-shadow: 0pt 3pt 3pt rgba(0,0,0,.25);
+}
+
+.admin-ap-progress-bar {
+    margin: {
+        left: 8pt, right: 8pt,
+        top: inherit, bottom: -10pt
+    };
+    padding: 2pt;
+}
+
+
 

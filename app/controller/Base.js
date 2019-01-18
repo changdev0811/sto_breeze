@@ -115,8 +115,9 @@ Ext.define('Breeze.controller.Base', {
      * @param {(Ext.data.Record|Object)} recordSource Data record source (model record
      *      or regular object)
      * @param {String} dataName Name to use for storage in viw model
+     * @param {String} model Optional model to use to store as record
      */
-    copyRecordToViewModel: function(recordSource, dataName){
+    copyRecordToViewModel: function(recordSource, dataName, model=null){
         // var replace = Object.defVal(replace, true),
         //     clone = Object.defVal(clone, true),
         //     // default to using getData
@@ -144,10 +145,18 @@ Ext.define('Breeze.controller.Base', {
         //     vm.set(dataName, dataVal);
         //     return true;
         // }
-        this.getViewModel().set(
-            dataName,
-            Ext.clone(recordSource)
-        );
+        if(model == null){
+            this.getViewModel().set(
+                dataName,
+                Ext.clone(recordSource)
+            );
+        } else {
+            var rec = Ext.create(model, {data: Ext.clone(recordSource)});
+            this.getViewModel().set(
+                dataName,
+                rec
+            );
+        }
     },
 
     /**
