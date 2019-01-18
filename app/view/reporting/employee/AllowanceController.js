@@ -81,7 +81,7 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == null){
+        if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
         }
