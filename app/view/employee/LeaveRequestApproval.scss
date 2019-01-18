@@ -10,6 +10,11 @@
     $ui: 'leave-request-approval-base'
 );
 
+@include paneltitle-ui(
+    $ui: 'leave-request-approval-base',
+    $font-size: $panel-title-font-size
+);
+
 @include displayfield-ui(
     $input-color: #ffffff,
     $input-font-size: map-get($root-font-sizes, 'detail'),

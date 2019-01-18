@@ -99,6 +99,30 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
         showOt1Hours: function(get){ return (get('atAGlance.ot1') !== null); },
         showOt2Hours: function(get){ return (get('atAGlance.ot2') !== null); },
         showOt3Hours: function(get){ return (get('atAGlance.ot3') !== null); },
-        showOt4Hours: function(get){ return (get('atAGlance.ot4') !== null); }
+        showOt4Hours: function(get){ return (get('atAGlance.ot4') !== null); },
+
+        // Permission related formulas
+        canEditWorkTime: {
+            bind: {
+                rights: '{secRights}',
+                policy: '{punch.policy.Can_Adjust_Punches}',
+                level: '{accessLevel}',
+                userId: '{userId}',
+                employeeId: '{employeeId}'
+
+            },
+            get: function(data){
+                //  Logic from old WorkTimeView
+                if(data.userId.toString() == data.employeeId.toString()){
+                    if(data.level == 15){
+                        return true;
+                    } else {
+                        return data.policy.Can_Adjust_Punches;
+                    }
+                } else {
+                    return data.rights.Worktime_Maintenance;
+                }
+            }
+        }
     }
 });

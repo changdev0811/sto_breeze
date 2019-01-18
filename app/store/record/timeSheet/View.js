@@ -12,13 +12,27 @@ Ext.define('Breeze.store.record.timeSheet.View', {
 
     autoLoad: false,
 
+    config: {
+        lookupId: null,
+        startTime: null,
+        endTime: null,
+        utcStartTime: null,
+        utcEndTime: null
+    },
+
     listeners: {
         beforeload: function(){
             this.provideAuthCookieToProxy();
             this.useJsonParams();
             // TODO: Figure out what offset should be
 			// workaround for offset error
-			this.getProxy().extraParams.offset = 0;
+			this.addExtraParams({
+                lookup_id: this.getLookupId(),
+                start_time: this.getStartTime(),
+                end_time: this.getEndTime(),
+                UTCstart_time: this.getUtcStartTime(),
+                UTCend_time: this.getUtcEndTime()
+            });
         }
     },
 
@@ -35,7 +49,7 @@ Ext.define('Breeze.store.record.timeSheet.View', {
         },
         reader: {
             type: 'json',
-            rootProperty: 'd.Records'
+            rootProperty: 'd'
         },
         pageParam: undefined,
         startParam: undefined

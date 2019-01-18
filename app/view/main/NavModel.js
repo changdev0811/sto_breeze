@@ -26,10 +26,8 @@ Ext.define('Breeze.view.main.NavModel', {
         punch: {
             defaultProjectCode: null,
             status: 0,
-            policy: {
-                hasTimeKron: false,
-                info: {}
-            }
+            hasTimeKron: false,
+            // policy: {}
         },
         /**
          * Data for employees views (views showing view of other users, with side panel)
@@ -66,7 +64,7 @@ Ext.define('Breeze.view.main.NavModel', {
     formulas: {
         hasKron: function(get){
             return (
-                get('punch.policy.hasTimeKron')
+                get('punch.hasTimeKron')
             );
         },
 

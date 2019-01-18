@@ -60,17 +60,13 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
         var me = this;
         return new Promise(function(resolve, reject){
             var store = Ext.create('Breeze.store.record.timeSheet.View', {
-                storeId: storeId,
-                // groupField: 'Employee_Id'
+                lookupId: lookupId,
+                startTime: startTime.toLocaleString(),
+                endTime: endTime.toLocaleString(),
+                utcStartTime: startTime.toUTC({out: Date.UTC_OUT.STRING}),
+                utcEndTime: endTime.toUTC({out: Date.UTC_OUT.STRING}),
             });
             store.load({
-                params: {
-                    lookup_id: lookupId,
-                    start_time: startTime.toLocaleString(),
-                    end_time: endTime.toLocaleString(),
-                    UTCstart_time: startTime.toUTC({out: Date.UTC_OUT.STRING}),
-                    UTCend_time: endTime.toUTC({out: Date.UTC_OUT.STRING})
-                },
                 callback: function(records, options, success){
                     if(success){
                         resolve(store);

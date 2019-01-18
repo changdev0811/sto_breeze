@@ -242,6 +242,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                             reference: 'wtrTimeSheetTab',
                             title: 'Time Sheet View',
                             layout: 'fit',
+                            bind: {
+                                hidden: '{!punch.policy.Can_Use_TimeSheets}',
+                                disabled: '{!punch.policy.Can_Use_TimeSheets}'
+                            },
                             items: [
                                 {
                                     xtype: 'employee.worktime.sheet'
