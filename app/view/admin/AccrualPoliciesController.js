@@ -2138,31 +2138,49 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         // hide progress bar
         vm.set('saveAndApply.progress',-1);
 
-        // Change view to Apply Form
-        var changeView = ()=>{
-            me.getView().setActiveItem(
-                me.getView().getComponent('applyForm')
-            );
+
+        // Prepare and display apply view
+        var showApplyView = () => {
+            // Prepare Apply view
+            this.api.employeesAndCategoriesForApply(policy.ID).then((r)=>{
+                let employeeTargets = vm.get('applyEmployeeTargets'),
+                    categoryTargets = vm.get('applyCategoryTargets');
+                
+                // clear any checked values
+                employees.changeAllCheckboxes(false);
+                categories.changeAllCheckboxes(false);
+
+                // Replace employee targets
+                employeeTargets.loadData(Ext.clone(r.employees));
+                // Replace category targets
+                categoryTargets.loadData(Ext.clone(r.categories));
+
+                // Show apply form
+                me.getView().setActiveItem(
+                    me.getView().getComponent('applyForm')
+                );
+            }).catch((err)=>{
+                console.warn('Encountered error with getAccrualPolicyEmployeesAndCategoies call', err);
+            });
         };
 
-        // Prepare Apply view
-        this.api.employeesAndCategoriesForApply(policy.ID).then((r)=>{
-            let employeeTargets = vm.get('applyEmployeeTargets'),
-                categoryTargets = vm.get('applyCategoryTargets');
-            
-            // clear any checked values
-            employees.changeAllCheckboxes(false);
-            categories.changeAllCheckboxes(false);
-
-            // Replace employee targets
-            employeeTargets.loadData(Ext.clone(r.employees));
-            // Replace category targets
-            categoryTargets.loadData(Ext.clone(r.categories));
-
-            // Show apply form
-            changeView();
-        }).catch((err)=>{
-            console.warn('Encountered error with getAccrualPolicyEmployeesAndCategoies call', err);
+        // Save
+        this.api.save(vm.saveParameters()).then((r) => {
+            // Show success message
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+            // Prepare apply view and switch
+            showApplyView();
+        }).catch((err) => {
+            // Show error message
+            Ext.toast({
+                type: err.type,
+                message: err.message,
+                timeout: 'error'
+            });
         });
     },
 
@@ -2235,27 +2253,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             });
         };
 
-        // Start the process
-        this.api.save(vm.saveParameters()).then((r)=>{
-            // Show success message
-            Ext.toast({
-                type: r.type,
-                message: r.message,
-                timeout: 'info'
-            });
-            // reset progress bar value
-            updateProgressBar(0);
-            console.info('pre apply');
-            // start applying
-            doApply(0);
-        }).catch((err)=>{
-            // Show error message
-            Ext.toast({
-                type: err.type,
-                message: err.message,
-                timeout: 'error'
-            });
-        });
+        updateProgressBar(0);
+        doApply(0);
+
     },
 
     onSavePolicyAndApplyCancelButton: function(){
