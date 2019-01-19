@@ -571,3 +571,15 @@
     $body-background-color: map-get($admin-colors,'base'),
     $tool-font-size: 12pt
 );
+
+
+/// === Select field popup tool zone gap fix ====
+/*
+    The below rule removes the weird tool icon div inside select field popups
+    that is adding weird extra space
+*/
+.x-tool-dock.x-listitem-tool-dock.x-component-tool-dock {
+    & > .x-tool-zone.x-start{
+        display: none;
+    }
+}
