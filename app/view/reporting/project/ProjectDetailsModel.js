@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsModel', {
     alias: 'viewmodel.reporting.project.projectdetails',
 
     constructor: function (cfg) {
-        this.callSuper([cfg]);
+        this.callParent([cfg]);
         /**
          * Report params contains attributes that get submitted along with
          * report request. When possible, they have been bound to their
