@@ -102,13 +102,11 @@ Ext.define('Breeze.view.reporting.project.ProjectProfileController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList'),
             projectList = this.lookup('projectList');
 
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
-            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+            selectedProjects = projectRecords.map((r)=>{return r.getData().ID;});
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')

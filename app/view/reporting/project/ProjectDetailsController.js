@@ -155,11 +155,11 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
                 body-- might be missing elsewhere
             */
             selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+        // assign list of category ids as single string, joined with ','
+        vm.set(
+            'reportParams.inccats',
+            selectedCategories.join(',')
+        );
         
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
@@ -188,7 +188,6 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsController', {
     buildReport: function(format){
         var me = this,
             params = this.getViewModel().getData().reportParams;
-        console.log("params", params);
         me.reportApi.process(params, format).then(
             function(url){
                 if(typeof url == "string"){
