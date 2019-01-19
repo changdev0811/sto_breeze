@@ -28,13 +28,6 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
         // Load employees for tree selector
         this.addStoreToViewModel(
             'Breeze.store.reporting.parameters.Employees',
