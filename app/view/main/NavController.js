@@ -169,15 +169,12 @@ Ext.define('Breeze.view.main.NavController', {
         Breeze.helper.Auth.startAuthCheckTimer();
         this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
         Ext.util.History.init();
+
         this.loadAccess();
         this.loadEmployee();
         this.loadPunchSettings();
+        this.loadConfigAndPreferences();
         this.updateAttendanceStatus();
-
-
-
-
-
     },
 
     loadNavigation: function(){
@@ -223,6 +220,23 @@ Ext.define('Breeze.view.main.NavController', {
         ).catch(function(err){
             console.warn('Unable to get default project code', err);
         });
+    },
+
+    /**
+     * Load Config and User preferences stores into viewmodel
+     */
+    loadConfigAndPreferences: function(){
+        var vm = this.getViewModel();
+        this.addStoreToViewModel(
+            'Breeze.store.company.Config',
+            'companyConfig',
+            { load: true }
+        );
+        this.addStoreToViewModel(
+            'Breeze.store.record.UserPreferences',
+            'userPreferences',
+            { load: true, userId: vm.get('userId') }
+        );
     },
 
     /**
@@ -553,7 +567,10 @@ Ext.define('Breeze.view.main.NavController', {
         this.changeContent(
             Ext.create('Breeze.view.requests.Requests', {
             //Ext.create('Breeze.view.requests.MyRequestsInput', {
-                data: { employee: emp }
+                data: { employee: emp },
+                viewModel: {
+                    parent: vm
+                }
             })
 
         );

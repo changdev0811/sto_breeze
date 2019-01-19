@@ -10,10 +10,17 @@ Ext.define('Breeze.store.record.UserPreferences', {
 	autoLoad: false,
 	root: 'd',
 	
+	config: {
+		userId: null
+	},
+
 	listeners: {
-		bbeforeload : function () {
+		beforeload : function () {
             this.provideAuthCookieToProxy();
-            this.useJsonParams();
+			this.useJsonParams();
+			this.addExtraParams({
+				lookup: this.getUserId()
+			});
 		}
 		// load: function (store, records, success, opts) {
 		//     STI.currentPrefs = store.getAt(0).data;
@@ -31,8 +38,8 @@ Ext.define('Breeze.store.record.UserPreferences', {
 		},
 		reader: {
 			type: 'json',
-			root: 'd' // The returned JSON will have array
-					  // of users under a "users" property
+			rootProperty: 'd' // The returned JSON will have array
+					  	// of users under a "users" property
 		},
 		// Don't want proxy to include these params in request
 		pageParam: undefined,
