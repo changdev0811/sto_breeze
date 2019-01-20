@@ -37,7 +37,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 {
                     name: 'first_name',
                     label: 'First',
-                    id: 'firstName',
+                    // id: 'firstName',
                     required: true,
                     bind: {
                         value: '{info.FirstName}'
@@ -74,7 +74,7 @@ Ext.define('Breeze.view.employee.information.General', {
             },
             items: [
                 {
-                    name: 'ssn',
+                    // name: 'ssn',
                     label: 'SSN',
                     reference: 'ssnPlain',
                     // autoHideInputMask: true,
@@ -85,7 +85,7 @@ Ext.define('Breeze.view.employee.information.General', {
                     }
                 },
                 {
-                    label: 'SSN',
+                    // label: 'SSN',
                     reference: 'ssnHidden',
                     value: '(hidden)',
                     readOnly: true,
@@ -109,7 +109,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 },
                 {
                     xtype: 'selectfield',
-                    name: 'gender',
+                    // name: 'gender',
                     label: 'Gender',
                     store: 'GenderOptions',
                     bind: { value: '{info.Gender}' },

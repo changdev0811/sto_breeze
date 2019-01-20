@@ -68,9 +68,22 @@ Ext.define('Breeze.view.employee.InformationController', {
                         // }
                         me.toggleCompanyLists(c);
                         me.prepareCompanyLists();
+                        // store original values 
+                        vm.set('originals',{
+                            StartUpSettings: vm.get('info.StartUpSettings'),
+                            PunchPolicy: vm.get('info.PunchPolicy'),
+                            DefaultProject: vm.get('info.DefaultProject'),
+
+                        });
                     });
                 } else {
                     vm.set('info', Object.assign({},vm.get('newRecord.employee')));
+                    // store original values 
+                    vm.set('originals',{
+                        StartUpSettings: vm.get('info.StartUpSettings'),
+                        PunchPolicy: vm.get('info.PunchPolicy'),
+                        DefaultProject: vm.get('info.DefaultProject')
+                    });
                     vm.set('info.punchPolicy', Object.assign({},vm.get('newRecord.punchPolicy')));
                     me.prepareShiftSegments();
                     me.applyCompanyConfig();
@@ -489,6 +502,25 @@ Ext.define('Breeze.view.employee.InformationController', {
             data: shiftSegs
         }, 'shift.segments' );
     },
+
+    replaceShiftSegmentsWithSchedule: function(schedule){
+        let data = schedule.getData(),
+            shiftSegments = this.getViewModel().get('shift.segments');
+        
+        var segments = [];
+        for(var i=0;i<data.ShiftStartTimes.length; i++){
+            segments.push({
+                StartTime: data.ShiftStartTimes[i].replace(' ',''),
+                StopTime: data.ShiftStopTimes[i].replace(' ', ''),
+                StartMin: data.ShiftStartSegments[i],
+                StopMin: data.ShiftStopSegments[i]
+            });
+        }
+        shiftSegments.loadData(segments, false);
+        shiftSegments.commitChanges();
+        this.copyShiftSegmentsToModel();
+    },
+
 
     /**
      * Constructs shift time choices store
@@ -1792,9 +1824,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.punchpolicy_id = vm.get('info.punchPolicy.policy_id');
         params.default_project = vm.get('info.DefaultProject');
         // TODO: figure out what determines these values
-        params.changeAllowedTime = false;
-        params.changePastTime = false;
-        params.changeUserModifiedTime = false;
+        params.changeAllowedTime = vm.get('accrual.changeAllowedTime');
+        params.changePastTime = vm.get('accrual.changePast');
+        params.changeUserModifiedTime = vm.get('accrual.changeAllowedTime');
         params.user_modified = true;
         // The next six array items have to be string joined and submitted as lists
         params.shiftStartSegments = vm.get('info.ShiftStartSegments').join(',');
@@ -1889,6 +1921,70 @@ Ext.define('Breeze.view.employee.InformationController', {
                 department_role_ids: vm.get('info.DeptRoleIds').join(',')
             };
         return params;
+    },
+
+    //===[Accrual Policy Change]==
+    onAccrualPolicyChange: function(comp, newVal, oldVal){
+        var vm = this.getViewModel(),
+            view = this.getView(),
+            dlg = view.policyChangeDialog;
+
+        if(!dlg.ownerCmp){
+            dlg = Ext.apply({
+                ownerCmp: view
+            }, dlg);
+            view.policyChangeDialog = dlg = Ext.create(dlg);
+        }
+
+        if(newVal !== vm.get('originals.StartUpSettings')){
+            console.info('Change accrual policy');
+            var dlgVm = dlg.getViewModel();
+            dlgVm.set('newSchedule', newVal);
+            dlg.getComponent('mode').getAt(0).setValues({mode: 3});
+            dlgVm.set('changePast', false);
+            dlgVm.set('changeUserModified', false);
+            dlg.show();
+        } else {
+            let newSchedule = vm.get('scheduleList').query('ID', newVal).getAt(0);
+            this.replaceShiftSegmentsWithSchedule(newSchedule);
+            vm.set('info.RecordingMode', newSchedule.get('recordingMode'));
+        }
+
+    },
+
+    onChangeAccrualPolicyDialogCancel: function(cmp){
+        var vm = this.getViewModel(),
+            dlg = this.getView().policyChangeDialog;
+
+        vm.set('info.StartUpSettings', vm.get('originals.StartUpSettings'));
+        dlg.hide();
+    },
+
+    onChangeAccrualPolicyDialogDone: function(cmp){
+        var vm = this.getViewModel(),
+            dlg = this.getView().policyChangeDialog,
+            dlgVm = dlg.getViewModel(),
+            newSchedule = vm.get('scheduleList').query('ID', dlgVm.get('newSchedule')).getAt(0);
+        
+        console.info('done');
+
+        var mode = dlg.getComponent('mode').getAt(0).getValues().mode;
+        if(mode == 2 || mode == 4){
+            this.replaceShiftSegmentsWithSchedule(newSchedule);
+        }
+        if(mode == 3 || mode == 4){
+            vm.set('accrual.changeAllowedTime', true);
+            vm.set('accrual.changePast', dlgVm.get('changePast'));
+            vm.set('accrual.changeUserModifiedTime', dlgVm.get('changeuserModified'));
+        } else {
+            vm.set('accrual.changeAllowedTime', false);
+            vm.set('accrual.changePast', false);
+            vm.set('accrual.changeUserModifiedTime', false);
+        }
+
+        vm.set('info.RecordingMode', newSchedule.get('RecordingMode'));
+        this.copyShiftSegmentsToModel();
+        dlg.hide();
     }
 
 });

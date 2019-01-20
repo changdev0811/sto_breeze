@@ -1,0 +1,28 @@
+/**
+ * Employee Info Change Accrual Policy Dialog Stylesheet
+ * Classes and UI overrides in this sheet should be specific to 
+ * items that appear within the Employee Info Change Accrual Policy Dialog view
+*/
+
+.dialog-warning{
+    color: $alert-color;
+    font-style: italic;
+    font-size: map-get($root-font-sizes, 'small')
+}
+
+@include field-ui(
+    $ui: 'dialog-field',
+    $label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include radiofield-ui(
+    $ui: 'dialog-field-radio',
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include checkboxfield-ui(
+    $ui: 'dialog-field-checkbox',
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+
