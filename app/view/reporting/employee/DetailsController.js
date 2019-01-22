@@ -62,7 +62,7 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
             'companyConfig',
             { 
                 load: true,
-                // ++New+ callback for config load to store caption text
+                // callback to store Company configs
                 loadOpts: { callback: (success) => {
                     if(success){
                         let config = vm.get('companyConfig'),

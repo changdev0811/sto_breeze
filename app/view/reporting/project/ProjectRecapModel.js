@@ -18,9 +18,11 @@ Ext.define('Breeze.view.reporting.project.ProjectRecapModel', {
          */
         var data = {
             reportParams: {
-                LogoInHeader: false,
-                NameInHeader: false,
-                RepSignature: false,
+                LogoInHeader: false,    // reset by RepLogo of companyConfig store
+                NameInHeader: false,    // reset by RepComp of companyConfig store
+                RepSignature: false,    // reset by RepSignature of companyConfig store
+                CompanyName: '',        // reset by CompanyName of companyConfig store
+                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Project Recap Report',
                 submit_approve: true,
                 submit_submit: false,
