@@ -59,14 +59,35 @@ Ext.define('Breeze.view.reporting.employee.EmployeeProjectController', {
                 loadOpts: { callback: (success) => {
                     if(success){
                         let config = vm.get('companyConfig'),
-                            captions = config.getAt(0).get('Captions');
+                            companyParams = config.getAt(0);
+                            captions = companyParams.get('Captions');
                         vm.set(
-                            'captions.projectSingular', 
-                            captions.ProjectSingular
+                            'captions.projectSinglar', 
+                            captions.ProjectSinglar
                         );
                         vm.set(
                             'captions.projectPlural',
                             captions.ProjectPlural
+                        );
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                        vm.set(
+                            'reportParams.CompanyName',
+                            companyParams.get('CompanyName')
+                        );
+                        vm.set(
+                            'reportParams.RepLogoPath',
+                            companyParams.get('RepLogoPath')
                         );
                     }
                 }}
