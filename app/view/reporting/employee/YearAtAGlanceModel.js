@@ -19,9 +19,11 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceModel', {
         var data = {
             reportParams: {
                 GroupByDept: true,
-                LogoInHeader: false,
-                NameInHeader: false,
-                RepSignature: false,
+                LogoInHeader: false,    // reset by RepLogo of companyConfig store
+                NameInHeader: false,    // reset by RepComp of companyConfig store
+                RepSignature: false,    // reset by RepSignature of companyConfig store
+                CompanyName: '',        // reset by CompanyName of companyConfig store
+                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Year At A Glance Report',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
