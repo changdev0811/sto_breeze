@@ -119,7 +119,6 @@ Ext.define('Breeze.view.main.Nav', {
                                     layout: 'hbox',
                                     height: '64pt',
                                     items: [
-
                                         {
                                             xtype: 'image',
                                             height: '32pt',
@@ -131,7 +130,6 @@ Ext.define('Breeze.view.main.Nav', {
                                             reference: 'infoProfilePicture',
                                             userCls: 'main-info-profile-picture'
                                         },
-
                                         {
                                             xtype: 'container',
                                             flex: 1,
@@ -170,7 +168,6 @@ Ext.define('Breeze.view.main.Nav', {
                                             arrow: false,
                                             iconCls: 'x-fa fa-angle-right',
                                         },
-
                                         /* Actual button */
                                         {
                                             xtype: 'button',
@@ -199,20 +196,17 @@ Ext.define('Breeze.view.main.Nav', {
                                                         iconCls: 'x-fas fa-user-cog',
                                                         separator: true
                                                         //    icon: 'resources/icons/user-cog.svg'
-                                                    }, {
+                                                    }/*, {
                                                         xtype: 'menuitem',
                                                         text: 'Sign Out',
                                                         iconCls: 'x-fas fa-sign-out',
                                                         handler: 'onMenuSignOut'
-                                                    }
+                                                    }*/
                                                 ]
                                             }
                                         }
-
                                     ]
                                 },
-
-
                                 {
                                     // Side navigation menu tree
                                     xtype: 'breeze.navbar.navtree',
@@ -280,10 +274,8 @@ Ext.define('Breeze.view.main.Nav', {
                             }
                             // layout: 'fit'
                         }
-
                     ]
                 }
-
             ]
         }
     ]
