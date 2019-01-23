@@ -2041,8 +2041,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 var staT = BreezeTime.resolve(start),
                     stoT = BreezeTime.resolve(stop);
                 record.set({
-                    StartTime: staT.asTime(), StartMin: staT.asMinutes(),
-                    StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
+                    StartTime: staT.asTime(), StartSegment: staT.asMinutes(),
+                    StopTime: stoT.asTime(), StopSegment: stoT.asMinutes()
                 }, { commit: true });
             }
             console.info('valid');
