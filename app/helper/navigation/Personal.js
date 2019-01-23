@@ -77,6 +77,13 @@ Ext.define('Breeze.helper.navigation.Personal', {
                 iconCls: 'x-fas fa-question-circle',
                 routeRef: 'help',
                 id: 'help'
+            },
+            {
+                text: 'Sign Out', leaf: true,
+                iconCls: 'x-fas fa-sign-out',
+                routeRef: 'signout',
+                // handler: 'onMenuSignOut',
+                id: 'signOut'
             }
         ]
     }

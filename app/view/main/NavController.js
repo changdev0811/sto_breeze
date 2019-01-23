@@ -137,13 +137,13 @@ Ext.define('Breeze.view.main.NavController', {
             action: 'onReportRoute',
             // TODO: Implement before report route method to prevent access when not allowed
             before: 'beforeReportRoute'
+        },
+        'signout': {
+            action: 'onMenuSignOut'
         }
-
     },
 
     init: function(component){
-
-
         var me = this;
 
         this.router = Ext.create('Breeze.helper.routing.TreeRouter', {controller: this});

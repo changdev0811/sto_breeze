@@ -9,7 +9,7 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsModel', {
     alias: 'viewmodel.reporting.project.projectdetails',
 
     constructor: function (cfg) {
-        this.callSuper([cfg]);
+        this.callParent([cfg]);
         /**
          * Report params contains attributes that get submitted along with
          * report request. When possible, they have been bound to their
@@ -18,9 +18,11 @@ Ext.define('Breeze.view.reporting.project.ProjectDetailsModel', {
          */
         var data = {
             reportParams: {
-                LogoInHeader: false,
-                NameInHeader: false,
-                RepSignature: false,
+                LogoInHeader: false,    // reset by RepLogo of companyConfig store
+                NameInHeader: false,    // reset by RepComp of companyConfig store
+                RepSignature: false,    // reset by RepSignature of companyConfig store
+                CompanyName: '',        // reset by CompanyName of companyConfig store
+                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Project Details Report',
                 inccats: '',
                 submit_approve: true,

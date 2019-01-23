@@ -53,7 +53,36 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                        vm.set(
+                            'reportParams.CompanyName',
+                            companyParams.get('CompanyName')
+                        );
+                        vm.set(
+                            'reportParams.RepLogoPath',
+                            companyParams.get('RepLogoPath')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -78,10 +107,14 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department or Employee.');
+            if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
+                messages.push('Please select one or more Departments containing Employees.');
+            } else {
+                messages.push('Please select one or more Employees.');
+            }
         }
 
-        if(vmData.reportParams.inccats == null){
+        if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -111,7 +144,7 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')
@@ -120,14 +153,14 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
             // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            // selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
-            // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+            selectedCategories = categoryRecords.map((r)=>r.getData().Category_Id);
+        // assign list of category ids as single string, joined with ','
+        vm.set(
+            'reportParams.inccats',
+            selectedCategories.join(',')
+        );
     },
 
     /**

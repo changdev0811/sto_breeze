@@ -28,13 +28,6 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
         // Load employees for tree selector
         this.addStoreToViewModel(
             'Breeze.store.reporting.parameters.Employees',
@@ -53,7 +46,36 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                        vm.set(
+                            'reportParams.CompanyName',
+                            companyParams.get('CompanyName')
+                        );
+                        vm.set(
+                            'reportParams.RepLogoPath',
+                            companyParams.get('RepLogoPath')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -78,7 +100,11 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department or Employee.');
+            if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
+                messages.push('Please select one or more Departments containing Employees.');
+            } else {
+                messages.push('Please select one or more Employees.');
+            }
         }
 
         if(!valid){
@@ -98,20 +124,18 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
+            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')
         );
-        
     },
 
     /**

@@ -337,10 +337,10 @@ Ext.define('Breeze.view.reporting.employee.Lateness', {
                                     xtype: 'datefield',
                                     name: 'reportDay',
                                     label: '',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
+                                    // picker: {
+                                    //     xtype: 'datepicker',
+                                    //     title: ''
+                                    // },
                                     bind: '{reportParams.reportDay}'
                                 }
                             ]

@@ -9,7 +9,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
     alias: 'viewmodel.employee.information',
 
     constructor: function(cfg){
-        this.callSuper([cfg]);
+        this.callParent([cfg]);
         this.setData({
             employeeName: 'X',
             employeeId: undefined,

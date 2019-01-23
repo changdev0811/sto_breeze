@@ -137,7 +137,8 @@ Ext.define('Breeze.view.reporting.department.AbsenceController', {
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
             // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            // selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
+            selectedCategory = (categoryRecords.length > 0)? categoryRecords[categoryRecords.length - 1] : null;
 
         if(selectedCategory !== null){
             // set category_id if non null selected category

@@ -62,18 +62,39 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
             'companyConfig',
             { 
                 load: true,
-                // ++New+ callback for config load to store caption text
+                // callback to store Company configs
                 loadOpts: { callback: (success) => {
                     if(success){
                         let config = vm.get('companyConfig'),
-                            captions = config.getAt(0).get('Captions');
+                            companyParams = config.getAt(0);
+                            captions = companyParams.get('Captions');
                         vm.set(
-                            'captions.projectSingular', 
-                            captions.ProjectSingular
+                            'captions.projectSinglar', 
+                            captions.ProjectSinglar
                         );
                         vm.set(
                             'captions.projectPlural',
                             captions.ProjectPlural
+                        );
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                        vm.set(
+                            'reportParams.CompanyName',
+                            companyParams.get('CompanyName')
+                        );
+                        vm.set(
+                            'reportParams.RepLogoPath',
+                            companyParams.get('RepLogoPath')
                         );
                     }
                 }}
@@ -102,7 +123,11 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department or Employee.');
+            if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
+                messages.push('Please select one or more Departments containing Employees.');
+            } else {
+                messages.push('Please select one or more Employees.');
+            }
         }
 
         if(vmData.reportParams.inccats == ''){
@@ -151,8 +176,6 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
         
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
             /*  TODO: +++Note: the following needs to have 'return' in the 
                 body-- might be missing elsewhere
@@ -166,7 +189,8 @@ Ext.define('Breeze.view.reporting.employee.DetailsController', {
         
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
-            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+            // selectedProjects = projectRecords.map((r)=>{return r.getData;});           // I dont understand why it is.
+            selectedProjects = projectRecords.map((r)=>{return r.getData().ID;});
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
