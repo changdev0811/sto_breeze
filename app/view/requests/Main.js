@@ -7,7 +7,7 @@
  */
 Ext.define('Breeze.view.requests.Main', {
     extend: 'Ext.Container',
-    alias: 'widget.requests.Main',
+    alias: 'widget.requests.main',
 
     userCls:'requests-content',
 
