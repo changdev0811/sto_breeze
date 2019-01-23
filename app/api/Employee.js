@@ -143,5 +143,26 @@ Ext.define('Breeze.api.Employee', {
                 }
             )
         });
+    },
+
+    getDepartmentStaff: function(departmentId, staffType){
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                'getDepartmentStaff',
+                {
+                    department_id: departmentId,
+                    staff_type: staffType
+                },
+                true, false,
+                function(r){
+                    var response = api.decodeJsonResponse(r);
+                    resolve(response);
+                },
+                function(e){
+                    reject(e);
+                }
+            )
+        });
     }
 });
