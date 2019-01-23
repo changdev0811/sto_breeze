@@ -197,9 +197,9 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     stopT = BreezeTime.resolve(stop.getValue());
                 segments.loadData([{
                     StartTime: startT.asTime(),
-                    StartMin: startT.asMinutes(),
+                    StartSegment: startT.asMinutes(),
                     StopTime: stopT.asTime(),
-                    StopMin: stopT.asMinutes()
+                    StopSegment: stopT.asMinutes()
                 }], true);
                 segments.commitChanges();
                 dlg.hide();
@@ -2101,15 +2101,22 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         })
     },
 
+    presaveFieldUpdate: function(){
+        var vm = this.getViewModel();
+        vm.set('policyData.recordingMode', this.lookup('recordingMode').getValues().recMode);
+        vm.set('selectedCategory.calendarType',this.lookup('recordingYear').getValues().yearType);
+        
+    },
+
     /**
      * Handle 'Save Accrual Policy' button click event
      */
     onSavePolicy: function () {
+        this.presaveFieldUpdate();
         var vm = this.getViewModel(),
             params = vm.saveParameters(),
             me = this,
             id = vm.get('policyData').ID;
-        console.info('id');
 
         this.api.save(params).then((r)=>{
             // Show success message
