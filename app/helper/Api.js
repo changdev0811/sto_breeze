@@ -88,8 +88,6 @@
              * @todo TODO: Revisit and decide on keeping/tossing cookieParams
              * @param {String} service Service name
              * @param {Object} params Parameters
-             * @param {boolean} cookieParams If true, cookie auth params are included in request params
-             *  Default true
              * @param {Boolean} sync Enable/disable sync (default true)
              * @param {Function} successHandler Success function
              * @param {Function} failureHandler Failure function

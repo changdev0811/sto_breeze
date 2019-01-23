@@ -123,7 +123,7 @@ Ext.define('Breeze.api.Punch', {
         });
         var data = {
             Punch_Time: utc,
-            TimeZone_ID: this.statics.timeZoneId,
+            TimeZone_ID: "UTC",
             Customer_ID: authCook.cust,
             Employee_ID: authCook.emp,
             project_code: projectCode
@@ -145,10 +145,10 @@ Ext.define('Breeze.api.Punch', {
                         Async: false
                     };
                     
-                    api.serviceRequest(
+                    api.punchRequest(
                         'SubmitPunch',
                         params,
-                        true, true,
+                        false,
                         function(resp){
                             resolve(api.decodeJsonResponse(resp));
                         },
@@ -165,10 +165,10 @@ Ext.define('Breeze.api.Punch', {
                     };
     
                     // No geolocation info
-                    api.serviceRequest(
+                    api.punchRequest(
                         'SubmitPunch',
                         params,
-                        true, true,
+                        false,
                         function(resp){
                             resolve(api.decodeJsonResponse(resp));
                         },
@@ -186,10 +186,10 @@ Ext.define('Breeze.api.Punch', {
                 };
 
                 // No geolocation info
-                api.serviceRequest(
+                api.punchRequest(
                     'SubmitPunch',
                     params,
-                    true, true,
+                    false,
                     function(resp){
                         resolve(api.decodeJsonResponse(resp));
                     },
