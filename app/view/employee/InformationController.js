@@ -1873,6 +1873,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.Can_Edit_Projects = vm.get('info.punchPolicy.Can_Edit_Notes');
         params.Can_Adjust_Punches = vm.get('info.punchPolicy.Can_Adjust_Punches');
         params.Can_Use_TimeSheets = vm.get('info.punchPolicy.Can_Use_TimeSheets');
+        params.Timesheet_Submission_Required = vm.get('info.punchPolicy.TimeSheet_Submission_Required');
         params.InOut_Opt = vm.get('info.punchPolicy.InOut_Opt');
         params.Can_Use_InOut = vm.get('info.punchPolicy.Can_Use_InOut');
         params.policy_id = vm.get('info.StartUpSettings');
