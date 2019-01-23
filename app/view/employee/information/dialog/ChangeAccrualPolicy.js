@@ -18,7 +18,7 @@ Ext.define('Breeze.view.employee.information.dialog.ChangeAccrualPolicy', {
 
     buttons: [
         {
-            text: 'Done',
+            text: 'Submut',
             ui: 'confirm alt',
             handler: 'onChangeAccrualPolicyDialogDone'
         },
