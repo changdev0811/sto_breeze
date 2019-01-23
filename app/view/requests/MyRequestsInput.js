@@ -37,10 +37,10 @@ Ext.define('Breeze.view.requests.MyRequestsInput', {
                     // Action buttons shown at bottom of panel
                     buttonAlign: 'center',
                     buttons: {
-                        cancel: { weight:1, name: 'cancel_button', text: 'cancel', handler: 'closeLeaveRequestForm', ui: 'action',      width:'115pt' },
-                        save:   { weight:2, name: 'save_button',   text: 'Save Request', /* handler: 'onPrintPDF',*/     ui: 'action',      width:'115pt' },
-                        submit: { weight:3, name: 'submit_button', text: 'Submit Request', /* handler: 'onPrintExcel',*/ ui: 'action',      width:'115pt' },
-                        remove: { weight:4, name: 'remove_button', text: 'Delete Request', /* handler: 'onPrintExcel',*/ ui: 'decline alt', width:'115pt' },
+                        save:   { weight:1,  text: 'Save Request',    /* handler: 'onPrintPDF',*/           ui: 'confirm alt',  width:'115pt' },
+                        submit: { weight:2,  text: 'Submit Request',  /* handler: 'onPrintExcel',*/         ui: 'confirm alt',  width:'115pt' },
+                        cancel: { weight:3,  text: 'cancel',             handler: 'closeLeaveRequestForm',  ui: 'action',      width:'115pt' },
+                        remove: { weight:4,  text: 'Delete Request',  /* handler: 'onPrintExcel',*/         ui: 'decline alt', width:'115pt' },
                     },
 
                     // Adjust action button toolbar spacing and appearance with UI and shadow

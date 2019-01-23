@@ -47,16 +47,16 @@ Ext.define('Breeze.view.employee.information.SideBar', {
         },
         {
             xtype: 'dialog',
-            ui:'light-themed-dialog',
+            ui:'dark-themed-dialog',
             reference: 'notesDialog',
             title:{
                 text:'Notes',
-                ui:'light-themed-dialog'
+                ui:'dark-themed-dialog'
             },
             tools: [
                 {
                     iconCls: 'x-fa fa-times',
-                    ui: 'light-themed-dialog',
+                    ui: 'dark-themed-dialog',
                     handler: 'onCloseNotesDialog'
                 }
             ],
@@ -74,21 +74,23 @@ Ext.define('Breeze.view.employee.information.SideBar', {
         },
         {
             xtype: 'dialog',
-            ui:'light-themed-dialog',
+            ui:'dark-themed-dialog',
             reference: 'notesEditorDialog',
             minWidth: '300pt',
             minHeight: '300pt',
             layout: 'fit',
             title:{
                 text:'Notes',
-                ui:'light-themed-dialog'
+                ui:'dark-themed-dialog'
             },
             tools: [
+                /*
                 {
                     iconCls: 'x-fa fa-times',
-                    ui: 'light-themed-dialog',
+                    ui: 'dark-themed-dialog',
                     handler: 'onCloseNotesDialog'
                 }
+                */
             ],
             items:[
                 {
@@ -102,8 +104,22 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             ],
             buttons: [
                 {
-                    text: 'Submit',
+                    text: 'Clear',
                     ui: 'action alt',
+                    handler: 'onClearNotesButton',
+                    bind: {
+                        disabled: '{!hasTempNotes}'
+                    }
+                },
+
+                {
+                    xtype: 'spacer',
+                    //width: '8pt',
+                    flex:1,
+                },
+                {
+                    text: 'Submit',
+                    ui: 'confirm alt',
                     handler: 'onSubmitNotesButton'
                 },
                 {
@@ -111,23 +127,22 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     width: '8pt'
                 },
                 {
-                    text: 'Clear',
-                    ui: 'action alt',
-                    handler: 'onClearNotesButton',
-                    bind: {
-                        disabled: '{!hasTempNotes}'
-                    }
+                    text: 'Cancel',
+                    ui: 'decline alt',
+                    handler: 'onCloseNotesDialog'
                 }
+
+                
             ]
         },
         {
             xtype: 'dialog',
             width: '400pt', height: '400pt',
-            ui: 'light-themed-dialog employeeinfo-dialog',
+            ui: 'dark-themed-dialog employeeinfo-dialog',
             reference: 'profilePictureEditorDialog',
             title: {
                 text: 'Update Profile Picture',
-                ui: 'light-themed-dialog'
+                ui: 'dark-themed-dialog'
             },
             buttons: [
                 {
@@ -155,7 +170,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 },
                 {
                     text: 'Cancel',
-                    ui: 'action',
+                    ui: 'decline alt',
                     handler: 'onCancelProfilePictureEdit'
                 }
             ],
