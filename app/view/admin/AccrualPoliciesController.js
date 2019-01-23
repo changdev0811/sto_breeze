@@ -203,7 +203,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 }], true);
                 segments.commitChanges();
                 dlg.hide();
-                this.onAddShiftSegmentDialogCancel(dlg);
+                this.onCreateShiftSegmentDialogCancel(dlg);
                 Ext.toast({
                     type: Ext.Toast.INFO,
                     message: 'Shift segment added successfully',
@@ -2107,7 +2107,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     onSavePolicy: function () {
         var vm = this.getViewModel(),
             params = vm.saveParameters(),
-            me = this;
+            me = this,
+            id = vm.get('policyData').ID;
 
         this.api.save(params).then((r)=>{
             // Show success message
@@ -2117,7 +2118,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 timeout: 'info'
             });
             // Reload policies, selecting saved policy
-            me.loadPolicies(parseInt(r.policyId));
+            // me.loadPolicies(parseInt(r.policyId));
+            me.loadPolicies(id);
         }).catch((err)=>{
             // Show error message
             Ext.toast({
