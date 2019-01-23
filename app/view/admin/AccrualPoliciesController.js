@@ -99,7 +99,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                         if (success) {
                             var record = records[0];
                             if (policyId !== null) {
-                                record = vm.get('policiesList').queryRecords("ID", policyId)[0];
+                                record = vm.get('policiesList').queryRecords("data", policyId.toString())[0];
                             }
                             this.lookup('policyList').getSelectable().setSelectedRecord(
                                 record
@@ -2109,6 +2109,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             params = vm.saveParameters(),
             me = this,
             id = vm.get('policyData').ID;
+        console.info('id');
 
         this.api.save(params).then((r)=>{
             // Show success message
