@@ -200,7 +200,8 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     "Can_Adjust_Punches": false,
                     "Can_Use_TimeSheets": true,
                     "InOut_Opt": false,
-                    "Can_Use_InOut": true
+                    "Can_Use_InOut": true,
+                    "TimeSheet_Submission_Required": true
                 }
             }
         })

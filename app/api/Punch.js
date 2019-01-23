@@ -133,30 +133,50 @@ Ext.define('Breeze.api.Punch', {
             // try adding geolocation info
             // TODO: Address geolocation needs for mobile version
             // TODO: Re-enable GPS when security cert is fixed
-            if(false && navigator.geolocation){
+            if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(loc){
                     data.lat = loc.coords.latitude;
                     data.lng = loc.coords.longitude;
                     data.acc = loc.coords.accuracy;        
-                });
 
-                var params = {
-                    punchData: data,
-                    // not sure if this is used, but required by call
-                    Async: false
-                };
-                
-                api.serviceRequest(
-                    'SubmitPunch',
-                    params,
-                    true, true,
-                    function(resp){
-                        resolve(api.decodeJsonResponse(resp));
-                    },
-                    function(err){
-                        reject(err);
-                    }
-                );
+                    var params = {
+                        punchData: data,
+                        // not sure if this is used, but required by call
+                        Async: false
+                    };
+                    
+                    api.serviceRequest(
+                        'SubmitPunch',
+                        params,
+                        true, true,
+                        function(resp){
+                            resolve(api.decodeJsonResponse(resp));
+                        },
+                        function(err){
+                            reject(err);
+                        }
+                    );
+                }, function(err){
+                    console.warn('Error getting location: ', err);
+                    var params = {
+                        punchData: data,
+                        // not sure if this is used, but required by call
+                        Async: false
+                    };
+    
+                    // No geolocation info
+                    api.serviceRequest(
+                        'SubmitPunch',
+                        params,
+                        true, true,
+                        function(resp){
+                            resolve(api.decodeJsonResponse(resp));
+                        },
+                        function(err){
+                            reject(err);
+                        }
+                    );
+                });
             } else {
                 
                 var params = {
