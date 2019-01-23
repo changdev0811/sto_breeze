@@ -1,12 +1,13 @@
 /**
- * MOTD Requests view
- * @class MyRequestsInput
- * @namespace Breeze.view.requests.MyRequestsInput
- * @alias widget.requests.myrequestsinput
+ * My Requests request form
+ * Used by Requests view
+ * @class Form
+ * @namespace Breeze.view.requests.Form
+ * @alias widget.requests.form
  */
-Ext.define('Breeze.view.requests.MyRequestsInput', {
+Ext.define('Breeze.view.requests.Form', {
     extend: 'Ext.Container',
-    alias: 'widget.requests.myrequestsinput',
+    alias: 'widget.requests.form',
 
     // Layout and base styles
     layout: 'hbox',

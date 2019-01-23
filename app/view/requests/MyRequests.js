@@ -1,12 +1,13 @@
 /**
- * MOTD Requests view
- * @class MyRequests
- * @namespace Breeze.view.requests.MyRequests
- * @alias widget.requests.myrequests
+ * My Requests main content view
+ * Displayed inside Requests view
+ * @class Main 
+ * @namespace Breeze.view.requests.Main
+ * @alias widget.requests.main
  */
-Ext.define('Breeze.view.requests.MyRequests', {
+Ext.define('Breeze.view.requests.Main', {
     extend: 'Ext.Container',
-    alias: 'widget.requests.myrequests',
+    alias: 'widget.requests.Main',
 
     userCls:'requests-content',
 

@@ -19,7 +19,10 @@ Ext.define('Breeze.view.requests.Requests', {
         crumbTitle: 'My Requests'
     },
     
-    requires: ['Ext.layout.Card', 'Breeze.view.requests.RequestsController'],
+    requires: [
+        'Ext.layout.Card', 'Breeze.view.requests.RequestsController',
+        'Breeze.view.requests.Main', 'Breeze.view.requests.Form'
+    ],
     
     listeners: {
         initialize: 'onInit'
@@ -29,11 +32,11 @@ Ext.define('Breeze.view.requests.Requests', {
     layout: 'card',
     items: [
         {
-            xtype: 'requests.myrequests',
+            xtype: 'requests.main',
             itemId: 'requests'
         },
         {
-            xtype: 'requests.myrequestsinput',
+            xtype: 'requests.form',
             itemId: 'form'
         }
     ]
