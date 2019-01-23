@@ -235,7 +235,7 @@ Ext.define('Breeze.view.main.NavController', {
         this.addStoreToViewModel(
             'Breeze.store.record.UserPreferences',
             'userPreferences',
-            { load: true, userId: vm.get('userId') }
+            { load: true, createOpts: { userId: vm.get('userId') } }
         );
     },
 
