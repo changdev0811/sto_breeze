@@ -1495,9 +1495,13 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {*} e 
      * @param {*} eOpts 
      */
-    onCloseNotesDialog: function(dialog, e, eOpts){
-        dialog.hide();
+    onCloseNotesDialog: function(ref, e, eOpts){
+        //dialog.hide();
+        ref.getParent().getParent().hide();
     },
+
+
+
 
     /**
      * Handle 'clear' button click in notes editor dialog
