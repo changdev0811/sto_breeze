@@ -16,7 +16,8 @@ Ext.define('Breeze.view.employee.Information', {
         'Breeze.view.employee.InformationController',
         'Breeze.view.employee.InformationModel',
         'Breeze.widget.actionsheet.MultipleMode',
-        'Breeze.view.employee.information.Sheets'
+        'Breeze.view.employee.information.Sheets',
+        'Breeze.view.employee.information.dialog.ChangeAccrualPolicy'
     ],
     
     //==[Start of Panel Setup/Styling]====
@@ -194,5 +195,9 @@ Ext.define('Breeze.view.employee.Information', {
                 }
             ]
         }
-    ]
+    ],
+
+    policyChangeDialog: {
+        xtype: 'employee.information.dialog.changeaccrualpolicy'
+    }
 });

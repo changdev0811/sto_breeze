@@ -24,9 +24,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 compensation: false // is compensation shown?
             },
             // Misc config settings from company config
-            companyConfig: {
+            // companyConfig: {
     
-            },
+            // },
             // Holdes notes before committing changes
             tempNotes: "",
             // ==[Company tab list visibility]==
@@ -81,11 +81,19 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 
             },
 
+            
+            accrual: {
+                changeMode: 1,
+                changePast: false,
+                changeUserModified: false,
+                changeAllowedTime: false
+            },
+
             newRecord: {
                 employee: {
-                    "__type": "Repository.Entities.Employee",
-                    "_TerminationDate": null,
-                    "_HireDate": (new Date()),
+                    // "__type": "Repository.Entities.Employee",
+                    // "_TerminationDate": null,
+                    // "_HireDate": (new Date()),
                     "TerminationDate": "",
                     "CustomerID": "",
                     "ID": 0,
@@ -94,7 +102,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     "FirstName": "",
                     "MiddleName": "",
                     "LastName": "",
-                    "HireDate": "",
+                    "HireDate": (new Date()),
                     "DepartmentName": "",
                     "StartUpSettings": 1001,
                     "Department": 0,
@@ -127,7 +135,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     ],
                     "PhotoFlag": false,
                     "Photo": "app/resources/EmployeePhotos/default_man.png",
-                    "Username": "New",
+                    "Username": "",
                     "LoginType": 13,
                     "Supervisors": [],
                     "SupervisorIds": [],

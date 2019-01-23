@@ -176,7 +176,10 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             reference: 'accrualPolicy',
                             displayField: 'Name',
                             valueField: 'ID',
-                            required: true
+                            required: true,
+                            listeners: {
+                                change: 'onAccrualPolicyChange'
+                            }
                         },
                         {
                             name: 'default_project',
@@ -255,5 +258,5 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                 }
             ]
         }       
-    ],
+    ]
 });

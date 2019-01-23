@@ -21,7 +21,8 @@ $scoped-root-font-size-bread: 10pt;
 //--[Root font sets]--
 $root-font-sizes: (
     base: $scoped-root-font-size-base,
-    detail: $scoped-root-font-size-detail
+    detail: $scoped-root-font-size-detail,
+    small: $scoped-root-font-size-bread
 );
 
 // ====[Panels]====
