@@ -102,22 +102,26 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             ],
             buttons: [
                 {
-                    text: 'Submit',
-                    ui: 'action alt',
-                    handler: 'onSubmitNotesButton'
-                },
-                {
-                    xtype: 'spacer',
-                    width: '8pt'
-                },
-                {
                     text: 'Clear',
                     ui: 'action alt',
                     handler: 'onClearNotesButton',
                     bind: {
                         disabled: '{!hasTempNotes}'
                     }
-                }
+                },
+
+                {
+                    xtype: 'spacer',
+                    //width: '8pt',
+                    flex:1,
+                },
+                {
+                    text: 'Submit',
+                    ui: 'confirm alt',
+                    handler: 'onSubmitNotesButton'
+                },
+
+                
             ]
         },
         {
@@ -155,7 +159,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                 },
                 {
                     text: 'Cancel',
-                    ui: 'action',
+                    ui: 'decline alt',
                     handler: 'onCancelProfilePictureEdit'
                 }
             ],
