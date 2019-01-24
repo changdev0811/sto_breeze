@@ -164,5 +164,31 @@ Ext.define('Breeze.api.Employee', {
                 }
             )
         });
+    },
+
+    /**
+     * Gets employee shift time for given employee
+     * Ported from homemade.js
+     * @api getEmpShiftTime
+     * @param {String} employeeId Employee ID
+     * @return {Promise} Promise resolving with minutes, schedule_id and recording_mode
+     */
+    getShiftTime: function(employeeId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getEmpShiftTime',
+                {
+                    emp_id_ret: employeeId
+                },
+                true, false,
+                function(r){
+                    resolve(api.decodeJsonResponse(r));
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     }
 });

@@ -10,7 +10,11 @@ Ext.define('Breeze.model.record.leaveRequest.Day', {
     alias: 'breeze.model.record.leaverequest.day',
     fields: [
         'request_date', 'category_name', 'Amount',
-        'request_conflicts', 'category_code', 'Conflicts',
+        'request_conflicts', 'category_code',
         'recording_mode'
-    ]
+    ],
+    hasMany: {
+        model: 'Breeze.model.record.leaveRequest.Conflict',
+        name: 'Conflicts'
+    }
 });

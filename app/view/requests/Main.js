@@ -11,14 +11,6 @@ Ext.define('Breeze.view.requests.Main', {
 
     userCls:'requests-content',
 
-
-
-    config: {
-        crumbTitle: 'My Requests'
-    },
-
-
-
     // Layout and base styles
     layout: 'hbox',
     scrollable:'x',
@@ -48,66 +40,72 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
+                        // {
+                        //     xtype:'container',
+                        //     userCls:'requests-fieldset',
+                        //     layout: 'fit',
+                        //     scrollable:'y',
+                        //     flex:1,
+                        //     items:[
                         {
-                            xtype:'container',
-                            userCls:'requests-fieldset',
-                            layout: 'fit',
-                            scrollable:'y',
-                            flex:1,
-                            items:[
-                                // Departments tree
-                                {
-                                    xtype: 'grid',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'grid',
-                                    ui: 'employeeinfo-shift-grid requests-grid',
-                                    userCls: 'no-background',
-                                    layout: 'hbox',
-                                    hideHeaders: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'gridcolumn',
-                                            text:'Name',
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            text:'State',
-                                            dataIndex: 'text',
-                                            flex: 1,
-                                        }
-                                    ],
-                                    //reference: 'departmentTree',
-                                    //bind: '{departmentsTree}'
-                                }
-                            ]
-                        },
-                        /*
-                        {
-                            xtype:'container',
-                            userCls:'requests-fieldset no-border',
+                            xtype: 'grid',
+                            // == Item ID to make finding tree in panel easier
+                            itemId: 'grid',
+                            ui: 'employeeinfo-shift-grid requests-grid',
+                            userCls: 'no-background requests-fieldset',
+                            // userCls: 'requests-fieldset',
                             layout: 'hbox',
-                            items: [
+                            flex: 1, scrollable: 'y',
+                            selectable: {
+                                mode: 'single'
+                            },
+                            hideHeaders: true,
+                            rootVisible: false,
+                            columns: [
                                 {
-                                    xtype: 'label',
-                                    userCls: 'requests-label',
-                                    html: 'Employee Notes',
+                                    xtype: 'gridcolumn',
+                                    text:'',
+                                    dataIndex: 'request_name',
+                                    flex: 1.5,
                                 },
                                 {
-                                    xtype: 'button',
-                                    //text: 'Save for Future Use',
-                                    iconCls:'x-fas fa-edit',
-                                    ui: 'plain wtr-button',                   
-                                },
-
-                            ]
-
-
-
+                                    xtype: 'gridcolumn',
+                                    text:'',
+                                    dataIndex: 'request_status',
+                                    flex: 1,
+                                    tpl: [
+                                        '<tpl switch="request_status">',
+                                        '<tpl case="Approved">',
+                                        '<span class="leaverequest lr-approved">{request_status}<span>',
+                                        '<tpl case="Draft">',
+                                        '<span class="leaverequest lr-draft">{request_status}<span>',
+                                        '<tpl case="Pending">',
+                                        '<span class="leaverequest lr-pending">{request_status}<span>',
+                                        '<tpl case="Denied">',
+                                        '<span class="leaverequest lr-denied">{request_status}<span>',
+                                        '<tpl case="Cancelled">',
+                                        '<tpl case="Cancellation Pending">',
+                                        '<tpl case="Cancellation Denied">',
+                                        '<span class="leaverequest lr-cancelled">{request_status}<span>',
+                                        '<tpl default>',
+                                        '<span>{request_status}</span>',
+                                        '</tpl>'
+                                    ],
+                                    cell: {
+                                        encodeHtml: false
+                                    }
+                                }
+                            ],
+                            bind: {
+                                store: '{leaveRequests}'
+                            },
+                            listeners: {
+                                select: 'onLeaveRequestSelect'
+                            }
+                            
                         }
-                        */
+                        //     ]
+                        // },
                     ]
                 },
                 {
@@ -139,19 +137,19 @@ Ext.define('Breeze.view.requests.Main', {
                                     userCls: 'no-background',
                                     scrollable:'y',
                                     layout: 'hbox',
-                                    hideHeaders: true,
+                                    // hideHeaders: true,
                                     rootVisible: false,
                                     columns: [
                                         {
-                                            xtype: 'gridcolumn',
+                                            xtype: 'datecolumn',
                                             text:'Date',
-                                            dataIndex: 'text',
+                                            dataIndex: 'request_date',
                                             flex: 4,
                                         },
                                         {
                                             xtype: 'gridcolumn',
                                             text:'Category',
-                                            dataIndex: 'text',
+                                            dataIndex: 'category_name',
                                             flex: 5,
                                         },
                                         {
@@ -168,7 +166,9 @@ Ext.define('Breeze.view.requests.Main', {
                                         }
                                     ],
                                     //reference: 'departmentTree',
-                                    //bind: '{departmentsTree}'
+                                    bind: {
+                                        store: '{requestedDays}'
+                                    }
                                 }
                             ]
                         },

@@ -14,7 +14,6 @@ Ext.define('Breeze.view.requests.Form', {
     scrollable:'x',
 
 
-
     // Body contents
     items: [
 
