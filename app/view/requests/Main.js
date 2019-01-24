@@ -122,56 +122,56 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
+                        // {
+                        //     xtype:'container',
+                        //     userCls:'requests-fieldset',
+                        //     layout: 'fit',
+                        //     flex:1,
+                        //     items: [
+
                         {
-                            xtype:'container',
-                            userCls:'requests-fieldset',
-                            layout: 'fit',
-                            flex:1,
-                            items: [
-                                // Departments tree
+                            xtype: 'grid',
+                            // == Item ID to make finding tree in panel easier
+                            itemId: 'grid',
+                            ui: 'employeeinfo-shift-grid requests-grid',
+                            userCls: 'requests-fieldset no-background',
+                            scrollable:'y', flex: 1,
+                            layout: 'hbox',
+                            // hideHeaders: true,
+                            rootVisible: false,
+                            columns: [
                                 {
-                                    xtype: 'grid',
-                                    // == Item ID to make finding tree in panel easier
-                                    itemId: 'grid',
-                                    ui: 'employeeinfo-shift-grid requests-grid',
-                                    userCls: 'no-background',
-                                    scrollable:'y',
-                                    layout: 'hbox',
-                                    // hideHeaders: true,
-                                    rootVisible: false,
-                                    columns: [
-                                        {
-                                            xtype: 'datecolumn',
-                                            text:'Date',
-                                            dataIndex: 'request_date',
-                                            flex: 4,
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            text:'Category',
-                                            dataIndex: 'category_name',
-                                            flex: 5,
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            text:'Hours',
-                                            dataIndex: 'text',
-                                            flex: 5,
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            text:'Conflicts',
-                                            dataIndex: 'text',
-                                            flex: 5,
-                                        }
-                                    ],
-                                    //reference: 'departmentTree',
-                                    bind: {
-                                        store: '{requestedDays}'
-                                    }
+                                    xtype: 'datecolumn',
+                                    text:'Date',
+                                    dataIndex: 'request_date',
+                                    flex: 2,
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    text:'Category',
+                                    dataIndex: 'category_name',
+                                    flex: 3,
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    text:'Hours',
+                                    dataIndex: 'Amount',
+                                    flex: 1,
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    text:'Conflicts',
+                                    dataIndex: 'request_conflicts',
+                                    flex: 1,
                                 }
-                            ]
-                        },
+                            ],
+                            //reference: 'departmentTree',
+                            bind: {
+                                store: '{requestedDays}'
+                            }
+                        }
+                        //     ]
+                        // },
                     ]
                 },
             ]
