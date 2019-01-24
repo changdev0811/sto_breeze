@@ -51,12 +51,16 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
 
 
-    loadRequestedDays: function(requestLookupId){
+    /**
+     * Reload requested days store, passing in ID of request to load days for
+     * @param {Object} requestId Leave Request ID to load days for
+     */
+    loadRequestedDays: function(requestId){
         var me = this,
             vm = this.getViewModel(),
             store = vm.get('requestedDays');
         
-        store.setLookup(requestLookupId);
+        store.setRequestId(requestId);
         store.updateProxy();
         store.load({
             callback: function(records, op, success){

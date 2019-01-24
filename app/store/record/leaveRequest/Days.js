@@ -12,7 +12,8 @@ Ext.define('Breeze.store.record.leaveRequest.Days', {
     model: 'Breeze.model.record.leaveRequest.Day',
 
     config: {
-        lookup: null
+        lookup: null,
+        requestId: null
     },
 
     autoLoad: false,
@@ -26,6 +27,9 @@ Ext.define('Breeze.store.record.leaveRequest.Days', {
             } else {
                 this.addExtraParams({lookup: this.getLookup()});
             }
+            this.addExtraParams({
+                request_id: this.getRequestId()
+            });
         }
     },
 
