@@ -193,30 +193,20 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             xtype: 'container',
             layout: 'hbox',
             items: [
-                // {
-                //     xtype: 'checkbox',
-                //     boxLabel: 'Show Punches',
-                //     // labelAlign: 'right',
-                //     inline: true,
-                //     reference: 'wtrShowPunches',
-                //     ui: 'dark-checkbox',
-                //     listeners: {
-                //         change: 'onShowPunchesChange'
-                //     }
-                // },
-                {
-                    xtype: 'button',
-                    ui: 'plain wtr-button',
-                    text: 'Show All Punches',
-                    reference: 'showPunchesButton',
-                    data: {
-                        showText: 'Show All Punches',
-                        hideText: 'Hide All Punches'
-                    },
-                    listeners: {
-                        tap: 'onShowPunches'
-                    }
-                },
+
+                //{
+                //    xtype: 'button',
+                //    ui: 'plain wtr-button',
+                //    text: 'Show All Punches',
+                //    reference: 'showPunchesButton',
+                //    data: {
+                //        showText: 'Show All Punches',
+                //        hideText: 'Hide All Punches'
+                //    },
+                //    listeners: {
+                //        tap: 'onShowPunches'
+                //    }
+                //},
                 // ===[Approve/Deny Button Container]===
                 {
                     xtype: 'toolbar',
@@ -227,11 +217,36 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         pack: 'end'
                     },
                     items: [
+                        
+
+                        {
+                            xtype: 'checkbox',
+                            boxLabel: 'Show Punches',
+                            // labelAlign: 'right',
+                            inline: true,
+                            reference: 'wtrShowPunches',
+                            ui: 'dark-checkbox',
+                            listeners: {
+                                change: 'onShowPunchesChange'
+                            }
+                        },
+
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fa fa-clock', 
+                            ui:'alt',
+                        },
+                        {
+                            xtype: 'spacer',
+                            flex: 1,
+                        },
+
                         {
                             xtype: 'button',
                             text: 'Approve',
-                            ui: 'confirm alt wtr-button wtr-button-alt',
-                            iconCls: 'x-fas fa-check',
+                            //ui: 'confirm alt wtr-button wtr-button-alt',
+                            ui: 'confirm alt',
+                            //iconCls: 'x-fas fa-check',
                             menu: {
                                 xtype: 'menu',
                                 items: [
@@ -253,8 +268,9 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                         {
                             xtype: 'button',
                             text: 'Deny',
-                            ui: 'decline alt wtr-button wtr-button-alt',
-                            iconCls: 'x-fas fa-times',
+                            //ui: 'decline alt wtr-button wtr-button-alt',
+                            ui: 'decline alt',
+                            //iconCls: 'x-fas fa-times',
                             menu: {
                                 xtype: 'menu',
                                 items: [
