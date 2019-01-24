@@ -167,6 +167,7 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
             userCls: 'employee-worktime-records-grid',
         },
         // ===[Approve/Deny Button Container]===
+        /*
         {
             xtype: 'toolbar',
             ui: 'wtr-actions',
@@ -178,8 +179,9 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'button',
                     text: 'Approve',
-                    ui: 'confirm alt wtr-button wtr-button-alt',
-                    iconCls: 'x-fas fa-check',
+                    //ui: 'confirm alt wtr-button wtr-button-alt',
+                    ui: 'confirm alt',
+                    //iconCls: 'x-fas fa-check',
                     menu: {
                         xtype: 'menu',
                         items: [
@@ -201,8 +203,9 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 {
                     xtype: 'button',
                     text: 'Deny',
-                    ui: 'decline alt wtr-button wtr-button-alt',
-                    iconCls: 'x-fas fa-times',
+                    //ui: 'decline alt wtr-button wtr-button-alt',
+                    ui: 'decline alt',
+                    //iconCls: 'x-fas fa-times',
                     menu: {
                         xtype: 'menu',
                         items: [
@@ -223,6 +226,104 @@ Ext.define('Breeze.view.employee.workTime.Sheet', {
                 }
             ]
         }
+        */
+
+
+        {
+            xtype: 'container',
+            layout: 'hbox',
+            items: [
+
+                //{
+                //    xtype: 'button',
+                //    ui: 'plain wtr-button',
+                //    text: 'Show All Punches',
+                //    reference: 'showPunchesButton',
+                //    data: {
+                //        showText: 'Show All Punches',
+                //        hideText: 'Hide All Punches'
+                //    },
+                //    listeners: {
+                //        tap: 'onShowPunches'
+                //    }
+                //},
+                // ===[Approve/Deny Button Container]===
+                {
+                    xtype: 'toolbar',
+                    ui: 'wtr-actions',
+                    flex: 1,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        
+
+
+
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fa fa-clock', 
+                            ui:'alt',
+                        },
+                        {
+                            xtype: 'spacer',
+                            flex: 1,
+                        },
+
+                        {
+                            xtype: 'button',
+                            text: 'Approve',
+                            //ui: 'confirm alt wtr-button wtr-button-alt',
+                            ui: 'confirm alt',
+                            //iconCls: 'x-fas fa-check',
+                            menu: {
+                                xtype: 'menu',
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Approve',
+                                        itemId: 'mnuApproveRegular',
+                                        iconCls: 'x-fas fa-check-circle'
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Approve w/ Note',
+                                        itemId: 'mnuApproveWithNote',
+                                        iconCls: 'x-fas fa-file-check'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Deny',
+                            //ui: 'decline alt wtr-button wtr-button-alt',
+                            ui: 'decline alt',
+                            //iconCls: 'x-fas fa-times',
+                            menu: {
+                                xtype: 'menu',
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Deny',
+                                        itemId: 'mnuDenyRegular',
+                                        iconCls: 'x-fas fa-times-octagon'
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Deny w/ Note',
+                                        itemId: 'mnuDenyWithNote',
+                                        iconCls: 'x-fas fa-file-times'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+
     ]
 
 });
