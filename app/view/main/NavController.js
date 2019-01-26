@@ -436,14 +436,7 @@ Ext.define('Breeze.view.main.NavController', {
     },
 
     onUserPreferences: function() {
-        // ensure side panel isn't visible
-        try{
-            this.refreshSidePanel(false);
-        } catch (err) {
-            console.warn('refresh err', err);
-        }
-        var info = Ext.create('Breeze.view.user.Preferences');
-        this.changeContent(info);
+        this.redirectTo('user/preferences');
     },
 
     /**

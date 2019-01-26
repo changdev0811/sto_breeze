@@ -32,6 +32,7 @@ Ext.define('Breeze.view.main.Nav', {
     layout: 'vbox',
 
     items: [
+        //----- Header -------------------------------------------
         {
             xtype: 'container',
             userCls: 'main-nav-header',
@@ -78,26 +79,21 @@ Ext.define('Breeze.view.main.Nav', {
 
             ]
 
-        },
+        },//------- end of Header --------------------------
+        //---------- Body ----------------------------------
         {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
             userCls: 'full-content',
             items: [
-
+                //----------- side tree-node navigation bar --------
                 {
-
                     xtype: 'container',
                     layout: 'vbox',
-                    // minWidth: '200pt',
-                    // maxWidth: '200pt',
-                    //width: 'auto',
-                    // flex: 1,
                     reference: 'navSideBar',
                     userCls: ['main-nav-side-bar'],
                     items: [
-
                         {
                             xtype: 'container',
                             flex: 1,
@@ -199,7 +195,7 @@ Ext.define('Breeze.view.main.Nav', {
                                                         listeners: {
                                                             click: 'onUserPreferences'
                                                         },
-                                                        separator: true
+                                                        // separator: true
                                                         //    icon: 'resources/icons/user-cog.svg'
                                                     }/*, {
                                                         xtype: 'menuitem',
@@ -275,7 +271,7 @@ Ext.define('Breeze.view.main.Nav', {
                             ]
                         }
                     ]
-                },
+                },//----------- end of side tree-node navigation bar
                 {
                     xtype: 'container',
                     reference: 'sidePanelContainer',

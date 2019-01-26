@@ -6,14 +6,21 @@
  */
 Ext.define('Breeze.view.user.Preferences', {
     extend: 'Ext.Panel',
+    alias: 'widget.user.preferences',
     
-    ui: 'reporting-base',
-    title: 'User Preferences',
-    
+    config: {
+        crumbTitle: 'Preferences',
+    },
+    // View Model
     viewModel: {
         type: 'user.preferences'
     },
+
+    // Controller
     controller: 'user.preferences',
+
+    ui: 'reporting-base',
+    title: 'User Preferences',
     
     buttonAlign: 'left',
     buttons: {
