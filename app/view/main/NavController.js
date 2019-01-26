@@ -77,6 +77,11 @@ Ext.define('Breeze.view.main.NavController', {
             name: 'personal_info',
             before: 'beforeRoute'
         },
+        'user/preferences': {
+            action: 'onUserPreferencesRoute',
+            name: 'user_preferences',
+            before: 'beforeRoute'
+        },
         'personal/fyi': {
             action: 'onPersonalFyiRoute',
             before: 'beforeRoute'
@@ -415,14 +420,30 @@ Ext.define('Breeze.view.main.NavController', {
         console.info('Employee Info Route');
         // var auth = Breeze.helper.Auth.getCookies();
         // var info = Ext.create('Breeze.view.employee.Information');
-        console.info('Created employee info view instance: ', info);
         var info = Ext.create('Breeze.view.employee.Information', {
             data: { employee: undefined }
         });
+        console.info('Created employee info view instance: ', info);
         this.changeContent(info);
         // { xtype: 'employee.information' }
         // info
-        console.info('Employee Info Route Set');
+    },
+
+    onUserPreferencesRoute: function() {
+        console.info('User Preferences Route');
+        var info = Ext.create('Breeze.view.user.Preferences');
+        this.changeContent(info);
+    },
+
+    onUserPreferences: function() {
+        // ensure side panel isn't visible
+        try{
+            this.refreshSidePanel(false);
+        } catch (err) {
+            console.warn('refresh err', err);
+        }
+        var info = Ext.create('Breeze.view.user.Preferences');
+        this.changeContent(info);
     },
 
     /**
