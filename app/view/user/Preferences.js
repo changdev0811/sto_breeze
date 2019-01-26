@@ -6,20 +6,25 @@
  */
 Ext.define('Breeze.view.user.Preferences', {
     extend: 'Ext.Panel',
+    
     ui: 'reporting-base',
     title: 'User Preferences',
+    
     viewModel: {
         type: 'user.preferences'
     },
+    controller: 'user.preferences',
+    
     buttonAlign: 'left',
     buttons: {
-        pdf: { text: 'Apply', ui: 'action', userCls:'report-action-button' },
+        apply: { text: 'Apply', handler: 'onApply', ui: 'action', userCls:'report-action-button' },
     },
     buttonToolbar: {
         xtype: 'toolbar',
         ui: 'reporting-actions',
         shadow: false
     },
+    
     // Body contents
     items: [{
         xtype: 'container',
