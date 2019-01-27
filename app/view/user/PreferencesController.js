@@ -11,7 +11,7 @@ Ext.define('Breeze.view.user.PreferencesController', {
     /**
      * handler for 'Apply' action button
      */
-    onApply: function(c, e, eOpts){
+    onSave: function(c, e, eOpts){
         console.info('Apply Clicked');
         params = this.getViewModel().getData().params;
         console.info("user preferences info", params);
