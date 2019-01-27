@@ -22,14 +22,11 @@ Ext.define('Breeze.view.reporting.employee.ProfileModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Profile Report',
                 inccats: '',
                 showScheduled: null,
                 // ++Update 11/5++ used by recording years list
                 recording_years: '', // List of recording years
-                sdate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: ''

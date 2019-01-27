@@ -65,14 +65,6 @@ Ext.define('Breeze.view.reporting.employee.LatenessController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -135,6 +127,11 @@ Ext.define('Breeze.view.reporting.employee.LatenessController', {
                     forceInt: false
                 }
             ).join(',')
+        );
+
+        vm.set(
+            'reportParams.reportDayUtc',
+            vm.get('reportParams.reportDay').toUTCString()
         );
         
     },

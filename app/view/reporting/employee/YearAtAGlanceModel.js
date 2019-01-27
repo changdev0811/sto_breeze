@@ -22,12 +22,11 @@ Ext.define('Breeze.view.reporting.employee.YearAtAGlanceModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Year At A Glance Report',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
+                Colors: true,           // According to tko code
                 // recording year
                 recyear: (new Date()).getYear() + 1900, // Defaults rec year to current year 
                 recyeartype: 'ALL', // Record year type ('ALL' or calendar type)

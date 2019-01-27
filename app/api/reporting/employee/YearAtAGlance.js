@@ -109,7 +109,13 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
         // Add additional params taken from config
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
         this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
-        this.appendParam(params, 'customer_id', cust);
+        // this.appendParam(params, 'customer_id', cust);
+        this.appendParam(params, 'custid', cust);      // According to tko code, instead of customer_id
+
+        emp = emp < 0 ? 0 : emp;
+        var mytablename = 'z' + cust + emp + 'YAAG' + new Date().getTime();
+
+        this.appendParam(params, 'tablename', mytablename);
 
         var reportKind = this.statics().report;
 

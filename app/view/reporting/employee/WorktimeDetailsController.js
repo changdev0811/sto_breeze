@@ -81,14 +81,6 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -167,6 +159,15 @@ Ext.define('Breeze.view.reporting.employee.WorktimeDetailsController', {
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
+        );
+
+        vm.set(
+            'reportParams.dStartUtc',
+            vm.get('reportParams.dStart').toUTCString()
+        );
+        vm.set(
+            'reportParams.dEndUtc',
+            vm.get('reportParams.dEnd').toUTCString()
         );
     },
 

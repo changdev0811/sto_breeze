@@ -65,14 +65,6 @@ Ext.define('Breeze.view.reporting.employee.TimesheetController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }

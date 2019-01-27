@@ -23,15 +23,17 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Time Activity Report',
-                inccats: '',
-                dStart: (new Date()),
-                dEnd: (new Date()),
+                // inccats: '',
+                category_ids: '',       // According to tko code, instead of inccats
+                // dStart: (new Date()),
+                // dEnd: (new Date()),
+                sdate: (new Date()),    // According to tko code
+                edate: (new Date()),    // According to tko code
                 // Concerning selected departments/ids
-                idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                idtype: 'emps',         // According to existing code, this is always 'emps'
+                // incids: '',
+                employee_ids: ''        // According to tko code, instead of incids
             }
         };
         this.setData(data);

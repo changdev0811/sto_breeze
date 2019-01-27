@@ -72,14 +72,6 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -181,6 +173,7 @@ Ext.define('Breeze.view.reporting.employee.AllowanceController', {
     buildReport: function(format){
         var me = this,
             params = this.getViewModel().getData().reportParams;
+        console.info("params in controller", params);
         me.reportApi.process(params, format).then(
             function(url){
                 if(typeof url == "string"){

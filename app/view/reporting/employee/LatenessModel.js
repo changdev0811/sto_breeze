@@ -22,12 +22,11 @@ Ext.define('Breeze.view.reporting.employee.LatenessModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Lateness Check Report',
-                on_time: null,
-                no_record: null,
+                on_time: false,
+                no_record: false,
                 reportDay: (new Date()),
+                reportDayUtc: (new Date().toUTCString()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: ''

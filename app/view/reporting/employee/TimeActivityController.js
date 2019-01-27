@@ -72,14 +72,6 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -105,7 +97,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
-        if(vmData.reportParams.incids == ''){
+        // if(vmData.reportParams.incids == ''){
+        if(vmData.reportParams.employee_ids == ''){
             valid = false;
             if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
                 messages.push('Please select one or more Departments containing Employees.');
@@ -114,7 +107,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
             }
         }
 
-        if(vmData.reportParams.inccats == ''){
+        // if(vmData.reportParams.inccats == ''){
+        if(vmData.reportParams.category_ids == ''){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -141,7 +135,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
-            'reportParams.incids', 
+            // 'reportParams.incids',
+            'reportParams.employee_ids',
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
                     nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
@@ -158,7 +153,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivityController', {
             selectedCategories = categoryRecords.map((r)=>r.getData().Category_Id);
         // assign list of category ids as single string, joined with ','
         vm.set(
-            'reportParams.inccats',
+            // 'reportParams.inccats',
+            'reportParams.category_ids',
             selectedCategories.join(',')
         );
     },

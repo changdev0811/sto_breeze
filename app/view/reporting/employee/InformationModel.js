@@ -22,8 +22,6 @@ Ext.define('Breeze.view.reporting.employee.InformationModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 EmployeeNumber: '',     // reset by Captions.EmployeeNumber of companyConfig store
                 ReportTitle: 'Employee Information Report',
                 viewssn: false,
