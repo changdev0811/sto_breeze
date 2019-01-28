@@ -352,8 +352,33 @@ Ext.define('Breeze.view.main.NavController', {
         } else {
             // TODO: Implement regular punch view
             console.info('Regular punch');
+            me.onPunchWindowTap();
         }
     },
+
+
+    /**
+     * Handle punch window menu button event, displaying 
+     * punch options dialog
+     * @param {*} ref 
+     * @param {*} x 
+     * @param {*} eOpts 
+     */
+    onPunchWindowTap: function(){
+        var vm = this.getViewModel();
+        console.info("[onPunchWindowTap]");
+        //notesDialog
+        var view = this.getView(),
+        dialog = null;
+        dialog = this.lookup('punchWindowDialog');
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+
 
     /**
      * Handle side nav tree item selection changing
@@ -912,7 +937,21 @@ Ext.define('Breeze.view.main.NavController', {
                 tree.setSelection(navNode);
             }
         }
-    }
+    },
+
+
+
+    /**
+     * Handle punch window dialog close event
+     * @param {*} dialog 
+     * @param {*} e 
+     * @param {*} eOpts 
+     */
+    onClosePunchWindowDialog: function(ref, e, eOpts){
+        //dialog.hide();
+        ref.getParent().getParent().hide();
+    },
+
 
 
 });
