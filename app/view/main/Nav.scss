@@ -124,6 +124,21 @@ $content-edge: 6pt;
 }
 
 
+.punch-window-profile-picture {
+    margin:5pt;
+    border-radius: 50%;
+    border: 1pt solid white;
+    background-color: $base-color;
+    box-shadow: 0pt 2pt 10pt rgba(0,0,0,.25);
+}
+
+.punchWindowClock{
+    text-align:center; 
+    font-size:16pt;
+    margin:5pt;
+}
+
+
 // Content panel
 .main-content {
     margin: $content-edge $content-edge $content-edge $content-edge;

@@ -173,7 +173,7 @@ Ext.define('Breeze.widget.punch.PunchButton', {
                     }, {
                         text: 'Punch Window',
                         itemId: 'mnuPunchWindow',
-                        disabled: true
+                        disabled: false
                     }
                 ]
             }
