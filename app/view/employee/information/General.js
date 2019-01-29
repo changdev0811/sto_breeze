@@ -7,6 +7,10 @@ Ext.define('Breeze.view.employee.information.General', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.general',
 
+
+    padding:'8pt',
+
+
     requires: [
         'Breeze.widget.field.Text'
     ],
@@ -24,7 +28,7 @@ Ext.define('Breeze.view.employee.information.General', {
     items: [
         {
             xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            userCls: 'employee-info-fieldset no-side-margin',
             layout: 'hbox',
             title: 'Name',
             defaults: {
@@ -58,7 +62,7 @@ Ext.define('Breeze.view.employee.information.General', {
         },
         {
             xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
+            userCls: 'employee-info-fieldset no-side-margin',
             layout: 'hbox',
             // title: 'Name',
             defaults: {

@@ -96,15 +96,15 @@ $calendar-text-colors: (
 // ====[Employee Info View]====
 
 // specific colors
-$scoped-employee-info-base: $scoped-root-lighter;
-$scoped-employee-info-light: #C0D8EB;
-$scoped-employee-info-medium: #bed9ed;
-$scoped-employee-info-dark: #6DAFFF;
-$scoped-employee-info-row-dark: #70a5d2;
-$scoped-employee-info-row-light: #96bede;
+$scoped-employee-info-base: #498DC6;
+$scoped-employee-info-light: #A2C6E3;
+$scoped-employee-info-medium: #ff00FF;
+$scoped-employee-info-dark: #0000ff;
+$scoped-employee-info-row-dark: #83B1DB;
+$scoped-employee-info-row-light: #5494CC;
 
 $scoped-employee-info-text-base: #ffffff;
-$scoped-employee-info-text-light: $scoped-employee-info-light;
+$scoped-employee-info-text-light: #A2C6E3;
 $scoped-employee-info-text-medium: $scoped-employee-info-base;
 $scoped-employee-info-text-dark: $scoped-employee-info-text-base;
 

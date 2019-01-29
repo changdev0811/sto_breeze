@@ -156,8 +156,11 @@ Ext.define('Breeze.view.employee.Calendar',{
             inline: true,
             userCls:'legend' ,
             /*flex:1,*/
-            minWidth:'614pt',
-            height:'45pt',
+            //minWidth:'614pt',
+            //height:'45pt',
+
+            height:'auto',
+
             padding: '8pt 8pt 0pt 8pt',
             layout: {
                 type: 'hbox',

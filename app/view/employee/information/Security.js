@@ -6,6 +6,7 @@
 Ext.define('Breeze.view.employee.information.Security', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.security',
+    padding:'8pt',
 
     controller: 'employee.information.security',
 
@@ -20,13 +21,10 @@ Ext.define('Breeze.view.employee.information.Security', {
     },
 
     items: [
-        
         {
             xtype: 'fieldset',
-            userCls: 'employee-info-fieldset',
-            
+            userCls: 'employee-info-fieldset no-side-margin',
             title: 'Login Information',
-            
             items: [
                 {
                     xtype: 'container',
@@ -98,8 +96,10 @@ Ext.define('Breeze.view.employee.information.Security', {
         {
             xtype: 'fieldset',
             // xtype: 'formpanel',
-            ui: 'employeeinfo-fieldpanel',
-            userCls: 'employee-info-fieldset-bordered',
+            userCls: 'employee-info-fieldset no-side-margin',
+
+            //ui: 'employeeinfo-fieldpanel',
+            //userCls: 'employee-info-fieldset-bordered',
             reference: 'securityChangePassword',
             layout: 'vbox',
             title: 'Change Password',
@@ -164,12 +164,17 @@ Ext.define('Breeze.view.employee.information.Security', {
                     items: [
                         {
                             text: 'Reset',
+                            ui: 'action',
                             listeners: {
                                 tap: 'onResetChangePasswordTap'
                             }
                         },
                         {
-                            ui: 'action',
+                            xtype:'component',
+                            flex:1
+                        },
+                        {
+                            ui: 'confirm alt',
                             reference: 'changePasswordButton',
                             text: 'Change Password',
                             disabled: true,

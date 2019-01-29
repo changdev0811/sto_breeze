@@ -8,6 +8,8 @@
 Ext.define('Breeze.view.employee.information.PunchPolicy', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.punchpolicy',
+    
+    padding:'8pt',
 
     requires: [
         'Breeze.view.employee.information.PunchPolicyController'
@@ -33,6 +35,10 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
     items: [
         {
             xtype: 'tabpanel',
+
+    padding:'8pt 0pt 0pt 0pt',
+
+
             layout: {
                 animation: 'fade'
             },
@@ -360,7 +366,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                     items: [
                         {
                             xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
+                            //userCls: 'employee-info-fieldset',
+                            userCls: 'employee-info-fieldset no-side-margin',
                             layout: 'vbox',
                             title: 'Punch Rounding',
                             items: [
@@ -470,7 +477,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                     items: [
                         {
                             xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
+                            //userCls: 'employee-info-fieldset',
+                            userCls: 'employee-info-fieldset no-side-margin',
                             title: 'Punch Options',
                             items: [
                                 {
@@ -537,7 +545,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                         },
                         {
                             xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
+                            //userCls: 'employee-info-fieldset',
+                            userCls: 'employee-info-fieldset no-side-margin',
                             title: 'Other',
                             items: [
                                 {
@@ -622,7 +631,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicy', {
                     items: [
                         {
                             xtype: 'fieldset',
-                            userCls: 'employee-info-fieldset',
+                            //userCls: 'employee-info-fieldset',
+                            userCls: 'employee-info-fieldset no-side-margin',
                             title: 'Automatic Deductions',
                             items: [
                                 {
