@@ -23,7 +23,7 @@ Ext.define('Breeze.view.requests.Main', {
             xtype: 'container',
             userCls:'requests-content',
             //flex: 1,
-            width: '220pt',
+            width: '300pt', // 220pt
             layout: 'vbox',
             items:[
                 {
@@ -34,7 +34,8 @@ Ext.define('Breeze.view.requests.Main', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            handler: 'showLeaveRequestForm'
+                            // handler: 'showLeaveRequestForm'
+                            handler: 'showCreateRequestDialog'
                         }
                     ],
                     flex: 1,
@@ -144,13 +145,14 @@ Ext.define('Breeze.view.requests.Main', {
                                     xtype: 'datecolumn',
                                     text:'Date',
                                     dataIndex: 'request_date',
+                                    format: 'm/d/Y',
                                     flex: 2,
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text:'Category',
                                     dataIndex: 'category_name',
-                                    flex: 3,
+                                    flex: 2,
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -182,7 +184,7 @@ Ext.define('Breeze.view.requests.Main', {
             userCls:'requests-content',
 
             flex: 2,
-            minWidth: '600pt',
+            minWidth: '520pt', // 600pt
             layout: 'vbox',
             items:[
                 {
@@ -313,7 +315,7 @@ Ext.define('Breeze.view.requests.Main', {
                             inline: true,
                             userCls:'legend' ,
                             /*flex:1,*/
-                            minWidth:'614pt',
+                            // minWidth:'614pt',
                             height:'45pt',
                             padding: '8pt 8pt 0pt 8pt',
                             layout: {

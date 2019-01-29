@@ -19,6 +19,44 @@ Ext.define('Breeze.api.Requests', {
         this.initConfig(cfg || {});
     },
 
+
+    /**
+     * Create new leave request
+     * @param {String} name Name of request
+     * @return {Promise} Promise resolving with toast object also including
+     *      'requestId' param defining the newly created request's unique ID
+     *      Rejection returns a generic error message in an error toast object
+     * @api /createLeaveRequest
+     */
+    createRequest: function(name){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'createLeaveRequest',
+                {
+                    name: name
+                },
+                true, false,
+                function(r) {
+                    var resp = api.decodeJsonResponse(r),
+                        requestId = resp.info[0];
+                    resolve({
+                        type: Ext.Toast.INFO,
+                        message: 'New Leave Request Created',
+                        requestId: requestId
+                    });
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Error creating Leave Request',
+                        error: err
+                    });
+                }
+            )
+        })
+    },
+
     /**
      * @api /deleteLeaveRequest
      */
@@ -62,10 +100,44 @@ Ext.define('Breeze.api.Requests', {
     },
 
     /**
+     * Submit employee leave request
+     * @param {String} requestId Leave request ID
+     * @return {Promise} Resolves with success toast, errors with error toast
      * @api /employeeSubmitLeaveRequest
      */
-    submitEmployeeRequest: function(){
-
+    submitEmployeeRequest: function(requestId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'employeeSubmitLeaveRequest',
+                {
+                    request_id: requestId
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Leave Request Submitted Successfully'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err
+                        });
+                    }
+                },
+                function(err){
+                    console.warn('Error occured in Requests.submitEmployeeRequest: ', err);
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occurred',
+                        error: err
+                    });
+                }
+            );
+        });
     },
 
     /**

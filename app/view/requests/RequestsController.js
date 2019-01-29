@@ -168,7 +168,43 @@ Ext.define('Breeze.view.requests.RequestsController', {
         }
     },
 
+    showCreateRequestDialog: function(){
+        console.info('create request dialog');
+        var view = this.getView(),
+            vm = this.getViewModel();
+            dialog = this.createRequestDialog;
+        
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.createRequestDialog);
+            this.createRequestDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+                
+    },
+
     // === [Event Handlers] ===
+
+    onCreateRequest: function(btn){
+
+    },
+
+    /**
+     * Handle cancel button action for create leave request dialog,
+     * hiding and resetting field values
+     * 
+     * @param {Object} btn Button that triggered event
+     */
+    onCreateRequestDialogCancel: function(btn){
+        var dlg = this.createRequestDialog,
+            nameField = dlg.getComponent('requestName');
+        
+        dlg.hide();
+        nameField.clearValue();
+        nameField.clearInvalid();   
+    },
 
     /**
      * Event handler for select event on Leave Requests grid
@@ -194,6 +230,12 @@ Ext.define('Breeze.view.requests.RequestsController', {
         );
     },
 
+    onFyiNavClick:function(){
+        this.redirectTo('personal/fyi');
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    },
+
+    // === [Leave Request Form] ===
     showLeaveRequestForm: function(){
         // console.info('Leave Request Button');
         var view = this.getView(),
@@ -207,8 +249,4 @@ Ext.define('Breeze.view.requests.RequestsController', {
         view.setActiveItem(requests);
     },
 
-    onFyiNavClick:function(){
-        this.redirectTo('personal/fyi');
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    }
 });
