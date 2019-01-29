@@ -82,7 +82,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
 
                             height: '100pt',
                             reference: 'shiftSegmentGrid',
-                            striped: true,
+                            striped: false,
                             sortable: false,
                             columnResize: false,
                             columnMenu: null,
