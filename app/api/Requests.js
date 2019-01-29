@@ -6,19 +6,7 @@
  */
 Ext.define('Breeze.api.Requests', {
     extend: 'Breeze.api.Base',
-    // singleton: true,
-
-
-    config: {
-        // Copy of company config store record to fall back on
-        companyConfigRecord: null
-    },
-
-    constructor: function(cfg){
-        this.callParent(arguments);
-        this.initConfig(cfg || {});
-    },
-
+    singleton: true,
 
     /**
      * Create new leave request
@@ -165,15 +153,13 @@ Ext.define('Breeze.api.Requests', {
      * @param {Object} requestId Leave Request ID
      * @param {Object} employeeId (optional) Employee ID to pass along as lookup param, 
      *      pass undefined or null to use cookie to determine
-     * @param {Object} companyConfigRecord (optional) reference to company config record; if not given,
-     *      falls back to company config record stored in class instance
+     * @param {Object} companyConfigRecord reference to company config record;
      * @return {Promise} Resolves with response object, at which time leave request days
      *      store should get reloaded; failure rejects with error object
      * @api /updateLeaveRequestEvent
      */
     updateRequestEvent: function(record, requestId, employeeId, companyConfigRecord){
         var employeeId = (Object.isUnvalued(employeeId))? this.auth.getCookies().emp : employeeId,
-            companyConfigRecord = Object.defVal(companyConfigRecord, this.getCompanyConfigRecord(), true),
             api = this.api,
             param = {
                 time: record.get('request_date'),
@@ -207,20 +193,18 @@ Ext.define('Breeze.api.Requests', {
      * @param {Number} amount Request amount
      * @param {String} employeeId (optional) Employee ID to pass along as lookup param, 
      *      pass undefined or null to use cookie to determine
-     * @param {Object} companyConfigRecord (optional) reference to company config record; if not given,
-     *      falls back to company config record stored in class instanc
+     * @param {Object} companyConfigRecord reference to company config record;
      * @return {Promise} Resolves with true if valid, rejects with error string
      * @api /validateLeaveRequestDay
      */
     validateRequestDay: function(requestId, day, code, amount, employeeId, companyConfigRecord){
         // Provide default values to employeeId and companyConfigRecord if not explicitly provided
         var employeeId = (Object.isUnvalued(employeeId))? this.auth.getCookies().emp : employeeId,
-            companyConfigRecord = Object.defVal(companyConfigRecord, this.getCompanyConfigRecord(), true),
             api = this.api;
         
         return new Promise((resolve, reject)=>{
             api.serviceRequest(
-                'validateRequestDay',
+                'validateLeaveRequestDay',
                 {   
                     lookup: employeeId,
                     time: day,

@@ -66,10 +66,7 @@ Ext.define('Breeze.view.requests.Main', {
                                 mode: 'single'
                             },
                             hideHeaders: true,
-                            rootVisible: false,
-                            plugins: {
-                                gridcellediting: true
-                            },
+                            plugins: { gridcellediting: true },
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
@@ -77,12 +74,7 @@ Ext.define('Breeze.view.requests.Main', {
                                     dataIndex: 'request_name',
                                     flex: 1.5,
                                     editor: {
-                                        xtype: 'breeze-textfield',
-                                        // listeners: {
-                                        //     change: function(self, newVal, oldVal){
-                                        //         if()
-                                        //     }
-                                        // }
+                                        xtype: 'breeze-textfield'
                                     }
                                 },
                                 {
@@ -156,9 +148,9 @@ Ext.define('Breeze.view.requests.Main', {
                             ui: 'employeeinfo-shift-grid requests-grid',
                             userCls: 'requests-fieldset no-background',
                             scrollable:'y', flex: 1,
+                            plugins: { gridcellediting: true },
                             layout: 'hbox',
                             // hideHeaders: true,
-                            rootVisible: false,
                             columns: [
                                 {
                                     xtype: 'datecolumn',
@@ -180,6 +172,9 @@ Ext.define('Breeze.view.requests.Main', {
                                     },
                                     dataIndex: 'Amount',
                                     flex: 1,
+                                    editor: {
+                                        xtype: 'numberfield'
+                                    }
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -188,13 +183,14 @@ Ext.define('Breeze.view.requests.Main', {
                                     flex: 1,
                                 }
                             ],
-                            //reference: 'departmentTree',
                             bind: {
                                 store: '{requestedDays}'
+                            },
+                            listeners: {
+                                beforeedit: 'onRequestedDaysBeforeEdit',
+                                edit: 'onRequestedDaysEdit'
                             }
-                        }
-                        //     ]
-                        // },
+                        },
                     ]
                 },
             ]

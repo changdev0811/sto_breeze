@@ -19,10 +19,28 @@ Ext.define('Breeze.view.requests.RequestsController', {
         
         this.api = { 
             category: Breeze.api.company.Category,
-            requests: Ext.create('Breeze.api.Requests', {
-                companyConfigRecord: vm.get('companyConfig').getAt(0)
-            })
+            requests: Breeze.api.Requests
         };
+
+        // // If company config is already loaded, pass it to the requests api
+        // if(vm.get('companyConfig').isLoaded()){
+        //     console.info('company config load already');
+        //     this.api.requests.setCompanyConfigRecord(vm.get('companyConfig').getAt(0));
+        // } else {
+        //     // If not loaded, add single time event listener to handle load completion
+        //     vm.get('companyConfig').on({load: {
+        //         fn: (records, op, success)=>{
+        //             this.api.requests = records[0];
+        //             console.info('company config load complete');
+        //         }, 
+        //         scope: me,
+        //         single: true
+        //     }});
+        //     if(!vm.get('companyConfig').isLoading()){
+        //         // If loading isn't in progress, start it
+        //         vm.get('companyConfig').load();
+        //     }
+        // }
 
         // calendar categories
         vm.set('employeeId', vm.get('userId'));
@@ -259,6 +277,59 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
     //     }
     // },
+
+    /**
+     * Event handler that fires before displaying amount editor for 
+     * Requested Days grid, deciding whether field should be editable
+     * @param {Object} location 
+     * @param {Object} editor Editor object
+     */
+    onRequestedDaysBeforeEdit: function(location, editor){
+        // console.info('before requested day edit');
+        var record = location.record,
+            vm = this.getViewModel(),
+            status = vm.get('selectedRequest').request_status.toUpperCase();
+        if(status == 'APPROVED' || status == 'PENDING'){
+            return false;
+        }
+    },
+
+    onRequestedDaysEdit: function(location, editor, newVal, oldVal){
+        var vm = this.getViewModel(),
+            hoursMode = (vm.get('empShiftTime.recording_mode') == 21),
+            request = vm.get('selectedRequest'),
+            record = location.record,
+            me = this,
+            amount = (!hoursMode)? newVal / 100 : newVal;
+        if(newVal <= 0){
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Requested time must be greater than 0',
+                timeout: 'warn'
+            });
+            record.set({Amount: oldVal}, {commit: true});
+        } else {
+            me.api.requests.validateRequestDay(
+                request.unique_id,
+                record.get('request_date'),
+                record.get('category_code'),
+                amount,
+                null,
+                vm.get('companyConfig').getAt(0)
+            ).then((r)=>{
+                // successful
+            }).catch((err)=>{
+                // failed to validate, so return to old value
+                record.set({Amount: oldVal}, {commit: true});
+                // show warning
+                Ext.toast({
+                    type: Ext.Toast.WARN,
+                    message: err,
+                    timeout: 'warn'
+                });
+            });
+        }
+    },
 
     /**
      * Event handler for editor on Leave Request grid's name column
