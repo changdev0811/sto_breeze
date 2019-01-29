@@ -1,6 +1,8 @@
 Ext.define('Breeze.view.employee.information.Schedule', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.schedule',
+    
+    padding:'8pt',
 
     requires: [
         'Ext.grid.plugin.CellEditing'
@@ -20,22 +22,29 @@ Ext.define('Breeze.view.employee.information.Schedule', {
         {
             xtype: 'container',
             // userCls: 'employee-info-fieldset',
-            userCls: 'ei-schedule-top-padding',
+            //userCls: 'ei-schedule-top-padding',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
-                flex: 1,
-                xtype: 'textfield',
-                userCls: 'employee-info-general-field',
-                ui: 'employeeinfo-textfield'
+                //flex: 1,
+                //xtype: 'textfield',
+                //userCls: 'employee-info-general-field',
+                //ui: 'employeeinfo-textfield'
             },
             items: [
                 {
+                    flex: 1,
                     xtype: 'panel',
                     
                     // userCls: 'employee-info-fieldset',
+                    //ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
+                    //userCls: 'employee-info-grid',
+                    
                     ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                     userCls: 'employee-info-grid',
+
+
+
                     title: 'Shift Information',
                     body:{
                         style:'background:red!important;',
@@ -65,10 +74,14 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                         // TODO: Figure out how to make combo boxes work as input fields
                         {
                             xtype: 'grid',
+                            //ui: 'employeeinfo-shift-grid employee-info-shift-grid-sized',
+                            //userCls: 'employee-info-grid',
+
+                            ui: 'employeeinfo-shift-grid employee-info-grid',
+                            userCls: 'no-background',
+
                             height: '100pt',
-                            ui: 'employeeinfo-shift-grid employee-info-shift-grid-sized',
                             reference: 'shiftSegmentGrid',
-                            userCls: 'employee-info-grid',
                             striped: true,
                             sortable: false,
                             columnResize: false,
@@ -160,13 +173,18 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     ]
                 },
                 {
-                    xtype: 'container',
+                    //xtype: 'container',
+
+                    xtype: 'fieldset',
+                    userCls: 'employee-info-fieldset no-padding no-border',
+
+
                     layout: 'vbox',
                     flex: 1,
                     defaults: {
                         xtype: 'selectfield',
-                        userCls: 'employee-info-general-field',
-                        ui: 'employeeinfo-textfield'
+                        //userCls: 'employee-info-fieldset no-border',
+                        ui: 'employeeinfo-textfield',
                     },
                     items: [
                         {
@@ -196,12 +214,13 @@ Ext.define('Breeze.view.employee.information.Schedule', {
 
         {
             xtype: 'container',
+            padding: '8pt 0pt 0pt 0pt',
             layout: 'hbox',
             items: [
                 {
                     flex: 1,
                     xtype: 'fieldset',
-                    userCls: 'employee-info-fieldset',
+                    userCls: 'employee-info-fieldset no-side-margin',
                     title: 'Exempt Status',
                     reference: 'exemptStatus',
                     defaults: { 
@@ -230,7 +249,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                 {
                     flex: 1,
                     xtype: 'fieldset',
-                    userCls: 'employee-info-fieldset',
+                    userCls: 'employee-info-fieldset ',
                     title: 'Recording Mode',
                     reference: 'recordingMode',
                     defaults: { 
