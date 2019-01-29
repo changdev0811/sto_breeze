@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.employee.ExcessiveHours', {
     
     statics: {
         ajaxCall: '',
-        report: 'EmployeeExcessiveHours'
+        report: 'ExcessiveHours'
     },
 
     /**
