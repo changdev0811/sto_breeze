@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.employee.ProfileModel', {
                 RepSignature: false,    // reset by RepSignature of companyConfig store
                 ReportTitle: 'Employee Profile Report',
                 inccats: '',
-                showScheduled: null,
+                showScheduled: false,
                 // ++Update 11/5++ used by recording years list
                 recording_years: '', // List of recording years
                 // Concerning selected departments/ids

@@ -111,6 +111,11 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
             messages.push('Please select a Category.')
         }
 
+        if(vmData.reportParams.recording_years == ''){
+            valid = false;
+            messages.push('Please Select A Recording Year');
+        }
+
         if(!valid){
             // If validation failed, show error(s) in toast message
             Ext.toast({
