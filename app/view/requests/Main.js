@@ -117,6 +117,29 @@ Ext.define('Breeze.view.requests.Main', {
                         }
                         //     ]
                         // },
+                    ],
+                    buttonToolbar: { ui:'requests-leave-panel' },
+                    buttons: [
+                        {
+                            xtype: 'button',
+                            ui: 'confirm alt', itemId: 'submit',
+                            text: 'Submit', hidden: true,
+                            bind: { hidden: '{!requestActions.submit}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline alt', style: 'margin-left: 4pt',
+                            itemId: 'delete',
+                            text: 'Delete', hidden: true,
+                            bind: { hidden: '{!requestActions.delete}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline alt', style: 'margin-left: 4pt',
+                            itemId: 'cancelRequest',
+                            text: 'Cancel Request', hidden: true,
+                            bind: { hidden: '{!requestActions.cancelRequest}' }
+                        }
                     ]
                 },
                 {
@@ -126,6 +149,11 @@ Ext.define('Breeze.view.requests.Main', {
                     title: 'Requested Days',
                     tools: [
                         {
+                            iconCls: 'x-fas fa-plus',
+                            handler: 'showLeaveRequestForm'
+                            // handler: 'showCreateRequestDialog'
+                        },
+                        {
                             iconCls: 'x-fas fa-table',
                             handler: 'onFyiNavClick'
                         }
@@ -133,12 +161,6 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
-                        // {
-                        //     xtype:'container',
-                        //     userCls:'requests-fieldset',
-                        //     layout: 'fit',
-                        //     flex:1,
-                        //     items: [
 
                         {
                             xtype: 'grid',
@@ -181,6 +203,19 @@ Ext.define('Breeze.view.requests.Main', {
                                     text:'Conflicts',
                                     dataIndex: 'request_conflicts',
                                     flex: 1,
+                                    // Delete day tool
+                                    cell: {
+                                        toolDefaults: {
+                                            ui: 'employeeinfo-grid-tool',
+                                            zone: 'end'
+                                        },
+                                        tools: [
+                                            {
+                                                iconCls: 'x-fas fa-times',
+                                                // handler: 'onDeleteAccrualInterval'
+                                            }
+                                        ]
+                                    }
                                 }
                             ],
                             bind: {

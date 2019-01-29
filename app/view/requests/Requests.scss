@@ -35,6 +35,11 @@
  $body-color: map-get($employee-info-colors, 'base'),
 );
 
+@include toolbar-ui(
+    $ui: 'requests-leave-panel',
+    $background-color: map-get($employee-info-colors, 'base')
+);
+
 @include panel-ui(
  $ui: 'requests-days-panel',
  $background-color: map-get($employee-fyi-colors, 'base'),

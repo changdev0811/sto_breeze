@@ -6,6 +6,15 @@ Ext.define('Breeze.view.requests.RequestsModel', {
 
     },
 
+    data: {
+        // Visibility of leave request action buttons
+        requestActions: {
+            submit: true,
+            delete: true,
+            cancelRequest: false
+        }
+    },
+
     formulas: {
         /**
          * Formula returning the column title for Requested Days' grid
