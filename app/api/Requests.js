@@ -53,13 +53,6 @@ Ext.define('Breeze.api.Requests', {
     },
 
     /**
-     * @api /deleteLeaveRequestDay
-     */
-    deleteRequestDay: function(){
-
-    },
-
-    /**
      * @api /employeeCancelLeaveRequest
      */
     cancelEmployeeRequest: function(){
@@ -147,6 +140,65 @@ Ext.define('Breeze.api.Requests', {
     },
 
     /**
+     * Add single day to leave request
+     * @param {String} requestId ID of target leave request
+     * @param {Date} startDate Date of requested day
+     * @param {Number} amount Amount of time requested
+     * @param {String} employeeId (optional) id of employee to add request for
+     * @param {Object} companyConfigRecord Reference to company config
+     * @return {Promise} Promise resolving with success toast object including date object,
+     *       or rejecting with error
+     * @api /addLeaveRequestDay
+     */
+    addRequestDay: function(requestId, startDate, code, amount, employeeId, companyConfigRecord){
+        var employeeId = this.resolveEmployeeId(employeeId),
+            companyConfigRecord = this.resolveCompanyConfigRecord(companyConfigRecord),
+            api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'addLeaveRequestDay',
+                {
+                    lookup: employeeId,
+                    request_id: requestId,
+                    code: code,
+                    EnforceAllowed: companyConfigRecord.get('EnforceAllowed'),
+                    recordAmount: amount,
+                    time: (new Date(startDate)).toUTC({out: Date.UTC_OUT.NUMBER}) / 1000
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(!resp.success || (resp.err && resp.err.length > 0)){
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err
+                        });
+                    } else {
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Leave Request Day successfully added',
+                            date: startDate
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occured'
+                    });
+                }
+            )
+        });
+    },
+
+    /**
+     * @todo TODO: should replicate multiple day adding function from old calendar.js:477ish
+     */
+    addRequestDayRange: function(){
+
+    },
+
+    /**
      * Ported from LeaveRequestSlidePanel.js; used to be part of leave request
      * days store, abstracted out for consistency
      * @param {Object} record Leave Request record object
@@ -159,7 +211,8 @@ Ext.define('Breeze.api.Requests', {
      * @api /updateLeaveRequestEvent
      */
     updateRequestEvent: function(record, requestId, employeeId, companyConfigRecord){
-        var employeeId = (Object.isUnvalued(employeeId))? this.auth.getCookies().emp : employeeId,
+        var employeeId = this.resolveEmployeeId(employeeId),
+            companyConfigRecord = this.resolveCompanyConfigRecord(companyConfigRecord),
             api = this.api,
             param = {
                 time: record.get('request_date'),
@@ -199,7 +252,8 @@ Ext.define('Breeze.api.Requests', {
      */
     validateRequestDay: function(requestId, day, code, amount, employeeId, companyConfigRecord){
         // Provide default values to employeeId and companyConfigRecord if not explicitly provided
-        var employeeId = (Object.isUnvalued(employeeId))? this.auth.getCookies().emp : employeeId,
+        var employeeId = this.resolveEmployeeId(employeeId),
+            companyConfigRecord = this.resolveCompanyConfigRecord(companyConfigRecord),
             api = this.api;
         
         return new Promise((resolve, reject)=>{
@@ -227,6 +281,23 @@ Ext.define('Breeze.api.Requests', {
                 }
             )
         });
+    },
+
+
+    /**
+     * @api /deleteLeaveRequestDay
+     */
+    deleteRequestDay: function(){
+
+    },
+
+    privates: {
+        resolveEmployeeId: function(value){
+            return (Object.isUnvalued(value))? this.auth.getCookies().emp : value;
+        },
+        resolveCompanyConfigRecord: function(value){
+            return (Object.isUnvalued(value))? Ext.getStore('CompanyConfig').getAt(0) : value;
+        }
     }
 
 });

@@ -9,6 +9,8 @@ Ext.define('Breeze.view.requests.RequestsModel', {
     data: {
         // Visibility of leave request action buttons
         requestActions: {
+            employeeNotes: true,
+            supervisorNotes: false,
             submit: true,
             delete: true,
             cancelRequest: false

@@ -122,6 +122,23 @@ Ext.define('Breeze.view.requests.Main', {
                     buttons: [
                         {
                             xtype: 'button',
+                            iconCls: 'x-fas fa-edit',
+                            itemId: 'employeeNotes',
+                            text: '', hidden: true,
+                            bind: { hidden: '{requestActions.employeeNotes}' }
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fas fa-edit',
+                            itemId: 'supervisorNotes',
+                            text: '',  hidden: true,
+                            bind: { hidden: '{requestActions.supervisorNotes}' }
+                        },
+                        {
+                            xtype: 'spacer'
+                        },
+                        {
+                            xtype: 'button',
                             ui: 'confirm alt', itemId: 'submit',
                             text: 'Submit', hidden: true,
                             bind: { hidden: '{!requestActions.submit}' }
