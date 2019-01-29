@@ -9,22 +9,75 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
 
     requires: [
-        'Breeze.api.Employee',        
+        'Breeze.api.company.Category',
+        'Breeze.api.Requests'
     ],
 
     onInit: function(comp){
-        // calendar categories    
-        console.info('Calendar controller initialized');
-        this.getViewModel().set('employeeId', comp.getData().employee);
-        this.companyApi = Ext.create('Breeze.api.Company');
+        var me = this,
+            vm = this.getViewModel();
+        
+        this.api = { 
+            category: Breeze.api.company.Category,
+            requests: Ext.create('Breeze.api.Requests', {
+                companyConfigRecord: vm.get('companyConfig').getAt(0)
+            })
+        };
+
+        // calendar categories
+        vm.set('employeeId', vm.get('userId'));
         this.loadCategories();
+        
+        // Load emp shift time info
+        Ext.create('Breeze.api.Employee').getShiftTime(vm.get('employeeId')).then((r)=>{
+            vm.set('empShiftTime', r);
+        }).catch((e)=>{
+            console.warn('Failed to load employee shift time with getEmpShiftTime');
+        });
+
+        // Load requests
+        me.addStoreToViewModel(
+            'Breeze.store.record.leaveRequests.Employee',
+            'leaveRequests',
+            { load: true }
+        );
+
+        // Prepare store for requested days
+        me.addStoreToViewModel(
+            'Breeze.store.record.leaveRequest.Days',
+            'requestedDays',
+            { load: false }
+        );
     },
+
+
+
+
+    /**
+     * Reload requested days store, passing in ID of request to load days for
+     * @param {Object} requestId Leave Request ID to load days for
+     */
+    loadRequestedDays: function(requestId){
+        var me = this,
+            vm = this.getViewModel(),
+            store = vm.get('requestedDays');
+        
+        store.setRequestId(requestId);
+        store.updateProxy();
+        store.load({
+            callback: function(records, op, success){
+                // c
+            },
+            scope: me
+        });
+    },
+
 
     // calendar categories    
     loadCategories: function(){
         var me = this;
       
-        me.companyApi.category.loadCompactListStore((success, id, store) => {
+        me.api.category.loadCompactListStore((success, id, store) => {
             if(!success){
                 // Failed to load
                 console.warn('Failed to load Categories store');
@@ -43,6 +96,9 @@ Ext.define('Breeze.view.requests.RequestsController', {
         });
     },
 
+    /**
+     * Load calendar
+     */
     loadCalendar: function(){
         var me = this;
         var vm = me.getViewModel();
@@ -95,6 +151,10 @@ Ext.define('Breeze.view.requests.RequestsController', {
         }});
     },
 
+    /**
+     * Handle showing/hiding loading mask for calendar
+     * @param {Boolean} shown 
+     */
     showLoadingMask: function(shown){
         var cmp = this.lookup('calendarPanel').getView().activeView;
         if(shown){
@@ -110,6 +170,22 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
     // === [Event Handlers] ===
 
+    /**
+     * Event handler for select event on Leave Requests grid
+     * @param {Object} grid 
+     * @param {Object} selected 
+     */
+    onLeaveRequestSelect: function(grid, selected){
+        
+        // Make copy of selected leave request
+        this.copyRecordToViewModel(
+            selected.getData(), 'selectedRequest'
+        );
+
+        // Load requested days for selected leave request
+        this.loadRequestedDays(selected.get('unique_id'));
+    },
+
     onPrevMonthButton: function(){
         console.info("Prev");
         this.showLoadingMask(true);
@@ -117,7 +193,6 @@ Ext.define('Breeze.view.requests.RequestsController', {
             -1, Ext.Date.MONTH
         );
     },
-
 
     showLeaveRequestForm: function(){
         // console.info('Leave Request Button');
@@ -131,7 +206,6 @@ Ext.define('Breeze.view.requests.RequestsController', {
             requests = view.getComponent('requests');
         view.setActiveItem(requests);
     },
-
 
     onFyiNavClick:function(){
         this.redirectTo('personal/fyi');

@@ -1,0 +1,21 @@
+/**
+    Leave Request status text classes
+*/
+
+.leaverequest{
+    &.lr-approved{
+        color: map-get($leave-request-status-colors, 'approved');
+    }
+    &.lr-draft{
+        color: map-get($leave-request-status-colors, 'draft');
+    }
+    &.lr-pending{
+        color: map-get($leave-request-status-colors, 'pending');
+    }
+    &.lr-denied{
+        color: map-get($leave-request-status-colors, 'denied');
+    }
+    &.lr-cancelled{
+        color: map-get($leave-request-status-colors, 'cancelled');
+    }
+}

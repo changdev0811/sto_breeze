@@ -379,3 +379,14 @@ $green-text-colors: (
 );
 
 
+
+// === [My Requests] ====
+
+// My request status colors
+$leave-request-status-colors: (
+    approved: $confirm-color, // original: green
+    draft: #404040, // original: black
+    pending: $base-color, // original: blue
+    denied: $alert-color, // original: red
+    cancelled: $scoped-toast-warn
+);

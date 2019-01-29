@@ -4,10 +4,17 @@
  * that appear within the Breeze.view.requests.Requests view or its children
  */
 
+@import "RequestStatuses";
+
 @include gridcolumn-ui(
     $ui: 'requests-grid',
     $font-size: 10pt,
     $padding: 4pt,
+);
+
+@include dataview-ui(
+    $ui: 'requests-grid'
+    // TODO: add dataview style rules, including row background colors
 );
 
 @include gridcolumn-ui(
