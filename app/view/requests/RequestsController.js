@@ -19,7 +19,9 @@ Ext.define('Breeze.view.requests.RequestsController', {
         
         this.api = { 
             category: Breeze.api.company.Category,
-            requests: Breeze.api.Requests
+            requests: Ext.create('Breeze.api.Requests', {
+                companyConfigRecord: vm.get('companyConfig').getAt(0)
+            })
         };
 
         // calendar categories
