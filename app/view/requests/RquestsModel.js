@@ -1,17 +1,25 @@
 Ext.define('Breeze.view.requests.RequestsModel', {
-    extend: 'Ext.app.ViewModel',
+    extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.requests.requests',
-
-    data: {
-        employeeInfo: {},
-        motd: null,
-        hideMotd:false,
-        employeeId:null,
-    },
 
     stores: {
 
     },
+
+    formulas: {
+        /**
+         * Formula returning the column title for Requested Days' grid
+         * 'Amount' column
+         */
+        requestedDaysAmountColumnTitle: {
+            bind: {
+                recordingMode: '{empShiftTime.recording_mode}'
+            },
+            get: function(data){
+                return (data.recordingMode == 21)? 'Hours' : 'Percent';
+            }
+        }
+    }
 
 
 

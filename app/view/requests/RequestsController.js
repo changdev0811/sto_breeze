@@ -35,22 +35,47 @@ Ext.define('Breeze.view.requests.RequestsController', {
             console.warn('Failed to load employee shift time with getEmpShiftTime');
         });
 
-        // Load requests
-        me.addStoreToViewModel(
-            'Breeze.store.record.leaveRequests.Employee',
-            'leaveRequests',
-            { load: true }
-        );
-
         // Prepare store for requested days
         me.addStoreToViewModel(
             'Breeze.store.record.leaveRequest.Days',
             'requestedDays',
             { load: false }
         );
+
+        me.loadRequests();
     },
 
+    /**
+     * Load requests into store, optionally selecting one by its unique_id
+     * @param {String} requestId (optional) id of request to select after load
+     */
+    loadRequests: function(requestId = null){
+        var me = this,
+            vm = this.getViewModel();
 
+        // Load requests
+        me.addStoreToViewModel(
+            'Breeze.store.record.leaveRequests.Employee',
+            'leaveRequests',
+            { 
+                load: true,
+                loadOpts: {
+                    callback: function(records, op, success){
+                        if(success){
+                            var record = records[0];
+                            if(requestId !== null){
+                                record = vm.get('leaveRequests').queryRecords("unique_id", requestId.toString())[0];
+                            }
+                            this.lookup('leaveRequestsGrid').getSelectable().setSelectedRecord(
+                                record
+                            )
+                        }
+                    },
+                    scope: me
+                }
+            }
+        );
+    },
 
 
     /**
@@ -188,7 +213,27 @@ Ext.define('Breeze.view.requests.RequestsController', {
     // === [Event Handlers] ===
 
     onCreateRequest: function(btn){
+        var dlg = this.createRequestDialog,
+            nameField = dlg.getComponent('requestName'),
+            vm = this.getViewModel(),
+            api = this.api,
+            me = this;
 
+        if(!nameField.validate()){
+            // Field is blank, so show warning
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'You must enter a name for this request!',
+                timeout: 'warn'
+            });
+        } else {
+            // Name is okay, so proceed
+            api.requests.createRequest(nameField.getValue()).then((r)=>{
+
+            }).catch((e)=>{
+
+            })
+        }
     },
 
     /**
@@ -203,8 +248,50 @@ Ext.define('Breeze.view.requests.RequestsController', {
         
         dlg.hide();
         nameField.clearValue();
-        nameField.clearInvalid();   
+        nameField.clearInvalid();
     },
+
+    // onLeaveRequestBeforeCompleteEdit: function(location, editor, newVal, oldVal){
+    //     console.info('before name edit complete');
+    //     var record = location.record;
+
+    //     if(newVal.trim().length == 0){
+
+    //     }
+    // },
+
+    /**
+     * Event handler for editor on Leave Request grid's name column
+     * @param {*} location 
+     * @param {*} editor 
+     * @param {*} newValue 
+     * @param {*} oldValue 
+     */
+    onLeaveRequestEdit: function(location, editor, newValue, oldValue){
+        // console.info('Leave request edit');
+        var requestId = location.record.get('unique_id'),
+            me = this;
+        
+        me.api.requests.renameEmployeeRequest(
+            requestId, newValue
+        ).then((r)=>{
+            Ext.toast({
+                type: Ext.Toast.INFO,
+                message: 'Successfully renamed Leave Request',
+                timeout: 'info'
+            });
+            me.loadRequests(requestId);
+        }).catch((err)=>{
+            Ext.toast({
+                type: Ext.Toast.ERROR,
+                message: 'Unable to rename Leave Request',
+                timeout: 'error'
+            });
+            me.loadRequests(requestId);
+        });
+
+    },
+
 
     /**
      * Event handler for select event on Leave Requests grid

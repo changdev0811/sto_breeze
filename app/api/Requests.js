@@ -93,10 +93,28 @@ Ext.define('Breeze.api.Requests', {
     },
 
     /**
+     * Employee Rename leave request
+     * @param {String} requestId ID of request to change
      * @api /employeeRenameLeaveRequest
      */
-    renameEmployeeRequest: function(){
-
+    renameEmployeeRequest: function(requestId, newName){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'employeeRenameLeaveRequest',
+                {
+                    request_id: requestId,
+                    newName: newName
+                },
+                true, false,
+                function(r){
+                    resolve(requestId)
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     },
 
     /**

@@ -41,6 +41,8 @@ Ext.define('Breeze.view.requests.Requests', {
         }
     ],
 
+    //===[Dialogs shared by view]===
+
     createRequestDialog: {
         xtype: 'dialog',
         title: 'New Leave Request',
