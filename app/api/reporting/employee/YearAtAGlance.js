@@ -183,27 +183,6 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
             ).then(
                 function(r){
                     resolve(YAAGToTempTable(incid_arr, yaagTempParams));
-                    // me.makeApiCall(
-                    //     'YAAGtoTempTable',
-                    //     yaagTempParams
-                    // ).then(
-                    //     function(r){
-                    //         me.createReportStore(
-                    //             reportKind, {"Rows": params}, { format: format }
-                    //         ).then(
-                    //             function(store){
-                    //                 resolve(store.getAt(0).get('CurrentPageURL'));
-                    //             }
-                    //         ).catch(
-                    //             function(err){
-                    //                 console.warn('Error loading report store', err);
-                    //                 reject(err);
-                    //             }
-                    //         );
-                    //     }
-                    // ).catch(
-
-                    // );
                 }
             ).catch(
                 function(err){
