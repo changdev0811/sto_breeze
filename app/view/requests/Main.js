@@ -27,7 +27,7 @@ Ext.define('Breeze.view.requests.Main', {
             xtype: 'container',
             userCls:'requests-content',
             //flex: 1,
-            width: '300pt', // 220pt
+            width: '320pt', // 220pt
             layout: 'vbox',
             items:[
                 {
@@ -119,19 +119,27 @@ Ext.define('Breeze.view.requests.Main', {
                         // },
                     ],
                     buttonToolbar: { ui:'requests-leave-panel' },
+                    // Leave Requests action buttons
                     buttons: [
                         {
                             xtype: 'button',
                             iconCls: 'x-fas fa-edit',
                             itemId: 'employeeNotes',
-                            text: '', hidden: true,
+                            text: 'Employee', hidden: true,
                             bind: { hidden: '{requestActions.employeeNotes}' }
                         },
                         {
                             xtype: 'button',
                             iconCls: 'x-fas fa-edit',
+                            itemId: 'employeeNotesReadOnly',
+                            text: 'Employee', hidden: true,
+                            bind: { hidden: '{requestActions.employeeNotesReadOnly}' }
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fas fa-edit',
                             itemId: 'supervisorNotes',
-                            text: '',  hidden: true,
+                            text: 'Supervisor',  hidden: true,
                             bind: { hidden: '{requestActions.supervisorNotes}' }
                         },
                         {
@@ -155,7 +163,7 @@ Ext.define('Breeze.view.requests.Main', {
                             ui: 'decline alt', style: 'margin-left: 4pt',
                             itemId: 'cancelRequest',
                             text: 'Cancel Request', hidden: true,
-                            bind: { hidden: '{!requestActions.cancelRequest}' }
+                            bind: { hidden: '{!requestActions.cancel}' }
                         }
                     ]
                 },
@@ -220,7 +228,7 @@ Ext.define('Breeze.view.requests.Main', {
                                     text:'Conflicts',
                                     dataIndex: 'request_conflicts',
                                     flex: 1,
-                                    // Delete day tool
+                                    // Remove button
                                     cell: {
                                         toolDefaults: {
                                             ui: 'employeeinfo-grid-tool',
@@ -229,6 +237,10 @@ Ext.define('Breeze.view.requests.Main', {
                                         tools: [
                                             {
                                                 iconCls: 'x-fas fa-times',
+                                                hidden: true,
+                                                bind: {
+                                                    hidden: '{!requestActions.deleteDay}'
+                                                }
                                                 // handler: 'onDeleteAccrualInterval'
                                             }
                                         ]
@@ -253,7 +265,7 @@ Ext.define('Breeze.view.requests.Main', {
             userCls:'requests-content',
 
             flex: 2,
-            minWidth: '520pt', // 600pt
+            minWidth: '500pt', // 600pt
             layout: 'vbox',
             items:[
                 {

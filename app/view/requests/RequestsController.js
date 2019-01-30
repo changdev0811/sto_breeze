@@ -228,6 +228,104 @@ Ext.define('Breeze.view.requests.RequestsController', {
                 
     },
 
+    toggleLeaveRequestActionButtons: function(){
+        var vm = this.getViewModel(),
+            leaveRequest = vm.get('selectedRequest'),
+            status = leaveRequest.request_status.toUpperCase(),
+            companyConfig = vm.get('companyConfig').getAt(0),
+            actions = vm.get('requestActions');
+        switch (status) {
+            case "DRAFT":
+                actions = {
+                    employeeNotes: true,
+                    employeeNotesReadOnly: false,
+                    supervisorNotes: false,
+                    denyNotes: false,
+                    submit: true,
+                    delete: true,
+                    cancel: false,
+                    deleteDay: true
+                };
+                break;
+            case "PENDING":
+                actions = {
+                    employeeNotes: false,
+                    employeeNotesReadOnly: true,
+                    supervisorNotes: true,
+                    denyNotes: false,
+                    submit: false,
+                    delete: false,
+                    // Show cancel button based on config settings
+                    cancel: (companyConfig.get('CancelLeavePending') !== 131),
+                    deleteDay: false
+                };
+                break;
+            case "CANCELLATION PENDING":
+                actions = {
+                    employeeNotes: false,
+                    employeeNotesReadOnly: true,
+                    supervisorNotes: true,
+                    denyNotes: false,
+                    submit: false,
+                    delete: false,
+                    cancel: false,
+                    deleteDay: false
+                };
+                break;
+            case "CANCELLATION DENIED":
+                actions = {
+                    employeeNotes: false,
+                    employeeNotesReadOnly: true,
+                    supervisorNotes: true,
+                    denyNotes: true,
+                    submit: false,
+                    delete: false,
+                    cancelRequest: false,
+                    deleteDay: false
+                };
+                break;
+            case "APPROVED":
+                actions = {
+                    employeeNotes: false,
+                    employeeNotesReadOnly: true,
+                    supervisorNotes: true,
+                    denyNotes: false,
+                    submit: false,
+                    delete: false,
+                    // Show cancel button based on config settings
+                    cancel: (companyConfig.get('CancelLeaveNotTaken') !== 131),
+                    deleteDay: false
+                };
+                break;
+            case "DENIED":
+                actions = {
+                    employeeNotes: true,
+                    employeeNotesReadOnly: false,
+                    supervisorNotes: true,
+                    denyNotes: true,
+                    submit: true,
+                    delete: true,
+                    cancel: false,
+                    deleteDay: true
+                };
+                break;
+            case "CANCELLED":
+                actions = {
+                    employeeNotes: true,
+                    employeeNotesReadOnly: false,
+                    supervisorNotes: true,
+                    denyNotes: false,
+                    submit: false,
+                    delete: true,
+                    cancel: false,
+                    deleteDay: true
+                };
+                break;
+        }
+        vm.set('requestActions', actions);
+        
+    },
+
     // === [Event Handlers] ===
 
     onCreateRequest: function(btn){
@@ -375,6 +473,9 @@ Ext.define('Breeze.view.requests.RequestsController', {
         this.copyRecordToViewModel(
             selected.getData(), 'selectedRequest'
         );
+
+        // Update values in view model that determine which request action buttons are shown
+        this.toggleLeaveRequestActionButtons();
 
         // Load requested days for selected leave request
         this.loadRequestedDays(selected.get('unique_id'));

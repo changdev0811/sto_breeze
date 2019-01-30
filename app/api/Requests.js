@@ -46,10 +46,43 @@ Ext.define('Breeze.api.Requests', {
     },
 
     /**
+     * Delete leave request API call, ported from LeaveRequestSlidePanel.js
+     * @param {String} requestId Unique ID of request to delete
+     * @return {Promise} Promise resolving or rejecting with toast message object
      * @api /deleteLeaveRequest
      */
-    deleteRequest: function(){
-
+    deleteRequest: function(requestId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'deleteLeaveRequest',
+                {
+                    request_id: requestId
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(r.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Leave Request deleted successfully'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Unable to delete Leave Request'
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unable to delete Leave Request',
+                        error: err
+                    });
+                }
+            )
+        });
     },
 
     /**
