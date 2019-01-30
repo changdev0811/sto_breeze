@@ -9,6 +9,10 @@ Ext.define('Breeze.view.requests.Main', {
     extend: 'Ext.Container',
     alias: 'widget.requests.main',
 
+    requires: [
+        'Ext.grid.plugin.CellEditing'
+    ],
+
     userCls:'requests-content',
 
     // Layout and base styles
@@ -23,7 +27,7 @@ Ext.define('Breeze.view.requests.Main', {
             xtype: 'container',
             userCls:'requests-content',
             //flex: 1,
-            width: '220pt',
+            width: '320pt', // 220pt
             layout: 'vbox',
             items:[
                 {
@@ -34,7 +38,8 @@ Ext.define('Breeze.view.requests.Main', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            handler: 'showLeaveRequestForm'
+                            // handler: 'showLeaveRequestForm'
+                            handler: 'showCreateRequestDialog'
                         }
                     ],
                     flex: 1,
@@ -51,6 +56,7 @@ Ext.define('Breeze.view.requests.Main', {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
+                            reference: 'leaveRequestsGrid',
                             ui: 'employeeinfo-shift-grid requests-grid',
                             userCls: 'no-background requests-fieldset',
                             // userCls: 'requests-fieldset',
@@ -60,13 +66,16 @@ Ext.define('Breeze.view.requests.Main', {
                                 mode: 'single'
                             },
                             hideHeaders: true,
-                            rootVisible: false,
+                            plugins: { gridcellediting: true },
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
                                     text:'',
                                     dataIndex: 'request_name',
                                     flex: 1.5,
+                                    editor: {
+                                        xtype: 'breeze-textfield'
+                                    }
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -100,12 +109,95 @@ Ext.define('Breeze.view.requests.Main', {
                                 store: '{leaveRequests}'
                             },
                             listeners: {
-                                select: 'onLeaveRequestSelect'
+                                select: 'onLeaveRequestSelect',
+                                // beforecompleteedit: 'onLeaveRequestBeforeCompleteEdit',
+                                edit: 'onLeaveRequestEdit'
                             }
                             
                         }
                         //     ]
                         // },
+                    ],
+                    buttonToolbar: { ui:'requests-leave-panel' },
+                    // Leave Requests action buttons
+                    buttons: [
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
+                            itemId: 'employeeNotes',
+                            text: 'Employee Notes', hidden: true,
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotes}' }
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
+                            itemId: 'employeeNotesReadOnly',
+                            text: 'Employee Notes', hidden: true,
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotesReadOnly}' }
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
+                            itemId: 'supervisorNotes',
+                            text: 'Supervisor',  hidden: true,
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.supervisorNotes}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'action alt', iconCls: 'x-fas fa-edit',
+                            itemId: 'multiNotes',
+                            text: 'Notes', hidden: true,
+                            bind: { hidden: '{!leaveRequestMultipleNotes}' },
+                            menu: {
+                                xtype: 'menu',
+                                defaults: { xtype: 'menuitem' },
+                                items: [
+                                    {
+                                        text: 'Employee Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.employeeNotes}' }
+                                    },
+                                    {
+                                        text: 'Employee Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' }
+                                    },
+                                    {
+                                        text: 'Supervisor Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.supervisorNotes}' }
+                                    },
+                                    {
+                                        text: 'Deny Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.denyNotes}' }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'spacer'
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'confirm alt', itemId: 'submit',
+                            text: 'Submit', hidden: true,
+                            bind: { hidden: '{!requestActions.submit}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline alt', style: 'margin-left: 4pt',
+                            itemId: 'delete',
+                            text: 'Delete', hidden: true,
+                            bind: { hidden: '{!requestActions.delete}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'decline alt', style: 'margin-left: 4pt',
+                            itemId: 'cancelRequest',
+                            text: 'Cancel Request', hidden: true,
+                            bind: { hidden: '{!requestActions.cancel}' }
+                        }
                     ]
                 },
                 {
@@ -115,6 +207,11 @@ Ext.define('Breeze.view.requests.Main', {
                     title: 'Requested Days',
                     tools: [
                         {
+                            iconCls: 'x-fas fa-plus',
+                            handler: 'showLeaveRequestForm'
+                            // handler: 'showCreateRequestDialog'
+                        },
+                        {
                             iconCls: 'x-fas fa-table',
                             handler: 'onFyiNavClick'
                         }
@@ -122,56 +219,75 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
-                        // {
-                        //     xtype:'container',
-                        //     userCls:'requests-fieldset',
-                        //     layout: 'fit',
-                        //     flex:1,
-                        //     items: [
 
                         {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
+                            reference: 'requestedDaysGrid',
                             ui: 'employeeinfo-shift-grid requests-grid',
                             userCls: 'requests-fieldset no-background',
                             scrollable:'y', flex: 1,
+                            plugins: { gridcellediting: true },
                             layout: 'hbox',
                             // hideHeaders: true,
-                            rootVisible: false,
                             columns: [
                                 {
                                     xtype: 'datecolumn',
                                     text:'Date',
                                     dataIndex: 'request_date',
+                                    format: 'm/d/Y',
                                     flex: 2,
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text:'Category',
                                     dataIndex: 'category_name',
-                                    flex: 3,
+                                    flex: 2,
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    text:'Hours',
+                                    bind: {
+                                        text: '{requestedDaysAmountColumnTitle}'
+                                    },
                                     dataIndex: 'Amount',
                                     flex: 1,
+                                    editor: {
+                                        xtype: 'numberfield'
+                                    }
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text:'Conflicts',
                                     dataIndex: 'request_conflicts',
                                     flex: 1,
+                                    // Remove button
+                                    cell: {
+                                        toolDefaults: {
+                                            ui: 'employeeinfo-grid-tool',
+                                            zone: 'end'
+                                        },
+                                        tools: [
+                                            {
+                                                iconCls: 'x-fas fa-times',
+                                                hidden: true,
+                                                bind: {
+                                                    hidden: '{!requestActions.deleteDay}'
+                                                }
+                                                // handler: 'onDeleteAccrualInterval'
+                                            }
+                                        ]
+                                    }
                                 }
                             ],
-                            //reference: 'departmentTree',
                             bind: {
                                 store: '{requestedDays}'
+                            },
+                            listeners: {
+                                beforeedit: 'onRequestedDaysBeforeEdit',
+                                edit: 'onRequestedDaysEdit'
                             }
-                        }
-                        //     ]
-                        // },
+                        },
                     ]
                 },
             ]
@@ -182,7 +298,7 @@ Ext.define('Breeze.view.requests.Main', {
             userCls:'requests-content',
 
             flex: 2,
-            minWidth: '600pt',
+            minWidth: '500pt', // 600pt
             layout: 'vbox',
             items:[
                 {
@@ -313,7 +429,7 @@ Ext.define('Breeze.view.requests.Main', {
                             inline: true,
                             userCls:'legend' ,
                             /*flex:1,*/
-                            minWidth:'614pt',
+                            // minWidth:'614pt',
                             height:'45pt',
                             padding: '8pt 8pt 0pt 8pt',
                             layout: {

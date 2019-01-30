@@ -12,9 +12,13 @@ Ext.define('Breeze.model.calendar.Event', {
     //     {name: 'finish', type: 'date'}
     // ],
 
+    fields: [
+        {name: 'isLeave', type: 'boolean', default: false}
+    ],
+
     init: function(){
         // this.callParent(arguments);
-        console.info('Event init');
+        // console.info('Event init');
     },
 
     getDescription: function(){
@@ -23,6 +27,10 @@ Ext.define('Breeze.model.calendar.Event', {
 
     setDescription: function(description){
         this.set('durationDesc', description);
+    },
+
+    getIsLeave: function(){
+        return this.get('isLeave');
     },
 
     // getStartDate: function(){

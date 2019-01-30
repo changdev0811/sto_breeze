@@ -9,9 +9,12 @@ Ext.define('Breeze.model.record.leaveRequest.Day', {
     extend: 'Breeze.model.Base',
     alias: 'breeze.model.record.leaverequest.day',
     fields: [
-        'request_date', 'category_name', 'Amount',
-        'request_conflicts', 'category_code',
-        'recording_mode'
+        {name: 'request_date', type: 'date'},
+        {name: 'category_name', type: 'string'},
+        {name:'Amount', type: 'number'},
+        {name: 'request_conflicts', type: 'integer'},
+        {name: 'category_code', type: 'string'},
+        {name: 'recording_mode', type: 'integer'}
     ],
     hasMany: {
         model: 'Breeze.model.record.leaveRequest.Conflict',

@@ -2051,8 +2051,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('shift change');
     },
 
-
-    // TODO: Implement delete policy handler
     onDeletePolicy: function (comp) {
         var me = this,
             policyId = this.getViewModel().get('policyData').ID;

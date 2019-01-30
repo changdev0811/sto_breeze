@@ -49,7 +49,7 @@ Ext.define('Breeze.store.calendar.Events', {
 
     listeners: {
         beforeload: function() {
-            console.info('Before setting event params');
+            // console.info('Before setting event params');
             this.provideAuthCookieToProxy();
             this.useJsonParams();
             this.getProxy().extraParams.type = this.getEventType();
