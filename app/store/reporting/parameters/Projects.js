@@ -16,7 +16,8 @@ Ext.define('Breeze.store.reporting.parameters.Projects', {
         beforeload: function() {
             this.provideAuthCookieToProxy();
             this.useJsonParams();
-            this.addExtraParams({showNoProjects: this.getShowNoProjects()});
+            // this.addExtraParams({showNoProjects: this.getShowNoProjects()});
+            this.addExtraParams({showNoProject: this.getShowNoProjects()});
         }
     },
 

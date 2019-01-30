@@ -313,7 +313,8 @@ Ext.define('Breeze.view.reporting.employee.Timesheet', {
                             bodyAlign: 'stretch',
                             ui: 'reporting',
                             name: 'ShowHours',
-                            bind: '{reportParams.showhours}'
+                            // bind: '{reportParams.showhours}'
+                            bind: '{reportParams.show_overtime}'
                         }
                     ]
                 },

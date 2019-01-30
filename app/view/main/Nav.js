@@ -32,6 +32,7 @@ Ext.define('Breeze.view.main.Nav', {
     layout: 'vbox',
 
     items: [
+        //----- Header -------------------------------------------
         {
             xtype: 'container',
             userCls: 'main-nav-header',
@@ -78,26 +79,21 @@ Ext.define('Breeze.view.main.Nav', {
 
             ]
 
-        },
+        },//------- end of Header --------------------------
+        //---------- Body ----------------------------------
         {
             xtype: 'container',
             flex: 1,
             layout: 'hbox',
             userCls: 'full-content',
             items: [
-
+                //----------- side tree-node navigation bar --------
                 {
-
                     xtype: 'container',
                     layout: 'vbox',
-                    // minWidth: '200pt',
-                    // maxWidth: '200pt',
-                    //width: 'auto',
-                    // flex: 1,
                     reference: 'navSideBar',
                     userCls: ['main-nav-side-bar'],
                     items: [
-
                         {
                             xtype: 'container',
                             flex: 1,
@@ -182,7 +178,7 @@ Ext.define('Breeze.view.main.Nav', {
                                             menu: {
                                                 xtype: 'menu',
                                                 items: [
-                                                    {
+                                                    /*{
                                                         xtype: 'menucheckitem',
                                                         text: 'Enable Night Mode',
                                                         bind: {
@@ -191,12 +187,15 @@ Ext.define('Breeze.view.main.Nav', {
                                                         listeners: {
                                                             checkChange: 'onMenuNightModeChange'
                                                         }
-                                                    },
+                                                    },*/
                                                     {
                                                         xtype: 'menuitem',
                                                         text: 'User Preferences',
                                                         iconCls: 'x-fas fa-user-cog',
-                                                        separator: true
+                                                        listeners: {
+                                                            click: 'onUserPreferences'
+                                                        },
+                                                        // separator: true
                                                         //    icon: 'resources/icons/user-cog.svg'
                                                     }/*, {
                                                         xtype: 'menuitem',
@@ -209,6 +208,45 @@ Ext.define('Breeze.view.main.Nav', {
                                         }
                                     ]
                                 },
+                                /*{
+                                    xtype: 'breeze.navbar.navtree',
+                                    defaults: {
+                                        xtype: 'breeze.navbar.navtreeitem'
+                                    },
+                                    micro: false,
+                                    userCls: ['main-nav-side-menu', 'normal'],
+                                    ui: 'SideNav',
+                                    expanderFirst: false,
+                                    expanderOnly: false,
+                                    singleExpand: true,
+                                    selectOnExpander: true,
+                                    floatLeafItems: false,
+                                    store: {
+                                        root: {
+                                            children: [
+                                                {
+                                                    text: 'Venture Interactive',
+                                                    iconCls: 'x-fas fa-user',
+                                                    // routeAct: false,
+                                                    // routeRef: 'personal',
+                                                    // id: 'personal',
+                                                    children: [
+                                                        {
+                                                            text: 'User Preferences', leaf: true,
+                                                            iconCls: 'x-fas fa-user-cog',
+                                                            routeRef: 'user/preferences',
+                                                            id: 'preferences'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        type: 'tree'
+                                    },
+                                    listeners: {
+                                        selectionchange: 'onSideNavSelect'
+                                    }
+                                },*/
                                 {
                                     // Side navigation menu tree
                                     xtype: 'breeze.navbar.navtree',
@@ -233,7 +271,7 @@ Ext.define('Breeze.view.main.Nav', {
                             ]
                         }
                     ]
-                },
+                },//----------- end of side tree-node navigation bar
                 {
                     xtype: 'container',
                     reference: 'sidePanelContainer',

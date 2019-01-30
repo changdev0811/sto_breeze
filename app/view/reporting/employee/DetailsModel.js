@@ -22,18 +22,20 @@ Ext.define('Breeze.view.reporting.employee.DetailsModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Details Report',
                 inccats: '',
-                showadjust: null,
-                shownotes: null,
-                notesonly: null,
+                showadjust: false,
+                shownotes: false,
+                notesonly: false,
                 submit_approve: true,
                 submit_submit: false,
                 submit_unsubmit: false,
-                dStart: (new Date()),
-                dEnd: (new Date()),
+                sdate: (new Date()),
+                edate: (new Date()),
+                // dStart: (new Date()),
+                // dEnd: (new Date()),
+                sdateUtc: (new Date().toUTCString()),
+                edateUtc: (new Date().toUTCString()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',

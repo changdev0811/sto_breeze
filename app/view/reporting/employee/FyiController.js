@@ -65,14 +65,6 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -98,7 +90,8 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
-        if(vmData.reportParams.incids == ''){
+        // if(vmData.reportParams.incids == ''){
+        if(vmData.reportParams.empids == ''){
             valid = false;
             if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
                 messages.push('Please select one or more Departments containing Employees.');
@@ -128,7 +121,8 @@ Ext.define('Breeze.view.reporting.employee.FyiController', {
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
-            'reportParams.incids', 
+            // 'reportParams.incids',
+            'reportParams.empids',
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
                     nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,

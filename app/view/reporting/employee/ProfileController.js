@@ -72,14 +72,6 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
                         );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
                     }
                 }}
             }
@@ -117,6 +109,11 @@ Ext.define('Breeze.view.reporting.employee.ProfileController', {
         if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
+        }
+
+        if(vmData.reportParams.recording_years == ''){
+            valid = false;
+            messages.push('Please Select A Recording Year');
         }
 
         if(!valid){

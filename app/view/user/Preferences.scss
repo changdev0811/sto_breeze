@@ -1,0 +1,17 @@
+/**
+ * User Preferences Stylesheet
+ * Classes and UI overrides in this sheet should be specific to items
+ * that appear within the User Preferences view or its children
+ */
+@include textfield-ui(
+    $ui: 'weired',
+    $focused-input-underline-color: map-get($admin-colors, 'light'),
+    $input-color: map-get($admin-text-colors, 'base'),
+    $input-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include field-ui(
+    $ui: 'weired',
+    $label-color: map-get($admin-text-colors, 'base'),
+    $focused-label-color: map-get($admin-text-colors, 'base')
+)

@@ -66,14 +66,6 @@ Ext.define('Breeze.view.reporting.employee.InformationController', {
                             companyParams.get('RepSignature')
                         );
                         vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
-                        );
-                        vm.set(
                             'reportParams.EmployeeNumber',
                             companyParams.get('Captions').EmployeeNumber
                         );

@@ -41,11 +41,10 @@ Ext.define('Breeze.view.reporting.employee.TimesheetModel', {
                 LogoInHeader: false,    // reset by RepLogo of companyConfig store
                 NameInHeader: false,    // reset by RepComp of companyConfig store
                 RepSignature: false,    // reset by RepSignature of companyConfig store
-                CompanyName: '',        // reset by CompanyName of companyConfig store
-                RepLogoPath: '',        // reset by RepLogoPath of companyConfig store
                 ReportTitle: 'Employee Timesheet Report',
                 hhmm_format: true,
-                showhours: null,
+                // showhours: false,
+                show_overtime: false,   // Accordint to tko code, instead of showhours
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',

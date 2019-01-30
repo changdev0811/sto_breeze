@@ -313,7 +313,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivity', {
                                     //     xtype: 'datepicker',
                                     //     title: 'Start Date'
                                     // },
-                                    bind: '{reportParams.dStart}'
+                                    bind: '{reportParams.sdate}'
+                                    // bind: '{reportParams.dStart}'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -323,7 +324,8 @@ Ext.define('Breeze.view.reporting.employee.TimeActivity', {
                                     //     xtype: 'datepicker',
                                     //     title: 'End Date'
                                     // },
-                                    bind: '{reportParams.dEnd}'
+                                    bind: '{reportParams.edate}'
+                                    // bind: '{reportParams.dEnd}'
                                 }
                             ]
                         }

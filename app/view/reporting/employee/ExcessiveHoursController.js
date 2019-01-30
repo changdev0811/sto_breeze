@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHoursController', {
 
         // Create instance of report generation API class
         this.reportApi = Ext.create(
-            'Breeze.api.reporting.employee.Details',
+            'Breeze.api.reporting.employee.ExcessiveHours',
             {exceptionHandler: this.onReportException}
         );
 
@@ -80,14 +80,6 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHoursController', {
                         vm.set(
                             'reportParams.RepSignature',
                             companyParams.get('RepSignature')
-                        );
-                        vm.set(
-                            'reportParams.CompanyName',
-                            companyParams.get('CompanyName')
-                        );
-                        vm.set(
-                            'reportParams.RepLogoPath',
-                            companyParams.get('RepLogoPath')
                         );
                     }
                 }}
@@ -167,6 +159,15 @@ Ext.define('Breeze.view.reporting.employee.ExcessiveHoursController', {
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
+        );
+
+        vm.set(
+            'reportParams.dStartUtc',
+            vm.get('reportParams.dStart').toUTCString()
+        );
+        vm.set(
+            'reportParams.dEndUtc',
+            vm.get('reportParams.dEnd').toUTCString()
         );
     },
 

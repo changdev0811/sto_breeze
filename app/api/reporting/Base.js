@@ -139,6 +139,26 @@ Ext.define('Breeze.api.reporting.Base', {
         });
     },
 
+    makeApiCall: function(method, params){
+        var api = this.api;
+        return new Promise(function(resolve, reject){
+            api.serviceRequest(
+                method,
+                params,
+                true,
+                true,
+                function(r){
+                    console.info(`"${method}" call success`, r);
+                    resolve(r);
+                },
+                function(err){
+                    console.warn(`"${method}" call failed`, err);
+                    reject(err);
+                }
+            );
+        });
+    },
+
     /**
      * Generate new temporary table name
      * @param {String} kind Table kind name

@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.employee.Allowance', {
     
     statics: {
         ajaxCall: '',
-        report: 'EmployeeAllowance'
+        report: 'EmployeeAllowanceProjection'
     },
 
     /**
