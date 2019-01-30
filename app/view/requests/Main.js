@@ -123,24 +123,57 @@ Ext.define('Breeze.view.requests.Main', {
                     buttons: [
                         {
                             xtype: 'button',
-                            iconCls: 'x-fas fa-edit',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotes',
-                            text: 'Employee', hidden: true,
-                            bind: { hidden: '{requestActions.employeeNotes}' }
+                            text: 'Employee Notes', hidden: true,
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotes}' }
                         },
                         {
                             xtype: 'button',
-                            iconCls: 'x-fas fa-edit',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotesReadOnly',
-                            text: 'Employee', hidden: true,
-                            bind: { hidden: '{requestActions.employeeNotesReadOnly}' }
+                            text: 'Employee Notes', hidden: true,
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotesReadOnly}' }
                         },
                         {
                             xtype: 'button',
-                            iconCls: 'x-fas fa-edit',
+                            iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'supervisorNotes',
                             text: 'Supervisor',  hidden: true,
-                            bind: { hidden: '{requestActions.supervisorNotes}' }
+                            bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.supervisorNotes}' }
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'action alt', iconCls: 'x-fas fa-edit',
+                            itemId: 'multiNotes',
+                            text: 'Notes', hidden: true,
+                            bind: { hidden: '{!leaveRequestMultipleNotes}' },
+                            menu: {
+                                xtype: 'menu',
+                                defaults: { xtype: 'menuitem' },
+                                items: [
+                                    {
+                                        text: 'Employee Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.employeeNotes}' }
+                                    },
+                                    {
+                                        text: 'Employee Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' }
+                                    },
+                                    {
+                                        text: 'Supervisor Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.supervisorNotes}' }
+                                    },
+                                    {
+                                        text: 'Deny Notes',
+                                        hidden: true,
+                                        bind: { hidden: '{!requestActions.denyNotes}' }
+                                    }
+                                ]
+                            }
                         },
                         {
                             xtype: 'spacer'

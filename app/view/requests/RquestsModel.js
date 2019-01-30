@@ -22,6 +22,20 @@ Ext.define('Breeze.view.requests.RequestsModel', {
 
     formulas: {
         /**
+         * Formula used to decide if one notes button is shown or if a button
+         * with a mennu is shown instead
+         */
+        leaveRequestMultipleNotes: {
+            bind: '{requestActions}',
+            get: function(data){
+                if(data.employeeNotes + data.employeeNotesReadOnly + data.supervisorNotes + data.denyNotes > 1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        },
+        /**
          * Formula returning the column title for Requested Days' grid
          * 'Amount' column
          */
