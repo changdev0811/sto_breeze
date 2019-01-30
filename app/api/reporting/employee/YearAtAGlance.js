@@ -97,7 +97,8 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
             // Store current user ID from cookie in emp and currentUser
             cust = this.auth.getCookies().cust,
             emp = this.auth.getCookies().emp,
-            currentUser = this.auth.getCookies().emp;
+            currentUser = this.auth.getCookies().emp,
+            offset = 240;
         // use employee id from constructor params, if available
         if(this.getParameters() && this.getParameters()['employeeId']){
             emp = this.getParameters().employeeId;
@@ -113,25 +114,102 @@ Ext.define('Breeze.api.reporting.employee.YearAtAGlance', {
         this.appendParam(params, 'custid', cust);      // According to tko code, instead of customer_id
 
         emp = emp < 0 ? 0 : emp;
-        var mytablename = 'z' + cust + emp + 'YAAG' + new Date().getTime();
+        // var mytablename = 'z' + cust + emp + 'YAAG' + new Date().getTime();
+        var mytablename = me.createTemporaryTableName('YAAG');
 
         this.appendParam(params, 'tablename', mytablename);
 
+        console.info('params in controller', params);
+
         var reportKind = this.statics().report;
+        var ajaxCall = this.statics().ajaxCall;
+
+        var reportParams = params;
+        var yaagTempParams = {}
+
+        yaagTempParams.idtype = modelParamsData.idtype;
+        yaagTempParams.recyear = modelParamsData.recyear;
+        yaagTempParams.recyeartype = modelParamsData.recyeartype;
+        yaagTempParams.tablename = mytablename;
+
+        var incid_arr = modelParamsData.incids.split(",");
+
+        function YAAGToTempTable(incidArr, params){
+            var eid = incidArr.pop();
+            if(eid != undefined){
+                var mParams = Object.assign({}, params);
+                mParams.incids = eid;
+                mParams.offset = offset;
+                me.makeApiCall(
+                    'YAAGtoTempTable',
+                    mParams
+                ).then(
+                    function(r){
+                        return YAAGToTempTable(incidArr, params);
+                    }
+                ).catch(
+                    function(err){
+                        console.warn(err);
+                        return err;
+                    }
+                );
+            } else {
+                me.createReportStore(
+                    reportKind, {"Rows": reportParams}, { format: format }
+                ).then(
+                    function(store){
+                        return(store.getAt(0).get('CurrentPageURL'));
+                    }
+                ).catch(
+                    function(err){
+                        console.warn('Error loading report store', err);
+                        return err;
+                    }
+                );
+            }
+        }
 
         return new Promise(function(resolve, reject){
-            me.createReportStore(
-                reportKind, {"Rows": params}, { format: format }
+            /*me.createTemporaryTable(
+                ajaxCall,
+                mytablename
+            ).then(*/
+            me.makeApiCall(
+                ajaxCall,
+                {
+                    tablename: mytablename,
+                    offset: offset
+                }
             ).then(
-                function(store){
-                    resolve(store.getAt(0).get('CurrentPageURL'));
+                function(r){
+                    resolve(YAAGToTempTable(incid_arr, yaagTempParams));
+                    // me.makeApiCall(
+                    //     'YAAGtoTempTable',
+                    //     yaagTempParams
+                    // ).then(
+                    //     function(r){
+                    //         me.createReportStore(
+                    //             reportKind, {"Rows": params}, { format: format }
+                    //         ).then(
+                    //             function(store){
+                    //                 resolve(store.getAt(0).get('CurrentPageURL'));
+                    //             }
+                    //         ).catch(
+                    //             function(err){
+                    //                 console.warn('Error loading report store', err);
+                    //                 reject(err);
+                    //             }
+                    //         );
+                    //     }
+                    // ).catch(
+
+                    // );
                 }
             ).catch(
                 function(err){
-                    console.warn('Error loading report store', err);
                     reject(err);
                 }
-            )
+            );
         });
     }
 });
