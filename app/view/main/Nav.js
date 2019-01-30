@@ -109,105 +109,13 @@ Ext.define('Breeze.view.main.Nav', {
                                         tap: 'onSideNavToggle'
                                     }
                                 },
-
                                 {
-                                    xtype: 'container',
-                                    layout: 'hbox',
-                                    minHeight: '64pt',
-                                    items: [
-                                        {
-                                            xtype: 'image',
-                                            height: '32pt',
-                                            width: '32pt',
-                                            src: 'resources/photos/default_user.png',
-                                            //bind: {
-                                            //    src: '{profilePicture}'
-                                            //},
-                                            reference: 'infoProfilePicture',
-                                            userCls: 'main-info-profile-picture'
-                                        },
-                                        {
-                                            xtype: 'container',
-                                            flex: 1,
-                                            layout: 'vbox',
-                                            items: [
-                                                // Company Name
-                                                {
-                                                    xtype: 'component',
-                                                    flex: 1,
-                                                    width:'136pt',
-                                                    style: '',
-                                                    userCls: 'main-nav-company-name',
-                                                    reference: 'navHeaderCompanyName',
-                                                    bind: {
-                                                        html: '{header.business}'
-                                                    }
-                                                },
-                                                // User Name
-                                                {
-                                                    xtype: 'component',
-                                                    flex: 1,
-                                                    width:'136pt',
-                                                    style: '',
-                                                    userCls: 'main-nav-user-name',
-                                                    reference: 'navHeaderUserName',
-                                                    bind: {
-                                                        html: '{header.fullname}'
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            menuAlign: 'tr',
-                                            ui: 'mainNavUserButton',
-                                            userCls: 'main-nav-user-button',
-                                            text: '',
-                                            arrow: false,
-                                            iconCls: 'x-fa fa-angle-right',
-                                        },
-                                        /* Actual button */
-                                        {
-                                            xtype: 'button',
-                                            menuAlign: 'tr',
-                                            ui: 'mainNavUserButton',
-                                            userCls: 'main-nav-user-button',
-                                            style: 'hyphens:auto; position:absolute; height:100%; width:220pt; right:0pt',
-                                            text: '',
-                                            arrow: false,
-                                            menu: {
-                                                xtype: 'menu',
-                                                items: [
-                                                    /*{
-                                                        xtype: 'menucheckitem',
-                                                        text: 'Enable Night Mode',
-                                                        bind: {
-                                                            checked: '{nightMode}'
-                                                        },
-                                                        listeners: {
-                                                            checkChange: 'onMenuNightModeChange'
-                                                        }
-                                                    },*/
-                                                    {
-                                                        xtype: 'menuitem',
-                                                        text: 'User Preferences',
-                                                        iconCls: 'x-fas fa-user-cog',
-                                                        listeners: {
-                                                            click: 'onUserPreferences'
-                                                        },
-                                                        // separator: true
-                                                        //    icon: 'resources/icons/user-cog.svg'
-                                                    }/*, {
-                                                        xtype: 'menuitem',
-                                                        text: 'Sign Out',
-                                                        iconCls: 'x-fas fa-sign-out',
-                                                        handler: 'onMenuSignOut'
-                                                    }*/
-                                                ]
-                                            }
-                                        }
-                                    ]
+                                    xtype: 'breeze-user-header',
+                                    reference: 'userHeader',
+                                    companyNameBinding: '{header.business}',
+                                    userNameBinding: '{header.fullname}'
                                 },
+                                
                                 /*{
                                     xtype: 'breeze.navbar.navtree',
                                     defaults: {
