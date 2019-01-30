@@ -99,6 +99,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
     /**
      * Reload requested days store, passing in ID of request to load days for
      * @param {Object} requestId Leave Request ID to load days for
+     * @todo TODO: Navigate calendar to month of first request day on load (see LeaveRequestSlidePanel.js:160)
      */
     loadRequestedDays: function(requestId){
         var me = this,

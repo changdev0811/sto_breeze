@@ -47,6 +47,7 @@ Ext.define('Breeze.api.Requests', {
 
     /**
      * Delete leave request API call, ported from LeaveRequestSlidePanel.js
+     * Should refresh leave request days after success (with empid - 5000)
      * @param {String} requestId Unique ID of request to delete
      * @return {Promise} Promise resolving or rejecting with toast message object
      * @api /deleteLeaveRequest
@@ -88,19 +89,89 @@ Ext.define('Breeze.api.Requests', {
     /**
      * @api /employeeCancelLeaveRequest
      */
-    cancelEmployeeRequest: function(){
-
+    cancelEmployeeRequest: function(requestId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'employeeCancelLeaveRequest',
+                {
+                    request_id: requestId
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: resp.err,
+                            requestId: requestId
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err    
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error',
+                        error: err
+                    });
+                }
+            );
+        });
     },
 
     /**
+     * Change employee leave request notes
+     * @param {String} requestId Unique identifier of leave request to update note for
+     * @param {String} note Note body
+     * @return {Promise} Promise resolving with toast object, and requestId attribute, or
+     *      rejecting with toast object including error attribute, either caught or response err
      * @api /employeeLeaveRequestChangeNotes
      */
-    changeEmployeeRequestNotes: function(){
-
+    changeEmployeeRequestNotes: function(requestId, note){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'employeeLeaveRequestChangeNotes',
+                {
+                    request_id: requestId,
+                    newNote: note
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Leave Reques Employee Notes successfully updated',
+                            requestId: requestId
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Unable to update Leave Request Employee Notes',
+                            error: resp.err
+                        });
+                    }
+                }, 
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occured',
+                        error: err
+                    });
+                }
+            )
+        })
     },
 
     /**
      * @api /supervisorUpdateLeaveRequestNotes
+     * @todo TODO: Implement changeSupervisorRequestNotes for leave request approval view
      */
     changeSupervisorRequestNotes: function(){
 
@@ -318,16 +389,60 @@ Ext.define('Breeze.api.Requests', {
 
 
     /**
+     * Should refresh leave request days after success (with empid - 5000)
+     * @param {String} requestId ID of request day belongs to
+     * @param {Object} record Record of Leave request day to delete
+     * @return {Promise} Promise resolving or rejecting with Toast param objects
      * @api /deleteLeaveRequestDay
      */
-    deleteRequestDay: function(){
-
+    deleteRequestDay: function(requestId, record){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'deleteLeaveRequestDay',
+                {
+                    absence: record.get('request_date'),
+                    request_id: requestId,
+                    catcode: record.get('category_code')
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: 'Leave Request Day successfully deleted'
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: 'Unable to delete Leave Request'
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unable to delete Leave Request (Unknown error)',
+                        error: err
+                    });
+                }
+            )
+        });
     },
 
     privates: {
+        /**
+         * Returns given employee id, or id from cookie if none given
+         * @param {String} value Optional employee id to use
+         */
         resolveEmployeeId: function(value){
             return (Object.isUnvalued(value))? this.auth.getCookies().emp : value;
         },
+        /**
+         * Returns company config record, using getStore to find store if none given
+         * @param {Object} value Optional main record from company config store
+         */
         resolveCompanyConfigRecord: function(value){
             return (Object.isUnvalued(value))? Ext.getStore('CompanyConfig').getAt(0) : value;
         }
