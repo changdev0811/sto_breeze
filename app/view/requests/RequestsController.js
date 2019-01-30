@@ -228,6 +228,11 @@ Ext.define('Breeze.view.requests.RequestsController', {
                 
     },
 
+    /**
+     * Update view model values bound to visibility of various
+     * Leave Request action buttons, based on the request status of currently
+     * selected leave request
+     */
     toggleLeaveRequestActionButtons: function(){
         var vm = this.getViewModel(),
             leaveRequest = vm.get('selectedRequest'),
@@ -392,6 +397,17 @@ Ext.define('Breeze.view.requests.RequestsController', {
         }
     },
 
+    /**
+     * Handle event fired by completion of editing a cell in requested
+     * days grid.
+     * 
+     * Applies validation check and reverts value if validation fails
+     * 
+     * @param {*} location Location object provided by cell editor plugin
+     * @param {*} editor Editor object
+     * @param {*} newVal New value
+     * @param {*} oldVal Old value
+     */
     onRequestedDaysEdit: function(location, editor, newVal, oldVal){
         var vm = this.getViewModel(),
             hoursMode = (vm.get('empShiftTime.recording_mode') == 21),
@@ -431,10 +447,10 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
     /**
      * Event handler for editor on Leave Request grid's name column
-     * @param {*} location 
-     * @param {*} editor 
-     * @param {*} newValue 
-     * @param {*} oldValue 
+     * @param {*} location Location object provided by cell editor plugin
+     * @param {*} editor Editor object
+     * @param {*} newVal New value
+     * @param {*} oldVal Old value
      */
     onLeaveRequestEdit: function(location, editor, newValue, oldValue){
         // console.info('Leave request edit');
