@@ -15,6 +15,7 @@ Ext.define('Breeze.view.main.Nav', {
         'Breeze.view.main.NavController',
         'Breeze.widget.punch.AnalogClock',
         'Breeze.widget.punch.DigitalClock',
+        'Breeze.widget.navBar.UserHeader',
         'Ext.menu.Menu',
         'Ext.menu.Item',
         'Breeze.widget.navBar.NavTree',

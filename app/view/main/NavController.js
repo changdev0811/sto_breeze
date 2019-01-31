@@ -520,11 +520,44 @@ Ext.define('Breeze.view.main.NavController', {
     onPersonalYaagRoute: function(){
         var vm = this.getViewModel();
         var emp = vm.get('userId');
-        this.changeContent(
-            Ext.create('Breeze.view.employee.YearAtAGlance', {
-                data: { employee: emp }
-            })
-        );
+        var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
+        var me = this;
+        yaag.process().then(
+            function(url){
+                if(typeof url == "string"){
+                    Ext.toast({
+                        message: 'Year at a Glance report successfully generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    // window.open(url,'_blank');
+                    me.changeContent(
+                        Ext.create('Breeze.view.employee.YearAtAGlance', {
+                            data: { employee: emp }, viewModel: { data: { path: url }}
+                        })
+                    );
+                } else {
+                    if(url.Message){
+                        Ext.toast({
+                            message: 'Year at a Glance Error: <br>' + url.Message,
+                            type: Ext.Toast.ERROR,
+                            timeout: 10000
+                        });
+                    }
+                }
+                Ext.util.History.back();
+            }
+        ).catch(
+            function(err){
+                console.warn('Error generating YAAG report: ', err);
+                Ext.toast({
+                    message: 'Error generating Year at a Glance Report', 
+                    timeout: 10000,
+                    type: Ext.Toast.ERROR
+                });
+                Ext.util.History.back();
+            }
+        )
     },
 
     /*
