@@ -8,6 +8,12 @@ Ext.define('Breeze.view.user.PreferencesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.user.preferences',
 
+
+
+    onInit: function(component){
+        this.theme = Breeze.helper.Theme;
+        this.getViewModel().set('nightMode', (this.theme.getMode() == 'night'));
+    },
     /**
      * handler for 'Apply' action button
      */
@@ -15,5 +21,11 @@ Ext.define('Breeze.view.user.PreferencesController', {
         console.info('Apply Clicked');
         params = this.getViewModel().getData().params;
         console.info("user preferences info", params);
-    }
+    },
+
+    onMenuNightModeChange: function(field, checked){
+        this.theme.swap((checked)? 'night' : 'day');
+    },
+
+
 });
