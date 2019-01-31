@@ -237,7 +237,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                     layout: {
                         animation: 'fade'
                     },
-                    tabBarPosition: 'bottom',
+                    //tabBarPosition: 'bottom',
+                    tabBarPosition: 'top',
                     //ui: 'employeeinfo-small-tabs',
                     tabBar: {
                         defaultTabUI: 'employeeinfo-small-tabs',
