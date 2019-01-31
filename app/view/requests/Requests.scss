@@ -58,6 +58,11 @@
  $tool-color :  map-get($root-colors, 'base'),
 );
 
+@include panel-ui(
+    $ui: 'requests-main-panel',
+    $header-font-size: $panel-title-font-size
+);
+
 
 @include toolbar-ui(
     $ui: 'requests-input-panel',
@@ -108,7 +113,6 @@
     $hovered-icon-color: map-get($root-colors, 'base'),
     $pressed-icon-color: map-get($root-colors, 'base'),
 );
-
 
 .requests-radio-input{
     margin:20pt 0pt 0pt 0pt;
