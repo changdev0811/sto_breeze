@@ -46,6 +46,17 @@ Ext.define('Breeze.view.requests.RequestsModel', {
             get: function(data){
                 return (data.recordingMode == 21)? 'Hours' : 'Percent';
             }
+        },
+        /**
+         * Formula returning whether amount is in hours
+         */
+        amountInHoursMode: {
+            bind: {
+                recordingMode: '{empShiftTime.recording_mode}'
+            },
+            get: function(data){
+                return (data.recordingMode == 21);
+            }
         }
     }
 

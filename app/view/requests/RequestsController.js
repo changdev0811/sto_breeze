@@ -49,6 +49,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
         // Load emp shift time info
         Ext.create('Breeze.api.Employee').getShiftTime(vm.get('employeeId')).then((r)=>{
             vm.set('empShiftTime', r);
+            me.updateCalendarFormViewtModel();
         }).catch((e)=>{
             console.warn('Failed to load employee shift time with getEmpShiftTime');
         });
@@ -193,6 +194,16 @@ Ext.define('Breeze.view.requests.RequestsController', {
             
             vm.setStores({calendar: calStore});
         }});
+    },
+
+    /**
+     * Makes calendar add event form inherit this view's viewmodel
+     */
+    updateCalendarFormViewModel: function(){
+        var cmp = this.lookup('calendarPanel').getView().getAt(0),
+            form = cmp.getAddForm();
+            Ext.merge(form, {viewModel: {parent: this.getViewModel()}});
+            cmp.setAddForm(form);
     },
 
     /**

@@ -379,14 +379,10 @@ Ext.define('Breeze.view.requests.Main', {
                                         ui:'dark-themed-dialog',
                                         saveButton:       { ui:'alt confirm' },
                                         cancelButton:     { ui:'alt action', userCls:'cancel-button'},
-                                        //startDateField:   { ui:'employee-calendar-form' },
-                                        //startTimeField:   { ui:'employee-calendar-form' },
-                                        //endDateField:     { ui:'employee-calendar-form' },
-                                        //endTimeField:     { ui:'employee-calendar-form' },
-                                        //allDayField:      { ui:'employee-calendar-form' },
-                                        //descriptionField: { ui:'employee-calendar-form' },
-                                        toolbarUi:'employee-calendar-form'
-                                        
+                                        toolbarUi:'employee-calendar-form',
+                                        bind: {
+                                            hoursMode: '{amountInHoursMode}'
+                                        }
                                     },
 
                                     editForm:{
@@ -402,7 +398,8 @@ Ext.define('Breeze.view.requests.Main', {
                                         //endTimeField:     { ui:'employee-calendar-form' },
                                         //allDayField:      { ui:'employee-calendar-form' },
                                         //descriptionField: { ui:'employee-calendar-form' },
-                                        toolbarUi:'employee-calendar-form'
+                                        toolbarUi:'employee-calendar-form',
+                                        hoursMode: false
                                     },
 
                                     xtype: 'calendar-month',
