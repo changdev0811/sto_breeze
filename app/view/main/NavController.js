@@ -300,6 +300,7 @@ Ext.define('Breeze.view.main.NavController', {
         button.setCollapsed(collapsed);
         var navTree = this.lookup('navSideMenuTree');
         var sideBar = this.lookup('navSideBar');
+        this.lookup('userHeader').setCollapsed(collapsed);
         // update layout of punch clock
         //this.lookup('navPunchClock').setMicro(collapsed);
         // If button's collapsed state isn't the same as
@@ -460,9 +461,9 @@ Ext.define('Breeze.view.main.NavController', {
         this.changeContent(info);
     },
 
-    onUserPreferences: function() {
-        this.redirectTo('user/preferences');
-    },
+    // onUserPreferences: function() {
+    //     this.redirectTo('user/preferences');
+    // },
 
     /**
      * Handle personal FYI route
