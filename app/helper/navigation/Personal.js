@@ -73,18 +73,16 @@ Ext.define('Breeze.helper.navigation.Personal', {
                 routeEvent: 'sidepanelopen',
                 id: 'reports'
             }, {
-                text: 'Help', leaf: true,
-                iconCls: 'x-fas fa-question-circle',
-                routeRef: 'help',
-                id: 'help'
-            },
-            {
                 text: 'User Preferences', leaf: true,
                 iconCls: 'x-fas fa-user-cog',
                 routeRef: 'user/preferences',
                 id: 'perferences'
-            },
-            {
+            }, {
+                text: 'Help', leaf: true,
+                iconCls: 'x-fas fa-question-circle',
+                routeRef: 'help',
+                id: 'help'
+            }, {
                 text: 'Sign Out', leaf: true,
                 iconCls: 'x-fas fa-sign-out',
                 routeRef: 'signout',
