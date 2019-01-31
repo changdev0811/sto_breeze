@@ -18,6 +18,63 @@
 }
 
 
+// styling applied to employee-fyi-fieldset title
+.fyi-fieldset {
+    border:solid 1px white;
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0, bottom: 0.5)
+    );
+
+    .x-form-fieldset-title {
+        color: map-get($employee-fyi-text-colors, 'base');
+        background-color:map-get($employee-fyi-colors, 'row-dark');
+        font-weight:1000;
+        font-size: map-get($root-font-sizes, 'detail');
+        padding: edge-size-from-relative(
+            $base: $scoped-root-panel-body-padding-base,
+            $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25 )
+        );
+    }
+
+}
+
+.no-border {
+    border:none !important;
+}
+
+// styling applied to employee-fyi-fieldset title
+.no-padding  {
+
+    .x-form-fieldset-body-el {
+        //margin:0;
+        padding:0 !important;
+    }
+
+
+}
+
+// styling applied to employee-fyi-fieldset title
+.no-margin {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0)
+    );
+}
+
+.no-side-margin {
+    margin: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0, right: 0, bottom: 0.5)
+    );
+}
+
+
+.no-background {
+    background:transparent !important;
+}
+
+
 
 @include paneltitle-ui(
     $ui: 'employee-fyi-panel',
@@ -71,6 +128,42 @@
 
 
 
+@include field-ui(
+    $ui: 'fyi',
+    $label-color: map-get($employee-fyi-text-colors, 'light'),
+    $focused-label-color: map-get($employee-fyi-text-colors, 'base'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+);
+
+@include trigger-ui(
+    $ui: 'fyi',
+    $icon-color: map-get($employee-fyi-text-colors, 'base'),
+    $hovered-icon-color: map-get($employee-fyi-colors, 'dark'),
+    $pressed-icon-color: map-get($employee-fyi-colors, 'medium')
+);
+
+@include checkboxfield-ui(
+    $ui: 'fyi',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $box-label-color: map-get($employee-fyi-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include radiofield-ui(
+    $ui: 'fyi',
+    $box-label-color: map-get($employee-fyi-text-colors, 'base'),
+    $box-label-font-size: map-get($root-font-sizes, 'detail')
+);
+
+@include textfield-ui(
+    $ui: 'fyi-text',
+    $focused-input-underline-color: map-get($employee-fyi-colors, 'light'),
+    $input-color: map-get($employee-fyi-text-colors, 'base'),
+    $input-font-size: map-get($root-font-sizes, 'detail')
+);
+
+
 // == Panel Version Styling ==
 
 @include panel-ui(
@@ -80,3 +173,265 @@
     $body-background-color: map-get($employee-fyi-colors,'base'),
     $body-padding: map-path($root-panel-sizes, 'body' 'padding')
 );
+
+
+
+@include grid-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+
+
+
+@include dataview-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+)
+
+@include checkcell-ui(
+    $ui: 'employee-fyi-grid',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $disabled-checkbox-color: #ffffff,
+);
+
+
+
+@include gridcell-ui(
+    $ui: 'employee-fyi-grid',
+
+
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+
+
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        // $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+        $weights: (top: 0.5, left: 0.5, right: 0.5, bottom: 0.5)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+);
+
+@include gridrow-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+@include headercontainer-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+@include gridcolumn-ui(
+    $ui: 'employee-fyi-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sort-icon-color: map-get($employee-fyi-text-colors, 'base'),
+);
+
+@include rowheader-ui(
+    $ui: 'employee-fyi-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color:mix(
+        transparent,
+        map-get($employee-fyi-colors, 'row-dark')
+    )
+);@include grid-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+
+
+
+@include dataview-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+)
+
+@include checkcell-ui(
+    $ui: 'employee-fyi-grid',
+    $checkbox-color: #ffffff,
+    $checked-checkbox-color: #ffffff,
+    $disabled-checkbox-color: #ffffff,
+);
+
+
+
+@include gridcell-ui(
+    $ui: 'employee-fyi-grid',
+
+
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+
+
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        // $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+        $weights: (top: 0.5, left: 0.5, right: 0.5, bottom: 0.5)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+);
+
+@include gridrow-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+@include headercontainer-ui(
+    $ui: 'employee-fyi-grid',
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+
+);
+
+@include gridcolumn-ui(
+    $ui: 'employee-fyi-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
+    $sort-icon-color: map-get($employee-fyi-text-colors, 'base'),
+);
+
+@include rowheader-ui(
+    $ui: 'employee-fyi-grid',
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color:mix(
+        transparent,
+        map-get($employee-fyi-colors, 'row-dark')
+    )
+);
+
+
+
+
+
+
+
+@include toolbar-ui(
+    $ui: 'employee-fyi-tree',
+    $background-color: map-get($employee-fyi-colors, 'row-dark'),
+    $background-gradient: none,
+    $line-height: 22pt,
+);
+
+
+@include treecell-ui(
+    $ui: 'employee-fyi-tree-item',
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $selected-color: map-get($employee-fyi-text-colors, 'base'),
+    $hovered-color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: transparent,
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'employee-fyi-tree-item',
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $selected-color: map-get($employee-fyi-text-colors, 'base'),
+    $hovered-color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: transparent,
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+@include treecell-ui(
+    $ui: 'employee-fyi-tree-item-selectable',
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $selected-color: map-get($employee-fyi-text-colors, 'base'),
+    $hovered-color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'medium'),
+    $hovered-background-color: transparent,
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+
+@include gridcell-ui(
+    $ui: 'employee-fyi-tree-item-selectable',
+    $color: map-get($employee-fyi-text-colors, 'base'),
+    $selected-color: map-get($employee-fyi-text-colors, 'base'),
+    $hovered-color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: map-get($employee-fyi-colors, 'medium'),
+    $hovered-background-color: transparent,
+    $font-size: map-get($root-font-sizes, 'detail') !important
+);
+
+

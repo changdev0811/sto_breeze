@@ -98,8 +98,8 @@ $calendar-text-colors: (
 // specific colors
 $scoped-employee-info-base: #498DC6;
 $scoped-employee-info-light: #A2C6E3;
-$scoped-employee-info-medium: #ff00FF;
-$scoped-employee-info-dark: #0000ff;
+$scoped-employee-info-medium: #A2C6E3;
+$scoped-employee-info-dark: #A2C6E3;
 $scoped-employee-info-row-dark: #83B1DB;
 $scoped-employee-info-row-light: #5494CC;
 
@@ -129,22 +129,38 @@ $employee-info-text-colors: (
 
 // specific colors
 $scoped-employee-fyi-base: #48657F;
-$scoped-employee-fyi-light: #A4B2C0;
+$scoped-employee-fyi-light: #A3B1BF;
+$scoped-employee-fyi-medium: #A3B1BF;
+$scoped-employee-fyi-dark: #A3B1BF;
+$scoped-employee-fyi-row-dark: #8397A9;
+$scoped-employee-fyi-row-light: #536F87;
 
 $scoped-employee-fyi-text-base: #ffffff;
-$scoped-employee-fyi-text-light: #A4B2C0;
+$scoped-employee-fyi-text-light: #A3B1BF;
+$scoped-employee-fyi-text-medium: $scoped-employee-info-base;
+$scoped-employee-fyi-text-dark: $scoped-employee-info-text-base;
 $scoped-employee-fyi-text-alert: #E98591;
 
 $employee-fyi-colors: (
     base:  $scoped-employee-fyi-base,
-    light: $scoped-employee-fyi-light
+    light: $scoped-employee-fyi-light,
+    medium: $scoped-employee-fyi-medium,
+    dark: $scoped-employee-fyi-base,
+    row-dark: $scoped-employee-fyi-row-dark,
+    row-light: $scoped-employee-fyi-row-light
 );
 
 $employee-fyi-text-colors: (
     base:  $scoped-employee-fyi-text-base,
+    light:$scoped-employee-fyi-text-light,
+    medium: $scoped-employee-fyi-text-medium,
+    dark: $scoped-employee-fyi-text-dark,
     light: $scoped-employee-fyi-text-light,
     alert: $scoped-employee-fyi-text-alert,
 );
+
+
+
 
 
 // ====[WorkTime Records]====
