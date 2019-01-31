@@ -71,23 +71,25 @@ Ext.define('Breeze.widget.navBar.UserHeader', {
 
     //====[Layout + Content]====
 
-    layout: 'hbox', minHeight: '64pt',
+    layout: 'hbox', minHeight: '24pt',
     items: [
         {
             xtype: 'image',
-            width: '32pt', height: '32pt',
+            width: '20pt', height: '20pt',
             itemId: 'infoProfilePicture'
         },
+
+
         {
             xtype: 'container', flex: 1, layout: 'vbox', itemId: 'names',
             defaults: {  },
             items: [
                 {
-                    xtype: 'component', flex: 1, width: '136pt',
+                    xtype: 'component', flex: 1, width: '128pt',
                     itemId: 'company'
                 },
                 {
-                    xtype: 'component', flex: 1, width: '136pt',
+                    xtype: 'component', flex: 1, width: '128pt',
                     itemId: 'user'
                 }
             ]
