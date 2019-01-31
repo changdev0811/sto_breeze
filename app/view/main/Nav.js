@@ -60,7 +60,7 @@ Ext.define('Breeze.view.main.Nav', {
                     xtype: 'breeze-history-bread',
                     reference: 'breadCrumbs',
                     flex: 1,
-                    style: 'margin-left: 48pt; height: 64pt'
+                    style: 'margin-left: 4pt; height: 64pt'
                 },
                 {
                     xtype: 'breeze-punchbutton',

@@ -10,9 +10,9 @@ $content-edge: 6pt;
 // Style overrides for main nav side menu treelist
 .main-nav-side-menu {
     // overflow-y: auto;
-    margin-left: 8pt;
+    margin-left: 6pt;
     &.micro {
-        width: 80pt;
+        width: 72pt;
         // Style for treelist container in micro mode (container of subitems)
         .x-treelist-container {
                 
@@ -35,7 +35,7 @@ $content-edge: 6pt;
 
 
         .x-treelist-item-expander{
-            margin-right:31pt;
+            margin-right:41pt;
 
         }
 
@@ -45,7 +45,7 @@ $content-edge: 6pt;
         // minWidth: 200pt;
         // maxWidth: 200pt;
         // Providing width of sidebar when expanded
-        width: 200pt;
+        width: 160pt;
     }
     //font-weight: bold;
     // smaller subitems
@@ -55,16 +55,16 @@ $content-edge: 6pt;
     }
 
     .x-treelist-container {
-        margin-left: -25pt;
+        margin-left: -16pt;
         .x-treelist-item-icon {
-            font-size: 12pt;
-            margin-top:-10pt;
+            font-size: 8pt;
+            margin-top:-8pt;
         }
         .x-treelist-item-text {
-            font-size: 12pt;
-            line-height:30pt;
+            font-size: 10pt;
+            line-height:20pt;
             // margin-left:49.5pt;
-            margin-left:36pt;
+            margin-left:24pt;
         }
     }
 }
@@ -86,40 +86,40 @@ $content-edge: 6pt;
 }
 
 .main-nav-company-name {
-    margin-left:10pt !important;
+    margin-left:7pt !important;
     color:#ffffff;
     text-align: left;
-    font-size: 16pt;
+    font-size: 14pt;
     font-weight: 600;
-    padding-top:14pt;
+    padding-top:0pt;
 }
 .main-nav-user-name {
-    margin-left:10pt !important;
+    margin-left:7pt !important;
     color:#ffffff;
     text-align: left;
-    font-size: 12pt;
+    font-size: 10pt;
     font-weight: 400;
-    padding-bottom:10pt;
+    padding-bottom:0pt;
 }
 
 .main-nav-side-bar{
     background-color: $base-color;
     // Width for side bar when 'micro' (collapsed)
     &.micro {
-        width: 90px;
+        width: 42pt;
     }
 }
 
 .main-nav-user-button {
     .x-icon-el {
-        width:32pt;
-        height:32pt;
+        width:24pt;
+        height:24pt;
     }
 }
 
 .main-info-profile-picture {
-    margin:16pt 0pt 16pt 5pt;
-    border-radius: 50% 50% 50% 50%;
+    margin:4pt 0pt 8pt 5pt;
+    border-radius: 50%;
     border: 1pt solid white;
 }
 
