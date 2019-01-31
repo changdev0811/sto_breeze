@@ -4,14 +4,14 @@
  * that appear within the User Preferences view or its children
  */
 @include textfield-ui(
-    $ui: 'weired',
+    $ui: 'yaagCalendarType',
     $focused-input-underline-color: map-get($admin-colors, 'light'),
     $input-color: map-get($admin-text-colors, 'base'),
     $input-font-size: map-get($root-font-sizes, 'detail')
 );
 
 @include field-ui(
-    $ui: 'weired',
+    $ui: 'yaagCalendarType',
     $label-color: map-get($admin-text-colors, 'base'),
     $focused-label-color: map-get($admin-text-colors, 'base')
 )

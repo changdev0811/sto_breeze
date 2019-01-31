@@ -18,16 +18,16 @@ Ext.define('Breeze.view.user.PreferencesModel', {
          */
         var data = {
             params: {
-                cbNightMode: false,
-                cbGoogleCal: false,
-                cbShowHints: true,    
-                cbLeaveRequestWizard: false,
-                cbViewSupervisorDashboard: false,
-                cbViewMessageOfTheDay: false,       
-                cbHHMM: true,
-                cbViewTimeLocal: false,
-                cbClockOutSignOut: false,
-                cbYaagCalendarView: false,
+                NightMode: false,
+                GoogleCal: false,
+                ShowHints: false,    
+                LeaveRequestWizard: false,
+                ViewSupervisorDashboard: false,
+                ViewMessageOfTheDay: false,       
+                HHMM: false,
+                ViewTimeLocal: false,
+                ClockOutSignOut: false,
+                YaagCalendarView: false,
                 YaagCalendarType: 1
             }
         };
