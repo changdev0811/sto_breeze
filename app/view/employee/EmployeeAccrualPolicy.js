@@ -63,7 +63,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
     items: [
         {
             xtype: 'fieldset',
-            userCls: 'admin-fieldset no-side-margin',
+            userCls: 'fyi-fieldset no-side-margin',
             title:'Employee Accrual Policy - [CATEGORY]',
 
             flex: 1,
@@ -82,8 +82,8 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         // row 1
                         {
                             xtype: 'selectfield',
-                            ui: 'admin admin-text',
-                            userCls: 'admin-fieldset no-side-margin no-border',
+                            ui: 'fyi fyi-text',
+                            userCls: 'fyi-fieldset no-side-margin no-border',
                             value:'Max',
                             label:'Category:',
                             labelAlign:'left',
@@ -102,7 +102,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 {  
                                     xtype: 'displayfield',
                                     ui: 'fyi-display-field',
-                                    userCls: 'admin-fieldset no-side-margin no-border',
+                                    userCls: 'fyi-fieldset no-side-margin no-border',
 
                                     value: 'Year Type:',
                                     //labelAlign: 'left',
@@ -114,48 +114,64 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     width:'10pt',
                                 },
                                 {
-                                    xtype: 'fieldset',
-                                    userCls: 'admin-fieldset no-side-margin',
+                                    xtype: 'containerfield',
+                                    //xtype: 'fieldset',
+                                    userCls: 'fyi-fieldset no-side-margin',
+                                    reference: 'yearType',
                                     layout: 'hbox',
+                                    defaults: {
+                                        bodyAlign: 'stretch',
+                                        ui: 'fyi',
+                                        xtype: 'radio',
+                                        style: 'padding-right: 8pt'
+                                    },
+                                    //bind: {
+                                    //    values: {
+                                    //        yearType:'{selectedCategory.calendarType}'
+                                    //    },
+                                    //},
                                     items: [
                                         {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            userCls:'tool-check-box',
-                                            name: 'isWorktime',
-                                            //id: 'radio1',
-                                            value: '20',
-                                            boxLabel: 'Anniversary',
-                                            //bodyAlign: 'stretch',
-                                        },
-                                        {
-                                            xtype:'spacer',
-                                            width:'10pt',
-                                        },
-                                        {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            userCls:'tool-check-box',
-                                            name: 'isWorktime',
-                                            //id: 'radio1',
-                                            value: '20',
-                                            boxLabel: 'Calendar',
-                                            //bodyAlign: 'stretch',
-                                        },
-                                        {
-                                            xtype:'spacer',
-                                            width:'10pt',
-                                        },
-                                        {
-                                            xtype:'checkbox',
-                                            ui:'admin',
-                                            userCls:'tool-check-box',
-                                            name: 'isWorktime',
-                                            //id: 'radio1',
-                                            value: '20',
-                                            boxLabel: 'Fiscal',
-                                            //bodyAlign: 'stretch',
-                                        },
+                                            xtype: 'containerfield',
+                                            reference: 'recordingYear',
+                                            defaults: {
+                                                bodyAlign: 'stretch',
+                                                ui: 'fyi',
+                                                xtype: 'radio',
+                                                style: 'padding-right: 8pt'
+                                            },
+                                            bind: {
+                                                values: {
+                                                    yearType: '{selectedCategory.calendarType}'
+                                                }
+                                            },
+                                            items: [
+                                                {
+                                                    name: 'yearType',
+                                                    boxLabel: 'Anniversary',
+                                                    value: 45,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                },
+                                                {
+                                                    name: 'yearType',
+                                                    boxLabel: 'Calendar',
+                                                    value: 46,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                },
+                                                {
+                                                    name: 'yearType',
+                                                    boxLabel: 'Fiscal',
+                                                    value: 45,
+                                                    bind: {
+                                                        groupValue: '{recordingYear.yearType}'
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     ]
                                 },
                             ]
@@ -165,14 +181,14 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         // row 3
                         {
                             xtype: 'container',
-                            //userCls: 'admin-fieldset no-side-margin no-border',
+                            //userCls: 'fyi-fieldset no-side-margin no-border',
                             layout: 'hbox',
                             //flex: 1,
                             items: [
                                 {
                                     xtype: 'datefield',
-                                    userCls: 'admin-fieldset no-side-margin no-padding no-border',
-                                    ui: 'admin admin-text',
+                                    userCls: 'fyi-fieldset no-side-margin no-padding no-border',
+                                    ui: 'fyi fyi-text',
                                     //name: 'viewdate_field',
                                     width:'170pt',
                                     label: 'View Date:',
@@ -195,8 +211,8 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 
                                 {
                                     xtype: 'selectfield',
-                                    ui: 'admin admin-text',
-                                    userCls: 'admin-fieldset no-padding no-border',
+                                    ui: 'fyi fyi-text',
+                                    userCls: 'fyi-fieldset no-padding no-border',
                                     width:'160pt',
                                     label: 'Recording Year:',
                                     labelAlign:'left',
@@ -212,7 +228,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 },
                                 {  
                                     xtype: 'displayfield',
-                                    ui: 'admin fyi-display-field',
+                                    ui: 'fyi fyi-display-field',
                                     label: '(00/00/00 - 00/00/00)',
                                     labelAlign: 'left',
                                     labelWidth: 'auto',
@@ -223,14 +239,14 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         // row 4
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-side-margin no-padding',
+                            userCls: 'fyi-fieldset no-side-margin no-padding',
                             layout: 'vbox',
                             flex: 1,
                             items: [
 
                                 {
                                     xtype: 'toolbar',
-                                    ui: 'admin-tree',
+                                    ui: 'employee-fyi-tree',
                                     shadow: false,
                                     items: [
                                         {
@@ -265,12 +281,23 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     xtype: 'grid',
                                     // == Item ID to make finding tree in panel easier
                                     itemId: 'grid',
-                                    ui: 'employeeinfo-shift-grid requests-grid',
+
+                                    ui: 'employee-fyi-grid', userCls: 'employee-fyi-grid',
+
                                     flex:1,
                                     userCls: 'no-background',
                                     layout: 'hbox',
                                     hideHeaders: true,
                                     rootVisible: false,
+
+                                            defaults: {
+                                                cell: {
+                                                    ui: 'employee-fyi-grid employee-fyi-tree-item',
+                                                },
+                                                userCls: 'no-border',
+
+                                            },
+                                    
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
@@ -313,13 +340,17 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
 
 
 
+
+
+
+
                             ]
                         },
 
                         // row 5
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset no-side-margin',
+                            userCls: 'fyi-fieldset no-side-margin',
                             layout: 'vbox',
                             defaults: {
                                 xtype: 'displayfield',
@@ -339,7 +370,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     items: [
                                         {
                                             xtype:'checkbox',
-                                            ui:'admin',
+                                            ui:'fyi',
                                             boxLabel: 'Carry Over',
                                             //bodyAlign: 'stretch',
                                         },
@@ -349,7 +380,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                         },
                                         {
                                             xtype: 'selectfield',
-                                            ui: 'reporting admin-text',
+                                            ui: 'reporting fyi-text',
                                             value:'Max',
                                             options: [
                                                 { text: 'No Max', value: 1 },
@@ -362,7 +393,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                         },
                                         {
                                             xtype: 'breeze-textfield',
-                                            ui: 'admin admin-text',
+                                            ui: 'fyi fyi-text',
                                         },   
                                     ]
                                 },
@@ -378,7 +409,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                     items: [
                                         {
                                             xtype:'checkbox',
-                                            ui:'admin',
+                                            ui:'fyi',
                                             boxLabel: 'Expires',
                                             //bodyAlign: 'stretch',
                                         },
@@ -388,7 +419,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                         },
                                         {
                                             xtype: 'datefield',
-                                            userCls: 'admin-fieldset no-padding no-border',
+                                            userCls: 'fyi-fieldset no-padding no-border',
                                             ui: ['dark-textfield', 'fyi-field','fyi-textfield'],
                                             //reference: 'viewDate',
                                             picker: {
@@ -413,7 +444,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                     items: [
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset',
+                            userCls: 'fyi-fieldset',
                             layout: 'vbox',
                             defaults: {
                                 xtype: 'displayfield',
@@ -442,8 +473,8 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         },
                         {
                             xtype: 'datefield',
-                            userCls: 'admin-fieldset no-padding no-border',
-                            ui: 'admin admin-text',
+                            userCls: 'fyi-fieldset no-padding no-border',
+                            ui: 'fyi fyi-text',
                             //name: 'viewdate_field',
                             label: 'Start accruing on:',
                             labelAlign:'left',
@@ -459,7 +490,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         },
                         {
                             xtype: 'fieldset',
-                            userCls: 'admin-fieldset',
+                            userCls: 'fyi-fieldset',
                             layout: 'vbox',
                             flex: 1,
                             defaults: {
@@ -518,7 +549,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                 },
                                 {
                                     xtype:'checkbox',
-                                    ui:'admin',
+                                    ui:'fyi',
                                     boxLabel: 'Show Schedule Time',
                                     bodyAlign: 'stretch',
                                 },

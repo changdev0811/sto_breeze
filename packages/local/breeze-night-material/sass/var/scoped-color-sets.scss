@@ -134,18 +134,31 @@ $employee-info-text-colors: (
 // specific colors
 $scoped-employee-fyi-base: #2E4159;
 $scoped-employee-fyi-light: #96A0AE;
+$scoped-employee-fyi-medium: #96A0AE;
+$scoped-employee-fyi-dark: #6A7A8D;
+$scoped-employee-fyi-row-dark: #4A5D74;
+$scoped-employee-fyi-row-light: #808D9D;
 
 $scoped-employee-fyi-text-base: #ffffff;
-$scoped-employee-fyi-text-light: #96A0AE;
+$scoped-employee-fyi-text-light: $scoped-employee-info-light;
+$scoped-employee-fyi-text-medium: $scoped-employee-info-base;
+$scoped-employee-fyi-text-dark: $scoped-employee-info-text-base;
 $scoped-employee-fyi-text-alert: #E98591;
 
 $employee-fyi-colors: (
     base:  $scoped-employee-fyi-base,
-    light: $scoped-employee-fyi-light
+    light: $scoped-employee-fyi-light,
+    medium: $scoped-employee-fyi-medium,
+    dark: $scoped-employee-fyi-base,
+    row-dark: $scoped-employee-fyi-row-dark,
+    row-light: $scoped-employee-fyi-row-light,
 );
 
 $employee-fyi-text-colors: (
     base:  $scoped-employee-fyi-text-base,
+    light:$scoped-employee-fyi-text-light,
+    medium: $scoped-employee-fyi-text-medium,
+    dark: $scoped-employee-fyi-text-dark,
     light: $scoped-employee-fyi-text-light,
     alert: $scoped-employee-fyi-text-alert,
 );
