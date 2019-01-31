@@ -143,6 +143,9 @@ Ext.define('Breeze.view.main.NavController', {
             // TODO: Implement before report route method to prevent access when not allowed
             before: 'beforeReportRoute'
         },
+        'help': {
+            action: 'onHelpRoute'
+        },
         'signout': {
             action: 'onMenuSignOut'
         }
@@ -661,6 +664,10 @@ Ext.define('Breeze.view.main.NavController', {
         Ext.util.History.back();
     },
 
+
+
+
+
     /**
      * Handle admin route
      */
@@ -998,6 +1005,18 @@ Ext.define('Breeze.view.main.NavController', {
     onClosePunchWindowDialog: function(ref, e, eOpts){
         //dialog.hide();
         ref.getParent().getParent().hide();
+    },
+
+
+
+    /**
+     * Handle download punch station route
+     */
+    onHelpRoute: function(){
+        // TODO: open link to punch station download in new tab (add correct url)
+        console.info('Help Route');
+        window.open("http://www.softtimeonline.com/help/");
+        Ext.util.History.back();
     },
 
 
