@@ -1,12 +1,12 @@
 /**
- * Employee Leave Requests
- * Ported from old EmployeeLeaveRequests
- * @class Employees
- * @namespace Breeze.store.record.leaveRequest.Employees
- * @alias store.record.leaverequest.employees
- * @api /getLeaveRequestsforEmployee
+ * Supervisor Leave Requests
+ * Ported from old SupervisorLeaveRequests
+ * @class Supervisors
+ * @namespace Breeze.store.record.leaveRequests.Supervisor
+ * @alias store.record.leaverequests.supervisor
+ * @api /getLeaveRequestsforSupervisor
  */
-Ext.define('Breeze.store.record.leaveRequest.Employees', {
+Ext.define('Breeze.store.record.leaveRequests.Supervisor', {
     extend: 'Breeze.store.Base',
     model: 'Breeze.model.record.LeaveRequest',
 
@@ -21,7 +21,7 @@ Ext.define('Breeze.store.record.leaveRequest.Employees', {
 
     proxy: {
         type: 'ajax',
-        url: Breeze.helper.Store.api.url('getLeaveRequestsforEmployee'),
+        url: Breeze.helper.Store.api.url('getLeaveRequestsforSupervisor'),
         // url: Breeze.helper.Api.url('getDepartmentList'),
         headers: { 'Content-Type': 'application/json' },
         actionMethods: {

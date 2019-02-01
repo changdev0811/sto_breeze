@@ -837,6 +837,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesModel', {
 
         // Output names with source prop names for mapFromRecords
         var shiftParams = {
+            // shiftStartSegments: 'StartMin',
+            // shiftStopSegments: 'StopMin'
             shiftStartSegments: 'StartSegment',
             shiftStopSegments: 'StopSegment'
         };

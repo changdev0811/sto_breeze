@@ -15,6 +15,7 @@ Ext.define('Breeze.view.main.Nav', {
         'Breeze.view.main.NavController',
         'Breeze.widget.punch.AnalogClock',
         'Breeze.widget.punch.DigitalClock',
+        'Breeze.widget.navBar.UserHeader',
         'Ext.menu.Menu',
         'Ext.menu.Item',
         'Breeze.widget.navBar.NavTree',
@@ -59,7 +60,7 @@ Ext.define('Breeze.view.main.Nav', {
                     xtype: 'breeze-history-bread',
                     reference: 'breadCrumbs',
                     flex: 1,
-                    style: 'margin-left: 48pt; height: 64pt'
+                    style: 'margin-left: 4pt; height: 64pt'
                 },
                 {
                     xtype: 'breeze-punchbutton',
@@ -109,105 +110,13 @@ Ext.define('Breeze.view.main.Nav', {
                                         tap: 'onSideNavToggle'
                                     }
                                 },
-
                                 {
-                                    xtype: 'container',
-                                    layout: 'hbox',
-                                    minHeight: '64pt',
-                                    items: [
-                                        {
-                                            xtype: 'image',
-                                            height: '32pt',
-                                            width: '32pt',
-                                            src: 'resources/photos/default_user.png',
-                                            //bind: {
-                                            //    src: '{profilePicture}'
-                                            //},
-                                            reference: 'infoProfilePicture',
-                                            userCls: 'main-info-profile-picture'
-                                        },
-                                        {
-                                            xtype: 'container',
-                                            flex: 1,
-                                            layout: 'vbox',
-                                            items: [
-                                                // Company Name
-                                                {
-                                                    xtype: 'component',
-                                                    flex: 1,
-                                                    width:'136pt',
-                                                    style: '',
-                                                    userCls: 'main-nav-company-name',
-                                                    reference: 'navHeaderCompanyName',
-                                                    bind: {
-                                                        html: '{header.business}'
-                                                    }
-                                                },
-                                                // User Name
-                                                {
-                                                    xtype: 'component',
-                                                    flex: 1,
-                                                    width:'136pt',
-                                                    style: '',
-                                                    userCls: 'main-nav-user-name',
-                                                    reference: 'navHeaderUserName',
-                                                    bind: {
-                                                        html: '{header.fullname}'
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            menuAlign: 'tr',
-                                            ui: 'mainNavUserButton',
-                                            userCls: 'main-nav-user-button',
-                                            text: '',
-                                            arrow: false,
-                                            iconCls: 'x-fa fa-angle-right',
-                                        },
-                                        /* Actual button */
-                                        {
-                                            xtype: 'button',
-                                            menuAlign: 'tr',
-                                            ui: 'mainNavUserButton',
-                                            userCls: 'main-nav-user-button',
-                                            style: 'hyphens:auto; position:absolute; height:100%; width:220pt; right:0pt',
-                                            text: '',
-                                            arrow: false,
-                                            menu: {
-                                                xtype: 'menu',
-                                                items: [
-                                                    /*{
-                                                        xtype: 'menucheckitem',
-                                                        text: 'Enable Night Mode',
-                                                        bind: {
-                                                            checked: '{nightMode}'
-                                                        },
-                                                        listeners: {
-                                                            checkChange: 'onMenuNightModeChange'
-                                                        }
-                                                    },*/
-                                                    {
-                                                        xtype: 'menuitem',
-                                                        text: 'User Preferences',
-                                                        iconCls: 'x-fas fa-user-cog',
-                                                        listeners: {
-                                                            click: 'onUserPreferences'
-                                                        },
-                                                        // separator: true
-                                                        //    icon: 'resources/icons/user-cog.svg'
-                                                    }/*, {
-                                                        xtype: 'menuitem',
-                                                        text: 'Sign Out',
-                                                        iconCls: 'x-fas fa-sign-out',
-                                                        handler: 'onMenuSignOut'
-                                                    }*/
-                                                ]
-                                            }
-                                        }
-                                    ]
+                                    xtype: 'breeze-user-header',
+                                    reference: 'userHeader',
+                                    companyNameBinding: '{header.business}',
+                                    userNameBinding: '{header.fullname}'
                                 },
+                                
                                 /*{
                                     xtype: 'breeze.navbar.navtree',
                                     defaults: {
@@ -317,6 +226,98 @@ Ext.define('Breeze.view.main.Nav', {
                     ]
                 }
             ]
-        }
+        },
+
+        {
+            xtype: 'dialog',
+            ui:'dark-themed-dialog employeeinfo-dialog',
+            reference: 'punchWindowDialog',
+            minWidth: '300pt',
+            minHeight: '300pt',
+            layout: 'vbox',
+            title:{
+                text:'Notes',
+                ui:'dark-themed-dialog'
+            },
+            bind:{
+                title: '{header.fullname}',
+            },
+            items:[
+                {
+                    xtype:'container',
+                    layout:'hbox',
+                    items:[
+                        {
+                            xtype: 'image',
+                            height: '48pt',
+                            width: '48pt',
+                            src: 'resources/photos/default_user.png',
+                            //bind: {
+                            //    src: '{profilePicture}'
+                            //},
+                            reference: 'infoProfilePicture',
+                            userCls: 'punch-window-profile-picture',
+
+                        },
+                        {
+                            xtype: 'component',
+                            flex:1,
+                            style:'margin:auto 0pt auto 5pt;',
+                            html: 'You are currently {inout}<br>{lastPunch}'
+                        },
+                    ]
+                },
+                {
+                    xtype: 'component',
+                    userCls:'punchWindowClock',
+                    html: '{0:00:00 AM/PM}'
+                },
+                {
+                    xtype: 'selectfield',
+                    label: 'Project',
+                    labelAlign: 'left',
+                    labelWidth: 'auto',
+                    placeholder: '*No Project*',
+                },
+                {
+                    xtype: 'textareafield',
+                    flex: 1,
+                    border: true,
+                    label: 'Note',
+                    //bind: '{tempNotes}',
+                    placeholder: ""
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Clear',
+                    ui: 'action alt',
+                    handler: 'onClearNotesButton',
+                    bind: {
+                        //disabled: '{!hasTempNotes}'
+                    }
+                },
+                {
+                    xtype: 'spacer',
+                    //width: '8pt',
+                    flex:1,
+                },
+                {
+                    text: 'Punch In', // Bind: Punch In / Punch Out
+                    ui: 'confirm alt',
+                    //handler: 'onSubmitNotesButton' // Bind: Punch In / Punch Out
+                },
+                {
+                    xtype: 'spacer',
+                    width: '8pt'
+                },
+                {
+                    text: 'Cancel',
+                    ui: 'decline alt',
+                    handler: 'onClosePunchWindowDialog'
+                }
+            ]
+        },
+
     ]
 });

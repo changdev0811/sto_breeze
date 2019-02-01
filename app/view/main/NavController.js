@@ -143,6 +143,9 @@ Ext.define('Breeze.view.main.NavController', {
             // TODO: Implement before report route method to prevent access when not allowed
             before: 'beforeReportRoute'
         },
+        'help': {
+            action: 'onHelpRoute'
+        },
         'signout': {
             action: 'onMenuSignOut'
         }
@@ -300,6 +303,7 @@ Ext.define('Breeze.view.main.NavController', {
         button.setCollapsed(collapsed);
         var navTree = this.lookup('navSideMenuTree');
         var sideBar = this.lookup('navSideBar');
+        this.lookup('userHeader').setCollapsed(collapsed);
         // update layout of punch clock
         //this.lookup('navPunchClock').setMicro(collapsed);
         // If button's collapsed state isn't the same as
@@ -357,8 +361,33 @@ Ext.define('Breeze.view.main.NavController', {
         } else {
             // TODO: Implement regular punch view
             console.info('Regular punch');
+            me.onPunchWindowTap();
         }
     },
+
+
+    /**
+     * Handle punch window menu button event, displaying 
+     * punch options dialog
+     * @param {*} ref 
+     * @param {*} x 
+     * @param {*} eOpts 
+     */
+    onPunchWindowTap: function(){
+        var vm = this.getViewModel();
+        console.info("[onPunchWindowTap]");
+        //notesDialog
+        var view = this.getView(),
+        dialog = null;
+        dialog = this.lookup('punchWindowDialog');
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+
+
 
     /**
      * Handle side nav tree item selection changing
@@ -435,9 +464,9 @@ Ext.define('Breeze.view.main.NavController', {
         this.changeContent(info);
     },
 
-    onUserPreferences: function() {
-        this.redirectTo('user/preferences');
-    },
+    // onUserPreferences: function() {
+    //     this.redirectTo('user/preferences');
+    // },
 
     /**
      * Handle personal FYI route
@@ -494,11 +523,44 @@ Ext.define('Breeze.view.main.NavController', {
     onPersonalYaagRoute: function(){
         var vm = this.getViewModel();
         var emp = vm.get('userId');
-        this.changeContent(
-            Ext.create('Breeze.view.employee.YearAtAGlance', {
-                data: { employee: emp }
-            })
-        );
+        var yaag = Ext.create('Breeze.api.reporting.YearAtAGlance');
+        var me = this;
+        yaag.process().then(
+            function(url){
+                if(typeof url == "string"){
+                    Ext.toast({
+                        message: 'Year at a Glance report successfully generated',
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    // window.open(url,'_blank');
+                    me.changeContent(
+                        Ext.create('Breeze.view.employee.YearAtAGlance', {
+                            data: { employee: emp }, viewModel: { data: { path: url }}
+                        })
+                    );
+                } else {
+                    if(url.Message){
+                        Ext.toast({
+                            message: 'Year at a Glance Error: <br>' + url.Message,
+                            type: Ext.Toast.ERROR,
+                            timeout: 10000
+                        });
+                    }
+                }
+                Ext.util.History.back();
+            }
+        ).catch(
+            function(err){
+                console.warn('Error generating YAAG report: ', err);
+                Ext.toast({
+                    message: 'Error generating Year at a Glance Report', 
+                    timeout: 10000,
+                    type: Ext.Toast.ERROR
+                });
+                Ext.util.History.back();
+            }
+        )
     },
 
     /*
@@ -601,6 +663,10 @@ Ext.define('Breeze.view.main.NavController', {
         window.location.href = "https://tko.softtimeonline.com/STO/PunchStation/setup.exe";
         Ext.util.History.back();
     },
+
+
+
+
 
     /**
      * Handle admin route
@@ -930,7 +996,33 @@ Ext.define('Breeze.view.main.NavController', {
                 tree.setSelection(navNode);
             }
         }
-    }
+    },
+
+
+
+    /**
+     * Handle punch window dialog close event
+     * @param {*} dialog 
+     * @param {*} e 
+     * @param {*} eOpts 
+     */
+    onClosePunchWindowDialog: function(ref, e, eOpts){
+        //dialog.hide();
+        ref.getParent().getParent().hide();
+    },
+
+
+
+    /**
+     * Handle download punch station route
+     */
+    onHelpRoute: function(){
+        // TODO: open link to punch station download in new tab (add correct url)
+        console.info('Help Route');
+        window.open("http://www.softtimeonline.com/help/");
+        Ext.util.History.back();
+    },
+
 
 
 });

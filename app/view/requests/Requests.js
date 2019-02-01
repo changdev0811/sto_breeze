@@ -39,6 +39,48 @@ Ext.define('Breeze.view.requests.Requests', {
             xtype: 'requests.form',
             itemId: 'form'
         }
-    ]
+    ],
+
+    //===[Dialogs shared by view]===
+
+    createRequestDialog: {
+        xtype: 'dialog',
+        title: 'New Leave Request',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'vbox',
+
+        maxHeight: '400pt',
+
+        items: [
+            {
+                xtype: 'component',
+                html: 'What would you like to call this request?'
+            },
+            {
+                xtype: 'breeze-textfield',
+                itemId: 'requestName',
+                required: true,
+                placeholder: 'Request Name'
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Save',
+                ui: 'confirm alt',
+                handler: 'onCreateRequest'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onCreateRequestDialogCancel'
+            }
+        ]
+    }
 
 });

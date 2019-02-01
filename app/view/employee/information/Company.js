@@ -9,6 +9,9 @@ Ext.define('Breeze.view.employee.information.Company', {
     extend: 'Ext.Container',
     alias: 'widget.employee.information.company',
 
+    padding:'8pt',
+
+
     layout: 'vbox',
     reference: 'employeeInfoCompanyView',
     requires: [
@@ -26,8 +29,10 @@ Ext.define('Breeze.view.employee.information.Company', {
 
     items: [
         {
-            xtype: 'container',
-            userCls: 'employee-info-container',
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset no-margin no-padding no-border',
+            //xtype: 'container',
+            //userCls: 'employee-info-container',
             layout: 'hbox',
             // title: 'Name',
             defaults: {
@@ -70,8 +75,10 @@ Ext.define('Breeze.view.employee.information.Company', {
             ]
         },
         {
-            xtype: 'container',
-            userCls: 'employee-info-container',
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset no-margin no-padding no-border',
+            //xtype: 'container',
+            //userCls: 'employee-info-container',
             layout: 'hbox',
             defaults: {
                 flex: 1,
@@ -105,8 +112,11 @@ Ext.define('Breeze.view.employee.information.Company', {
             ]
         },
         {
-            xtype: 'container',
-            userCls: 'employee-info-container',
+            
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset no-margin no-padding no-border',
+            //xtype: 'container',
+            //userCls: 'employee-info-container',
             layout: 'hbox',
             defaults: {
                 flex: 1,
@@ -209,18 +219,27 @@ Ext.define('Breeze.view.employee.information.Company', {
 
         // Container for list tabs
         {
-            xtype: 'container',
+            
+            xtype: 'fieldset',
+            userCls: 'employee-info-fieldset no-margin no-padding no-border',
+            //xtype: 'container',
             flex: 1,
             layout: 'vbox',
             items: [
                 // List tab panel
                 {
                     xtype: 'tabpanel',
+
+                    ui: 'wtr-tabbar',
+                    userCls: 'no-border no-margin no-padding',
+
+
                     layout: {
                         animation: 'fade'
                     },
-                    tabBarPosition: 'bottom',
-                    ui: 'employeeinfo-small-tabs',
+                    //tabBarPosition: 'bottom',
+                    tabBarPosition: 'top',
+                    //ui: 'employeeinfo-small-tabs',
                     tabBar: {
                         defaultTabUI: 'employeeinfo-small-tabs',
                         shadow: 'false'
@@ -242,8 +261,13 @@ Ext.define('Breeze.view.employee.information.Company', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
-                                    userCls: 'employee-info-grid',
+                                    
+                                    ui: 'employee-info-grid-panel',
+                                    userCls: 'employee-info-fieldset no-padding no-margin',
+
+
+                                    //ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
+                                    //userCls: 'employee-info-grid',
                                     title: 'Supervisors',
                                     // Grid title tool buttons
                                     tools: {
@@ -279,8 +303,13 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             hideHeaders: true,
                                             sortable: false,
                                             columnMenu: null,
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls: 'employee-info-grid',
+
+                                            ui: 'employeeinfo-shift-grid employee-info-grid',
+                                            userCls: 'no-background',
+
+
+                                            //ui: 'employeeinfo-shift-grid',
+                                            //userCls: 'employee-info-grid',
                                             reference: 'supervisorsListGrid',
                                             plugins: {
                                                 gridcellediting: true,
@@ -356,8 +385,15 @@ Ext.define('Breeze.view.employee.information.Company', {
                             items: [
                                 {
                                     xtype: 'panel',
+                                    //ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
+                                    //userCls: 'employee-info-grid',
+
+                                    
                                     ui: 'employee-info-shift-grid employee-info-grid-panel employee-info-tab-panel',
                                     userCls: 'employee-info-grid',
+
+
+
                                     title: 'Supervised Employees',
                                     tools: {
                                         add: {
@@ -390,8 +426,17 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             hideHeaders: true,
                                             sortable: false,
                                             columnMenu: null,
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls: 'employee-info-grid',
+                                            
+                                            ui: 'employee-info-grid',
+
+
+                                            ui: 'employeeinfo-shift-grid employee-info-grid',
+                                            userCls: 'no-background',
+
+
+                                            //ui: 'employeeinfo-shift-grid',
+                                            //userCls: 'employee-info-grid',
+                                            
                                             reference: 'employeesListGrid',
                                             plugins: {
 
@@ -503,8 +548,12 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             hideHeaders: true,
                                             sortable: false,
                                             columnMenu: null,
-                                            ui: 'employeeinfo-shift-grid',
-                                            userCls: 'employee-info-grid',
+
+                                            ui: 'employeeinfo-shift-grid employee-info-grid',
+                                            userCls: 'no-background',
+
+                                            //ui: 'employeeinfo-shift-grid',
+                                            //userCls: 'employee-info-grid',
                                             reference: 'departmentsListGrid',
                                             plugins: {
                                                 gridcellediting: true

@@ -4,10 +4,19 @@
  * that appear within the Breeze.view.requests.Requests view or its children
  */
 
+@import "RequestStatuses";
+
 @include gridcolumn-ui(
     $ui: 'requests-grid',
     $font-size: 10pt,
     $padding: 4pt,
+);
+
+@include dataview-ui(
+    $ui: 'requests-grid',
+    // TODO: add dataview style rules, including row background colors
+    // $item-font-size: 11pt
+    $item-padding: 2pt 2pt 2pt 2pt !important
 );
 
 @include gridcolumn-ui(
@@ -24,6 +33,11 @@
  $header-background-color: map-get($employee-info-colors, 'base'),
  $body-background-color: map-get($employee-info-colors, 'base'),
  $body-color: map-get($employee-info-colors, 'base'),
+);
+
+@include toolbar-ui(
+    $ui: 'requests-leave-panel',
+    $background-color: map-get($employee-info-colors, 'base')
 );
 
 @include panel-ui(

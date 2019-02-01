@@ -8,10 +8,9 @@ Ext.define('Breeze.view.employee.YearAtAGlance',{
 
     viewModel:{
         data:{
-            path:Ext.getResourcePath('ReleaseNotes.pdf'),
+            path: '',
         }
     },
-
 
     config: {
         crumbTitle: 'Year at a Glance',

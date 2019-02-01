@@ -49,27 +49,38 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             xtype: 'dialog',
             ui:'dark-themed-dialog',
             reference: 'notesDialog',
+            minWidth: '300pt',
+            minHeight: '300pt',
+            layout: 'fit',
             title:{
                 text:'Notes',
                 ui:'dark-themed-dialog'
             },
             tools: [
-                {
-                    iconCls: 'x-fa fa-times',
-                    ui: 'dark-themed-dialog',
-                    handler: 'onCloseNotesDialog'
-                }
+                //{
+                //    iconCls: 'x-fa fa-times',
+                //    ui: 'dark-themed-dialog',
+                //    handler: 'onCloseNotesDialog'
+                //}
             ],
             items:[
                 {
                     xtype:'component',
                     scrollable:'y',
+                    flex: 1,
                     userCls:'employeeinfo-notes-text',        
                     bind:{
                         html:'{employeeNotes}',
                     }
                 }
 
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    ui: 'decline alt',
+                    handler: 'onCloseNotesDialog'
+                }  
             ]
         },
         {

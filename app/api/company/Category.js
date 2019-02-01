@@ -10,7 +10,7 @@ Ext.define('Breeze.api.company.Category', {
 
     /** Default names for shared category stores */
     storeIds: {
-        compactList: 'compactCategoryListÍtore'
+        compactList: 'compactCategoryListStore'
     },
 
     /**

@@ -255,6 +255,18 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         label: 'Start',
                                                         store: 'accrualShiftChoices',
                                                         displayField: 'time',
+                                                        displayTpl: [
+                                                            '{[this.time(values)]}',
+                                                            {
+                                                                time: function(values){
+                                                                    if(typeof values.time == "string"){
+                                                                        return values.time;
+                                                                    } else {
+                                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
                                                         valueField: 'value',
                                                         forceSelection: false,
                                                         queryMode: 'local',
@@ -299,6 +311,18 @@ Ext.define('Breeze.view.admin.AccrualPolicies', {
                                                         label: 'Stop',
                                                         store: 'accrualShiftChoices',
                                                         displayField: 'time',
+                                                        displayTpl: [
+                                                            '{[this.time(values)]}',
+                                                            {
+                                                                time: function(values){
+                                                                    if(typeof values.time == "string"){
+                                                                        return values.time;
+                                                                    } else {
+                                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
                                                         valueField: 'value',
                                                         forceSelection: false,
                                                         queryMode: 'local',

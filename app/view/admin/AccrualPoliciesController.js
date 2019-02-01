@@ -99,7 +99,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                         if (success) {
                             var record = records[0];
                             if (policyId !== null) {
-                                record = vm.get('policiesList').queryRecords("ID", policyId)[0];
+                                record = vm.get('policiesList').queryRecords("data", policyId.toString())[0];
                             }
                             this.lookup('policyList').getSelectable().setSelectedRecord(
                                 record
@@ -197,13 +197,13 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     stopT = BreezeTime.resolve(stop.getValue());
                 segments.loadData([{
                     StartTime: startT.asTime(),
-                    StartMin: startT.asMinutes(),
+                    StartSegment: startT.asMinutes(),
                     StopTime: stopT.asTime(),
-                    StopMin: stopT.asMinutes()
+                    StopSegment: stopT.asMinutes()
                 }], true);
                 segments.commitChanges();
                 dlg.hide();
-                this.onAddShiftSegmentDialogCancel(dlg);
+                this.onCreateShiftSegmentDialogCancel(dlg);
                 Ext.toast({
                     type: Ext.Toast.INFO,
                     message: 'Shift segment added successfully',
@@ -2041,8 +2041,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 var staT = BreezeTime.resolve(start),
                     stoT = BreezeTime.resolve(stop);
                 record.set({
-                    StartTime: staT.asTime(), StartMin: staT.asMinutes(),
-                    StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
+                    StartTime: staT.asTime(), StartSegment: staT.asMinutes(),
+                    StopTime: stoT.asTime(), StopSegment: stoT.asMinutes()
                 }, { commit: true });
             }
             console.info('valid');
@@ -2051,8 +2051,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         console.info('shift change');
     },
 
-
-    // TODO: Implement delete policy handler
     onDeletePolicy: function (comp) {
         var me = this,
             policyId = this.getViewModel().get('policyData').ID;
@@ -2101,13 +2099,22 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
         })
     },
 
+    presaveFieldUpdate: function(){
+        var vm = this.getViewModel();
+        vm.set('policyData.recordingMode', this.lookup('recordingMode').getValues().recMode);
+        vm.set('selectedCategory.calendarType',this.lookup('recordingYear').getValues().yearType);
+        
+    },
+
     /**
      * Handle 'Save Accrual Policy' button click event
      */
     onSavePolicy: function () {
+        this.presaveFieldUpdate();
         var vm = this.getViewModel(),
             params = vm.saveParameters(),
-            me = this;
+            me = this,
+            id = vm.get('policyData').ID;
 
         this.api.save(params).then((r)=>{
             // Show success message
@@ -2117,7 +2124,8 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 timeout: 'info'
             });
             // Reload policies, selecting saved policy
-            me.loadPolicies(parseInt(r.policyId));
+            // me.loadPolicies(parseInt(r.policyId));
+            me.loadPolicies(id);
         }).catch((err)=>{
             // Show error message
             Ext.toast({
