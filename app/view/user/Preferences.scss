@@ -16,4 +16,33 @@
     $focused-label-color: map-get($employee-info-text-colors, 'base'),
     $label-font-size: map-get($root-font-sizes, 'detail'),
 
+);
+
+
+
+@include toggleslider-ui(
+	$ui: 'weired',
+	$track-background-color: rgba(255,255,255,0),
+	$fill-background-color: rgba(255,255,255,.66),
 )
+
+/* Total freek'n hack, but styling through theamer is*/
+
+.x-slider-weired > .x-thumb-wrap-el > .x-thumb {
+	background-color:white !important;
+	border:solid none;
+	box-shadow: none !important;
+	border:solid 2px map-get($employee-info-colors, 'base');
+
+}
+
+.x-slider-weired > .x-track-el {
+	overflow: hidden;
+	padding: 0;
+	border:solid 2px white;
+	border-radius: 8pt 8pt 8pt 8pt;
+}
+.x-slider-weired > .x-track-el > .x-fill-el{
+	border-radius: 0 !important;
+}
+
