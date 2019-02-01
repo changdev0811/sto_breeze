@@ -23,14 +23,15 @@
     &[data-content=date]{
         // min-width: 150pt;
         // flex: 1 auto;
-        width: 150pt;
+        width: 160pt;
         font-weight: bold;
-        color: $neutral_color;
+        color: rgba(255,255,255,1);
     };
     &[data-content=message]{
         float: right;
-        flex: 3 3 auto;
+        flex: 1;
         text-align: left;
+        color: rgba(255,255,255,.80)
     };
 }
 
