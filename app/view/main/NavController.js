@@ -67,6 +67,11 @@ Ext.define('Breeze.view.main.NavController', {
 
     /** Routes */
     routes: {
+        'user/preferences': {
+            action: 'onUserPreferencesRoute',
+            name: 'user_preferences',
+            before: 'beforeRoute'
+        },
         // Personal routes
         'personal': {
             action: 'onHomeRoute',
@@ -75,11 +80,6 @@ Ext.define('Breeze.view.main.NavController', {
         'personal/info': {
             action: 'onPersonalEmployeeInfoRoute',
             name: 'personal_info',
-            before: 'beforeRoute'
-        },
-        'user/preferences': {
-            action: 'onUserPreferencesRoute',
-            name: 'user_preferences',
             before: 'beforeRoute'
         },
         'personal/fyi': {
@@ -748,6 +748,9 @@ Ext.define('Breeze.view.main.NavController', {
         
         // Make sure employees panel is still shown
         this.refreshSidePanel(true, this.Panels.EMPLOYEES);
+        
+        // employees.SubNav is shown by formular 'hideEmployeesSubNav'.
+        vm.set('sidePanel.type', this.Panels.EMPLOYEES.id);
 
         if(!plan.method){
             // var view = Ext.create(
@@ -851,7 +854,8 @@ Ext.define('Breeze.view.main.NavController', {
                             type.view,
                             { data: { employee: emp } }
                         );
-                    vm.set('sidePanel.type', type.id);
+                    // If type.id is 'employees', employees.SubNav is shown by formular 'hideEmployeesSubNav'.
+                    // vm.set('sidePanel.type', type.id);
                     panelContainer.insert(0, panel);
                     console.info('Showing side panel: ', type.id);
                 } else {
@@ -883,7 +887,7 @@ Ext.define('Breeze.view.main.NavController', {
                 authorized = this[panel.authorize]();
             }
             if(authorized){
-                this.refreshSidePanel(true, this.Panels[e.route.toUpperCase()]);
+                this.refreshSidePanel(true, panel);
                 this.syncNavToRoute(e.route);
                 window.location.hash="";
                 if(panel.clearContent){

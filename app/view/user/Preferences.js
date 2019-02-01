@@ -45,7 +45,6 @@ Ext.define('Breeze.view.user.Preferences', {
             userCls: 'report-section-padding',
         },
         items: [
-
             {
                 xtype: 'fieldset',
                 maxWidth: '600pt',
@@ -60,31 +59,25 @@ Ext.define('Breeze.view.user.Preferences', {
                         },
                 items: [
                     {
-                        //xtype: 'breeze-checkbox',
-                        ui: 'reporting',
+                        name: 'cbNightMode',
+			            ui: 'reporting',
                         reference:'nightMode',
-                        bodyAlign: 'stretch',
-                        boxLabel: 'Enabled',
-                        bind: {
-                            checked: '{nightMode}'
-                        },
+                        boxLabel: 'Enable',
+                        bind: '{params.NightMode}',
                         listeners: {
                             change: 'onMenuNightModeChange'
                         }
                     },
                 ]
             },
-
             {
                 xtype: 'fieldset',
                 flex: 1,
                 maxWidth: '600pt',
                 minWidth: '400pt',
-                layout: 'vbox',
                 title: 'Preferences',
                 userCls: 'reporting-fieldset',
                 items: [
-                    
                     {
                         xtype:'container',
                         layout:'hbox',
@@ -108,32 +101,32 @@ Ext.define('Breeze.view.user.Preferences', {
                                         name: 'cbGoogleCal',
                                         boxLabel: 'Integrate with Google Calendar',
                                         hidden: true,
-                                        bind: '{params.cbGoogleCal}'
+                                	    bind: '{params.GoogleCal}'
                                     },
                                     {
                                         name: 'cbShowHints',
                                         inline: true,
                                         label: '',
                                         boxLabel: 'View STO Hints at Login',
-                                        bind: '{params.cbShowHints}'
+                                	    bind: '{params.ShowHints}'
                                     },
                                     {
                                         name: 'cbLeaveRequestWizard',
                                         label: '',
                                         labelMinWidth: 0,
                                         boxLabel: 'Show Leave Request Wizard',
-                                        bind: '{params.cbLeaveRequestWizard}'
+                                	    bind: '{params.LeaveRequestWizard}'
                                     },
                                     {
                                         name: 'cbViewSupervisorDashboard',
                                         label: '',
                                         boxLabel: 'View Supervisor Dashboard at Login',
-                                        bind: '{params.cbViewSupervisorDashboard}'
+                                	    bind: '{params.ViewSupervisorDashboard}'
                                     },
                                     {
                                         name: 'cbViewMessageOfTheDay',
                                         boxLabel: 'View Message of the Day at Login',
-                                        bind: '{params.cbViewMessageOfTheDay}'
+                                	    bind: '{params.ViewMessageOfTheDay}'
                                     },
                                 ]
                             },
@@ -154,31 +147,31 @@ Ext.define('Breeze.view.user.Preferences', {
                                     {
                                         name: 'cbHHMM',
                                         boxLabel: 'View and Edit Time in HH:MM Mode',
-                                        bind: '{params.cbHHMM}'
+                                	    bind: '{params.HHMM}'
                                     },
                                     {
                                         name: 'cbViewTimeLocal',
                                         boxLabel: 'View Local Time instead of UTC',
-                                        bind: '{params.cbViewTimeLocal}'
+                                	    bind: '{params.ViewTimeLocal}'
                                     },
                                     {
                                         name: 'cbClockOutSignOut',
                                         boxLabel: 'Sign out when you clock out',
-                                        bind: '{params.cbClockOutSignOut}'
+                                	    bind: '{params.ClockOutSignOut}'
                                     },
                                     {
                                         name: 'cbYaagCalendarView',
                                         boxLabel: 'YAAG Calendar Mode',
-                                        bind: '{params.cbYaagCalendarView}'
+                                        bind: '{params.YaagCalendarView}',
+                                        listeners: {
+                                            change: 'enableYCalType'
+                                        }
                                     },
-                                    // {
-                                    //     xtype: 'component',
-                                    //     html: 'YAAG Recording Year Type'
-                                    // },
                                     {
                                         xtype: 'selectfield',
                                         name: 'YaagCalendarType',
-                                        ui: 'weired',
+                                        reference: 'yaagCalendarType',
+                                        ui: 'yaagCalendarType',
                                         label: 'YAAG Recording Year Type',
                                         valueField: 'id',
                                         bind: {
@@ -189,9 +182,6 @@ Ext.define('Breeze.view.user.Preferences', {
 
                                 ]
                             },
-
-                        
-
                         ]
                     },
 
@@ -200,12 +190,10 @@ Ext.define('Breeze.view.user.Preferences', {
                         layout:'hbox',
                         padding:'10pt 0pt 0pt 0pt',
                         items:[
-
                             {
                                 xtype:'component',
                                 flex:1
                             },
-
                             {
                                 xtype:'button',
                                 ui: 'confirm alt',
@@ -215,22 +203,10 @@ Ext.define('Breeze.view.user.Preferences', {
                                 handler: 'onSave', 
 
                             }
-                        
-
                         ]
                     },
-
-
-
-                    
-
-
                 ]
             },
-            
-
-
-
         ]
     }]
 });

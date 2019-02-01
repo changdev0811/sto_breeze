@@ -60,7 +60,10 @@ Ext.define('Breeze.view.auth.Login', {
                     label: 'Password',
                     // labelMinWidth: '110px',
                     required: true,
-                    inputType: 'password'
+                    inputType: 'password',
+                    listeners: {
+                        keypress: 'pressEnterKey'
+                    }
                 },
                 {
                     xtype: 'checkbox',

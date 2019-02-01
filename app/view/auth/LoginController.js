@@ -185,6 +185,17 @@ Ext.define('Breeze.auth.LoginController', {
             messageCtl.setMessage(message);
             messageCtl.setHidden(false);
         }
-    }
+    },
 
+    /** 
+     * Process Login when Enter key is pressed.
+     * @param {HTMLElement} t The target of the event
+     * @param {Ext.event.Event} e The Ext.event.Event encapsulating the DOM event.
+     * @param {Object} eOpts The options object passed to Ext.util.Observable.addListener.
+    */
+    pressEnterKey: function(t, e, eOpts){
+        if(e.getKey() == Ext.EventObject.ENTER){
+            this.onLoginButtonTap(t, e, eOpts);
+        }
+    }
 })

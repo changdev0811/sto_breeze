@@ -94,7 +94,8 @@ Ext.define('Breeze.view.main.NavModel', {
         hideEmployeesSubNav: function(get){
             if(
                 get('employeesView.useSubNav') &&
-                (get('sidePanel.shown') && get('sidePanel.type') == 'employees')
+                get('sidePanel.shown') && 
+                get('sidePanel.type') == 'employees'
             ){
                 return false;
             } else {
