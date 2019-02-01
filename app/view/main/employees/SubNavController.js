@@ -1,9 +1,9 @@
 /**
- * View Controller for Employees Panel
- * @class PanelController
- * @namespace Breeze.view.main.employees.PanelController
+ * View Controller for top SubNav
+ * @class SubNavController
+ * @namespace Breeze.view.main.employees.SubNavController
  * @extends Breeze.controller.Base
- * @alias main.employees.panel
+ * @alias controller.main.employees.subnav
  */
 
 Ext.define('Breeze.view.main.employees.SubNavController', {
@@ -18,25 +18,28 @@ Ext.define('Breeze.view.main.employees.SubNavController', {
 
     },
 
+    /** 
+     * When tapped in the link of top subnav, redirect
+    */
+    onNavTap: function(t, e, eOpts){
+        var type = t.getItemId(),
+            urlObj = new URL(window.location.href),
+            arr = urlObj.hash.split('/'),
+            cat = arr[0].substring(1),
+            id = arr[arr.length - 1];
+            
+        var itemId_arr = ['cal', 'empinfo', 'fyi', 'yag', 'wtv'];
 
-    onNavTap: function(bp){
-        //setPressed:true/false
-        console.log("[onNavTap]");
-        
-        var b_arr = ['cal', 'empinfo', 'fyi', 'yag', 'wtv'];
-        //var cb_itemId = bp.get('itemId');
-
-        console.log(bp);
-
-        for(var i = 0; i < b_arr.length; i++){
-            var btn = bp.parent.getComponent(b_arr[i]);
-            if(btn != bp){
+        itemId_arr.forEach(function(itemId){
+            var btn = t.parent.getComponent(itemId);
+            if(itemId != type){
                 btn.setPressed(false);
             }
-        }
-        
+        });
 
-
+        this.redirectTo(
+            `${cat}/${type}/${id}`
+        );
     }
    
 });

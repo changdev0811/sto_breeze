@@ -23,18 +23,12 @@ Ext.define('Breeze.view.main.employees.SubNav', {
         initialize: 'onInit'
     },
 
-
-
-
-
-
     layout: 'hbox',
     //height:'auto',
     ui: 'employees-side-bar-panel',
     // padding: '16pt',
     
     items: [
-
       {
           //xtype: 'segmentedbutton',
           xtype: 'container',
