@@ -10,6 +10,7 @@ Ext.define('Breeze.view.requests.Main', {
     alias: 'widget.requests.main',
 
     requires: [
+        'Breeze.view.requests.form.RequestDay',
         'Ext.grid.plugin.CellEditing',
         'Ext.panel.Resizer'
     ],
@@ -99,7 +100,9 @@ Ext.define('Breeze.view.requests.Main', {
                                         '<tpl case="Denied">',
                                         '<span class="leaverequest lr-denied">{request_status}<span>',
                                         '<tpl case="Cancelled">',
+                                        '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl case="Cancellation Pending">',
+                                        '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl case="Cancellation Denied">',
                                         '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl default>',
@@ -374,7 +377,7 @@ Ext.define('Breeze.view.requests.Main', {
                             views:{
                                 month:{
                                     addForm:{
-                                        xtype:'requests.form.add',
+                                        xtype:'requests.form.requestday',
                                         userCls:'employee-calendar-form',
                                         ui:'dark-themed-dialog',
                                         saveButton:       { ui:'alt confirm' },
@@ -409,6 +412,11 @@ Ext.define('Breeze.view.requests.Main', {
                                     },
                                     view:{
                                         ui: 'employee-calendar',
+                                    },
+
+                                    listeners: {
+                                        eventadd: 'onCalendarEventAdd',
+                                        beforeeventadd: 'onCalendarBeforeEventAdd'
                                     }
                                 },
 

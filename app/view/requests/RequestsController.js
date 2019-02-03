@@ -49,7 +49,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
         // Load emp shift time info
         Ext.create('Breeze.api.Employee').getShiftTime(vm.get('employeeId')).then((r)=>{
             vm.set('empShiftTime', r);
-            me.updateCalendarFormViewtModel();
+            me.updateCalendarFormViewModel();
         }).catch((e)=>{
             console.warn('Failed to load employee shift time with getEmpShiftTime');
         });
@@ -139,71 +139,6 @@ Ext.define('Breeze.view.requests.RequestsController', {
                 }
             }
         });
-    },
-
-    /**
-     * Load calendar
-     */
-    loadCalendar: function(){
-        var me = this;
-        var vm = me.getViewModel();
-
-        console.info('Calendar Load Start');
-        
-        var calendarCmp = this.lookup('calendarPanel'),
-            calendar = calendarCmp.getView().activeView,
-            start = calendar.getDisplayRange().start,
-            end = calendar.getDisplayRange().end;
-
-        this.showLoadingMask(true);
-
-        var calStore = Ext.create('Breeze.store.calendar.Calendar',
-            {
-                // autoLoad: true,
-                categories: vm.getStore('categories'),
-                startDate: start.toLocaleString(),
-                endDate: end.toLocaleString(),
-                utcStartDate: start.toUTC({out: Date.UTC_OUT.STRING}),
-                utcEndDate: end.toUTC({out: Date.UTC_OUT.STRING}),
-                // endDate: (new Date()).toISOString(),
-                lookup: vm.get('employeeId')
-            }
-        ).load({callback: function(r,o,success){
-            // console.info('Calendar load successful: ', success);
-            
-            // Add event listeners for detecting when all events finish updating
-            calStore.getEventSource().on({
-                datachanged: function(){
-                    console.info('datachanged');
-                    this.showLoadingMask(true);
-                }, 
-                refresh: function(){
-                    console.info('refresh');
-                    this.showLoadingMask(false);
-                },
-                // beforeupdate: function(){
-                //     console.info('beforeupdate');
-                //     this.showLoadingMask(true);
-                // },
-                // endupdate: function(){
-                //     console.info('endupdate');
-                //     this.showLoadingMask(true);
-                // },
-                scope: me
-            });
-            
-            vm.setStores({calendar: calStore});
-        }});
-    },
-
-    /**
-     * Makes calendar add event form inherit this view's viewmodel
-     */
-    updateCalendarFormViewModel: function(){
-        var cmp = this.lookup('calendarPanel').getView().getAt(0),
-            form = cmp.getAddForm();
-            Ext.merge(form, {viewModel: {parent: this.getViewModel()}});
-            cmp.setAddForm(form);
     },
 
     /**
@@ -345,6 +280,10 @@ Ext.define('Breeze.view.requests.RequestsController', {
 
     // === [Event Handlers] ===
 
+    /**
+     * Event handler for save button in create leave request dialog
+     * @param {Object} btn 
+     */
     onCreateRequest: function(btn){
         var dlg = this.createRequestDialog,
             nameField = dlg.getComponent('requestName'),
@@ -383,15 +322,6 @@ Ext.define('Breeze.view.requests.RequestsController', {
         nameField.clearValue();
         nameField.clearInvalid();
     },
-
-    // onLeaveRequestBeforeCompleteEdit: function(location, editor, newVal, oldVal){
-    //     console.info('before name edit complete');
-    //     var record = location.record;
-
-    //     if(newVal.trim().length == 0){
-
-    //     }
-    // },
 
     /**
      * Event handler that fires before displaying amount editor for 
@@ -509,14 +439,6 @@ Ext.define('Breeze.view.requests.RequestsController', {
         this.loadRequestedDays(selected.get('unique_id'));
     },
 
-    onPrevMonthButton: function(){
-        console.info("Prev");
-        this.showLoadingMask(true);
-        this.lookup('calendarPanel').navigate(
-            -1, Ext.Date.MONTH
-        );
-    },
-
     onFyiNavClick:function(){
         this.redirectTo('personal/fyi');
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -536,4 +458,124 @@ Ext.define('Breeze.view.requests.RequestsController', {
         view.setActiveItem(requests);
     },
 
+    // === [Calendar] ===
+
+    /**
+     * Load calendar
+     */
+    loadCalendar: function(){
+        var me = this;
+        var vm = me.getViewModel();
+
+        console.info('Calendar Load Start');
+        
+        var calendarCmp = this.lookup('calendarPanel'),
+            calendar = calendarCmp.getView().activeView,
+            start = calendar.getDisplayRange().start,
+            end = calendar.getDisplayRange().end;
+
+        this.showLoadingMask(true);
+
+        var calStore = Ext.create('Breeze.store.calendar.Calendar',
+            {
+                // autoLoad: true,
+                categories: vm.getStore('categories'),
+                startDate: start.toLocaleString(),
+                endDate: end.toLocaleString(),
+                utcStartDate: start.toUTC({out: Date.UTC_OUT.STRING}),
+                utcEndDate: end.toUTC({out: Date.UTC_OUT.STRING}),
+                // endDate: (new Date()).toISOString(),
+                lookup: vm.get('employeeId')
+            }
+        ).load({callback: function(r,o,success){
+            // console.info('Calendar load successful: ', success);
+            
+            // Add event listeners for detecting when all events finish updating
+            calStore.getEventSource().on({
+                datachanged: function(){
+                    console.info('datachanged');
+                    this.showLoadingMask(true);
+                }, 
+                refresh: function(){
+                    console.info('refresh');
+                    this.showLoadingMask(false);
+                },
+                // beforeupdate: function(){
+                //     console.info('beforeupdate');
+                //     this.showLoadingMask(true);
+                // },
+                // endupdate: function(){
+                //     console.info('endupdate');
+                //     this.showLoadingMask(true);
+                // },
+                scope: me
+            });
+            
+            vm.setStores({calendar: calStore});
+        }});
+    },
+
+    /**
+     * Makes calendar add event form inherit this view's viewmodel
+     */
+    updateCalendarFormViewModel: function(){
+        var cmp = this.lookup('calendarPanel').getView().getAt(0),
+            form = cmp.getAddForm();
+            Ext.merge(form, {viewModel: {parent: this.getViewModel()}});
+            cmp.setAddForm(form);
+    },
+
+    onCalendarBeforeEventAdd: function(view, context){
+        console.info('before event add');
+        var requestStatus = this.getViewModel().get('selectedRequest').request_status.toUpperCase();
+        if(requestStatus == "DRAFT" || requestStatus == "DENIED"){
+            return false;
+        }
+    },
+
+    /**
+     * Event handler for clicking 'save' in add request day form
+     * 
+     * Takes event data built by calendar logic and uses it to make
+     * an api call to add a requested day
+     * 
+     * @param {Object} view Calendar month view component (view in calendar panel)
+     * @param {Object} context Object with 'event' - event record, and 'data'- event data
+     * @param {*} eOpts Event options
+     */
+    onCalendarEventAdd: function(view, context, eOpts){
+        // console.info('Calendar event added');
+        var me = this,
+            vm = this.getViewModel(),
+            hoursMode = vm.get('amountInHoursMode'),
+            requestId = vm.get('selectedRequest').unique_id,
+            event = context.data;
+
+        var amount = 0;
+
+        if(hoursMode){
+            amount = (event.hours * 100) / 24;
+        } else {
+            amount = event.percent;
+        }
+        
+        me.api.requests.addRequestDay(
+            requestId, event.startDate, event.calendarId, amount
+        ).then((r)=>{
+            me.loadCategories();
+            me.loadRequestedDays(requestId);
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+        }).catch((e)=>{
+            me.loadCategories();
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'error'
+            });
+        });
+    }
 });

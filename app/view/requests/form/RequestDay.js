@@ -1,6 +1,6 @@
-Ext.define('Breeze.view.requests.RequestDayForm', {
+Ext.define('Breeze.view.requests.form.RequestDay', {
     extend: 'Ext.calendar.form.Add',
-    alias: 'widget.requests.form.add',
+    alias: 'widget.requests.form.requestday',
     title: {
         ui: 'dark-themed-dialog',
         text: 'Request Day'
