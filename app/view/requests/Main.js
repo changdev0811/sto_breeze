@@ -52,13 +52,6 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
-                        // {
-                        //     xtype:'container',
-                        //     userCls:'requests-fieldset',
-                        //     layout: 'fit',
-                        //     scrollable:'y',
-                        //     flex:1,
-                        //     items:[
                         {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
@@ -282,8 +275,8 @@ Ext.define('Breeze.view.requests.Main', {
                                                 hidden: true,
                                                 bind: {
                                                     hidden: '{!requestActions.deleteDay}'
-                                                }
-                                                // handler: 'onDeleteAccrualInterval'
+                                                },
+                                                handler: 'onRequestedDaysDelete'
                                             }
                                         ]
                                     }
@@ -311,24 +304,26 @@ Ext.define('Breeze.view.requests.Main', {
             minWidth: '500pt', // 600pt
             layout: 'vbox',
             items:[
+                // Calendar panel
                 {
                     xtype: 'panel',
                     userCls:'requests-calendar-panel',
-                    title: ' ',
+                    title: 'Calendar',
                     tools: [
                         {
                             iconCls: 'x-fa fa-sync',
-                            //handler: 'onRefreshTool'  
+                            handler: 'onRefreshTool'  
                         },
                         {
                             iconCls: 'x-fa fa-print',
-                            //handler: 'onPrintTool'
+                            handler: 'onPrintTool'
                         }
                     ],
                     ui: 'employee-calendar-panel',
                     flex: 1,
                     layout: 'vbox',
                     items: [
+                        // Calendar component
                         {
                             xtype: 'calendar',
                             userCls: 'employee-calendar-noedge',
@@ -424,18 +419,7 @@ Ext.define('Breeze.view.requests.Main', {
 
                             }
                         },
-
-                        
-                        //{
-                        //    xtype: 'container',
-                        //    layout: 'vbox',
-                        //    userCls:'legend-title',
-                        //    height:'14pt',
-                        //    html:"Legend"
-                        //},
-                        
-
-
+                        // Categories Legend
                         {
                             xtype: 'dataview',
                             ui:'calendar-legend',
@@ -455,16 +439,6 @@ Ext.define('Breeze.view.requests.Main', {
                             },
                             itemTpl: '<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{Category_Color_HEX}"></div>{Category_Name}</div>',
 
-                            // store: [
-                            //     { title: 'Illness',     color:'rgb(153, 255, 204,1)'    },
-                            //     { title: 'Vacation',    color:'rgb(255, 255, 153,1)'    },
-                            //     { title: 'Personal',    color:'rgb(51, 153, 255,1)'     },
-                            //     { title: 'Jury',        color:'rgb(153, 153, 204,1)'    },
-                            //     { title: 'Bereavement', color:'rgb(153, 204, 255,1)'    },
-                            //     { title: 'Holiday',     color:'rgb(255, 153, 15,1)'     },
-                            //     { title: 'Training',    color:'rgb(153, 153, 153, 1)'   }
-                                
-                            // ]
                             bind: {
                                 store: '{categories}',
                             },

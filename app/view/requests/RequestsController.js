@@ -102,7 +102,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
      * @param {Object} requestId Leave Request ID to load days for
      * @todo TODO: Navigate calendar to month of first request day on load (see LeaveRequestSlidePanel.js:160)
      */
-    loadRequestedDays: function(requestId){
+    loadRequestedDays: function(requestId, changeCalendarDate=false){
         var me = this,
             vm = this.getViewModel(),
             store = vm.get('requestedDays');
@@ -111,7 +111,12 @@ Ext.define('Breeze.view.requests.RequestsController', {
         store.updateProxy();
         store.load({
             callback: function(records, op, success){
-                // c
+                if(success && changeCalendarDate && records.length > 0){
+                    // If indicated and requests are available, change calendar to show event
+                    this.lookup('calendarPanel').setValue(
+                        new Date(records[0].get('request_date'))
+                    );
+                }
             },
             scope: me
         });
@@ -409,6 +414,34 @@ Ext.define('Breeze.view.requests.RequestsController', {
     },
 
     /**
+     * Event handler for delete button shown on requested day items
+     * @param {Object} grid Reference to containing grid component
+     * @param {Object} info Object with selecion info
+     */
+    onRequestedDaysDelete: function(grid, info){
+        var record = info.record,
+            vm = this.getViewModel(),
+            request = vm.get('selectedRequest'),
+            me = this;
+        this.api.requests.deleteRequestDay(
+            request.unique_id, record
+        ).then((r)=>{
+            me.loadRequestedDays(request.unique_id);
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+        }).catch((e)=>{
+            Ext.toast({
+                type: e.type,
+                message: e.message,
+                timoeut: 'error'
+            });
+        });
+    },
+
+    /**
      * Event handler for editor on Leave Request grid's name column
      * @param {*} location Location object provided by cell editor plugin
      * @param {*} editor Editor object
@@ -457,7 +490,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
         this.toggleLeaveRequestActionButtons();
 
         // Load requested days for selected leave request
-        this.loadRequestedDays(selected.get('unique_id'));
+        this.loadRequestedDays(selected.get('unique_id'), true);
     },
 
     onFyiNavClick:function(){
@@ -590,14 +623,21 @@ Ext.define('Breeze.view.requests.RequestsController', {
             requestId = vm.get('selectedRequest').unique_id,
             event = context.data;
 
-        var amount = 0;
+        var amount = 0, amountSrc = (hoursMode)? event.hours : event.percent;
 
         if(hoursMode){
-            amount = (event.hours * 100) / 24;
+            amount = (amountSrc * 100) / 24;
         } else {
-            amount = event.percent;
+            amount = amountSrc;
         }
         
+        // if(amount == 0){
+        //     Ext.toast({
+        //         type: Ext.Toast.WARN,
+        //         message: 'Requested time must be greater than 0'
+        //     })
+        // }
+
         me.api.requests.addRequestDay(
             requestId, event.startDate, event.calendarId, amount
         ).then((r)=>{

@@ -38,7 +38,7 @@ Ext.define('Breeze.view.requests.form.RequestDay', {
             label: 'Hours',
             itemId: 'hours',
             name: 'hours',
-            minValue: 0,
+            minValue: 1,
             maxValue: 24
         },
         percentField: {
@@ -47,7 +47,7 @@ Ext.define('Breeze.view.requests.form.RequestDay', {
             label: 'Percent',
             itemId: 'percent',
             name: 'percent',
-            minValue: 0,
+            minValue: 1,
             maxValue: 100
         },
         /**
