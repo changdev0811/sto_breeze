@@ -199,14 +199,16 @@ Ext.define('Breeze.view.requests.Main', {
                             ui: 'decline alt', style: 'margin-left: 4pt',
                             itemId: 'delete',
                             text: 'Delete', hidden: true,
-                            bind: { hidden: '{!requestActions.delete}' }
+                            bind: { hidden: '{!requestActions.delete}' },
+                            handler: 'onLeaveRequestDelete'
                         },
                         {
                             xtype: 'button',
                             ui: 'decline alt', style: 'margin-left: 4pt',
                             itemId: 'cancelRequest',
                             text: 'Cancel Request', hidden: true,
-                            bind: { hidden: '{!requestActions.cancel}' }
+                            bind: { hidden: '{!requestActions.cancel}' },
+                            handler: 'onLeaveRequestCancel'
                         }
                     ]
                 },

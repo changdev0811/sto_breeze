@@ -63,7 +63,7 @@ Ext.define('Breeze.api.Requests', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    if(r.success){
+                    if(resp.success){
                         resolve({
                             type: Ext.Toast.INFO,
                             message: 'Leave Request deleted successfully'

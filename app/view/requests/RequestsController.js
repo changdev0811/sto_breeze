@@ -647,6 +647,11 @@ Ext.define('Breeze.view.requests.RequestsController', {
         view.setActiveItem(requests);
     },
 
+    /**
+     * Event handler for submit request button
+     * 
+     * Submits leave request
+     */
     onLeaveRequestSubmit: function(){
         var vm = this.getViewModel(),
             requestId = vm.get('selectedRequest').unique_id,
@@ -667,6 +672,67 @@ Ext.define('Breeze.view.requests.RequestsController', {
             });
         });
     },
+
+    /**
+     * Event handler for cancel request button
+     * 
+     * Attempts to cancel leave request
+     */
+    onLeaveRequestCancel: function(){
+        var vm = this.getViewModel(),
+            requestId = vm.get('selectedRequest').unique_id,
+            me = this;
+        this.api.requests.cancelEmployeeRequest(requestId).then((r)=>{
+            me.loadCategories();
+            me.loadRequests(requestId);
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+        }).catch((err)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'error'
+            });
+        });
+    },
+
+    /**
+     * Event handler for delete request button
+     * 
+     * Attempts to delete leave request if user clicks 'yes' in confirm dialog
+     */
+    onLeaveRequestDelete: function(){
+        var vm = this.getViewModel(),
+            requestId = vm.get('selectedRequest').unique_id,
+            me = this;
+        Ext.Msg.themedConfirm(
+            'Delete Leave Request',
+            'Are you sure you want to delete this Leave Request?', 
+            (choice)=>{
+                if(choice == 'yes'){
+                    me.api.requests.deleteRequest(requestId).then((r)=>{
+                        me.loadCategories();
+                        me.loadRequests();
+                        Ext.toast({
+                            type: r.type,
+                            message: r.message,
+                            timeout: 'info'
+                        });
+                    }).catch((err)=>{
+                        Ext.toast({
+                            type: err.type,
+                            message: err.message,
+                            timeout: 'error'
+                        });
+                    });
+                }
+            }, me
+        );
+    },
+    
 
     // === [Calendar] ===
 
