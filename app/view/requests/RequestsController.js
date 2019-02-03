@@ -525,10 +525,24 @@ Ext.define('Breeze.view.requests.RequestsController', {
             cmp.setAddForm(form);
     },
 
+    /**
+     * Fired prior to showing Add Event form for Calendar
+     * Decides whether or not form should be shown
+     * @param {*} view 
+     * @param {*} context 
+     */
     onCalendarBeforeEventAdd: function(view, context){
         console.info('before event add');
-        var requestStatus = this.getViewModel().get('selectedRequest').request_status.toUpperCase();
+        var request = this.getViewModel().get('selectedRequest');
+        if(Object.isUnvalued(request)){
+            // Cancel form if no request is selected
+            return false;
+        }
+        var requestStatus = request.request_status.toUpperCase();
+        // Cancel showing form if leave request isn't in valid state
         if(requestStatus == "DRAFT" || requestStatus == "DENIED"){
+            // ok
+        } else {
             return false;
         }
     },

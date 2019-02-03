@@ -217,7 +217,8 @@ Ext.define('Breeze.view.requests.Main', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            handler: 'showLeaveRequestForm'
+                            handler: 'onAddRequestedDaysTool'
+                            // handler: 'showLeaveRequestForm'
                             // handler: 'showCreateRequestDialog'
                         },
                         {
