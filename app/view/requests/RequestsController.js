@@ -83,7 +83,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
                         if(success){
                             var record = records[0];
                             if(requestId !== null){
-                                record = vm.get('leaveRequests').queryRecords("unique_id", requestId.toString())[0];
+                                record = vm.get('leaveRequests').findRecord("unique_id", requestId.toString());
                             }
                             this.lookup('leaveRequestsGrid').getSelectable().setSelectedRecord(
                                 record
