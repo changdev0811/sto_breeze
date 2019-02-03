@@ -147,7 +147,7 @@ Ext.define('Breeze.api.Requests', {
                     if(resp.success){
                         resolve({
                             type: Ext.Toast.INFO,
-                            message: 'Leave Reques Employee Notes successfully updated',
+                            message: 'Leave Request Employee Notes successfully updated',
                             requestId: requestId
                         });
                     } else {

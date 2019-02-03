@@ -128,6 +128,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotes',
                             text: 'Employee Notes', hidden: true,
+                            handler: 'onEmployeeNotesButton',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotes}' }
                         },
                         {
@@ -135,6 +136,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotesReadOnly',
                             text: 'Employee Notes', hidden: true,
+                            handler: 'onEmployeeNotesReadOnlyButton',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotesReadOnly}' }
                         },
                         {
@@ -142,6 +144,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'supervisorNotes',
                             text: 'Supervisor',  hidden: true,
+                            handler: 'showSupervisorNotesDialog',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.supervisorNotes}' }
                         },
                         {
@@ -157,22 +160,26 @@ Ext.define('Breeze.view.requests.Main', {
                                     {
                                         text: 'Employee Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.employeeNotes}' }
+                                        bind: { hidden: '{!requestActions.employeeNotes}' },
+                                        handler: 'onEmployeeNotesButton'
                                     },
                                     {
                                         text: 'Employee Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' }
+                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' },
+                                        handler: 'onEmployeeNotesReadOnlyButton'
                                     },
                                     {
                                         text: 'Supervisor Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.supervisorNotes}' }
+                                        bind: { hidden: '{!requestActions.supervisorNotes}' },
+                                        handler: 'showSupervisorNotesDialog',
                                     },
                                     {
                                         text: 'Deny Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.denyNotes}' }
+                                        bind: { hidden: '{!requestActions.denyNotes}' },
+                                        handler: 'showSupervisorNotesDialog',
                                     }
                                 ]
                             }

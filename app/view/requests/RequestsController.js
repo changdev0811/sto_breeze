@@ -163,6 +163,9 @@ Ext.define('Breeze.view.requests.RequestsController', {
         }
     },
 
+    /**
+     * Display the dialog for creating a new leave request
+     */
     showCreateRequestDialog: function(){
         console.info('create request dialog');
         var view = this.getView(),
@@ -176,8 +179,74 @@ Ext.define('Breeze.view.requests.RequestsController', {
             this.createRequestDialog = dialog = Ext.create(dialog);
         }
 
+        dialog.show();          
+    },
+
+    /**
+     * Display employee notes dialog, either normal or readonly
+     * @param {Boolean} readOnly If true, display as read only
+     */
+    showEmployeeNotesDialog: function(readOnly = false){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            request = vm.get('selectedRequest'),
+            dialog = this.employeeNotesDialog;
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.employeeNotesDialog);
+            this.employeeNotesDialog = dialog = Ext.create(dialog);
+        }
+
+        // Update note data and adjust form based on read only value
+        var notes = dialog.getComponent('notes');
+        notes.setValue(request.emp_notes);
+        notes.setReadOnly(readOnly);
+        dialog.getButtons().getComponent('save').setHidden(readOnly);
+        
         dialog.show();
-                
+    },
+
+    /**
+     * Display supervisor notes dialog
+     */
+    showSupervisorNotesDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            request = vm.get('selectedRequest'),
+            dialog = this.supervisorNotesDialog;
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.supervisorNotesDialog);
+            this.supervisorNotesDialog = dialog = Ext.create(dialog);
+        }
+
+        // Update note data
+        dialog.getComponent('notes').setValue(request.sup_notes);
+        
+        dialog.show();
+    },
+
+    /**
+     * Display deny notes dialog
+     */
+    showDenyNotesDialog: function(){
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            request = vm.get('selectedRequest'),
+            dialog = this.denyNotesDialog;
+        if(!dialog){
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.denyNotesDialog);
+            this.denyNotesDialog = dialog = Ext.create(dialog);
+        }
+
+        // Update note data
+        dialog.getComponent('notes').setValue(request.sup_notes);
+        
+        dialog.show();
     },
 
     /**
@@ -286,6 +355,47 @@ Ext.define('Breeze.view.requests.RequestsController', {
     // === [Event Handlers] ===
 
     /**
+     * Handle 'Employee Notes' button click event
+     */
+    onEmployeeNotesButton: function(){
+        this.showEmployeeNotesDialog(false);
+    },
+
+    /**
+     * Handle 'Employee Notes' (read only) button click event
+     */
+    onEmployeeNotesReadOnlyButton: function(){
+        this.showEmployeeNotesDialog(true);
+    },
+
+    /**
+     * Event handler for 'save' button in Employee Notes dialog
+     */
+    onEmployeeNotesSave: function(){
+        var requestId = this.getViewModel().get('selectedRequest').unique_id,
+            me = this,
+            dialog = this.employeeNotesDialog,
+            notes = dialog.getComponent('notes').getValue();
+        
+        this.api.requests.changeEmployeeRequestNotes(requestId, notes).then((r)=>{
+            me.loadRequests(requestId);
+            dialog.hide();
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+        }).catch((err)=>{
+            dialog.hide();
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'error'
+            });
+        });
+    },
+
+    /**
      * Event handler for save button in create leave request dialog
      * @param {Object} btn 
      */
@@ -326,6 +436,27 @@ Ext.define('Breeze.view.requests.RequestsController', {
         dlg.hide();
         nameField.clearValue();
         nameField.clearInvalid();
+    },
+
+    /**
+     * Handle dialog cancel button click event
+     */
+    onEmployeeNotesDialogCancel: function(){
+        this.employeeNotesDialog.hide();
+    },
+
+    /**
+     * Handle dialog cancel button click event
+     */
+    onSupervisorNotesDialogCancel: function(){
+        this.supervisorNotesDialog.hide();
+    },
+
+    /**
+     * Handle dialog cancel button click event
+     */
+    onDenyNotesDialogCancel: function(){
+        this.denyNotesDialog.hide();
     },
 
     /**
@@ -521,7 +652,7 @@ Ext.define('Breeze.view.requests.RequestsController', {
         var me = this;
         var vm = me.getViewModel();
 
-        console.info('Calendar Load Start');
+        // console.info('Calendar Load Start');
         
         var calendarCmp = this.lookup('calendarPanel'),
             calendar = calendarCmp.getView().activeView,
@@ -547,11 +678,11 @@ Ext.define('Breeze.view.requests.RequestsController', {
             // Add event listeners for detecting when all events finish updating
             calStore.getEventSource().on({
                 datachanged: function(){
-                    console.info('datachanged');
+                    // console.info('datachanged');
                     this.showLoadingMask(true);
                 }, 
                 refresh: function(){
-                    console.info('refresh');
+                    // console.info('refresh');
                     this.showLoadingMask(false);
                 },
                 // beforeupdate: function(){
