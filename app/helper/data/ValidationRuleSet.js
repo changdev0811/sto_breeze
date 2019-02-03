@@ -130,7 +130,9 @@ Ext.define('Breeze.helper.data.ValidationRuleSet', {
 
     privates: {
         addError: function(message){
-            this.setErrors(this.getErrors().push(message));
+            var errors = this.getErrors();
+            errors.push(message)
+            this.setErrors(errors);
         }
     }
 
