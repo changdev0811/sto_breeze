@@ -175,7 +175,6 @@ Ext.define('Breeze.view.employee.Information', {
                             displayField: 'Name',
                             label: 'Punch Policy',
                             valueField: 'ID',
-                            bind: '{punchPolicy.policy_id}',
                             userCls: 'employee-info-general-field',
                             ui: 'employeeinfo-textfield',
                             required: true,

@@ -38,13 +38,13 @@ Ext.define('Breeze.view.employee.information.Security', {
                     items: [
     
                         {
-                            name: 'user_name',
+                            itemId: 'user_name',
                             label: 'User Name',
                             bind: { value: '{info.Username}' },
                             required: true
                         },
                         {
-                            name: 'user_type',
+                            itemId: 'user_type',
                             // xtype: 'selectfield',
                             xtype: 'combobox',
                             editable: false,
@@ -56,7 +56,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                         },
                         {
                             xtype: 'breeze-email',
-                            name: 'email',
+                            itemId: 'email',
                             label: 'Email',
                             bind: { value: '{info.Email}' }, 
                             // TODO: Email validation regex
@@ -82,7 +82,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     items: [
                         {
                             xtype: 'breeze-password',
-                            name: 'create_password',
+                            itemId: 'create_password',
                             bind: { 
                                 value: '{initialPassword}'
                             },
@@ -124,7 +124,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                     },
                     items: [
                         {
-                            name: 'old_password',
+                            itemId: 'old_password',
                             label: 'Current Password',
                             xtype: 'breeze-password',
                             ignoreReadOnly: true,
@@ -133,7 +133,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                             }
                         },
                         {
-                            name: 'password',
+                            itemId: 'password',
                             xtype: 'breeze-password',
                             label: 'New Password',
                             // Changing password requires new and new confirm pass
@@ -143,7 +143,7 @@ Ext.define('Breeze.view.employee.information.Security', {
                             }
                         },
                         {
-                            name: 'confirm_new_password',
+                            itemId: 'confirm_new_password',
                             label: 'Confirm',
                             xtype: 'breeze-password',
                             listeners: {

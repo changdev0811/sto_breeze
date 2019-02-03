@@ -11,7 +11,8 @@ Ext.define('Breeze.view.employee.InformationController', {
     alias: 'controller.employee.information',
 
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
+        'Breeze.helper.data.ValidationRuleSet'
     ],
 
     onInit: function(component, eOpts){
@@ -783,7 +784,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                     ['info', n].join('.'),
                     arrays[n]
                 );
-            }
+            }   
         };
 
         // Extract arrays
@@ -1822,17 +1823,17 @@ Ext.define('Breeze.view.employee.InformationController', {
         };
             
         ['first_name', 'last_name'].forEach((f)=>{
-            var partValid = pages.employee.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.employee.tab.query(`[itemId=${f}]`)[0].validate();
             pages.employee.valid = pages.employee.valid && partValid;
             pages.employee.errCount += ((partValid)? 0 : 1);
         });
         ['department'].forEach((f)=>{
-            var partValid = pages.company.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.company.tab.query(`[itemId=${f}]`)[0].validate();
             pages.company.valid = pages.company.valid && partValid;
             pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = pages.security.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].validate();
             pages.security.valid = pages.security.valid && partValid;
             pages.security.errCount += ((partValid)? 0 : 1);
         });

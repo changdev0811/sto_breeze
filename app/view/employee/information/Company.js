@@ -44,7 +44,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             items: [
                 {
                     xtype: 'datefield',
-                    name: 'date_of_hire',
+                    itemId: 'date_of_hire',
                     label: 'Hire Date',
                     // bind: { value: '{info.HireDate}' },
                     bind: { value: '{hireDate}' },
@@ -57,7 +57,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 },
                 {
                     xtype: 'datefield',
-                    name: 'date_of_termination',
+                    itemId: 'date_of_termination',
                     label: 'Termination Date',
                     bind: { value: '{info.TerminationDate}' },
                     // edgePicker: {},
@@ -68,7 +68,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     // },
                 },
                 {
-                    name: 'customer_employee_id',
+                    itemId: 'customer_employee_id',
                     label: 'Employee #',
                     bind: { value: '{info.EmployeeNumber}' }
                 }
@@ -90,7 +90,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                 {
                     xtype: 'selectfield',
                     editable: false,
-                    name: 'department',
+                    itemId: 'department',
                     label: 'Department',
                     displayField: 'Name',
                     valueField: 'Id',
@@ -98,14 +98,24 @@ Ext.define('Breeze.view.employee.information.Company', {
                     store: 'departments',
                     required: true,
                     bind: { value: '{info.Department}' },
+                    validators: {
+                        type: 'method',
+                        fn: function(value){
+                            if(value === 0){
+                                return 'Required';
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
                 },
                 {
-                    name: 'badge_id',
+                    itemId: 'badge_id',
                     label: 'Badge #',
                     bind: { value: '{info.Badge}' }
                 },
                 {
-                    name: 'payroll',
+                    itemId: 'payroll',
                     label: 'Payroll #',
                     bind: { value: '{info.Payroll}' }
                 }
@@ -126,7 +136,7 @@ Ext.define('Breeze.view.employee.information.Company', {
             },
             items: [
                 {
-                    name: 'comp_rate',
+                    itemId: 'comp_rate',
                     xtype: 'numberfield',
                     minValue: 0, decimals: 2,
                     label: 'Compensation',
@@ -152,7 +162,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     xtype: 'selectfield',
                     editable: false,
                     label: 'Compensation Frequency',
-                    name: 'comp_per',
+                    itemId: 'comp_per',
                     store: 'CompensationOptions',
                     bind: { value: '{info.CompPer}' },
                     displayField: 'Description',
