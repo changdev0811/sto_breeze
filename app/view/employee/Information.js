@@ -197,6 +197,8 @@ Ext.define('Breeze.view.employee.Information', {
         }
     ],
 
+    // === [Dialogs] ===
+
     policyChangeDialog: {
         xtype: 'employee.information.dialog.changeaccrualpolicy'
     }, 
