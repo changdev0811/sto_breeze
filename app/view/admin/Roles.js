@@ -207,7 +207,7 @@ Ext.define('Breeze.view.admin.Roles', {
     dialog: {
         xtype: 'dialog',
         // width: '400pt', height: '400pt',
-        ui: 'light-themed-dialog employeeinfo-dialog',
+        ui: 'dark-themed-dialog employeeinfo-dialog',
         title: 'Supervisor Role Conflict',
 
         items: [
