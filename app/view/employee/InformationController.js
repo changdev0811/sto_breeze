@@ -49,7 +49,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('departments').setStore(vm.getStore('departments'));
                 // comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 // comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
-                comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
+                // comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
                 if(vm.get('employeeId') !== 'new'){
                     // if employee id isn't new, load employee
                     me.loadEmployeeInfo(component, function(c){
@@ -216,7 +216,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
 
         // vm.getStore('supervisors').load();
-
+        
         vm.getStore('departments').getProxy().extraParams.excludeterminated = 0;
         vm.getStore('departments').getProxy().extraParams.includeUserDept = vm.get('readOnly');
         
@@ -1204,6 +1204,57 @@ Ext.define('Breeze.view.employee.InformationController', {
         if(record !== null){
             records.remove([record]);
             records.commitChanges();
+        }
+    },
+
+        /**
+     * Method called by dialog cancelable mixin's onDialogCancel method
+     * for shift segment dialog cancel button; resets field values and
+     * clears validation error indicators
+     * @param {Object} dlg dialog reference
+     */
+    onCreateShiftSegmentDialogCancel: function (dlg) {
+        let start = dlg.getComponent('start'),
+            stop = dlg.getComponent('stop');
+        start.clearValue();
+        stop.clearValue();
+        start.setError(null);
+        stop.setError(null);
+    },
+
+    onCreateShiftSegmentDialogSave: function (btn) {
+        let dlg = btn.getParent().getParent(),
+            start = dlg.getComponent('start'),
+            stop = dlg.getComponent('stop'),
+            segments = this.getViewModel().get('shift.segments');
+        start.validate();
+        stop.validate();
+        if (start.isValid() && stop.isValid()) {
+            if (this.validateShiftSegment(start.getValue(), stop.getValue(), null, true)) {
+                // Segment is valid, update store with new item
+                let startT = BreezeTime.resolve(start.getValue()),
+                    stopT = BreezeTime.resolve(stop.getValue());
+                segments.loadData([{
+                    StartTime: startT.asTime(),
+                    StartMin: startT.asMinutes(),
+                    StopTime: stopT.asTime(),
+                    StopMin: stopT.asMinutes()
+                }], true);
+                segments.commitChanges();
+                dlg.hide();
+                this.onCreateShiftSegmentDialogCancel(dlg);
+                Ext.toast({
+                    type: Ext.Toast.INFO,
+                    message: 'Shift segment added successfully',
+                    timeout: 'info'
+                });
+            };
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Please fix field errors and try again.',
+                timeout: 'warn'
+            });
         }
     },
 
