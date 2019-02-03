@@ -416,10 +416,21 @@ Ext.define('Breeze.view.requests.RequestsController', {
         } else {
             // Name is okay, so proceed
             api.requests.createRequest(nameField.getValue()).then((r)=>{
-
+                me.loadRequests(r.requestId);
+                dlg.hide();
+                Ext.toast({
+                    type: r.type,
+                    message: r.message,
+                    timeout: 'info'
+                });
             }).catch((e)=>{
-
-            })
+                dlg.hide();
+                Ext.toast({
+                    type: e.type,
+                    message: e.message,
+                    timeout: 'error'
+                });
+            });
         }
     },
 
