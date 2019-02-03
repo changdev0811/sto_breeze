@@ -102,7 +102,7 @@ Ext.define('Breeze.view.employee.information.Security', {
             //userCls: 'employee-info-fieldset-bordered',
             reference: 'securityChangePassword',
             layout: 'vbox',
-            title: 'Change Password',
+            title:'<i class="fas fa-key" style="padding-right:8pt;"></i>Change Password',
             ignoreReadOnly: true,
             bind: {
                 hidden: '{newEmployee}'

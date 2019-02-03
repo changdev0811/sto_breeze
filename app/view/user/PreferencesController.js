@@ -5,7 +5,6 @@
  * @alias controller.user.preferences
  */
 Ext.define('Breeze.view.user.PreferencesController', {
-    // extend: 'Ext.app.ViewController',
     extend: 'Breeze.controller.Base',
     alias: 'controller.user.preferences',
     theme: Breeze.helper.Theme,
@@ -20,7 +19,7 @@ Ext.define('Breeze.view.user.PreferencesController', {
         var nightMode = (themeName === 'night')? true : false;
         console.log('theme name', themeName);
         console.log('nightMode', nightMode);
-
+		this.getViewModel().set('nightMode', (this.theme.getMode() == 'night') ? 1 : 0);
         // Load UserPreferences
         this.addStoreToViewModel(
             'Breeze.store.user.Preferences',
@@ -89,8 +88,11 @@ Ext.define('Breeze.view.user.PreferencesController', {
         yaagSltFld.setDisabled(newValue);
     },
 
-    onMenuNightModeChange: function(checkbox, newValue, oldValue, eOpts){
-        console.log(`${(newValue)? 'night' : 'day'} theme`);
-        this.theme.swap((newValue)? 'night' : 'day');
+    //onMenuNightModeChange: function(checkbox, newValue, oldValue, eOpts){
+    //    console.log(`${(newValue)? 'night' : 'day'} theme`);
+    //    this.theme.swap((newValue)? 'night' : 'day');
+    //}
+	onMenuNightModeChange: function(field, value){
+        this.theme.swap((value == 1)? 'night' : 'day');
     }
 });

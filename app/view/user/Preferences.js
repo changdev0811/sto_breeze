@@ -51,19 +51,26 @@ Ext.define('Breeze.view.user.Preferences', {
                 minWidth: '400pt',
                 layout: 'hbox',
                 title: 'Night Mode',
+
+                
+
                 userCls: 'reporting-fieldset',
-                defaults: {
-                            bodyAlign: 'stretch',
-                            ui: 'reporting',
-                            xtype: 'breeze-checkbox'
-                        },
+
                 items: [
                     {
-                        name: 'cbNightMode',
-			            ui: 'reporting',
-                        reference:'nightMode',
-                        boxLabel: 'Enable',
-                        bind: '{params.NightMode}',
+                        //xtype: 'breeze-checkbox',
+                        xtype: 'togglefield',
+                        ui: 'reporting',
+                        bodyAlign: 'stretch',
+                        //label: 'Enabled',
+                        labelAlign:'right',
+                        activeLabel:'Enabled',
+                        inactiveLabel:'Disabled',
+
+                        bind: {
+                            value: '{nightMode}'
+                            //hecked: '{nightMode}'
+                        },
                         listeners: {
                             change: 'onMenuNightModeChange'
                         }
