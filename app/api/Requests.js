@@ -333,10 +333,24 @@ Ext.define('Breeze.api.Requests', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    resolve(resp);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: resp.err
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err
+                        });
+                    }
                 },
                 function(err){
-                    reject(err);
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occured',
+                        error: err
+                    });
                 }
             )
         });

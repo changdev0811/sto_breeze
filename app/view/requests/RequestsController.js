@@ -373,7 +373,28 @@ Ext.define('Breeze.view.requests.RequestsController', {
                 null,
                 vm.get('companyConfig').getAt(0)
             ).then((r)=>{
-                // successful
+                // successful, so update event record
+                me.api.requests.updateRequestEvent(
+                    record, request.unique_id
+                ).then((r2)=>{
+                    // Refresh requested days
+                    me.loadRequestedDays(request.unique_id);
+                    // Show success
+                    Ext.toast({
+                        type: r2.type,
+                        message: r2.message,
+                        timeout: 'info'
+                    });
+                }).catch((err2)=>{
+                    // Refresh requested days
+                    me.loadRequestedDays(request.unique_id);
+                    // Show error
+                    Ext.toast({
+                        type: err2.type,
+                        message: err2.message,
+                        timeout: 'error'
+                    });
+                });
             }).catch((err)=>{
                 // failed to validate, so return to old value
                 record.set({Amount: oldVal}, {commit: true});
@@ -523,6 +544,10 @@ Ext.define('Breeze.view.requests.RequestsController', {
             form = cmp.getAddForm();
             Ext.merge(form, {viewModel: {parent: this.getViewModel()}});
             cmp.setAddForm(form);
+    },
+
+    onAddRequestedDaysTool: function(){
+        this.lookup('calendarPanel').getView().getAt(0).showAddForm();
     },
 
     /**
