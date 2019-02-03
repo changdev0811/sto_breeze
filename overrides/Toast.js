@@ -85,6 +85,7 @@ Ext.define('Breeze.Toast', {
         config = config || {};
         var {timeout} = config;
         config.timeout = this.resolveTimeout(timeout);
+        config.list = (config.list)? config.list : null;
         this.setConfig(config);
         this.callParent([config]);
     },
