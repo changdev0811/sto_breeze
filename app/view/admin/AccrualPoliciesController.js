@@ -1887,22 +1887,35 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     onCategorySelect: function (list, record, eOpts) {
         var vm = this.getViewModel(),
             policyCats = vm.get('policyCategories'),
-            recId = parseInt(record.get('Category_Id'));
-
+            recId = parseInt(record.get('Category_Id')),
+            policyId = vm.get('policyData').ID,
+            me = this;
+        this.api.policyCategory(policyId, recId).then((data)=>{
+            me.copyRecordToViewModel(
+                data, 'selectedCategory'
+                // ,'Breeze.model.accrual.policy.Category'
+            );
+            vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(data.accrualRules));
+            // load selected category's carry over rules
+            vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(data.carryOverRules));
+            vm.get('selectedCategoryCarryOverRules').sort('svcFrom', 'ASC');
+        }).catch((e)=>{
+            console.warn('Unable to load category data!');
+        });
         // vm.set('categoryId', Ext.clone(record.get('Category_Id')));
         // this.lookup('accrualRuleGrid').runRefresh();
         // // vm.set('selectedCategory', vm.get('policyCategories').query)
         // console.info('Category Selected');
-        var rec = policyCats.queryRecords('categoryId', recId)[0];
-        this.copyRecordToViewModel(
-            rec.getData(), 'selectedCategory'
-            // ,'Breeze.model.accrual.policy.Category'
-        );
-        // load selected category's accrual rules
-        vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
-        // load selected category's carry over rules
-        vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
-        vm.get('selectedCategoryCarryOverRules').sort('svcFrom', 'ASC');
+        // var rec = policyCats.queryRecords('categoryId', recId)[0];
+        // this.copyRecordToViewModel(
+        //     rec.getData(), 'selectedCategory'
+        //     // ,'Breeze.model.accrual.policy.Category'
+        // );
+        // // load selected category's accrual rules
+        // vm.get('selectedCategoryAccrualRules').loadData(Ext.clone(rec.getData().accrualRules));
+        // // load selected category's carry over rules
+        // vm.get('selectedCategoryCarryOverRules').loadData(Ext.clone(rec.getData().carryOverRules));
+        // vm.get('selectedCategoryCarryOverRules').sort('svcFrom', 'ASC');
     },
 
     onDeleteAccrualInterval: function(grid, info){

@@ -166,6 +166,26 @@ Ext.define('Breeze.api.admin.AccrualPolicies', {
         });
     },
 
+    policyCategory: function(policyId, categoryId){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getAccrualPolicyCategory',
+                {
+                    schedule_id: policyId.toString(),
+                    category_id: categoryId.toString()
+                },
+                true, false,
+                function(r){
+                    resolve(api.decodeJsonResponse(r));
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
+    },
+
     /**
      * Gather Employees and Categories a given Policy can be applied to
      * @param {String} policyId ID of Policy to gather Apply info for
