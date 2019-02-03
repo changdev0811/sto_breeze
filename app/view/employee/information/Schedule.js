@@ -106,13 +106,41 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                         editable: '{!readOnly}'
                                     },
                                     editor: {
-                                        xtype: 'selectfield',
+                                        // xtype: 'selectfield',
+                                        // store: 'accrualShiftChoices',
+                                        // displayField: 'time',
+                                        // valueField: 'value',
+                                        // listeners: {
+                                        //     // change: 'onShiftTimeChange',
+                                        //     select: 'onShiftTimeSelect'
+                                        // }
+                                        xtype: 'combobox',
+                                        itemId: 'start',
+                                        label: 'Start',
                                         store: 'accrualShiftChoices',
                                         displayField: 'time',
+                                        displayTpl: [
+                                            '{[this.time(values)]}',
+                                            {
+                                                time: function (values) {
+                                                    if (typeof values.time == "string") {
+                                                        return values.time;
+                                                    } else {
+                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                    }
+                                                }
+                                            }
+                                        ],
                                         valueField: 'value',
+                                        forceSelection: false,
+                                        queryMode: 'local',
+                                        required: true,
+                                        validators: {
+                                            type: 'controller',
+                                            fn: 'validateShiftTime'
+                                        },
                                         listeners: {
-                                            // change: 'onShiftTimeChange',
-                                            select: 'onShiftTimeSelect'
+                                            change: 'onShiftTimeChange'
                                         }
                                     }
                                     // editor: {
@@ -144,12 +172,40 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                         editable: '{!readOnly}'
                                     },
                                     editor: {
-                                        xtype: 'selectfield',
+                                        // xtype: 'selectfield',
+                                        // store: 'accrualShiftChoices',
+                                        // displayField: 'time',
+                                        // valueField: 'value',
+                                        // listeners: {
+                                        //     select: 'onShiftTimeSelect'
+                                        // }
+                                        xtype: 'combobox',
+                                        itemId: 'stop',
+                                        label: 'Stop',
                                         store: 'accrualShiftChoices',
                                         displayField: 'time',
+                                        displayTpl: [
+                                            '{[this.time(values)]}',
+                                            {
+                                                time: function (values) {
+                                                    if (typeof values.time == "string") {
+                                                        return values.time;
+                                                    } else {
+                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                    }
+                                                }
+                                            }
+                                        ],
                                         valueField: 'value',
+                                        forceSelection: false,
+                                        queryMode: 'local',
+                                        required: true,
+                                        validators: {
+                                            type: 'controller',
+                                            fn: 'validateShiftTime'
+                                        },
                                         listeners: {
-                                            select: 'onShiftTimeSelect'
+                                            change: 'onShiftTimeChange'
                                         }
                                     },
                                     cell: {

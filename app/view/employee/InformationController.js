@@ -776,13 +776,14 @@ Ext.define('Breeze.view.employee.InformationController', {
          */
         var copyData = function(arrays){
             var names = Object.keys(arrays);
-            names.forEach((n)=>{
+            for(var i=0;i<names.length;i++){
+                let n = names[i];
                 // Update viewmodel attribute values
                 vm.set(
                     ['info', n].join('.'),
                     arrays[n]
                 );
-            })
+            }
         };
 
         // Extract arrays
@@ -947,6 +948,146 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
 
         return !noOverlap;
+    },
+
+    /**
+     * Checks validity of shift info time value
+     * @param {String} value Time string
+     * @return {Boolean} True if valid, false otherwise
+     */
+    validateShiftTime: function (value) {
+        if (typeof value == 'number') {
+            // If value is a number, its from the dropdown and is thus valid
+            return true;
+        }
+        return (BreezeTime.isValidFormat(value)) ?
+            true : 'Expected format: Hour:Minute(AM/PM';
+    },
+
+    /**
+     * Runs validation tests for new or modified shift values against
+     * all other shift segments
+     * @param {(Number|String)} start 
+     * @param {(Number|String)} stop 
+     * @param {Object} record Optional record of updated segment to avoid self-conflict
+     */
+    validateShiftSegment: function (start, stop, record = null) {
+        var resolve = (v) => {
+            return (typeof v == 'number') ?
+                BreezeTime.fromMinutes(v) :
+                BreezeTime.parse(v);
+        },
+            vm = this.getViewModel(),
+            segments = vm.get('shift.segments');
+
+        // var source = this.lookup('shiftSegmentGrid');
+
+        // Create Validation rule set
+        var validRuleSet = Ext.create('Breeze.helper.data.ValidationRuleSet', {
+            rules: {
+                differentTimes: {
+                    fn: (get) => {
+                        return (get('start').asMinutes() !== get('stop').asMinutes());
+                    },
+                    passFn: (get, name) => {
+                        console.info(name, ' passed');
+                    },
+                    failFn: (get, name) => {
+                        console.warn(name, ' failed');
+                        // errors.push('Start and stop times must be different');
+                        return 'Start and stop times must be different';
+                    }
+                },
+                noOverlap: {
+                    fn: (get) => {
+                        var ok = true,
+                            otherSegs = get('segments').queryRecordsBy(
+                                (r) => { return r !== get('record'); }
+                            ).map((r) => {
+                                return [r.get('StartMin'), r.get('StopMin')];
+                            }),
+                            // Function for overlap checking
+                            overlaps = (v, r) => {
+                                return (v >= r[0] && v <= r[1]);
+                            };
+                        otherSegs.push([get('start').asMinutes(), get('stop').asMinutes()]);
+
+                        otherSegs.forEach((r, i) => {
+                            otherSegs.forEach((r2, i2) => {
+                                if (i !== i2) {
+                                    r.forEach((v) => {
+                                        ok &= !overlaps(v, r2);
+                                    })
+                                }
+                            })
+                        });
+
+                        return ok;
+                    },
+                    passFn: (get, name) => {
+                        console.info(name, ' passed');
+                    },
+                    failFn: (get, name) => {
+                        console.warn(name, ' failed');
+                        // errors.push('Shift cannot overlap with existing shifts');
+                        return 'Shift cannot overlap with existing shifts';
+                    }
+                }
+            }
+        });
+
+        // Put data to be given to rule set into an object
+        let data = {
+            start: resolve(Ext.clone(start)),
+            stop: resolve(Ext.clone(stop)),
+            segments: segments,
+            record: record
+        };
+
+
+        // Run all validation checks
+        var res = validRuleSet.runAll(data);
+
+        if (validRuleSet.allPassed(res)) {
+            return true;
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update shift',
+                list: validRuleSet.getErrors(),
+                timeout: ['warn', 5000]
+            });
+            return false;
+        }
+
+        console.info('Validate shift segment');
+    },
+
+    onShiftTimeChange: function (cmp, newVal, oldVal) {
+        cmp.validate();
+        if (cmp.isValid() && BreezeTime.resolve(newVal) !== null) {
+            cmp.setError(null);
+            var record = cmp.getParent().ownerCmp.getRecord(),
+                start = record.get('StartTime'),
+                stop = record.get('StopTime');
+            if (cmp.getItemId() == 'start') {
+                start = newVal;
+            } else {
+                stop = newVal;
+            }
+            var ok = this.validateShiftSegment(start, stop, record, false);
+            if (ok) {
+                var staT = BreezeTime.resolve(start),
+                    stoT = BreezeTime.resolve(stop);
+                record.set({
+                    StartTime: staT.asTime(), StartMin: staT.asMinutes(),
+                    StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
+                }, { commit: true });
+            }
+            console.info('valid');
+            cmp.getParent().cancelEdit();
+        }
+        console.info('shift change');
     },
 
     /**
@@ -1804,7 +1945,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.first_name = vm.get('info.FirstName');
         params.last_name = vm.get('info.LastName');
         params.middle_name = vm.get('info.MiddleName');
-        params.company_employee_id = vm.get('info.CustomerID');
+        params.company_employee_id = vm.get('info.EmployeeNumber');
         params.ssn = vm.get('info.SSN');
         params.payroll = vm.get('info.Payroll');
         params.date_of_hire = vm.get('info.HireDate');
