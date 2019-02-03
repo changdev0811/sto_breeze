@@ -53,20 +53,21 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     tools: {
                         add: {
                             iconCls: 'x-fas fa-plus',
-                            data: {
-                                // Mode for filtering what is shown in multi actionsheet
-                                sheetMode: 'shiftSegment',
-                                // Name of function used to make sure its ok to add
-                                // checkHandler: 'canAddShift',
-                                // xtype/alias of multisheet component
-                                componentType: 'employee.information.sheets'
-                            },
+                            // data: {
+                            //     // Mode for filtering what is shown in multi actionsheet
+                            //     sheetMode: 'shiftSegment',
+                            //     // Name of function used to make sure its ok to add
+                            //     // checkHandler: 'canAddShift',
+                            //     // xtype/alias of multisheet component
+                            //     componentType: 'employee.information.sheets'
+                            // },
                             bind: {
                                 // Dynamically disable based on readonly and shift count
                                 // disabled: '{!canAddShift}',
                                 hidden: '{readOnly}'
                             },
-                            handler: 'onGridAddButton'
+                            // handler: 'onGridAddButton'
+                            handler: 'onAddShiftSegment'
                             // handler: 'onAddShiftSegmentDirect'
                         }
                     },

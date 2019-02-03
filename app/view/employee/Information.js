@@ -247,7 +247,7 @@ Ext.define('Breeze.view.employee.Information', {
                 xtype: 'button',
                 text: 'Save',
                 ui: 'confirm alt',
-                handler: 'onCreateShiftSegmentDialogSave'
+                handler: 'onAddShiftSegmentDialogSave'
             },
             {
                 xtype: 'spacer', width: '8pt'
@@ -259,7 +259,7 @@ Ext.define('Breeze.view.employee.Information', {
                 handler: 'onDialogCancel',
                 data: {
                     // cleanup function after closing dialog
-                    cancelableAction: 'onCreateShiftSegmentDialogCancel'
+                    cancelableAction: 'onAddShiftSegmentDialogCancel'
                 }
             }
         ]

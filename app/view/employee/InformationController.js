@@ -12,8 +12,13 @@ Ext.define('Breeze.view.employee.InformationController', {
 
     requires: [
         'Breeze.api.Employee',
-        'Breeze.helper.data.ValidationRuleSet'
+        'Breeze.helper.data.ValidationRuleSet',
+        'Breeze.mixin.DialogCancelable',
     ],
+
+    mixins: {
+        dialogCancelable: 'Breeze.mixin.DialogCancelable'
+    },
 
     onInit: function(component, eOpts){
         console.log("Employee Info Controller Init");
@@ -1150,6 +1155,9 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp 
      */
     onAddShiftSegment: function(comp){
+        // TODO: Finish implementing onAddShiftSegment with dialog
+        this.showAddShiftSegmentDialog();
+        return null;
         var vm = this.getViewModel(),
             segments = vm.get('shift.segments'),
             sheet = comp.getParent().getParent(),
@@ -1207,13 +1215,31 @@ Ext.define('Breeze.view.employee.InformationController', {
         }
     },
 
-        /**
+    /**
+     * Display the dialog used for creating new shift segments
+     */
+    showAddShiftSegmentDialog: function () {
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.addShiftSegmentDialog;
+
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addShiftSegmentDialog);
+            this.addShiftSegmentDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+   /**
      * Method called by dialog cancelable mixin's onDialogCancel method
      * for shift segment dialog cancel button; resets field values and
      * clears validation error indicators
      * @param {Object} dlg dialog reference
      */
-    onCreateShiftSegmentDialogCancel: function (dlg) {
+    onAddShiftSegmentDialogCancel: function (dlg) {
         let start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop');
         start.clearValue();
@@ -1222,7 +1248,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         stop.setError(null);
     },
 
-    onCreateShiftSegmentDialogSave: function (btn) {
+    onAddShiftSegmentDialogSave: function (btn) {
         let dlg = btn.getParent().getParent(),
             start = dlg.getComponent('start'),
             stop = dlg.getComponent('stop'),
@@ -1242,7 +1268,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 }], true);
                 segments.commitChanges();
                 dlg.hide();
-                this.onCreateShiftSegmentDialogCancel(dlg);
+                this.onAddShiftSegmentDialogCancel(dlg);
                 Ext.toast({
                     type: Ext.Toast.INFO,
                     message: 'Shift segment added successfully',
