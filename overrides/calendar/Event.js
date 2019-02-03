@@ -32,7 +32,8 @@ Ext.define('Breeze.overrides.calendar.Event', {
                 // NOTE: Added element to indicate event is a request
                 reference: 'requestIcon',
                 tag: 'div',
-                cls: 'x-icon-el x-font-icon x-fas fa-retweet'
+                cls: 'x-icon-el x-font-icon x-fas fa-retweet',
+                hidden: true
             }, {
                 reference: 'titleElement',
                 tag: 'span',

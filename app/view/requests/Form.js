@@ -28,9 +28,9 @@ Ext.define('Breeze.view.requests.Form', {
             items:[
                 {
                     xtype: 'panel',
-                    ui:'requests-input-panel',
+                    ui:'requests-input-panel requests-main-panel',
                     userCls:'requests-input-panel',
-                    title: 'Leave Request',
+                    title: 'Request Days',
                     layout:'vbox',
  
 
@@ -51,30 +51,6 @@ Ext.define('Breeze.view.requests.Form', {
                     },
 
                     items:[
-                        {
-                            xtype: 'container',
-                            userCls:'requests-fieldset',
-                            layout: 'hbox',
-                            items:[
-                                {
-                                    xtype: 'breeze-textfield',
-                                    label: 'Request Name',
-                                    ui: 'requests-text-input',
-                                    flex:1,
-                                },
-                                {
-                                    xtype:'spacer',
-                                    width:'10pt',
-                                },
-                                {
-                                    xtype: 'selectfield',
-                                    label: 'Category',
-                                    ui: 'requests-text-input',
-                                    flex: 1,
-                                    displayField: 'Category',
-                                },
-                            ]
-                        },
                         {
                             xtype: 'container',
                             userCls:'requests-fieldset',
@@ -197,13 +173,41 @@ Ext.define('Breeze.view.requests.Form', {
                             ]
                         },
                         {
-                            xtype:'textareafield',
-                            label:'Notes',
-                            userCls:'requests-fieldset',
-                            //flex:1,
+                            xtype: 'panel',
+                            ui:'requests-input-panel',
+                            userCls:'requests-input-panel',
+                            title: 'Leave Request Overview',
+                            layout: 'fit',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    userCls:'requests-fieldset',
+                                    layout: 'vbox',
+                                    items: [
+                                        {
+                                            xtype: 'displayfield',
+                                            label: 'Request Name',
+                                            ui: 'requests-text-input',
+                                        },
+                                        {
+                                            xtype: 'container',
+                                            layout: 'hbox',
+                                            items: [
+                                                {
+                                                    xtype: 'displayfield',
+                                                    label: 'Employee Notes',
+                                                    ui: 'requests-text-input',
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                
+                            ]
                         }
+                        
                     ]
-                }
+                },
             ],
         },
         // column 2
@@ -218,10 +222,11 @@ Ext.define('Breeze.view.requests.Form', {
                     ui:'requests-input-panel',
                     userCls:'requests-input-panel requests-rule',
                     title: 'Work Days Requested',
-                    layout: 'fit',
+                    layout: 'vbox',
+                    flex: 1,
                     items:[
                         {
-                            xtype:'container',
+                            xtype:'fieldset',
                             userCls:'requests-fieldset-input',
                             layout: 'fit',
                             scrollable:'y',

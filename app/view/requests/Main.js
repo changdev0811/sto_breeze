@@ -10,7 +10,8 @@ Ext.define('Breeze.view.requests.Main', {
     alias: 'widget.requests.main',
 
     requires: [
-        'Ext.grid.plugin.CellEditing'
+        'Ext.grid.plugin.CellEditing',
+        'Ext.panel.Resizer'
     ],
 
     userCls:'requests-content',
@@ -24,11 +25,16 @@ Ext.define('Breeze.view.requests.Main', {
 
         // column 1
         {
-            xtype: 'container',
+            xtype: 'panel',
             userCls:'requests-content',
             //flex: 1,
-            width: '320pt', // 220pt
+            // width: '320pt', // 220pt
+            minWidth: '320pt',
             layout: 'vbox',
+            resizable: {
+                split: true,
+                edges: 'east'
+            },
             items:[
                 {
                     xtype: 'panel',
@@ -219,7 +225,6 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
-
                         {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
@@ -289,6 +294,7 @@ Ext.define('Breeze.view.requests.Main', {
                             }
                         },
                     ]
+                
                 },
             ]
         },
@@ -368,18 +374,15 @@ Ext.define('Breeze.view.requests.Main', {
                             views:{
                                 month:{
                                     addForm:{
-                                        xtype:'breeze-calendar-form-add',
+                                        xtype:'requests.form.add',
                                         userCls:'employee-calendar-form',
-                                        ui:'employee-calendar-form',
+                                        ui:'dark-themed-dialog',
                                         saveButton:       { ui:'alt confirm' },
                                         cancelButton:     { ui:'alt action', userCls:'cancel-button'},
-                                        //startDateField:   { ui:'employee-calendar-form' },
-                                        //startTimeField:   { ui:'employee-calendar-form' },
-                                        //endDateField:     { ui:'employee-calendar-form' },
-                                        //endTimeField:     { ui:'employee-calendar-form' },
-                                        //allDayField:      { ui:'employee-calendar-form' },
-                                        //descriptionField: { ui:'employee-calendar-form' },
-                                        toolbarUi:'employee-calendar-form'
+                                        toolbarUi:'employee-calendar-form',
+                                        bind: {
+                                            hoursMode: '{amountInHoursMode}'
+                                        }
                                     },
 
                                     editForm:{
@@ -395,7 +398,8 @@ Ext.define('Breeze.view.requests.Main', {
                                         //endTimeField:     { ui:'employee-calendar-form' },
                                         //allDayField:      { ui:'employee-calendar-form' },
                                         //descriptionField: { ui:'employee-calendar-form' },
-                                        toolbarUi:'employee-calendar-form'
+                                        toolbarUi:'employee-calendar-form',
+                                        hoursMode: false
                                     },
 
                                     xtype: 'calendar-month',

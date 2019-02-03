@@ -33,13 +33,18 @@ Ext.define('Breeze.model.calendar.Event', {
         return this.get('isLeave');
     },
 
-    // getStartDate: function(){
-    //     return this.data.start;
-    // },
+    getStartDate: function(){
+        //return this.data.start;
+        return Date.fromUTC(this.data.startDate);
+    },
     
-    // getEndDate: function(){
-    //     return this.data.finish;
-    // },
+    getEndDate: function(){
+        return Date.fromUTC(this.data.endDate);
+    },
+
+    getAllDay: function(){
+        return (this.data.allDay || this.data.dayPercent == 1);
+    },
 
     /**
      * Overrides accessor for Event's title
