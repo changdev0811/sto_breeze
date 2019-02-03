@@ -21,6 +21,7 @@ Ext.define('Breeze.overrides.Msg', {
     themedConfirm: function (title, message, handler, ...extraOptions) {
         //    var [ui = Ext.MessageBox.uis.default, scope = undefined] = extraOptions;
         var ui = Ext.MessageBox.uis.default, scope = undefined;
+        ui = 'dark-themed-dialog';
         // get params
         var [xArg1 = undefined, xArg2 = undefined] = extraOptions;
         // allow either scope or ui or both to be given based on type

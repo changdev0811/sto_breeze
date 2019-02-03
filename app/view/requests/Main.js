@@ -10,6 +10,7 @@ Ext.define('Breeze.view.requests.Main', {
     alias: 'widget.requests.main',
 
     requires: [
+        'Breeze.view.requests.form.RequestDay',
         'Ext.grid.plugin.CellEditing',
         'Ext.panel.Resizer'
     ],
@@ -51,13 +52,6 @@ Ext.define('Breeze.view.requests.Main', {
                     flex: 1,
                     layout: 'vbox',
                     items:[
-                        // {
-                        //     xtype:'container',
-                        //     userCls:'requests-fieldset',
-                        //     layout: 'fit',
-                        //     scrollable:'y',
-                        //     flex:1,
-                        //     items:[
                         {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
@@ -99,7 +93,9 @@ Ext.define('Breeze.view.requests.Main', {
                                         '<tpl case="Denied">',
                                         '<span class="leaverequest lr-denied">{request_status}<span>',
                                         '<tpl case="Cancelled">',
+                                        '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl case="Cancellation Pending">',
+                                        '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl case="Cancellation Denied">',
                                         '<span class="leaverequest lr-cancelled">{request_status}<span>',
                                         '<tpl default>',
@@ -132,6 +128,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotes',
                             text: 'Employee Notes', hidden: true,
+                            handler: 'onEmployeeNotesButton',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotes}' }
                         },
                         {
@@ -139,6 +136,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'employeeNotesReadOnly',
                             text: 'Employee Notes', hidden: true,
+                            handler: 'onEmployeeNotesReadOnlyButton',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.employeeNotesReadOnly}' }
                         },
                         {
@@ -146,6 +144,7 @@ Ext.define('Breeze.view.requests.Main', {
                             iconCls: 'x-fas fa-edit', ui: 'action alt',
                             itemId: 'supervisorNotes',
                             text: 'Supervisor',  hidden: true,
+                            handler: 'showSupervisorNotesDialog',
                             bind: { hidden: '{leaveRequestMultipleNotes || !requestActions.supervisorNotes}' }
                         },
                         {
@@ -161,22 +160,26 @@ Ext.define('Breeze.view.requests.Main', {
                                     {
                                         text: 'Employee Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.employeeNotes}' }
+                                        bind: { hidden: '{!requestActions.employeeNotes}' },
+                                        handler: 'onEmployeeNotesButton'
                                     },
                                     {
                                         text: 'Employee Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' }
+                                        bind: { hidden: '{!requestActions.employeeNotesReadOnly}' },
+                                        handler: 'onEmployeeNotesReadOnlyButton'
                                     },
                                     {
                                         text: 'Supervisor Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.supervisorNotes}' }
+                                        bind: { hidden: '{!requestActions.supervisorNotes}' },
+                                        handler: 'showSupervisorNotesDialog',
                                     },
                                     {
                                         text: 'Deny Notes',
                                         hidden: true,
-                                        bind: { hidden: '{!requestActions.denyNotes}' }
+                                        bind: { hidden: '{!requestActions.denyNotes}' },
+                                        handler: 'showSupervisorNotesDialog',
                                     }
                                 ]
                             }
@@ -188,21 +191,24 @@ Ext.define('Breeze.view.requests.Main', {
                             xtype: 'button',
                             ui: 'confirm alt', itemId: 'submit',
                             text: 'Submit', hidden: true,
-                            bind: { hidden: '{!requestActions.submit}' }
+                            bind: { hidden: '{!requestActions.submit}' },
+                            handler: 'onLeaveRequestSubmit'
                         },
                         {
                             xtype: 'button',
                             ui: 'decline alt', style: 'margin-left: 4pt',
                             itemId: 'delete',
                             text: 'Delete', hidden: true,
-                            bind: { hidden: '{!requestActions.delete}' }
+                            bind: { hidden: '{!requestActions.delete}' },
+                            handler: 'onLeaveRequestDelete'
                         },
                         {
                             xtype: 'button',
                             ui: 'decline alt', style: 'margin-left: 4pt',
                             itemId: 'cancelRequest',
                             text: 'Cancel Request', hidden: true,
-                            bind: { hidden: '{!requestActions.cancel}' }
+                            bind: { hidden: '{!requestActions.cancel}' },
+                            handler: 'onLeaveRequestCancel'
                         }
                     ]
                 },
@@ -214,7 +220,11 @@ Ext.define('Breeze.view.requests.Main', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            handler: 'showLeaveRequestForm'
+                            handler: 'onAddRequestedDaysTool',
+                            bind: {
+                                disabled: '{!canRequestDays}'
+                            }
+                            // handler: 'showLeaveRequestForm'
                             // handler: 'showCreateRequestDialog'
                         },
                         {
@@ -278,8 +288,8 @@ Ext.define('Breeze.view.requests.Main', {
                                                 hidden: true,
                                                 bind: {
                                                     hidden: '{!requestActions.deleteDay}'
-                                                }
-                                                // handler: 'onDeleteAccrualInterval'
+                                                },
+                                                handler: 'onRequestedDaysDelete'
                                             }
                                         ]
                                     }
@@ -307,24 +317,26 @@ Ext.define('Breeze.view.requests.Main', {
             minWidth: '500pt', // 600pt
             layout: 'vbox',
             items:[
+                // Calendar panel
                 {
                     xtype: 'panel',
                     userCls:'requests-calendar-panel',
-                    title: ' ',
+                    title: 'Calendar',
                     tools: [
                         {
                             iconCls: 'x-fa fa-sync',
-                            //handler: 'onRefreshTool'  
+                            handler: 'onRefreshTool'  
                         },
                         {
                             iconCls: 'x-fa fa-print',
-                            //handler: 'onPrintTool'
+                            handler: 'onPrintTool'
                         }
                     ],
                     ui: 'employee-calendar-panel',
                     flex: 1,
                     layout: 'vbox',
                     items: [
+                        // Calendar component
                         {
                             xtype: 'calendar',
                             userCls: 'employee-calendar-noedge',
@@ -374,7 +386,7 @@ Ext.define('Breeze.view.requests.Main', {
                             views:{
                                 month:{
                                     addForm:{
-                                        xtype:'requests.form.add',
+                                        xtype:'requests.form.requestday',
                                         userCls:'employee-calendar-form',
                                         ui:'dark-themed-dialog',
                                         saveButton:       { ui:'alt confirm' },
@@ -409,24 +421,18 @@ Ext.define('Breeze.view.requests.Main', {
                                     },
                                     view:{
                                         ui: 'employee-calendar',
+                                    },
+
+                                    listeners: {
+                                        eventadd: 'onCalendarEventAdd',
+                                        beforeeventadd: 'onCalendarBeforeEventAdd'
                                     }
                                 },
 
 
                             }
                         },
-
-                        
-                        //{
-                        //    xtype: 'container',
-                        //    layout: 'vbox',
-                        //    userCls:'legend-title',
-                        //    height:'14pt',
-                        //    html:"Legend"
-                        //},
-                        
-
-
+                        // Categories Legend
                         {
                             xtype: 'dataview',
                             ui:'calendar-legend',
@@ -446,16 +452,6 @@ Ext.define('Breeze.view.requests.Main', {
                             },
                             itemTpl: '<div class="legend-item-label"><div class="legend-item-dot" style="background-color:{Category_Color_HEX}"></div>{Category_Name}</div>',
 
-                            // store: [
-                            //     { title: 'Illness',     color:'rgb(153, 255, 204,1)'    },
-                            //     { title: 'Vacation',    color:'rgb(255, 255, 153,1)'    },
-                            //     { title: 'Personal',    color:'rgb(51, 153, 255,1)'     },
-                            //     { title: 'Jury',        color:'rgb(153, 153, 204,1)'    },
-                            //     { title: 'Bereavement', color:'rgb(153, 204, 255,1)'    },
-                            //     { title: 'Holiday',     color:'rgb(255, 153, 15,1)'     },
-                            //     { title: 'Training',    color:'rgb(153, 153, 153, 1)'   }
-                                
-                            // ]
                             bind: {
                                 store: '{categories}',
                             },

@@ -63,7 +63,7 @@ Ext.define('Breeze.api.Requests', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    if(r.success){
+                    if(resp.success){
                         resolve({
                             type: Ext.Toast.INFO,
                             message: 'Leave Request deleted successfully'
@@ -147,7 +147,7 @@ Ext.define('Breeze.api.Requests', {
                     if(resp.success){
                         resolve({
                             type: Ext.Toast.INFO,
-                            message: 'Leave Reques Employee Notes successfully updated',
+                            message: 'Leave Request Employee Notes successfully updated',
                             requestId: requestId
                         });
                     } else {
@@ -333,10 +333,24 @@ Ext.define('Breeze.api.Requests', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    resolve(resp);
+                    if(resp.success){
+                        resolve({
+                            type: Ext.Toast.INFO,
+                            message: resp.err
+                        });
+                    } else {
+                        reject({
+                            type: Ext.Toast.ERROR,
+                            message: resp.err
+                        });
+                    }
                 },
                 function(err){
-                    reject(err);
+                    reject({
+                        type: Ext.Toast.ERROR,
+                        message: 'Unknown error occured',
+                        error: err
+                    });
                 }
             )
         });

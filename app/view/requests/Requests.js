@@ -81,6 +81,111 @@ Ext.define('Breeze.view.requests.Requests', {
                 handler: 'onCreateRequestDialogCancel'
             }
         ]
+    },
+
+    employeeNotesDialog: {
+        xtype: 'dialog',
+        title: 'Leave Request Notes',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'fit',
+
+        maxHeight: '400pt',
+        width: '300pt',
+        height: '300pt',
+
+        items: [
+            {
+                xtype: 'textareafield',
+                flex: 1,
+                border: true,
+                label: '',
+                itemId: 'notes',
+                placeholder: "No notes are currently recorded.",
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Save',
+                ui: 'confirm alt',
+                itemId: 'save',
+                handler: 'onEmployeeNotesSave'
+            },
+            {
+                xtype: 'spacer',
+                width: '8pt'
+            },
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onEmployeeNotesDialogCancel'
+            }
+        ]
+    },
+
+    supervisorNotesDialog: {
+        xtype: 'dialog',
+        title: 'Supervisor Notes',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'fit',
+
+        maxHeight: '400pt',
+        width: '300pt',
+        height: '300pt',
+
+        items: [
+            {
+                xtype: 'textareafield',
+                flex: 1,
+                border: true,
+                label: '',
+                itemId: 'notes',
+                readOnly: true,
+                placeholder: "No notes are currently recorded.",
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onSupervisorNotesDialogCancel'
+            }
+        ]
+    },
+
+    denyNotesDialog: {
+        xtype: 'dialog',
+        title: 'Deny Notes',
+        ui: 'dark-themed-dialog employeeinfo-dialog dark-dlg',
+
+        layout: 'fit',
+
+        maxHeight: '400pt',
+        width: '300pt',
+        height: '300pt',
+
+        items: [
+            {
+                xtype: 'textareafield',
+                flex: 1,
+                border: true,
+                label: '',
+                itemId: 'notes',
+                readOnly: true,
+                placeholder: "No notes are currently recorded.",
+            }
+        ],
+
+        buttons: [
+            {
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onDenyNotesDialogCancel'
+            }
+        ]
     }
 
 });
