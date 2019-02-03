@@ -470,7 +470,11 @@ Ext.define('Breeze.view.requests.RequestsController', {
         var record = location.record,
             vm = this.getViewModel(),
             status = vm.get('selectedRequest').request_status.toUpperCase();
-        if(status == 'APPROVED' || status == 'PENDING'){
+        // if(status == 'APPROVED' || status == 'PENDING'){
+        //     return false;
+        // }
+        if(!vm.get('canRequestDays')){
+            // Rely on formula
             return false;
         }
     },
@@ -641,6 +645,27 @@ Ext.define('Breeze.view.requests.RequestsController', {
         var view = this.getView(),
             requests = view.getComponent('requests');
         view.setActiveItem(requests);
+    },
+
+    onLeaveRequestSubmit: function(){
+        var vm = this.getViewModel(),
+            requestId = vm.get('selectedRequest').unique_id,
+            me = this;
+        this.api.requests.submitEmployeeRequest(requestId).then((r)=>{
+            me.loadCategories();
+            me.loadRequests(requestId);
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'info'
+            });
+        }).catch((err)=>{
+            Ext.toast({
+                type: r.type,
+                message: r.message,
+                timeout: 'error'
+            });
+        });
     },
 
     // === [Calendar] ===

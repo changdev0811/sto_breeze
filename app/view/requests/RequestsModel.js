@@ -57,6 +57,21 @@ Ext.define('Breeze.view.requests.RequestsModel', {
             get: function(data){
                 return (data.recordingMode == 21);
             }
+        },
+        /**
+         * Formula indicating whether days can be requested for the 
+         * selected leave request
+         */
+        canRequestDays: {
+            bind: '{selectedRequest.request_status}',
+            get: function(data){
+                var status = data.toUpperCase();
+                if(status == 'APPROVED' || status == 'PENDING'){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         }
     }
 

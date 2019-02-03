@@ -191,7 +191,8 @@ Ext.define('Breeze.view.requests.Main', {
                             xtype: 'button',
                             ui: 'confirm alt', itemId: 'submit',
                             text: 'Submit', hidden: true,
-                            bind: { hidden: '{!requestActions.submit}' }
+                            bind: { hidden: '{!requestActions.submit}' },
+                            handler: 'onLeaveRequestSubmit'
                         },
                         {
                             xtype: 'button',
@@ -217,7 +218,10 @@ Ext.define('Breeze.view.requests.Main', {
                     tools: [
                         {
                             iconCls: 'x-fas fa-plus',
-                            handler: 'onAddRequestedDaysTool'
+                            handler: 'onAddRequestedDaysTool',
+                            bind: {
+                                disabled: '{!canRequestDays}'
+                            }
                             // handler: 'showLeaveRequestForm'
                             // handler: 'showCreateRequestDialog'
                         },
