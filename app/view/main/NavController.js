@@ -449,8 +449,11 @@ Ext.define('Breeze.view.main.NavController', {
         console.info('Employee Info Route');
         // var auth = Breeze.helper.Auth.getCookies();
         // var info = Ext.create('Breeze.view.employee.Information');
+        // prevent name errors
+        this.destroyContentByType(['employee.information']);
         var info = Ext.create('Breeze.view.employee.Information', {
-            data: { employee: undefined }
+            data: { employee: undefined },
+            viewModel: { parent: this.getViewModel() }
         });
         console.info('Created employee info view instance: ', info);
         this.changeContent(info);
@@ -906,7 +909,7 @@ Ext.define('Breeze.view.main.NavController', {
      */
     replaceContent: function(ns, args){
         var container = this.lookup('contentContainer');
-
+        console.info('replace content');
         var old = container.getActiveItem();
         if(!Object.isUnvalued(old)){
             try {
@@ -929,9 +932,14 @@ Ext.define('Breeze.view.main.NavController', {
      * Swap contents of body content container
      * @param {Object} newContent New view / component to show in content container
      */
-    changeContent: function(newContent){
-        var container = this.lookup('contentContainer');
-        
+    changeContent: function(newContent, xtypesToDestroy){
+        var container = this.lookup('contentContainer'),
+        xtypesToDestroy = Object.defVal(xtypesToDestroy, [], true);
+        if(xtypesToDestroy.length > 0){
+            // Clean up content with given xtypes, if specified
+            this.destroyContentByType(xtypesToDestroy);
+        }
+        console.info('change content');
         if(newContent && newContent !== null){
             var old = container.getActiveItem();
             container.setActiveItem(newContent);
@@ -1022,6 +1030,24 @@ Ext.define('Breeze.view.main.NavController', {
         window.open("http://www.softtimeonline.com/help/");
         Ext.util.History.back();
     },
+
+    privates: {
+        /**
+         * Force destroy to be called on any view content with matching xtype
+         * to avoid name attribute collisions
+         * @param {Array} types 
+         */
+        destroyContentByType: function(types){
+            var container = this.lookup('contentContainer'),
+                items = container.getItems().items;
+            for(let i = 0; i < items.length; i++){
+                if( items[i].xtype && types.includes(items[i].xtype)){
+                    // items[i].destroy();
+                    container.remove(items[i],true);
+                }
+            }
+        }
+    }
 
 
 
