@@ -227,6 +227,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                         {
                             xtype: 'fieldset',
                             // itemId: 'imageFieldSet',
+                            itemId: 'imagePreviewField',
                             flex: 1,
                             title: 'Current Profile Picture',
                             items: [

@@ -1812,7 +1812,7 @@ Ext.define('Breeze.view.employee.InformationController', {
     /**
      * Handle profile image edit dialog's 'upload' button
      */
-    onUploadProfilePicture: function(ref,e,eOpts){
+    onUploadProfilePicture2: function(ref,e,eOpts){
         var vm = this.getViewModel(),
             employeeId = vm.get('employeeId'),
             form = this.lookup('profilePictureForm');
@@ -1852,6 +1852,39 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
     },
     
+    onUploadProfilePicture: function(){
+        var vm = this.getViewModel(),
+            form = this.lookup('profilePictureForm'),
+            imageField = form.getComponent('imageFieldSet').getAt(0);
+        console.info('upload');
+
+        var fileName = imageField.getValue().split('.'),
+            ext = '.'.concat(fileName.slice(-1)[0].toLowerCase());
+        
+        form.getComponent('pictureModified').setValue(true);
+        form.getComponent('extension').setValue(ext);
+        
+        if(!['.jpeg','.jpg','.gif','.png','.bmp'].includes(ext)){
+            // Unsupported file extension
+            imageField.markInvalid('Invalid file type');
+            Ext.toast({
+                type: 'warn',
+                message: 'Invalid image type.<br>Please select a .jpg, .jpeg, .gif, .png or .bmp file type.',
+                timeout: ['warn',4]
+            });
+        } else {
+            if(form.isValid()){
+                this.apiClass.information.uploadPicture(form, vm.get('viewerId')).then((r)=>{
+                    console.info('pass');
+                    vm.set('info.Photo', r.path);
+                }).catch((err)=>{
+                    console.warn('fail');
+                });
+            }
+        }
+
+    },
+
     /**
      * Handle profile image edit dialog's 'cancel' button
      */
