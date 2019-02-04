@@ -60,7 +60,7 @@ Ext.define('Breeze.view.user.Preferences', {
                     {
                         //xtype: 'breeze-checkbox',
                         xtype: 'togglefield',
-                        ui: 'reporting',
+                        ui: 'yaagCalendarType',
                         bodyAlign: 'stretch',
                         //label: 'Enabled',
                         labelAlign:'right',
