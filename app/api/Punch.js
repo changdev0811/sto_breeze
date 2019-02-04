@@ -107,7 +107,7 @@ Ext.define('Breeze.api.Punch', {
      * TODO: Consider wrapping in proxy in Breeze.model.record.Punch
      * @param {String|Number} projectCode Code of current project (def is defaultProjectCode from emp info)
      */
-    submit: function(projectCode){
+    submit: function(projectCode, notes, punchIn){
         var authCook = this.auth.getCookies();
         var now = new Date();
         var api = this.api;
@@ -128,6 +128,13 @@ Ext.define('Breeze.api.Punch', {
             Employee_ID: authCook.emp,
             project_code: projectCode
         };
+
+        if(!Object.isUnvalued(notes)){
+            data.notes = notes;
+        }
+        if(!Object.isUnvalued(punchIn)){
+            data.punch_type = (punchIn)? 136 : 137;
+        }
 
         return new Promise(function(resolve, reject){
             // try adding geolocation info
@@ -200,6 +207,27 @@ Ext.define('Breeze.api.Punch', {
             }
         });
 
+    },
+
+    /**
+     * @return {Promise} promise resolving with punch data object, or rejecting with error
+     * @api /getCurrentPunch_Data
+     */
+    getCurrentPunchData: function(){
+        var api = this.api;
+        return new Promise((resolve,reject)=>{
+            api.serviceRequest(
+                'getCurrentPunch_Data',
+                {},
+                true, false,
+                function(r){
+                    resolve(api.decodeJsonResponse(r));
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
     }
 
 

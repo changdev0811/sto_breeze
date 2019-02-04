@@ -154,6 +154,9 @@ Ext.define('Breeze.view.main.NavController', {
     init: function(component){
         var me = this;
 
+        this.tasks = {}; // hold various tasks
+        this.taskRunner = new Ext.util.TaskRunner(); // shared task runner
+
         this.router = Ext.create('Breeze.helper.routing.TreeRouter', {controller: this});
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
@@ -375,18 +378,91 @@ Ext.define('Breeze.view.main.NavController', {
      */
     onPunchWindowTap: function(){
         var vm = this.getViewModel();
+            me = this;
+        var view = this.getView(),
+            dialog = this.punchWindowDialog;
+            
+        if (!dialog) {
+            dialog = Ext.apply({ 
+                ownerCmp: view, 
+                viewModel: { parent: vm }  
+            }, view.punchWindowDialog);
+            this.punchWindowDialog = dialog = Ext.create(dialog);
+        }
+        
+        this.punchClass.getCurrentPunchData().then((r)=>{
+            me.addStoreToViewModel('Breeze.store.company.FlatProjectList', 'flatProjects', {load: true});
+            me.copyRecordToViewModel(r, 'punch.currentData');
+            me.tasks.punchWindowClock = me.taskRunner.newTask({
+                run: function(){
+                    let cmp = me.punchWindowDialog.query('[itemId="currentTime"]')[0];
+                    cmp.setHtml(Ext.Date.format(new Date(), 'g:i:s A'));
+                },
+                interval: 500
+            });
+            me.tasks.punchWindowClock.start();
+            dialog.getComponent('notes').setValue("");
+            dialog.show();
+        });
         console.info("[onPunchWindowTap]");
         //notesDialog
-        var view = this.getView(),
-        dialog = null;
-        dialog = this.lookup('punchWindowDialog');
-        if (!dialog) {
-            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
-            dialog = Ext.create(dialog);
-        }
-        dialog.show();
+        // dialog.show();
     },
 
+    /**
+     * Handle punch window dialog close event
+     * @param {*} dialog 
+     * @param {*} e 
+     * @param {*} eOpts 
+     */
+    onPunchWindowClose: function(ref, e, eOpts){
+        var dlg = this.punchWindowDialog;
+        dlg.hide();
+        dlg.getComponent('notes').clearValue();
+        this.taskRunner.stop(this.tasks.punchWindowClock, true);
+    },
+
+    /**
+     * Event handler for submit button in punch window
+     * 
+     * Performs punch submit api call and closes dialog
+     */
+    onPunchWindowSubmit: function(){
+        var vm = this.getViewModel(),
+            dlg = this.punchWindowDialog,
+            project = dlg.getComponent('project').getSelection(),
+            notes = dlg.getComponent('notes').getValue(),
+            punchIn= (vm.get('punch.currentData.punch_status') == 0);
+        project = (project == null)? "" : project.get('Code');
+        me.punchClass.submit(project, notes, punchIn).then(
+            (resp)=>{
+                if(resp.success){
+                    Ext.toast({
+                        message: 'Successfully punched ' + kind,
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    me.updateAttendanceStatus();
+                    dlg.hide();
+                    // close punch window
+                } else {
+                    Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
+                    Ext.toast({
+                        message: 'Error submitting punch:<br> ' + resp.err,
+                        type: Ext.Toast.ERROR,
+                        timeout: 10000
+                    });
+                }
+            }
+        ).catch(function(err){
+            console.warn('Caught error submitting punch: ', err);
+            Ext.toast({
+                message: 'Error submitting punch',
+                type: Ext.Toast.ERROR,
+                timeout: 10000
+            });
+        });
+    },
 
 
     /**
@@ -997,20 +1073,6 @@ Ext.define('Breeze.view.main.NavController', {
             }
         }
     },
-
-
-
-    /**
-     * Handle punch window dialog close event
-     * @param {*} dialog 
-     * @param {*} e 
-     * @param {*} eOpts 
-     */
-    onClosePunchWindowDialog: function(ref, e, eOpts){
-        //dialog.hide();
-        ref.getParent().getParent().hide();
-    },
-
 
 
     /**

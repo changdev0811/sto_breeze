@@ -13,6 +13,7 @@ Ext.define('Breeze.view.main.Nav', {
     requires: [
         'Breeze.view.main.NavModel',
         'Breeze.view.main.NavController',
+        'Breeze.view.main.Punch',
         'Breeze.widget.punch.AnalogClock',
         'Breeze.widget.punch.DigitalClock',
         'Breeze.widget.navBar.UserHeader',
@@ -226,98 +227,11 @@ Ext.define('Breeze.view.main.Nav', {
                     ]
                 }
             ]
-        },
+        }
+    ],
 
-        {
-            xtype: 'dialog',
-            ui:'dark-themed-dialog employeeinfo-dialog',
-            reference: 'punchWindowDialog',
-            minWidth: '300pt',
-            minHeight: '300pt',
-            layout: 'vbox',
-            title:{
-                text:'Notes',
-                ui:'dark-themed-dialog'
-            },
-            bind:{
-                title: '{header.fullname}',
-            },
-            items:[
-                {
-                    xtype:'container',
-                    layout:'hbox',
-                    items:[
-                        {
-                            xtype: 'image',
-                            height: '48pt',
-                            width: '48pt',
-                            src: 'resources/photos/default_user.png',
-                            //bind: {
-                            //    src: '{profilePicture}'
-                            //},
-                            reference: 'infoProfilePicture',
-                            userCls: 'punch-window-profile-picture',
-
-                        },
-                        {
-                            xtype: 'component',
-                            flex:1,
-                            style:'margin:auto 0pt auto 5pt;',
-                            html: 'You are currently {inout}<br>{lastPunch}'
-                        },
-                    ]
-                },
-                {
-                    xtype: 'component',
-                    userCls:'punchWindowClock',
-                    html: '{0:00:00 AM/PM}'
-                },
-                {
-                    xtype: 'selectfield',
-                    label: 'Project',
-                    labelAlign: 'left',
-                    labelWidth: 'auto',
-                    placeholder: '*No Project*',
-                },
-                {
-                    xtype: 'textareafield',
-                    flex: 1,
-                    border: true,
-                    label: 'Note',
-                    //bind: '{tempNotes}',
-                    placeholder: ""
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Clear',
-                    ui: 'action alt',
-                    handler: 'onClearNotesButton',
-                    bind: {
-                        //disabled: '{!hasTempNotes}'
-                    }
-                },
-                {
-                    xtype: 'spacer',
-                    //width: '8pt',
-                    flex:1,
-                },
-                {
-                    text: 'Punch In', // Bind: Punch In / Punch Out
-                    ui: 'confirm alt',
-                    //handler: 'onSubmitNotesButton' // Bind: Punch In / Punch Out
-                },
-                {
-                    xtype: 'spacer',
-                    width: '8pt'
-                },
-                {
-                    text: 'Cancel',
-                    ui: 'decline alt',
-                    handler: 'onClosePunchWindowDialog'
-                }
-            ]
-        },
-
-    ]
+    // === [Shared Dialogs] ===
+    punchWindowDialog: {
+        xtype: 'main.punch'
+    }
 });
