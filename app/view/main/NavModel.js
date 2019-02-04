@@ -59,7 +59,10 @@ Ext.define('Breeze.view.main.NavModel', {
         }
     },
 
-    stores: {},
+    stores: {
+
+        // flatProjects (used by punch window)
+    },
 
     formulas: {
         hasKron: function(get){

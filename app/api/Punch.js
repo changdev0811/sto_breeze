@@ -200,6 +200,27 @@ Ext.define('Breeze.api.Punch', {
             }
         });
 
+    },
+
+    /**
+     * @return {Promise} promise resolving with punch data object, or rejecting with error
+     * @api /getCurrentPunch_Data
+     */
+    getCurrentPunchData: function(){
+        var api = this.api;
+        return new Promise((resolve,reject)=>{
+            api.serviceRequest(
+                'getCurrentPunch_Data',
+                {},
+                true, false,
+                function(r){
+                    resolve(api.decodeJsonResponse(r));
+                },
+                function(err){
+                    reject(err);
+                }
+            );
+        });
     }
 
 
