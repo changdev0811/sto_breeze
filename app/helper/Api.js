@@ -13,7 +13,8 @@
                 punch: '../STOServe/PunchService.asmx/',
                 // api: '../STOServe/Service1.asmx/',
                 // TODO: make api url relative
-                api: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/',
+                // api: 'https://vitest.softtimeonline.com/STOServe/Service1.asmx/',
+                api: '../STOServe/Service1.asmx/',
                 // ASHX Script path
                 ashx: 'https://vitest.softtimeonline.com/STOServe/',
                 // pulled from sti_namespace, used in STOLogin view
@@ -42,7 +43,7 @@
             /**
              * Generic AJAX API request
              * @todo TODO: Revisit and decide on keeping/tossing cookieParams
-             * @param {String} api API Path url
+             * @param {String} api API Path url (can be name of attribute in apiPaths)
              * @param {String} service Service name
              * @param {Object} params Parameters
              * @param {boolean} cookieParams If true, cookie auth params are included in request params
@@ -55,6 +56,10 @@
                 if(cookieParams){
                     // If cookies are gone, force reload to ask for login
                     Breeze.helper.Auth.isAuthorized(true);
+                }
+
+                if(this.apiPaths[api]){
+                    api = this.apiPaths[api];
                 }
                 
                 var reqParams = params;
@@ -78,6 +83,55 @@
                     sto: true,
                     url: api + service,
                     params: JSON.stringify(reqParams),
+                    success: successHandler,
+                    failure: failureHandler
+                });
+            },
+
+            /**
+             * Generic AJAX Upload request
+             * @todo TODO: Revisit and decide on keeping/tossing cookieParams
+             * @param {String} api API Path url (can be name of attribute in apiPaths)
+             * @param {String} service Service name
+             * @param {Object} form Form element
+             * @param {boolean} cookieParams If true, cookie auth params are included in request params
+             *  Default true
+             * @param {Boolean} sync Enable/disable sync (default true)
+             * @param {Function} successHandler Success function
+             * @param {Function} failureHandler Failure function
+             */
+            upload: function(api, service, form, cookieParams, sync, successHandler, failureHandler){
+                if(cookieParams){
+                    // If cookies are gone, force reload to ask for login
+                    Breeze.helper.Auth.isAuthorized(true);
+                }
+
+                if(this.apiPaths[api]){
+                    api = this.apiPaths[api];
+                }
+                
+                var reqParams = {};
+                var authCookies = Breeze.helper.Auth.getCookies();
+                var cookieParams = defVal(cookieParams, true);
+                if(cookieParams) {
+                    reqParams.cust_id = defVal(reqParams.cust_id, authCookies.cust);
+                    reqParams.emp_id = defVal(reqParams.emp_id, authCookies.emp);
+                    reqParams.hashcookie = defVal(reqParams.hashcookie, authCookies.pass);
+                }
+                var sync = defVal(sync, false);
+                var successHandler = defVal(successHandler, function(a,b){});
+                var failureHandler = defVal(failureHandler, function(a,b){});
+
+                Ext.Ajax.request({
+                    method: 'POST', async: sync,
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    sto: true,
+                    url: api + service,
+                    params: JSON.stringify(reqParams),
+                    form: form,
                     success: successHandler,
                     failure: failureHandler
                 });

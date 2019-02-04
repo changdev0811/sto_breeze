@@ -452,8 +452,7 @@ Ext.define('Breeze.view.main.NavController', {
         // prevent name errors
         this.destroyContentByType(['employee.information']);
         var info = Ext.create('Breeze.view.employee.Information', {
-            data: { employee: undefined },
-            viewModel: { parent: this.getViewModel() }
+            data: { employee: undefined }
         });
         console.info('Created employee info view instance: ', info);
         this.changeContent(info);

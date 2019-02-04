@@ -245,7 +245,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     },
                     items: [
                         {
-                            name: 'startup_settings',
+                            // name: 'startup_settings',
                             label: 'Accrual Policy',
                             bind: { value: '{info.StartUpSettings}', store: '{scheduleList}' },
                             reference: 'accrualPolicy',
@@ -257,7 +257,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             }
                         },
                         {
-                            name: 'default_project',
+                            // name: 'default_project',
                             label: 'Default Project',
                             bind: { value: '{info.DefaultProject}', store: '{projectList}' },
                             reference: 'defaultProject',
