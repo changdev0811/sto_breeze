@@ -414,24 +414,54 @@ Ext.define('Breeze.view.main.NavController', {
      * @param {*} e 
      * @param {*} eOpts 
      */
-    onClosePunchWindowDialog: function(ref, e, eOpts){
+    onPunchWindowClose: function(ref, e, eOpts){
         var dlg = this.punchWindowDialog;
         dlg.hide();
+        dlg.getComponent('notes').clearValue();
         this.taskRunner.stop(this.tasks.punchWindowClock, true);
     },
 
     /**
      * Event handler for submit button in punch window
+     * 
+     * Performs punch submit api call and closes dialog
      */
-    onSubmitPunchWindowDialog: function(){
-        // TODO: Finish implementation, making API call before closing dialog
-        this.onClosePunchWindowDialog();
+    onPunchWindowSubmit: function(){
+        var vm = this.getViewModel(),
+            dlg = this.punchWindowDialog,
+            project = dlg.getComponent('project').getValue(),
+            notes = dlg.getComponent('notes').getValue(),
+            punchIn= (vm.get('punch.currentData.punch_status') == 0);
+        me.punchClass.submit(project, notes, punchIn).then(
+            (resp)=>{
+                if(resp.success){
+                    Ext.toast({
+                        message: 'Successfully punched ' + kind,
+                        type: Ext.Toast.INFO,
+                        timeout: 10000
+                    });
+                    me.updateAttendanceStatus();
+                    // close punch window
+                    me.onPunchWindowClose();
+                } else {
+                    Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
+                    Ext.toast({
+                        message: 'Error submitting punch:<br> ' + resp.err,
+                        type: Ext.Toast.ERROR,
+                        timeout: 10000
+                    });
+                }
+            }
+        ).catch(function(err){
+            console.warn('Caught error submitting punch: ', err);
+            Ext.toast({
+                message: 'Error submitting punch',
+                type: Ext.Toast.ERROR,
+                timeout: 10000
+            });
+        });
     },
 
-
-    initPunchWindow: function(){
-
-    },
 
     /**
      * Handle side nav tree item selection changing

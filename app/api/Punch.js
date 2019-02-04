@@ -107,10 +107,10 @@ Ext.define('Breeze.api.Punch', {
      * TODO: Consider wrapping in proxy in Breeze.model.record.Punch
      * @param {String|Number} projectCode Code of current project (def is defaultProjectCode from emp info)
      */
-    submit: function(projectCode){
+    submit: function(projectCode, notes, punchIn){
         var authCook = this.auth.getCookies();
         var now = new Date();
-        var api = this.api;
+        var apiObj = this.api;
         // TODO: Determine if this is even necessary to go through making a new date
         // using existing date and .getUTCxyz
         // var utc = new Date(
@@ -129,6 +129,13 @@ Ext.define('Breeze.api.Punch', {
             project_code: projectCode
         };
 
+        if(!Object.isUnvalued(notes)){
+            data.notes = notes;
+        }
+        if(!Object.isUnvalued(punchIn)){
+            data.punch_type = (punchIn)? 136 : 137;
+        }
+
         return new Promise(function(resolve, reject){
             // try adding geolocation info
             // TODO: Address geolocation needs for mobile version
@@ -145,7 +152,7 @@ Ext.define('Breeze.api.Punch', {
                         Async: false
                     };
                     
-                    api.punchRequest(
+                    apiObj.punchRequest(
                         'SubmitPunch',
                         params,
                         false,
@@ -165,7 +172,7 @@ Ext.define('Breeze.api.Punch', {
                     };
     
                     // No geolocation info
-                    api.punchRequest(
+                    apiObj.punchRequest(
                         'SubmitPunch',
                         params,
                         false,
@@ -186,7 +193,7 @@ Ext.define('Breeze.api.Punch', {
                 };
 
                 // No geolocation info
-                api.punchRequest(
+                apiObj.punchRequest(
                     'SubmitPunch',
                     params,
                     false,

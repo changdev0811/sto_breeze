@@ -99,6 +99,7 @@ Ext.define('Breeze.view.main.Punch', {
             displayField: 'Name', valueField: 'ID',
             itemId: 'project',
             placeholder: '*No Project*',
+            hidden: true,
             bind: {
                 store: '{flatProjects}',
                 value: '{punch.currentData.employee_default_project}',
@@ -112,7 +113,11 @@ Ext.define('Breeze.view.main.Punch', {
             itemId: 'notes',
             label: 'Note',
             //bind: '{tempNotes}',
-            placeholder: ""
+            placeholder: "",
+            hidden: true,
+            bind: {
+                hidden: '{!punch.currentData.policy_add_note}'
+            }
         }
     ],
     buttons: [
@@ -126,7 +131,7 @@ Ext.define('Breeze.view.main.Punch', {
                 text: '{punchButtonText}'
             },
             ui: 'confirm alt',
-            handler: 'onSubmitPunchWindowDialog'
+            handler: 'onPunchWindowSubmit'
             //handler: 'onSubmitNotesButton' // Bind: Punch In / Punch Out
         },
         {
@@ -136,7 +141,7 @@ Ext.define('Breeze.view.main.Punch', {
         {
             text: 'Cancel',
             ui: 'decline alt',
-            handler: 'onClosePunchWindowDialog'
+            handler: 'onPunchWindowClose'
         }
     ]
 });
