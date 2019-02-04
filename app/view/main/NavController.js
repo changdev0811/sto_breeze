@@ -401,6 +401,7 @@ Ext.define('Breeze.view.main.NavController', {
                 interval: 500
             });
             me.tasks.punchWindowClock.start();
+            dialog.getComponent('notes').setValue("");
             dialog.show();
         });
         console.info("[onPunchWindowTap]");
@@ -442,8 +443,8 @@ Ext.define('Breeze.view.main.NavController', {
                         timeout: 10000
                     });
                     me.updateAttendanceStatus();
+                    dlg.hide();
                     // close punch window
-                    me.onPunchWindowClose();
                 } else {
                     Ext.toast('Error submitting punch:<br>' + resp.err, 1024);
                     Ext.toast({
