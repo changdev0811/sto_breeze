@@ -110,7 +110,7 @@ Ext.define('Breeze.api.Punch', {
     submit: function(projectCode, notes, punchIn){
         var authCook = this.auth.getCookies();
         var now = new Date();
-        var apiObj = this.api;
+        var api = this.api;
         // TODO: Determine if this is even necessary to go through making a new date
         // using existing date and .getUTCxyz
         // var utc = new Date(
@@ -152,7 +152,7 @@ Ext.define('Breeze.api.Punch', {
                         Async: false
                     };
                     
-                    apiObj.punchRequest(
+                    api.punchRequest(
                         'SubmitPunch',
                         params,
                         false,
@@ -172,7 +172,7 @@ Ext.define('Breeze.api.Punch', {
                     };
     
                     // No geolocation info
-                    apiObj.punchRequest(
+                    api.punchRequest(
                         'SubmitPunch',
                         params,
                         false,
@@ -193,7 +193,7 @@ Ext.define('Breeze.api.Punch', {
                 };
 
                 // No geolocation info
-                apiObj.punchRequest(
+                api.punchRequest(
                     'SubmitPunch',
                     params,
                     false,

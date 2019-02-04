@@ -429,9 +429,10 @@ Ext.define('Breeze.view.main.NavController', {
     onPunchWindowSubmit: function(){
         var vm = this.getViewModel(),
             dlg = this.punchWindowDialog,
-            project = dlg.getComponent('project').getValue(),
+            project = dlg.getComponent('project').getSelection(),
             notes = dlg.getComponent('notes').getValue(),
             punchIn= (vm.get('punch.currentData.punch_status') == 0);
+        project = (project == null)? "" : project.get('Code');
         me.punchClass.submit(project, notes, punchIn).then(
             (resp)=>{
                 if(resp.success){
