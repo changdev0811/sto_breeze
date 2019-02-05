@@ -4,6 +4,8 @@
         "include": [
             "app",
             "app/api",
+            "app/helper",
+            "app/helper/navigation",
             "lib",
             "overrides"
         ]

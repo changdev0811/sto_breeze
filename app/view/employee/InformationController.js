@@ -1237,6 +1237,21 @@ Ext.define('Breeze.view.employee.InformationController', {
         dialog.show();
     },
 
+    showAddSupervisedEmployeeDialog: function () {
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.addSupervisedEmployeeDialog;
+
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addSupervisedEmployeeDialog);
+            this.addSupervisedEmployeeDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
    /**
      * Method called by dialog cancelable mixin's onDialogCancel method
      * for shift segment dialog cancel button; resets field values and
@@ -1337,27 +1352,28 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     onGridAddButton: function (comp,tool){
         var configData = tool.getData();
-        var { componentType, checkHandler, sheetMode } = configData,
+        var { componentType, checkHandler, dialogMethod } = configData,
             canShow = true,
             component = null;
 
-        component = Ext.create({
-            xtype: componentType,
-            controller: this,
-            viewModel: this.getViewModel()
-        });
+        // component = Ext.create({
+        //     xtype: componentType,
+        //     controller: this,
+        //     viewModel: this.getViewModel()
+        // });
 
         if(!Object.isUnvalued(checkHandler)){
             canShow = this[checkHandler]();
         }
 
-        if(!Object.isUnvalued(sheetMode)){
-            component.setMode(sheetMode);
-        }
+        // if(!Object.isUnvalued(sheetMode)){
+        //     component.setMode(sheetMode);
+        // }
 
         if(canShow){
-            var sheet = Ext.Viewport.add(component);
-            sheet.show();
+            // var sheet = Ext.Viewport.add(component);
+            // sheet.show();
+            this[dialogMethod]();
         }
     },
 
@@ -2013,6 +2029,11 @@ Ext.define('Breeze.view.employee.InformationController', {
                         message: resp.message,
                         timeout: 10000
                     });
+                    // update sidebar info
+                    Ext.fireEvent('refreshuser');
+                    if(this.onInit){
+                        this.onInit(this.getView());
+                    }
                     // TODO: Decide where to navigate to after successfull save
                 }).catch((resp)=>{
                     var msg = resp.message;
@@ -2035,6 +2056,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                         type: resp.type,
                         timeout: 10000
                     });
+                    // update sidebar info
+                    Ext.fireEvent('refreshuser');
                     // try to reload view
                     if(this.onInit){
                         this.onInit(this.getView());

@@ -208,7 +208,13 @@ Ext.define('Breeze.view.employee.Information', {
     addShiftSegmentDialog: {
         xtype: 'employee.information.dialog.addshiftsegment'
     },
+    addSupervisedEmployeeDialog: {
+        xtype: 'employee.information.dialog.addsupervisedemployee'
+    },
     addDepartmentDialog: {
+        xtype: 'employee.information.dialog.addsupervisedemployee'
+    },
+    addSupervisorDialog: {
         xtype: 'employee.information.dialog.addsupervisedemployee'
     }
 

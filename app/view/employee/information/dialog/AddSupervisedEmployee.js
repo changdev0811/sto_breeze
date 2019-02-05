@@ -41,4 +41,4 @@ Ext.define('Breeze.view.employee.information.dialog.AddSupervisedEmployee', {
             }
         }
     ]
-})
+});

@@ -414,7 +414,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             },
                                             data: {
                                                 // Mode for filtering what is shown in multi actionsheet
-                                                sheetMode: 'supervisedEmployee',
+                                                // sheetMode: 'supervisedEmployee',
+                                                dialogMethod: 'showAddSupervisedEmployeeDialog',
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: 'canAddCompanyEmployee',
                                                 // xtype/alias of multisheet component
