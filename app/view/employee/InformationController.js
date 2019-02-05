@@ -2077,7 +2077,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.comp_rate = vm.get('info.CompRate');
         params.comp_per = vm.get('info.CompPer');
         params.sex = vm.get('info.Gender');
-        params.picture_path = vm.get('profilePicture');
+        params.picture_path = '.'+vm.get('profilePicture').split('.').slice(-1);
         // params.picture_modified = vm.get('info.PhotoFlag').toString();
         params.picture_modified = vm.get('wasProfilePictureModified').toString();
         // exempt = (vm.get('info.Exempt') == 138);
@@ -2167,7 +2167,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp_rate: vm.get('info.CompRate'),
                 comp_per: vm.get('info.CompPer'),
                 sex: vm.get('info.Gender'),
-                picture_path: vm.get('profilePicture'),
+                picture_path: '.'+vm.get('profilePicture').split('.').slice(-1),
                 picture_modified: vm.get('wasProfilePictureModified').toString(),
                 exempt: false,
                 notes: vm.get('info.Notes'),
