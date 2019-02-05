@@ -1,0 +1,16 @@
+{
+    "recurseDepth": 5,
+    "source": {
+        "include": [
+            "app",
+            "app/api",
+            "lib",
+            "overrides"
+        ]
+    },
+    "opts": {
+        "destination": "./doc",
+        "recursive": true,
+        "readme": "./Readme.md"
+    }
+}

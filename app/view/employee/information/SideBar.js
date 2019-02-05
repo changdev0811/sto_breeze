@@ -160,7 +160,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     text: 'Remove Picture',
                     ui: 'action',
                     bind: {
-                        disabled: '{!hasCustomProfilePicture}'
+                        disabled: '{photo == null}'
                     },
                     handler: 'onRemoveProfilePicture'
                 },
@@ -180,15 +180,21 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                     width: '8pt'
                 },
                 {
-                    text: 'Cancel',
+                    text: 'Close',
                     ui: 'decline alt',
                     handler: 'onCancelProfilePictureEdit'
                 }
             ],
-            layout: 'fit',
+            layout: 'vbox',
             items: [
                 {
+                    xtype: 'component',
+                    html: 'Photo will not be applied until employee is saved',
+                    style: 'text-align: center'
+                },
+                {
                     xtype: 'formpanel',
+                    flex: 1,
                     layout: 'vbox',
                     reference: 'profilePictureForm',
                     header: false,
@@ -227,6 +233,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                         {
                             xtype: 'fieldset',
                             // itemId: 'imageFieldSet',
+                            itemId: 'imagePreviewField',
                             flex: 1,
                             title: 'Current Profile Picture',
                             items: [
@@ -234,7 +241,7 @@ Ext.define('Breeze.view.employee.information.SideBar', {
                                     xtype: 'image',
                                     height: 201,
                                     bind: {
-                                        src: '{info.Photo}'
+                                        src: '{profilePicture}'
                                     }
                                 }
                             ]

@@ -347,6 +347,88 @@ Ext.define('Breeze.api.employee.Information', {
         });
     },
 
+    uploadPicture: function(form, employeeId){
+        var api = this.api,
+            cookie = this.auth.getCookies(),
+            cForm = Ext.clone(form),
+            url = api.ashxUrl('uploadEmployeePicture.ashx');
+        
+        // shorthand assign values to input fields by item id
+        let setFormVal = (itemId, val) => { 
+            cForm.getComponent(itemId).setValue(val); 
+        };
+
+        setFormVal('employeeId', employeeId);
+        setFormVal('empId', cookie.emp);
+        setFormVal('custId', cookie.cust);
+        setFormVal('hashcookie', cookie.pass);
+        
+        return new Promise((resolve, reject)=>{
+            api.upload(
+                'ashx', 'uploadEmployeePicture.ashx',
+                cForm, 'Uploading Image', true,
+                /**
+                 * Success callback
+                 * @param {Object} f Form object
+                 * @param {Object} r Response object
+                 */
+                function(f,r){
+                    let picPath = Breeze.helper.settings.Employee.profilePicture,
+                        ext = f.getComponent('extension').getValue(),
+                        custId = f.getComponent('custId').getValue(),
+                        employeeId = f.getComponent('employeeId').getValue(),
+                        empId = f.getComponent('empId').getValue(),
+                        resp = {
+                            response: r,
+                            path: (employeeId == 'new')?
+                                `${picPath.path}${custId}/tmp${cookie.emp}${ext}?bob=${String.random()}` :
+                                `${picPath.path}${custId}/${employeeId}tmp${empId}${ext}?bob=${String.random()}`
+                        };
+                    resolve(resp);
+                },
+                function(f,err){
+                    reject(err);
+                }
+            );
+            // api.upload(
+            //     'ashx', 'uploadEmployeePicture.ashx',
+            //     cForm.el.dom, 'Uploading Image', true,
+            //     function(r){
+            //         var resp = api.decodeJsonResponse(r,null);
+            //         resolve(resp);
+            //     },
+            //     function(err){
+            //         reject(err);
+            //     }
+            // );
+
+        });
+    },
+
+    checkUsername: function(userName){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'checkUsername', {
+                    employee_id: 0,
+                    username: userName
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve(true);
+                    } else {
+                        reject(resp.err)
+                    }
+                },
+                function(err){
+                    reject('Invalid username');
+                }
+            )
+        });
+    },
+
     /**
      * Method is form specific, so logic is defined in employee/InformationController
      * @see Breeze.view.employee.InformationController.onRemoveProfilePicture

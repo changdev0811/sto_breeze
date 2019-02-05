@@ -53,20 +53,21 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     tools: {
                         add: {
                             iconCls: 'x-fas fa-plus',
-                            data: {
-                                // Mode for filtering what is shown in multi actionsheet
-                                sheetMode: 'shiftSegment',
-                                // Name of function used to make sure its ok to add
-                                // checkHandler: 'canAddShift',
-                                // xtype/alias of multisheet component
-                                componentType: 'employee.information.sheets'
-                            },
+                            // data: {
+                            //     // Mode for filtering what is shown in multi actionsheet
+                            //     sheetMode: 'shiftSegment',
+                            //     // Name of function used to make sure its ok to add
+                            //     // checkHandler: 'canAddShift',
+                            //     // xtype/alias of multisheet component
+                            //     componentType: 'employee.information.sheets'
+                            // },
                             bind: {
                                 // Dynamically disable based on readonly and shift count
                                 // disabled: '{!canAddShift}',
                                 hidden: '{readOnly}'
                             },
-                            handler: 'onGridAddButton'
+                            // handler: 'onGridAddButton'
+                            handler: 'onAddShiftSegment'
                             // handler: 'onAddShiftSegmentDirect'
                         }
                     },
@@ -106,13 +107,41 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                         editable: '{!readOnly}'
                                     },
                                     editor: {
-                                        xtype: 'selectfield',
+                                        // xtype: 'selectfield',
+                                        // store: 'accrualShiftChoices',
+                                        // displayField: 'time',
+                                        // valueField: 'value',
+                                        // listeners: {
+                                        //     // change: 'onShiftTimeChange',
+                                        //     select: 'onShiftTimeSelect'
+                                        // }
+                                        xtype: 'combobox',
+                                        itemId: 'start',
+                                        label: 'Start',
                                         store: 'accrualShiftChoices',
                                         displayField: 'time',
+                                        displayTpl: [
+                                            '{[this.time(values)]}',
+                                            {
+                                                time: function (values) {
+                                                    if (typeof values.time == "string") {
+                                                        return values.time;
+                                                    } else {
+                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                    }
+                                                }
+                                            }
+                                        ],
                                         valueField: 'value',
+                                        forceSelection: false,
+                                        queryMode: 'local',
+                                        required: true,
+                                        validators: {
+                                            type: 'controller',
+                                            fn: 'validateShiftTime'
+                                        },
                                         listeners: {
-                                            // change: 'onShiftTimeChange',
-                                            select: 'onShiftTimeSelect'
+                                            change: 'onShiftTimeChange'
                                         }
                                     }
                                     // editor: {
@@ -144,12 +173,40 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                                         editable: '{!readOnly}'
                                     },
                                     editor: {
-                                        xtype: 'selectfield',
+                                        // xtype: 'selectfield',
+                                        // store: 'accrualShiftChoices',
+                                        // displayField: 'time',
+                                        // valueField: 'value',
+                                        // listeners: {
+                                        //     select: 'onShiftTimeSelect'
+                                        // }
+                                        xtype: 'combobox',
+                                        itemId: 'stop',
+                                        label: 'Stop',
                                         store: 'accrualShiftChoices',
                                         displayField: 'time',
+                                        displayTpl: [
+                                            '{[this.time(values)]}',
+                                            {
+                                                time: function (values) {
+                                                    if (typeof values.time == "string") {
+                                                        return values.time;
+                                                    } else {
+                                                        return BreezeTime.fromMinutes(values.value).asTime();
+                                                    }
+                                                }
+                                            }
+                                        ],
                                         valueField: 'value',
+                                        forceSelection: false,
+                                        queryMode: 'local',
+                                        required: true,
+                                        validators: {
+                                            type: 'controller',
+                                            fn: 'validateShiftTime'
+                                        },
                                         listeners: {
-                                            select: 'onShiftTimeSelect'
+                                            change: 'onShiftTimeChange'
                                         }
                                     },
                                     cell: {
@@ -188,7 +245,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                     },
                     items: [
                         {
-                            name: 'startup_settings',
+                            // name: 'startup_settings',
                             label: 'Accrual Policy',
                             bind: { value: '{info.StartUpSettings}', store: '{scheduleList}' },
                             reference: 'accrualPolicy',
@@ -200,7 +257,7 @@ Ext.define('Breeze.view.employee.information.Schedule', {
                             }
                         },
                         {
-                            name: 'default_project',
+                            // name: 'default_project',
                             label: 'Default Project',
                             bind: { value: '{info.DefaultProject}', store: '{projectList}' },
                             reference: 'defaultProject',

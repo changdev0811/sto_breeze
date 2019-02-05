@@ -20,8 +20,8 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
     updatePasswordRequirement: function(src, newVal, oldVal, eOpts){
         if(newVal !== oldVal){
             var hasValue = (newVal !== '');
-            src.el.up().down('[name="password"]').component.setRequired(hasValue);
-            src.el.up().down('[name="confirm_new_password"]').component.setRequired(hasValue);
+            src.el.up().component.query('[itemId="password"]')[0].setRequired(hasValue);
+            src.el.up().component.query('[itemId="confirm_new_password"]')[0].setRequired(hasValue);
         }
         this.lookup('changePasswordButton').setDisabled(!this.passwordChangeReady());
     },
@@ -37,9 +37,9 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
         var fieldset = this.lookup('securityChangePassword');
         var vm = this.getViewModel();
         var fields = {
-            oldpass: fieldset.down('[name="old_password"]'),
-            password: fieldset.down('[name="password"]'),
-            passwordConfirm: fieldset.down('[name="confirm_new_password"]')
+            oldpass: fieldset.query('[itemId="old_password"]')[0],
+            password: fieldset.query('[itemId="password"]')[0],
+            passwordConfirm: fieldset.query('[itemId="confirm_new_password"]')[0]
         };
         var params = {
             username: vm.get('info.Username'),
@@ -86,9 +86,9 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
     passwordChangeReady: function(){
         var fieldset = this.lookup('securityChangePassword');
         var fields = {
-            oldpass: fieldset.down('[name="old_password"]'),
-            password: fieldset.down('[name="password"]'),
-            passwordConfirm: fieldset.down('[name="confirm_new_password"]')
+            oldpass: fieldset.query('[itemId="old_password"]')[0],
+            password: fieldset.query('[itemId="password"]')[0],
+            passwordConfirm: fieldset.query('[itemId="confirm_new_password"]')[0]
         };
         return (
             fields.oldpass.getValue() !== null &&
@@ -102,9 +102,9 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
     onResetChangePasswordTap: function(){
         var fieldset = this.lookup('securityChangePassword');
         var fields = {
-            oldpass: fieldset.down('[name="old_password"]'),
-            password: fieldset.down('[name="password"]'),
-            passwordConfirm: fieldset.down('[name="confirm_new_password"]')
+            oldpass: fieldset.query('[itemId="old_password"]')[0],
+            password: fieldset.query('[itemId="password"]')[0],
+            passwordConfirm: fieldset.query('[itemId="confirm_new_password"]')[0]
         };
         fields.oldpass.clearValue();
         fields.password.clearValue();

@@ -11,8 +11,14 @@ Ext.define('Breeze.view.employee.InformationController', {
     alias: 'controller.employee.information',
 
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
+        'Breeze.helper.data.ValidationRuleSet',
+        'Breeze.mixin.DialogCancelable',
     ],
+
+    mixins: {
+        dialogCancelable: 'Breeze.mixin.DialogCancelable'
+    },
 
     onInit: function(component, eOpts){
         console.log("Employee Info Controller Init");
@@ -48,7 +54,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp.lookup('departments').setStore(vm.getStore('departments'));
                 // comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 // comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
-                comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
+                // comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
                 if(vm.get('employeeId') !== 'new'){
                     // if employee id isn't new, load employee
                     me.loadEmployeeInfo(component, function(c){
@@ -215,7 +221,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
 
         // vm.getStore('supervisors').load();
-
+        
         vm.getStore('departments').getProxy().extraParams.excludeterminated = 0;
         vm.getStore('departments').getProxy().extraParams.includeUserDept = vm.get('readOnly');
         
@@ -251,6 +257,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             var info = data.employee;
             info.punchPolicy = data.punchPolicy;
             vm.set('info',info);
+            if(vm.get('info.PhotoFlag')){
+                // Copy profile picture to custom photo prop if custom
+                vm.set('photo', vm.get('info.Photo'));
+            }
             callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
@@ -776,13 +786,14 @@ Ext.define('Breeze.view.employee.InformationController', {
          */
         var copyData = function(arrays){
             var names = Object.keys(arrays);
-            names.forEach((n)=>{
+            for(var i=0;i<names.length;i++){
+                let n = names[i];
                 // Update viewmodel attribute values
                 vm.set(
                     ['info', n].join('.'),
                     arrays[n]
                 );
-            })
+            }   
         };
 
         // Extract arrays
@@ -950,6 +961,146 @@ Ext.define('Breeze.view.employee.InformationController', {
     },
 
     /**
+     * Checks validity of shift info time value
+     * @param {String} value Time string
+     * @return {Boolean} True if valid, false otherwise
+     */
+    validateShiftTime: function (value) {
+        if (typeof value == 'number') {
+            // If value is a number, its from the dropdown and is thus valid
+            return true;
+        }
+        return (BreezeTime.isValidFormat(value)) ?
+            true : 'Expected format: Hour:Minute(AM/PM';
+    },
+
+    /**
+     * Runs validation tests for new or modified shift values against
+     * all other shift segments
+     * @param {(Number|String)} start 
+     * @param {(Number|String)} stop 
+     * @param {Object} record Optional record of updated segment to avoid self-conflict
+     */
+    validateShiftSegment: function (start, stop, record = null) {
+        var resolve = (v) => {
+            return (typeof v == 'number') ?
+                BreezeTime.fromMinutes(v) :
+                BreezeTime.parse(v);
+        },
+            vm = this.getViewModel(),
+            segments = vm.get('shift.segments');
+
+        // var source = this.lookup('shiftSegmentGrid');
+
+        // Create Validation rule set
+        var validRuleSet = Ext.create('Breeze.helper.data.ValidationRuleSet', {
+            rules: {
+                differentTimes: {
+                    fn: (get) => {
+                        return (get('start').asMinutes() !== get('stop').asMinutes());
+                    },
+                    passFn: (get, name) => {
+                        console.info(name, ' passed');
+                    },
+                    failFn: (get, name) => {
+                        console.warn(name, ' failed');
+                        // errors.push('Start and stop times must be different');
+                        return 'Start and stop times must be different';
+                    }
+                },
+                noOverlap: {
+                    fn: (get) => {
+                        var ok = true,
+                            otherSegs = get('segments').queryRecordsBy(
+                                (r) => { return r !== get('record'); }
+                            ).map((r) => {
+                                return [r.get('StartMin'), r.get('StopMin')];
+                            }),
+                            // Function for overlap checking
+                            overlaps = (v, r) => {
+                                return (v >= r[0] && v <= r[1]);
+                            };
+                        otherSegs.push([get('start').asMinutes(), get('stop').asMinutes()]);
+
+                        otherSegs.forEach((r, i) => {
+                            otherSegs.forEach((r2, i2) => {
+                                if (i !== i2) {
+                                    r.forEach((v) => {
+                                        ok &= !overlaps(v, r2);
+                                    })
+                                }
+                            })
+                        });
+
+                        return ok;
+                    },
+                    passFn: (get, name) => {
+                        console.info(name, ' passed');
+                    },
+                    failFn: (get, name) => {
+                        console.warn(name, ' failed');
+                        // errors.push('Shift cannot overlap with existing shifts');
+                        return 'Shift cannot overlap with existing shifts';
+                    }
+                }
+            }
+        });
+
+        // Put data to be given to rule set into an object
+        let data = {
+            start: resolve(Ext.clone(start)),
+            stop: resolve(Ext.clone(stop)),
+            segments: segments,
+            record: record
+        };
+
+
+        // Run all validation checks
+        var res = validRuleSet.runAll(data);
+
+        if (validRuleSet.allPassed(res)) {
+            return true;
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Unable to update shift',
+                list: validRuleSet.getErrors(),
+                timeout: ['warn', 5000]
+            });
+            return false;
+        }
+
+        console.info('Validate shift segment');
+    },
+
+    onShiftTimeChange: function (cmp, newVal, oldVal) {
+        cmp.validate();
+        if (cmp.isValid() && BreezeTime.resolve(newVal) !== null) {
+            cmp.setError(null);
+            var record = cmp.getParent().ownerCmp.getRecord(),
+                start = record.get('StartTime'),
+                stop = record.get('StopTime');
+            if (cmp.getItemId() == 'start') {
+                start = newVal;
+            } else {
+                stop = newVal;
+            }
+            var ok = this.validateShiftSegment(start, stop, record, false);
+            if (ok) {
+                var staT = BreezeTime.resolve(start),
+                    stoT = BreezeTime.resolve(stop);
+                record.set({
+                    StartTime: staT.asTime(), StartMin: staT.asMinutes(),
+                    StopTime: stoT.asTime(), StopMin: stoT.asMinutes()
+                }, { commit: true });
+            }
+            console.info('valid');
+            cmp.getParent().cancelEdit();
+        }
+        console.info('shift change');
+    },
+
+    /**
      * Event handler for selecting new shift time value
      * @param {Object} comp Component event originates from
      * @param {Ext.data.Model} data New data model
@@ -1008,6 +1159,9 @@ Ext.define('Breeze.view.employee.InformationController', {
      * @param {Object} comp 
      */
     onAddShiftSegment: function(comp){
+        // TODO: Finish implementing onAddShiftSegment with dialog
+        this.showAddShiftSegmentDialog();
+        return null;
         var vm = this.getViewModel(),
             segments = vm.get('shift.segments'),
             sheet = comp.getParent().getParent(),
@@ -1062,6 +1216,75 @@ Ext.define('Breeze.view.employee.InformationController', {
         if(record !== null){
             records.remove([record]);
             records.commitChanges();
+        }
+    },
+
+    /**
+     * Display the dialog used for creating new shift segments
+     */
+    showAddShiftSegmentDialog: function () {
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this.addShiftSegmentDialog;
+
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addShiftSegmentDialog);
+            this.addShiftSegmentDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+   /**
+     * Method called by dialog cancelable mixin's onDialogCancel method
+     * for shift segment dialog cancel button; resets field values and
+     * clears validation error indicators
+     * @param {Object} dlg dialog reference
+     */
+    onAddShiftSegmentDialogCancel: function (dlg) {
+        let start = dlg.getComponent('start'),
+            stop = dlg.getComponent('stop');
+        start.clearValue();
+        stop.clearValue();
+        start.setError(null);
+        stop.setError(null);
+    },
+
+    onAddShiftSegmentDialogSave: function (btn) {
+        let dlg = btn.getParent().getParent(),
+            start = dlg.getComponent('start'),
+            stop = dlg.getComponent('stop'),
+            segments = this.getViewModel().get('shift.segments');
+        start.validate();
+        stop.validate();
+        if (start.isValid() && stop.isValid()) {
+            if (this.validateShiftSegment(start.getValue(), stop.getValue(), null, true)) {
+                // Segment is valid, update store with new item
+                let startT = BreezeTime.resolve(start.getValue()),
+                    stopT = BreezeTime.resolve(stop.getValue());
+                segments.loadData([{
+                    StartTime: startT.asTime(),
+                    StartMin: startT.asMinutes(),
+                    StopTime: stopT.asTime(),
+                    StopMin: stopT.asMinutes()
+                }], true);
+                segments.commitChanges();
+                dlg.hide();
+                this.onAddShiftSegmentDialogCancel(dlg);
+                Ext.toast({
+                    type: Ext.Toast.INFO,
+                    message: 'Shift segment added successfully',
+                    timeout: 'info'
+                });
+            };
+        } else {
+            Ext.toast({
+                type: Ext.Toast.WARN,
+                message: 'Please fix field errors and try again.',
+                timeout: 'warn'
+            });
         }
     },
 
@@ -1574,26 +1797,25 @@ Ext.define('Breeze.view.employee.InformationController', {
             form = this.lookup('profilePictureForm');
         
         // Update photo flag in view model to false, indicating no custom pic
-        vm.set('info.PhotoFlag', false);
+        // vm.set('info.PhotoFlag', false);
 
         // Update photo path in view model to default image
-        vm.set(
-            'info.Photo',
-            `${picSettings.path}${picSettings.defaultFile}`
-        );
+        vm.set('photo', null);
 
         // Update form fields
         form.getComponent('hasPicture').setValue(false);
-        form.getComponent('imageFieldSet')
-            .getComponent('imageFile').reset();
-
+        var imgField = form.getComponent('imageFieldSet')
+            .getComponent('imageFile');
+        imgField.reset();
+        imgField.clearInvalid();
+        
         console.info('Profile photo removed.');
     },
 
     /**
      * Handle profile image edit dialog's 'upload' button
      */
-    onUploadProfilePicture: function(ref,e,eOpts){
+    onUploadProfilePicture2: function(ref,e,eOpts){
         var vm = this.getViewModel(),
             employeeId = vm.get('employeeId'),
             form = this.lookup('profilePictureForm');
@@ -1633,6 +1855,48 @@ Ext.define('Breeze.view.employee.InformationController', {
         });
     },
     
+    onUploadProfilePicture: function(){
+        var vm = this.getViewModel(),
+            form = this.lookup('profilePictureForm'),
+            imageField = form.getComponent('imageFieldSet').getAt(0);
+        console.info('upload');
+
+        var fileName = imageField.getValue().split('.'),
+            ext = '.'.concat(fileName.slice(-1)[0].toLowerCase());
+        
+        form.getComponent('pictureModified').setValue(true);
+        form.getComponent('extension').setValue(ext);
+        
+        if(!['.jpeg','.jpg','.gif','.png','.bmp'].includes(ext)){
+            // Unsupported file extension
+            imageField.markInvalid('Invalid file type');
+            Ext.toast({
+                type: 'warn',
+                message: 'Invalid image type.<br>Please select a .jpg, .jpeg, .gif, .png or .bmp file type.',
+                timeout: ['warn',4]
+            });
+        } else {
+            if(form.isValid()){
+                this.apiClass.information.uploadPicture(form, vm.get('viewerId')).then((r)=>{
+                    console.info('pass');
+                    vm.set('photo', r.path);
+                    Ext.toast({
+                        type: 'info',
+                        message: 'Profile Picture successfully uploaded',
+                        timeout: 'info'
+                    });
+                }).catch((err)=>{
+                    Ext.toast({
+                        type: 'error',
+                        message: 'An unknown error occured',
+                        timeout: 'error'
+                    });
+                });
+            }
+        }
+
+    },
+
     /**
      * Handle profile image edit dialog's 'cancel' button
      */
@@ -1681,23 +1945,23 @@ Ext.define('Breeze.view.employee.InformationController', {
         };
             
         ['first_name', 'last_name'].forEach((f)=>{
-            var partValid = pages.employee.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.employee.tab.query(`[itemId=${f}]`)[0].validate();
             pages.employee.valid = pages.employee.valid && partValid;
             pages.employee.errCount += ((partValid)? 0 : 1);
         });
         ['department'].forEach((f)=>{
-            var partValid = pages.company.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.company.tab.query(`[itemId=${f}]`)[0].validate();
             pages.company.valid = pages.company.valid && partValid;
             pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = pages.security.tab.down(`[name=${f}]`).validate();
+            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].validate();
             pages.security.valid = pages.security.valid && partValid;
             pages.security.errCount += ((partValid)? 0 : 1);
         });
         if(vm.get('newEmployee')){
             pages.security.valid = pages.security.valid && 
-                pages.security.tab.down(`[name=create_password]`).validate();
+                pages.security.tab.query(`[itemId=create_password]`)[0].validate();
             if(!pages.security.valid){
                 pages.security.errCount = 1;
             }
@@ -1804,7 +2068,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.first_name = vm.get('info.FirstName');
         params.last_name = vm.get('info.LastName');
         params.middle_name = vm.get('info.MiddleName');
-        params.company_employee_id = vm.get('info.CustomerID');
+        params.company_employee_id = vm.get('info.EmployeeNumber');
         params.ssn = vm.get('info.SSN');
         params.payroll = vm.get('info.Payroll');
         params.date_of_hire = vm.get('info.HireDate');
@@ -1813,9 +2077,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.comp_rate = vm.get('info.CompRate');
         params.comp_per = vm.get('info.CompPer');
         params.sex = vm.get('info.Gender');
-        params.picture_path = vm.get('info.Photo');
+        params.picture_path = '.'+vm.get('profilePicture').split('.').slice(-1)[0].split('?')[0];
         // params.picture_modified = vm.get('info.PhotoFlag').toString();
-        params.picture_modified = vm.get('info.PhotoFlag');
+        params.picture_modified = vm.get('wasProfilePictureModified').toString();
         // exempt = (vm.get('info.Exempt') == 138);
         params.exempt = false;
         params.notes = vm.get('info.Notes');
@@ -1903,7 +2167,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp_rate: vm.get('info.CompRate'),
                 comp_per: vm.get('info.CompPer'),
                 sex: vm.get('info.Gender'),
-                picture_path: vm.get('info.Photo'),
+                picture_path: '.'+vm.get('profilePicture').split('.').slice(-1)[0].split('?')[0],
+                picture_modified: vm.get('wasProfilePictureModified').toString(),
                 exempt: false,
                 notes: vm.get('info.Notes'),
                 recording_mode: vm.get('info.RecordingMode'),

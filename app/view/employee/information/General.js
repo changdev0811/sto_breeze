@@ -39,7 +39,7 @@ Ext.define('Breeze.view.employee.information.General', {
             },
             items: [
                 {
-                    name: 'first_name',
+                    itemId: 'first_name',
                     label: 'First',
                     // id: 'firstName',
                     required: true,
@@ -48,12 +48,12 @@ Ext.define('Breeze.view.employee.information.General', {
                     }
                 },
                 {
-                    name: 'middle_name',
+                    itemId: 'middle_name',
                     label: 'Middle',
                     bind: { value: '{info.MiddleName}' }
                 },
                 {
-                    name: 'last_name',
+                    itemId: 'last_name',
                     required: true,
                     label: 'Last',
                     bind: { value: '{info.LastName}' }
@@ -100,7 +100,7 @@ Ext.define('Breeze.view.employee.information.General', {
                 },
                 {
                     xtype: 'datefield',
-                    name: 'date_of_birth',
+                    itemId: 'date_of_birth',
                     label: 'Birth Date',
                     edgePicker: {},
                     // picker: {

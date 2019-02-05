@@ -17,7 +17,9 @@ Ext.define('Breeze.view.employee.Information', {
         'Breeze.view.employee.InformationModel',
         'Breeze.widget.actionsheet.MultipleMode',
         'Breeze.view.employee.information.Sheets',
-        'Breeze.view.employee.information.dialog.ChangeAccrualPolicy'
+        'Breeze.view.employee.information.dialog.ChangeAccrualPolicy',
+        'Breeze.view.employee.information.dialog.AddShiftSegment',
+        'Breeze.view.employee.information.dialog.AddSupervisedEmployee'
     ],
     
     //==[Start of Panel Setup/Styling]====
@@ -175,7 +177,6 @@ Ext.define('Breeze.view.employee.Information', {
                             displayField: 'Name',
                             label: 'Punch Policy',
                             valueField: 'ID',
-                            bind: '{punchPolicy.policy_id}',
                             userCls: 'employee-info-general-field',
                             ui: 'employeeinfo-textfield',
                             required: true,
@@ -184,7 +185,8 @@ Ext.define('Breeze.view.employee.Information', {
                                 // manual binding since readonly plugin isn't applied here
                                 editable: '{!readOnly}',
                                 readOnly: '{readOnly}',
-                                disabled: '{readOnly}'
+                                disabled: '{readOnly}',
+                                store: '{punchPolicies}'
                             }
                         },
                         {
@@ -197,7 +199,17 @@ Ext.define('Breeze.view.employee.Information', {
         }
     ],
 
+    // === [Dialogs] ===
+
     policyChangeDialog: {
         xtype: 'employee.information.dialog.changeaccrualpolicy'
+    }, 
+    /* Add Shift Segment Dialog */
+    addShiftSegmentDialog: {
+        xtype: 'employee.information.dialog.addshiftsegment'
+    },
+    addDepartmentDialog: {
+        xtype: 'employee.information.dialog.addsupervisedemployee'
     }
+
 });
