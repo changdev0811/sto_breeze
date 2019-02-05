@@ -1237,6 +1237,20 @@ Ext.define('Breeze.view.employee.InformationController', {
         dialog.show();
     },
 
+    showCompanyDialog: function (dialogName) {
+        var view = this.getView(),
+            vm = this.getViewModel(),
+            dialog = this[dialogName];
+
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view[dialogName]);
+            this[dialogName] = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
     showAddSupervisedEmployeeDialog: function () {
         var view = this.getView(),
             vm = this.getViewModel(),
@@ -1352,7 +1366,7 @@ Ext.define('Breeze.view.employee.InformationController', {
      */
     onGridAddButton: function (comp,tool){
         var configData = tool.getData();
-        var { componentType, checkHandler, dialogMethod } = configData,
+        var { componentType, checkHandler, dialog } = configData,
             canShow = true,
             component = null;
 
@@ -1373,7 +1387,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         if(canShow){
             // var sheet = Ext.Viewport.add(component);
             // sheet.show();
-            this[dialogMethod]();
+            this.showCompanyDialog(dialog);
         }
     },
 

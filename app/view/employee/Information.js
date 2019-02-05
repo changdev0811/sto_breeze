@@ -215,7 +215,7 @@ Ext.define('Breeze.view.employee.Information', {
         xtype: 'employee.information.dialog.addsupervisedemployee'
     },
     addSupervisorDialog: {
-        xtype: 'employee.information.dialog.addsupervisedemployee'
+        xtype: 'employee.information.dialog.addsupervisordialog'
     }
 
 });

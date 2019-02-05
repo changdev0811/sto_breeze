@@ -290,7 +290,8 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             },
                                             data: {
                                                 // Mode for filtering what is shown in multi actionsheet
-                                                sheetMode: 'supervisor',
+                                                // sheetMode: 'supervisor',
+                                                dialog: 'addSupervisorDialog',
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: 'canAddCompanySupervisor',
                                                 // xtype/alias of multisheet component
@@ -415,7 +416,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             data: {
                                                 // Mode for filtering what is shown in multi actionsheet
                                                 // sheetMode: 'supervisedEmployee',
-                                                dialogMethod: 'showAddSupervisedEmployeeDialog',
+                                                dialog: 'addSupervisedEmployeeDialog',
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: 'canAddCompanyEmployee',
                                                 // xtype/alias of multisheet component
@@ -537,7 +538,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                                             },
                                             data: {
                                                 // Mode for filtering what is shown in multi actionsheet
-                                                sheetMode: 'department',
+                                                dialog: 'addDepartmentDialog',
                                                 // Name of function used to make sure its ok to add
                                                 checkHandler: null,
                                                 // xtype/alias of multisheet component
