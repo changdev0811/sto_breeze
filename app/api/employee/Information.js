@@ -382,7 +382,7 @@ Ext.define('Breeze.api.employee.Information', {
                             response: r,
                             path: (employeeId == 'new')?
                                 `${picPath.path}${custId}/tmp${cookie.emp}${ext}?bob=${String.random()}` :
-                                `${picPath.path}${custId}/${employeeId}tmp${ext}?bob=${String.random()}`
+                                `${picPath.path}${custId}/${employeeId}tmp${empId}${ext}?bob=${String.random()}`
                         };
                     resolve(resp);
                 },

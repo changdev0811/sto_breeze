@@ -257,6 +257,10 @@ Ext.define('Breeze.view.employee.InformationController', {
             var info = data.employee;
             info.punchPolicy = data.punchPolicy;
             vm.set('info',info);
+            if(vm.get('info.PhotoFlag')){
+                // Copy profile picture to custom photo prop if custom
+                vm.set('photo', vm.get('info.Photo'));
+            }
             callback(component);
             // vm.setData(data.data);
         }).catch(function(err){
@@ -1793,19 +1797,18 @@ Ext.define('Breeze.view.employee.InformationController', {
             form = this.lookup('profilePictureForm');
         
         // Update photo flag in view model to false, indicating no custom pic
-        vm.set('info.PhotoFlag', false);
+        // vm.set('info.PhotoFlag', false);
 
         // Update photo path in view model to default image
-        vm.set(
-            'info.Photo',
-            `${picSettings.path}${picSettings.defaultFile}`
-        );
+        vm.set('photo', null);
 
         // Update form fields
         form.getComponent('hasPicture').setValue(false);
-        form.getComponent('imageFieldSet')
-            .getComponent('imageFile').reset();
-
+        var imgField = form.getComponent('imageFieldSet')
+            .getComponent('imageFile');
+        imgField.reset();
+        imgField.clearInvalid();
+        
         console.info('Profile photo removed.');
     },
 
@@ -1876,9 +1879,18 @@ Ext.define('Breeze.view.employee.InformationController', {
             if(form.isValid()){
                 this.apiClass.information.uploadPicture(form, vm.get('viewerId')).then((r)=>{
                     console.info('pass');
-                    vm.set('info.Photo', r.path);
+                    vm.set('photo', r.path);
+                    Ext.toast({
+                        type: 'info',
+                        message: 'Profile Picture successfully uploaded',
+                        timeout: 'info'
+                    });
                 }).catch((err)=>{
-                    console.warn('fail');
+                    Ext.toast({
+                        type: 'error',
+                        message: 'An unknown error occured',
+                        timeout: 'error'
+                    });
                 });
             }
         }
@@ -2065,9 +2077,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         params.comp_rate = vm.get('info.CompRate');
         params.comp_per = vm.get('info.CompPer');
         params.sex = vm.get('info.Gender');
-        params.picture_path = vm.get('info.Photo');
+        params.picture_path = vm.get('profilePicture');
         // params.picture_modified = vm.get('info.PhotoFlag').toString();
-        params.picture_modified = vm.get('info.PhotoFlag');
+        params.picture_modified = vm.get('wasProfilePictureModified').toString();
         // exempt = (vm.get('info.Exempt') == 138);
         params.exempt = false;
         params.notes = vm.get('info.Notes');
@@ -2155,7 +2167,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                 comp_rate: vm.get('info.CompRate'),
                 comp_per: vm.get('info.CompPer'),
                 sex: vm.get('info.Gender'),
-                picture_path: vm.get('info.Photo'),
+                picture_path: vm.get('profilePicture'),
+                picture_modified: vm.get('wasProfilePictureModified').toString(),
                 exempt: false,
                 notes: vm.get('info.Notes'),
                 recording_mode: vm.get('info.RecordingMode'),

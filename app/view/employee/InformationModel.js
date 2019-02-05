@@ -80,7 +80,6 @@ Ext.define('Breeze.view.employee.InformationModel', {
             info: {
                 
             },
-
             
             accrual: {
                 changeMode: 1,
@@ -203,7 +202,9 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     "Can_Use_InOut": true,
                     "TimeSheet_Submission_Required": true
                 }
-            }
+            },
+
+            photo: null
         })
     },
 
@@ -346,20 +347,30 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
-
         /**
-         * Formula returning profile picture path or default file if
-         * no custom image has been set
-         * @param {Function} get ViewModel get function reference
-         * @return {String} profile picture url
+         * Path to profile photo, pulled either from custom ({photo}) or original 
+         * ({info.Photo})
          */
-        profilePicture: function (get) {
-            if (get('info.PhotoFlag')) {
-                return get('info.Photo');
+        profilePicture: {
+            bind: {
+                original: '{info.Photo}',
+                isCustom: '{info.PhotoFlag}',
+                custom: '{photo}'
+            },
+            get: function(data){
+                if(data.custom == null){
+                    return data.original;
+                } else {
+                    return data.custom;
+                }
+            }
+        },
+
+        wasProfilePictureModified: function(get){
+            if(get('info.PhotoFlag')){
+                return (get('photo') !== get('info.Photo'));
             } else {
-                var picSets = Breeze.helper.settings.Employee
-                    .profilePicture;
-                return `${picSets.path}${picSets.defaultFile}`
+                return (get('photo') !== null);
             }
         },
 
@@ -370,7 +381,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
          * @return {Boolean} True if custom picture, false otherwise
          */
         hasCustomProfilePicture: function (get) {
-            return get('info.PhotoFlag');
+            return (get('photo') !== null);
         },
 
         /**
