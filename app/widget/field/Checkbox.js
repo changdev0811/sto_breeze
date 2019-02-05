@@ -2,6 +2,8 @@
  * Custom Checkbox override
  * @class Checkbox
  * @alias Breeze.widget.field.Checkbox
+ * @xtype breeze-checkbox
+ * @xtype breeze-checkboxfield
  */
 Ext.define('Breeze.widget.field.Checkbox', {
     extend: 'Ext.field.Checkbox',

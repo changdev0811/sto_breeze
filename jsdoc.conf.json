@@ -1,10 +1,14 @@
 {
+    "plugins": ["jsdoc_plugins/ext_xtype"],
     "recurseDepth": 5,
     "source": {
         "include": [
+            "app.js",
             "app",
             "app/api",
             "app/helper",
+            "app/mixin",
+            "app/widget/",
             "app/helper/navigation",
             "lib",
             "overrides"

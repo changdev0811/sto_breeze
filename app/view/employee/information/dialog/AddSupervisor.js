@@ -1,13 +1,14 @@
 /**
- * Add supervised employee dialog
+ * Add supervised employee dialog; Used in company > supervisors
+ * in Employee Info
  * @class AddSupervisor
- * @namespace Breeze.view.employee.information.dialog.AddSupervisor
+ * @memberof Breeze.view.employee.information.dialog
  */
 Ext.define('Breeze.view.employee.information.dialog.AddSupervisor', {
     extend: 'Ext.Dialog',
     alias: 'widget.employee.information.dialog.addsupervisor',
     ui: 'dark-themed-dialog',
-    title: 'Add Supervised Employee',
+    title: 'Add Supervisor',
     layout: 'hbox',
     items: [
         {

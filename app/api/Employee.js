@@ -108,11 +108,9 @@ Ext.define('Breeze.api.Employee', {
                 true, true,
                 function(resp){
                     var data = api.decodeJsonResponse(resp);
+                    delete data.__type;
                     resolve(
-                        {
-                            fullname: data.fullname,
-                            business: data.business
-                        }
+                        data
                     );
                 },
                 function(err){
