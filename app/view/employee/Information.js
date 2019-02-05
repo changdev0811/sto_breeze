@@ -19,7 +19,7 @@ Ext.define('Breeze.view.employee.Information', {
         'Breeze.view.employee.information.Sheets',
         'Breeze.view.employee.information.dialog.ChangeAccrualPolicy',
         'Breeze.view.employee.information.dialog.AddShiftSegment',
-        'Breeze.view.employee.information.dialog.AddSupervisedEmploye'
+        'Breeze.view.employee.information.dialog.AddSupervisedEmployee'
     ],
     
     //==[Start of Panel Setup/Styling]====
