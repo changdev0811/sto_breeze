@@ -14,6 +14,9 @@
             "overrides"
         ]
     },
+    "tags": {
+        "dictionaries": ["jsdoc", "closure"]
+    },
     "opts": {
         "destination": "./doc",
         "recursive": true,

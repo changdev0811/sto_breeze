@@ -10,7 +10,8 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
 
     /**
      * @memberof Breeze.plugin.field.AsyncValidation
-     * @inner
+     * @class
+     * @static
      */
     config: {
         /**
@@ -30,8 +31,7 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * will be wrapped to correctly work with async. If false,
          * validator must match the structure of this class's wrapPromise
          * method
-         * @property {Boolean} wrapPromise
-         * @memberOf Breeze.plugin.field.AsyncValidation.config
+         * @member {Boolean}
          */
         wrapPromise: true,
         /**
