@@ -7,12 +7,11 @@ Ext.define('Breeze.view.employee.workTime.Record', {
     extend: 'Ext.Container',
     alias: 'widget.employee.worktime.record',
 
-    requires: [
-        'Ext.grid.plugin.RowExpander'
-    ],
-
     layout: 'vbox',
     userCls: 'employee-worktime-records-grid',
+    viewModel: {
+        selection: null
+    },
 
     items: [
         {
@@ -28,8 +27,10 @@ Ext.define('Breeze.view.employee.workTime.Record', {
             },
             sortable: false,
             plugins: {
-                // { type: 'rowexpander' }
-                rowexpander: true
+                rowexpander: true,
+                gridcellediting: {
+                    selectOnEdit: true
+                }
             },
             // Removed for now because trying to force newly loaded
             // records to show their punches causes layout issues
@@ -126,68 +127,101 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     
                 },
                 {
-                    xtype: 'gridcolumn',
+                    xtype: 'datecolumn',
                     flex: 1,
-                    formatter: 'date("m/d/Y")',
+                    text: 'Date',
                     dataIndex: 'Record_Date',
                     sortable: true,
-                    text: 'Date'
+                    editable: true,
+                    editor: {
+                        field: {
+                            xtype: 'datepickerfield'
+                        },
+                        allowBlank: false
+                    }
                 },
-
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time IN',
+                    dataIndex: 'timeIn',
                     sortable: true,
-                    // dataIndex: 'Start_Time'
-                    tpl: [
-                        '{[this.formatted(values.Start_Time)]}',
-                        {
-                            formatted: function(v){
-                                if((Object.isUnvalued(v) || v == '')){
-                                    return v;
-                                } else {
-                                    return (moment(v).format('h:mm A'));
-                                }
-                            }
+                    editable: true,
+                    editor: {
+                        xtype: 'selectfield',
+                        itemId: 'timeInSelector',
+                        bind: {
+                            store: 'accrualShiftChoices'
+                        },
+                        displayField: 'time',
+                        valueField: 'value',
+                        listeners: {
+                            change: 'onTimeChange'
                         }
-                    ]
+                    },
+                    renderer: 'timefieldRenderer'
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Time OUT',
+                    dataIndex: 'timeOut',
                     sortable: true,
-                    // dataIndex: 'End_Time'
-                    tpl: [
-                        '{[this.formatted(values.End_Time)]}',
-                        {
-                            formatted: function(v){
-                                if((Object.isUnvalued(v) || v == '')){
-                                    return v;
-                                } else {
-                                    return (moment(v).format('h:mm A'));
-                                }
+                    editable: true,
+                    editor: {
+                        xtype: 'selectfield',
+                        itemId: 'timeOutSelector',
+                        store: 'accrualShiftChoices',
+                        displayField: 'time',
+                        valueField: 'value',
+                        bind: {
+                            listeners: {
+                                change: 'onTimeChange'
                             }
                         }
-                    ]
+                    },
+                    renderer: 'timefieldRenderer'
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 1,
                     text: 'Hours',
                     dataIndex: 'Total_Time_Hours',
-                    sortable: true
-
+                    sortable: true,
+                    editable: false,
+                    // summaryType: 'sum',
+                    // summaryRenderer: function (value, summaryData, dataIndex) {
+                    //     return new Minutes(value, this.grid.up('wtv').HHMM).display();
+                    // }
                 },
                 {
                     xtype: 'gridcolumn',
                     flex: 2,
                     text: 'Project',
-                    dataIndex: 'Project',
-                    sortable: true
+                    dataIndex: 'Project_ID',
+                    sortable: true,
+                    editable: true,
+                    editor: {
+                        xtype: 'selectfield',
+                        bind: {
+                            store: '{projects}',
+                        },
+                        displayField: 'Name',
+                        valueField: 'ID'
+                    },
+                    renderer: 'projectRenderer'
                 }
-            ]
+            ],
+            listeners: {
+                selectionchange: function (grid, re) {
+                    var selection = grid.getSelections(),
+                        vm = grid.up('container').getViewModel();
+                    if(!Ext.isEmpty(selection)){
+                        var record = selection[0];
+                        vm.set('selection', record);
+                    }
+                }
+            }
         },
         {
             xtype: 'container',

@@ -132,22 +132,40 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Load work time record data store
      */
     loadWorkTimeRecords: function(){
-        var me = this;
-        var vm = me.getViewModel();
-        var start = vm.get('startDate');
-        var end = vm.get('endDate');
+        var me = this,
+            vm = me.getViewModel(),
+            cust = this.api.auth.getCookies().cust,
+            emp = this.api.auth.getCookies().emp,
+            start = vm.get('startDate'),
+            end = vm.get('endDate');
+
         // TODO: Add live date data for ajax call in place of dummy dates
         this.api.workTimeRecords.getWorkTimeRecordsForRange(
-            this.api.auth.getCookies().emp,
-             // '2018-07-01T00:00:00',
-            // '2018-07-07T00:00:00',
+            emp,
             start,
             end,
+            // this.api.auth.getCookies().emp,
+            // '2018-07-01T00:00:00',
+            // '2018-07-07T00:00:00',
             'workTimeRecordStore'
         ).then(function(store){
             // me.getViewModel().setStores({workTimeRecords: store});
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             //me.getViewModel().setStores({workTimeRecords: store});
+
+            // This record is for adding new record
+            var blankRecord = Ext.create('Breeze.model.record.WorkTime', {
+                Record_Date: ' Click Here to Add',
+                Customer_ID: cust,
+                ID: 0,
+                Project_ID: 0,
+                Total_Time: 'new',
+                Deduction: null,
+                Employee_ID: emp
+            });
+
+            // Add the blankRcord as the first record
+            // store.insert(0, blankRecord);
             me.addLoadedStoreToViewModel(store, 'workTimeRecords');
             me.updateShowPunchesButton(false);
             console.info('WorkTimeRecord loaded');
@@ -362,5 +380,67 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
         // Show dialog
         dialog.show();
+    },
+
+    onTimeChange: function (cmp, newVal, oldVal) {
+        var WTRGrid = this.lookupReference('workTimeRecordGrid'),
+            record = WTRGrid.up('container').getViewModel().get('selection'),
+            delta = newVal - oldVal;
+
+        Date.prototype.addHours = function(h) {    
+            this.setTime(this.getTime() + (h*60*60*1000)); 
+            return this;
+        }
+        Date.prototype.addMinutes = function(m) {
+            this.setTime(this.getTime() + (m*60*1000)); 
+            return this;
+        }
+
+        var h_delta = Math.floor(Math.abs(delta/60));
+
+        var timeProcessor = function(fieldName, delta) {
+            var time = record.get(fieldName);
+            time.addHours(delta > 0 ? h_delta : -1 * h_delta);
+            time.addMinutes(delta%60);
+            record.set(fieldName, time);
+        }
+
+        if(cmp.getItemId() == 'timeInSelector') {
+            timeProcessor('Start_Time', delta);
+        } else {
+            timeProcessor('End_Time', delta);
+        }
+    },
+
+    /** 
+     * the renderer of selectfield for projects
+     * @param {int} value project ID
+    */
+    projectRenderer: function(value) {
+        var vm = this.getViewModel(),
+            projects = vm.get('projects'),
+            recordIndex = projects.findExact('ID', value);
+        if(recordIndex === -1) {
+            // It means that it is unknown values
+            return '';
+        }
+
+        var projectName = projects.getAt(recordIndex).get('Name');
+        return projectName;
+    },
+
+    /** 
+     * the renderer of selectfield for Time IN and Time OUT columns
+     * @param {} value the number of minutes
+    */
+    timefieldRenderer: function(value) {
+        var timeList = Ext.getStore('accrualShiftChoices'),
+            index = timeList.findExact('value', value);
+        if(index === -1) {
+            return '';  
+        }
+
+        var time = timeList.getAt(index).get('time');
+        return time;
     }
 });
