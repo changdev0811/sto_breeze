@@ -40,8 +40,22 @@ Ext.define('Breeze.view.employee.information.Security', {
                         {
                             itemId: 'user_name',
                             label: 'User Name',
-                            bind: { value: '{info.Username}' },
-                            required: true
+                            bind: { 
+                                value: '{info.Username}',
+                                editable: '{employeeId == "new"}'
+                            },
+                            ignoreReadOnly: true,
+                            required: true,
+                            plugins: {
+                                asyncValidate: {
+                                    type: 'breeze.field.asyncvalidation',
+                                    validator: 'validateUserName',
+                                    triggerEvent: 'focusleave'
+                                }
+                            },
+                            listeners: {
+                                aftervalidationfail: 'onUserNameAfterValidationFail' 
+                            }
                         },
                         {
                             itemId: 'user_type',
