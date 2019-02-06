@@ -1,6 +1,8 @@
 /**
  * Punch Clock Punch Window
  * Gets instantiated and controlled by NavController
+ * @class Punch
+ * @memberof Breeze.view.main
  */
 Ext.define('Breeze.view.main.Punch', {
     extend: 'Ext.Dialog',
@@ -17,7 +19,6 @@ Ext.define('Breeze.view.main.Punch', {
             },
         }
     },
-    xtype: 'dialog',
     ui: 'dark-themed-dialog employeeinfo-dialog',
     reference: 'punchWindowDialog',
     minWidth: '300pt',

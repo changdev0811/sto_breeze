@@ -61,7 +61,11 @@ Ext.define('Breeze.view.main.NavController', {
     listen: {
         global: {
             sidepanelclose: 'onSidePanelClose',
-            sidepanelopen: 'onSidePanelOpen'
+            sidepanelopen: 'onSidePanelOpen',
+            // Global event for refreshing sidebar
+            // refreshemployees: 'onRefreshEmployees'
+            /** Event causing user info to be refreshed */
+            refreshuser: 'onRefreshUser'
         }
     },
 
@@ -777,6 +781,16 @@ Ext.define('Breeze.view.main.NavController', {
 
     },
 
+    /**
+     * Handle download punch station route
+     */
+    onHelpRoute: function(){
+        // TODO: open link to punch station download in new tab (add correct url)
+        console.info('Help Route');
+        window.open("http://www.softtimeonline.com/help/");
+        Ext.util.History.back();
+    },
+
     //===[Employees]===
 
     /**
@@ -946,6 +960,12 @@ Ext.define('Breeze.view.main.NavController', {
         }
     },
 
+    // ===[Global Event Handlers]===
+
+    onRefreshUser: function(){
+        this.loadEmployee();
+    },
+
     /**
      * Handle global event to close side panel
      */
@@ -1079,17 +1099,6 @@ Ext.define('Breeze.view.main.NavController', {
                 tree.setSelection(navNode);
             }
         }
-    },
-
-
-    /**
-     * Handle download punch station route
-     */
-    onHelpRoute: function(){
-        // TODO: open link to punch station download in new tab (add correct url)
-        console.info('Help Route');
-        window.open("http://www.softtimeonline.com/help/");
-        Ext.util.History.back();
     },
 
     privates: {

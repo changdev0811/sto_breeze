@@ -14,7 +14,7 @@ Ext.define('Breeze.api.Employee', {
 
     constructor: function(){
         this.fyi = Ext.create('Breeze.api.employee.Fyi');
-        this.information = Ext.create('Breeze.api.employee.Information');
+        this.information = Breeze.api.employee.Information;
         this.workTimeRecords = Ext.create('Breeze.api.employee.WorkTimeRecords');
     },
 
@@ -108,11 +108,9 @@ Ext.define('Breeze.api.Employee', {
                 true, true,
                 function(resp){
                     var data = api.decodeJsonResponse(resp);
+                    delete data.__type;
                     resolve(
-                        {
-                            fullname: data.fullname,
-                            business: data.business
-                        }
+                        data
                     );
                 },
                 function(err){

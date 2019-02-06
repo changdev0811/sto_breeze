@@ -115,7 +115,8 @@ Ext.define('Breeze.view.main.Nav', {
                                     xtype: 'breeze-user-header',
                                     reference: 'userHeader',
                                     companyNameBinding: '{header.business}',
-                                    userNameBinding: '{header.fullname}'
+                                    userNameBinding: '{header.fullname}',
+                                    profileImageBinding: '{header.Photo}'
                                 },
                                 
                                 /*{

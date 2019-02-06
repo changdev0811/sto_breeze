@@ -27,6 +27,30 @@ Ext.define('Breeze.view.employee.information.SecurityController', {
     },
 
     /**
+     * Async validation function for username
+     * Uses AsyncValidation plugin
+     * @param {Object} value 
+     * @see Breeze.plugin.field.AsyncValidation
+     */
+    validateUserName: async function(value){
+        return Breeze.api.employee.Information.checkUsername(value);
+    },
+
+    /**
+     * Event handler for event fired by AsyncValidation plugin on username
+     * when validation fails
+     * @param {Object} cmp 
+     * @param {String} err 
+     */
+    onUserNameAfterValidationFail: function(cmp, err){
+        Ext.toast({
+            type: 'warn',
+            message: err,
+            timeout: ['warn',4]
+        });
+    },
+
+    /**
      * Update whether change password button is disabled based on results of passwordChangeReady method
      */
     checkChangeReady: function(){

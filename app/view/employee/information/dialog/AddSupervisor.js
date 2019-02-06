@@ -1,24 +1,24 @@
 /**
- * Add supervised employee dialog;
- * Used in Company > Supervised Employees in Employee Info
- * @class AddSupervisedEmployee
+ * Add supervised employee dialog; Used in company > supervisors
+ * in Employee Info
+ * @class AddSupervisor
  * @memberof Breeze.view.employee.information.dialog
  */
-Ext.define('Breeze.view.employee.information.dialog.AddSupervisedEmployee', {
+Ext.define('Breeze.view.employee.information.dialog.AddSupervisor', {
     extend: 'Ext.Dialog',
-    alias: 'widget.employee.information.dialog.addsupervisedemployee',
+    alias: 'widget.employee.information.dialog.addsupervisor',
     ui: 'dark-themed-dialog',
-    title: 'Add Supervised Employee',
+    title: 'Add Supervisor',
     layout: 'hbox',
     items: [
         {
             xtype: 'selectfield',
-            label: 'Employee Name',
-            itemId: 'employee',
+            label: 'Supervisor',
+            itemId: 'supervisor',
             displayField: 'displayName',
             valueField: 'personId',
             bind: {
-                store: '{choices.supervisedEmployees}'
+                store: '{choices.supervising}'
             },
             required: true, errorTarget: 'under'
         }
@@ -29,7 +29,7 @@ Ext.define('Breeze.view.employee.information.dialog.AddSupervisedEmployee', {
             ui: 'confirm alt',
             text: 'Add',
             listeners: {
-                tap: 'onCompanyAddEmployee'
+                tap: 'onCompanyAddSupervisor'
             }
         },
         { xtype: 'spacer', width: 8 },

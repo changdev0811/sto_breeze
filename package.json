@@ -1,10 +1,10 @@
 {
   "name": "sto_breeze",
   "version": "1.0.0",
-  "description": "breeze rebuild of STO",
+  "description": "breeze rebuild of STO/TKO",
   "main": "index.js",
   "repository": "git@bitbucket.org:venturesti/sto_breeze.git",
-  "author": "Wade Harkins <wade@ventureinteractive.com>",
+  "author": "Venture Interactive",
   "license": "NONE",
   "private": true,
   "devDependencies": {

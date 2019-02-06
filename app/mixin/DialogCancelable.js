@@ -2,7 +2,7 @@
  * Shorthand common event handler for dialog cancel buttons with ability
  * to trigger secondary controller handler logic
  * @class DialogCancelable
- * @namespace Breeze.mixin.DialogCancelable
+ * @memberof Breeze.mixin
  */
 Ext.define('Breeze.mixin.DialogCancelable', {
     mixinId: 'dialogCancelable',
@@ -16,6 +16,7 @@ Ext.define('Breeze.mixin.DialogCancelable', {
      * cancelableAction function recieves one param-- the dialog object
      * 
      * @param {Ext.Button} button Button that fired event
+     * @memberof Breeze.mixin.DialogCancelable
      */
     onDialogCancel: function (button) {
         var dlg = button.getParent().getParent();

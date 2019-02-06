@@ -4,10 +4,11 @@
  * Should be accessed indirectly through Breeze.api.Employee
  * @class Information
  * @alias Breeze.api.employee.Information
+ * @memberof Breeze.api.employee
  */
 Ext.define('Breeze.api.employee.Information', {
     extend: 'Breeze.api.Base',
-
+    singleton: true,
     /**
      * Gets employee info
      * @api getEmployeeInfo
@@ -405,6 +406,11 @@ Ext.define('Breeze.api.employee.Information', {
         });
     },
 
+    /**
+     * Check if username is available
+     * @param {String} userName Username to check
+     * @return {Promise} Promise resolving in true or false indicating if name is available
+     */
     checkUsername: function(userName){
         var api = this.api;
         return new Promise((resolve, reject)=>{

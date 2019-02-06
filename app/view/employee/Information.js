@@ -15,11 +15,13 @@ Ext.define('Breeze.view.employee.Information', {
         'Ext.tab.Panel',
         'Breeze.view.employee.InformationController',
         'Breeze.view.employee.InformationModel',
-        'Breeze.widget.actionsheet.MultipleMode',
-        'Breeze.view.employee.information.Sheets',
+        // 'Breeze.widget.actionsheet.MultipleMode',
         'Breeze.view.employee.information.dialog.ChangeAccrualPolicy',
         'Breeze.view.employee.information.dialog.AddShiftSegment',
-        'Breeze.view.employee.information.dialog.AddSupervisedEmployee'
+        'Breeze.view.employee.information.dialog.AddSupervisedEmployee',
+        'Breeze.view.employee.information.dialog.AddSupervisor',
+        'Breeze.view.employee.information.dialog.AddDepartment',
+        'Breeze.plugin.field.AsyncValidation'
     ],
     
     //==[Start of Panel Setup/Styling]====
@@ -208,8 +210,14 @@ Ext.define('Breeze.view.employee.Information', {
     addShiftSegmentDialog: {
         xtype: 'employee.information.dialog.addshiftsegment'
     },
-    addDepartmentDialog: {
+    addSupervisedEmployeeDialog: {
         xtype: 'employee.information.dialog.addsupervisedemployee'
+    },
+    addDepartmentDialog: {
+        xtype: 'employee.information.dialog.adddepartment'
+    },
+    addSupervisorDialog: {
+        xtype: 'employee.information.dialog.addsupervisor'
     }
 
 });
