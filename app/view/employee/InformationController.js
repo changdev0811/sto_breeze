@@ -51,7 +51,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // TODO: finish config loading
             me.loadStores(function(pass){
                 // Provide loaded stores to form fields needing them
-                comp.lookup('departments').setStore(vm.getStore('departments'));
+                comp.lookup('departmentsSelect').setStore(vm.getStore('departments'));
                 // comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 // comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 // comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
@@ -660,7 +660,7 @@ Ext.define('Breeze.view.employee.InformationController', {
         
         /* TODO: TKO code has multiple cases, but only supervisorss are used, so ignoring case */
         // if(originalDept == null || departmentId !== originalDept){
-        staffType = this.apiClass.information.departmentStaffType.SUPERVISOR;
+        staffType = Breeze.api.employee.Information.departmentStaffType.SUPERVISOR;
         this.apiClass.information.departmentStaff(departmentId, staffType).then((r)=>{
             let supervisors = r.supervisorIds;
             vm.set('info.SupervisorIds', supervisors);

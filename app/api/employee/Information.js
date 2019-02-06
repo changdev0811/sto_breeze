@@ -519,7 +519,7 @@ Ext.define('Breeze.api.employee.Information', {
 
     departmentStaff: function(departmentId, staffType){
         var staffType = Object.defVal(staffType, 
-            Breeze.api.employee.information.departmentStaffType.BOTH),
+            Breeze.api.employee.Information.departmentStaffType.BOTH),
             api = this.api;
         return new Promise((resolve, reject)=>{
             api.serviceRequest(
