@@ -3,10 +3,11 @@
  * in Employee Info
  * @class AddDepartment
  * @memberof Breeze.view.employee.information.dialog
+ * @alias widget.employee.information.dialog.adddepartment
  */
 Ext.define('Breeze.view.employee.information.dialog.AddDepartment', {
     extend: 'Ext.Dialog',
-    alias: 'widget.employee.information.dialog.addcompany',
+    alias: 'widget.employee.information.dialog.adddepartment',
     ui: 'dark-themed-dialog',
     title: 'Add Department',
     layout: 'hbox',

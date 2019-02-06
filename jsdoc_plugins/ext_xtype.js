@@ -24,8 +24,12 @@ exports.handlers = {
         if(xtypes){
             let xtypeList = xtypes.map((x)=>{return `<li><code>${x.value}</code></li>`});
             e.doclet.description = `${e.doclet.description}
-                                    <b>xtypes<b><ul>
-                                    ${xtypeList}`;
+                                    <dl class="details">
+                                        <dt class="tag-source">XTypes:</dt>
+                                        <dd class="tag-source">
+                                            <ul class="dummy">${xtypeList}</ul>
+                                        </dd>
+                                    </dl>`;
         }
     }
 };

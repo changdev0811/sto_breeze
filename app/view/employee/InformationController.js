@@ -1498,6 +1498,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             supField.clearValue();
+            supField.clearInvalid();
         }
         
         console.info('Add supervisor');
@@ -1533,6 +1534,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             supField.clearValue();
+            supField.clearInvalid();
             
         }
         
@@ -1572,7 +1574,9 @@ Ext.define('Breeze.view.employee.InformationController', {
             // Close action sheet and reset values to empty
             sheet.hide();
             deptField.clearValue();
-            roleField.clearValue();        
+            roleField.clearValue();
+            deptField.clearInvalid();
+            roleField.clearInvalid();      
         }
         
         
@@ -1672,11 +1676,6 @@ Ext.define('Breeze.view.employee.InformationController', {
         // Dispose of action sheet
         // sheet.removeFromViewport();
         // sheet.close();
-    },
-
-    onActionSheetHide: function(src, eOpts){
-        console.info('Hidden!');
-        src.removeFromViewport();
     },
 
     // TODO: Finish implementing data binding for layoffs
