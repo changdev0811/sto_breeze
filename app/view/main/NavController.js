@@ -200,6 +200,7 @@ Ext.define('Breeze.view.main.NavController', {
         var navStore, extras = [];
         if (level >= Breeze.api.Employee.accessLevel.SUPERVISOR) {
             extras.push('Breeze.helper.navigation.Employees');
+            extras.push('Breeze.helper.navigation.Supervisor');
             if(level == Breeze.api.Employee.accessLevel.SUPER_ADMIN){
                 extras.push('Breeze.helper.navigation.Admin');
             }
@@ -442,7 +443,7 @@ Ext.define('Breeze.view.main.NavController', {
             (resp)=>{
                 if(resp.success){
                     Ext.toast({
-                        message: 'Successfully punched ' + kind,
+                        message: 'Successfully punched ' + ((punchIn)? 'In' : 'Out'),
                         type: Ext.Toast.INFO,
                         timeout: 10000
                     });

@@ -49,16 +49,6 @@ Ext.define('Breeze.helper.navigation.Personal', {
                         iconCls: 'x-fas fa-calendar-check-o',
                         routeRef: 'personal/worktime_records',
                         id: 'wtr'
-                    }, {
-                        text: 'Leave Request Approval', leaf: true,
-                        iconCls: 'x-fas fa-thumbs-up',
-                        routeRef: 'personal/leave_request_approval',
-                        id: 'leaveRequestApproval'
-                    }, {
-                        text: 'Time Sheet Approval', leaf: true,
-                        iconCls: 'x-fas fa-thumbs-up',
-                        routeRef: 'personal/time_sheet_approval',
-                        id: 'timeSheetApproval'
                     }
                 ]
             }, {
