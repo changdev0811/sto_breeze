@@ -25,7 +25,7 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
      */
     onRoundingIncChange: function(c,newVal,oldVal,eOpts){
         // console.log('Rounding Inc Changed');
-        var roundOff = this.lookup('roundingTab').down('[name="rounding_off"]');
+        var roundOff = this.lookup('roundingTab').query('[itemId="rounding_off"]')[0];
         var roundMin = -((newVal / 2).toFixed() -1);
         var roundMax = ((newVal - .1) / 2).toFixed();
         roundOff.setValue(
@@ -70,8 +70,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
 	 */
 	onPunchForLunchChange: function(c, newV, oldV, eOpts){
 		var deductions = this.lookup('deductionsTab');
-		deductions.down('[name="lunch_seg"]').setDisabled(!newV);
-		deductions.down('[name="lunch_minutes"]').setDisabled(!newV);
+		deductions.query('[itemId="lunch_seg"]')[0].setDisabled(!newV);
+		deductions.query('[itemId="lunch_minutes"]')[0].setDisabled(!newV);
 	},
 
 
@@ -160,8 +160,8 @@ Ext.define('Breeze.view.employee.information.PunchPolicyController', {
      * Refresh displayed 'rounding' preview text
      */
     refreshRoundingPreview: function(){
-        var increment = this.lookup('roundingTab').down('[name="rounding_inc"]');
-        var offset = this.lookup('roundingTab').down('[name="rounding_off"]');
+        var increment = this.lookup('roundingTab').query('[itemId="rounding_inc"]')[0];
+        var offset = this.lookup('roundingTab').query('[itemId="rounding_off"]')[0];
 
         var nRoundMinutes = increment.getValue();
         var nOffsetSeconds = offset.getValue();

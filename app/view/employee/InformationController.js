@@ -79,6 +79,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                             StartUpSettings: vm.get('info.StartUpSettings'),
                             PunchPolicy: vm.get('info.PunchPolicy'),
                             DefaultProject: vm.get('info.DefaultProject'),
+                            Department: vm.get('info.Department')
 
                         });
                     });
@@ -88,7 +89,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                     vm.set('originals',{
                         StartUpSettings: vm.get('info.StartUpSettings'),
                         PunchPolicy: vm.get('info.PunchPolicy'),
-                        DefaultProject: vm.get('info.DefaultProject')
+                        DefaultProject: vm.get('info.DefaultProject'),
+                        Department: vm.get('info.Department')
                     });
                     vm.set('info.punchPolicy', Object.assign({},vm.get('newRecord.punchPolicy')));
                     me.prepareShiftSegments();
@@ -648,6 +650,32 @@ Ext.define('Breeze.view.employee.InformationController', {
         choices.commitChanges();
 
         console.info('Done building departments store');
+    },
+
+    onDepartmentChange: function(cmp, departmentId){
+        var vm = this.getViewModel(),
+            staffType = null,
+            originalDept = vm.get('originals.Department'),
+            me = this;
+        
+        /* TODO: TKO code has multiple cases, but only supervisorss are used, so ignoring case */
+        // if(originalDept == null || departmentId !== originalDept){
+        staffType = this.apiClass.information.departmentStaffType.SUPERVISOR;
+        this.apiClass.information.departmentStaff(departmentId, staffType).then((r)=>{
+            let supervisors = r.supervisorIds;
+            vm.set('info.SupervisorIds', supervisors);
+            me.prepareCompanyLists();
+            me.buildSupervisorChoices();
+        }).catch((err)=>{
+            Ext.toast({
+                type: 'error',
+                message: 'Failed to load supervisors for department',
+                timeout: 'error'
+            });
+        });
+
+        
+        
     },
 
     /**

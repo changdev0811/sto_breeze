@@ -939,7 +939,7 @@ Ext.define('Breeze.view.main.NavController', {
                     panelContainer.removeAll();
                     if(type.clearContent){
                         // clear content panel if configured to do so
-                        this.lookup('contentContainer').removeAll();
+                        this.lookup('contentContainer').removeAll(true);
                     }
                     let emp = vm.get('userId'),
                         panel = Ext.create(

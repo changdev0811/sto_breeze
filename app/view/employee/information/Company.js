@@ -107,6 +107,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                 return true;
                             }
                         }
+                    },
+                    listeners: {
+                        change: 'onDepartmentChange'
                     }
                 },
                 {

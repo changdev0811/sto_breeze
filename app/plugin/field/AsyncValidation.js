@@ -11,7 +11,7 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
     /**
      * @memberof Breeze.plugin.field.AsyncValidation
      * @class
-     * @static
+     * @inner
      */
     config: {
         /**
@@ -24,6 +24,7 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * If validator returns a promise directly, wrapPromise should be true
          * Otherwise, validator should be a promise returning resolve or reject
          * (See inner method wrap in callValidator function)
+         * @member {Function}
          */
         validator: null,
         /**
@@ -36,11 +37,13 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
         wrapPromise: true,
         /**
          * Event that triggers validation
+         * @member {String}
          */
         triggerEvent: 'change',
         /**
          * View controller reference; if not set, auto searches
          * through parents to find controller
+         * @member {Object}
          */
         controller: null,
     },
@@ -56,6 +59,8 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
         /**
          * Attach event listener to component
          * @param {Object} host Component
+         * @memberOf Breeze.plugin.field.AsyncValidation
+         * @private
          */
         attach: function (host) {
             var controller = this.getController(),
@@ -77,6 +82,8 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * @param {Object} cmp Host component
          * @param {Function} fn Validator function
          * @param {Boolean} wrap Whether validation function needs to be wrapped
+         * @memberOf Breeze.plugin.field.AsyncValidation
+         * @private
          */
         callValidator: async function (cmp, fn, wrap) {
             var hasAfterFail = cmp.hasListener('aftervalidationfail'),
@@ -113,6 +120,8 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * Traverse host component's parents until one is found with a 
          * view controller
          * @param {Object} host Host component
+         * @memberOf Breeze.plugin.field.AsyncValidation
+         * @private
          */
         findController: function (host) {
             var controller = host.getController(),
