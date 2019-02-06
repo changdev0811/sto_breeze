@@ -1,8 +1,8 @@
 /**
  * Controller for Employee Information View
  * @class InformationController
- * @namespace Breeze.view.employee.InformationController
- * @alias controller.employee.information
+ * @memberof Breeze.view.employee
+ * @xtype controller.employee.information
  * @extends Breeze.controller.Base
  * TODO: Deal with toggle of exclude terminated
  */
@@ -30,7 +30,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         // remember id of user doing viewing
         vm.set('viewerId', Breeze.helper.Auth.getCookies().emp);
 
-        if(typeof component.getData().employee !== 'undefined'){
+        var cd = component.getData();
+
+        if(cd && typeof cd.employee !== 'undefined'){
             this.empId = component.getData().employee;
             vm.set('employeeId', this.empId);
         } else {
@@ -51,7 +53,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             // TODO: finish config loading
             me.loadStores(function(pass){
                 // Provide loaded stores to form fields needing them
-                comp.lookup('departments').setStore(vm.getStore('departments'));
+                comp.lookup('departmentsSelect').setStore(vm.getStore('departments'));
                 // comp.lookup('accrualPolicy').setStore(vm.getStore('scheduleList'));
                 // comp.lookup('defaultProject').setStore(vm.getStore('projectList'));
                 // comp.lookup('punchPolicy').setStore(vm.getStore('punchPolicies'));
@@ -79,6 +81,7 @@ Ext.define('Breeze.view.employee.InformationController', {
                             StartUpSettings: vm.get('info.StartUpSettings'),
                             PunchPolicy: vm.get('info.PunchPolicy'),
                             DefaultProject: vm.get('info.DefaultProject'),
+                            Department: vm.get('info.Department')
 
                         });
                     });
@@ -88,7 +91,8 @@ Ext.define('Breeze.view.employee.InformationController', {
                     vm.set('originals',{
                         StartUpSettings: vm.get('info.StartUpSettings'),
                         PunchPolicy: vm.get('info.PunchPolicy'),
-                        DefaultProject: vm.get('info.DefaultProject')
+                        DefaultProject: vm.get('info.DefaultProject'),
+                        Department: vm.get('info.Department')
                     });
                     vm.set('info.punchPolicy', Object.assign({},vm.get('newRecord.punchPolicy')));
                     me.prepareShiftSegments();
@@ -648,6 +652,35 @@ Ext.define('Breeze.view.employee.InformationController', {
         choices.commitChanges();
 
         console.info('Done building departments store');
+    },
+
+    onDepartmentChange: function(cmp, departmentId){
+        var vm = this.getViewModel(),
+            staffType = null,
+            // originalDept = vm.get('originals.Department'),
+            currentDept = vm.get('info.Department'),
+            me = this;
+        
+        if (currentDept !== departmentId) {
+            /* TODO: TKO code has multiple cases, but only supervisorss are used, so ignoring case */
+            // if(originalDept == null || departmentId !== originalDept){
+            staffType = Breeze.api.employee.Information.departmentStaffType.SUPERVISOR;
+            this.apiClass.information.departmentStaff(departmentId, staffType).then((r) => {
+                let supervisors = r.supervisorIds;
+                vm.set('info.SupervisorIds', supervisors);
+                me.prepareCompanyLists();
+                me.buildSupervisorChoices();
+            }).catch((err) => {
+                console.warn('Error in onDepartmentChange', err);
+                Ext.toast({
+                    type: 'error',
+                    message: 'Failed to load supervisors for department',
+                    timeout: 'error'
+                });
+            });
+
+        }
+        
     },
 
     /**
@@ -1984,7 +2017,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].validate();
+            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].isValid();
             pages.security.valid = pages.security.valid && partValid;
             pages.security.errCount += ((partValid)? 0 : 1);
         });

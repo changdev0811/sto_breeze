@@ -1,10 +1,11 @@
-/**
- * Base class for Navigation helpers. Not used directly-- more specific
- * Navigation helper classes extend this
- * @class Base
- * @namespace Breeze.helper.navigation.Base
- */
-Ext.define('Breeze.helper.navigation.Base', {
+Ext.define('Breeze.helper.navigation.Base', 
+    /**
+     * Base class for Navigation helpers. Not used directly-- more specific
+     * Navigation helper classes extend this
+     * @class Base
+     * @memberOf Breeze.helper.navigation
+     */    
+    {
 
     /**
      * Takes tree node array and tosses it into a new instance
@@ -51,24 +52,19 @@ Ext.define('Breeze.helper.navigation.Base', {
         var base = existing.slice(0),
             // Accept table store format or array of child nodes
             addition = newData.slice(0),
-            // provide default values for options not defined
-            options = { 
-                child: (options && options.children)? 
-                    options.children : false,
-                before: (options && options.before)?
-                    options.before : false,
-                replace: (options && options.replace)?
-                    options.replace : false
-            },
             target = this.resolvePath(base, path);
         
-        if(options.child && target.children){
+        if(target.children && options.child){
              // children mode && target has .children attribute
              if(options.replace){
                 // replace all children
                 target.children = addition;
             } else {
-                target.children = target.children.concat(addition);
+                if(options.before){
+                    target.children = addition.concat(target.children);
+                } else {
+                    target.children = target.children.concat(addition);
+                }
             }
         } else {
             //either not children mode, or target doesn't have

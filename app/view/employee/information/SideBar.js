@@ -40,9 +40,12 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             // iconCls: 'x-fas fa-file-upload',
             userCls:'employeeinfo-edit-profile-image-button',        
             ui:'employeeinfo-notes-button', 
-            //hidden:true, 
+            hidden:true, 
             listeners:{
                 tap:'onEditProfilePictureTap'
+            },
+            bind: {
+                hidden: '{!canUploadPicture}'
             }
         },
         {

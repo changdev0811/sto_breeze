@@ -4,7 +4,7 @@
  * into tree stores, optionally with other tree parts merged in.
  * Defines settings for how parts merge with other tree parts
  * @class TreeBase
- * @namespace Breeze.helper.navigation.TreeBase
+ * @memberof Breeze.helper.navigation
  * @extends Breeze.helper.navigation.Base
  */
 Ext.define('Breeze.helper.navigation.TreeBase', {
@@ -20,33 +20,47 @@ Ext.define('Breeze.helper.navigation.TreeBase', {
         // Path tree should be merged at
         targetPath: null,
         // Merge options
-        mergeOptions: {
-            child: false,
-            before: false,
-            replace: false
-        },
-
+        mergeChild: false,
+        mergeBefore: false,
+        mergeReplace: false,
         // Tree nodes
         data: [],
     },
 
     /**
      * Constructor
+     * @constructor
      * @param {Object} cfg Config attributes provided by classes extending
      *  TreeBase so overrides get combined with default config attributes
      */
     constructor: function(cfg){
-        this.callParent([cfg]);
+        // this.callParent([cfg]);
         this.initConfig();
     },
 
     /**
      * Shorthand access to Base class's createTree, specifically using
      * owning instance's data
+     * @member
+     * @function
      * @see Breeze.helper.navigation.Base.createTree
+     * @memberof Breeze.helper.navigation.TreeBase
      */
     asTree: function () {
         return this.createTree(this.getData());
+    },
+
+    /**
+     * Combines merge option config properties into a single object
+     * @return {Object} Object containing child, before, and replace properties
+     * @memberof Breeze.helper.navigation.TreeBase
+     */
+    getMergeOptions: function(){
+        return {
+            child: this.getMergeChild(),
+            before: this.getMergeBefore(),
+            replace: this.getMergeReplace()
+        }
     },
 
     /**
@@ -57,6 +71,7 @@ Ext.define('Breeze.helper.navigation.TreeBase', {
      *  TreeBase to automerge with calling tree
      * @see Breeze.helper.navigation.Base.createTree
      * @see Breeze.helper.navigation.Base.mergeTree
+     * @memberof Breeze.helper.navigation.TreeBase
      */
     asTreeWithExtras: function (extras) {
         var tree = this.getData(),

@@ -3,10 +3,8 @@ Ext.define('Breeze.helper.navigation.Employees', {
 
     config: {
         targetPath: 'personal',
-        mergeOptions: {
-            child: false,
-            before: true
-        },
+        mergeChild: false,
+        mergeBefore: true,
         data: [
             {
                 text: 'Employees',

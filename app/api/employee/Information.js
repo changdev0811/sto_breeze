@@ -9,6 +9,16 @@
 Ext.define('Breeze.api.employee.Information', {
     extend: 'Breeze.api.Base',
     singleton: true,
+
+    /**
+     * Staff time enum for departmentStaff
+     */
+    departmentStaffType: {
+        EMPLOYEE: 0,
+        SUPERVISOR: 1,
+        BOTH: 2
+    },
+
     /**
      * Gets employee info
      * @api getEmployeeInfo
@@ -499,6 +509,28 @@ Ext.define('Breeze.api.employee.Information', {
                     } else {
                         reject(response.message);
                     }
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
+    },
+
+    departmentStaff: function(departmentId, staffType){
+        var staffType = Object.defVal(staffType, 
+            Breeze.api.employee.Information.departmentStaffType.BOTH),
+            api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getDepartmentStaff',
+                {
+                    department_id: departmentId,
+                    staff_type: staffType
+                },
+                true, false,
+                function(r){
+                    resolve(api.decodeJsonResponse(r));
                 },
                 function(err){
                     reject(err);

@@ -1,11 +1,12 @@
 /**
  * Top level View Model class for Employee Information
  * @class InformationModel
+ * @memberof Breeze.view.employee
  * @alias Breeze.view.employee.InformationModel
  * @view Breeze.view.employee.Information
  */
-Ext.define('Breeze.view.employee.InformationModel', {
-    extend: 'Ext.app.ViewModel',
+(function(){Ext.define('Breeze.view.employee.InformationModel', {
+    extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.employee.information',
 
     constructor: function(cfg){
@@ -104,7 +105,7 @@ Ext.define('Breeze.view.employee.InformationModel', {
                     "HireDate": (new Date()),
                     "DepartmentName": "",
                     "StartUpSettings": 1001,
-                    "Department": 0,
+                    "Department": null,
                     "PunchPolicy": 0,
                     "DefaultProject": 0,
                     "DisplayName": null,
@@ -204,7 +205,14 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 }
             },
 
-            photo: null
+            photo: null,
+
+            originals: {
+                StartUpSettings: null,
+                PunchPolicy: null,
+                DefaultProject: null,
+                Department: null
+            }
         })
     },
 
@@ -313,6 +321,84 @@ Ext.define('Breeze.view.employee.InformationModel', {
                 this.set(
                     'info.punchPolicy.Ot_Week4', value * 60 * 60
                 )
+            }
+        },
+
+        //===[Overtime Checkbox Formulas]===
+        overtime2Enabled: {
+            bind: {
+                ot1: '{info.punchPolicy.Ot_Opt1}'
+            },
+            get: function (data) {
+                return data.ot1;
+            }
+        },
+        overtime3Enabled: {
+            bind: {
+                ot1: '{info.punchPolicy.Ot_Opt1}',
+                ot2: '{info.punchPolicy.Ot_Opt2}'
+            },
+            get: function (data) {
+                return data.ot1 && data.ot2;
+            }
+        },
+        overtime1Checked: {
+            get: function (get) {
+                return get('info.punchPolicy.Ot_Opt1');
+            },
+            set: function (value) {
+                this.set('info.punchPolicy.Ot_Opt1', value);
+                if (!value) {
+                    this.setMultiple(
+                        [
+                            'info.punchPolicy.Ot_Opt2',
+                            'info.punchPolicy.Ot_Opt3',
+                            'info.punchPolicy.Ot_Opt4'
+                        ],
+                        false
+                    );
+                }
+            }
+        },
+        overtime2Checked: {
+            get: function (get) {
+                return get('info.punchPolicy.Ot_Opt2');
+            },
+            set: function (value) {
+                this.set('info.punchPolicy.Ot_Opt2', value);
+                if (!value) {
+                    this.setMultiple(
+                        [
+                            'info.punchPolicy.Ot_Opt3',
+                            'info.punchPolicy.Ot_Opt4'
+                        ],
+                        false
+                    );
+                }
+            }
+        },
+        overtime3Checked: {
+            get: function (get) {
+                return get('info.punchPolicy.Ot_Opt3');
+            },
+            set: function (value) {
+                this.set('info.punchPolicy.Ot_Opt3', value);
+                if (!value) {
+                    this.set('info.punchPolicy.Ot_Opt4', false);
+                }
+            }
+        },
+
+        /**
+         * Indicates whether user can upload a profile picture based on
+         * whether accessLevel is > Breeze.api.Employee.accessLevel.EMPLOYEE
+         * @member
+         * @formula
+         */
+        canUploadPicture: {
+            bind: '{accessLevel}',
+            get: function(data){
+                return (data > Breeze.api.Employee.accessLevel.EMPLOYEE);
             }
         },
 
@@ -434,4 +520,4 @@ Ext.define('Breeze.view.employee.InformationModel', {
 
     }
 
-});
+});})();

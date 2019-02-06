@@ -1,6 +1,11 @@
 {
     "plugins": ["jsdoc_plugins/ext_xtype"],
-    "recurseDepth": 5,
+    "templates": {
+        "default": {
+            "useLongnameInNav": true
+        }
+    },
+    "recurseDepth": 6,
     "source": {
         "include": [
             "app.js",
@@ -9,7 +14,6 @@
             "app/helper",
             "app/mixin",
             "app/widget/",
-            "app/helper/navigation",
             "lib",
             "overrides"
         ]

@@ -6,10 +6,8 @@ Ext.define('Breeze.helper.navigation.Admin', {
 
     config: {
         targetPath: 'personal',
-        mergeOptions: {
-            child: false,
-            before: true
-        },
+        mergeChild: false,
+        mergeBefore: true,
         data: [
             {
                 text: 'Admin',

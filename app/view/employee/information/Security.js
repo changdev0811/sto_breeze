@@ -50,7 +50,8 @@ Ext.define('Breeze.view.employee.information.Security', {
                                 asyncValidate: {
                                     type: 'breeze.field.asyncvalidation',
                                     validator: 'validateUserName',
-                                    triggerEvent: 'focusleave'
+                                    triggerEvent: 'focusleave',
+                                    force: false
                                 }
                             },
                             listeners: {

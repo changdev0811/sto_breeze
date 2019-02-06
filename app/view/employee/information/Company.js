@@ -94,7 +94,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     label: 'Department',
                     displayField: 'Name',
                     valueField: 'Id',
-                    reference: 'departments',
+                    reference: 'departmentsSelect',
                     store: 'departments',
                     required: true,
                     bind: { value: '{info.Department}' },
@@ -107,6 +107,9 @@ Ext.define('Breeze.view.employee.information.Company', {
                                 return true;
                             }
                         }
+                    },
+                    listeners: {
+                        change: 'onDepartmentChange'
                     }
                 },
                 {
