@@ -2015,7 +2015,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             pages.company.errCount += ((partValid)? 0 : 1);
         });
         ['user_name'].forEach((f)=>{
-            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].validate();
+            var partValid = pages.security.tab.query(`[itemId=${f}]`)[0].isValid();
             pages.security.valid = pages.security.valid && partValid;
             pages.security.errCount += ((partValid)? 0 : 1);
         });

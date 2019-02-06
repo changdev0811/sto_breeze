@@ -33,11 +33,13 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * validator must match the structure of this class's wrapPromise
          * method
          * @member {Boolean}
+         * @default
          */
         wrapPromise: true,
         /**
          * Event that triggers validation
          * @member {String}
+         * @default
          */
         triggerEvent: 'change',
         /**
@@ -46,6 +48,12 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * @member {Object}
          */
         controller: null,
+        /**
+         * If true, force validation even if field is read only or disabled 
+         * @member {Boolean}
+         * @default
+         */
+        force: false
     },
 
     init: function (host) {
@@ -63,6 +71,10 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          * @private
          */
         attach: function (host) {
+            if(host.getDisabled() || host.getReadOnly() && !this.getForce()){
+                // Cancel bind if field is readonly or disabled
+                return null;
+            }
             var controller = this.getController(),
                 validator = this.getValidator(),
                 trigger = this.getTriggerEvent(),
