@@ -655,26 +655,29 @@ Ext.define('Breeze.view.employee.InformationController', {
     onDepartmentChange: function(cmp, departmentId){
         var vm = this.getViewModel(),
             staffType = null,
-            originalDept = vm.get('originals.Department'),
+            // originalDept = vm.get('originals.Department'),
+            currentDept = vm.get('info.Department'),
             me = this;
         
-        /* TODO: TKO code has multiple cases, but only supervisorss are used, so ignoring case */
-        // if(originalDept == null || departmentId !== originalDept){
-        staffType = Breeze.api.employee.Information.departmentStaffType.SUPERVISOR;
-        this.apiClass.information.departmentStaff(departmentId, staffType).then((r)=>{
-            let supervisors = r.supervisorIds;
-            vm.set('info.SupervisorIds', supervisors);
-            me.prepareCompanyLists();
-            me.buildSupervisorChoices();
-        }).catch((err)=>{
-            Ext.toast({
-                type: 'error',
-                message: 'Failed to load supervisors for department',
-                timeout: 'error'
+        if (currentDept !== departmentId) {
+            /* TODO: TKO code has multiple cases, but only supervisorss are used, so ignoring case */
+            // if(originalDept == null || departmentId !== originalDept){
+            staffType = Breeze.api.employee.Information.departmentStaffType.SUPERVISOR;
+            this.apiClass.information.departmentStaff(departmentId, staffType).then((r) => {
+                let supervisors = r.supervisorIds;
+                vm.set('info.SupervisorIds', supervisors);
+                me.prepareCompanyLists();
+                me.buildSupervisorChoices();
+            }).catch((err) => {
+                console.warn('Error in onDepartmentChange', err);
+                Ext.toast({
+                    type: 'error',
+                    message: 'Failed to load supervisors for department',
+                    timeout: 'error'
+                });
             });
-        });
 
-        
+        }
         
     },
 
