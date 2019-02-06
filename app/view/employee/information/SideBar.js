@@ -43,6 +43,9 @@ Ext.define('Breeze.view.employee.information.SideBar', {
             //hidden:true, 
             listeners:{
                 tap:'onEditProfilePictureTap'
+            },
+            bind: {
+                hidden: '{!canUploadPicture}'
             }
         },
         {

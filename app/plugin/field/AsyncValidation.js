@@ -7,7 +7,6 @@
 Ext.define('Breeze.plugin.field.AsyncValidation', {
     extend: 'Ext.plugin.Abstract',
     alias: 'plugin.breeze.field.asyncvalidation',
-
     /**
      * @memberof Breeze.plugin.field.AsyncValidation
      * @class
@@ -49,45 +48,94 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
          */
         controller: null,
         /**
-         * If true, force validation even if field is read only or disabled 
+         * If true, validation occurs reguardless of readonly/disabled/editable state
          * @member {Boolean}
          * @default
          */
-        force: false
+        force: true
+    },
+    
+    init: function (host) {
+        this.host = host;
+        
+        if(this.getController() == null){
+            this.findController();
+        }
+        
+        this.attach();
     },
 
-    init: function (host) {
-        if (this.getController() == null) {
-            this.findController(host);
+    /**
+     * Handle when enabled config property is updated.
+     * Attatch or detatch based on value
+     * @param {Boolean} newVal 
+     * @param {Boolean} oldVal 
+     */
+    updateEnabled: function(newVal, oldVal){
+        if(!this.host){
+            return null;
         }
-        this.attach(host);
+        if(newVal && !this.attached){
+            this.attach();
+        } else if(!newVal && this.attached){
+            this.detatch();
+        }
     },
 
     privates: {
+
+        /**
+         * Reference to host component
+         * @memberof {Object} Breeze.plugin.field.AsyncValidation
+         * @default
+         */
+        host: null,
+
         /**
          * Attach event listener to component
-         * @param {Object} host Component
          * @memberOf Breeze.plugin.field.AsyncValidation
          * @private
          */
-        attach: function (host) {
-            if(host.getDisabled() || host.getReadOnly() && !this.getForce()){
-                // Cancel bind if field is readonly or disabled
-                return null;
-            }
-            var controller = this.getController(),
+        attach: function () {
+            var host = this.host,
+                controller = this.getController(),
                 validator = this.getValidator(),
                 trigger = this.getTriggerEvent(),
                 wrap = this.getWrapPromise(),
-                call = this.callValidator;
-            host.addListener(trigger, (cmp) => {
-                call(
-                    cmp,
-                    controller[validator],
-                    wrap
-                );
-            });
+                call = this.callValidator,
+                isAllowed = this.isAllowed,
+                self = this;
+            
+            this.triggerListener = (cmp) => {
+                if(isAllowed(self)){
+                    call(
+                        cmp,
+                        controller[validator],
+                        wrap
+                    );
+                }
+            };
+
+            host.addListener(trigger, this.triggerListener);
         },
+
+        /**
+         * Returns bool indicating whether validation is allowed, based
+         * on whether field is readonly/disabled/editable. If force is true, the
+         * other properties are ignored
+         * @return {Boolean} True if validation is allowed, false otherwise
+         * @memberof Breeze.plugin.field.AsyncValidation
+         * @private
+         */
+        isAllowed: function(self){
+            var host = self.host,
+                def = (prop, val)=>{return Object.defVal(host[`get${prop}`](),val,true); };
+            return (
+                self.getForce() || 
+                (!def('ReadOnly', false) && !def('Disabled', false) && def('Editable', true))
+            );
+        },
+
         /**
          * Execute validator function asynchronously, firing appropriate
          * aftervalidation event if listener is available on resolution
@@ -131,17 +179,44 @@ Ext.define('Breeze.plugin.field.AsyncValidation', {
         /**
          * Traverse host component's parents until one is found with a 
          * view controller
-         * @param {Object} host Host component
          * @memberOf Breeze.plugin.field.AsyncValidation
          * @private
          */
-        findController: function (host) {
-            var controller = host.getController(),
-                loc = host;
+        findController: function () {
+            
+            // // Generic upward scan for component with get property
+            // var scanUp = (target) => {
+            //     let fn = `get${target}`,
+            //         match = host[fn](),
+            //         loc = host;
+            //     while(match == null && loc.getParent() !== null){
+            //         loc = loc.getParent();
+            //         match = loc[fn]();
+            //     }
+
+            //     return {cmp: loc, match: match};
+            // };
+
+            // // Scan for controller + owning component and viewModel + owning component
+            // var controllerScan = scanUp('Controller'),
+            //     viewModelScan = scanUp('ViewModel');
+            
+            // this.setController(controllerScan.match);
+            // this.root = {
+            //     components: {
+            //         controller: controllerScan.cmp,
+            //         viewModel: viewModelScan.cmp
+            //     },
+            //     viewModel: viewModelScan.match
+            // };
+            
+            var controller = this.host.getController(),
+                loc = this.host;
             while (controller == null && loc.getParent() !== null) {
-                controller = loc.getController();
                 loc = loc.getParent();
+                controller = loc.getController();
             }
+
             this.setController(controller);
         }
     }

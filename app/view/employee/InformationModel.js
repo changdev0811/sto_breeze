@@ -1,10 +1,11 @@
 /**
  * Top level View Model class for Employee Information
  * @class InformationModel
+ * @memberof Breeze.view.employee
  * @alias Breeze.view.employee.InformationModel
  * @view Breeze.view.employee.Information
  */
-Ext.define('Breeze.view.employee.InformationModel', {
+(function(){Ext.define('Breeze.view.employee.InformationModel', {
     extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.employee.information',
 
@@ -388,6 +389,19 @@ Ext.define('Breeze.view.employee.InformationModel', {
             }
         },
 
+        /**
+         * Indicates whether user can upload a profile picture based on
+         * whether accessLevel is > Breeze.api.Employee.accessLevel.EMPLOYEE
+         * @member
+         * @formula
+         */
+        canUploadPicture: {
+            bind: '{accessLevel}',
+            get: function(data){
+                return (data > Breeze.api.Employee.accessLevel.EMPLOYEE);
+            }
+        },
+
         hasTempNotes: function (get) {
             var notes = get('tempNotes');
             return (typeof notes == 'undefined' || notes == null || notes === "") ? false : true;
@@ -506,4 +520,4 @@ Ext.define('Breeze.view.employee.InformationModel', {
 
     }
 
-});
+});})();

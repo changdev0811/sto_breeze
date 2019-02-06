@@ -1,8 +1,8 @@
 /**
  * Controller for Employee Information View
  * @class InformationController
- * @namespace Breeze.view.employee.InformationController
- * @alias controller.employee.information
+ * @memberof Breeze.view.employee
+ * @xtype controller.employee.information
  * @extends Breeze.controller.Base
  * TODO: Deal with toggle of exclude terminated
  */
@@ -30,7 +30,9 @@ Ext.define('Breeze.view.employee.InformationController', {
         // remember id of user doing viewing
         vm.set('viewerId', Breeze.helper.Auth.getCookies().emp);
 
-        if(typeof component.getData().employee !== 'undefined'){
+        var cd = component.getData();
+
+        if(cd && typeof cd.employee !== 'undefined'){
             this.empId = component.getData().employee;
             vm.set('employeeId', this.empId);
         } else {
