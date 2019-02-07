@@ -1,10 +1,10 @@
 /**
  * Employee EmployeeAccrualPolicy View
- * @class Breeze.view.employee.EmployeeAccrualPolicy
+ * @class Breeze.view.employee.AccrualPolicy
  */
-Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
+Ext.define('Breeze.view.employee.AccrualPolicy',{
     extend: 'Ext.Panel',
-    alias: 'widget.employee.employeeaccrualpolicy',
+    alias: 'widget.employee.accrualpolicy',
 
     config: {
         crumbTitle: 'My Accrual Policy',
@@ -12,18 +12,18 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
 
     
     requires: [
-        'Breeze.view.employee.FyiController',
-        'Breeze.view.employee.FyiModel',
-        'Breeze.view.employee.fyi.AccrualItem',
+        // 'Breeze.view.employee.FyiController',
+        // 'Breeze.view.employee.FyiModel',
+        // 'Breeze.view.employee.fyi.AccrualItem',
         'Ext.field.Display',
         'Ext.field.Date',
         'Ext.picker.Date'
     ],
 
     viewModel: {
-        type: 'employee.employeeaccrualpolicy'
+        type: 'employee.accrualpolicy'
     },
-    controller: 'employee.employeeaccrualpolicy',
+    controller: 'employee.accrualpolicy',
 
     listeners: {
         initialize: 'onInit'
@@ -46,7 +46,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
 
     title: 'My Accrual Policy',
     ui: 'employee-accrual-policy-base',
-    layout: 'vbox',
+    layout: 'hbox',
     userCls: 'employee-fyi-container',
     scrollable:true,
     // Action buttons shown at bottom of panel
@@ -61,18 +61,18 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
         shadow: false,
     },
     items: [
-        {
-            xtype: 'fieldset',
-            userCls: 'fyi-fieldset no-side-margin',
-            title:'Employee Accrual Policy - [CATEGORY]',
+        // {
+        //     xtype: 'fieldset',
+        //     userCls: 'fyi-fieldset no-side-margin',
+        //     title:'Employee Accrual Policy - [CATEGORY]',
 
-            flex: 1,
+        //     flex: 1,
 
-            minWidth:'700pt',
-            minHeight:'400pt',
+        //     minWidth:'700pt',
+        //     minHeight:'400pt',
 
-            layout: 'hbox',
-            items: [
+        //     layout: 'hbox',
+        //     items: [
                 // column 1
                 {
                     xtype: 'container',
@@ -394,6 +394,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                                         {
                                             xtype: 'breeze-textfield',
                                             ui: 'fyi fyi-text',
+                                            flex: 1
                                         },   
                                     ]
                                 },
@@ -449,24 +450,25 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             defaults: {
                                 xtype: 'displayfield',
                                 ui: 'employee-accrual-policy-display-field',
+                                labelWidth: '96pt'
                             },
                             items: [
                                 {  
-                                    label: 'Employee Name',
+                                    label: 'Employee',
                                     labelAlign: 'left',
-                                    labelWidth: 'auto',
+                                    // labelWidth: 'auto',
                                     bind: { value: '{employeeName}' },
                                 },
                                 {
                                     label: 'Department',
                                     labelAlign: 'left',
-                                    labelWidth: 'auto',
+                                    // labelWidth: 'auto',
                                     bind: { value: '{departmentName}' },
                                 },
                                 {
                                     label: 'Hire Date',
                                     labelAlign: 'left',
-                                    labelWidth: 'auto',
+                                    // labelWidth: 'auto',
                                     bind: { value: '{hireDate}' },
                                 }
                             ]
@@ -496,6 +498,8 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                             defaults: {
                                 xtype: 'displayfield',
                                 ui: 'employee-accrual-policy-display-field',
+                                width: '100%',
+                                bodyAlign: 'end'
                             },
                             items: [
                                 {  
@@ -564,7 +568,7 @@ Ext.define('Breeze.view.employee.EmployeeAccrualPolicy',{
                         },
                     ]
                 }
-            ]
-        }
+        //     ]
+        // }
     ]
 });

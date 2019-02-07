@@ -1,6 +1,6 @@
-Ext.define('Breeze.view.employee.EmployeeAccrualPolicyModel', {
+Ext.define('Breeze.view.employee.AccrualPolicyModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.employee.employeeaccrualpolicy',
+    alias: 'viewmodel.employee.accrualpolicy',
 
     data: {
         employeeName: 'X',

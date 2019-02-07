@@ -1,16 +1,15 @@
 /**
- * Controller for Employee EmployeeAccrualPolicy View
+ * Controller for Employee AccrualPolicy View
  */
-Ext.define('Breeze.view.employee.EmployeeAccrualPolicyController', {
+Ext.define('Breeze.view.employee.AccrualPolicyController', {
     extend: 'Breeze.controller.Base',
-    alias: 'controller.employee.employeeaccrualpolicy',
+    alias: 'controller.employee.accrualpolicy',
 
     requires: [
         'Breeze.api.Employee'
     ],
 
     onInit: function(component, eOpts){
-        console.log("FYI Controller Init");
         this.apiClass = Ext.create('Breeze.api.Employee');
         var me = this;        
 
