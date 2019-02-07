@@ -57,7 +57,7 @@ Ext.define('Breeze.view.requests.Main', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
                             reference: 'leaveRequestsGrid',
-                            ui: 'employeeinfo-shift-grid requests-grid',
+                            ui: 'employeeinfo-shift-grid employee-info-grid',
                             userCls: 'no-background requests-fieldset',
                             // userCls: 'requests-fieldset',
                             layout: 'hbox',
@@ -240,8 +240,8 @@ Ext.define('Breeze.view.requests.Main', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
                             reference: 'requestedDaysGrid',
-                            ui: 'employeeinfo-shift-grid requests-grid',
-                            userCls: 'requests-fieldset no-background',
+                            ui: 'employee-fyi-shift-grid employee-fyi-grid',
+                            userCls: 'no-background requests-fieldset',
                             scrollable:'y', flex: 1,
                             plugins: { gridcellediting: true },
                             layout: 'hbox',
