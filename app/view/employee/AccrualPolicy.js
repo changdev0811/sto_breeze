@@ -104,7 +104,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy',{
                                     ui: 'fyi-display-field',
                                     userCls: 'fyi-fieldset no-side-margin no-border',
 
-                                    value: 'Year Type:',
+                                    label: 'Year Type:',
                                     //labelAlign: 'left',
                                     //labelWidth: 'auto',
                                     //bind: { value: '{employeeName}' },
@@ -372,7 +372,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy',{
                                             xtype:'checkbox',
                                             ui:'fyi',
                                             boxLabel: 'Carry Over',
-                                            //bodyAlign: 'stretch',
+                                            minWidth: '64pt',
+                                            bodyAlign: 'stretch',
                                         },
                                         {
                                             xtype:'spacer',
@@ -412,7 +413,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy',{
                                             xtype:'checkbox',
                                             ui:'fyi',
                                             boxLabel: 'Expires',
-                                            //bodyAlign: 'stretch',
+                                            minWidth: '64pt',
+                                            bodyAlign: 'stretch',
                                         },
                                         {
                                             xtype:'spacer',
