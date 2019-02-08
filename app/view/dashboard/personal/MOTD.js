@@ -22,14 +22,14 @@ Ext.define('Breeze.view.dashboard.personal.MOTD', {
     },
     
     /* Probably not needed */
-    /*
+    
     tools: [
         {
             iconCls: 'x-fas fa-angle-right',
             handler: 'onFyiNavClick'
         }
     ],
-    */
+    
 
     items: [
 
