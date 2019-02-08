@@ -13,6 +13,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         'Breeze.api.Company'
     ],
 
+    mixins: {
+        dialogCancelable: 'Breeze.mixin.DialogCancelable'
+    },
     /**
      * Initialize component handler
      */
@@ -134,13 +137,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     loadWorkTimeRecords: function(){
         var me = this,
             vm = me.getViewModel(),
-            cust = this.api.auth.getCookies().cust,
-            emp = this.api.auth.getCookies().emp,
+            cust = me.api.auth.getCookies().cust,
+            emp = me.api.auth.getCookies().emp,
             start = vm.get('startDate'),
             end = vm.get('endDate');
 
         // TODO: Add live date data for ajax call in place of dummy dates
-        this.api.workTimeRecords.getWorkTimeRecordsForRange(
+        me.api.workTimeRecords.getWorkTimeRecordsForRange(
             emp,
             start,
             end,
@@ -153,6 +156,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             // me.lookup('workTimeRecordGrid').setStore(me.getViewModel().getStore('workTimeRecords'));
             //me.getViewModel().setStores({workTimeRecords: store});
 
+            /*
             // This record is for adding new record
             var blankRecord = Ext.create('Breeze.model.record.WorkTime', {
                 Record_Date: ' Click Here to Add',
@@ -163,6 +167,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 Deduction: null,
                 Employee_ID: emp
             });
+            */
 
             // Add the blankRcord as the first record
             // store.insert(0, blankRecord);
@@ -383,33 +388,26 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     },
 
     onTimeChange: function (cmp, newVal, oldVal) {
-        var WTRGrid = this.lookupReference('workTimeRecordGrid'),
-            record = WTRGrid.up('container').getViewModel().get('selection'),
-            delta = newVal - oldVal;
-
-        Date.prototype.addHours = function(h) {    
-            this.setTime(this.getTime() + (h*60*60*1000)); 
-            return this;
-        }
-        Date.prototype.addMinutes = function(m) {
-            this.setTime(this.getTime() + (m*60*1000)); 
-            return this;
-        }
-
-        var h_delta = Math.floor(Math.abs(delta/60));
-
-        var timeProcessor = function(fieldName, delta) {
-            var time = record.get(fieldName);
-            time.addHours(delta > 0 ? h_delta : -1 * h_delta);
-            time.addMinutes(delta%60);
+        var record = cmp.getParent().ownerCmp.getRecord();
+        
+        var timeProcessor = function(fieldName, val) {
+            var time = record.get('Record_Date');    
+            time = new Date(time.getFullYear(), time.getMonth(), time.getDate(), Math.floor(val/60), val%60, time.getSeconds());
             record.set(fieldName, time);
         }
 
         if(cmp.getItemId() == 'timeInSelector') {
-            timeProcessor('Start_Time', delta);
+            timeProcessor('Start_Time', newVal);
         } else {
-            timeProcessor('End_Time', delta);
+            timeProcessor('End_Time', newVal);
         }
+
+        this.updateOrCreateWTR(record.data);
+    },
+
+    onCellChange: function (cmp, newVal, oldVal) {
+        var record = cmp.getParent().ownerCmp.getRecord();
+        this.updateOrCreateWTR(record.data);
     },
 
     /** 
@@ -442,5 +440,142 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
         var time = timeList.getAt(index).get('time');
         return time;
+    },
+
+    /** 
+     * show 'Add New WorkTime Record' dialog
+    */
+    showAddNewWTRDialog: function() {
+        var view = this.getView(),
+            dialog = this.addNewWTRDialog;
+        
+        if (!dialog) {
+            dialog = Ext.apply({
+                ownerCmp: view
+            }, view.addNewWTRDialog);
+            this.addNewWTRDialog = dialog = Ext.create(dialog);
+        }
+
+        dialog.show();
+    },
+
+    /** 
+     * Handler of Save button on AddNewWTRDialog
+    */
+    onAddNewWTRDialogSave: function(btn) {
+        var me = this,
+            dateEle = me.lookupReference('date'),
+            projectEle = me.lookupReference('project'),
+            timeInEle = me.lookupReference('timeIn'),
+            timeOutEle = me.lookupReference('timeOut');
+        
+        dateEle.validate();
+        projectEle.validate();
+        timeInEle.validate();
+        timeOutEle.validate();
+
+        if(dateEle.isValid() && projectEle.isValid()
+            && timeInEle.isValid() && timeOutEle.isValid()) {
+            var dlg = btn.getParent().getParent(),
+                date = dateEle.getValue(),
+                cust = me.api.auth.getCookies().cust,
+                emp = me.api.auth.getCookies().emp,
+                startTime = timeInEle.getValue(),
+                endTime = timeOutEle.getValue();
+
+            // This record is for adding new record
+            var newWTR = Ext.create('Breeze.model.record.WorkTime', {
+                Record_Date: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
+                Customer_ID: cust,
+                Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
+                End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
+                ID: 0,
+                Project_ID: projectEle.getValue(),
+                Total_Time: 'new',
+                Deduction: null,
+                Employee_ID: emp
+            });
+
+            dlg.hide();
+            this.onAddNewWTRDialogCancel(dlg);
+            /** 
+             * We need to do something here.
+             * Ajax call - isTimeSheetValidForNewData
+            */
+            me.updateOrCreateWTR(newWTR.data);
+            
+        }
+    },
+
+    /**
+     * Method called by dialog cancelable mixin's onDialogCancel method
+     * for Add New WTR dialog cancel button; resets field values and
+     * clears validation error indicators
+     * @param {Object} dlg dialog reference
+     */
+    onAddNewWTRDialogCancel: function(dlg) {
+        var me = this;
+            dateEle = me.lookupReference('date'),
+            projectEle = me.lookupReference('project'),
+            timeInEle = me.lookupReference('timeIn'),
+            timeOutEle = me.lookupReference('timeOut');
+
+        dateEle.clearValue();
+        projectEle.clearValue();
+        timeInEle.clearValue();
+        timeOutEle.clearValue();
+    },
+
+    updateOrCreateWTR: function(WTR) {
+        var WTRObj = new Object();
+        
+        WTRObj.Customer_ID = WTR.Customer_ID;
+        WTRObj.ID          = WTR.ID;
+        WTRObj.employee_id = WTR.Employee_ID;
+        WTRObj.record_date = WTR.Record_Date;
+
+        var date = new Date(WTR.Record_Date);
+        
+        if (WTR.Start_Time !== null) {
+            var sTimeLocal = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getHours(), WTR.Start_Time.getMinutes(), WTR.Start_Time.getSeconds()),
+                sTimeUTC = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getUTCHours(), WTR.Start_Time.getUTCMinutes(), WTR.Start_Time.getUTCSeconds());
+            // should implement User Preferences usage.
+            // if (STI.currentPrefs.ViewTimeLocal == ture) {
+                WTRObj.Start_Time = sTimeLocal;
+            // } else {
+            //     WTRObj.Start_Time = sTimeUTC;
+            // }
+        } else {
+            WTRObj.Start_Time = null;
+        }
+
+        if (WTR.End_Time !== null) {
+            // var addDay = this.isEndTimeLess(WTR.Record_Date, WTR.Start_Time, WTR.End_Time);
+            var addDay = false;
+            if (addDay) {
+                WTRObj.End_Time = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+            } else {
+                WTRObj.End_Time = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+            }
+        } else {
+            WTRObj.End_Time = null;
+        }
+
+        WTRObj.projecT_id = WTR.Project_ID;
+
+        if (WTR.In_Punch) {
+            WTRObj.pin_id = (WTR.In_Punch.Customer_ID == null) ? 0 : WTR.In_Punch.Id;
+        } else {
+            WTRObj.pin_id = 0;
+        }
+        if (WTR.Out_Punch) {
+            WTRObj.pout_id = (WTR.Out_Punch.Customer_ID == null) ? 0 : WTR.Out_Punch.Id;
+        } else {
+            WTRObj.pout_id = 0;
+        }
+        
+        WTRObj.Total_Time = (WTR.Total_Time == null) ? 0 : WTR.Total_Time;
+        // We should make Ajax call 'updateWorkTime'
+        console.log("final WTRObj", WTRObj);
     }
 });
