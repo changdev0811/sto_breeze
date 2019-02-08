@@ -9,6 +9,7 @@ Ext.define('Breeze.view.requests.Main', {
     extend: 'Ext.Container',
     alias: 'widget.requests.main',
 
+
     requires: [
         'Breeze.view.requests.form.RequestDay',
         'Ext.grid.plugin.CellEditing',
@@ -27,9 +28,11 @@ Ext.define('Breeze.view.requests.Main', {
         // column 1
         {
             xtype: 'panel',
+            ui:'request-resize-panel',
             userCls:'requests-content',
+            //style:'background-color:red;',
             //flex: 1,
-            // width: '320pt', // 220pt
+            width: '320pt', // 220pt
             minWidth: '320pt',
             layout: 'vbox',
             resizable: {
@@ -40,7 +43,7 @@ Ext.define('Breeze.view.requests.Main', {
                 {
                     xtype: 'panel',
                     ui:'requests-leave-panel',
-                    userCls:'requests-leave-panel',
+                    userCls:'requests-leave-panel requests-content',
                     title: 'My Leave Requests',
                     tools: [
                         {
@@ -57,7 +60,7 @@ Ext.define('Breeze.view.requests.Main', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
                             reference: 'leaveRequestsGrid',
-                            ui: 'employeeinfo-shift-grid requests-grid',
+                            ui: 'employeeinfo-shift-grid employee-info-grid requests-grid',
                             userCls: 'no-background requests-fieldset',
                             // userCls: 'requests-fieldset',
                             layout: 'hbox',
@@ -240,8 +243,8 @@ Ext.define('Breeze.view.requests.Main', {
                             // == Item ID to make finding tree in panel easier
                             itemId: 'grid',
                             reference: 'requestedDaysGrid',
-                            ui: 'employeeinfo-shift-grid requests-grid',
-                            userCls: 'requests-fieldset no-background',
+                            ui: 'employee-fyi-shift-grid employee-fyi-grid request-grid',
+                            userCls: 'no-background requests-fieldset',
                             scrollable:'y', flex: 1,
                             plugins: { gridcellediting: true },
                             layout: 'hbox',
@@ -252,13 +255,13 @@ Ext.define('Breeze.view.requests.Main', {
                                     text:'Date',
                                     dataIndex: 'request_date',
                                     format: 'm/d/Y',
-                                    flex: 2,
+                                    width: '85pt',
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text:'Category',
                                     dataIndex: 'category_name',
-                                    flex: 2,
+                                    flex: 1,
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -266,7 +269,7 @@ Ext.define('Breeze.view.requests.Main', {
                                         text: '{requestedDaysAmountColumnTitle}'
                                     },
                                     dataIndex: 'Amount',
-                                    flex: 1,
+                                    width: '55pt',
                                     editor: {
                                         xtype: 'numberfield'
                                     }
@@ -275,7 +278,7 @@ Ext.define('Breeze.view.requests.Main', {
                                     xtype: 'gridcolumn',
                                     text:'Conflicts',
                                     dataIndex: 'request_conflicts',
-                                    flex: 1,
+                                    width: '70pt',
                                     // Remove button
                                     cell: {
                                         toolDefaults: {

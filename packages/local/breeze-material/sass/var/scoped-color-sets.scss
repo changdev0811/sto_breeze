@@ -400,9 +400,9 @@ $green-text-colors: (
 
 // My request status colors
 $leave-request-status-colors: (
-    approved: $confirm-color, // original: green
-    draft: #404040, // original: black
-    pending: $base-color, // original: blue
-    denied: $alert-color, // original: red
-    cancelled: $scoped-toast-warn
+    approved: rgba(255,255,255,.33), //$confirm-color, // original: green
+    draft: #fff,                     //#404040,        // original: black
+    pending: rgba(255,255,255,.33),  //$base-color,    // original: blue
+    denied: rgba(255,0,0,.33),       //$alert-color,   // original: red
+    cancelled: rgba(255,255,255,.33),
 );

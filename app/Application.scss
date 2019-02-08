@@ -3,3 +3,20 @@
  *  styling should be located the view's corresponding scss file.
  */
 $enable-font-awesome: dynamic(true);
+
+
+.x-loading-spinner{
+    width:16pt;
+    height:16pt;
+    background-size: 16pt 16pt;
+    background-image: url('../resources/img/spinner.png')!important;
+    transform-origin: 8pt 8pt;
+    //animation:none !important;
+}
+
+.x-loading-spinner > span{
+    display:none!important;
+}
+
+
+
