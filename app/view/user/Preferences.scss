@@ -7,7 +7,9 @@
     $ui: 'yaagCalendarType',
     $focused-input-underline-color: map-get($employee-info-colors, 'light'),
     $input-color: map-get($employee-info-text-colors, 'base'),
-    $input-font-size: map-get($root-font-sizes, 'detail')
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+    $disabled-input-color: map-get($admin-text-colors, 'light'),
+
 );
 
 @include field-ui(
@@ -15,7 +17,7 @@
     $label-color: map-get($employee-info-text-colors, 'base'),
     $focused-label-color: map-get($employee-info-text-colors, 'base'),
     $label-font-size: map-get($root-font-sizes, 'detail'),
-
+    $disabled-label-color: map-get($admin-text-colors, 'light'),
 );
 
 

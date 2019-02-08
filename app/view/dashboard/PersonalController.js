@@ -29,7 +29,9 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
         this.lookup('fyiDash').getHeader().el.on('click', function(e){
             me.onFyiNavClick(e);
         });
-
+        this.lookup('motdDash').getHeader().el.on('click', function(e){
+            me.onMOTDNavClick(e);
+        });
 
         // Load MOTD
         this.motdApi = Ext.create('Breeze.api.admin.MOTD');
@@ -191,7 +193,27 @@ Ext.define('Breeze.view.dashboard.PersonalController', {
 
     onInfoNavClick: function(){
         this.redirectTo('personal/info');
-    }
+    },
+
+    onMOTDNavClick: function(){
+        var vm = this.getViewModel();
+        console.info("[onNotesButtonTap]");
+        //notesDialog
+        var view = this.getView(),
+            dialog = null;
+            dialog = this.lookup('MOTDDialog');
+
+        if (!dialog) {
+            dialog = Ext.apply({ ownerCmp: view }, view.dialog);
+            dialog = Ext.create(dialog);
+        }
+        dialog.show();
+    },
+    
+    onCloseMOTDDialog: function(ref, e, eOpts){
+        //dialog.hide();
+        ref.getParent().getParent().hide();
+    },
 
 
 });

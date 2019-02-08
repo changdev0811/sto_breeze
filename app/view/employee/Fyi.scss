@@ -218,7 +218,8 @@
     $sorted-background-color: map-get($employee-fyi-colors, 'row-light'),
     $trigger-background-color: map-get($employee-fyi-colors, 'row-light'),
 
-
+    $font-size: 12pt,
+    $line-height: 14pt,
 
     $padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
@@ -406,6 +407,7 @@
     $color: map-get($employee-fyi-text-colors, 'base'),
     $selected-color: map-get($employee-fyi-text-colors, 'base'),
     $hovered-color: map-get($employee-fyi-text-colors, 'base'),
+    $background-color: transparent,
     $background-color: transparent,
     $selected-background-color: transparent,
     $hovered-background-color: transparent,

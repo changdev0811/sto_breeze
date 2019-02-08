@@ -62,15 +62,55 @@ Ext.define('Breeze.view.dashboard.Personal', {
                         },
                     ]
                 },
-
                 {
                     xtype: 'dashboard.personal.calendar',
                     reference:'calDash',
                     flex: 1
-
                 }
             ]
-        }
+        },
+
+        {
+            xtype: 'dialog',
+            ui:'dark-themed-dialog',
+            reference: 'MOTDDialog',
+            minWidth: '300pt',
+            minHeight: '300pt',
+            layout: 'fit',
+            title:{
+                text:'Message of the Day',
+                ui:'dark-themed-dialog'
+            },
+            tools: [
+                //{
+                //    iconCls: 'x-fa fa-times',
+                //    ui: 'dark-themed-dialog',
+                //    handler: 'onCloseNotesDialog'
+                //}
+            ],
+            items:[
+                {
+                    xtype:'component',
+                    scrollable:'y',
+                    flex: 1,
+                    userCls:'employeeinfo-notes-text',        
+                    bind: {
+                        html: '{motd}'
+                    }
+                }
+
+            ],
+            buttons: [
+                {
+                    text: 'Close',
+                    ui: 'action alt',
+                    handler: 'onCloseMOTDDialog'
+                }  
+            ]
+        },
+
+
+
 
 
 

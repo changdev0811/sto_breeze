@@ -199,6 +199,7 @@
     $label-color: map-get($admin-text-colors, 'light'),
     $focused-label-color: map-get($admin-text-colors, 'base'),
     $label-font-size: map-get($root-font-sizes, 'detail'),
+    $disabled-label-color: map-get($admin-text-colors, 'light'),
 );
 
 @include trigger-ui(
@@ -226,7 +227,9 @@
     $ui: 'admin-text',
     $focused-input-underline-color: map-get($admin-colors, 'light'),
     $input-color: map-get($admin-text-colors, 'base'),
-    $input-font-size: map-get($root-font-sizes, 'detail')
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+    $disabled-input-color: map-get($admin-text-colors, 'light'),
+    $placeholder-color: map-get($admin-text-colors, 'light'),
 );
 
 

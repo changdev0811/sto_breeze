@@ -28,12 +28,21 @@
 
 
 @include panel-ui(
+ $ui: 'request-resize-panel',
+ $background-color: transparent,
+ $header-background-color: transparent,
+ $body-background-color: transparent,
+ $body-color: transparent,
+);
+
+@include panel-ui(
  $ui: 'requests-leave-panel',
  $background-color: map-get($employee-info-colors, 'base'),
  $header-background-color: map-get($employee-info-colors, 'base'),
  $body-background-color: map-get($employee-info-colors, 'base'),
  $body-color: map-get($employee-info-colors, 'base'),
 );
+
 
 @include toolbar-ui(
     $ui: 'requests-leave-panel',
