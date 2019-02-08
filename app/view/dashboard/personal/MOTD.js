@@ -26,7 +26,7 @@ Ext.define('Breeze.view.dashboard.personal.MOTD', {
     tools: [
         {
             iconCls: 'x-fas fa-angle-right',
-            handler: 'onFyiNavClick'
+            handler: 'onMOTDNavClick'
         }
     ],
     
@@ -39,6 +39,7 @@ Ext.define('Breeze.view.dashboard.personal.MOTD', {
             xtype: 'fieldset',
             userCls: 'admin-fieldset no-padding no-border',
             maxHeight:'100pt',
+            padding:'0pt 8pt 0pt 0pt',
             scrollable:'y',
 
             //flex: 1,
