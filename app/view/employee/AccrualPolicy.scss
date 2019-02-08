@@ -1,3 +1,7 @@
+/**
+    Styles for Employee My Accrual Policies view
+    /view/employee/AccrualPolicy.js
+*/
 @include panel-ui(
     $body-padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
@@ -29,4 +33,13 @@
     ),
     // $label-font-size: 12pt !important,
     $ui: 'employee-accrual-policy-display-field',
+);
+
+@include field-ui(
+    $ui: 'employee-accrual-policy-display-field-inner',
+    $label-font-size: map-get($root-font-sizes, 'detail') - 2pt,
+    $label-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 1, right: 0.5, bottom: 0.125)
+    )
 );
