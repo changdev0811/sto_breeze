@@ -4,6 +4,9 @@
  * @memberof Breeze.model.accrual.category
  */
 Ext.define('Breeze.model.accrual.category.Adjust', {
+    requires: [
+        'Breeze.model.accrual.category.Rule'
+    ],
     extend: 'Breeze.model.Base',
     fields: [
         { name: "accrued", type: "integer" }, 

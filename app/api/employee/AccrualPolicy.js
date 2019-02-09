@@ -24,7 +24,7 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    resolve(r);
+                    resolve(resp);
                 },
                 function(err){
                     reject(err);
@@ -57,7 +57,7 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
                 true, false,
                 function(r){
                     var resp = api.decodeJsonResponse(r);
-                    resolve(r);
+                    resolve(resp);
                 },
                 function(err){
                     reject(err);

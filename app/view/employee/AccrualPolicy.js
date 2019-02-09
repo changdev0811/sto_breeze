@@ -15,6 +15,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
         // 'Breeze.view.employee.FyiController',
         // 'Breeze.view.employee.FyiModel',
         // 'Breeze.view.employee.fyi.AccrualItem',
+        'Breeze.view.employee.AccrualPolicyController',
         'Ext.field.Display',
         'Ext.field.Date',
         'Ext.picker.Date'
@@ -43,17 +44,23 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
     ],
 
 
-
-    title: 'My Accrual Policy',
+    title: 'Employee Accrual Policy',
+    bind: {
+        title: 'Employee Accrual Policy - {adjustInfo.categoryName}'
+    },
     ui: 'employee-accrual-policy-base',
     layout: 'hbox',
     userCls: 'employee-fyi-container',
     scrollable: true,
     // Action buttons shown at bottom of panel
     buttonAlign: 'right',
-    buttons: {
-        apply: { text: 'Save', /* handler: 'onPrintExcel',*/ ui: 'confirm alt', style: 'width:125pt' },
-    },
+    buttons: [
+        { 
+            text: 'Save', /* handler: 'onPrintExcel',*/
+            ui: 'confirm alt', style: 'width:125pt',
+            bind: { hidden: '{isRestricted}' }
+        }
+    ],
     // Adjust action button toolbar spacing and appearance with UI and shadow
     buttonToolbar: {
         xtype: 'toolbar',
@@ -74,13 +81,21 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                     userCls: 'fyi-fieldset no-side-margin no-border',
                     value: 'Max',
                     label: 'Category:',
+                    valueField: 'Category_ID',
+                    displayField: 'Category_Name',
                     labelAlign: 'left',
                     labelWidth: 'auto',
-                    options: []//<-- this should probably be in the model.js
+                    // Formats items with category color dot
+                    itemTpl: [
+                        '<div class="usercategories-widget-legend-item-label">',
+                        '<div class="legend-item-dot" style="background-color:{Category_Color_HEX}"></div>',
+                        '{Category_Name}</div>'
+                    ],
+                    bind: {
+                        value: '{adjustInfo.categoryId}',
+                        store: '{categories}'
+                    }
                 },
-
-
-
 
                 // row 2
                 {
@@ -93,9 +108,6 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             userCls: 'fyi-fieldset no-side-margin no-border',
 
                             label: 'Year Type:',
-                            //labelAlign: 'left',
-                            //labelWidth: 'auto',
-                            //bind: { value: '{employeeName}' },
                         },
                         {
                             xtype: 'spacer',
@@ -103,62 +115,47 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         },
                         {
                             xtype: 'containerfield',
-                            //xtype: 'fieldset',
                             userCls: 'fyi-fieldset no-side-margin',
-                            reference: 'yearType',
                             layout: 'hbox',
                             defaults: {
                                 bodyAlign: 'stretch',
                                 ui: 'fyi',
                                 xtype: 'radio',
-                                style: 'padding-right: 8pt'
+                                style: 'padding-right: 8pt; padding-left: 8pt',
+                                bind: {
+                                    disabled: '{isRestricted}',
+                                }
                             },
-                            //bind: {
-                            //    values: {
-                            //        yearType:'{selectedCategory.calendarType}'
-                            //    },
-                            //},
+                            reference: 'calendarType',
+                            bind: {
+                                values: {
+                                    yearType: '{adjustInfo.calendarType}'
+                                },
+                            },
                             items: [
                                 {
-                                    xtype: 'containerfield',
-                                    reference: 'recordingYear',
-                                    defaults: {
-                                        bodyAlign: 'stretch',
-                                        ui: 'fyi',
-                                        xtype: 'radio',
-                                        style: 'padding-right: 8pt; padding-left: 8pt'
-                                    },
+                                    name: 'yearType',
+                                    boxLabel: 'Anniversary',
+                                    value: 45,
                                     bind: {
-                                        values: {
-                                            yearType: '{selectedCategory.calendarType}'
-                                        }
-                                    },
-                                    items: [
-                                        {
-                                            // name: 'yearType',
-                                            boxLabel: 'Anniversary',
-                                            value: 45,
-                                            bind: {
-                                                groupValue: '{recordingYear.yearType}'
-                                            }
-                                        },
-                                        {
-                                            // name: 'yearType',
-                                            boxLabel: 'Calendar',
-                                            value: 46,
-                                            bind: {
-                                                groupValue: '{recordingYear.yearType}'
-                                            }
-                                        },
-                                        {
-                                            // name: 'yearType',
-                                            boxLabel: 'Fiscal',
-                                            value: 45,
-                                            bind: {
-                                                groupValue: '{recordingYear.yearType}'
-                                            }
-                                        }
-                                    ]
+                                        groupValue: '{calendarType.yearType}'
+                                    }
+                                },
+                                {
+                                    name: 'yearType',
+                                    boxLabel: 'Calendar',
+                                    value: 46,
+                                    bind: {
+                                        groupValue: '{calendarType.yearType}'
+                                    }
+                                },
+                                {
+                                    name: 'yearType',
+                                    boxLabel: 'Fiscal',
+                                    value: 45,
+                                    bind: {
+                                        groupValue: '{calendarType.yearType}'
+                                    }
                                 }
                             ]
                         },
@@ -187,6 +184,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 xtype: 'datepicker',
                                 title: 'Select Date'
                             },
+                            bind: {
+                                value: '{activeDay}'
+                            }
                             //listeners: {
                             //    change: 'onViewDateChanged'
                             //}
@@ -199,28 +199,27 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
                         {
                             xtype: 'selectfield',
-                            ui: 'fyi fyi-text',
-                            userCls: 'fyi-fieldset no-padding no-border',
+                            ui: 'fyi fyi-text', userCls: 'fyi-fieldset no-padding no-border',
                             width: '160pt',
                             label: 'Recording Year:',
-                            labelAlign: 'left',
-                            labelWidth: 'auto',
-
+                            labelAlign: 'left', labelWidth: 'auto',
                             store: 'Years',
                             displayField: 'Year', valueField: 'Year',
-                            bind: { value: String((new Date()).getYear() + 1900) } //<-- this should probably be in the model.js
+                            bind: {
+                                value: '{adjustInfo.recordingYear}'
+                            }
                         },
                         {
                             xtype: 'spacer',
                             width: '5pt',
                         },
                         {
-                            xtype: 'displayfield',
-                            ui: 'fyi fyi-display-field',
-                            label: '(00/00/00 - 00/00/00)',
-                            labelAlign: 'left',
-                            labelWidth: 'auto',
-                        },
+                            xtype: 'component',
+                            userCls: 'employee-accrual-policy-duration',
+                            bind: {
+                                html: '({adjustInfo.recordingYearStart} - {adjustInfo.recordingYearEnd})'
+                            }
+                        }
                     ]
                 },
 
@@ -240,31 +239,23 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 {
                                     xtype: 'checkbox',
                                     ui: 'reporting',
-                                    boxLabel: 'Accrual Rules',
-                                    //bind: {
-                                    //    boxLabel: '{selectedCategory.categoryName} Accrual Rules',
-                                    //    checked: '{selectedCategory.allowAccrual}'
-                                    //},
-                                    //listeners: {
-                                    //    change: 'onCategoriesCheckAllChange'
-                                    //}
+                                    boxLabel: 'Accrual Rules'
                                 },
 
                                 { xtype: 'spacer', flex: 1 },
 
                                 {
                                     xtype: 'button',
-                                    //text: 'Save for Future Use',
                                     iconCls: 'x-fas fa-plus',
                                     ui: 'plain wtr-button',
                                     bind: {
-                                        disabled: '{!selectedCategory.allowAccrual}'
+                                        hidden: '{isRestricted}'
                                     }
                                 },
                             ]
                         },
 
-
+                        // Accrual Rules grid
                         {
                             xtype: 'grid',
                             // == Item ID to make finding tree in panel easier
@@ -351,8 +342,14 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     xtype: 'checkbox',
                                     ui: 'fyi',
                                     boxLabel: 'Carry Over',
+                                    reference: 'carryOverCheckbox',
                                     minWidth: '64pt',
                                     bodyAlign: 'stretch',
+
+                                    bind: {
+                                        disabled: '{isRestricted}',
+                                        checked: '{adjustInfo.carryOver}'
+                                    }
                                 },
                                 {
                                     xtype: 'spacer',
@@ -365,7 +362,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     options: [
                                         { text: 'No Max', value: 1 },
                                         { text: 'Max', value: 2 },
-                                    ]//<-- this should probably be in the model.js
+                                    ],
+                                    bind: {
+                                        value: '{adjustInfo.carryMax}',
+                                        readOnly: '{isRestricted}'
+                                    }//<-- this should probably be in the model.js
                                 },
                                 {
                                     xtype: 'spacer',
@@ -394,6 +395,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     boxLabel: 'Expires',
                                     minWidth: '64pt',
                                     bodyAlign: 'stretch',
+                                    bind: {
+                                        readOnly: '{isRestricted}'
+                                    }
                                 },
                                 {
                                     xtype: 'spacer',
@@ -408,9 +412,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                         xtype: 'datepicker',
                                         title: 'Select Date'
                                     },
-                                    //listeners: {
-                                    //    change: 'onViewDateChanged'
-                                    //}
+                                    bind: {
+                                        readOnly: '{isRestricted}'
+                                    }
                                 },
                             ]
                         },
@@ -438,19 +442,19 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Employee',
                             labelAlign: 'left',
                             // labelWidth: 'auto',
-                            bind: { value: '{employeeName}' },
+                            bind: { value: '{adjustInfo.employeeName}' },
                         },
                         {
                             label: 'Department',
                             labelAlign: 'left',
                             // labelWidth: 'auto',
-                            bind: { value: '{departmentName}' },
+                            bind: { value: '{adjustInfo.departmentName}' },
                         },
                         {
                             label: 'Hire Date',
                             labelAlign: 'left',
                             // labelWidth: 'auto',
-                            bind: { value: '{hireDate}' },
+                            bind: { value: '{adjustInfo.hire_date}' },
                         }
                     ]
                 },
@@ -480,7 +484,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         xtype: 'displayfield',
                         ui: 'employee-accrual-policy-display-field',
                         width: '100%',
-                        bodyAlign: 'end'
+                        bodyAlign: 'end',
+
                     },
                     items: [
                         {
@@ -488,16 +493,20 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             labelAlign: 'left',
                             labelWidth: '115pt',
                             bind: { value: '+ {carriedOver}' },
+                            encodeHtml: false
                         },
                         {
                             ui: [
                                 'employee-accrual-policy-display-field',
                                 'employee-accrual-policy-display-field-inner'
                             ],
+                            userCls: 'employee-accrual-policy-carryover-negative',
                             label: 'Carry Over Expired',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '- {carryOverExpired}' },
+                            bind: {
+                                value: '{carryOverExpired}'
+                            }
                         },
                         {
                             label: 'Accrued',
@@ -539,8 +548,14 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         {
                             xtype: 'checkbox',
                             ui: 'fyi',
-                            boxLabel: 'Show Schedule Time',
+                            boxLabel: 'Show scheduled time',
                             bodyAlign: 'stretch',
+                            bind: {
+                                checked: '{showScheduled}'
+                            },
+                            listeners: {
+                                change: 'onShowScheduledTimeChange'
+                            }
                         },
                         {
                             label: 'Remaining',

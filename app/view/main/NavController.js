@@ -269,6 +269,12 @@ Ext.define('Breeze.view.main.NavController', {
         }).catch((err)=>{
             console.warn('Failed to get user access level info:', err);
         })
+
+        me.empClass.getSecurityRights(vm.get('userId')).then((r)=>{
+            vm.set('securityRights', r);
+        }).catch((err)=>{
+            console.warn('Failed to get security rights', err);
+        });
     },
 
     /**
@@ -569,13 +575,12 @@ Ext.define('Breeze.view.main.NavController', {
         // this.syncNavToRoute('root');
         this.changeContent(
             Ext.create('Breeze.view.employee.AccrualPolicy', {
+                data: {
+                    targetEmployee: undefined,
+                    categoryId: id
+                },
                 // data: { employee: undefined, catId: id },
-                viewModel: { parent: this.getViewModel(), 
-                    data: {
-                        targetEmployee: undefined,
-                        categoryId: id
-                    } 
-                }
+                viewModel: { parent: this.getViewModel() }
             })
         );
     },
@@ -969,8 +974,13 @@ Ext.define('Breeze.view.main.NavController', {
 
     // ===[Global Event Handlers]===
 
+    /**
+     * Reloads employee, access, and config/preference data
+     */
     onRefreshUser: function(){
         this.loadEmployee();
+        this.loadAccess();
+        this.loadConfigAndPreferences();
     },
 
     /**

@@ -6,83 +6,84 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     alias: 'controller.employee.accrualpolicy',
 
     requires: [
-        'Breeze.api.Employee'
+        'Breeze.api.Employee',
+        'Breeze.api.employee.AccrualPolicy',
+        'Breeze.store.category.CompactList'
     ],
 
     onInit: function(component, eOpts){
-        this.apiClass = Ext.create('Breeze.api.Employee');
-        var me = this;        
+        // load / reference API classes
+        this.api = {
+            employee: Ext.create('Breeze.api.Employee'),
+            accrual: Breeze.api.employee.AccrualPolicy
+        };
 
-        // Initialize date selector field
-        this.lookup('viewDate').setValue(
-            new Date()
+        var me = this,
+            vm = this.getViewModel();
+
+        // If a specific employee is given, use that as target,
+        // else get target from current user's id
+        if(Object.isUnvalued(component.getData().targetEmployee,true)){
+            vm.set('targetEmployee', vm.get('userId'));
+        }
+        // Parse category id so it is an integer
+        vm.set('categoryId', parseInt(component.getData().categoryId));
+
+        this.addStoreToViewModel(
+            'Breeze.store.category.CompactList',
+            'categories', {load: true}
         );
 
         this.addLoadedStoreToViewModel({
             model: 'Breeze.model.accrual.category.Rule',
             data: []
         }, 'categoryRules');
-        
+
         console.info('Controller ready');
+        this.loadAdjustInfo();
+        this.loadPoint();
+    },
+
+    loadAdjustInfo: function(){
+        var vm = this.getViewModel(),
+            me = this;
+        
+        this.api.accrual.categoryAdjustInfo(
+            vm.get('targetEmployee'),
+            vm.get('categoryId'),
+            vm.get('activeDay'),
+            vm.get('showScheduled')
+        ).then((r)=>{
+            me.copyRecordToViewModel(r,'adjustInfo');//,'Breeze.model.accrual.category.Adjust');
+            me.getViewModel().get('categoryRules').load(r.rules);
+            console.info('adjust loaded');
+        }).catch((e)=>{
+
+        });
+    },
+
+    loadPoint: function(){
+        var me = this,
+            vm = me.getViewModel();
+        this.api.accrual.categoryPointInTime(
+            vm.get('targetEmployee'),
+            vm.get('categoryId'),
+            vm.get('activeDay'),
+            vm.get('showScheduled')
+        ).then((r) => {
+            me.copyRecordToViewModel(
+                r, 'categoryPoint'
+            );
+            console.info('category point updated');
+        }).catch((err) => {
+            console.info('Error loading category point in time', err);
+        });
     },
 
     //==[Event Handlers]==
 
-    /**
-     * Handles view date change event, triggering refresh of displayed data
-     * if value has changed
-     */
-    onViewDateChanged: function(cmp, newVal, oldVal, eOpts){
-        if(newVal !== oldVal){
-            this.displayData(this);
-        }
-    },
-
-    /**
-     * Handles show scheduled checkbox change event, triggering refresh of
-     * displayed data if value has changed
-     */
-    onShowScheduledChanged: function(cmp, newVal, oldVal, eOpts){
-        if(newVal !== oldVal){
-            this.displayData(this);
-        }
-    },
-
-    /**
-     * Override handler for refresh tool button click
-     * (overrides Breeze.controller.Base.onRefreshTool)
-     */
-    onRefreshTool: function(){
-        console.info('Hit refresh');
-        this.onInit(this.getView());
-    },
-
-    //==[Data Display]==
-
-    /**
-     * Display FYI data after making API call, storing result in view model store
-     * @param {Object} me Reference to controller context
-     */
-    displayData: function(me){
-        var me = me;
-        var viewDate = me.lookup('viewDate').getValue();
-        var showScheduled = me.lookup('showScheduled').getChecked();
-        me.apiClass.fyi.getFYI(
-            me.empId,
-            viewDate.getFullYear(),
-            Ext.util.Format.date(viewDate, 'm/d/Y'),
-            showScheduled
-        ).then(function(data){
-            if(typeof data !== 'undefined'){
-                console.log("Loaded FYI Test");
-                var vm = me.getViewModel();
-                vm.setStores({employee_fyi: data.store});
-                vm.setData(data.data);
-            } else {
-                console.log("Error loading FYI data");
-            }
-        }).catch(function(err){
-            console.log("FYI Error", err);
-        });
+    onShowScheduledTimeChange: function(cmp, newValue, oldValue){
+        this.loadPoint();
     }
+
 });

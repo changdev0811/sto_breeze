@@ -2,6 +2,31 @@
     Styles for Employee My Accrual Policies view
     /view/employee/AccrualPolicy.js
 */
+
+.employee-accrual-policy-duration {
+    font-size: map-get($root-font-sizes, 'detail');
+    color: map-get($employee-fyi-text-colors, 'light');
+    padding-top: 5pt;
+}
+
+/*
+ Class for accrual policy ledger numbers
+*/
+.employee-accrual-policy-ledger {
+    display: flex; flex-direction: column;
+    & > .sign {
+        width: auto;
+        color: $map-get($employee-fyi-text-colors, 'light');
+    }
+    & > .value{
+        flex: 1;
+        color: $map-get($employee-fyi-text-colors, 'light');
+        &.negative{
+            color: lighten($alert-color, 15%);
+        }
+    }
+}
+
 @include panel-ui(
     $body-padding: edge-size-from-relative(
         $base: $scoped-root-panel-body-padding-base,
