@@ -484,17 +484,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 endTime = timeOutEle.getValue();
 
             // This record is for adding new record
-            var newWTR = Ext.create('Breeze.model.record.WorkTime', {
+            var newWTR = {
                 Record_Date: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
                 Customer_ID: cust,
                 Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
                 End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
                 ID: 0,
                 Project_ID: projectEle.getValue(),
-                Total_Time: 'new',
-                Deduction: null,
+                Total_Time: null,
                 Employee_ID: emp
-            });
+            }
 
             dlg.hide();
             this.onAddNewWTRDialogCancel(dlg);
@@ -502,8 +501,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
              * We need to do something here.
              * Ajax call - isTimeSheetValidForNewData
             */
-            me.updateOrCreateWTR(newWTR.data);
-            
+            // me.updateOrCreateWTR(newWTR.data);
+            me.updateOrCreateWTR(newWTR);
         }
     },
 
@@ -575,7 +574,18 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         }
         
         WTRObj.Total_Time = (WTR.Total_Time == null) ? 0 : WTR.Total_Time;
-        // We should make Ajax call 'updateWorkTime'
+
+        me.api.makeApiCall(
+            'updateWorkTime',
+            {
+                'wt': WTRObj,
+                'offsetUseDate': WTRObj.Start_Time
+            } 
+        ).then(function(r) {
+            // should implement update of WTR and TSV.
+        }).catch(function(err) {
+
+        });
         console.log("final WTRObj", WTRObj);
     }
 });
