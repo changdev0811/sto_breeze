@@ -482,68 +482,86 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                     flex: 1,
                     defaults: {
                         xtype: 'displayfield',
-                        ui: 'employee-accrual-policy-display-field',
+                        ui: [
+                            'employee-accrual-policy-display-field',
+                            'employee-accrual-policy-display-field-ledger'
+                        ],
                         width: '100%',
-                        bodyAlign: 'end',
-
+                        bodyAlign: 'stretch',
+                        data: {
+                            color: false
+                        }
                     },
                     items: [
                         {
                             label: 'Carried Over',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '+ {carriedOver}' },
+                            bind: { value: '{categoryPoint.carryOver}' },
+                            renderer: 'renderLedgerValue',
                             encodeHtml: false
                         },
                         {
                             ui: [
                                 'employee-accrual-policy-display-field',
-                                'employee-accrual-policy-display-field-inner'
+                                'employee-accrual-policy-display-field-ledger',
+                                'employee-accrual-policy-display-field-ledger-small'
                             ],
-                            userCls: 'employee-accrual-policy-carryover-negative',
                             label: 'Carry Over Expired',
                             labelAlign: 'left',
                             labelWidth: '115pt',
                             bind: {
-                                value: '{carryOverExpired}'
+                                value: '{categoryPoint.carryOverExpired}'
+                            },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false,
+                            data: {
+                                color: false,
+                                small: true
                             }
                         },
                         {
                             label: 'Accrued',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '+ {accrued}' },
+                            bind: {
+                                value: '{categoryPoint.accrued}',
+                            },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false,
                         },
                         {
                             label: 'Adjustments',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '+ {adjustments}' },
+                            bind: { value: '{categoryPoint.adjustments}' },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false
                         },
                         {
-                            label: ' ',
-                            labelAlign: 'left',
-                            labelWidth: '115pt',
-                            bind: { value: '--------------------' },
+                            xtype: 'component',
+                            html: '<hr/>'
                         },
                         {
                             label: 'Allowed',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-
-                            bind: { value: '{allowed}' },
+                            bind: { value: '{categoryPoint.allowed}' },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false
                         },
                         {
                             label: 'Recorded',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '- {recorded}' },
+                            bind: { value: '{categoryPoint.recorded}' },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false,
+                            data: { color: true, negative: true }
                         },
                         {
-                            label: ' ',
-                            labelAlign: 'left',
-                            labelWidth: '115pt',
-                            bind: { value: '--------------------' },
+                            xtype: 'component',
+                            html: '<hr/>'
                         },
                         {
                             xtype: 'checkbox',
@@ -561,7 +579,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Remaining',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '{remaining}' },
+                            bind: { value: '{categoryPoint.remaining}' },
+                            renderer: 'renderLedgerValue',
+                            encodeHtml: false,
                         },
 
                     ]

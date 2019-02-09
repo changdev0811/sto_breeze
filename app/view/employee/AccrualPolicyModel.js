@@ -41,29 +41,17 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
                 }
             }
         },
-
-        carryOverExpired: {
-            bind: '{categoryPoint.carryOverExpired}',
-            get: function(data){
-                return this.coloredValueHtml(data);
-            }
-        }
-
-
+         /**
+         * Whether ledger row Carry Over Expired should be visible
+         * @formula
+         * @memberof Breeze.view.employee.AccrualPolicyViewModel
+         * @return {Boolean} True if visible, false otherwise
+         */
+        // showCarryOverExpired: {
+        //     bind: '{categoryPoint.carryOverExpired}',
+        //     get: function(data){
+        //         return (parseFloat(data) >= 0);
+        //     }
+        // }
     },
-
-    privates: {
-        coloredValueHtml: function(value){
-            var actualValue = parseFloat(value),
-                negative = (actualValue < 0);
-            
-            return [
-                '<div class="employee-accrual-policy-ledger>',
-                `<div class="sign">${(negative)? '-' : '+'}</div>`,
-                `<div class="value ${(negative)? 'negative' : ''}">${value}</div>`,
-                '</div>'
-            ].join('');
-        }
-    }
-
 });

@@ -80,6 +80,34 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         });
     },
 
+    //==[Renderers]==
+    /**
+     * Renderer for ledger values; determines sign and color
+     * @param {String} value Ledger value
+     * @param {Object} field Display field
+     */
+    renderLedgerValue: function (value, field) {
+
+        var actualValue = parseFloat(value),
+            negative = (actualValue < 0),
+            data = field.getData();
+        // Base color, small, and force negative off data atributes on field
+        var color = (data.color),
+            small = data.small,
+            forceNegative = data.negative;
+
+        if(forceNegative){
+            negative = true;
+        }
+        
+        return [
+            `<div class="employee-accrual-policy-ledger ${(small)? 'small' : ''}">`,
+            `<div class="sign">${(negative) ? '-' : '+'}</div>`,
+            `<div class="value ${(negative && color) ? 'negative' : ''}">${value}</div>`,
+            '</div>'
+        ].join('');
+    },
+
     //==[Event Handlers]==
 
     onShowScheduledTimeChange: function(cmp, newValue, oldValue){
