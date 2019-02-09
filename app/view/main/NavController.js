@@ -569,8 +569,13 @@ Ext.define('Breeze.view.main.NavController', {
         // this.syncNavToRoute('root');
         this.changeContent(
             Ext.create('Breeze.view.employee.AccrualPolicy', {
-                data: { employee: undefined, catId: id },
-                viewModel: { parent: this.getViewModel() }
+                // data: { employee: undefined, catId: id },
+                viewModel: { parent: this.getViewModel(), 
+                    data: {
+                        targetEmployee: undefined,
+                        categoryId: id
+                    } 
+                }
             })
         );
     },

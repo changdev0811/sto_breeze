@@ -18,11 +18,12 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             new Date()
         );
 
-        this.lookup('startDate').setValue(
-            new Date()
-        );
-
-        //this.displayData(me);
+        this.addLoadedStoreToViewModel({
+            model: 'Breeze.model.accrual.category.Rule',
+            data: []
+        }, 'categoryRules');
+        
+        console.info('Controller ready');
     },
 
     //==[Event Handlers]==

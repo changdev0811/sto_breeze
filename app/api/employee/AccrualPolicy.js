@@ -10,14 +10,33 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
     /**
      * @api /getCategoryAdjustInfo
      */
-    categoryAdjustInfo: function () {
-
+    categoryAdjustInfo: function (employeeId, categoryId, activeDay, showScheduled) {
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'getCategoryAdjustInfo',
+                {
+                    employee_id: employeeId,
+                    category_id: categoryId,
+                    activeDay: activeDay,
+                    showScheduled: showScheduled
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    resolve(r);
+                },
+                function(err){
+                    reject(err);
+                }
+            )
+        });
     },
 
     /**
      * API call for getting category point in time info
      * @memberof Breeze.api.employee.AccrualPolicy
-     * @api /getCategoryPointInTime
+     * @api /getCategoryPointinTime
      * @param {String} employeeId Employee ID
      * @param {Number} categoryId Category ID
      * @param {Date} activeDay Active day
@@ -28,7 +47,7 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
         var api = this.api;
         return new Promise((resolve, reject)=>{
             api.serviceRequest(
-                'getCategoryPointInTime',
+                'getCategoryPointinTime',
                 {
                     employee_id: employeeId,
                     category_id: categoryId,
