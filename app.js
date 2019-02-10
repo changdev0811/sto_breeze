@@ -2,6 +2,8 @@
  * This file launches the application by asking Ext JS to create
  * and launch() the Application class.
  */
+var STI = new Object();
+
 Ext.application({
     extend: 'Breeze.Application',
 

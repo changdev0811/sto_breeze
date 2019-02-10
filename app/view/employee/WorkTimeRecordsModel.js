@@ -36,7 +36,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             ot2: null,
             ot3: null,
             ot4: null
-        }
+        },
+        timeSheet: null,
+        secRights: null
     },
 
     // stores: {

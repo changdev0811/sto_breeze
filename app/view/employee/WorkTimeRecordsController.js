@@ -131,6 +131,80 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         });
     },
 
+    loadTimeSheet: function() {
+        var me = this,
+            vm = me.getViewModel(),
+            emp = me.api.auth.getCookies().emp,
+            start = vm.get('startDate'),
+            end = vm.get('endDate');
+        var ts_store = vm.getStore('timeSheetStore');
+
+        if (!ts_store) {
+            me.addStoreToViewModel(
+                'Breeze.store.record.TimeSheet',
+                'timeSheetStore'
+            );
+            ts_store = vm.getStore('timeSheetStore');
+        } else {
+            ts_store.removeAll();
+        }
+        
+        return new Promise(function(resolve, reject){
+            ts_store.load({
+                params: {
+                    lookup_id: emp,
+                    sdate: start,
+                    edate: end
+                },
+                callback: (records, operation, success) => {
+                    if(success){
+                        // let ts_store = vm.get('timeSheetStore');
+                        vm.set(
+                            'timeSheet', 
+                            ts_store.getAt(0).data
+                        );
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+    },
+
+    getEmployeeRights: function() {
+        var me = this,
+            vm = me.getViewModel();
+        var sr_store = vm.getStore('secRightsStore');
+
+        if (!sr_store) {
+            me.addStoreToViewModel(
+                'Breeze.store.record.TimeSheet',
+                'secRightsStore'
+            );
+            sr_store = vm.getStore('secRightsStore');
+        } else {
+            sr_store.removeAll();
+        }
+        
+        return new Promise(function(resolve, reject){
+            sr_store.load({
+                callback: (records, operation, success) => {
+                    if(success){
+                        // let ts_store = vm.get('timeSheetStore');
+                        vm.set(
+                            'secRights', 
+                            sr_store.getAt(0).data
+                        );
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+    },
+
     /**
      * Load work time record data store
      */
@@ -574,7 +648,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         }
         
         WTRObj.Total_Time = (WTR.Total_Time == null) ? 0 : WTR.Total_Time;
-
         me.api.makeApiCall(
             'updateWorkTime',
             {
@@ -582,10 +655,21 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 'offsetUseDate': WTRObj.Start_Time
             } 
         ).then(function(r) {
-            // should implement update of WTR and TSV.
+            var interval = 50;
+            setTimeout(function() { me.refreshWTV() }, interval);
         }).catch(function(err) {
 
         });
         console.log("final WTRObj", WTRObj);
+    },
+
+    refreshWTV: function() {
+        var me = this;
+        me.loadTimeSheet()
+        .then(function(r) {
+            me.getEmployeeRights();
+            // we need to do something here
+            me.loadWorkTimeRecords();
+        })
     }
 });
