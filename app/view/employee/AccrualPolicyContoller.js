@@ -55,7 +55,24 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             vm.get('showScheduled')
         ).then((r)=>{
             me.copyRecordToViewModel(r,'adjustInfo');//,'Breeze.model.accrual.category.Adjust');
-            me.getViewModel().get('categoryRules').load(r.rules);
+            var vm = me.getViewModel();
+            vm.getViewModel().get('categoryRules').load(r.rules);
+            var info = vm.get('adjustInfo');
+            // Set initial carry over option select field and carry over checkbox values
+            // based on loaded carrymax value. See view model formulas for full behavior
+            if(info.get('carryMax') < 0){
+                info.set('carryOver', 0);
+                this.lookup('carryOptionField').setValue(0);
+            } else {
+                if(info.get('carryMax') !== 0){
+                    this.lookup('carryOptionField').setValue(1);
+                } else {
+                    this.lookup('carryOptionField').setValue(0);
+                }
+            }
+            if(info.get('carryExpires' !== '1/1/1990')){
+                // TODO: EmployeeCategoryAdjust.js:1791
+            }
             console.info('adjust loaded');
         }).catch((e)=>{
 

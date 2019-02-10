@@ -13,7 +13,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
         // View Date
         activeDay: (new Date()),
         // Show Scheduled checkbox
-        showScheduled: false
+        showScheduled: false,
     },
 
     stores: {
@@ -41,17 +41,33 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
                 }
             }
         },
-         /**
-         * Whether ledger row Carry Over Expired should be visible
-         * @formula
-         * @memberof Breeze.view.employee.AccrualPolicyViewModel
-         * @return {Boolean} True if visible, false otherwise
-         */
-        // showCarryOverExpired: {
-        //     bind: '{categoryPoint.carryOverExpired}',
-        //     get: function(data){
-        //         return (parseFloat(data) >= 0);
-        //     }
-        // }
+
+        carryMax: {
+            bind: '{adjustInfo.carryMax}',
+            get: function(data){
+                if(data < 0){
+                    return 1;
+                } else {
+                    return data;
+                }
+            },
+            set: function(val){
+                this.set('adjustInfo.carryMax',val);
+            }
+        },
+        
+        hideCarryOver: {
+            bind: '{adjustInfo.carryOver}',
+            get: function(data){
+                return !data;
+            }
+        },
+
+        hideCarryMax: {
+            bind: '{carryOptionField.value}',
+            get: function(data){
+                return (data == 0);
+            }
+        }
     },
 });

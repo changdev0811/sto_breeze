@@ -239,7 +239,10 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 {
                                     xtype: 'checkbox',
                                     ui: 'reporting',
-                                    boxLabel: 'Accrual Rules'
+                                    boxLabel: 'Accrual Rules',
+                                    bind: {
+                                        checked: '{adjustInfo.allowAccrual}'
+                                    }
                                 },
 
                                 { xtype: 'spacer', flex: 1 },
@@ -334,8 +337,6 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             flex: 1,
                             defaults: {
                                 xtype: 'displayfield',
-                                //ui: 'fyi-display-field',
-
                             },
                             items: [
                                 {
@@ -345,7 +346,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     reference: 'carryOverCheckbox',
                                     minWidth: '64pt',
                                     bodyAlign: 'stretch',
-
+                                    hidden: false,
                                     bind: {
                                         disabled: '{isRestricted}',
                                         checked: '{adjustInfo.carryOver}'
@@ -357,25 +358,38 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 },
                                 {
                                     xtype: 'selectfield',
+                                    reference: 'carryOptionField',
                                     ui: 'reporting fyi-text',
-                                    value: 'Max',
                                     options: [
-                                        { text: 'No Max', value: 1 },
-                                        { text: 'Max', value: 2 },
+                                        { text: 'No Max', value: 0 },
+                                        { text: 'Max', value: 1 },
                                     ],
+                                    displayField: 'text', valueField: 'value',
+                                    hidden: true,
+                                    value: 0,
                                     bind: {
-                                        value: '{adjustInfo.carryMax}',
+                                        hidden: '{hideCarryOver}',
                                         readOnly: '{isRestricted}'
-                                    }//<-- this should probably be in the model.js
+                                    },
+
                                 },
                                 {
                                     xtype: 'spacer',
-                                    width: '10pt',
+                                    width: '10pt'
                                 },
                                 {
-                                    xtype: 'breeze-textfield',
+                                    xtype: 'numberfield',
+                                    clearable: false,
                                     ui: 'fyi fyi-text',
-                                    flex: 1
+                                    textAlign: 'right',
+                                    flex: 1,
+                                    value: 0, minValue: 0, decimals: 4,
+                                    hidden: true,
+                                    bind: {
+                                        hidden: '{hideCarryOver || hideCarryMax}',
+                                        value: '{carryMax}'
+                                    }
+
                                 },
                             ]
                         },
@@ -387,6 +401,10 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             defaults: {
                                 xtype: 'displayfield',
                                 //ui: 'fyi-display-field',
+                                hidden: true,
+                                bind: {
+                                    hidden: '{hideCarryOver}'
+                                }
                             },
                             items: [
                                 {
@@ -408,10 +426,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     userCls: 'fyi-fieldset no-padding no-border',
                                     ui: ['dark-textfield', 'fyi-field', 'fyi-textfield'],
                                     //reference: 'viewDate',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Select Date'
-                                    },
+                                    picker: null,
                                     bind: {
                                         readOnly: '{isRestricted}'
                                     }
@@ -471,10 +486,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         xtype: 'datepicker',
                         title: 'Select Date'
                     },
-                    //listeners: {
-                    //    change: 'onViewDateChanged'
-                    //}
+                    bind: {
+                        value: '{adjustInfo.wait_date}'
+                    }
                 },
+                // Ledger
                 {
                     xtype: 'fieldset',
                     userCls: 'fyi-fieldset',
