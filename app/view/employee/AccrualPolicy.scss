@@ -3,7 +3,8 @@
     /view/employee/AccrualPolicy.js
 */
 
-.employee-accrual-policy-duration {
+// Style for component text
+.employee-accrual-policy-cmptext {
     font-size: map-get($root-font-sizes, 'detail');
     color: map-get($employee-fyi-text-colors, 'light');
     padding-top: 5pt;

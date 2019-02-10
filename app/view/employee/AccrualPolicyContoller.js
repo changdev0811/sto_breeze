@@ -8,7 +8,8 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     requires: [
         'Breeze.api.Employee',
         'Breeze.api.employee.AccrualPolicy',
-        'Breeze.store.category.CompactList'
+        'Breeze.store.category.CompactList',
+        'Breeze.model.accrual.employee.Rule'
     ],
 
     onInit: function(component, eOpts){
@@ -35,7 +36,8 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         );
 
         this.addLoadedStoreToViewModel({
-            model: 'Breeze.model.accrual.category.Rule',
+            model: 'Breeze.model.accrual.employee.Rule',
+            groupField: 'ruleName',
             data: []
         }, 'categoryRules');
 
@@ -44,6 +46,10 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         this.loadPoint();
     },
 
+    /**
+     * Load adjustment information for current category
+     * Writes result to view model object 'adjustInfo', and updates 'categoryRules' store
+     */
     loadAdjustInfo: function(){
         var vm = this.getViewModel(),
             me = this;
@@ -79,6 +85,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         });
     },
 
+    /**
+     * Load category point in time info for current category and dates
+     */
     loadPoint: function(){
         var me = this,
             vm = me.getViewModel();
@@ -128,6 +137,12 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     //==[Event Handlers]==
 
     onShowScheduledTimeChange: function(cmp, newValue, oldValue){
+        this.loadPoint();
+    },
+
+    onCategoryChange: function(cmp, newValue){
+        this.getViewModel().set('categoryId', newValue);
+        this.loadAdjustInfo(newValue);
         this.loadPoint();
     }
 

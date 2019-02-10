@@ -42,6 +42,12 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
             }
         },
 
+        /**
+         * Carry max value formula, has getter and setter
+         * @formula
+         * @memberof Breeze.view.employee.AccrualPolicyViewModel
+         * @return {Number} Carrymax value
+         */
         carryMax: {
             bind: '{adjustInfo.carryMax}',
             get: function(data){

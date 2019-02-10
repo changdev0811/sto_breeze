@@ -58,6 +58,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
         { 
             text: 'Save', /* handler: 'onPrintExcel',*/
             ui: 'confirm alt', style: 'width:125pt',
+            hidden: true,
             bind: { hidden: '{isRestricted}' }
         }
     ],
@@ -68,13 +69,13 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
         shadow: false,
     },
     items: [
-
         {
             xtype: 'container',
             flex: 2,
             layout: 'vbox',
             items: [
                 // row 1
+                // Category
                 {
                     xtype: 'selectfield',
                     ui: 'fyi fyi-text',
@@ -94,10 +95,14 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                     bind: {
                         value: '{adjustInfo.categoryId}',
                         store: '{categories}'
+                    },
+                    listeners: {
+                        change: 'onCategoryChange'
                     }
                 },
 
                 // row 2
+                // Year Type
                 {
                     xtype: 'container',
                     layout: 'hbox',
@@ -123,39 +128,58 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 xtype: 'radio',
                                 style: 'padding-right: 8pt; padding-left: 8pt',
                                 bind: {
-                                    disabled: '{isRestricted}',
+                                    hidden: '{isRestricted}',
                                 }
                             },
                             reference: 'calendarType',
                             bind: {
                                 values: {
-                                    yearType: '{adjustInfo.calendarType}'
+                                    calTypeRadio: '{adjustInfo.calendarType}'
                                 },
                             },
                             items: [
                                 {
-                                    name: 'yearType',
+                                    name: 'calTypeRadio',
                                     boxLabel: 'Anniversary',
                                     value: 45,
                                     bind: {
-                                        groupValue: '{calendarType.yearType}'
+                                        groupValue: '{calendarType.calTypeRadio}'
                                     }
                                 },
                                 {
-                                    name: 'yearType',
+                                    name: 'calTypeRadio',
                                     boxLabel: 'Calendar',
                                     value: 46,
                                     bind: {
-                                        groupValue: '{calendarType.yearType}'
+                                        groupValue: '{calendarType.calTypeRadio}'
                                     }
                                 },
                                 {
                                     name: 'yearType',
                                     boxLabel: 'Fiscal',
-                                    value: 45,
+                                    value: 47,
                                     bind: {
-                                        groupValue: '{calendarType.yearType}'
+                                        groupValue: '{calTypeRadio.calTypeRadio}'
                                     }
+                                },
+                                // Static component shown in restricted mode
+                                {
+                                    xtype: 'component',
+                                    hidden: true,
+                                    userCls: 'employee-accrual-policy-cmptext',
+                                    bind: {
+                                        hidden: '{!isRestricted}',
+                                        data: {
+                                            calType: '{adjustInfo.calendarType}'
+                                        }
+                                    },
+                                    tpl: [
+                                        '<tpl switch="calType">',
+                                        '<tpl case="45">Anniversary',
+                                        '<tpl case="46">Calendar',
+                                        '<tpl case="47">Fiscal',
+                                        '</tpl>'
+                                    ]
                                 }
                             ]
                         },
@@ -164,6 +188,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
 
                 // row 3
+                // View Date + Recording Year
                 {
                     xtype: 'container',
                     //userCls: 'fyi-fieldset no-side-margin no-border',
@@ -187,9 +212,6 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             bind: {
                                 value: '{activeDay}'
                             }
-                            //listeners: {
-                            //    change: 'onViewDateChanged'
-                            //}
                         },
 
                         {
@@ -215,7 +237,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         },
                         {
                             xtype: 'component',
-                            userCls: 'employee-accrual-policy-duration',
+                            userCls: 'employee-accrual-policy-cmptext',
                             bind: {
                                 html: '({adjustInfo.recordingYearStart} - {adjustInfo.recordingYearEnd})'
                             }
@@ -224,6 +246,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                 },
 
                 // row 4
+                // Accrual Rules Grid
                 {
                     xtype: 'fieldset',
                     userCls: 'fyi-fieldset no-side-margin no-padding',
@@ -241,7 +264,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     ui: 'reporting',
                                     boxLabel: 'Accrual Rules',
                                     bind: {
-                                        checked: '{adjustInfo.allowAccrual}'
+                                        checked: '{adjustInfo.allowAccrual}',
+                                        disabled: '{isRestricted}'
                                     }
                                 },
 
@@ -265,10 +289,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             itemId: 'grid',
 
                             ui: 'employee-fyi-grid', userCls: 'employee-fyi-grid',
-
-                            flex: 1,
                             userCls: 'no-background',
-                            layout: 'hbox',
+
+                            hidden: true,
+
+                            flex: 1, layout: 'hbox',
                             hideHeaders: true,
                             rootVisible: false,
 
@@ -314,13 +339,16 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 },
                             ],
                             //reference: 'departmentTree',
-                            //bind: '{departmentsTree}'
+                            bind: {
+                                hidden: '{!adjustInfo.allowAccrual}'
+                            }
                         }
 
                     ]
                 },
 
                 // row 5
+                // Carry over
                 {
                     xtype: 'fieldset',
                     userCls: 'fyi-fieldset no-side-margin',
@@ -438,11 +466,13 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
             ]
         },
         // column 2
+        // Info (rightSide)
         {
             xtype: 'container',
-            width: '220pt',
-            layout: 'vbox',
+            width: '220pt', layout: 'vbox',
+            itemId: 'rightSide',
             items: [
+                // User Info Box
                 {
                     xtype: 'fieldset',
                     userCls: 'fyi-fieldset',
@@ -473,21 +503,19 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         }
                     ]
                 },
+                // Start accruing field
                 {
                     xtype: 'datefield',
                     userCls: 'fyi-fieldset no-padding no-border',
                     ui: 'fyi fyi-text',
                     //name: 'viewdate_field',
+                    itemId: 'startAccruing',
                     label: 'Start accruing on:',
-                    labelAlign: 'left',
-                    labelWidth: 'auto',
-                    reference: 'startDate',
-                    picker: {
-                        xtype: 'datepicker',
-                        title: 'Select Date'
-                    },
+                    labelAlign: 'left', labelWidth: 'auto',
+                    picker: null,
                     bind: {
-                        value: '{adjustInfo.wait_date}'
+                        value: '{adjustInfo.wait_date}',
+                        hidden: '{!adjustInfo.isallowed}'
                     }
                 },
                 // Ledger
@@ -513,7 +541,10 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Carried Over',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '{categoryPoint.carryOver}' },
+                            bind: { 
+                                value: '{categoryPoint.carryOver}',
+                                hidden: '{!adjustInfo.isallowed}'
+                            },
                             renderer: 'renderLedgerValue',
                             encodeHtml: false
                         },
@@ -527,7 +558,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             labelAlign: 'left',
                             labelWidth: '115pt',
                             bind: {
-                                value: '{categoryPoint.carryOverExpired}'
+                                value: '{categoryPoint.carryOverExpired}',
+                                hidden: '{!adjustInfo.isallowed}'
                             },
                             renderer: 'renderLedgerValue',
                             encodeHtml: false,
@@ -542,6 +574,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             labelWidth: '115pt',
                             bind: {
                                 value: '{categoryPoint.accrued}',
+                                hidden: '{!adjustInfo.isallowed}'
                             },
                             renderer: 'renderLedgerValue',
                             encodeHtml: false,
@@ -550,19 +583,28 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Adjustments',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '{categoryPoint.adjustments}' },
+                            bind: { 
+                                value: '{categoryPoint.adjustments}',
+                                hidden: '{!adjustInfo.isallowed}'
+                            },
                             renderer: 'renderLedgerValue',
                             encodeHtml: false
                         },
                         {
                             xtype: 'component',
-                            html: '<hr/>'
+                            html: '<hr/>',
+                            bind: {
+                                hidden: '{!adjustInfo.isallowed}'
+                            }
                         },
                         {
                             label: 'Allowed',
                             labelAlign: 'left',
                             labelWidth: '115pt',
-                            bind: { value: '{categoryPoint.allowed}' },
+                            bind: { 
+                                value: '{categoryPoint.allowed}',
+                                hidden: '{!adjustInfo.isallowed}'
+                            },
                             renderer: 'renderLedgerValue',
                             encodeHtml: false
                         },

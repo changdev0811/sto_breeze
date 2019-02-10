@@ -1,11 +1,11 @@
 /**
  * Model for my accrual policy view's category adjustment
  * @class Adjust
- * @memberof Breeze.model.accrual.category
+ * @memberof Breeze.model.accrual.employee
  */
-Ext.define('Breeze.model.accrual.category.Adjust', {
+Ext.define('Breeze.model.accrual.employee.Adjust', {
     requires: [
-        'Breeze.model.accrual.category.Rule'
+        'Breeze.model.accrual.employee.Rule'
     ],
     extend: 'Breeze.model.Base',
     fields: [
