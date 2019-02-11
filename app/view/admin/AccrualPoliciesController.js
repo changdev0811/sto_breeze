@@ -508,7 +508,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                     'monthlySpecialOn', 'onWeekly', 'onBiWeekly', 'monthly31',
                     'monthly30', 'monthly28', 'onAnnually', 'onAnniversary'
                 ]);
-            } else if (newVal == 115) {
+            } else if (newVal == 114) {
                 // Show Annually options
                 multiHide([
                     'monthlySpecialOn', 'onWeekly', 'onBiWeekly',
@@ -726,7 +726,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
                 }
             } else if (fields.accformOn.getValue() == 114) {
                 // Annually
-                if (fields.onAnnually.getValue().trim() == '') {
+                if (Object.isUnvalued(fields.onAnnually.getValue())) {
                     accrualRule.accformDay = 'ANNIVERSARRY';
                 } else {
                     accrualRule.accformDay = fields.onAnnually.getValue();
