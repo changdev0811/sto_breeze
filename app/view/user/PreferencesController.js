@@ -70,6 +70,12 @@ Ext.define('Breeze.view.user.PreferencesController', {
             }
         ).then(
             function(r){
+                Ext.toast({
+                    type: 'info',
+                    message: 'Successfully updated user preferences',
+                    timeout: 'info'
+                });
+                Ext.fireEvent('refreshuser');
                 console.info("Updating User Preferences success",r);
             }
         ).catch(
