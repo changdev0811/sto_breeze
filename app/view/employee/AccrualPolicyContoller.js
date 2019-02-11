@@ -766,4 +766,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     },
 
+    save: function(){
+        var vm = this.getViewModel();
+        console.info('save');
+    }
+
 });
