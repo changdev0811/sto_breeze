@@ -11,6 +11,12 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
     data: {
         // Show Scheduled checkbox
         showScheduled: false,
+        // Carry over
+        carryOverSettings: {
+            expires: false,
+            enabled: false,
+            option: 0
+        }
     },
 
     stores: {
@@ -60,7 +66,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
         },
         
         hideCarryOver: {
-            bind: '{categoryAdjust.carryOver}',
+            bind: '{carryOverSettings.enabled}',
             get: function(data){
                 return !data;
             }
@@ -74,7 +80,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
          * @return {Boolean} True if visible, false otherwise
          */
         hideCarryMax: {
-            bind: '{carryOptionField.value}',
+            bind: '{carryOverSettings.option}',
             get: function(data){
                 return (data == 0);
             }

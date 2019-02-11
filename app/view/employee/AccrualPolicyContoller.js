@@ -74,7 +74,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             // viewDateField.suspendEvents(false);
             // recordingYearField.suspendEvents(false);
             me.copyRecordToViewModel(r,'categoryAdjust','Breeze.model.accrual.employee.Adjust');
-            viewDateField.suspendEvents(false);
+            // viewDateField.suspendEvents(false);
             // recordingYearField.resumeEvents();
             // viewDateField.resumeEvents();
             var vm = me.getViewModel();
@@ -85,18 +85,21 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             // vm.set('recordingYear', info.recordingYear);
             // Set initial carry over option select field and carry over checkbox values
             // based on loaded carrymax value. See view model formulas for full behavior
+            vm.set('carryOverSettings.enabled', info.get('carryOver'));
             if(info.get('carryMax') < 0){
-                info.set('carryOver', 0);
-                this.lookup('carryOptionField').setValue(0);
+                info.set('carryOverSettings.enabled', false);
+                vm.set('carryOverSettings.option', 0);
             } else {
                 if(info.get('carryMax') !== 0){
-                    this.lookup('carryOptionField').setValue(1);
+                    vm.set('carryOverSettings.option', 1);
                 } else {
-                    this.lookup('carryOptionField').setValue(0);
+                    vm.set('carryOverSettings.option', 0);
                 }
             }
             if(info.get('carryExpires' !== '1/1/1990')){
-                // TODO: EmployeeCategoryAdjust.js:1791
+                vm.set('carryOverOptions.expires', true);
+            } else {
+                vm.set('carryOverOptions.expires', false);
             }
             console.info('adjust loaded');
         }).catch((e)=>{

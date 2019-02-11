@@ -328,7 +328,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
                             flex: 1,
                             hideHeaders: false,
-                            rootVisible: false,
+                            sortable: false,
                             grouped: true,
                             defaults: {
                                 cell: {
@@ -342,34 +342,48 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 {
                                     xtype: 'datecolumn',
                                     text: 'From',
-                                    dataIndex: 'ruleStart',
+                                    dataIndex: 'ruleStart', itemId: 'from',
                                     flex: 2,
-                                    draggable: false, hidable: false, sortable: false
+                                    menu: null, menuDisabled: true
                                 },
 
                                 {
-                                    xtype: 'gridcolumn',
+                                    xtype: 'datecolumn',
                                     text: 'To',
-                                    dataIndex: 'text',
+                                    dataIndex: 'ruleEnd', itemId: 'to',
                                     flex: 2,
+                                    menu: null, menuDisabled: true
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text: 'Accrual Information',
-                                    dataIndex: 'text',
+                                    dataIndex: 'accrualChanged', itemId: 'info',
                                     flex: 8,
+                                    menu: null, menuDisabled: true
                                 },
                                 {
                                     xtype: 'gridcolumn',
                                     text: 'Occurrences',
-                                    dataIndex: 'occurtences',
+                                    dataIndex: 'occurrences', itemId: 'occurrences',
                                     flex: 4,
+                                    tpl: [
+                                        '<tpl if="occurrences &lt; 0">---</tpl>',
+                                        '<tpl if="occurrences &gt;= 0">{occurrences}</tpl>'
+                                    ]
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    text: 'Total Time',
-                                    dataIndex: 'text',
+                                    text: 'Total Time', 
+                                    dataIndex: 'total', itemId: 'totalTime',
                                     flex: 4,
+                                    tpl: [
+                                        '<tpl if="occurrences &lt; 0">---</tpl>',
+                                        '<tpl if="occurrences &gt;= 0">{total}',
+                                            '<tpl if="recording_mode == 20"> Days</tpl>',
+                                            '<tpl if="recording_mode == 21"> Hours</tpl>',
+                                        '</tpl>'
+                                    ]
+
                                 },
                             ],
                             //reference: 'departmentTree',
@@ -412,7 +426,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     hidden: false,
                                     bind: {
                                         disabled: '{isRestricted}',
-                                        checked: '{categoryAdjust.carryOver}'
+                                        checked: '{carryOverSettings.enabled}'
                                     }
                                 },
                                 {
@@ -421,7 +435,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 },
                                 {
                                     xtype: 'selectfield',
-                                    reference: 'carryOptionField',
+                                    // reference: 'carryOptionField',
                                     ui: 'reporting fyi-text',
                                     options: [
                                         { text: 'No Max', value: 0 },
@@ -429,8 +443,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     ],
                                     displayField: 'text', valueField: 'value',
                                     hidden: true,
-                                    value: 0,
                                     bind: {
+                                        value: '{carryOverSettings.option}',
                                         hidden: '{hideCarryOver}',
                                         readOnly: '{isRestricted}'
                                     },
@@ -477,7 +491,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     minWidth: '64pt',
                                     bodyAlign: 'stretch',
                                     bind: {
-                                        readOnly: '{isRestricted}'
+                                        readOnly: '{isRestricted}',
+                                        checked: '{carryOverSettings.expires}'
                                     }
                                 },
                                 {
@@ -491,7 +506,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     //reference: 'viewDate',
                                     picker: null,
                                     bind: {
-                                        readOnly: '{isRestricted}'
+                                        readOnly: '{isRestricted}',
+                                        value: '{categoryAdjust.carryExpires}',
+                                        hidden: '{!carryOverSettings.expires || hideCarryOver}'
                                     }
                                 },
                             ]

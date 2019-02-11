@@ -12,12 +12,13 @@ Ext.define('Breeze.model.accrual.employee.Rule', {
 		{name: 'accformUnit',	type: 'integer'	},
 		{name: 'ruleName',		type: 'string'	},
 		{name: 'ruleStart',		type: 'date'	},
-		{name: 'ruleEnd',		type: 'string'	},
+		{name: 'ruleEnd',		type: 'date'	},
 		{name: 'ruleModified',	type: 'date'	},
 		{name: 'accrualChanged',type: 'boolean'	},
 		{name: 'occurrences',	type: 'integer'	},
 		{name: 'total',			type: 'number'	},
-		{name: 'recordingMode',	type: 'integer'	},
+		// {name: 'recordingMode',	type: 'integer'	},
+		{name: 'recording_mode',	type: 'integer'	},
 		// Place holders for monthly special values to display in the TPL grid
 		{name: 'msMonth',		type: 'string'	},
 		{name: 'msDay',			type: 'string'	}
