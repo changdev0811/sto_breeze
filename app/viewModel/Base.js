@@ -63,7 +63,8 @@ Ext.define('Breeze.viewmodel.Base', {
         } else {
             if(Array.isArray(source)){
                 // Array of records
-                records = source.map((r)=>{return r.getData();});
+                // records = source.map((r)=>{return r.getData();});
+                records = source;
             } else {
                 // Store containing recorfds
                 records = source.getData().items;

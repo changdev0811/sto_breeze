@@ -97,7 +97,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         store: '{categories}'
                     },
                     listeners: {
-                        select: 'onCategorySelect'
+                        change: 'onCategoryChange'
                     }
                 },
 
@@ -251,11 +251,12 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Recording Year:',
                             reference: 'recordingYearField',
                             labelAlign: 'left', labelWidth: 'auto',
-                            store: 'Years',
+                            // store: 'Years',
                             displayField: 'Year', valueField: 'Year',
                             // value: (new Date()).getYear() + 1900,
                             bind: {
-                                value: '{categoryAdjust.recordingYear}'
+                                value: '{categoryAdjust.recordingYear}',
+                                store: '{recordedYears}'
                                 // value: '{recordingYear}'
                             },
                             listeners: {
@@ -358,7 +359,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             },
                             listeners: {
                                 beforecompleteedit: 'onAccrualRuleBeforeEditComplete',
-                                // beforeedit: 'onAccrualRuleBeforeEdit'
+                                beforeedit: 'onAccrualRuleInfoBeforeEdit'
                             },
 
                             columns: [
