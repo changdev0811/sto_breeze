@@ -84,3 +84,9 @@
         $weights: (top: 0.125, left: 1, right: 0.5, bottom: 0.125)
     )
 );
+
+// Small text button used in end of prev. year / end of next year buttons
+@include button-ui(
+    $ui: 'small-text',
+    $font-size: map-get($root-font-sizes, 'detail') - 4pt   
+);

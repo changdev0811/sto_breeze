@@ -10,8 +10,8 @@ Ext.define('Breeze.model.accrual.employee.Adjust', {
     extend: 'Breeze.model.Base',
     fields: [
         { name: "accrued", type: "integer" }, 
-        { name: "active_yos_end", type: "date" }, 
-        { name: "active_yos_start", type: "date" }, 
+        { name: "active_yos_end", type: "string" }, 
+        { name: "active_yos_start", type: "string" }, 
         { name: "adjustments", type: "integer" }, 
         { name: "allowAccrual", type: "boolean" }, 
         { name: "allowed", type: "integer" }, 
@@ -27,8 +27,8 @@ Ext.define('Breeze.model.accrual.employee.Adjust', {
         { name: "isallowed", type: "boolean" }, 
         { name: "recorded", type: "integer" }, 
         { name: "recordingYear", type: "integer" }, 
-        { name: "recordingYearStart", type: "date" }, 
-        { name: "recordingYearEnd", type: "date" }, 
+        { name: "recordingYearStart", type: "string" }, 
+        { name: "recordingYearEnd", type: "string" }, 
         { name: "remaining", type: "integer" }, 
         { name: "viewDate", type: "date" }, 
         { name: "wait_date", type: "date" }

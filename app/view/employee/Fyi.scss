@@ -138,7 +138,8 @@
 @include trigger-ui(
     $ui: 'fyi',
     $icon-color: map-get($employee-fyi-text-colors, 'base'),
-    $hovered-icon-color: map-get($employee-fyi-colors, 'dark'),
+    // $hovered-icon-color: map-get($employee-fyi-colors, 'dark'),
+    $hovered-icon-color: #ffffff,
     $pressed-icon-color: map-get($employee-fyi-colors, 'medium')
 );
 

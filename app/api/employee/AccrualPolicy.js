@@ -66,7 +66,21 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
         });
     },
 
-    saveCategoryAdjust: function(notAllowed){
+    /**
+     * Save employee category adjustment API call (ported from EmployeeCategoryAdjust.js)
+     * @api saveEmployeeCategoryAdjust
+     * @param {String} employeeId ID of employee adjustment is for
+     * @param {Number} categoryId Target category ID
+     * @param {Objet} category Category Adjustment data object
+     * @param {Object} rules Accrual Rules store
+     * @return {Promise} Promise resolving with success toast or rejecting with error toast
+     */
+    saveCategoryAdjust: function(employeeId, categoryId, category, rules){
+        var api = this.api;
+        
+    },
 
+    saveCategoryAdjustNotAllowed: function(){
+        
     }
 });

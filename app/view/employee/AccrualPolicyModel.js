@@ -9,9 +9,6 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
     alias: 'viewmodel.employee.accrualpolicy',
 
     data: {
-
-        // View Date
-        activeDay: (new Date()),
         // Show Scheduled checkbox
         showScheduled: false,
     },
@@ -49,7 +46,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
          * @return {Number} Carrymax value
          */
         carryMax: {
-            bind: '{adjustInfo.carryMax}',
+            bind: '{categoryAdjust.carryMax}',
             get: function(data){
                 if(data < 0){
                     return 1;
@@ -58,21 +55,43 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
                 }
             },
             set: function(val){
-                this.set('adjustInfo.carryMax',val);
+                this.set('categoryAdjust.carryMax',val);
             }
         },
         
         hideCarryOver: {
-            bind: '{adjustInfo.carryOver}',
+            bind: '{categoryAdjust.carryOver}',
             get: function(data){
                 return !data;
             }
         },
 
+        /**
+         * Formula used to determine if carry over max field should be visible
+         * based on carry over option select field's value
+         * @formula
+         * @memberof Breeze.view.employee.AccrualPolicyViewModel
+         * @return {Boolean} True if visible, false otherwise
+         */
         hideCarryMax: {
             bind: '{carryOptionField.value}',
             get: function(data){
                 return (data == 0);
+            }
+        },
+
+        /**
+         * Formula used to convert hire date into date object
+         * @formula
+         * @formulaBind categoryAdjust.hire_date
+         * @formulaGetter
+         * @memberof Breeze.view.employee.AccrualPolicyViewModel
+         * @return {Date} Hire date as Date object
+         */
+        employeeHireDate: {
+            bind: '{categoryAdjust.hire_date}',
+            get: function(data){
+                return new Date(data);
             }
         }
     },
