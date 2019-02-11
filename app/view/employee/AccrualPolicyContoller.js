@@ -832,7 +832,21 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     },
 
+    /**
+     * Event handler for save button. Triggers appropiate save call based on settings
+     */
     onSave: function(){
+        if(this.getViewModel().get('categoryAdjust').get('isallowed')){
+            this.saveFull();
+        } else {
+            this.saveNotAllowed();
+        }
+    },
+
+    /**
+     * Perform full save
+     */
+    saveFull: function(){
         var vm = this.getViewModel(),
             carryOver = vm.get('carryOverSettings'),
             category = vm.get('categoryAdjust');
@@ -877,6 +891,27 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         this.api.accrual.saveCategoryAdjust(
             vm.get('targetEmployee'), vm.get('categoryId'), params, ruleParams
+        ).then((r)=>{
+            Ext.toast(r);
+            me.loadAdjustInfo();
+            me.loadPoint();
+        }).catch((err)=>{
+            Ext.toast(err);
+            if(err.error){
+                console.warn('Error saving category adjust: ', err.error);
+            }
+        });
+    },
+
+    /**
+     * Perform limited save
+     */
+    saveNotAllowed: function(){
+        var vm = this.getViewModel(),
+            me = this;
+
+        this.api.accrual.saveCategoryAdjustNotAllowed(
+            vm.get('targetEmployee'), vm.get('categoryId'),  this.lookup('calendarType').getValues().calTypeRadio
         ).then((r)=>{
             Ext.toast(r);
             me.loadAdjustInfo();

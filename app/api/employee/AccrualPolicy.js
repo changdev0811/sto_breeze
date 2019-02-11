@@ -114,7 +114,49 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
         
     },
 
-    saveCategoryAdjustNotAllowed: function(){
+    /**
+     * @api saveEmployeeCategoryAdjustNotAllowed
+     * @param {*} employeeId 
+     * @param {*} categoryId 
+     * @param {*} calendarType 
+     */
+    saveCategoryAdjustNotAllowed: function(employeeId, categoryId, calendarType){
+        var api = this.api;
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'saveEmployeeCategoryAdjustNotAllowed',
+                {
+                    employee_id: employeeId,
+                    category_id: categoryId,
+                    cal_type: calendarType
+                },
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: 'info',
+                            message: 'Category Adjust successfully saved',
+                            timeout: 'info'
+                        });
+                    } else {
+                        reject({
+                            type: 'error',
+                            message: resp.err,
+                            timeout: 'error'
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: 'error',
+                        message: 'Unknown error occured',
+                        timeout: 'error',
+                        error: err
+                    });
+                }
+            )
+        })
         
     }
 });
