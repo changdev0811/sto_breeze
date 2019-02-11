@@ -206,14 +206,112 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         this.loadPoint(cat, date, scheduled);
     },
 
-    onPrevYearButton: function(){
-        console.info('prev');
-    },
-    onNextYearButton: function(){
-        console.info('next');
+    // onPrevYearButton: function(){
+    //     console.info('prev');
+    // },
+    // onNextYearButton: function(){
+    //     console.info('next');
+    // },
+
+    onAccrualRuleAdd: function(){
+        var me = this,
+            vm = this.getViewModel(),
+            rules = vm.get('categoryRules'),
+            category = vm.get('categoryAdjust');
+        
+        // Check if name contains special characters
+        var hasSpecialCharacters = function(s){
+            return (s.indexOf('|') + s.indexOf(',') > -2);
+        };
+        /**
+         * Check if name is in use
+         * @param {String} n 
+         * @return {Boolean}
+         */
+        var nameIsInUse = (n)=>{
+            let nNorm = n.toLowerCase().trim(),
+                cat = vm.get('categoryAdjust'),
+                start = new Date(cat.get('active_yos_start')).toDateString(),
+                end = new Date(cat.get('active_yos_end')).toDateString(),
+                count = 0;
+            for(var i=0;i<rules.getCount();i++){
+                let rule = rules.getAt(i);
+                if(
+                    rule.get('ruleName').toLowerCase().trim() == nNorm &&
+                    new Date(rule.get('ruleStart')).toDateString() == start &&
+                    new Date(rule.get('ruleEnd')).toDateString() == end
+                ){
+                    count++;
+                }
+            }
+            return (count > 0);
+        };
+
+        Ext.Msg.themedPrompt(
+            'Add Accrual Rule',
+            'Enter a name for the new Accrual Rule',
+            (button, name) => {
+                if(button == 'ok'){
+                    if(hasSpecialCharacters(name)){
+                        Ext.Msg.themedAlert(
+                            'Unable to Add Rule',
+                            'Rule name cannot contain the \'|\' or \',\' characters.'
+                        );
+                    } else if(nameIsInUse(name)){
+                        Ext.Msg.themedAlert(
+                            'Unable to Add Rule',
+                            `${name} is already a rule of the active year of service for ${category.get('categoryName')}.`
+                        );
+                    } else {
+                        rules.loadData([{
+                            accformDay: 1,
+                            accformInc: 0,
+                            accformPer: 53,
+                            accformUnit: 48,
+                            ruleName: name.trim(),
+                            ruleStart: category.get('active_yos_start'),
+                            ruleEnd: category.get('active_yos_end'),
+                            accrualChanged: false,
+                            occurrences: -1,
+                            total: 0,
+                            msMonth: 0,
+                            msDay: 0
+                        }], true);
+                        rules.commitChanges();
+                        Ext.toast({
+                            type: 'info',
+                            message: 'Accrual Rule successfully added',
+                            timeout: 'info'
+                        });
+                    }
+                }
+            }
+        );
     },
 
-        /**
+    onAccrualRuleDelete: function(grid, info){
+        var store = grid.getStore(),
+            record = info.record,
+            vm = this.getViewModel();
+        
+        var start = new Date(record.get('ruleStart')),
+            end = new Date(record.get('ruleEnd')),
+            activeDate = new Date(vm.get('categoryAdjust.viewDate'));
+        
+        if(start <= activeDate && activeDate <= ruleEnd){
+            store.remove(record);
+
+            Ext.toast({
+                type: 'info',
+                message: 'Accrual Rule successfully deleted',
+                timeout: 'info'
+            });
+        } else {
+            // TODO: What should happen here?
+        }
+    },
+
+    /**
      * Extracted portion of onAccrualRuleBeforeEdit specific to the 'info' column
      */
     onAccrualRuleInfoBeforeEdit: function (location, editor) {
@@ -472,7 +570,13 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             }
         }
     },
-
+ 
+    /**
+     * Event handler for accrual rule editor
+     * @param {*} comp 
+     * @param {*} newVal 
+     * @param {*} oldVal 
+     */
     onAccrualRuleInfoChange: function (comp, newVal, oldVal) {
         var itemId = comp.getItemId(),
             infoFc = this.lookup('accrualRuleGrid')

@@ -308,6 +308,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     ui: 'plain wtr-button',
                                     bind: {
                                         hidden: '{isRestricted}'
+                                    },
+                                    listeners: {
+                                        tap: 'onAccrualRuleAdd'
                                     }
                                 },
                             ]
@@ -650,7 +653,23 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                             '<tpl if="recording_mode == 20"> Days</tpl>',
                                             '<tpl if="recording_mode == 21"> Hours</tpl>',
                                         '</tpl>'
-                                    ]
+                                    ],
+                                    // Delete interval tool
+                                    cell: {
+                                        toolDefaults: {
+                                            ui: 'employeeinfo-grid-tool',
+                                            zone: 'end'
+                                        },
+                                        tools: [
+                                            {
+                                                iconCls: 'x-fas fa-times',
+                                                handler: 'onAccrualRuleDelete',
+                                                bind: {
+                                                    hidden: '{isRestricted}'
+                                                }
+                                            }
+                                        ]
+                                    }
 
                                 },
                             ],
