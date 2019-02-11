@@ -20,8 +20,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Initialize component handler
      */
     onInit: function(component, eOpts){
-        console.log("final checking with STI", STI);
         this.api = Ext.create('Breeze.api.Employee');
+        this.empInfoClass = Ext.create('Breeze.api.employee.Information');
         this.companyApi = Ext.create('Breeze.api.Company');
         this.punchApi = Ext.create('Breeze.api.Punch');
         var weekSelect = this.lookup('weekSelector');
@@ -53,6 +53,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.loadEmployee();
         this.loadProjects();
         this.loadWorkTimeRecords();
+        this.loadCurrentEmployeeInfo();
+        this.loadCurrentPunchPolicy();                      // for STI.currentPunchPolicy
         this.loadAtAGlance();
         this.attachListenerToRecordGrid();
 
@@ -203,6 +205,26 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 }
             });
         });
+    },
+
+    /** 
+     * Load current punch policy and set it into global variable STI.
+    */
+    loadCurrentPunchPolicy: function(){
+        var me = this;
+        me.punchApi.getPolicyForEmployee().then(function(r) {
+            me.addLoadedStoreToViewModel(r, 'currentPunchPolicy');
+        });
+    },
+
+    /** 
+     * Load current Employee Info
+    */
+    loadCurrentEmployeeInfo: function(){
+        var me = this;
+        me.empInfoClass.getCurrentInfo().then(function(r) {
+            me.addLoadedStoreToViewModel(r, 'currentEmp');
+        })
     },
 
     /**
@@ -544,10 +566,12 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     */
     onAddNewWTRDialogSave: function(btn) {
         var me = this,
+            vm = me.getViewModel(),
             dateEle = me.lookupReference('date'),
             projectEle = me.lookupReference('project'),
             timeInEle = me.lookupReference('timeIn'),
-            timeOutEle = me.lookupReference('timeOut');
+            timeOutEle = me.lookupReference('timeOut'),
+            customerID = vm.get("currentEmp").CustomerID;
         
         dateEle.validate();
         projectEle.validate();
@@ -578,7 +602,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
             var newWTR = Ext.create('Breeze.model.record.WorkTime', {
 	            Record_Date: date,
-                Customer_ID: STI.currentEmp.CustomerID,
+                Customer_ID: customerID,
                 Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
                 End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
 	            ID: 0,
@@ -635,8 +659,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
 
     updateOrCreateWTR: function(WTR) {
         var me = this,
+            vm = me.getViewModel(),
+            currentPrefs = vm.get("userPreferences").getAt(0).data,
             WTRObj = new Object();
-        
+
         WTRObj.Customer_ID = WTR.Customer_ID;
         WTRObj.ID          = WTR.ID;
         WTRObj.employee_id = WTR.Employee_ID;
@@ -654,7 +680,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         }
         
         if (WTR.Start_Time !== null) {
-            if (STI.currentPrefs.ViewTimeLocal == true) {
+            if (currentPrefs.ViewTimeLocal == true) {
                 tempDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getHours(), WTR.Start_Time.getMinutes(), WTR.Start_Time.getSeconds());
                 // WTRObj.Start_Time = dateProcessor(tempDate);
                 WTRObj.Start_Time = tempDate

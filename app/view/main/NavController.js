@@ -158,7 +158,6 @@ Ext.define('Breeze.view.main.NavController', {
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
         this.punchClass = Ext.create('Breeze.api.Punch');
-        this.empInfoClass = Ext.create('Breeze.api.employee.Information');
 
         this.addStoreToViewModel(
             'Breeze.store.reporting.Routes',
@@ -183,9 +182,6 @@ Ext.define('Breeze.view.main.NavController', {
         this.loadAccess();
         this.loadEmployee();
         this.loadPunchSettings();
-        this.loadCurrentPunchPolicy();                      // for STI.currentPunchPolicy
-        this.loadCurrentEmployeeInfo();                     // for STI.currentEmp
-        this.loadCurrentPrefs();                            // for STI.currentPrefs
         this.loadConfigAndPreferences();
         this.updateAttendanceStatus();
     },
@@ -280,33 +276,6 @@ Ext.define('Breeze.view.main.NavController', {
                 vm.set('punch.hasTimeKron', data.hasTimeKron);
             }
         );
-    },
-
-    /** 
-     * Load current punch policy and set it into global variable STI.
-    */
-    loadCurrentPunchPolicy: function(){
-        this.punchClass.getPolicyForEmployee().then(function(r) {
-            STI.currentPunchPolicy = r;
-        });
-    },
-
-    loadCurrentEmployeeInfo: function(){
-        this.empInfoClass.getCurrentInfo().then(function(r) {
-            STI.currentEmp = r;
-        })
-    },
-
-    loadCurrentPrefs: function(){
-        var prefStore = Ext.create(
-            'Breeze.store.user.Preferences',
-            {
-                offset: 240,
-                limit: 25 
-            });
-        prefStore.load(function(records, operation, success) {
-            STI.currentPrefs = records[0].data;
-        });
     },
 
     /**

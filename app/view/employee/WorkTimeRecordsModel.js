@@ -19,6 +19,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
         endDate: undefined,
         showPunches: false,
         workTimeRecords: null,
+        currentEmp: null,
+        currentPunchPolicy: null,
         // Labels for columns in time sheet view, updated when selected dates change
         sheetDayLabels: {
             day1: 'Day 1',
