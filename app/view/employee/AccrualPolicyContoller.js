@@ -69,6 +69,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     loadAdjustInfo: function(category, date, showScheduled){
         var vm = this.getViewModel(),
             me = this;
+        var category = Object.defVal(category, vm.get('categoryid')),
+            date = Object.defVal(date, this.lookup('viewDateField').getValue()),
+            showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryAdjustInfo(
             vm.get('targetEmployee'),
             category,
@@ -84,7 +87,8 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             // recordingYearField.resumeEvents();
             // viewDateField.resumeEvents();
             var vm = me.getViewModel();
-            vm.get('categoryRules').loadData(r.rules);
+            // vm.get('categoryRules').loadData(r.rules);
+            this.processRules(r.rules);
             var info = vm.get('categoryAdjust');
             // Update activeDay to match returned viewDate
             // vm.set('activeDay', info.get('viewDate'));
@@ -119,6 +123,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     loadPoint: function(category, date, showScheduled){
         var me = this,
             vm = me.getViewModel();
+        var category = Object.defVal(category, vm.get('categoryid')),
+            date = Object.defVal(date, this.lookup('viewDateField').getValue()),
+            showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryPointInTime(
             vm.get('targetEmployee'),
             category,
@@ -132,6 +139,46 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         }).catch((err) => {
             console.info('Error loading category point in time', err);
         });
+    },
+
+    /**
+     * Process rule records before loading into store,
+     * adding calculated attribute3s
+     * @param {Array} data 
+     */
+    processRules: function(data){
+        var vm = this.getViewModel(),
+            processed = [],
+            ruleStore = vm.get('categoryRules'),
+            map = {
+                accformDay: 'ruleCount',
+                accformInc: 'ruleAmount',
+                accformPer: 'rulePer',
+                accformUnit: 'ruleUnit',
+                ruleName: 'ruleName',
+                ruleStart: 'ruleStart',
+                ruleEnd: 'ruleEnd',
+                occurrences: 'occurrences',
+                total: 'total',
+                recordingMode: 'recordingMode',
+                ruleModified: 'ruleModified'
+            };
+        for(var i = 0; i < data.length; i++){
+            var rDat = data[i],
+                msMonth = '1',
+                msDay = '1';
+            if(rDat.ruleCount.split('-').length > 1){
+                [msMonth, msDay] = rDat.ruleCount.split('-');
+            }
+
+            var nDat = vm.mapFromRecord(map, rDat, true);
+            nDat.msMonth = msMonth;
+            nDat.msDay = msDay;
+            nDat.accrualChanged = false;
+            processed.push(nDat);
+        }
+
+        ruleStore.loadData(processed);
     },
 
     //==[Renderers]==
@@ -213,6 +260,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     //     console.info('next');
     // },
 
+    /**
+     * Handle rule add button click ('+')
+     */
     onAccrualRuleAdd: function(){
         var me = this,
             vm = this.getViewModel(),
@@ -289,6 +339,11 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         );
     },
 
+    /**
+     * Event handler for accrual rule delete icon ('x')
+     * @param {*} grid Accrual rule grid
+     * @param {*} info Record info
+     */
     onAccrualRuleDelete: function(grid, info){
         var store = grid.getStore(),
             record = info.record,
@@ -296,9 +351,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         
         var start = new Date(record.get('ruleStart')),
             end = new Date(record.get('ruleEnd')),
-            activeDate = new Date(vm.get('categoryAdjust.viewDate'));
+            activeDate = this.lookup('viewDateField').getValue();
         
-        if(start <= activeDate && activeDate <= ruleEnd){
+        if(start <= activeDate && activeDate <= end){
             store.remove(record);
 
             Ext.toast({
@@ -308,6 +363,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             });
         } else {
             // TODO: What should happen here?
+            console.info('date out of range');
         }
     },
 
@@ -776,6 +832,63 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     },
 
+    onSave: function(){
+        var vm = this.getViewModel(),
+            carryOver = vm.get('carryOverSettings'),
+            category = vm.get('categoryAdjust');
+
+        var calType = this.lookup('calendarType').getValues().calTypeRadio,
+            activeDate = this.lookup('viewDateField').getValue();
+        
+
+        var params = {
+            wait_date: Ext.Date.format(new Date(category.get('wait_date')), 'm/d/Y'),
+            accrue: category.get('allowAccrual'),
+            cal_type: calType,
+            carry_over_expires: '1/1/1900'
+        };
+
+        var ruleParams = this.gatherAccrualRuleData(activeDate);
+
+        if (category.get('allowAccrual')) {
+            ruleParams = this.gatherAccrualRuleData(activeDate);
+        }
+
+        if (carryOver.enabled) {
+            if (carryOver.option == 1) {
+                params.carry_over = vm.get('carryMax');
+            } else {
+                params.carry_over = 0.0;
+            }
+
+            if (carryOver.expires) {
+                let expires = category.get('carryExpires');
+                if (!expires || expires.toString().length == 0) {
+                    params.carry_over_expires = '1/1/1900';
+                } else {
+                    params.carry_over_expires = Ext.Date.format(new Date(expires), 'm/d/Y');
+                }
+            }
+        } else {
+            params.carry_over = -1.0;
+        }
+
+        var me = this;
+
+        this.api.accrual.saveCategoryAdjust(
+            vm.get('targetEmployee'), vm.get('categoryId'), params, ruleParams
+        ).then((r)=>{
+            Ext.toast(r);
+            me.loadAdjustInfo();
+            me.loadPoint();
+        }).catch((err)=>{
+            Ext.toast(err);
+            if(err.error){
+                console.warn('Error saving category adjust: ', err.error);
+            }
+        });
+    },
+
     // == Other ==
 
     /**
@@ -870,9 +983,57 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     },
 
-    save: function(){
-        var vm = this.getViewModel();
-        console.info('save');
-    }
+    gatherAccrualRuleData: function(activeDate){
+        var vm = this.getViewModel(),
+            rules = vm.get('categoryRules'),
+            ruleCount = rules.getCount(),
+            activeDate = new Date(activeDate);
 
+        // Map object to be used by model's mapFromRecords method
+        var propMap = {
+            rule_names: 'ruleName',
+            accform_incs: 'accformInc',
+            accform_units: 'accformUnit',
+            accform_pers: 'accformPer',
+            accform_days: 'accformDay'
+        };
+
+
+        /**
+         * Check if rule is in range
+         * @param {Object} rule 
+         * @param {Date} date 
+         * @return {Boolean} true or false
+         */
+        var ruleInRange = function(rule, date){
+            return (
+                new Date(rule.get('ruleStart')) <= date &&
+                date <= new Date(rule.get('ruleEnd'))
+            );
+        };
+
+        var collectedRules = []
+        
+        var idx = 0, rec = rules.getAt(0);
+
+        if(ruleCount > 0){
+            while(
+                new Date(rec.get('ruleStart')) > activeDate ||
+                activeDate > new Date(rec.get('ruleEnd')) && idx < ruleCount
+            ){
+                idx++;
+                rec = rules.getAt(idx);
+            }
+        }
+
+        for(var i=idx; i<ruleCount; i++){
+            let r = rules.getAt(i);
+            if(ruleInRange(r, activeDate)){
+                collectedRules.push(r);
+            }
+        }
+
+        return vm.mapFromRecords(prop, collectedRules);
+    }
+    
 });

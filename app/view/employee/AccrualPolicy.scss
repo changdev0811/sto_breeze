@@ -90,3 +90,9 @@
     $ui: 'small-text',
     $font-size: map-get($root-font-sizes, 'detail') - 4pt   
 );
+
+// Smaller text size for accrual policy grid
+@include gridcell-ui(
+    $ui: 'employee-ap-grid',
+    $font-size: map-get($root-font-sizes, 'detail') - 2pt !important
+);

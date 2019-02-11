@@ -1,11 +1,11 @@
 /**
  * View Model for My Accrual Policy view
  * @class AccrualPolicyViewModel
- * @extends Ext.app.ViewModel
+ * @extends Breeze.viewmodel.Base
  * @memberof Breeze.view.employee
  */
 Ext.define('Breeze.view.employee.AccrualPolicyModel', {
-    extend: 'Ext.app.ViewModel',
+    extend: 'Breeze.viewmodel.Base',
     alias: 'viewmodel.employee.accrualpolicy',
 
     data: {
@@ -790,5 +790,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyModel', {
                 }
             ]
         },
-    }
+    },
+
+
 });

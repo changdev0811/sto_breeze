@@ -71,12 +71,46 @@ Ext.define('Breeze.api.employee.AccrualPolicy', {
      * @api saveEmployeeCategoryAdjust
      * @param {String} employeeId ID of employee adjustment is for
      * @param {Number} categoryId Target category ID
-     * @param {Objet} category Category Adjustment data object
-     * @param {Object} rules Accrual Rules store
+     * @param {Objet} category Category Adjustment parameters
+     * @param {Object} rules Accrual Rules parameters
      * @return {Promise} Promise resolving with success toast or rejecting with error toast
      */
-    saveCategoryAdjust: function(employeeId, categoryId, category, rules){
-        var api = this.api;
+    saveCategoryAdjust: function(employeeId, categoryId, categoryParams, rules){
+        var api = this.api,
+            params = Ext.Object.merge({
+                employee_id: employeeId, category_id: categoryId
+            }, categoryParams, rules);
+        return new Promise((resolve, reject)=>{
+            api.serviceRequest(
+                'saveEmployeeCategoryAdjust',
+                params,
+                true, false,
+                function(r){
+                    var resp = api.decodeJsonResponse(r);
+                    if(resp.success){
+                        resolve({
+                            type: 'info',
+                            message: 'Category Adjust successfully saved',
+                            timeout: 'info'
+                        });
+                    } else {
+                        reject({
+                            type: 'error',
+                            message: resp.err,
+                            timeout: 'error'
+                        });
+                    }
+                },
+                function(err){
+                    reject({
+                        type: 'error',
+                        message: 'Unknown error occured',
+                        timeout: 'error',
+                        error: err
+                    });
+                }
+            )
+        })
         
     },
 

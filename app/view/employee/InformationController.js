@@ -1939,7 +1939,7 @@ Ext.define('Breeze.view.employee.InformationController', {
             });
         } else {
             if(form.isValid()){
-                this.apiClass.information.uploadPicture(form, vm.get('viewerId')).then((r)=>{
+                this.apiClass.information.uploadPicture(form, vm.get('employeeId')).then((r)=>{
                     console.info('pass');
                     vm.set('photo', r.path);
                     Ext.toast({
