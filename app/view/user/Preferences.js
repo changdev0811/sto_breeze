@@ -128,7 +128,10 @@ Ext.define('Breeze.view.user.Preferences', {
                                         name: 'cbViewSupervisorDashboard',
                                         label: '',
                                         boxLabel: 'View Supervisor Dashboard at Login',
-                                	    bind: '{params.ViewSupervisorDashboard}'
+                                	    bind: {
+                                            value: '{params.ViewSupervisorDashboard}',
+                                            hidden: '{accessLevel < 14}'
+                                        }
                                     },
                                     {
                                         name: 'cbViewMessageOfTheDay',
@@ -159,7 +162,8 @@ Ext.define('Breeze.view.user.Preferences', {
                                     {
                                         name: 'cbViewTimeLocal',
                                         boxLabel: 'View Local Time instead of UTC',
-                                	    bind: '{params.ViewTimeLocal}'
+                                        bind: '{params.ViewTimeLocal}',
+                                        hidden: true
                                     },
                                     {
                                         name: 'cbClockOutSignOut',
@@ -169,10 +173,7 @@ Ext.define('Breeze.view.user.Preferences', {
                                     {
                                         name: 'cbYaagCalendarView',
                                         boxLabel: 'YAAG Calendar Mode',
-                                        bind: '{params.YaagCalendarView}',
-                                        listeners: {
-                                            change: 'enableYCalType'
-                                        }
+                                        bind: '{params.YaagCalendarView}'
                                     },
                                     {
                                         xtype: 'selectfield',
@@ -183,7 +184,8 @@ Ext.define('Breeze.view.user.Preferences', {
                                         valueField: 'id',
                                         bind: {
                                             store: '{calendarTypes}',
-                                            value: '{params.YaagCalendarType}'
+                                            value: '{params.YaagCalendarType}',
+                                            disabled: '{!params.YaagCalendarView}'
                                         }
                                     },
 

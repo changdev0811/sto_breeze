@@ -1,6 +1,6 @@
 /**
- * View Model class for Employee Information reporting view
- * @class InformationModel
+ * View Model class for Employee Preferences
+ * @class Preferences
  * @namespace Breeze.view.user.Preferences
  * @alias viewmodel.user.preferences
  */

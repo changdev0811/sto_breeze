@@ -543,7 +543,9 @@ Ext.define('Breeze.view.main.NavController', {
 
     onUserPreferencesRoute: function() {
         console.info('User Preferences Route');
-        var info = Ext.create('Breeze.view.user.Preferences');
+        var info = Ext.create('Breeze.view.user.Preferences', {
+            viewModel: { parent: this.getViewModel() }
+        });
         this.changeContent(info);
     },
 

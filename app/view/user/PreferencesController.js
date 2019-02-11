@@ -79,14 +79,6 @@ Ext.define('Breeze.view.user.PreferencesController', {
         );
     },
 
-    /** 
-     * handler for toggling of enable/disable status of selectfield
-    */
-    enableYCalType: function(checkbox, newValue, oldValue, eOpts){
-        console.log("disable checkbox", newValue);
-        var yaagSltFld = this.lookup('yaagCalendarType');
-        yaagSltFld.setDisabled(newValue);
-    },
 
     //onMenuNightModeChange: function(checkbox, newValue, oldValue, eOpts){
     //    console.log(`${(newValue)? 'night' : 'day'} theme`);
