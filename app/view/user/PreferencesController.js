@@ -64,20 +64,17 @@ Ext.define('Breeze.view.user.PreferencesController', {
         console.info('Save Clicked');
         var me = this,
             params = this.getViewModel().getData().params;
-        me.preferencesApi.makeApiCall(
-            'UpdateUserPreferences',
-            {
-                'ConfigInfo': Ext.JSON.encode(params)
-            }
-        ).then(
-            function(r){
-                console.info("Updating User Preferences success",r);
-            }
-        ).catch(
-            function(err){
-                console.info("Updating User Preferences failed",err);
-            }
-        );
+        
+        me.preferencesApi.savePrefs(Ext.JSON.encode(params))
+            .then(
+                function(r){
+                    console.info("Updating User Preferences success",r);
+                }
+            ).catch(
+                function(err){
+                    console.info("Updating User Preferences failed",err);
+                }
+            );
     },
 
     /** 

@@ -20,7 +20,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      * Initialize component handler
      */
     onInit: function(component, eOpts){
-
+        console.log("final checking with STI", STI);
         this.api = Ext.create('Breeze.api.Employee');
         this.companyApi = Ext.create('Breeze.api.Company');
         this.punchApi = Ext.create('Breeze.api.Punch');
@@ -461,6 +461,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         dialog.show();
     },
 
+    /** 
+     * the change listener for Time IN and Time OUT columns
+    */
     onTimeChange: function (cmp, newVal, oldVal) {
         var record = cmp.getParent().ownerCmp.getRecord();
         
@@ -479,6 +482,9 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.updateOrCreateWTR(record.data);
     },
 
+    /** 
+     * the change listener for Date and Project columns
+    */
     onCellChange: function (cmp, newVal, oldVal) {
         var record = cmp.getParent().ownerCmp.getRecord();
         this.updateOrCreateWTR(record.data);
@@ -555,19 +561,32 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 cust = me.api.auth.getCookies().cust,
                 emp = me.api.auth.getCookies().emp,
                 startTime = timeInEle.getValue(),
-                endTime = timeOutEle.getValue();
+                endTime = timeOutEle.getValue(),
+                projectID = projectEle.getValue();
 
             // This record is for adding new record
-            var newWTR = {
-                Record_Date: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
-                Customer_ID: cust,
+            // var newWTR = {
+            //     Record_Date: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
+            //     Customer_ID: cust,
+            //     Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
+            //     End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
+            //     ID: 0,
+            //     Project_ID: projectID,
+            //     Total_Time: null,
+            //     Employee_ID: emp
+            // }
+
+            var newWTR = Ext.create('Breeze.model.record.WorkTime', {
+	            Record_Date: date,
+                Customer_ID: STI.currentEmp.CustomerID,
                 Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
                 End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
-                ID: 0,
-                Project_ID: projectEle.getValue(),
-                Total_Time: null,
-                Employee_ID: emp
-            }
+	            ID: 0,
+	            Project_ID: projectID,
+	            Total_Time: null,
+                Deduction: null,
+	            Employee_ID: emp
+	        });
 
             dlg.hide();
             this.onAddNewWTRDialogCancel(dlg);
@@ -575,8 +594,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
              * We need to do something here.
              * Ajax call - isTimeSheetValidForNewData
             */
-            // me.updateOrCreateWTR(newWTR.data);
-            me.updateOrCreateWTR(newWTR);
+            me.updateOrCreateWTR(newWTR.data);
+            // me.updateOrCreateWTR(newWTR);
         }
     },
 
@@ -599,36 +618,65 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         timeOutEle.clearValue();
     },
 
+    isEndTimeLess: function(baseTime, startTime, endTime) {
+        if (endTime == null) {
+            return false;
+        }
+        var d = new Date(baseTime);
+        var tmpStartTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+        var tmpEndTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+
+        if (tmpEndTime < tmpStartTime) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     updateOrCreateWTR: function(WTR) {
-        var WTRObj = new Object();
+        var me = this,
+            WTRObj = new Object();
         
         WTRObj.Customer_ID = WTR.Customer_ID;
         WTRObj.ID          = WTR.ID;
         WTRObj.employee_id = WTR.Employee_ID;
-        WTRObj.record_date = WTR.Record_Date;
+        WTRObj.record_date = WTR.Record_Date.getFullYear() + "/" + (WTR.Record_Date.getMonth() + 1) + "/" + WTR.Record_Date.getDate();
 
-        var date = new Date(WTR.Record_Date);
+        var tempDate,
+            date = new Date(WTRObj.record_date);
+
+        var dateProcessor = function(date) {
+            var tempDateStr, YMD, TMS;
+            tempDateStr = date.toLocaleString('en-GB');
+            YMD = tempDateStr.split(",").shift().split("/").reverse().join("-");
+            TMS = tempDateStr.split(",").pop().trim();
+            return [YMD, TMS].join("T");
+        }
         
         if (WTR.Start_Time !== null) {
-            var sTimeLocal = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getHours(), WTR.Start_Time.getMinutes(), WTR.Start_Time.getSeconds()),
-                sTimeUTC = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getUTCHours(), WTR.Start_Time.getUTCMinutes(), WTR.Start_Time.getUTCSeconds());
-            // should implement User Preferences usage.
-            // if (STI.currentPrefs.ViewTimeLocal == ture) {
-                WTRObj.Start_Time = sTimeLocal;
-            // } else {
-            //     WTRObj.Start_Time = sTimeUTC;
-            // }
+            if (STI.currentPrefs.ViewTimeLocal == true) {
+                tempDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getHours(), WTR.Start_Time.getMinutes(), WTR.Start_Time.getSeconds());
+                // WTRObj.Start_Time = dateProcessor(tempDate);
+                WTRObj.Start_Time = tempDate
+            } else {
+                tempDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.Start_Time.getUTCHours(), WTR.Start_Time.getUTCMinutes(), WTR.Start_Time.getUTCSeconds());
+                // WTRObj.Start_Time = dateProcessor(tempDate);
+                WTRObj.Start_Time = tempDate
+            }
         } else {
             WTRObj.Start_Time = null;
         }
 
         if (WTR.End_Time !== null) {
-            // var addDay = this.isEndTimeLess(WTR.Record_Date, WTR.Start_Time, WTR.End_Time);
-            var addDay = false;
+            var addDay = this.isEndTimeLess(WTR.Record_Date, WTR.Start_Time, WTR.End_Time);
             if (addDay) {
-                WTRObj.End_Time = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+                tempDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+                // WTRObj.End_Time = dateProcessor(tempDate);
+                WTRObj.End_Time = tempDate;
             } else {
-                WTRObj.End_Time = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+                tempDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), WTR.End_Time.getHours(), WTR.End_Time.getMinutes(), WTR.End_Time.getSeconds());
+                // WTRObj.End_Time = dateProcessor(tempDate);
+                WTRObj.End_Time = tempDate;
             }
         } else {
             WTRObj.End_Time = null;
@@ -648,18 +696,15 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         }
         
         WTRObj.Total_Time = (WTR.Total_Time == null) ? 0 : WTR.Total_Time;
-        me.api.makeApiCall(
-            'updateWorkTime',
-            {
-                'wt': WTRObj,
-                'offsetUseDate': WTRObj.Start_Time
-            } 
-        ).then(function(r) {
-            var interval = 50;
-            setTimeout(function() { me.refreshWTV() }, interval);
-        }).catch(function(err) {
-
-        });
+        
+        me.api.updateWTR(WTRObj)
+            .then(function(r) {
+                var interval = 50;
+                console.log("WorkTimeRecord saving success!");
+                // setTimeout(function() { me.refreshWTV() }, interval);
+            }).catch(function(err) {
+                console.log("WorkTimeRecord saving fail!");
+            });
         console.log("final WTRObj", WTRObj);
     },
 
