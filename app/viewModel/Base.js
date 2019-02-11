@@ -42,6 +42,13 @@ Ext.define('Breeze.viewmodel.Base', {
         return output;
     },
 
+    /**
+     * Pull records using map into object of lists, returning an object with properties holding
+     * delimited lists of all source record properties
+     * @param {Object} map Object mapping output names (attributes) to input properties (values)
+     * @param {Object} source Source Array, object, or store
+     * @param {Boolean} flat If true, don't treat source as containing model records
+     */
     mapFromRecords: function(map, source, flat=false){
         var output = {},
             templ = Ext.clone(map),
@@ -54,7 +61,13 @@ Ext.define('Breeze.viewmodel.Base', {
         if(flat){
             records = source;
         } else {
-            records = source.getData().items;
+            if(Array.isArray(source)){
+                // Array of records
+                records = source.map((r)=>{return r.getData();});
+            } else {
+                // Store containing recorfds
+                records = source.getData().items;
+            }
         }
         for(let i=0;i<records.length;i++){
             let record = records[i];

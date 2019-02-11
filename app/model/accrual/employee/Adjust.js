@@ -23,7 +23,7 @@ Ext.define('Breeze.model.accrual.employee.Adjust', {
         { name: "categoryName", type: "string" }, 
         { name: "departmentName", type: "string" }, 
         { name: "employeeName", type: "string" }, 
-        { name: "hire_date", type: "date" }, 
+        { name: "hire_date", type: "string" }, 
         { name: "isallowed", type: "boolean" }, 
         { name: "recorded", type: "integer" }, 
         { name: "recordingYear", type: "integer" }, 

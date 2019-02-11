@@ -56,7 +56,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
     buttonAlign: 'right',
     buttons: [
         { 
-            text: 'Save', /* handler: 'onPrintExcel',*/
+            text: 'Save', itemId: 'save', handler: 'onSave',
             ui: 'confirm alt', style: 'width:125pt',
             hidden: true,
             bind: { hidden: '{isRestricted}' }
@@ -308,6 +308,9 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     ui: 'plain wtr-button',
                                     bind: {
                                         hidden: '{isRestricted}'
+                                    },
+                                    listeners: {
+                                        tap: 'onAccrualRuleAdd'
                                     }
                                 },
                             ]
@@ -319,8 +322,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
                             reference: 'accrualRuleGrid',
 
-                            ui: 'employee-fyi-grid', userCls: [
+                            ui: [
                                 'employee-fyi-grid', 
+                                'employee-ap-grid'
+                            ], userCls: [
+                                'employee-fyi-grid',
                                 'no-background'
                             ],
 
@@ -332,7 +338,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             
                             defaults: {
                                 cell: {
-                                    ui: 'employee-fyi-grid employee-fyi-tree-item',
+                                    ui: [
+                                        'employee-fyi-grid', 
+                                        'employee-fyi-tree-item',
+                                        'employee-ap-grid'
+                                    ]
                                 },
                                 userCls: 'no-border',
                             },
@@ -650,7 +660,23 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                             '<tpl if="recording_mode == 20"> Days</tpl>',
                                             '<tpl if="recording_mode == 21"> Hours</tpl>',
                                         '</tpl>'
-                                    ]
+                                    ],
+                                    // Delete interval tool
+                                    cell: {
+                                        toolDefaults: {
+                                            ui: 'employeeinfo-grid-tool',
+                                            zone: 'end'
+                                        },
+                                        tools: [
+                                            {
+                                                iconCls: 'x-fas fa-times',
+                                                handler: 'onAccrualRuleDelete',
+                                                bind: {
+                                                    hidden: '{isRestricted}'
+                                                }
+                                            }
+                                        ]
+                                    }
 
                                 },
                             ],
