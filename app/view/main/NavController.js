@@ -521,7 +521,7 @@ Ext.define('Breeze.view.main.NavController', {
     onHomeRoute: function() {
         this.changeContent(
             Ext.create('Breeze.view.dashboard.Personal', {
-                data: { employee: undefined }
+                data: { employee: this.getViewModel().get('userId') }
             })
         );
     },
