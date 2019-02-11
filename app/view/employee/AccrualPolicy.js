@@ -646,6 +646,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     text: 'Occurrences',
                                     dataIndex: 'occurrences', itemId: 'occurrences',
                                     // flex: 2,
+                                    menu: null, menuDisabled: true,
                                     tpl: [
                                         '<tpl if="occurrences &lt; 0">---</tpl>',
                                         '<tpl if="occurrences &gt;= 0">{occurrences}</tpl>'
@@ -655,6 +656,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     text: 'Total Time', 
                                     dataIndex: 'total', itemId: 'totalTime',
                                     // flex: 2,
+                                    menu: null, menuDisabled: true,
                                     tpl: [
                                         '<tpl if="occurrences &lt; 0">---</tpl>',
                                         '<tpl if="occurrences &gt;= 0">{total}',

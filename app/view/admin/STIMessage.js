@@ -10,7 +10,7 @@ Ext.define('Breeze.view.admin.STIMessage', {
 
     viewModel:{
         data:{
-            path:Ext.getResourcePath('ReleaseNotes.pdf'),
+            path:Ext.getResourcePath('../../app/resources/ReleaseNotes.pdf'),
         }
     },
 

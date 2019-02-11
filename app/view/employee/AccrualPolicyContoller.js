@@ -869,9 +869,11 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         var params = {
             wait_date: Ext.Date.format(new Date(category.get('wait_date')), 'm/d/Y'),
+            active_date: activeDate,
             accrue: category.get('allowAccrual'),
             cal_type: calType,
-            carry_over_expires: '1/1/1900'
+            carry_over_expires: '1/1/1900',
+            monthly_specials: ''
         };
 
         var ruleParams = this.gatherAccrualRuleData(activeDate);
