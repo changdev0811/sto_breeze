@@ -3,6 +3,7 @@
  * and launch() the Application class.
  * @namespace Breeze
  */
+
 Ext.application({
     extend: 'Breeze.Application',
 

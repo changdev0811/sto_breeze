@@ -262,6 +262,106 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
                 }
             ]
         }
-    ]
+    ],
 
+    addNewWTRDialog: {
+        xtype: 'dialog',
+        // ui: 'dark-themed-dialog',
+        ui: 'light-themed-dialog',
+        title: {
+            text: 'Add New WorkTime Record',
+            ui: 'light-themed-dialog',
+        },
+        tools: [
+            {
+                iconCls: 'x-fa fa-times',
+                ui: 'light-themed-dialog',
+                handler: 'onCloseDialog'
+            }
+        ],
+        layout: 'vbox',
+        items: [
+            {
+                xtype: 'container',
+                layout: 'hbox',
+                items: [
+                    {
+                        xtype: 'datefield',
+                        label: 'Date',
+                        reference: 'date',
+                        required: true
+                    },
+                    {
+                        xtype: 'spacer',
+                        width: '8pt'
+                    },
+                    {
+                        xtype: 'selectfield',
+                        label: 'Project',
+                        reference: 'project',
+                        required: true,
+                        bind: {
+                            store: '{projects}',
+                        },
+                        displayField: 'Name',
+                        valueField: 'ID'
+                    }
+                ]
+            },
+            {
+                xtype: 'container',
+                layout: 'hbox',
+                items: [
+                    {
+                        xtype: 'selectfield',
+                        label: 'Time IN',
+                        reference: 'timeIn',
+                        required: true,
+                        bind: {
+                            store: 'accrualShiftChoices'
+                        },
+                        displayField: 'time',
+                        valueField: 'value'
+                    },
+                    {
+                        xtype: 'spacer',
+                        width: '8pt'
+                    },
+                    {
+                        xtype: 'selectfield',
+                        label: 'Time OUT',
+                        reference: 'timeOut',
+                        required: true,
+                        bind: {
+                            store: 'accrualShiftChoices'
+                        },
+                        displayField: 'time',
+                        valueField: 'value'
+                    }
+                ]
+            }
+        ],
+        buttons: [
+            {
+                xtype: 'button',
+                text: 'Save',
+                ui: 'confirm alt',
+                handler: 'onAddNewWTRDialogSave'
+            },
+            {
+                xtype: 'spacer', width: '8pt'
+            },
+            {
+                xtype: 'button',
+                text: 'Cancel',
+                ui: 'decline alt',
+                handler: 'onDialogCancel',
+                data: {
+                    // cleanup function after closing dialog
+                    // cancelableAction: 'onCreateShiftSegmentDialogCancel'
+                    cancelableAction: 'onAddNewWTRDialogCancel'
+                }
+            }
+        ]
+    }
 });

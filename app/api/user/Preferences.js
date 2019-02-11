@@ -9,25 +9,22 @@
 Ext.define('Breeze.api.user.Preferences', {
     extend: 'Breeze.api.Base',
 
-    makeApiCall: function(method, params){
+    savePrefs: function(param){
         var api = this.api;
         return new Promise(function(resolve, reject){
             api.serviceRequest(
-                method,
-                params,
+                'UpdateUserPreferences',
+                {
+                    ConfigInfo: param
+                },
                 true,
                 true,
                 function(r){
-                    console.info(`"${method}" call success`, r);
-                    Ext.getStore('UserPreferencesStore').load(function(records, operation, success) {
-                        if(success){
-                            console.log(records);
-                        }
-                    });
+                    console.info("'UpdateUserPreferences' call success", r);
                     resolve(r);
                 },
                 function(err){
-                    console.warn(`"${method}" call failed`, err);
+                    console.warn("'UpdateUserPreferences' call failed", err);
                     reject(err);
                 }
             );

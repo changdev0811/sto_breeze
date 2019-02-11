@@ -16,9 +16,11 @@ Ext.define('Breeze.store.accrual.static.ShiftChoices', {
     constructor: function(cfg){
         var me = this;
         cfg = cfg || {};
+        var inc = 15,               // increment
+            steps = 24 * 60 / inc;
         // IEFF building 24 hour range values
         var times = (function(){
-            return function(){for(var b=[],a=0,c=0;48>a;a++,c=30*a)b.push(c);
+            return function(){for(var b=[],a=0,c=0;steps>a;a++,c=inc*a)b.push(c);
                 return b}().map(function(b){var a=Math.floor(b/60)%12;
                 var c=720>b?"AM":"PM";a=(0==a?12:a)+":"+(b%60)
                 .toZeroPaddedString(2)+c;return{value:b,time:a}});

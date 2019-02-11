@@ -19,7 +19,8 @@ Ext.define('Breeze.view.user.PreferencesController', {
         var nightMode = (themeName === 'night')? true : false;
         console.log('theme name', themeName);
         console.log('nightMode', nightMode);
-		this.getViewModel().set('nightMode', (this.theme.getMode() == 'night') ? 1 : 0);
+		// TODO: Uncomment if night time mode breaks, commented out while resolving merge conflict
+		//this.getViewModel().set('nightMode', (this.theme.getMode() == 'night') ? 1 : 0)
         // Load UserPreferences
         this.addStoreToViewModel(
             'Breeze.store.user.Preferences',
@@ -63,26 +64,17 @@ Ext.define('Breeze.view.user.PreferencesController', {
         console.info('Save Clicked');
         var me = this,
             params = this.getViewModel().getData().params;
-        me.preferencesApi.makeApiCall(
-            'UpdateUserPreferences',
-            {
-                'ConfigInfo': Ext.JSON.encode(params)
-            }
-        ).then(
-            function(r){
-                Ext.toast({
-                    type: 'info',
-                    message: 'Successfully updated user preferences',
-                    timeout: 'info'
-                });
-                Ext.fireEvent('refreshuser');
-                console.info("Updating User Preferences success",r);
-            }
-        ).catch(
-            function(err){
-                console.info("Updating User Preferences failed",err);
-            }
-        );
+        
+        me.preferencesApi.savePrefs(Ext.JSON.encode(params))
+            .then(
+                function(r){
+                    console.info("Updating User Preferences success",r);
+                }
+            ).catch(
+                function(err){
+                    console.info("Updating User Preferences failed",err);
+                }
+            );
     },
 
 

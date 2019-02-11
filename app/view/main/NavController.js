@@ -165,6 +165,7 @@ Ext.define('Breeze.view.main.NavController', {
         this.apiClass = Ext.create('Breeze.api.Auth');
         this.empClass = Ext.create('Breeze.api.Employee');
         this.punchClass = Ext.create('Breeze.api.Punch');
+
         this.addStoreToViewModel(
             'Breeze.store.reporting.Routes',
             'reportRoutes',

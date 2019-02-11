@@ -140,5 +140,33 @@ Ext.define('Breeze.api.employee.WorkTimeRecords', {
                 }
             )
         });
-    }
+    },
+
+    /** 
+    * Add or Update WorkTime Record
+    * @param {Object} WTRObj new or updated WorkTime Record Object
+   */
+    updateWTR: function (WTRObj) {
+        var api = this.api;
+        return new Promise(function (resolve, reject) {
+            api.serviceRequest(
+                'updateWorkTime',
+                {
+                    offset: 240,
+                    wt: WTRObj,
+                    offsetUseDate: WTRObj.Start_Time
+                },
+                true,
+                true,
+                function (r) {
+                    console.info("'updateWorkTime' call success", r);
+                    resolve(r);
+                },
+                function (err) {
+                    console.warn("'updateWorkTime' call failed", err);
+                    reject(err);
+                }
+            );
+        });
+    },
 });
