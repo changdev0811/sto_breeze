@@ -1,7 +1,8 @@
 /**
  * Extended version of ViewController with extras
  * @class Base
- * @namespace Breeze.controller.Base
+ * @memberof Breeze.controller
+ * @extends Ext.app.ViewController
  */
 Ext.define('Breeze.controller.Base', {
     extend: 'Ext.app.ViewController',
@@ -16,6 +17,8 @@ Ext.define('Breeze.controller.Base', {
      *  - createOpts: object to pass to create call (options)
      *  - loadOpts: object to pass to load call, can include callback
      *      e.g. callback: function(success, records, op)
+     * @function
+     * @memberof Breeze.controller.Base
      */
     addStoreToViewModel: function(storeNamespace, storeName, options){
         var vm = this.getViewModel();
@@ -47,6 +50,7 @@ Ext.define('Breeze.controller.Base', {
      *      Model
      * @return {Boolean} Returns true if store is successfully added, 
      *      false otherwise
+     * @memberof Breeze.controller.Base
      */
     addLoadedStoreToViewModel: function(store, storeName){
         var me = this,
@@ -89,6 +93,7 @@ Ext.define('Breeze.controller.Base', {
      *  - createOpts: object to pass to create call (options)
      *  - loadOpts: object to pass to load call, can include callback
      *      e.g. callback: function(success, records, op)
+     * @memberof Breeze.controller.Base
      */
     loadStoreForViewModel: function(storeNamespace, options){
         var vm = this.getViewModel();
@@ -115,7 +120,9 @@ Ext.define('Breeze.controller.Base', {
      * @param {(Ext.data.Record|Object)} recordSource Data record source (model record
      *      or regular object)
      * @param {String} dataName Name to use for storage in viw model
-     * @param {String} model Optional model to use to store as record
+     * @param {String|Object} model Optional model to use to store as record, or 
+     *      class / namespace of model class
+     * @memberof Breeze.controller.Base
      */
     copyRecordToViewModel: function(recordSource, dataName, model=null){
         // var replace = Object.defVal(replace, true),
@@ -151,7 +158,15 @@ Ext.define('Breeze.controller.Base', {
                 Ext.clone(recordSource)
             );
         } else {
-            var rec = Ext.create(model, {data: Ext.clone(recordSource)});
+            var rec = null;
+            if(typeof model == 'string'){
+                rec = Ext.create(model);//, {data: Ext.clone(recordSource)});
+                rec.set(Ext.clone(recordSource));
+                
+            } else {
+                rec = model.loadData(Ext.clone(recordSource));
+            }
+
             this.getViewModel().set(
                 dataName,
                 rec
@@ -164,6 +179,7 @@ Ext.define('Breeze.controller.Base', {
      * @param {String} store Store name
      * @param {Object} args Parameters to pass to store constructor
      * @return {Promise} Promise resolving with store or rejecting on error
+     * @memberof Breeze.controller.Base
      */
     loadStore: function(store, args){
         var args = Object.defVal(args, {});
@@ -186,6 +202,7 @@ Ext.define('Breeze.controller.Base', {
      * Handle refresh tool button click
      * 
      * Override in extending controllers to replace default behavior
+     * @memberof Breeze.controller.Base
      */
     onRefreshTool: function(c, t, eOpts){
         console.info('Refresh tool');
@@ -200,6 +217,7 @@ Ext.define('Breeze.controller.Base', {
      * Handle print tool button click
      * 
      * Override in extending controllers to replace default behavior
+     * @memberof Breeze.controller.Base
      */
     onPrintTool: function(c, t, eOpts){
         console.info('Print tool');

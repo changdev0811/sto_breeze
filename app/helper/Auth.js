@@ -12,7 +12,12 @@ Ext.define('Breeze.helper.Auth', {
     */
 
     statics: {
-        
+        // Access level constants, as returned by getAccess
+        accessLevel: {
+            SUPER_ADMIN: 15,
+            SUPERVISOR: 14,
+            EMPLOYEE: 13
+        },
         /**
          * Constant cookie field names
          */

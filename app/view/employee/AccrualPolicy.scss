@@ -1,0 +1,92 @@
+/**
+    Styles for Employee My Accrual Policies view
+    /view/employee/AccrualPolicy.js
+*/
+
+// Style for component text
+.employee-accrual-policy-cmptext {
+    font-size: map-get($root-font-sizes, 'detail');
+    color: map-get($employee-fyi-text-colors, 'light');
+    padding-top: 5pt;
+}
+
+/*
+ Class for accrual policy ledger numbers
+*/
+.employee-accrual-policy-ledger {
+    &.small{
+        font-size: map-get($root-font-sizes, 'detail') - 2pt !important,
+    }
+    display: flex; width: 100%;
+    & > .sign {
+        width: 1em;
+        color: map-get($employee-fyi-text-colors, 'light');
+    }
+    & > .value{
+        flex: 1;
+        flex-grow: 1;
+        text-align: right;
+        color: map-get($employee-fyi-text-colors, 'light');
+        &.negative{
+            color: lighten($alert-color, 15%) !important;
+        }
+    }
+}
+
+@include panel-ui(
+    $body-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0)
+    ),
+    $header-color: map-get($admin-text-colors, 'base'),
+    $background-color: map-get($employee-fyi-colors,'base'),
+    $header-background-color: map-get($employee-fyi-colors,'base'),
+    $body-background-color: map-get($employee-fyi-colors,'base'),
+    $ui: 'employee-accrual-policy-base'
+);
+
+@include displayfield-ui(
+    $input-color: #ffffff,
+    $input-font-size: map-get($root-font-sizes, 'detail'),
+    $input-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    $ui: 'employee-accrual-policy-display-field',
+);
+
+@include field-ui(
+    $label-color: map-get($employee-fyi-text-colors,'light'),
+    $focused-label-color: map-get($employee-fyi-text-colors,'light'),
+    $label-font-size: map-get($root-font-sizes, 'detail'),
+    $label-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0.5, right: 0.5, bottom: 0.125)
+    ),
+    // $label-font-size: 12pt !important,
+    $ui: 'employee-accrual-policy-display-field',
+);
+
+@include displayfield-ui(
+    $input-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 0, right: 0.5, bottom: 0.125)
+    ) !important,
+    $ui: 'employee-accrual-policy-display-field-ledger',
+);
+
+
+@include field-ui(
+    $ui: 'employee-accrual-policy-display-field-ledger-small',
+    $label-font-size: map-get($root-font-sizes, 'detail') - 2pt !important,
+    $label-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.125, left: 1, right: 0.5, bottom: 0.125)
+    )
+);
+
+// Small text button used in end of prev. year / end of next year buttons
+@include button-ui(
+    $ui: 'small-text',
+    $font-size: map-get($root-font-sizes, 'detail') - 4pt   
+);
