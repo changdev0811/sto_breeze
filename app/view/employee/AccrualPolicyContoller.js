@@ -63,16 +63,22 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     loadAdjustInfo: function(category, date, showScheduled){
         var vm = this.getViewModel(),
             me = this;
-        
         this.api.accrual.categoryAdjustInfo(
             vm.get('targetEmployee'),
             category,
             date,
             showScheduled
         ).then((r)=>{
+            // var viewDateField = me.lookup('viewDateField'),
+            //     recordingYearField = me.lookup('recordingYearField');
+            // viewDateField.suspendEvents(false);
+            // recordingYearField.suspendEvents(false);
             me.copyRecordToViewModel(r,'categoryAdjust','Breeze.model.accrual.employee.Adjust');
+            viewDateField.suspendEvents(false);
+            // recordingYearField.resumeEvents();
+            // viewDateField.resumeEvents();
             var vm = me.getViewModel();
-            vm.get('categoryRules').load(r.rules);
+            vm.get('categoryRules').loadData(r.rules);
             var info = vm.get('categoryAdjust');
             // Update activeDay to match returned viewDate
             // vm.set('activeDay', info.get('viewDate'));
@@ -160,6 +166,9 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         var vm = this.getViewModel(),
             date = new Date(vm.get('categoryAdjust.viewDate').setYear(cmp.getValue())),
             scheduled = vm.get('showScheduled');
+        if(cmp.getValue() == vm.get('categoryId')){
+            return null;
+        }
         this.loadAdjustInfo(cmp.getValue(), date, scheduled);
         this.loadPoint(cmp.getValue(), date, scheduled);
     },
@@ -169,16 +178,21 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             cat = vm.get('categoryId'),
             date = new Date(vm.get('categoryAdjust.viewDate').setYear(cmp.getValue())),
             scheduled = vm.get('showScheduled');
+        // if(cmp.getValue() == vm.get('categoryAdjust.recordingYear')){
+        //     return null;
+        // }
         this.loadAdjustInfo(cat, date, scheduled);
         this.loadPoint(cat, date, scheduled);
     },
 
     onViewDateChange: function(cmp, newValue, oldValue){
-        
         var vm = this.getViewModel(),
             cat = vm.get('categoryId'),
             date = newValue,
             scheduled = vm.get('showScheduled');
+        if(newValue == vm.get('categoryAdjust.viewDate')){
+            return null;
+        }
         this.loadAdjustInfo(cat, date, scheduled);
         this.loadPoint(cat, date, scheduled);
     },

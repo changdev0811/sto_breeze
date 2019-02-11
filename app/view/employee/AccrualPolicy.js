@@ -217,7 +217,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     ui: 'fyi fyi-text',
                                     //name: 'viewdate_field',
                                     width: '170pt',
-                                    // reference: 'viewDate',
+                                    reference: 'viewDateField',
                                     picker: null,
                                     // picker: {
                                     //     xtype: 'datepicker',
@@ -251,11 +251,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             ui: 'fyi fyi-text', userCls: 'fyi-fieldset no-padding no-border',
                             width: '160pt',
                             label: 'Recording Year:',
-                            // reference: 'recordingYearSelect',
+                            reference: 'recordingYearField',
                             labelAlign: 'left', labelWidth: 'auto',
                             store: 'Years',
                             displayField: 'Year', valueField: 'Year',
-                            value: (new Date()).getYear() + 1900,
+                            // value: (new Date()).getYear() + 1900,
                             bind: {
                                 value: '{categoryAdjust.recordingYear}'
                                 // value: '{recordingYear}'
@@ -326,10 +326,10 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
                             hidden: true,
 
-                            flex: 1, layout: 'hbox',
-                            hideHeaders: true,
+                            flex: 1,
+                            hideHeaders: false,
                             rootVisible: false,
-
+                            grouped: true,
                             defaults: {
                                 cell: {
                                     ui: 'employee-fyi-grid employee-fyi-tree-item',
@@ -340,10 +340,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
 
                             columns: [
                                 {
-                                    xtype: 'gridcolumn',
+                                    xtype: 'datecolumn',
                                     text: 'From',
-                                    dataIndex: 'text',
+                                    dataIndex: 'ruleStart',
                                     flex: 2,
+                                    draggable: false, hidable: false, sortable: false
                                 },
 
                                 {
@@ -361,7 +362,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                 {
                                     xtype: 'gridcolumn',
                                     text: 'Occurrences',
-                                    dataIndex: 'text',
+                                    dataIndex: 'occurtences',
                                     flex: 4,
                                 },
                                 {
@@ -373,7 +374,8 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             ],
                             //reference: 'departmentTree',
                             bind: {
-                                hidden: '{!categoryAdjust.allowAccrual}'
+                                hidden: '{!categoryAdjust.allowAccrual}',
+                                store: '{categoryRules}'
                             }
                         }
 
