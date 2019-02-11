@@ -95,7 +95,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         '{Category_Name}</div>'
                     ],
                     bind: {
-                        value: '{categoryAdjust.categoryId}',
+                        value: '{categoryId}',
                         store: '{categories}'
                     },
                     listeners: {
