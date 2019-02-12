@@ -61,16 +61,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
         height:'400pt',
         layout:'vbox',
         closeable: true,
-        ui: 'light-themed-dialog',
+        ui: 'dark-themed-dialog',
         title: {
             text: 'Punch Location',
-            ui: 'light-themed-dialog'
+            ui: 'dark-themed-dialog'
         },
 
         tools: [
             {
                 iconCls: 'x-fa fa-times',
-                ui: 'light-themed-dialog',
+                ui: 'dark-themed-dialog',
                 handler: 'onCloseDialog'
             }
         ],
@@ -267,15 +267,15 @@ Ext.define('Breeze.view.employee.WorkTimeRecords', {
     addNewWTRDialog: {
         xtype: 'dialog',
         // ui: 'dark-themed-dialog',
-        ui: 'light-themed-dialog',
+        ui: 'dark-themed-dialog',
         title: {
             text: 'Add New WorkTime Record',
-            ui: 'light-themed-dialog',
+            ui: 'dark-themed-dialog',
         },
         tools: [
             {
                 iconCls: 'x-fa fa-times',
-                ui: 'light-themed-dialog',
+                ui: 'dark-themed-dialog',
                 handler: 'onCloseDialog'
             }
         ],

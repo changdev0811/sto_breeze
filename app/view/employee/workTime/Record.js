@@ -18,6 +18,12 @@ Ext.define('Breeze.view.employee.workTime.Record', {
     items: [
         {
             xtype: 'panel',
+
+            ui: 'wtr-grid-panel',
+            userCls: 'employee-info-fieldset no-padding no-margin',
+            title: 'Worktime Reccords',
+            layout: 'vbox',
+            margin:'8pt 0pt 0pt 8pt',
             flex: 1,
             tools: [
                 {
@@ -26,7 +32,6 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     handler: 'showAddNewWTRDialog'
                 }
             ], 
-            layout: 'vbox',
             items: [{
                     reference: 'workTimeRecordGrid',
                     xtype: 'grid',
@@ -122,6 +127,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                     bind: {
                         store: '{workTimeRecords}'
                     },
+
                     columns: [
                         {
                             xtype: 'gridcolumn',

@@ -255,7 +255,7 @@ Ext.define('Breeze.view.employee.information.Company', {
                     //ui: 'employeeinfo-small-tabs',
                     tabBar: {
                         defaultTabUI: 'employeeinfo-small-tabs',
-                        shadow: 'false'
+                        shadow: false
                     },
                     reference: 'companyListTabs',
                     flex: 1,

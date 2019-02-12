@@ -26,6 +26,23 @@
     $body-color: map-get($wtr-text-colors,'base') !important
 );
 
+@include panel-ui(
+    $ui: 'wtr-grid-panel',
+    $header-background-color: map-get($wtr-colors, 'medium'),
+    $header-color: map-get($employee-info-text-colors,'base'),
+    $header-font-size: map-get($root-font-sizes, 'detail'),
+    $header-padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: ( top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $header-border-color: white,
+    $header-border-width: 1px 1px 0px 1px !important,
+    $body-border-color: white,
+    $body-border-width: 0px 1px 1px 1px !important,
+    $body-background-color: map-get($wtr-colors,'medium'),
+    $tool-font-size: 12pt
+);
+
 $wtr-side-head-font-size: 14pt;
 $wtr-side-body-font-size: 12pt;
 
@@ -69,9 +86,25 @@ $wtr-side-body-font-size: 12pt;
     background-color:map-get($wtr-colors,'base'); 
 }
 
+.x-component-employee-worktime-records-grid > .x-icon-el {
+    color:white !important;
+}
+
+
 @include gridcolumn-ui(
     $ui: 'employee-worktime-records-grid',
-    $font-size: 10pt
+    $font-size: 10pt,
+    $padding: edge-size-from-relative(
+        $base: $scoped-root-panel-body-padding-base,
+        $weights: (top: 0.25, left: 0.5, right: 0.5, bottom: 0.25)
+    ),
+    $color: map-get($wtr-text-colors, 'base'),
+    $background-color: transparent,
+    $selected-background-color: transparent,
+    $hovered-background-color: map-get($wtr-colors, 'medium'),
+    $sorted-background-color: map-get($wtr-colors, 'medium'),
+    $trigger-background-color: map-get($wtr-colors, 'medium'),
+    $sort-icon-color: map-get($wtr-text-colors, 'base'),
 );
 
 // --Adjustments to time at a glance labels in side--
