@@ -67,11 +67,14 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     /**
      * Load adjustment information for current category
      * Writes result to view model object 'categoryAdjust', and updates 'categoryRules' store
+     * @param {Number} category Category ID
+     * @param {Date} date Active date
+     * @param {boolean} showScheduled Show scheduled time
      */
     loadAdjustInfo: function(category, date, showScheduled){
         var vm = this.getViewModel(),
             me = this;
-        var category = Object.defVal(category, vm.get('categoryid')),
+        var category = Object.defVal(category, vm.get('categoryId')),
             date = Object.defVal(date, vm.get('categoryAdjust.viewDate')),
             showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryAdjustInfo(
@@ -121,11 +124,14 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     /**
      * Load category point in time info for current category and dates
+     * @param {Number} category Category ID
+     * @param {Date} date Active date
+     * @param {boolean} showScheduled Show scheduled time
      */
     loadPoint: function(category, date, showScheduled){
         var me = this,
             vm = me.getViewModel();
-            category = Object.defVal(category, vm.get('categoryid')),
+            category = Object.defVal(category, vm.get('categoryId')),
             date = Object.defVal(date, vm.get('categoryAdjust.viewDate')),
             showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryPointInTime(

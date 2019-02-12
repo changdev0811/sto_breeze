@@ -154,11 +154,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     }
                                 },
                                 {
-                                    name: 'yearType',
+                                    name: 'calTypeRadio',
                                     boxLabel: 'Fiscal',
                                     value: 47,
                                     bind: {
-                                        groupValue: '{calTypeRadio.calTypeRadio}'
+                                        groupValue: '{calendarType.calTypeRadio}'
                                     }
                                 },
                                 // Static component shown in restricted mode
