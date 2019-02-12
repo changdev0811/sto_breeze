@@ -111,10 +111,10 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
                     vm.set('carryOverSettings.option', 0);
                 }
             }
-            if(info.get('carryExpires' !== '1/1/1990')){
-                vm.set('carryOverSettings.expires', true);
-            } else {
+            if(info.get('carryExpires' == '1/1/1990')){
                 vm.set('carryOverSettings.expires', false);
+            } else {
+                vm.set('carryOverSettings.expires', true);
             }
 
 
