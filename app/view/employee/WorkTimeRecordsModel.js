@@ -39,8 +39,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
             ot3: null,
             ot4: null
         },
-        timeSheet: null,
-        secRights: null
+        timeSheet: null
     },
 
     // stores: {
@@ -109,7 +108,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsModel', {
         canEditWorkTime: {
             bind: {
                 rights: '{secRights}',
-                policy: '{punch.policy.Can_Adjust_Punches}',
+                policy: '{punch.policy}',
                 level: '{accessLevel}',
                 userId: '{userId}',
                 employeeId: '{employeeId}'
