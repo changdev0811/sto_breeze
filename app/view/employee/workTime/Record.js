@@ -149,6 +149,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                             editor: {
                                 field: {
                                     xtype: 'datepickerfield',
+                                    itemId: 'datePicker',
                                     listeners: {
                                         change: 'onCellChange'
                                     }
@@ -219,6 +220,7 @@ Ext.define('Breeze.view.employee.workTime.Record', {
                             editable: true,
                             editor: {
                                 xtype: 'selectfield',
+                                itemId: 'projectSelector',
                                 bind: {
                                     store: '{projects}',
                                 },

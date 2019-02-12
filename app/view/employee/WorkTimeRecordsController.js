@@ -21,7 +21,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
      */
     onInit: function(component, eOpts){
         this.api = Ext.create('Breeze.api.Employee');
-        this.empInfoClass = Ext.create('Breeze.api.employee.Information');
         this.companyApi = Ext.create('Breeze.api.Company');
         this.punchApi = Ext.create('Breeze.api.Punch');
         var weekSelect = this.lookup('weekSelector');
@@ -54,7 +53,6 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         this.loadProjects();
         this.loadWorkTimeRecords();
         this.loadCurrentEmployeeInfo();
-        this.loadCurrentPunchPolicy();                      // for STI.currentPunchPolicy
         this.loadAtAGlance();
         this.attachListenerToRecordGrid();
 
@@ -108,7 +106,8 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         var vm = me.getViewModel();
         var start = vm.get('startDate');
         var end = vm.get('endDate');
-        var lookupId = me.getViewModel().get('employeeId');
+        // var lookupId = vm.get('employeeId');
+        var lookupId = me.api.auth.getCookies().emp;
         
         /* Check if lookupId is null. Used to prevent erroneous call to loadAtAGlance
         by week selector prior to availability of prerequisite data */
@@ -137,6 +136,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         var me = this,
             vm = me.getViewModel(),
             emp = me.api.auth.getCookies().emp,
+            // emp = vm.get('employeeId'),
             start = vm.get('startDate'),
             end = vm.get('endDate');
         var ts_store = vm.getStore('timeSheetStore');
@@ -160,11 +160,12 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 },
                 callback: (records, operation, success) => {
                     if(success){
-                        // let ts_store = vm.get('timeSheetStore');
-                        vm.set(
-                            'timeSheet', 
-                            ts_store.getAt(0).data
-                        );
+                        if (typeof ts_store.getAt(0) != 'undefined'){
+                            vm.set(
+                                'timeSheet', 
+                                ts_store.getAt(0).data
+                            );
+                        }
                         resolve();
                     } else {
                         reject();
@@ -173,56 +174,13 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             });
         });
     },
-
-    getEmployeeRights: function() {
-        var me = this,
-            vm = me.getViewModel();
-        var sr_store = vm.getStore('secRightsStore');
-
-        if (!sr_store) {
-            me.addStoreToViewModel(
-                'Breeze.store.record.TimeSheet',
-                'secRightsStore'
-            );
-            sr_store = vm.getStore('secRightsStore');
-        } else {
-            sr_store.removeAll();
-        }
-        
-        return new Promise(function(resolve, reject){
-            sr_store.load({
-                callback: (records, operation, success) => {
-                    if(success){
-                        // let ts_store = vm.get('timeSheetStore');
-                        vm.set(
-                            'secRights', 
-                            sr_store.getAt(0).data
-                        );
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                }
-            });
-        });
-    },
-
-    /** 
-     * Load current punch policy and set it into global variable STI.
-    */
-    loadCurrentPunchPolicy: function(){
-        var me = this;
-        me.punchApi.getPolicyForEmployee().then(function(r) {
-            me.addLoadedStoreToViewModel(r, 'currentPunchPolicy');
-        });
-    },
-
+    
     /** 
      * Load current Employee Info
     */
     loadCurrentEmployeeInfo: function(){
         var me = this;
-        me.empInfoClass.getCurrentInfo().then(function(r) {
+        me.api.information.getCurrentInfo().then(function(r) {
             me.addLoadedStoreToViewModel(r, 'currentEmp');
         })
     },
@@ -235,6 +193,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             vm = me.getViewModel(),
             cust = me.api.auth.getCookies().cust,
             emp = me.api.auth.getCookies().emp,
+            // emp = vm.get('employeeId'),
             start = vm.get('startDate'),
             end = vm.get('endDate');
 
@@ -353,9 +312,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
         // console.info('Selected week changed');
         // console.info('Week:', comp.getSelectedWeek());
         // console.groupEnd();
-
-        var week = comp.getSelectedWeek();
-        var vm = this.getViewModel();
+        var me = this,
+            vm = me.getViewModel(),    
+            week = comp.getSelectedWeek();
+            
         vm.set('startDate', week.start);
         vm.set('endDate', week.end);
 
@@ -366,9 +326,10 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             var val = [names[i],'<br/>', days[i].getMonth() + 1, '/', days[i].getDate()].join('');
             vm.set(prop,val);
         }
-        this.loadWorkTimeRecords();
-        this.loadTimeSheetRecords();
-        this.loadAtAGlance();
+        // me.loadWorkTimeRecords();
+        // me.loadTimeSheetRecords();
+        // me.loadAtAGlance();
+        me.refreshWTV();
     },
 
     /**
@@ -509,6 +470,14 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     */
     onCellChange: function (cmp, newVal, oldVal) {
         var record = cmp.getParent().ownerCmp.getRecord();
+        if(cmp.getItemId() == 'datePicker') {
+            // itemId - 'datePicker'
+            record.set('Record_Date', newVal);
+        }
+        if(cmp.getItemId() == 'projectSelector') {
+            // itemId - 'projectSelector'
+            record.set('Project_ID', newVal);
+        }
         this.updateOrCreateWTR(record.data);
     },
 
@@ -584,22 +553,12 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
                 date = dateEle.getValue(),
                 cust = me.api.auth.getCookies().cust,
                 emp = me.api.auth.getCookies().emp,
+                // emp = vm.get('employeeId'),
                 startTime = timeInEle.getValue(),
                 endTime = timeOutEle.getValue(),
                 projectID = projectEle.getValue();
 
             // This record is for adding new record
-            // var newWTR = {
-            //     Record_Date: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
-            //     Customer_ID: cust,
-            //     Start_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(startTime/60), startTime%60, 0),
-            //     End_Time: new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(endTime/60), endTime%60, 0),
-            //     ID: 0,
-            //     Project_ID: projectID,
-            //     Total_Time: null,
-            //     Employee_ID: emp
-            // }
-
             var newWTR = Ext.create('Breeze.model.record.WorkTime', {
 	            Record_Date: date,
                 Customer_ID: customerID,
@@ -727,7 +686,7 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             .then(function(r) {
                 var interval = 50;
                 console.log("WorkTimeRecord saving success!");
-                // setTimeout(function() { me.refreshWTV() }, interval);
+                setTimeout(function() { me.refreshWTV() }, interval);
             }).catch(function(err) {
                 console.log("WorkTimeRecord saving fail!");
             });
@@ -735,12 +694,16 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
     },
 
     refreshWTV: function() {
-        var me = this;
-        me.loadTimeSheet()
-        .then(function(r) {
-            me.getEmployeeRights();
-            // we need to do something here
-            me.loadWorkTimeRecords();
-        })
+        var me = this,
+            vm = me.getViewModel(),
+            punchPolicy = vm.get("punch.policy");
+        // me.loadTimeSheet()
+            // .then(function(r) {
+                me.loadWorkTimeRecords();
+                if (punchPolicy.Can_Use_TimeSheets == true){
+                    me.loadTimeSheetRecords();
+                }
+                me.loadAtAGlance();
+            // });
     }
 });
