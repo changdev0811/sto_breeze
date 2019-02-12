@@ -9,7 +9,8 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         'Breeze.api.Employee',
         'Breeze.api.employee.AccrualPolicy',
         'Breeze.store.category.CompactList',
-        'Breeze.model.accrual.employee.Rule'
+        'Breeze.model.accrual.employee.Rule',
+        'Breeze.store.accrual.RecordedYears'
     ],
 
     onInit: function(component, eOpts){
@@ -31,10 +32,11 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
         vm.set('categoryId', parseInt(component.getData().categoryId));
 
         //  TODO: Determine if needed
-        // this.addStoreToViewModel(
-        //     'Breeze.store.accrual.RecordedYears',
-        //     'recordedYears', {load: false}
-        // );
+        this.addStoreToViewModel(
+            'Breeze.store.accrual.RecordedYears',
+            'recordedYears', 
+            {load: false, createOpts: { employeeId: vm.get('targetEmployee') }}
+        );
 
         this.addStoreToViewModel(
             'Breeze.store.category.CompactList',
@@ -49,7 +51,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         console.info('Controller ready');
         
-        // Initial API Calls
+        // // Initial API Calls
         this.loadAdjustInfo(
             vm.get('categoryId'),
             new Date(),
@@ -65,12 +67,15 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
     /**
      * Load adjustment information for current category
      * Writes result to view model object 'categoryAdjust', and updates 'categoryRules' store
+     * @param {Number} category Category ID
+     * @param {Date} date Active date
+     * @param {boolean} showScheduled Show scheduled time
      */
     loadAdjustInfo: function(category, date, showScheduled){
         var vm = this.getViewModel(),
             me = this;
-        var category = Object.defVal(category, vm.get('categoryid')),
-            date = Object.defVal(date, this.lookup('viewDateField').getValue()),
+        var category = Object.defVal(category, vm.get('categoryId')),
+            date = Object.defVal(date, vm.get('categoryAdjust.viewDate')),
             showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryAdjustInfo(
             vm.get('targetEmployee'),
@@ -78,26 +83,26 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             date,
             showScheduled
         ).then((r)=>{
-            // var viewDateField = me.lookup('viewDateField'),
-            //     recordingYearField = me.lookup('recordingYearField');
-            // viewDateField.suspendEvents(false);
-            // recordingYearField.suspendEvents(false);
             me.copyRecordToViewModel(r,'categoryAdjust','Breeze.model.accrual.employee.Adjust');
-            // viewDateField.suspendEvents(false);
-            // recordingYearField.resumeEvents();
-            // viewDateField.resumeEvents();
-            var vm = me.getViewModel();
+            
+            var vm = me.getViewModel(),
+                years = vm.get('recordedYears'),
+                recYearField = this.lookup('recordingYearField');
+            recYearField.suspendEvents(false);
+            years.setCategoryId(vm.get('categoryId'));
+            years.updateProxy();
+            years.load({callback: function(){
+                recYearField.resumeEvents(true);
+            }});
+
             // vm.get('categoryRules').loadData(r.rules);
             this.processRules(r.rules);
             var info = vm.get('categoryAdjust');
-            // Update activeDay to match returned viewDate
-            // vm.set('activeDay', info.get('viewDate'));
-            // vm.set('recordingYear', info.recordingYear);
             // Set initial carry over option select field and carry over checkbox values
             // based on loaded carrymax value. See view model formulas for full behavior
-            vm.set('carryOverSettings.enabled', info.get('carryOver'));
+            vm.set('carryOverSettings.enabled', true);
             if(info.get('carryMax') < 0){
-                info.set('carryOverSettings.enabled', false);
+                vm.set('carryOverSettings.enabled', false);
                 vm.set('carryOverSettings.option', 0);
             } else {
                 if(info.get('carryMax') !== 0){
@@ -106,11 +111,13 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
                     vm.set('carryOverSettings.option', 0);
                 }
             }
-            if(info.get('carryExpires' !== '1/1/1990')){
-                vm.set('carryOverOptions.expires', true);
+            if(info.get('carryExpires' == '1/1/1990')){
+                vm.set('carryOverSettings.expires', false);
             } else {
-                vm.set('carryOverOptions.expires', false);
+                vm.set('carryOverSettings.expires', true);
             }
+
+
             console.info('adjust loaded');
         }).catch((e)=>{
             console.warn('error!',e);
@@ -119,12 +126,15 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     /**
      * Load category point in time info for current category and dates
+     * @param {Number} category Category ID
+     * @param {Date} date Active date
+     * @param {boolean} showScheduled Show scheduled time
      */
     loadPoint: function(category, date, showScheduled){
         var me = this,
             vm = me.getViewModel();
-        var category = Object.defVal(category, vm.get('categoryid')),
-            date = Object.defVal(date, this.lookup('viewDateField').getValue()),
+            category = Object.defVal(category, vm.get('categoryId')),
+            date = Object.defVal(date, vm.get('categoryAdjust.viewDate')),
             showScheduled = Object.defVal(showScheduled, vm.get('showScheduled'));
         this.api.accrual.categoryPointInTime(
             vm.get('targetEmployee'),
@@ -160,7 +170,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
                 ruleEnd: 'ruleEnd',
                 occurrences: 'occurrences',
                 total: 'total',
-                recordingMode: 'recordingMode',
+                recordingMode: 'recording_mode',
                 ruleModified: 'ruleModified'
             };
         for(var i = 0; i < data.length; i++){
@@ -220,13 +230,23 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
     onCategorySelect: function (cmp) {
         var vm = this.getViewModel(),
-            date = new Date(vm.get('categoryAdjust.viewDate').setYear(cmp.getValue())),
+            date = new Date(vm.get('categoryAdjust.viewDate')),
             scheduled = vm.get('showScheduled');
         if(cmp.getValue() == vm.get('categoryId')){
             return null;
         }
         this.loadAdjustInfo(cmp.getValue(), date, scheduled);
         this.loadPoint(cmp.getValue(), date, scheduled);
+    },
+
+    onCategoryChange: function(cmp, newVal, oldVal){
+        if(newVal !== oldVal){
+            var vm = this.getViewModel(),
+                date = new Date(vm.get('categoryAdjust.viewDate')),
+                scheduled = vm.get('showScheduled');
+            this.loadAdjustInfo(newVal, date ,scheduled)
+            this.loadPoint(newVal, date ,scheduled)
+        }
     },
 
     onRecordingYearSelect: function(cmp){
@@ -857,9 +877,11 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         var params = {
             wait_date: Ext.Date.format(new Date(category.get('wait_date')), 'm/d/Y'),
+            active_date: activeDate,
             accrue: category.get('allowAccrual'),
             cal_type: calType,
-            carry_over_expires: '1/1/1900'
+            carry_over_expires: '1/1/1900',
+            monthly_specials: ''
         };
 
         var ruleParams = this.gatherAccrualRuleData(activeDate);
@@ -870,7 +892,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         if (carryOver.enabled) {
             if (carryOver.option == 1) {
-                params.carry_over = vm.get('carryMax');
+                params.carry_over = category.get('carryMax'); //vm.get('carryMax');
             } else {
                 params.carry_over = 0.0;
             }
@@ -1068,7 +1090,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             }
         }
 
-        return vm.mapFromRecords(prop, collectedRules);
+        return vm.mapFromRecords(propMap, collectedRules);
     }
     
 });

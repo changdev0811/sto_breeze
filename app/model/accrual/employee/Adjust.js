@@ -16,7 +16,7 @@ Ext.define('Breeze.model.accrual.employee.Adjust', {
         { name: "allowAccrual", type: "boolean" }, 
         { name: "allowed", type: "integer" }, 
         { name: "calendarType", type: "integer" }, 
-        { name: "carryExpires", type: "date" }, 
+        { name: "carryExpires", type: "string" }, 
         { name: "carryMax", type: "integer" }, 
         { name: "carryOver", type: "integer" }, 
         { name: "categoryId", type: "integer" }, 

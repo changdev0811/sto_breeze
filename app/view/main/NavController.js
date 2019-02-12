@@ -271,7 +271,7 @@ Ext.define('Breeze.view.main.NavController', {
             console.warn('Failed to get user access level info:', err);
         })
 
-        me.empClass.getSecurityRights(vm.get('userId')).then((r)=>{
+        me.empClass.getSecurityRights(Breeze.helper.Auth.getCookies().emp).then((r)=>{
             vm.set('securityRights', r);
         }).catch((err)=>{
             console.warn('Failed to get security rights', err);

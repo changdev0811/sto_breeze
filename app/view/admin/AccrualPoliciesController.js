@@ -1497,7 +1497,7 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
     },
 
     /**
-     * Fires before entering edit mode for cell in Accrule Rules grid
+     * Fires before entering edit mode for cell in Accrual Rules grid
      * Allows editor to be disabled conditionally for specific cells
      * @param {Object} location Object containing location data for targeted cell
      * @param {Object} editor Reference to active editor instance
@@ -1534,31 +1534,6 @@ Ext.define('Breeze.view.admin.AccrualPoliciesController', {
             this.onAccrualRuleInfoBeforeEdit(location, editor);
             return true;
         }
-
-        // ==[Logic specific to 'from' column]==
-        if (columnItemId == 'from') {
-            if (location.recordIndex == firstRuleIndex) {
-                /*
-                    Record is first rule for group, so disable edit
-                */
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        // ==[Logic specific to 'through' column]==
-        if (columnItemId == 'through') {
-            if (location.recordIndex == lastRuleIndex) {
-                /*
-                    Record is last rule for group, so disable through edit
-                */
-                return false;
-            } else {
-                return true;
-            }
-        }
-
     },
 
     /**

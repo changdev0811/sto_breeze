@@ -1,7 +1,7 @@
 /**
  * Employee EmployeeAccrualPolicy View
  * @class AccrualPolicy
- * @memberof Breeze.view.employee.
+ * @memberof Breeze.view.employee
  * @extends Ext.Panel
  */
 Ext.define('Breeze.view.employee.AccrualPolicy', {
@@ -97,7 +97,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                         store: '{categories}'
                     },
                     listeners: {
-                        select: 'onCategorySelect'
+                        change: 'onCategoryChange'
                     }
                 },
 
@@ -154,11 +154,11 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     }
                                 },
                                 {
-                                    name: 'yearType',
+                                    name: 'calTypeRadio',
                                     boxLabel: 'Fiscal',
                                     value: 47,
                                     bind: {
-                                        groupValue: '{calTypeRadio.calTypeRadio}'
+                                        groupValue: '{calendarType.calTypeRadio}'
                                     }
                                 },
                                 // Static component shown in restricted mode
@@ -251,11 +251,12 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             label: 'Recording Year:',
                             reference: 'recordingYearField',
                             labelAlign: 'left', labelWidth: 'auto',
-                            store: 'Years',
+                            // store: 'Years',
                             displayField: 'Year', valueField: 'Year',
                             // value: (new Date()).getYear() + 1900,
                             bind: {
-                                value: '{categoryAdjust.recordingYear}'
+                                value: '{categoryAdjust.recordingYear}',
+                                store: '{recordedYears}'
                                 // value: '{recordingYear}'
                             },
                             listeners: {
@@ -358,7 +359,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                             },
                             listeners: {
                                 beforecompleteedit: 'onAccrualRuleBeforeEditComplete',
-                                // beforeedit: 'onAccrualRuleBeforeEdit'
+                                beforeedit: 'onAccrualRuleInfoBeforeEdit'
                             },
 
                             columns: [
@@ -645,6 +646,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     text: 'Occurrences',
                                     dataIndex: 'occurrences', itemId: 'occurrences',
                                     // flex: 2,
+                                    menu: null, menuDisabled: true,
                                     tpl: [
                                         '<tpl if="occurrences &lt; 0">---</tpl>',
                                         '<tpl if="occurrences &gt;= 0">{occurrences}</tpl>'
@@ -654,6 +656,7 @@ Ext.define('Breeze.view.employee.AccrualPolicy', {
                                     text: 'Total Time', 
                                     dataIndex: 'total', itemId: 'totalTime',
                                     // flex: 2,
+                                    menu: null, menuDisabled: true,
                                     tpl: [
                                         '<tpl if="occurrences &lt; 0">---</tpl>',
                                         '<tpl if="occurrences &gt;= 0">{total}',

@@ -39,6 +39,7 @@
         $weights: (top: 0, left: 0.5, right: 0.5, bottom: 0)
     ),
     $header-color: map-get($admin-text-colors, 'base'),
+    $header-font-size: map-path($root-panel-sizes, 'header' 'font'),
     $background-color: map-get($employee-fyi-colors,'base'),
     $header-background-color: map-get($employee-fyi-colors,'base'),
     $body-background-color: map-get($employee-fyi-colors,'base'),

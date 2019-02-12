@@ -40,7 +40,7 @@ Ext.define('Breeze.store.accrual.RecordedYears', {
         },
         reader: {
             type: 'json',
-            rootProperty: 'd.Rows'
+            rootProperty: 'd.Years'
         },
         pageParam: undefined,
         startParam: undefined
