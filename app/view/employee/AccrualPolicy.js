@@ -1,7 +1,7 @@
 /**
  * Employee EmployeeAccrualPolicy View
  * @class AccrualPolicy
- * @memberof Breeze.view.employee.
+ * @memberof Breeze.view.employee
  * @extends Ext.Panel
  */
 Ext.define('Breeze.view.employee.AccrualPolicy', {
