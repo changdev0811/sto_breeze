@@ -10,10 +10,6 @@
         "include": [
             "app.js",
             "app",
-            "app/api",
-            "app/helper",
-            "app/mixin",
-            "app/widget/",
             "lib",
             "overrides"
         ]

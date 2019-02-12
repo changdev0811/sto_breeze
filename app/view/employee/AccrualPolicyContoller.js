@@ -100,7 +100,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
             var info = vm.get('categoryAdjust');
             // Set initial carry over option select field and carry over checkbox values
             // based on loaded carrymax value. See view model formulas for full behavior
-            vm.set('carryOverSettings.enabled', info.get('carryOver'));
+            vm.set('carryOverSettings.enabled', true);
             if(info.get('carryMax') < 0){
                 vm.set('carryOverSettings.enabled', false);
                 vm.set('carryOverSettings.option', 0);
@@ -112,10 +112,12 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
                 }
             }
             if(info.get('carryExpires' !== '1/1/1990')){
-                vm.set('carryOverOptions.expires', true);
+                vm.set('carryOverSettings.expires', true);
             } else {
-                vm.set('carryOverOptions.expires', false);
+                vm.set('carryOverSettings.expires', false);
             }
+
+
             console.info('adjust loaded');
         }).catch((e)=>{
             console.warn('error!',e);
@@ -890,7 +892,7 @@ Ext.define('Breeze.view.employee.AccrualPolicyController', {
 
         if (carryOver.enabled) {
             if (carryOver.option == 1) {
-                params.carry_over = vm.get('carryMax');
+                params.carry_over = category.get('carryMax'); //vm.get('carryMax');
             } else {
                 params.carry_over = 0.0;
             }
