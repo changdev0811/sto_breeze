@@ -2,16 +2,25 @@
  * Static class providing various style rules for use with ListStylable
  * mixin and TreeStores
  * @class StyleRules
- * @namespace Breeze.helper.settings.StyleRules
+ * @memberof Breeze.helper.settings
  * @static
  */
 Ext.define('Breeze.helper.settings.StyleRules', {
     singleton: true,
 
+    /**
+     * Accepted 'actions' for employee sidebar/nav
+     * @constant
+     * @type {Array}
+     * @memberof Breeze.helper.settings.StyleRules
+     */
     actions: ['Cal','EmpInfo','FYI','YAG','WTV','cal','empinfo','fyi','yag','wtv'],
 
     /**
      * Icons and labels for trees built from list API responses
+     * @constant
+     * @type {Object}
+     * @memberof Breeze.helper.settings.StyleRules
      */
     list: {
         // Employee
