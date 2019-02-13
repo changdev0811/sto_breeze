@@ -53,10 +53,30 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
-        console.info('Store: ', vm.getStore('udcTree'));
         console.info('Leaving init');
     },
 
@@ -81,7 +101,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
             messages.push('Please select a Department or Employee.');
         }
 
-        if(vmData.reportParams.inccats == null){
+        if(vmData.reportParams.inccats == ''){
             valid = false;
             messages.push('Please select a Category.')
         }
@@ -119,8 +139,6 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
         
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
             selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
             // assign list of category ids as single string, joined with ','
