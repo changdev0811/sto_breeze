@@ -340,10 +340,6 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: '',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Report Date'
-                                    },
                                     bind: '{reportParams.sDate}'
                                 }
                             ]

@@ -331,10 +331,6 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliation', {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: '',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Report Date'
-                                    },
                                     bind: '{reportParams.sDate}'
                                 }
                             ]

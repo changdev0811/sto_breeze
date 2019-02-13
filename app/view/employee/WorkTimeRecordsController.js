@@ -699,11 +699,11 @@ Ext.define('Breeze.view.employee.WorkTimeRecordsController', {
             punchPolicy = vm.get("punch.policy");
         // me.loadTimeSheet()
             // .then(function(r) {
-                me.loadWorkTimeRecords();
-                if (punchPolicy.Can_Use_TimeSheets == true){
-                    me.loadTimeSheetRecords();
-                }
-                me.loadAtAGlance();
+        me.loadWorkTimeRecords();
+        if (punchPolicy.Can_Use_TimeSheets == true){
+            me.loadTimeSheetRecords();
+        }
+        me.loadAtAGlance();
             // });
     }
 });

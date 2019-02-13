@@ -483,19 +483,11 @@ Ext.define('Breeze.view.reporting.department.PayrollSummary', {
                                             items: [
                                                 {
                                                     label: 'From',
-                                                    picker: {
-                                                        xtype: 'datepicker',
-                                                        title: 'From Date'
-                                                    },
                                                     bind: '{reportParams.dStart}',
                                                     //required: true
                                                 },
                                                 {
                                                     label: 'To',
-                                                    picker: {
-                                                        xtype: 'datepicker',
-                                                        title: 'To Date'
-                                                    },
                                                     bind: '{reportParams.dEnd}',
                                                     //required: true
                                                 }
