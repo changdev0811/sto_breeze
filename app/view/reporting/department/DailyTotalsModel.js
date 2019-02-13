@@ -23,13 +23,14 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department Daily Totals Report',
-                inccats: '',
                 hhmm_format: true,
                 submit_approve: true,
                 submit_submit: false,
                 submit_unsubmit: false,
                 dStart: (new Date()),
                 dEnd: (new Date()),
+                dStartUtc: (new Date().toUTCString()),
+                dEndUtc: (new Date().toUTCString()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',

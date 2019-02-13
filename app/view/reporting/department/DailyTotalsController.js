@@ -66,7 +66,8 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
                 loadOpts: { callback: (success) => {
                     if(success){
                         let config = vm.get('companyConfig'),
-                            captions = config.getAt(0).get('Captions');
+                            companyParams = config.getAt(0),
+                            captions = companyParams.get('Captions');
                         vm.set(
                             'captions.projectSingular', 
                             captions.ProjectSingular
@@ -74,6 +75,18 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
                         vm.set(
                             'captions.projectPlural',
                             captions.ProjectPlural
+                        );
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
                         );
                     }
                 }}
@@ -151,25 +164,31 @@ Ext.define('Breeze.view.reporting.department.DailyTotalsController', {
         
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
-            // set selected category to the first selected record, if any, otherwise null
-            selectedCategory = (categoryRecords.length > 0)? categoryRecords[0] : null;
             // get array of selected categories, using map to filter out the IDs
             /*  TODO: +++Note: the following needs to have 'return' in the 
                 body-- might be missing elsewhere
             */
             selectedCategories = categoryRecords.map((r)=>{return r.getData().Category_Id});
             // assign list of category ids as single string, joined with ','
-            vm.set(
-                'reportParams.inccats',
-                selectedCategories.join(',')
-            );
+        vm.set(
+            'reportParams.inccats',
+            selectedCategories.join(',')
+        );
         
         // Gather selected projects
         var projectRecords = projectList.gatherSelected(),
-            selectedProjects = projectRecords.map((r)=>{return r.getData;});
+            selectedProjects = projectRecords.map((r)=>{return r.getData().ID;});
         vm.set(
             'reportParams.projids',
             selectedProjects.join(',')
+        );
+        vm.set(
+            'reportParams.dStartUtc',
+            vm.get('reportParams.dStart').toUTCString()
+        );
+        vm.set(
+            'reportParams.dEndUtc',
+            vm.get('reportParams.dEnd').toUTCString()
         );
     },
 
