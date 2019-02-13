@@ -109,7 +109,7 @@ Ext.define('Breeze.api.reporting.department.DeptDetails', {
         // Add additional params taken from config
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
         this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
-        this.appendParam(params, 'customer_id', cust);
+        this.appendParam(params, 'custid', cust);
 
         var reportKind = this.statics().report;
 
