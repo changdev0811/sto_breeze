@@ -140,7 +140,7 @@ Ext.define('Breeze.view.reporting.department.AbsenceSummaryController', {
         // Categories list method gatherSelected returns array of all records selected
         var categoryRecords = categoryList.gatherSelected(),
             // get array of selected categories, using map to filter out the IDs
-            selectedCategories = categoryRecords.map((r)=>{r.getData().Category_Id});
+            selectedCategories = categoryRecords.map((r)=>r.getData().Category_Id);
             // assign list of category ids as single string, joined with ','
             vm.set(
                 'reportParams.inccats',
