@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.department.Notes', {
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentNotes'
+        report: 'Notes'
     },
 
     /**
@@ -110,6 +110,7 @@ Ext.define('Breeze.api.reporting.department.Notes', {
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
         this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
         this.appendParam(params, 'customer_id', cust);
+        this.appendParam(params, 'userId', currentUser);
 
         var reportKind = this.statics().report;
 
