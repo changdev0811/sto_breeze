@@ -233,10 +233,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
                 // Update weeks
                 var weeks = vm.get('selectedWeeks').data.items;
                 // Set dStart and dEnd to null
-                vm.set('reportParams.dStart', null);
-                vm.set('reportParams.dEnd', null);
-                vm.set('reportParams.dStartUtc', null);
-                vm.set('reportParams.dEndUtc', null);
+                // vm.set('reportParams.dStart', null);
+                // vm.set('reportParams.dEnd', null);
+                // vm.set('reportParams.dStartUtc', null);
+                // vm.set('reportParams.dEndUtc', null);
                 // Set week_str to list of selected weeks
                 vm.set(
                     'reportParams.weeks_str',

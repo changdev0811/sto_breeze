@@ -55,10 +55,10 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryModel', {
                 date_type: 'weeks', // Either 'weeks' or 'date_range
                 weeks_str: '', // Weeks chosen, if using 'weeks' type
                 weeks_strUtc: '', // Weeks chosen (utc)
-                dStart: null, // start date, if using date_range
-                dStartUtc: null, // start date, if using date_range
-                dEnd: null, // end date, if using date_range
-                dEndUtc: null // end date, if using date_range
+                dStart: (new Date()),
+                dEnd: (new Date()),
+                dStartUtc: (new Date().toUTCString()),
+                dEndUtc: (new Date().toUTCString()),
             }
         };
         this.setData(data);
