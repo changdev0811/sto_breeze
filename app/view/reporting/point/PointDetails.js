@@ -308,10 +308,6 @@ Ext.define('Breeze.view.reporting.point.PointDetails', {
                                     xtype: 'datefield',
                                     name: 'reportDate',
                                     label: 'Date:',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: ''
-                                    },
                                     bind: '{reportParams.sDate}'
                                 }
                             ]
