@@ -18,12 +18,11 @@ Ext.define('Breeze.view.reporting.misc.HolidayListModel', {
          */
         var data = {
             reportParams: {
-                GroupByDept: true,
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Holiday List Report',
-                recyear: (new Date()).getYear() + 1900 // Defaults rec year to current year 
+                year: (new Date()).getYear() + 1900 // Defaults rec year to current year 
             }
         };
         this.setData(data);

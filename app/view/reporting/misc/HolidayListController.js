@@ -28,32 +28,32 @@ Ext.define('Breeze.view.reporting.misc.HolidayListController', {
             {exceptionHandler: this.onReportException}
         );
 
-        // Load User-Defined Categories tree store
-        this.addStoreToViewModel(
-            'Breeze.store.category.List',
-            'categoriesList',
-            { load: true }
-        );
-
-        // Load employees for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.reporting.parameters.Employees',
-            'employeesTree',
-            { load: true }
-        );
-
-        // Load departments for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.reporting.parameters.Departments',
-            'departmentsTree',
-            { load: true }
-        );
-
         // Load company config
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -92,20 +92,6 @@ Ext.define('Breeze.view.reporting.misc.HolidayListController', {
      * Refresh values in viewmodel for selected employees and category
      */
     refreshSelectedItems: function(){
-        var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem(),
-            categoryList = this.lookup('categoryList');
-
-        // Set myinclist to list of chosen employee IDs
-        vm.set(
-            'reportParams.incids', 
-            this.checkedTreeItems(
-                employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
-                    forceInt: false
-                }
-            ).join(',')
-        );
         
     },
 

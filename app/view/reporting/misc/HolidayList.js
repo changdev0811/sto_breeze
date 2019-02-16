@@ -118,7 +118,7 @@ Ext.define('Breeze.view.reporting.misc.HolidayList', {
                             labelAlign: 'left',
                             store: 'Years',
                             displayField: 'Year', valueField: 'Year',
-                            bind: { value: '{reportParams.recyear}' }
+                            bind: { value: '{reportParams.year}' }
                         }
                     ]
                 }
