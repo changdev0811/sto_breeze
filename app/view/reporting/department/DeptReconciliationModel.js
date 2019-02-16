@@ -23,7 +23,7 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliationModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department Reconciliation Report',
-                scheduledtime: null,
+                scheduledtime: false,
                 sdate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
