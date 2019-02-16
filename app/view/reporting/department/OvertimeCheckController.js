@@ -201,7 +201,7 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
         );
         
         var weekStore = vm.get('selectedWeeks'),
-            weeksStr = weekStore.data.items.map((r)=>r.data.start),
+            weeksStr = weekStore.data.items.map((r)=>r.data.startText),
             weeksStrUtc = weekStore.data.items.map((r)=>new Date(r.data.start).toUTCString());
 
         vm.set(
@@ -213,6 +213,40 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckController', {
             'reportParams.weeks_strUtc',
             weeksStrUtc.join('*')
         );
+
+        vm.set(
+            'reportParams.ot_type',
+            vm.get('valType')
+        );
+
+        if (vm.get('reportParams.ot_type') == 1) {
+            vm.set(
+                'reportParams.ot_value',
+                vm.get('ot_hours_daily')
+            );
+        } else {
+            vm.set(
+                'reportParams.ot_value',
+                vm.get('ot_hours_weekly')
+            );
+        }
+    },
+
+    radioChange: function(e, newVal, oldVal, eOpts) {
+        var vm = this.getViewModel();
+        if (newVal) {
+            // selected Daily Hours
+            vm.set(
+                'valType',
+                1
+            );
+        } else {
+            // selected Weekly Hours
+            vm.set(
+                'valType',
+                2
+            );
+        }
     },
 
     /**

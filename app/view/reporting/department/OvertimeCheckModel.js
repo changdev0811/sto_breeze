@@ -43,7 +43,8 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
                 RepSignature: false,
                 ReportTitle: 'Overtime Check Report',
                 hhmm_format: true,
-                ot_value: 8.0,
+                ot_type: null,
+                ot_value: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',

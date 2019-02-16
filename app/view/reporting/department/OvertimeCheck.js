@@ -329,6 +329,9 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheck', {
                                             reference: 'dailyHours',
                                             bind: {
                                                 groupValue: '{valType}'
+                                            },
+                                            listeners: {
+                                                change: 'radioChange'
                                             }
                                         },
                                         {
