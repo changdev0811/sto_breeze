@@ -401,10 +401,6 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                             xtype: 'datefield',
                             name: 'finish',
                             label: '',
-                            picker: {
-                                xtype: 'datepicker',
-                                title: 'As of Date'
-                            },
                             bind: '{reportParams.sDate}'
                         }
                     ]
@@ -538,19 +534,11 @@ Ext.define('Breeze.view.reporting.misc.QuickList', {
                                             items: [
                                                 {
                                                     label: 'From',
-                                                    picker: {
-                                                        xtype: 'datepicker',
-                                                        title: 'From Date'
-                                                    },
                                                     bind: '{reportParams.dStart}',
                                                     //required: true
                                                 },
                                                 {
                                                     label: 'To',
-                                                    picker: {
-                                                        xtype: 'datepicker',
-                                                        title: 'To Date'
-                                                    },
                                                     bind: '{reportParams.dEnd}',
                                                     //required: true
                                                 }

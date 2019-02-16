@@ -308,20 +308,12 @@ Ext.define('Breeze.view.reporting.misc.Attendance', {
                                     xtype: 'datefield',
                                     name: 'start',
                                     label: 'From',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'Start Date'
-                                    },
                                     bind: '{reportParams.dStart}'
                                 },
                                 {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: 'To',
-                                    picker: {
-                                        xtype: 'datepicker',
-                                        title: 'End Date'
-                                    },
                                     bind: '{reportParams.dEnd}'
                                 }
                             ]
