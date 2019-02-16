@@ -331,7 +331,7 @@ Ext.define('Breeze.view.reporting.department.DeptReconciliation', {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: '',
-                                    bind: '{reportParams.sDate}'
+                                    bind: '{reportParams.sdate}'
                                 }
                             ]
                         }
