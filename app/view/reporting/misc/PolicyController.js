@@ -35,25 +35,32 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
             { load: true }
         );
 
-        // Load employees for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.reporting.parameters.Employees',
-            'employeesTree',
-            { load: true }
-        );
-
-        // Load departments for tree selector
-        this.addStoreToViewModel(
-            'Breeze.store.reporting.parameters.Departments',
-            'departmentsTree',
-            { load: true }
-        );
-
         // Load company config
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Leaving init');
@@ -75,7 +82,11 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
             vm = this.getViewModel()
             vmData = vm.getData();
         
-        // TODO: Add check for selected policies once new API call is ready
+        // Check if 1 > policies was selected
+        if(vmData.reportParams.incids == ''){
+            valid = false;
+            messages.push('Please select one or more Policies.');
+        }
 
         if(!valid){
             // If validation failed, show error(s) in toast message
@@ -96,8 +107,12 @@ Ext.define('Breeze.view.reporting.misc.PolicyController', {
         var vm = this.getViewModel(),
             policyList = this.lookup('policyList');
 
-        // Set incids to chosen policies
-        // TODO: Implement once new API call is available
+        // Update accrual policy schedule ids from accrualPolicyList
+        var scheduleRecords = policyList.gatherSelected(),
+            selectedScheduleIds = scheduleRecords.map((r)=>{
+                return r.getData().ID;
+            }).join(',');
+        vm.set('reportParams.incids', selectedScheduleIds);
         
     },
 
