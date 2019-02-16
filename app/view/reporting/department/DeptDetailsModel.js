@@ -26,7 +26,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsModel', {
                 inccats: '',
                 ShowChart: null,
                 // Concerning selected departments/ids
-                idtype: 'emps', // According to existing code, this is always 'emps'
+                // idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
                 incmonths: '', // Recording year months
                 recyear: (new Date()).getYear() + 1900 // Defaults rec year to current year 
