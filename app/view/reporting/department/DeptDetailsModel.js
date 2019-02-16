@@ -24,7 +24,7 @@ Ext.define('Breeze.view.reporting.department.DeptDetailsModel', {
                 RepSignature: false,
                 ReportTitle: 'Department Details Report',
                 inccats: '',
-                ShowChart: null,
+                ShowChart: false,
                 // Concerning selected departments/ids
                 // idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
