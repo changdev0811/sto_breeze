@@ -29,6 +29,8 @@ Ext.define('Breeze.view.reporting.department.SummaryProjectModel', {
                 submit_unsubmit: false,
                 dStart: (new Date()),
                 dEnd: (new Date()),
+                dStartUtc: (new Date().toUTCString()),
+                dEndUtc: (new Date().toUTCString()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
