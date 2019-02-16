@@ -43,6 +43,11 @@ Ext.define('Breeze.view.reporting.department.TimeRecapModel', {
                 RepSignature: false,
                 ReportTitle: 'Time Recap Report',
                 hhmm_format: true,
+                hourly_only: false,
+                no_time: false,
+                showSSN: false,
+                weeks_str: '',
+                weeks_strUtc: '',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: ''

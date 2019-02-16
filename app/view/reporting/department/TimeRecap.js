@@ -322,7 +322,7 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                             bodyAlign: 'stretch',
                             ui: 'reporting',
                             name: 'hourly_only',
-                            bind: '{reportParams.hourly_only}'
+                            bind: '{reportParams.no_time}'
                         },
                         {
                             xtype: 'checkbox',
@@ -331,7 +331,7 @@ Ext.define('Breeze.view.reporting.department.TimeRecap', {
                             bodyAlign: 'stretch',
                             ui: 'reporting',
                             name: 'hourly_only',
-                            bind: '{reportParams.hourly_only}'
+                            bind: '{reportParams.showSSN}'
                         }
                     ]
                 },
