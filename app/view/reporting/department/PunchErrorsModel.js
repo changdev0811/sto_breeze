@@ -26,6 +26,8 @@ Ext.define('Breeze.view.reporting.department.PunchErrorsModel', {
                 ReportTitle: 'Punch Errors Report',
                 dStart: (new Date()),
                 dEnd: (new Date()),
+                dStartUtc: (new Date().toUTCString()),
+                dEndUtc: (new Date().toUTCString()),
                 hhmm_format: true,
                 errOption: 1,
                 // Concerning selected departments/ids

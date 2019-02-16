@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.department.PunchErrors', {
     
     statics: {
         ajaxCall: '',
-        report: 'DepartmentPunchErrors'
+        report: 'PunchErrors'
     },
 
     /**
@@ -110,6 +110,7 @@ Ext.define('Breeze.api.reporting.department.PunchErrors', {
         this.appendParam(params, 'RepLogoPath', cfg.get('RepLogoPath'));
         this.appendParam(params, 'CompanyName', cfg.get('CompanyName'));
         this.appendParam(params, 'customer_id', cust);
+        this.appendParam(params, 'user_id', currentUser);
 
         var reportKind = this.statics().report;
 
