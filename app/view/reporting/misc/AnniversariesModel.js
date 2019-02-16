@@ -27,7 +27,7 @@ Ext.define('Breeze.view.reporting.misc.AnniversariesModel', {
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
                 incmonths: '', // Recording year months
-                recyear: (new Date()).getYear() + 1900 // Defaults rec year to current year 
+                year: (new Date()).getYear() + 1900 // Defaults rec year to current year 
 
             }
         };

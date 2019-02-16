@@ -340,7 +340,7 @@ Ext.define('Breeze.view.reporting.misc.Anniversaries', {
                                     labelWidth: 'auto',
                                     labelAlign: 'left',
                                     store: 'Years',
-                                    bind: { value: '{reportParams.recyear}' },
+                                    bind: { value: '{reportParams.year}' },
                                     displayField: 'Year',
                                     valueField: 'Year',
                                     flex: 1
@@ -356,7 +356,7 @@ Ext.define('Breeze.view.reporting.misc.Anniversaries', {
                             shadow: false,
                             bind: {
                                 // Hide until a recording year is selected
-                                hidden: '{reportParams.recyear==null}'
+                                hidden: '{reportParams.year==null}'
                             },
                             items: [
                                 {
@@ -391,7 +391,7 @@ Ext.define('Breeze.view.reporting.misc.Anniversaries', {
                             bind: {
                                 store: '{monthList}',
                                 // Hide until recording year has been chosen
-                                hidden: '{reportParams.recyear==null}'
+                                hidden: '{reportParams.year==null}'
                             },
                             viewModel: true
                         }
