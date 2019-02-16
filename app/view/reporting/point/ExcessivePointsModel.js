@@ -23,8 +23,8 @@ Ext.define('Breeze.view.reporting.point.ExcessivePointsModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Excessive Points Report',
-                dStart: (new Date()),
-                dEnd: (new Date()),
+                sDate: (new Date()),
+                eDate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',

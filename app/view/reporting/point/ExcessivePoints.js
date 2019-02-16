@@ -308,13 +308,13 @@ Ext.define('Breeze.view.reporting.point.ExcessivePoints', {
                                     xtype: 'datefield',
                                     name: 'start',
                                     label: 'From',
-                                    bind: '{reportParams.dStart}'
+                                    bind: '{reportParams.sDate}'
                                 },
                                 {
                                     xtype: 'datefield',
                                     name: 'finish',
                                     label: 'To',
-                                    bind: '{reportParams.dEnd}'
+                                    bind: '{reportParams.eDate}'
                                 }
 
                             ]
