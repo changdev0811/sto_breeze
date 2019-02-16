@@ -324,6 +324,14 @@ Ext.define('Breeze.view.reporting.department.Daily', {
                                     label: '',
                                     boxLabel: 'Show Accruals',
                                     bind: '{reportParams.showacc}'
+                                },
+                                {
+                                    name: 'ShowRec',
+                                    inline: true,
+                                    label: '',
+                                    boxLabel: 'Show Recorded Time',
+                                    bind: '{reportParams.showrec}',
+                                    hidden: true
                                 }
 
                             ]

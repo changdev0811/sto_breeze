@@ -23,8 +23,9 @@ Ext.define('Breeze.view.reporting.department.DailyModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department Daily Report',
-                showadj: null,
-                showacc: null,
+                showadj: false,
+                showacc: false,
+                showrec: true,
                 sDate: (new Date()),
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
