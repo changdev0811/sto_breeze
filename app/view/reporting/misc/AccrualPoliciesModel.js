@@ -18,7 +18,6 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesModel', {
          */
         var data = {
             reportParams: {
-                GroupByDept: true,
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,

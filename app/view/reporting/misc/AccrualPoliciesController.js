@@ -40,7 +40,28 @@ Ext.define('Breeze.view.reporting.misc.AccrualPoliciesController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Leaving init');
