@@ -46,7 +46,9 @@ Ext.define('Breeze.view.reporting.department.OvertimeCheckModel', {
                 ot_value: 8.0,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                weeks_str: '',
+                weeks_strUtc: ''
             }
         };
         this.setData(data);
