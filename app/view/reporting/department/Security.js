@@ -81,6 +81,7 @@ Ext.define('Breeze.view.reporting.department.Security', {
                         // fieldset containing toolbar & departments
                         {
                             xtype: 'fieldset',
+                            reference: 'departments',
                             flex: 1,
                             layout: 'vbox',
                             title: 'Departments',
