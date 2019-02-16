@@ -26,7 +26,6 @@ Ext.define('Breeze.view.reporting.misc.LeaveRequestSummaryModel', {
                 sdate: (new Date()),
                 edate: (new Date()),
                 // Concerning selected departments/ids
-                idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
                 status: 0 // Request status, default to All
             }
