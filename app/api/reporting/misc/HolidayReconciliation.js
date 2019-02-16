@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.misc.HolidayReconciliation', {
     
     statics: {
         ajaxCall: '',
-        report: 'MiscHolidayReconciliation'
+        report: 'MiscHolidayReconcilliation'
     },
 
     /**
