@@ -18,14 +18,14 @@ Ext.define('Breeze.view.reporting.misc.DepartmentListModel', {
          */
         var data = {
             reportParams: {
-                GroupByDept: true,
                 LogoInHeader: false,
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Department List Report',
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
-                incids: ''
+                incids: '',
+                viewempty: false
             }
         };
         this.setData(data);

@@ -39,7 +39,28 @@ Ext.define('Breeze.view.reporting.misc.DepartmentListController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -64,7 +85,7 @@ Ext.define('Breeze.view.reporting.misc.DepartmentListController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department.');
+            messages.push('Please select one or more Departments.');
         }
 
         if(!valid){
@@ -84,14 +105,14 @@ Ext.define('Breeze.view.reporting.misc.DepartmentListController', {
      */
     refreshSelectedItems: function(){
         var vm = this.getViewModel(),
-            employeeSelectTree = this.lookup('employeeSelectTabs').getActiveItem();
+            employeeSelectTree = this.lookup('departments');
 
         // Set myinclist to list of chosen employee IDs
         vm.set(
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: 'Dept',
                     forceInt: false
                 }
             ).join(',')

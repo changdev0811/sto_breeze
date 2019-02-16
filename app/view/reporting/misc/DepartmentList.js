@@ -81,6 +81,7 @@ Ext.define('Breeze.view.reporting.misc.DepartmentList', {
                         // fieldset containing toolbar & departments
                         {
                             xtype: 'fieldset',
+                            reference: 'departments',
                             flex: 1,
                             layout: 'vbox',
                             title: 'Departments',
@@ -226,7 +227,7 @@ Ext.define('Breeze.view.reporting.misc.DepartmentList', {
                                     inline: true,
                                     label: '',
                                     boxLabel: 'Show Empty Departments',
-                                    bind: '{reportParams.LogoInHeader}'
+                                    bind: '{reportParams.viewempty}'
                                 }
                             ]
                         }
