@@ -9,7 +9,7 @@ Ext.define('Breeze.api.reporting.misc.Attendance', {
     
     statics: {
         ajaxCall: '',
-        report: 'MiscAttendance'
+        report: 'MiscPerfectAttendance'
     },
 
     /**
