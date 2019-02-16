@@ -314,20 +314,20 @@ Ext.define('Breeze.view.reporting.misc.Birthdays', {
                                     inline: true,
                                     label: '',
                                     boxLabel: 'Print Employees With Unkown Birthdays',
-                                    bind: '{reportParams.LogoInHeader}'
+                                    bind: '{reportParams.show_WO_bday}'
                                 },
                                 {
                                     name: 'headerCompanyName',
                                     label: '',
                                     labelMinWidth: 0,
                                     boxLabel: 'Print Employee Birth Year',
-                                    bind: '{reportParams.NameInHeader}'
+                                    bind: '{reportParams.ShowBirthYear}'
                                 },
                                 {
                                     name: 'headerSignature',
                                     label: '',
                                     boxLabel: 'Print List By Employee Name',
-                                    bind: '{reportParams.RepSignature}'
+                                    bind: '{reportParams.print_by_employee_name}'
                                 }
                             ]
                         }

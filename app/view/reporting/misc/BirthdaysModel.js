@@ -23,11 +23,13 @@ Ext.define('Breeze.view.reporting.misc.BirthdaysModel', {
                 NameInHeader: false,
                 RepSignature: false,
                 ReportTitle: 'Birthdays Report',
-                recyear: null,
                 // Concerning selected departments/ids
                 idtype: 'emps', // According to existing code, this is always 'emps'
                 incids: '',
-                months: '' // List of chosen months
+                months: '', // List of chosen months
+                show_WO_bday: false,
+                ShowBirthYear: false,
+                print_by_employee_name: false
             }
         };
         this.setData(data);
