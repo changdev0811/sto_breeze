@@ -53,7 +53,28 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Store: ', vm.getStore('udcTree'));
@@ -78,7 +99,11 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department or Employee.');
+            if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
+                messages.push('Please select one or more Departments containing Employees.');
+            } else {
+                messages.push('Please select one or more Employees.');
+            }
         }
 
         // Check 1 > weeks have been picked if week mode
@@ -192,7 +217,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')
@@ -206,7 +231,7 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
         switch(dateType){
             case 'weeks':
                 // Update weeks
-                var weeks = vm.get('selectedWeeks').getData().items;
+                var weeks = vm.get('selectedWeeks').data.items;
                 // Set dStart and dEnd to null
                 vm.set('reportParams.dStart', null);
                 vm.set('reportParams.dEnd', null);
@@ -214,17 +239,17 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
                 vm.set('reportParams.dEndUtc', null);
                 // Set week_str to list of selected weeks
                 vm.set(
-                    'reportParams.week_str',
+                    'reportParams.weeks_str',
                     weeks.map((w) => { 
-                        return w.getData().startText; 
+                        return w.getData().startText;
                     }).join(',')
                 );
                 // Set week_strUtc to list of selected weeks as UTC dates
                 vm.set(
-                    'reportParams.week_strUtc',
+                    'reportParams.weeks_strUtc',
                     weeks.map((w) => {
                         // Use our custom toUTC method, specifying output as string
-                        return w.getData().start.toUTC({ out: Date.UTC_OUT.STRING });
+                        return w.data.start.toUTC({ out: Date.UTC_OUT.STRING });
                     }).join('*')
                 );
                 break;
@@ -247,8 +272,8 @@ Ext.define('Breeze.view.reporting.department.PayrollSummaryController', {
                     );
 
                     // clear week_str and week_strUtc
-                    vm.set('reportParams.week_str', '');
-                    vm.set('reportParams.week_strUtc', '');
+                    vm.set('reportParams.weeks_str', '');
+                    vm.set('reportParams.weeks_strUtc', '');
                 } catch (ex) {
 
                 }
