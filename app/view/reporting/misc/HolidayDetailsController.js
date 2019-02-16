@@ -46,7 +46,28 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
         this.addStoreToViewModel(
             'Breeze.store.company.Config',
             'companyConfig',
-            { load: true }
+            { 
+                load: true,
+                // callback to store Company configs
+                loadOpts: { callback: (success) => {
+                    if(success){
+                        let config = vm.get('companyConfig'),
+                            companyParams = config.getAt(0);
+                        vm.set(
+                            'reportParams.LogoInHeader', 
+                            companyParams.get('RepLogo')
+                        );
+                        vm.set(
+                            'reportParams.NameInHeader',
+                            companyParams.get('RepComp')
+                        );
+                        vm.set(
+                            'reportParams.RepSignature',
+                            companyParams.get('RepSignature')
+                        );
+                    }
+                }}
+            }
         );
 
         console.info('Leaving init');
@@ -70,7 +91,11 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
         
         if(vmData.reportParams.incids == ''){
             valid = false;
-            messages.push('Please select a Department or Employee.');
+            if(this.lookup('employeeSelectTabs').getActiveItem().getItemId()=='departments'){
+                messages.push('Please select one or more Departments containing Employees.');
+            } else {
+                messages.push('Please select one or more Employees.');
+            }
         }
 
         if(!valid){
@@ -97,7 +122,7 @@ Ext.define('Breeze.view.reporting.misc.HolidayDetailsController', {
             'reportParams.incids', 
             this.checkedTreeItems(
                 employeeSelectTree.getComponent('tree'), {
-                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'emp' : null,
+                    nodeType: (employeeSelectTree.getItemId() == 'departments')? 'Emp' : null,
                     forceInt: false
                 }
             ).join(',')
