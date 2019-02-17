@@ -31,6 +31,17 @@ Ext.define('Breeze.view.reporting.department.ShiftAnalysis', {
 
     title: 'Shift Analysis Report',
 
+    tools: [
+        {
+            iconCls: 'x-fa fa-sync',
+            handler: 'onRefreshTool'  
+        },
+        {
+            iconCls: 'x-fa fa-print',
+            handler: 'onPrintTool'
+        }
+    ],
+
     // Action buttons shown at bottom of panel
     buttonAlign: 'left',
     buttons: {
