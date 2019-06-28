@@ -13,9 +13,13 @@ Changes for development mode:
     - Testing Mode:
         - Set `devTestMode` to true to skip login (only works when using dummy api)
 
+- breeze_dummy_api provides dummy apis for development.
+
 #### Running
 
 - Run ``sencha app watch``
+
+![screen](./breeze.png)
 
 ### Production
 
