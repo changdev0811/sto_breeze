@@ -1,0 +1,37 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Full Supervisor",
+            "data": "1003",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Limited Supervisor",
+            "data": "1001",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Read Only Supervisor",
+            "data": "1002",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        }
+    ]
+}

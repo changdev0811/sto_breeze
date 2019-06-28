@@ -1,0 +1,112 @@
+{
+    "d": [
+        {
+            "id": 0,
+            "text": "All Projects",
+            "iconCls": "fal fa-sitemap fa-2x fa-fw sto-skyblue",
+            "leaf": "false",
+            "d": [
+                {
+                    "id": 5188,
+                    "text": "Moose Wrangling (MR1)",
+                    "iconCls": "GroupIcon",
+                    "leaf": "false",
+                    "d": [
+                        {
+                            "id": 5559,
+                            "text": "-New Project- (NP6)",
+                            "iconCls": "GroupIcon",
+                            "leaf": "true",
+                            "d": null,
+                            "data": "{\"Code\":\"NP6\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0.00,\"ID\":5559,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"-New Project-\",\"Parent_ID\":5188}",
+                            "type": "project",
+                            "fullName": null,
+                            "qtip": null,
+                            "cls": null,
+                            "status": 0,
+                            "icon": null,
+                            "checked": null
+                        }
+                    ],
+                    "data": "{\"Code\":\"MR1\",\"CustomerId\":0,\"Description\":\"Wrangling Mooses\",\"Hourly_Comp\":0.00,\"ID\":5188,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"Moose Wrangling\",\"Parent_ID\":0}",
+                    "type": "project",
+                    "fullName": null,
+                    "qtip": null,
+                    "cls": null,
+                    "status": 0,
+                    "icon": null,
+                    "checked": null
+                },
+                {
+                    "id": 5190,
+                    "text": "-New Project- (NP1)",
+                    "iconCls": "GroupIcon",
+                    "leaf": "false",
+                    "d": [
+                        {
+                            "id": 5560,
+                            "text": "-New Project- (NP7)",
+                            "iconCls": "GroupIcon",
+                            "leaf": "true",
+                            "d": null,
+                            "data": "{\"Code\":\"NP7\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0.00,\"ID\":5560,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"-New Project-\",\"Parent_ID\":5190}",
+                            "type": "project",
+                            "fullName": null,
+                            "qtip": null,
+                            "cls": null,
+                            "status": 0,
+                            "icon": null,
+                            "checked": null
+                        },
+                        {
+                            "id": 5561,
+                            "text": "-New Project- (NP8)",
+                            "iconCls": "GroupIcon",
+                            "leaf": "true",
+                            "d": null,
+                            "data": "{\"Code\":\"NP8\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0.00,\"ID\":5561,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"-New Project-\",\"Parent_ID\":5190}",
+                            "type": "project",
+                            "fullName": null,
+                            "qtip": null,
+                            "cls": null,
+                            "status": 0,
+                            "icon": null,
+                            "checked": null
+                        }
+                    ],
+                    "data": "{\"Code\":\"NP1\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0.00,\"ID\":5190,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"-New Project-\",\"Parent_ID\":0}",
+                    "type": "project",
+                    "fullName": null,
+                    "qtip": null,
+                    "cls": null,
+                    "status": 0,
+                    "icon": null,
+                    "checked": null
+                },
+                {
+                    "id": 5562,
+                    "text": "-New Project- (NP2)",
+                    "iconCls": "GroupIcon",
+                    "leaf": "true",
+                    "d": null,
+                    "data": "{\"Code\":\"NP2\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0.00,\"ID\":5562,\"IsOT\":false,\"IsWorktime\":true,\"Name\":\"-New Project-\",\"Parent_ID\":0}",
+                    "type": "project",
+                    "fullName": null,
+                    "qtip": null,
+                    "cls": null,
+                    "status": 0,
+                    "icon": null,
+                    "checked": null
+                }
+            ],
+            "data": "{\"Code\":\"\",\"CustomerId\":0,\"Description\":\"\",\"Hourly_Comp\":0,\"ID\":0,\"IsOT\":false,\"IsWorktime\":false,\"Name\":\"\",\"Parent_ID\":0}",
+            "type": "project",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        }
+    ]
+}

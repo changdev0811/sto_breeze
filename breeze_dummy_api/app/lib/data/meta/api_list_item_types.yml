@@ -1,0 +1,14 @@
+# Types & Roles
+roles:
+  # Update role values to be capital named
+  - Admin: 'Non-user (supervisor or admin)'
+  - User: 'Regular user'
+types:
+  - Dept: "Department"
+  - Emp: 'Employee'
+  - Cal: 'Calendar'
+  - EmpInfo: 'Employee Information'
+  - FYI: 'FYI'
+  - YAG: 'Year at a Glance'
+  - WTR: 'Work Time Records'
+  - project: 'Project'

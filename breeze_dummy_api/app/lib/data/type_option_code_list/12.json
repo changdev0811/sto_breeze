@@ -1,0 +1,22 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.OptionList",
+        "Rows": [
+            {
+                "ID": 45,
+                "CodeTypeID": 12,
+                "Description": "Anniversary"
+            },
+            {
+                "ID": 46,
+                "CodeTypeID": 12,
+                "Description": "Calendar"
+            },
+            {
+                "ID": 47,
+                "CodeTypeID": 12,
+                "Description": "Fiscal"
+            }
+        ]
+    }
+}

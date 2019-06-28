@@ -1,0 +1,89 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.absenceReturnJSON",
+        "Rows": [
+            {
+                "id": "67982605",
+                "calendarId": "90",
+                "startDate": "2018-06-20T00:00:00.000Z",
+                "endDate": "2018-06-21T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": false,
+                "dayPercent": 1.0000,
+                "priority": 7,
+                "durationDesc": "100 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (Non Company Holiday) : 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "69527318",
+                "calendarId": "90",
+                "startDate": "2018-06-21T00:00:00.000Z",
+                "endDate": "2018-06-22T00:00:00.000Z",
+                "allDay": false,
+                "isLeave": false,
+                "dayPercent": 0.1050,
+                "priority": 7,
+                "durationDesc": "10.5 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (New Holiday(4)) : 10.5 %\u003cBR\u003e"
+            },
+            {
+                "id": "69527326",
+                "calendarId": "90",
+                "startDate": "2018-06-30T00:00:00.000Z",
+                "endDate": "2018-07-01T00:00:00.000Z",
+                "allDay": false,
+                "isLeave": false,
+                "dayPercent": 0.4000,
+                "priority": 7,
+                "durationDesc": "40 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (asdfasdf) : 40 %\u003cBR\u003e"
+            },
+            {
+                "id": "69527334",
+                "calendarId": "90",
+                "startDate": "2018-07-04T00:00:00.000Z",
+                "endDate": "2018-07-05T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": false,
+                "dayPercent": 1.0000,
+                "priority": 7,
+                "durationDesc": "100 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (Ralph Day!) : 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "69527342",
+                "calendarId": "90",
+                "startDate": "2018-10-01T00:00:00.000Z",
+                "endDate": "2018-10-02T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": false,
+                "dayPercent": 1.0000,
+                "priority": 7,
+                "durationDesc": "100 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (New Holiday(1)) : 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "69527350",
+                "calendarId": "90",
+                "startDate": "2018-10-10T00:00:00.000Z",
+                "endDate": "2018-10-11T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": false,
+                "dayPercent": 1.0000,
+                "priority": 7,
+                "durationDesc": "100 %",
+                "title": "Holiday",
+                "absenceString": "Holiday (New Holiday(3)) : 100 %\u003cBR\u003e"
+            }
+        ],
+        "adjust": false,
+        "modify_time": false,
+        "points": false,
+        "notes": false
+    }
+}

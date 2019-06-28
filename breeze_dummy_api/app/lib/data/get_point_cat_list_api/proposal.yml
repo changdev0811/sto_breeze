@@ -1,0 +1,12 @@
+# Proposal for admin point category list api call
+# Ported from getPointCatTree
+---
+  d:
+    - AbsenceCats: 0
+      DurAmt: 1
+      DurType: 60
+      Occurances:
+        - occfrom: 1
+          occto: 0
+          occvalue: 0.0
+      PointDetails: 'Details string'

@@ -1,0 +1,17 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.OptionList",
+        "Rows": [
+            {
+                "ID": 11,
+                "CodeTypeID": 4,
+                "Description": "Male"
+            },
+            {
+                "ID": 12,
+                "CodeTypeID": 4,
+                "Description": "Female"
+            }
+        ]
+    }
+}

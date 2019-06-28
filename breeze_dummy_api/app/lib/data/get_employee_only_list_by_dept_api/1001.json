@@ -1,0 +1,81 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Venture, Admin",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Thompson, Shawn",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Harkins, Wade",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Wszalek, Jonathan",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Employee, Menial",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Visor, Super",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Doe, John",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        }
+    ]
+}

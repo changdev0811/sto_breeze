@@ -1,0 +1,57 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.CategoryAdjust",
+		"categoryId":1003,
+		"categoryName":"Personal",
+		"calendarType":46,
+		"viewDate":"2020-12-30T00:00:00",
+		"recordingYear":2020,
+		"recordingYearStart":"1/1/2020",
+		"recordingYearEnd":"12/31/2020",
+		"picturePath":"app/resources/UDC/Default/1003.png",
+		"carryOver":0,
+		"adjustments":0,
+		"recorded":0,
+		"allowed":0.0,
+		"remaining":0.0,
+		"accrued":0.0,
+		"carryMax":-1.0,
+		"carryExpires":"1/1/1900",
+		"rules":[
+			{
+				"ruleName":"Default",
+				"ruleAmount":0.0,
+				"ruleUnit":48,
+				"rulePer":117,
+				"ruleCount":"1",
+				"ruleStart":"10/30/2019",
+				"ruleEnd":"10/29/2020",
+				"ruleModified":0,
+				"occurrences":9,
+				"total":0.0,
+				"recording_mode":21
+			},
+			{
+				"ruleName":"Default",
+				"ruleAmount":0.0,
+				"ruleUnit":48,
+				"rulePer":117,
+				"ruleCount":"1",
+				"ruleStart":"10/30/2020",
+				"ruleEnd":"10/29/2021",
+				"ruleModified":0,
+				"occurrences":3,
+				"total":0.0,
+				"recording_mode":21
+			}
+		],
+		"isallowed":true,
+		"allowAccrual":true,
+		"hire_date":"10/30/2018",
+		"wait_date":"10/30/2018",
+		"employeeName":"Mason, Harry",
+		"departmentName":"Extra Department",
+		"active_yos_start":"10/30/2020",
+		"active_yos_end":"10/29/2021"
+	}
+}

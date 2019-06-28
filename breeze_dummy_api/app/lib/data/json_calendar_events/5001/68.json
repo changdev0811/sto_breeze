@@ -1,0 +1,37 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.absenceReturnJSON",
+        "Rows": [
+            {
+                "id": "68045636",
+                "calendarId": "68",
+                "startDate": "2018-06-22T00:00:00.000Z",
+                "endDate": "2018-06-23T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": false,
+                "dayPercent": 1.0000,
+                "priority": 5,
+                "durationDesc": "100 %",
+                "title": "Jury",
+                "absenceString": "Jury: 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "request_743143",
+                "calendarId": "68",
+                "startDate": "2018-07-11T00:00:00.000Z",
+                "endDate": "2018-07-12T00:00:00.000Z",
+                "allDay": true,
+                "isLeave": true,
+                "dayPercent": 0,
+                "priority": 0,
+                "durationDesc": "request",
+                "title": "",
+                "absenceString": "Request Information: 7/11/2018\u003cbr/\u003eReq1\u003cbr/\u003e------------\u003cbr/\u003eJury: 80 %\u003cBR\u003e"
+            }
+        ],
+        "adjust": false,
+        "modify_time": false,
+        "points": false,
+        "notes": false
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Project",
+        "CustomerId": 0,
+        "ID": 0,
+        "Name": null,
+        "Description": null,
+        "Code": "",
+        "Parent_ID": 0,
+        "IsWorktime": false,
+        "IsOT": false,
+        "Hourly_Comp": 0
+    }
+}

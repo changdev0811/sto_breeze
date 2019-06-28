@@ -1,0 +1,64 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Default Schedule",
+            "iconCls": "NoIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "1001",
+            "type": "sus",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "Fresh Policy",
+            "iconCls": "NoIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "5003",
+            "type": "sus",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "New Policy",
+            "iconCls": "NoIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "5001",
+            "type": "sus",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "Summer Policy",
+            "iconCls": "NoIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "5002",
+            "type": "sus",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        }
+    ]
+}

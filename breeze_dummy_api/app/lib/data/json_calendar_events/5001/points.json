@@ -1,0 +1,23 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.absenceReturnJSON",
+        "Rows": [
+            {
+                "id": "point_1_1001",
+                "categoryId": "points",
+                "startDate": "2018-08-29T00:00:00.000Z",
+                "endDate": "2018-08-30T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 0,
+                "priority": 0,
+                "durationDesc": "Points: 8/29/2018\u003cbr/\u003e------------\u003cbr/\u003eLate Points                   : 0.0000\u003cbr\u003e",
+                "title": "point",
+                "absenceString": null
+            }
+        ],
+        "adjust": false,
+        "modify_time": false,
+        "points": false,
+        "notes": false
+    }
+}

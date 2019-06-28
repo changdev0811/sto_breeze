@@ -1,0 +1,107 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.absenceReturnJSON",
+        "Rows": [
+            {
+                "id": "68310606",
+                "categoryId": "72",
+                "startDate": "2018-09-11T00:00:00.000Z",
+                "endDate": "2018-09-12T00:00:00.000Z",
+                "allDay": false,
+                "dayPercent": 0.5000,
+                "priority": 3,
+                "durationDesc": "50 %",
+                "title": "",
+                "absenceString": "Late: 50 %\u003cBR\u003e"
+            },
+            {
+                "id": "68310605",
+                "categoryId": "66",
+                "startDate": "2018-09-11T00:00:00.000Z",
+                "endDate": "2018-09-12T00:00:00.000Z",
+                "allDay": false,
+                "dayPercent": 0.5000,
+                "priority": 4,
+                "durationDesc": "50 %",
+                "title": "",
+                "absenceString": "Vacation: 50 %\u003cBR\u003e"
+            },
+            {
+                "id": "68310602",
+                "categoryId": "66",
+                "startDate": "2018-09-12T00:00:00.000Z",
+                "endDate": "2018-09-13T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 1.0000,
+                "priority": 4,
+                "durationDesc": "100 %",
+                "title": "",
+                "absenceString": "Vacation: 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "68310604",
+                "categoryId": "66",
+                "startDate": "2018-09-13T00:00:00.000Z",
+                "endDate": "2018-09-14T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 1.0000,
+                "priority": 4,
+                "durationDesc": "100 %",
+                "title": "",
+                "absenceString": "Vacation: 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "68310603",
+                "categoryId": "66",
+                "startDate": "2018-09-14T00:00:00.000Z",
+                "endDate": "2018-09-15T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 1.0000,
+                "priority": 4,
+                "durationDesc": "100 %",
+                "title": "",
+                "absenceString": "Vacation: 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "67970217",
+                "categoryId": "90",
+                "startDate": "2018-09-03T00:00:00.000Z",
+                "endDate": "2018-09-04T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 1.0000,
+                "priority": 23,
+                "durationDesc": "100 %",
+                "title": "",
+                "absenceString": "Holiday (Labor Day) : 100 %\u003cBR\u003e"
+            },
+            {
+                "id": "point_1_1001",
+                "categoryId": "point",
+                "startDate": "2018-08-29T00:00:00.000Z",
+                "endDate": "2018-08-30T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 0,
+                "priority": 0,
+                "durationDesc": "Points: 8/29/2018\u003cbr/\u003e------------\u003cbr/\u003eLate Points                   : 0.0000\u003cbr\u003e",
+                "title": "point",
+                "absenceString": null
+            },
+            {
+                "id": "worked_8/27/2018 12:00:00 AM",
+                "categoryId": "worktime",
+                "startDate": "2018-08-27T00:00:00.000Z",
+                "endDate": "2018-08-28T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 0,
+                "priority": 0,
+                "durationDesc": "Time Worked\u003cbr\u003e===========\u003cbr\u003e71.58 hours",
+                "title": "",
+                "absenceString": null
+            }
+        ],
+        "adjust": true,
+        "modify_time": true,
+        "points": true,
+        "notes": true
+    }
+}

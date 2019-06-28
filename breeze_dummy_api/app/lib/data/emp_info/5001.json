@@ -1,0 +1,8 @@
+{
+    "d": {
+        "__type": "Repository.Entities.DetailedPerson",
+        "fullname": "Venture, Admin",
+        "business": "Venture Interactive",
+        "Photo": "app/resources/EmployeePhotos/default_man.png"
+    }
+}

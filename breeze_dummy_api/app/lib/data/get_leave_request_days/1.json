@@ -1,0 +1,24 @@
+{
+    "d": [
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "6/19/2018 12:00:00 AM",
+            "category_name": "Vacation",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [
+                {
+                    "EmpName": "Harkins, Wade ",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 12.0000,
+                    "Percentage": 100.0000,
+                    "ConflictDate": "6/19/2018 12:00:00 AM",
+                    "recording_mode": 21
+                }
+            ],
+            "request_conflicts": 1,
+            "category_code": "66"
+        }
+    ]
+}

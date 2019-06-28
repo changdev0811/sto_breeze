@@ -1,0 +1,40 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.Project",
+            "CustomerId": 0,
+            "ID": 0,
+            "Name": "*No Project*",
+            "Description": "No Project",
+            "Code": null,
+            "Parent_ID": 0,
+            "IsWorktime": true,
+            "IsOT": false,
+            "Hourly_Comp": 0
+        },
+        {
+            "__type": "Repository.Entities.Project",
+            "CustomerId": 0,
+            "ID": 5188,
+            "Name": "Moose Wrangling (MR1)",
+            "Description": "Wrangling Mooses",
+            "Code": "MR1",
+            "Parent_ID": 0,
+            "IsWorktime": true,
+            "IsOT": false,
+            "Hourly_Comp": 0.00
+        },
+        {
+            "__type": "Repository.Entities.Project",
+            "CustomerId": 0,
+            "ID": 5190,
+            "Name": "-New Project- (NP1)",
+            "Description": "",
+            "Code": "NP1",
+            "Parent_ID": 0,
+            "IsWorktime": true,
+            "IsOT": false,
+            "Hourly_Comp": 0.00
+        }
+    ]
+}

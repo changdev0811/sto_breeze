@@ -1,0 +1,9 @@
+{
+    "d": {
+        "__type": "Repository.Entities.StaffList",
+        "supervisors": [],
+        "supervisorIds": [],
+        "employees": [],
+        "employeeIds": []
+    }
+}

@@ -1,0 +1,201 @@
+{
+    "d": {
+        "name": "Default Schedule",
+        "employees": [
+            {
+                "id": "5003",
+                "fullName": "Harkins, Wade ",
+                "displayName": "Harkins, Wade",
+                "departmentId": "1001",
+                "terminated": false
+            },
+            {
+                "id": "5007",
+                "fullName": "Mason, Harry ",
+                "displayName": "Mason, Harry",
+                "departmentId": "1002",
+                "terminated": false
+            },
+            {
+                "id": "5002",
+                "fullName": "Thompson, Shawn ",
+                "displayName": "Thompson, Shawn",
+                "departmentId": "1001",
+                "terminated": false
+            },
+            {
+                "id": "5001",
+                "fullName": "Venture, Admin ",
+                "displayName": "Venture, Admin",
+                "departmentId": "1001",
+                "terminated": false
+            },
+            {
+                "id": "5006",
+                "fullName": "Visor, Super D",
+                "displayName": "Visor, Super D",
+                "departmentId": "1002",
+                "terminated": false
+            },
+            {
+                "id": "5004",
+                "fullName": "Wszalek, Jonathan M",
+                "displayName": "Wszalek, Jonathan Matthew",
+                "departmentId": "1001",
+                "terminated": false
+            }
+        ],
+        "categories": [
+            {
+                "id": null,
+                "text": "Illness",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1001",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Vacation",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1002",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Personal",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1003",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Jury",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1005",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Bereavement",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1010",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Training",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1013",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Holiday",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1024",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Holiday2",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1025",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "Alien Abduction",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1026",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            },
+            {
+                "id": null,
+                "text": "New Category",
+                "iconCls": null,
+                "leaf": "True",
+                "d": null,
+                "data": "1027",
+                "type": "",
+                "fullName": null,
+                "qtip": null,
+                "cls": null,
+                "status": 0,
+                "icon": "",
+                "checked": null
+            }
+        ]
+    }
+}

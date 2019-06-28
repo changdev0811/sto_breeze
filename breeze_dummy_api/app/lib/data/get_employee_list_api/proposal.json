@@ -1,0 +1,220 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Employee, Menial",
+            "data": 5005,
+            "type": "Emp",
+            "info": {
+                "role": "admin"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        },
+        {
+            "id": null,
+            "text": "Harkins, Wade",
+            "data": 5003,
+            "type": "Emp",
+            "info": {
+                "role": "user"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        },
+        {
+            "id": null,
+            "text": "Thompson, Shawn",
+            "data": 5002,
+            "type": "Emp",
+            "info": {
+                "role": "user"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        },
+        {
+            "id": null,
+            "text": "Venture, Admin",
+            "data": 5001,
+            "type": "Emp",
+            "info": {
+                "role": "admin"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        },
+        {
+            "id": null,
+            "text": "Visor, Super",
+            "data": 5006,
+            "type": "Emp",
+            "info": {
+                "role": "admin"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        },
+        {
+            "id": null,
+            "text": "Wszalek, Jonathan Matthew",
+            "data": 5004,
+            "type": "Emp",
+            "info": {
+                "role": "user"
+            },
+            "d": [
+                {
+                    "id": null,
+                    "type": "Cal",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "EmpInfo",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "FYI",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "YAG",
+                    "leaf": true
+                },
+                {
+                    "id": null,
+                    "type": "WTR",
+                    "leaf": true
+                }
+            ]
+        }
+    ]
+}

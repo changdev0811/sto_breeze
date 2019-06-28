@@ -1,0 +1,284 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Extra Department",
+            "data": "1002",
+            "type": null,
+            "info": []
+        },
+        {
+            "id": null,
+            "text": "New Department",
+            "data": "1003",
+            "type": null,
+            "info": []
+        },
+        {
+            "id": null,
+            "text": "Test Department",
+            "data": "1001",
+            "type": null,
+            "info": [
+                {
+                    "id": null,
+                    "text": "Employee, Menial",
+                    "data": "5005",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "text": "Harkins, Wade",
+                    "data": "5003",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "text": "Thompson, Shawn",
+                    "data": "5002",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "text": "Venture, Admin",
+                    "data": "5001",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "text": "Visor, Super",
+                    "data": "5006",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "text": "Wszalek, Jonathan Matthew",
+                    "data": "5004",
+                    "type": "Emp",
+                    "info": [
+                        {
+                            "id": null,
+                            "text": "Calendar",
+                            "data": null,
+                            "type": "Cal",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee Information",
+                            "data": null,
+                            "type": "EmpInfo",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Employee FYI",
+                            "data": null,
+                            "type": "FYI",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "Year at a Glance",
+                            "data": null,
+                            "type": "YAG",
+                            "info": null
+                        },
+                        {
+                            "id": null,
+                            "text": "WorkTime Records",
+                            "data": null,
+                            "type": "WTV",
+                            "info": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

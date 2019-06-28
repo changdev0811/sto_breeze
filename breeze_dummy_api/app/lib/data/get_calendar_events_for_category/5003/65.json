@@ -1,0 +1,30 @@
+{
+    "d": {
+        "Rows": [
+            {
+                "id": "123",
+                "calendarId": 65,
+                "startDate": "2018-06-06T00:00:00.000Z",
+                "endDate": "2018-06-07T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 50,
+                "priority": 1,
+                "durationDesc": "4.5 Hours",
+                "title": "Illness",
+                "absenceString": "Absence Information: 6/6/2018&lt;BR&gt;------------&lt;BR&gt;Illness: 4.50 Hours&lt;BR&gt;"
+            },
+            {
+                "id": "124",
+                "calendarId": 65,
+                "startDate": "2018-06-07T00:00:00.000Z",
+                "endDate": "2018-06-08T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 100,
+                "priority": 2,
+                "durationDesc": "9.00 Hours",
+                "title": "Illness",
+                "absenceString": "Absence Information: 6/7/2018&lt;BR&gt;------------&lt;BR&gt;Vacation: 9.00 Hours&lt;BR&gt;"
+            }
+        ]
+    }
+}

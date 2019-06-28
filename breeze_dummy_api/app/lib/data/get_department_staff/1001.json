@@ -1,0 +1,19 @@
+{
+    "d": {
+        "__type": "Repository.Entities.StaffList",
+        "supervisors": [
+            "Harkins, Wade",
+            "Supervisor, Basic",
+            "Venture, Admin",
+            "Visor, Super D"
+        ],
+        "supervisorIds": [
+            5003,
+            5012,
+            5001,
+            5006
+        ],
+        "employees": [],
+        "employeeIds": []
+    }
+}

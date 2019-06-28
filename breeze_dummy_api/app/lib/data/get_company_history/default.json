@@ -1,0 +1,731 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.CompanyHistory",
+        "Rows": [
+            {
+                "AuditDate": "11/13/2018 5:29:11 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/13/2018 5:28:49 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/13/2018 5:13:16 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/13/2018 12:27:29 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/13/2018 12:25:28 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/12/2018 11:38:09 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/12/2018 7:56:15 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 7:09:44 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDepartment changed from \"Test Department\" to \"Extra Department\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "11/12/2018 6:28:41 PM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:13:57 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:11:17 PM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:11:16 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:10:39 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:10:39 PM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 6:03:51 PM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 5:29:23 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 5:29:17 PM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 11/12/2018"
+            },
+            {
+                "AuditDate": "11/12/2018 5:29:10 PM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 10/24/2018"
+            },
+            {
+                "AuditDate": "11/10/2018 1:07:37 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Summer Policy"
+            },
+            {
+                "AuditDate": "11/10/2018 12:41:20 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/10/2018 12:39:36 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Fresh Policy"
+            },
+            {
+                "AuditDate": "11/10/2018 12:36:20 AM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Summer Policy"
+            },
+            {
+                "AuditDate": "11/6/2018 7:25:52 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: New Policy"
+            },
+            {
+                "AuditDate": "11/6/2018 12:24:40 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:18:43 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:18:32 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:18:28 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:18:03 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:18:02 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "11/6/2018 12:17:57 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "11/6/2018 10:56:04 AM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "11/5/2018 8:43:18 PM",
+                "AuditMessage": "Venture, Admin modified Employee, Menial\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003ePhoto was changed.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/31/2018 7:52:27 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eShift changed from  9:00AM- 9:00PM to 12:00AM-12:30AM, 10:00PM-11:30PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 8:47:01 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eThe Security Role \"Full Supervisor\" was assigned for \"Extra Department\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 8:30:43 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003e\"Visor, Super D\" was removed as a supervisor.\u003c/li\u003e\u003cli\u003eSecurity Rights to \"Visor, Super D\" were removed.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 8:30:17 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eSecurity Rights to the department \"Extra Department\" were removed.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 8:18:39 PM",
+                "AuditMessage": "Venture, Admin modified Employee, Menial\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eSecurity Rights to the department \"Test Department\" were removed.\u003c/li\u003e\u003cli\u003eSecurity Rights to \"Harkins, Wade \" were removed.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 3:40:12 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003e\"Visor, Super D\" was added as a supervisor.\u003c/li\u003e\u003cli\u003eSecurity Rights were added for \"Visor, Super D\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 3:39:24 PM",
+                "AuditMessage": "Venture, Admin modified Visor, Super D.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eThe Security Role \"Full Supervisor\" was assigned for \"Extra Department\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "10/30/2018 3:38:48 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Mason, Harry"
+            },
+            {
+                "AuditDate": "10/25/2018 2:29:27 AM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 10/24/2018"
+            },
+            {
+                "AuditDate": "10/25/2018 2:29:20 AM",
+                "AuditMessage": "Venture, Admin reinstated Employee, Menial effective 10/24/2018"
+            },
+            {
+                "AuditDate": "10/25/2018 2:29:08 AM",
+                "AuditMessage": "Venture, Admin initiated a Layoff for Employee, Menial effective 10/24/2018"
+            },
+            {
+                "AuditDate": "10/10/2018 7:57:02 PM",
+                "AuditMessage": "All Holidays were successfully applied to all employees"
+            },
+            {
+                "AuditDate": "10/10/2018 7:56:53 PM",
+                "AuditMessage": "All Holidays were successfully applied to all employees"
+            },
+            {
+                "AuditDate": "10/10/2018 7:56:36 PM",
+                "AuditMessage": "The holiday New Holiday(3) was successfully added."
+            },
+            {
+                "AuditDate": "10/1/2018 3:39:01 PM",
+                "AuditMessage": "Venture, Admin added a point category."
+            },
+            {
+                "AuditDate": "10/1/2018 3:21:36 PM",
+                "AuditMessage": "Venture, Admin added a new category "
+            },
+            {
+                "AuditDate": "10/1/2018 3:17:46 PM",
+                "AuditMessage": "New Supervisor Role"
+            },
+            {
+                "AuditDate": "10/1/2018 3:04:27 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:04:20 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:03:03 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:03:00 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:02:53 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:02:41 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:02:38 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "10/1/2018 3:00:50 PM",
+                "AuditMessage": "Venture, Admin updated point category New Point Category."
+            },
+            {
+                "AuditDate": "10/1/2018 3:00:38 PM",
+                "AuditMessage": "Venture, Admin added a point category."
+            },
+            {
+                "AuditDate": "10/1/2018 2:58:09 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "10/1/2018 2:57:33 PM",
+                "AuditMessage": "The holiday New Holiday(1) was successfully added."
+            },
+            {
+                "AuditDate": "8/27/2018 10:24:06 PM",
+                "AuditMessage": "Venture, Admin created an adjustment for Harkins, Wade on 6/22/2018 for Illness in the amount of 1"
+            },
+            {
+                "AuditDate": "8/22/2018 12:26:22 AM",
+                "AuditMessage": "Venture, Admin added a point record for Harkins, Wade on 6/19/2018"
+            },
+            {
+                "AuditDate": "8/21/2018 10:44:28 PM",
+                "AuditMessage": "Venture, Admin has modified the category: Jury"
+            },
+            {
+                "AuditDate": "8/9/2018 2:17:32 AM",
+                "AuditMessage": "Venture, Admin modified Visor, Super\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eMiddle Name changed from \u003ci\u003e\u0026lt;blank\u0026gt;\u003c/i\u003e to \"D\".\u003c/li\u003e\u003c/ul\u003eVisor, Super is now \"Visor, Super D.\"."
+            },
+            {
+                "AuditDate": "8/2/2018 8:13:22 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eNotes changed.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "7/31/2018 2:08:09 AM",
+                "AuditMessage": "Venture, Admin modified Venture, Admin\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eShift changed from  9:00AM- 8:30PM to  9:00AM- 8:30PM,  9:00PM-10:30PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "7/4/2018 2:56:27 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: New Policy"
+            },
+            {
+                "AuditDate": "7/4/2018 2:56:03 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: New Policy"
+            },
+            {
+                "AuditDate": "7/3/2018 2:07:10 PM",
+                "AuditMessage": "Venture, Admin restored Employee, Menial ."
+            },
+            {
+                "AuditDate": "7/3/2018 2:02:12 PM",
+                "AuditMessage": "Venture, Admin modified the holiday New Holiday(1)."
+            },
+            {
+                "AuditDate": "7/3/2018 2:01:34 PM",
+                "AuditMessage": "The holiday New Holiday(1) was successfully added."
+            },
+            {
+                "AuditDate": "7/2/2018 10:26:54 PM",
+                "AuditMessage": "Venture, Admin removed category New Category"
+            },
+            {
+                "AuditDate": "7/2/2018 10:26:51 PM",
+                "AuditMessage": "Venture, Admin added a new category "
+            },
+            {
+                "AuditDate": "7/2/2018 4:01:05 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Visor, Super"
+            },
+            {
+                "AuditDate": "7/2/2018 3:59:18 PM",
+                "AuditMessage": "Venture, Admin deleted Employee, Menial."
+            },
+            {
+                "AuditDate": "6/28/2018 6:51:57 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003e\"Employee, Menial \" was added as a supervisor.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/28/2018 6:49:15 PM",
+                "AuditMessage": "Employee, Menial attemped to add a new employee, but failed because: Column name or number of supplied values does not match table definition.. Attention: You do not have the rights to add an employee to this department. Your administrator has been notified of this action.. "
+            },
+            {
+                "AuditDate": "6/28/2018 6:41:12 PM",
+                "AuditMessage": "Venture, Admin modified Employee, Menial\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eThe Security Role \"Full Supervisor\" was assigned for \"Test Department\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/28/2018 6:39:41 PM",
+                "AuditMessage": "Venture, Admin modified Employee, Menial\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDepartment changed from \"Extra Department\" to \"Test Department\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/28/2018 6:39:04 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Employee, Menial"
+            },
+            {
+                "AuditDate": "6/28/2018 6:35:30 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "6/28/2018 6:16:36 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003e\u003cb\u003eDate of Termination\u003c/b\u003e changed from \"06/28/2018\" to \u003ci\u003e\u0026lt;blank\u0026gt;\u003c/i\u003e.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/28/2018 6:16:14 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003e\u003cb\u003eDate of Termination\u003c/b\u003e changed from \u003ci\u003e\u0026lt;blank\u0026gt;\u003c/i\u003e to \"06/28/2018\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/28/2018 3:58:08 PM",
+                "AuditMessage": "Venture, Admin added a day for Thompson, Shawn on 6/16/2018 12:00:00 AM for Training"
+            },
+            {
+                "AuditDate": "6/26/2018 6:56:12 PM",
+                "AuditMessage": "Venture, Admin added a policy"
+            },
+            {
+                "AuditDate": "6/26/2018 2:41:43 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/30/2018\" to \"05/29/2018\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:41:26 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Thompson, Shawn\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/29/2018\" to \"05/28/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Exempt Policy-\" to \"-Default Non-Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:41:22 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Thompson, Shawn\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/30/2018\" to \"05/29/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Non-Exempt Policy-\" to \"-Default Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:41:02 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Venture, Admin\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/21/2018\" to \"05/20/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Exempt Policy-\" to \"-Default Non-Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:40:57 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Venture, Admin\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/22/2018\" to \"05/21/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Non-Exempt Policy-\" to \"-Default Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:40:46 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Wszalek, Jonathan M.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"06/05/2018\" to \"06/04/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Exempt Policy-\" to \"-Default Non-Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/26/2018 2:40:42 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Wszalek, Jonathan M.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"06/06/2018\" to \"06/05/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Non-Exempt Policy-\" to \"-Default Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/25/2018 1:16:04 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/31/2018\" to \"05/30/2018\".\u003c/li\u003e\u003cli\u003ePunch Policy changed from \"-Default Non-Exempt Policy-\" to \"-Default Exempt Policy-\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/25/2018 1:15:52 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified Wszalek, Jonathan M.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"06/07/2018\" to \"06/06/2018\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/21/2018 4:29:23 PM",
+                "AuditMessage": "Venture, Admin tried to add an absence for Wszalek, Jonathan M. on 6/21/2018 12:00:00 AM for Jurybut didn\u0027t have the proper permissions"
+            },
+            {
+                "AuditDate": "6/21/2018 4:29:22 PM",
+                "AuditMessage": "Wszalek, Jonathan M. added a point record for Wszalek, Jonathan M. on 6/21/2018"
+            },
+            {
+                "AuditDate": "6/21/2018 4:29:22 PM",
+                "AuditMessage": "Venture, Admin added a day for Wszalek, Jonathan M. on 6/21/2018 12:00:00 AM for Jury"
+            },
+            {
+                "AuditDate": "6/21/2018 4:23:40 PM",
+                "AuditMessage": "Venture, Admin created a note on 6/21/2018 for Thompson, Shawn"
+            },
+            {
+                "AuditDate": "6/21/2018 4:22:46 PM",
+                "AuditMessage": "Venture, Admin created a note on 6/26/2018 for Harkins, Wade"
+            },
+            {
+                "AuditDate": "6/21/2018 4:22:39 PM",
+                "AuditMessage": "Harkins, Wade added a point record for Harkins, Wade on 6/21/2018"
+            },
+            {
+                "AuditDate": "6/21/2018 4:22:39 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/21/2018 12:00:00 AM for Jury"
+            },
+            {
+                "AuditDate": "6/21/2018 4:22:33 PM",
+                "AuditMessage": "Venture, Admin tried to add an absence for Harkins, Wade on 4/10/2018 12:00:00 AM for Jurybut didn\u0027t have the proper permissions"
+            },
+            {
+                "AuditDate": "6/21/2018 3:52:18 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "6/21/2018 3:52:00 PM",
+                "AuditMessage": "Venture, Admin removed a Project"
+            },
+            {
+                "AuditDate": "6/21/2018 3:51:44 PM",
+                "AuditMessage": "Venture, Admin updated Project Moose Wrangling"
+            },
+            {
+                "AuditDate": "6/21/2018 3:51:06 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "6/21/2018 3:51:02 PM",
+                "AuditMessage": "Venture, Admin added a project"
+            },
+            {
+                "AuditDate": "6/21/2018 3:44:46 PM",
+                "AuditMessage": "Venture, Admin created a note on 6/20/2018 for Thompson, Shawn"
+            },
+            {
+                "AuditDate": "6/21/2018 3:40:48 PM",
+                "AuditMessage": "Venture, Admin updated a worktime record for Harkins, Wade."
+            },
+            {
+                "AuditDate": "6/21/2018 3:40:30 PM",
+                "AuditMessage": "Venture, Admin updated a worktime record for Harkins, Wade."
+            },
+            {
+                "AuditDate": "6/21/2018 3:17:53 PM",
+                "AuditMessage": "STISupport (Mckenzie, Chad M.) modified the holiday New Holiday(3)."
+            },
+            {
+                "AuditDate": "6/21/2018 3:07:08 PM",
+                "AuditMessage": "Venture, Admin updated point category Arbitrary Point."
+            },
+            {
+                "AuditDate": "6/21/2018 3:06:56 PM",
+                "AuditMessage": "Venture, Admin added a point category."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:49 PM",
+                "AuditMessage": "Venture, Admin modified the holiday New Holiday(3)."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:44 PM",
+                "AuditMessage": "The holiday New Holiday(4) was successfully added."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:42 PM",
+                "AuditMessage": "The holiday New Holiday(3) was successfully added."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:30 PM",
+                "AuditMessage": "Venture, Admin deleted the holiday New Holiday(3)."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:18 PM",
+                "AuditMessage": "Venture, Admin modified the holiday New Holiday(3)."
+            },
+            {
+                "AuditDate": "6/21/2018 3:02:06 PM",
+                "AuditMessage": "The holiday New Holiday(3) was successfully added."
+            },
+            {
+                "AuditDate": "6/21/2018 2:56:42 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "6/21/2018 2:51:44 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: New Policy"
+            },
+            {
+                "AuditDate": "6/19/2018 7:24:56 PM",
+                "AuditMessage": "Venture, Admin deleted the holiday New Holiday(1)."
+            },
+            {
+                "AuditDate": "6/19/2018 7:24:40 PM",
+                "AuditMessage": "The holiday New Holiday(1) was successfully added."
+            },
+            {
+                "AuditDate": "6/19/2018 7:24:28 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "6/19/2018 7:24:28 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "6/19/2018 7:24:22 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "6/13/2018 4:20:56 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eStartUp Settings changed from \"Summer Schedule\" to \"Default Schedule\"; allowed time for \"Default Schedule\" was applied.\u003c/li\u003e\u003cli\u003eShift changed from  8:00AM- 9:30PM to  9:00AM- 9:00PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:38:42 PM",
+                "AuditMessage": "Venture, Admin added a point record for Venture, Admin on 6/18/2018"
+            },
+            {
+                "AuditDate": "6/7/2018 6:38:00 PM",
+                "AuditMessage": "Venture, Admin updated point category Legal Points."
+            },
+            {
+                "AuditDate": "6/7/2018 6:37:00 PM",
+                "AuditMessage": "Venture, Admin added a day for Venture, Admin on 6/20/2018 12:00:00 AM for Holiday"
+            },
+            {
+                "AuditDate": "6/7/2018 6:37:00 PM",
+                "AuditMessage": "Venture, Admin added a day for Wszalek, Jonathan M. on 6/20/2018 12:00:00 AM for Holiday"
+            },
+            {
+                "AuditDate": "6/7/2018 6:36:59 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/20/2018 12:00:00 AM for Holiday"
+            },
+            {
+                "AuditDate": "6/7/2018 6:36:59 PM",
+                "AuditMessage": "Venture, Admin added a day for Thompson, Shawn on 6/20/2018 12:00:00 AM for Holiday"
+            },
+            {
+                "AuditDate": "6/7/2018 6:29:40 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eStartUp Settings changed from \"Default Schedule\" to \"Summer Schedule\"; allowed time for \"Summer Schedule\" was applied.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:29:08 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Summer Schedule"
+            },
+            {
+                "AuditDate": "6/7/2018 6:28:23 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Summer Schedule"
+            },
+            {
+                "AuditDate": "6/7/2018 6:26:46 PM",
+                "AuditMessage": "Venture, Admin modified Harkins, Wade\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eShift changed from  9:00AM- 6:00PM to  8:00AM- 9:30PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:24:04 PM",
+                "AuditMessage": "Venture, Admin removed the Software Engineering department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:24:04 PM",
+                "AuditMessage": "Venture, Admin removed the Software Engineering department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:21:29 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:21:28 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:21:28 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:21:00 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "6/7/2018 6:19:23 PM",
+                "AuditMessage": "Venture, Admin modified Venture, Admin\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eShift changed from  9:00AM- 6:00PM to  9:00AM- 8:30PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:19:07 PM",
+                "AuditMessage": "Venture, Admin modified Venture, Admin\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eDate of Hire changed from \"05/22/2018\" to \"05/22/2018\".\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:18:15 PM",
+                "AuditMessage": "Venture, Admin updated point category Legal Points."
+            },
+            {
+                "AuditDate": "6/7/2018 6:18:00 PM",
+                "AuditMessage": "Venture, Admin updated point category Legal Points."
+            },
+            {
+                "AuditDate": "6/7/2018 6:17:32 PM",
+                "AuditMessage": "Venture, Admin added a point category."
+            },
+            {
+                "AuditDate": "6/7/2018 6:16:32 PM",
+                "AuditMessage": "Venture, Admin modified Wszalek, Jonathan M.\u0027s Employee Information:\u003cul class=\"auditul\"\u003e\u003cli\u003eShift changed from  9:00AM- 6:00PM to  9:00AM- 9:00PM.\u003c/li\u003e\u003c/ul\u003e"
+            },
+            {
+                "AuditDate": "6/7/2018 6:14:00 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Default Schedule"
+            },
+            {
+                "AuditDate": "6/7/2018 1:08:12 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Wszalek, Jonathan M."
+            },
+            {
+                "AuditDate": "6/5/2018 8:26:42 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/7/2018 12:00:00 AM for Vacation"
+            },
+            {
+                "AuditDate": "6/5/2018 8:25:36 PM",
+                "AuditMessage": "Venture, Admin created an adjustment for Harkins, Wade on 6/7/2018 for Illness in the amount of 1"
+            },
+            {
+                "AuditDate": "6/5/2018 8:06:26 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Default Schedule"
+            },
+            {
+                "AuditDate": "6/5/2018 8:06:08 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Default Schedule"
+            },
+            {
+                "AuditDate": "6/5/2018 8:05:59 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Default Schedule"
+            },
+            {
+                "AuditDate": "6/5/2018 8:04:21 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/6/2018 12:00:00 AM for Illness"
+            },
+            {
+                "AuditDate": "6/5/2018 8:04:14 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/4/2018 12:00:00 AM for Training"
+            },
+            {
+                "AuditDate": "6/5/2018 8:04:06 PM",
+                "AuditMessage": "Venture, Admin deleted an absence recorded on 6/6/2018 12:00:00 AM for Harkins, Wade"
+            },
+            {
+                "AuditDate": "6/5/2018 8:03:36 PM",
+                "AuditMessage": "Venture, Admin created a note on 6/20/2018 for Harkins, Wade"
+            },
+            {
+                "AuditDate": "6/5/2018 8:03:06 PM",
+                "AuditMessage": "Venture, Admin added a day for Harkins, Wade on 6/6/2018 12:00:00 AM for Personal"
+            },
+            {
+                "AuditDate": "6/5/2018 8:02:16 PM",
+                "AuditMessage": "Venture, Admin has modified the Message of the Day."
+            },
+            {
+                "AuditDate": "6/5/2018 8:01:58 PM",
+                "AuditMessage": "All Holidays were successfully applied to all employees"
+            },
+            {
+                "AuditDate": "6/5/2018 7:50:49 PM",
+                "AuditMessage": "Harkins, Wade updated a worktime record for Harkins, Wade."
+            },
+            {
+                "AuditDate": "6/1/2018 8:07:16 AM",
+                "AuditMessage": "New Supervisor Role"
+            },
+            {
+                "AuditDate": "5/31/2018 2:45:37 PM",
+                "AuditMessage": "Venture, Admin removed category New Category"
+            },
+            {
+                "AuditDate": "5/31/2018 2:45:32 PM",
+                "AuditMessage": "Venture, Admin added a new category "
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:55 PM",
+                "AuditMessage": "Venture, Admin deleted the holiday New Holiday."
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:47 PM",
+                "AuditMessage": "The holiday New Holiday was successfully added."
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:42 PM",
+                "AuditMessage": "Venture, Admin deleted the holiday New Holiday."
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:31 PM",
+                "AuditMessage": "The holiday New Holiday was successfully added."
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:05 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:05 PM",
+                "AuditMessage": "Venture, Admin removed the New Department department "
+            },
+            {
+                "AuditDate": "5/31/2018 2:42:02 PM",
+                "AuditMessage": "Venture, Admin added a new department "
+            },
+            {
+                "AuditDate": "5/31/2018 2:39:46 PM",
+                "AuditMessage": "Venture, Admin saved the Accrual Policy: Default Schedule"
+            },
+            {
+                "AuditDate": "5/31/2018 2:09:05 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Harkins, Wade"
+            },
+            {
+                "AuditDate": "5/30/2018 3:53:00 PM",
+                "AuditMessage": "Thompson, Shawn updated a worktime record for Thompson, Shawn."
+            },
+            {
+                "AuditDate": "5/30/2018 3:52:31 PM",
+                "AuditMessage": "Thompson, Shawn updated a worktime record for Thompson, Shawn."
+            },
+            {
+                "AuditDate": "5/30/2018 3:45:54 PM",
+                "AuditMessage": "Venture, Admin deleted an absence recorded on 6/1/2018 12:00:00 AM for Thompson, Shawn"
+            },
+            {
+                "AuditDate": "5/30/2018 3:45:33 PM",
+                "AuditMessage": "Venture, Admin added a day for Thompson, Shawn on 6/1/2018 12:00:00 AM for Personal"
+            },
+            {
+                "AuditDate": "5/30/2018 3:44:54 PM",
+                "AuditMessage": "Venture, Admin added a new employee: Thompson, Shawn"
+            }
+        ]
+    }
+}

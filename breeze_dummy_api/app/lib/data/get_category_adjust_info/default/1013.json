@@ -1,0 +1,32 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.CategoryAdjust",
+		"categoryId":1013,
+		"categoryName":"Training",
+		"calendarType":46,
+		"viewDate":"2019-02-08T00:00:00",
+		"recordingYear":2019,
+		"recordingYearStart":"1/1/2019",
+		"recordingYearEnd":"12/31/2019",
+		"picturePath":"app/resources/UDC/Default/1013.png",
+		"carryOver":0,
+		"adjustments":0,
+		"recorded":0,
+		"allowed":0,
+		"remaining":0,
+		"accrued":0,
+		"carryMax":-1,
+		"carryExpires":"1/1/1900",
+		"rules":[
+
+		],
+		"isallowed":false,
+		"allowAccrual":false,
+		"hire_date":"5/29/2018",
+		"wait_date":"5/29/2018",
+		"employeeName":"Harkins, Wade",
+		"departmentName":"Test Department",
+		"active_yos_start":"5/29/2018",
+		"active_yos_end":"5/28/2019"
+	}
+}

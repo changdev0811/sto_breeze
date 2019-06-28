@@ -1,0 +1,64 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Extra Department",
+            "iconCls": "fal fa-building fa-2x fa-fw sto-skyblue",
+            "leaf": "True",
+            "d": [],
+            "data": "{\"Id\":1002,\"Name\":\"Extra Department\",\"Description\":\"\",\"SupervisorIds\":null,\"Supervisors\":null,\"EmployeeIds\":null,\"Employees\":null}",
+            "type": "Dept",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "New Department",
+            "iconCls": "fal fa-building fa-2x fa-fw sto-skyblue",
+            "leaf": "True",
+            "d": [],
+            "data": "{\"Id\":1003,\"Name\":\"New Department\",\"Description\":\"\",\"SupervisorIds\":null,\"Supervisors\":null,\"EmployeeIds\":null,\"Employees\":null}",
+            "type": "Dept",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "New Department",
+            "iconCls": "fal fa-building fa-2x fa-fw sto-skyblue",
+            "leaf": "True",
+            "d": [],
+            "data": "{\"Id\":1004,\"Name\":\"New Department\",\"Description\":\"\",\"SupervisorIds\":null,\"Supervisors\":null,\"EmployeeIds\":null,\"Employees\":null}",
+            "type": "Dept",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "Test Department",
+            "iconCls": "fal fa-building fa-2x fa-fw sto-skyblue",
+            "leaf": "True",
+            "d": [],
+            "data": "{\"Id\":1001,\"Name\":\"Test Department\",\"Description\":\"Default Department\",\"SupervisorIds\":null,\"Supervisors\":null,\"EmployeeIds\":null,\"Employees\":null}",
+            "type": "Dept",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        }
+    ]
+}

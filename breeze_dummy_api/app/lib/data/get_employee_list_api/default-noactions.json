@@ -1,0 +1,106 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Employee, Menial",
+            "data": "5005",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "Admin",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        },
+        {
+            "id": null,
+            "text": "Harkins, Wade",
+            "data": "5003",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "User",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        },
+        {
+            "id": null,
+            "text": "Thompson, Shawn",
+            "data": "5002",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "User",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        },
+        {
+            "id": null,
+            "text": "Venture, Admin",
+            "data": "5001",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "Admin",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        },
+        {
+            "id": null,
+            "text": "Visor, Super",
+            "data": "5006",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "Admin",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        },
+        {
+            "id": null,
+            "text": "Wszalek, Jonathan Matthew",
+            "data": "5004",
+            "type": "Emp",
+            "role": null,
+            "info": {
+                "id": null,
+                "text": null,
+                "data": null,
+                "type": null,
+                "role": "User",
+                "info": null,
+                "d": null
+            },
+            "d": null
+        }
+    ]
+}

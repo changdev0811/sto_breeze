@@ -1,0 +1,22 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Punch_Clock",
+        "customer_id": 991012,
+        "employee_id": 5003,
+        "employee_name": "Harkins, Wade",
+        "punch_status": 0,
+        "punch_lastActivity": "2/3/2019 11:00:00 PM",
+        "punch_lastProject": null,
+        "employee_default_project": 0,
+        "employee_last_project": 0,
+        "policy_add_note": true,
+        "comment1": "",
+        "comment2": "",
+        "comment3": "",
+        "comment4": "",
+        "comment5": "",
+        "comment6": "",
+        "comment7": "",
+        "comment8": ""
+    }
+}

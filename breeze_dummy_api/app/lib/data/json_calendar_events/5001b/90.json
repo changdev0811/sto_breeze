@@ -1,0 +1,63 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"request_755079",
+				"calendarId":"90",
+				"startDate":"2019-02-05T00:00:00.000Z",
+				"endDate":"2019-02-06T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/5/2019<br/>A<br/>------------<br/>Holiday: 100 %<BR>"
+			},
+			{
+				"id":"request_755080",
+				"calendarId":"90",
+				"startDate":"2019-02-06T00:00:00.000Z",
+				"endDate":"2019-02-07T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/6/2019<br/>A<br/>------------<br/>Holiday: 100 %<BR>"
+			},
+			{
+				"id":"request_755093",
+				"calendarId":"90",
+				"startDate":"2019-02-15T00:00:00.000Z",
+				"endDate":"2019-02-16T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/15/2019<br/>D<br/>------------<br/>Holiday: 50 %<BR>"
+			},
+			{
+				"id":"request_755094",
+				"calendarId":"90",
+				"startDate":"2019-02-16T00:00:00.000Z",
+				"endDate":"2019-02-17T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/16/2019<br/>D<br/>------------<br/>Holiday: 100 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

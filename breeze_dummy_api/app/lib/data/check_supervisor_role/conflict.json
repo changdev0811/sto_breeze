@@ -1,0 +1,13 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Resp",
+        "success": true,
+        "err": "4",
+        "info": [
+            "1001",
+            "Limited Supervisor",
+            "1002",
+            "Read Only Supervisor"
+        ]
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "3": {
+        "d": {
+            "__type": "Repository.Infrastructure.OptionList",
+            "Rows": [
+                {
+                    "ID": 5,
+                    "CodeTypeID": 3,
+                    "Description": "Hourly"
+                },
+                {
+                    "ID": 6,
+                    "CodeTypeID": 3,
+                    "Description": "Daily"
+                },
+                {
+                    "ID": 7,
+                    "CodeTypeID": 3,
+                    "Description": "Weekly"
+                },
+                {
+                    "ID": 8,
+                    "CodeTypeID": 3,
+                    "Description": "Bi-Weekly"
+                },
+                {
+                    "ID": 9,
+                    "CodeTypeID": 3,
+                    "Description": "Monthly"
+                },
+                {
+                    "ID": 10,
+                    "CodeTypeID": 3,
+                    "Description": "Annually"
+                }
+            ]
+        }
+    },
+    "4": {
+        "d": {
+            "__type": "Repository.Infrastructure.OptionList",
+            "Rows": [
+                {
+                    "ID": 11,
+                    "CodeTypeID": 4,
+                    "Description": "Male"
+                },
+                {
+                    "ID": 12,
+                    "CodeTypeID": 4,
+                    "Description": "Female"
+                }
+            ]
+        }
+    },
+    "5": {
+            "d": {
+                "__type": "Repository.Infrastructure.OptionList",
+                "Rows": [
+                    {
+                        "ID": 13,
+                        "CodeTypeID": 5,
+                        "Description": "Employee"
+                    },
+                    {
+                        "ID": 14,
+                        "CodeTypeID": 5,
+                        "Description": "Supervisor"
+                    },
+                    {
+                        "ID": 15,
+                        "CodeTypeID": 5,
+                        "Description": "Super Administrator"
+                    }
+                ]
+            }
+        }
+    }
+}

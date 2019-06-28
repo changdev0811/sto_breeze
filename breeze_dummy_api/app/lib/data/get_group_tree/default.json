@@ -1,0 +1,95 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Create New Group Calendar...",
+            "iconCls": "fal fa-calendar-plus fa-2x fa-fw sto-skyblue",
+            "leaf": "true",
+            "d": [],
+            "data": "0",
+            "type": "AddGroup",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "New Test Group Calendar",
+            "iconCls": "fal fa-object-group fa-2x fa-fw sto-skyblue",
+            "leaf": "false",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Group Calendar",
+                    "iconCls": "fal fa-calendar-alt fa-2x fa-fw sto-skyblue",
+                    "leaf": "true",
+                    "d": [],
+                    "data": "546",
+                    "type": "Group",
+                    "fullName": null,
+                    "qtip": null,
+                    "cls": "sti-left-menu",
+                    "status": 0,
+                    "icon": "none.png",
+                    "checked": null
+                },
+                {
+                    "id": null,
+                    "text": "Harkins, Wade",
+                    "iconCls": "fal fa-user fa-2x fa-fw sto-skyblue",
+                    "leaf": "true",
+                    "d": null,
+                    "data": "5003",
+                    "type": "displayemp",
+                    "fullName": "Harkins, Wade",
+                    "qtip": null,
+                    "cls": "sti-left-menu",
+                    "status": 0,
+                    "icon": "none.png",
+                    "checked": null
+                },
+                {
+                    "id": null,
+                    "text": "Thompson, Shawn",
+                    "iconCls": "fal fa-user fa-2x fa-fw sto-skyblue",
+                    "leaf": "true",
+                    "d": null,
+                    "data": "5002",
+                    "type": "displayemp",
+                    "fullName": "Thompson, Shawn",
+                    "qtip": null,
+                    "cls": "sti-left-menu",
+                    "status": 0,
+                    "icon": "none.png",
+                    "checked": null
+                },
+                {
+                    "id": null,
+                    "text": "Venture, Admin",
+                    "iconCls": "fal fa-user fa-2x fa-fw sto-skyblue",
+                    "leaf": "true",
+                    "d": null,
+                    "data": "5001",
+                    "type": "displayemp",
+                    "fullName": "Venture, Admin",
+                    "qtip": null,
+                    "cls": "sti-left-menu",
+                    "status": 0,
+                    "icon": "none.png",
+                    "checked": null
+                }
+            ],
+            "data": "546",
+            "type": "DisplayGroup",
+            "fullName": null,
+            "qtip": null,
+            "cls": "sti-left-menu",
+            "status": 0,
+            "icon": "none.png",
+            "checked": null
+        }
+    ]
+}

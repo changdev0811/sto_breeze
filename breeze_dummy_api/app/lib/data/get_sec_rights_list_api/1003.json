@@ -1,0 +1,213 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Add Employee",
+            "data": "Add_Employee",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Delete Employee",
+            "data": "Delete_Employee",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Edit Employee",
+            "data": "Edit_Employee",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "View SSN",
+            "data": "View_SSN",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "View Compensation",
+            "data": "View_Compensation",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Employee Category Adjust",
+            "data": "Employee_Category_Adjust",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Adjustments",
+            "data": "Adjustments",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Leave Approval",
+            "data": "Leave_Approval",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Modify Recorded Time",
+            "data": "Modify_Recorded_Time",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Manage Points",
+            "data": "Manage_Points",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Add Notes",
+            "data": "Add_Notes",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Employee Reports",
+            "data": "Employee_Reports",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Department Reports",
+            "data": "Department_Reports",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Project Maintenance",
+            "data": "Project_Maintenance",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Deduction Maintenance",
+            "data": "Deduction_Maintenance",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Export Payroll",
+            "data": "Export_Payroll",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Payroll Template Maintenance",
+            "data": "Payroll_Template_Maintenance",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Worktime Maintenance",
+            "data": "Worktime_Maintenance",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Worktime Approval",
+            "data": "Worktime_Approval",
+            "type": "sec",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        }
+    ]
+}

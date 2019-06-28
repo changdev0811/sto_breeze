@@ -1,0 +1,8 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.ShiftTimeObj",
+        "minutes": 0,
+        "schedule_id": 1001,
+        "recording_mode": 21
+    }
+}

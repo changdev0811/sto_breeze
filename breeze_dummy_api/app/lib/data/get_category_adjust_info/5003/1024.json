@@ -1,0 +1,32 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.CategoryAdjust",
+		"categoryId":1024,
+		"categoryName":"Holiday",
+		"calendarType":46,
+		"viewDate":"2020-12-30T00:00:00",
+		"recordingYear":2020,
+		"recordingYearStart":"1/1/2020",
+		"recordingYearEnd":"12/31/2020",
+		"picturePath":"app/resources/UDC/Default/1016.png",
+		"carryOver":0,
+		"adjustments":0,
+		"recorded":0,
+		"allowed":0,
+		"remaining":0,
+		"accrued":0,
+		"carryMax":-1,
+		"carryExpires":"1/1/1900",
+		"rules":[
+
+		],
+		"isallowed":false,
+		"allowAccrual":false,
+		"hire_date":"10/30/2018",
+		"wait_date":"10/30/2018",
+		"employeeName":"Mason, Harry",
+		"departmentName":"Extra Department",
+		"active_yos_start":"10/30/2020",
+		"active_yos_end":"10/29/2021"
+	}
+}

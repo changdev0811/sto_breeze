@@ -1,0 +1,49 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "-Default Exempt Policy-",
+            "iconCls": "GroupIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "{\"Allow_QuickPunch\":true,\"Allow_RegularPunch\":true,\"Auto_Close_Shift\":8,\"Auto_LunchPunch\":false,\"Auto_PunchIn\":true,\"Auto_PunchOut\":false,\"Can_Add_Notes\":true,\"Can_Add_Projects\":true,\"Can_Adjust_Punches\":false,\"Can_Edit_Notes\":true,\"Can_Use_InOut\":true,\"Can_Use_TimeSheets\":true,\"InOut_Opt\":false,\"IsFixed\":true,\"LunchPunch_Hours\":8,\"LunchPunch_Seg\":0,\"Ot_Day1\":36000,\"Ot_Day2\":0,\"Ot_Day3\":0,\"Ot_Day4\":0,\"Ot_Opt1\":true,\"Ot_Opt2\":false,\"Ot_Opt3\":false,\"Ot_Opt4\":false,\"Ot_Rate1\":1.50,\"Ot_Rate2\":0.00,\"Ot_Rate3\":0.00,\"Ot_Rate4\":0.00,\"Ot_Week1\":144000,\"Ot_Week2\":0,\"Ot_Week3\":0,\"Ot_Week4\":0,\"Round_Increment\":10,\"Round_Offset\":2,\"Subtract_DayOt\":false,\"customer_id\":991012,\"policy_id\":563,\"policy_name\":\"-Default Exempt Policy-\"}",
+            "type": "punchpolicy",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "-Default Non-Exempt Policy-",
+            "iconCls": "GroupIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "{\"Allow_QuickPunch\":true,\"Allow_RegularPunch\":true,\"Auto_Close_Shift\":8,\"Auto_LunchPunch\":false,\"Auto_PunchIn\":true,\"Auto_PunchOut\":false,\"Can_Add_Notes\":true,\"Can_Add_Projects\":true,\"Can_Adjust_Punches\":false,\"Can_Edit_Notes\":true,\"Can_Use_InOut\":true,\"Can_Use_TimeSheets\":true,\"InOut_Opt\":false,\"IsFixed\":true,\"LunchPunch_Hours\":8,\"LunchPunch_Seg\":0,\"Ot_Day1\":36000,\"Ot_Day2\":0,\"Ot_Day3\":0,\"Ot_Day4\":0,\"Ot_Opt1\":true,\"Ot_Opt2\":false,\"Ot_Opt3\":false,\"Ot_Opt4\":false,\"Ot_Rate1\":1.50,\"Ot_Rate2\":0.00,\"Ot_Rate3\":0.00,\"Ot_Rate4\":0.00,\"Ot_Week1\":144000,\"Ot_Week2\":0,\"Ot_Week3\":0,\"Ot_Week4\":0,\"Round_Increment\":10,\"Round_Offset\":2,\"Subtract_DayOt\":false,\"customer_id\":991012,\"policy_id\":564,\"policy_name\":\"-Default Non-Exempt Policy-\"}",
+            "type": "punchpolicy",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        },
+        {
+            "id": null,
+            "text": "-New Policy-",
+            "iconCls": "GroupIcon",
+            "leaf": "true",
+            "d": null,
+            "data": "{\"Allow_QuickPunch\":true,\"Allow_RegularPunch\":true,\"Auto_Close_Shift\":8,\"Auto_LunchPunch\":false,\"Auto_PunchIn\":true,\"Auto_PunchOut\":false,\"Can_Add_Notes\":true,\"Can_Add_Projects\":true,\"Can_Adjust_Punches\":false,\"Can_Edit_Notes\":true,\"Can_Use_InOut\":true,\"Can_Use_TimeSheets\":true,\"InOut_Opt\":false,\"IsFixed\":false,\"LunchPunch_Hours\":8,\"LunchPunch_Seg\":0,\"Ot_Day1\":36000,\"Ot_Day2\":0,\"Ot_Day3\":0,\"Ot_Day4\":0,\"Ot_Opt1\":true,\"Ot_Opt2\":false,\"Ot_Opt3\":false,\"Ot_Opt4\":false,\"Ot_Rate1\":1.50,\"Ot_Rate2\":0.00,\"Ot_Rate3\":0.00,\"Ot_Rate4\":0.00,\"Ot_Week1\":144000,\"Ot_Week2\":0,\"Ot_Week3\":0,\"Ot_Week4\":0,\"Round_Increment\":10,\"Round_Offset\":2,\"Subtract_DayOt\":false,\"customer_id\":991012,\"policy_id\":770,\"policy_name\":\"-New Policy-\"}",
+            "type": "punchpolicy",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": null,
+            "checked": null
+        }
+    ]
+}

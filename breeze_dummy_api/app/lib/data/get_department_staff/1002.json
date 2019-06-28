@@ -1,0 +1,17 @@
+{
+    "d": {
+        "__type": "Repository.Entities.StaffList",
+        "supervisors": [
+            "Employee, Menial",
+            "Venture, Admin",
+            "Visor, Super D"
+        ],
+        "supervisorIds": [
+            5005,
+            5001,
+            5006
+        ],
+        "employees": [],
+        "employeeIds": []
+    }
+}

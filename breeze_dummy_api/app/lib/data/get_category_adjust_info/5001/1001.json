@@ -1,0 +1,44 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.CategoryAdjust",
+		"categoryId":1001,
+		"categoryName":"Illness",
+		"calendarType":45,
+		"viewDate":"2019-02-10T00:00:00",
+		"recordingYear":2019,
+		"recordingYearStart":"5/29/2018",
+		"recordingYearEnd":"5/28/2019",
+		"picturePath":"app/resources/UDC/Default/1001.png",
+		"carryOver":0,
+		"adjustments":10.0,
+		"recorded":4.5,
+		"allowed":10.0,
+		"remaining":5.5,
+		"accrued":0.0,
+		"carryMax":1.0,
+		"carryExpires":"1/1/1900",
+		"rules":[
+			{
+				"ruleName":"Default",
+				"ruleAmount":0.0,
+				"ruleUnit":48,
+				"rulePer":117,
+				"ruleCount":"1",
+				"ruleStart":"5/29/2018",
+				"ruleEnd":"5/28/2019",
+				"ruleModified":0,
+				"occurrences":8,
+				"total":0.0,
+				"recording_mode":21
+			}
+		],
+		"isallowed":true,
+		"allowAccrual":true,
+		"hire_date":"5/29/2018",
+		"wait_date":"5/29/2018",
+		"employeeName":"Harkins, Wade",
+		"departmentName":"Test Department",
+		"active_yos_start":"5/29/2018",
+		"active_yos_end":"5/28/2019"
+	}
+}

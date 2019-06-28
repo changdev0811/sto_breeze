@@ -1,0 +1,12 @@
+{
+    "lookup": "5003",
+    "time": "7/11/2018 12:00:00 AM",
+    "request_id": 4,
+    "code": "68",
+    "EnforceAllowed": false,
+    "amount": 0.75,
+    "cust_id": "991012",
+    "emp_id": "5003",
+    "hashcookie": "",
+    "offset": 300
+}

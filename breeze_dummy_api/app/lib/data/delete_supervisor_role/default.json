@@ -1,0 +1,11 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Resp",
+        "success": true,
+        "err": "Supervisor Role: New Supervisor Role was\u003cbr/\u003esuccessfully deleted!",
+        "info": [
+            "New Supervisor Role",
+            "Venture, Admin deleted the supervisor role: New Supervisor Role"
+        ]
+    }
+}

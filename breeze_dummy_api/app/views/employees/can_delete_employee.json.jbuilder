@@ -1,0 +1,9 @@
+=begin
+{"d":
+    {"__type":"Repository.Entities.Resp",
+        "success":true,
+        "err":null,
+        "info":[]
+        }
+    }
+=end

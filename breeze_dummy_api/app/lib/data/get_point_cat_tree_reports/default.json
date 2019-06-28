@@ -1,0 +1,64 @@
+{
+    "d": [
+        {
+            "id": null,
+            "text": "Arbitrary Point",
+            "iconCls": "fal fa-exclamation fa-2x fa-fw sto-skyblue",
+            "leaf": "true",
+            "d": null,
+            "data": "1",
+            "type": "pointcat",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": false
+        },
+        {
+            "id": null,
+            "text": "Legal Points",
+            "iconCls": "fal fa-exclamation fa-2x fa-fw sto-skyblue",
+            "leaf": "true",
+            "d": null,
+            "data": "0",
+            "type": "pointcat",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": false
+        },
+        {
+            "id": null,
+            "text": "New Point Category",
+            "iconCls": "fal fa-exclamation fa-2x fa-fw sto-skyblue",
+            "leaf": "true",
+            "d": null,
+            "data": "2",
+            "type": "pointcat",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": false
+        },
+        {
+            "id": null,
+            "text": "New Point Category",
+            "iconCls": "fal fa-exclamation fa-2x fa-fw sto-skyblue",
+            "leaf": "true",
+            "d": null,
+            "data": "3",
+            "type": "pointcat",
+            "fullName": null,
+            "qtip": null,
+            "cls": null,
+            "status": 0,
+            "icon": "none.png",
+            "checked": false
+        }
+    ]
+}

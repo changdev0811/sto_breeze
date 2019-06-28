@@ -1,0 +1,85 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.TimeSheetApprovalRecord",
+            "id": 40,
+            "employee_Name": "Harkins, Wade",
+            "week_Ending": "7/7/2018",
+            "total_time": 720,
+            "timeSheet": {
+                "__type": "Repository.Entities.TimeSheet",
+                "id": 40,
+                "customer_id": 991012,
+                "employee_id": 5003,
+                "time_records": [
+                    {
+                        "__type": "Repository.Entities.WorkTime",
+                        "_record_date": "\/Date(1530576000000)\/",
+                        "Customer_Id": 991012,
+                        "ID": 862376,
+                        "employee_id": 5003,
+                        "record_note": null,
+                        "record_date": "7/3/2018 12:00:00 AM",
+                        "start_time": "\/Date(1530640822000)\/",
+                        "end_time": "\/Date(1530640832000)\/",
+                        "project_id": 0,
+                        "pin_id": 5028,
+                        "pout_id": 5029,
+                        "time_worked": 0,
+                        "deduction": null,
+                        "AbsenceCode": null,
+                        "AbsenceName": "",
+                        "AbsencePhoto": null
+                    },
+                    {
+                        "__type": "Repository.Entities.WorkTime",
+                        "_record_date": "\/Date(1530576000000)\/",
+                        "Customer_Id": 991012,
+                        "ID": 862379,
+                        "employee_id": 5003,
+                        "record_note": null,
+                        "record_date": "7/3/2018 12:00:00 AM",
+                        "start_time": "\/Date(1530608400000)\/",
+                        "end_time": "\/Date(1530651600000)\/",
+                        "project_id": 0,
+                        "pin_id": 0,
+                        "pout_id": 0,
+                        "time_worked": 720,
+                        "deduction": null,
+                        "AbsenceCode": null,
+                        "AbsenceName": "",
+                        "AbsencePhoto": null
+                    },
+                    {
+                        "__type": "Repository.Entities.WorkTime",
+                        "_record_date": "\/Date(1530576000000)\/",
+                        "Customer_Id": 991012,
+                        "ID": 862377,
+                        "employee_id": 5003,
+                        "record_note": null,
+                        "record_date": "7/3/2018 12:00:00 AM",
+                        "start_time": "\/Date(1530640836000)\/",
+                        "end_time": null,
+                        "project_id": 0,
+                        "pin_id": 5030,
+                        "pout_id": 0,
+                        "time_worked": 0,
+                        "deduction": null,
+                        "AbsenceCode": null,
+                        "AbsenceName": "",
+                        "AbsencePhoto": null
+                    }
+                ],
+                "start_date": "\/Date(1530403200000)\/",
+                "end_date": "\/Date(1531007940000)\/",
+                "approval_status": 0,
+                "employee_note": "",
+                "supervisor_note": "",
+                "submit_id": 0,
+                "submit_time": "\/Date(-62135596800000)\/",
+                "approve_id": 0,
+                "approve_time": "\/Date(-62135596800000)\/"
+            }
+        }
+    ]
+}

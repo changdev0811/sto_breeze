@@ -1,0 +1,14 @@
+{
+    "d": {
+        "__type": "Repository.Entities.AttendanceStatus",
+        "customer_id": 991012,
+        "employee_id": 5005,
+        "Status": 1,
+        "StatusText": "OUT",
+        "project": "0",
+        "project_code": "",
+        "LastActivity": "\/Date(1534787514000)\/",
+        "note": null,
+        "location": "199.87.198.18"
+    }
+}

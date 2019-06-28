@@ -1,0 +1,50 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"69818865",
+				"calendarId":"67",
+				"startDate":"2019-02-07T00:00:00.000Z",
+				"endDate":"2019-02-08T00:00:00.000Z",
+				"allDay":false,
+				"isLeave":false,
+				"dayPercent":0.25,
+				"priority":3,
+				"durationDesc":"25 %",
+				"title":"Personal",
+				"absenceString":"Personal: 25 %<BR>"
+			},
+			{
+				"id":"request_755076",
+				"calendarId":"67",
+				"startDate":"2019-02-04T00:00:00.000Z",
+				"endDate":"2019-02-05T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/4/2019<br/>A<br/>------------<br/>Personal: 25 %<BR>"
+			},
+			{
+				"id":"request_755090",
+				"calendarId":"67",
+				"startDate":"2019-02-13T00:00:00.000Z",
+				"endDate":"2019-02-14T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/13/2019<br/>C<br/>------------<br/>Personal: 25 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

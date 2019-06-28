@@ -1,0 +1,50 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"69818867",
+				"calendarId":"68",
+				"startDate":"2019-02-08T00:00:00.000Z",
+				"endDate":"2019-02-09T00:00:00.000Z",
+				"allDay":false,
+				"isLeave":false,
+				"dayPercent":0.5,
+				"priority":5,
+				"durationDesc":"50 %",
+				"title":"Jury",
+				"absenceString":"Jury: 50 %<BR>"
+			},
+			{
+				"id":"69818867",
+				"calendarId":"68",
+				"startDate":"2019-02-25T00:00:00.000Z",
+				"endDate":"2019-02-25T00:00:00.000Z",
+				"allDay":false,
+				"isLeave":false,
+				"dayPercent":0.5,
+				"priority":5,
+				"durationDesc":"50 %",
+				"title":"Jury",
+				"absenceString":"Jury: 50 %<BR>"
+			},
+			{
+				"id":"request_755078",
+				"calendarId":"68",
+				"startDate":"2019-02-04T00:00:00.000Z",
+				"endDate":"2019-02-05T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":false,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/4/2019<br/>A<br/>------------<br/>Jury: 25 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

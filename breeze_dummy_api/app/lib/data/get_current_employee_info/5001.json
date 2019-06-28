@@ -1,0 +1,126 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Employee",
+        "_TerminationDate": null,
+        "_HireDate": "\/Date(1526774400000)\/",
+        "TerminationDate": "",
+        "CustomerID": 991012,
+        "ID": 5001,
+        "RecordingMode": 21,
+        "Shift_Hours": null,
+        "FirstName": "Admin",
+        "MiddleName": "",
+        "LastName": "Venture",
+        "HireDate": "5/20/2018 12:00:00 AM",
+        "DepartmentName": "Test Department",
+        "StartUpSettings": 1001,
+        "Department": 1001,
+        "PunchPolicy": 564,
+        "DefaultProject": 0,
+        "DisplayName": null,
+        "BirthDate": "",
+        "Email": "",
+        "Notes": "",
+        "SSN": "",
+        "ExemptStatus": 139,
+        "Gender": 11,
+        "EmployeeNumber": "",
+        "Payroll": "",
+        "Badge": "",
+        "CompRate": 0.00,
+        "CompPer": 5,
+        "ShiftSegComboStartTimes": [
+            {
+                "shiftSegVal": 540,
+                "shiftSegStr": " 9:00AM"
+            },
+            {
+                "shiftSegVal": 1260,
+                "shiftSegStr": " 9:00PM"
+            }
+        ],
+        "ShiftSegComboStopTimes": [
+            {
+                "shiftSegVal": 1230,
+                "shiftSegStr": " 8:30PM"
+            },
+            {
+                "shiftSegVal": 1350,
+                "shiftSegStr": "10:30PM"
+            }
+        ],
+        "ShiftStartTimes": [
+            " 9:00AM",
+            " 9:00PM"
+        ],
+        "ShiftStopTimes": [
+            " 8:30PM",
+            "10:30PM"
+        ],
+        "ShiftStartSegments": [
+            540,
+            1260
+        ],
+        "ShiftStopSegments": [
+            1230,
+            1350
+        ],
+        "PhotoFlag": false,
+        "Photo": "app/resources/EmployeePhotos/default_man.png",
+        "Username": "Venture",
+        "LoginType": 15,
+        "Supervisors": [],
+        "SupervisorIds": [],
+        "SupervisorDeptsIds": [],
+        "SupervisorTerms": [],
+        "SupervisedEmps": [
+            "Harkins, Wade",
+            "Thompson, Shawn",
+            "Visor, Super D",
+            "Wszalek, Jonathan Matthew"
+        ],
+        "SupervisedEmpIds": [
+            5003,
+            5002,
+            5006,
+            5004
+        ],
+        "SupervisedEmpDeptsIds": [
+            "1001",
+            "1001",
+            "1001",
+            "1001"
+        ],
+        "SupervisedEmpTerms": [
+            false,
+            false,
+            false,
+            false
+        ],
+        "SupervisedDepts": [
+            "Extra Department",
+            "Test Department"
+        ],
+        "SupervisedDeptIds": [
+            1002,
+            1001
+        ],
+        "DeptRoles": [
+            "Full Supervisor",
+            "Full Supervisor"
+        ],
+        "DeptRoleIds": [
+            1003,
+            1003
+        ],
+        "ViewSSN": 1,
+        "ViewComp": 1,
+        "LayoffStatus": "Active",
+        "LayoffDate": null,
+        "WorkRecords": null,
+        "shiftHours": 13,
+        "displayName": "Venture, Admin",
+        "firstLast": "Admin Venture",
+        "possessiveFirstLast": "Admin Venture\u0027s"
+    }
+}

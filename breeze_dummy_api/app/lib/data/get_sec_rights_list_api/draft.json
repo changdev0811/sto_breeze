@@ -1,0 +1,99 @@
+{
+    "d": [
+        {
+            "text": "Add Employee",
+            "checked": true,
+            "data": "Add_Employee"
+        },
+        {
+            "text": "Delete Employee",
+            "checked": true,
+            "data": "Delete_Employee"
+        },
+        {
+            "text": "Edit Employee",
+            "checked": true,
+            "data": "Edit_Employee"
+        },
+        {
+            "text": "View SSN",
+            "checked": true,
+            "data": "View_SSN"
+        },
+        {
+            "text": "View Compensation",
+            "checked": true,
+            "data": "View_Compensation"
+        },
+        {
+            "text": "Employee Category Adjust",
+            "checked": true,
+            "data": "Employee_Category_Adjust"
+        },
+        {
+            "text": "Adjustments",
+            "checked": true,
+            "data": "Adjustments"
+        },
+        {
+            "text": "Leave Approval",
+            "checked": true,
+            "data": "Leave_Approval"
+        },
+        {
+            "text": "Modify Recorded Time",
+            "checked": true,
+            "data": "Modify_Recorded_Time"
+        },
+        {
+            "text": "Manage Points",
+            "checked": true,
+            "data": "Manage_Points"
+        },
+        {
+            "text": "Add Notes",
+            "checked": true,
+            "data": "Add_Notes"
+        },
+        {
+            "text": "Employee Reports",
+            "checked": true,
+            "data": "Employee_Reports"
+        },
+        {
+            "text": "Department Reports",
+            "checked": true,
+            "data": "Department_Reports"
+        },
+        {
+            "text": "Project Maintenance",
+            "checked": true,
+            "data": "Project_Maintenance"
+        },
+        {
+            "text": "Deduction Maintenance",
+            "checked": true,
+            "data": "Deduction_Maintenance"
+        },
+        {
+            "text": "Export Payroll",
+            "checked": true,
+            "data": "Export_Payroll"
+        },
+        {
+            "text": "Payroll Template Maintenance",
+            "checked": true,
+            "data": "Payroll_Template_Maintenance"
+        },
+        {
+            "text": "Worktime Maintenance",
+            "checked": true,
+            "data": "Worktime_Maintenance"
+        },
+        {
+            "text": "Worktime Approval",
+            "checked": true,
+            "data": "Worktime_Approval"
+        }
+    ]
+}

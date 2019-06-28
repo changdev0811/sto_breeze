@@ -1,0 +1,471 @@
+{
+    "d": [
+        {
+            "id": null,
+            "type": "Report",
+            "text": "Department Reports",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Absence Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AbsenceReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Absence Summary",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AbsenceSummary",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Adjustment Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AdjustmentReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Daily Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DailyReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Department Daily Totals",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DeptDailyTotals",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Department Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DepartmentDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Department Profile",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DeptProfile",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Department Reconciliation",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DepartmentReconciliation",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "In/Out Board",
+                    "leaf": true,
+                    "d": [],
+                    "data": "InOutBoard",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "In/Out History",
+                    "leaf": true,
+                    "d": [],
+                    "data": "InOutHistory",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Monthly Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "MonthlyReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Notes",
+                    "leaf": true,
+                    "d": [],
+                    "data": "Notes",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Overtime Check",
+                    "leaf": true,
+                    "d": [],
+                    "data": "OvertimeCheck",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Payroll Summary",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PayrollSummary",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Punch Errors",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PunchErrors",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Security Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "SecurityReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Shift Analysis",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ShiftAnalysis",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Summary by Project",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DProjectSummary",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Time Recap",
+                    "leaf": true,
+                    "d": [],
+                    "data": "TimeRecap",
+                    "type": "Report"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "Report",
+            "text": "Employee Reports",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Allowance Projection",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AllowanceProjection",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Employee Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "EmployeeDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Employee FYI",
+                    "leaf": true,
+                    "d": [],
+                    "data": "EmployeeFYI",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Employee Information",
+                    "leaf": true,
+                    "d": [],
+                    "data": "EmployeeInformation",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Employee Profile",
+                    "leaf": true,
+                    "d": [],
+                    "data": "EmployeeProfile",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Excessive Hours",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ExcessiveHours",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Lateness Check",
+                    "leaf": true,
+                    "d": [],
+                    "data": "LatenessCheck",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Recorded Time",
+                    "leaf": true,
+                    "d": [],
+                    "data": "RecordedTime",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Summary by Project",
+                    "leaf": true,
+                    "d": [],
+                    "data": "EProjectSummary",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Time Activity",
+                    "leaf": true,
+                    "d": [],
+                    "data": "TimeActivity",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Timesheet",
+                    "leaf": true,
+                    "d": [],
+                    "data": "Timesheet",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Worktime Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "WorktimeDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Year At A Glance",
+                    "leaf": true,
+                    "d": [],
+                    "data": "YearAtAGlance",
+                    "type": "Report"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "Report",
+            "text": "Miscellaneous Reports",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Accrual Policies",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AccrualPolicies",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Anniversary List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "AnniversaryList",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Audit",
+                    "leaf": true,
+                    "d": [],
+                    "data": "CompanyHistory",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Birthday List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "BirthdayList",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Department List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "DepartmentList",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Holiday Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "HolidayDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Holiday List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "HolidayList",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Holiday Reconciliation",
+                    "leaf": true,
+                    "d": [],
+                    "data": "HolidayReconciliation",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Leave Request Summary",
+                    "leaf": true,
+                    "d": [],
+                    "data": "LeaveRequestSummary",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Leave Requests",
+                    "leaf": true,
+                    "d": [],
+                    "data": "LeaveRequests",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Perfect Attendance",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PerfectAttendance",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Policy Report",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PolicyReport",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Quick List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "QuickList",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Supervisor List",
+                    "leaf": true,
+                    "d": [],
+                    "data": "SupervisorList",
+                    "type": "Report"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "Report",
+            "text": "Point Reports",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Excessive Points",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ExcessivePoints",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Point Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PointDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Point Ledger",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PointLedger",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Point Totals",
+                    "leaf": true,
+                    "d": [],
+                    "data": "PointTotals",
+                    "type": "Report"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "Report",
+            "text": "Project Reports",
+            "d": [
+                {
+                    "id": null,
+                    "text": "Project Details",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ProjectDetails",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Project Profile",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ProjectProfile",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Project Recap",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ProjectRecap",
+                    "type": "Report"
+                },
+                {
+                    "id": null,
+                    "text": "Project Time Summary",
+                    "leaf": true,
+                    "d": [],
+                    "data": "ProjectTimeSummary",
+                    "type": "Report"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.OptionList",
+        "Rows": [
+            {
+                "ID": 51,
+                "CodeTypeID": 14,
+                "Description": "Weekly"
+            },
+            {
+                "ID": 52,
+                "CodeTypeID": 14,
+                "Description": "Bi-Weekly"
+            },
+            {
+                "ID": 53,
+                "CodeTypeID": 14,
+                "Description": "Monthly"
+            },
+            {
+                "ID": 54,
+                "CodeTypeID": 14,
+                "Description": "Quarterly"
+            },
+            {
+                "ID": 55,
+                "CodeTypeID": 14,
+                "Description": "Semi-Annually"
+            },
+            {
+                "ID": 56,
+                "CodeTypeID": 14,
+                "Description": "Monthly Special"
+            },
+            {
+                "ID": 68,
+                "CodeTypeID": 14,
+                "Description": "Semi-Monthly"
+            },
+            {
+                "ID": 114,
+                "CodeTypeID": 14,
+                "Description": "Annually"
+            },
+            {
+                "ID": 115,
+                "CodeTypeID": 14,
+                "Description": "per X days"
+            },
+            {
+                "ID": 116,
+                "CodeTypeID": 14,
+                "Description": "per X weeks"
+            },
+            {
+                "ID": 117,
+                "CodeTypeID": 14,
+                "Description": "per X months"
+            },
+            {
+                "ID": 118,
+                "CodeTypeID": 14,
+                "Description": "per X years"
+            },
+            {
+                "ID": 119,
+                "CodeTypeID": 14,
+                "Description": "Monthly Special (per)"
+            },
+            {
+                "ID": 140,
+                "CodeTypeID": 14,
+                "Description": "per X worked hours"
+            },
+            {
+                "ID": 141,
+                "CodeTypeID": 14,
+                "Description": "per X worked days"
+            }
+        ]
+    }
+}

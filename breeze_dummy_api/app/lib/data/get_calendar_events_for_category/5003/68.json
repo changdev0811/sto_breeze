@@ -1,0 +1,28 @@
+{
+    "d": {
+        "Rows": [
+            {
+                "id": "68045632",
+                "startDate": "2018-06-21T00:00:00.000Z",
+                "endDate": "2018-06-22T00:00:00.000Z",
+                "allDay": true,
+                "calendarId": 68,
+                "priority": "4",
+                "desc": "12.00 Hours",
+                "title": "Jury",
+                "absenceString": "Absence Information: 6/21/2018&lt;BR&gt;------------&lt;BR&gt;Jury: 12.00 Hours&lt;BR&gt;"
+            },
+            {
+                "id": "68045636",
+                "startDate": "2018-06-22T00:00:00.000Z",
+                "endDate": "2018-06-24T00:00:00.000Z",
+                "allDay": "true",
+                "type": "68",
+                "priority": "4",
+                "desc": "12.00 Hours",
+                "title": "Jury",
+                "absenceString": "Absence Information: 6/22/2018&lt;BR&gt;------------&lt;BR&gt;Jury: 12.00 Hours&lt;BR&gt;"
+            }
+        ]
+    }
+}

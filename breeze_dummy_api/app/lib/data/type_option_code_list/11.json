@@ -1,0 +1,21 @@
+{
+    "d": {
+        "Rows": [
+            {
+                "ID": 42,
+                "CodeTypeID": 11,
+                "Description": "Day(s)"
+            },
+            {
+                "ID": 43,
+                "CodeTypeID": 11,
+                "Description": "Weeks(s)"
+            },
+            {
+                "ID": 44,
+                "CodeTypeID": 11,
+                "Description": "Month(s)"
+            }
+        ]
+    }
+}

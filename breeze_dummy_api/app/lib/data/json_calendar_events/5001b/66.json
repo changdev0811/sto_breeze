@@ -1,0 +1,24 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"69818864",
+				"calendarId":"66",
+				"startDate":"2019-02-07T00:00:00.000Z",
+				"endDate":"2019-02-08T00:00:00.000Z",
+				"allDay":false,
+				"isLeave":false,
+				"dayPercent":0.25,
+				"priority":2,
+				"durationDesc":"25 %",
+				"title":"Vacation",
+				"absenceString":"Vacation: 25 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

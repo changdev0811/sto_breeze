@@ -1,0 +1,76 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"request_755085",
+				"calendarId":"65",
+				"startDate":"2019-02-09T00:00:00.000Z",
+				"endDate":"2019-02-10T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/9/2019<br/>C<br/>------------<br/>Illness: 50 %<BR>"
+			},
+			{
+				"id":"request_755086",
+				"calendarId":"65",
+				"startDate":"2019-02-10T00:00:00.000Z",
+				"endDate":"2019-02-11T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/10/2019<br/>C<br/>------------<br/>Illness: 100 %<BR>"
+			},
+			{
+				"id":"request_755087",
+				"calendarId":"65",
+				"startDate":"2019-02-11T00:00:00.000Z",
+				"endDate":"2019-02-12T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/11/2019<br/>C<br/>------------<br/>Illness: 100 %<BR>"
+			},
+			{
+				"id":"request_755088",
+				"calendarId":"65",
+				"startDate":"2019-02-12T00:00:00.000Z",
+				"endDate":"2019-02-13T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/12/2019<br/>C<br/>------------<br/>Illness: 100 %<BR>"
+			},
+			{
+				"id":"request_755089",
+				"calendarId":"65",
+				"startDate":"2019-02-13T00:00:00.000Z",
+				"endDate":"2019-02-14T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/13/2019<br/>C<br/>------------<br/>Illness: 25 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

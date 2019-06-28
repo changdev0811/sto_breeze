@@ -1,0 +1,140 @@
+{
+    "d": {
+        "__type": "Repository.Entities.Employee_Plus_Policy",
+        "employee": {
+            "__type": "Repository.Entities.Employee",
+            "_TerminationDate": null,
+            "_HireDate": "\/Date(1527552000000)\/",
+            "TerminationDate": "",
+            "CustomerID": 991012,
+            "ID": 5003,
+            "RecordingMode": 21,
+            "Shift_Hours": null,
+            "FirstName": "Wade",
+            "MiddleName": "",
+            "LastName": "Harkins",
+            "HireDate": "5/29/2018 12:00:00 AM",
+            "DepartmentName": "Test Department",
+            "StartUpSettings": 1001,
+            "Department": 1001,
+            "PunchPolicy": 563,
+            "DefaultProject": 0,
+            "DisplayName": null,
+            "BirthDate": "05/01/2018",
+            "Email": "",
+            "Notes": "<p>Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.</p><p>There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.</p><p>Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?</p>",
+            "SSN": "3",
+            "ExemptStatus": 139,
+            "Gender": 11,
+            "EmployeeNumber": "2",
+            "Payroll": "2",
+            "Badge": "2",
+            "CompRate": 100000.00,
+            "CompPer": 5,
+            "ShiftSegComboStartTimes": [
+                {
+                    "shiftSegVal": 540,
+                    "shiftSegStr": " 9:00AM"
+                }
+            ],
+            "ShiftSegComboStopTimes": [
+                {
+                    "shiftSegVal": 1260,
+                    "shiftSegStr": " 9:00PM"
+                }
+            ],
+            "ShiftStartTimes": [
+                " 9:00AM"
+            ],
+            "ShiftStopTimes": [
+                " 9:00PM"
+            ],
+            "ShiftStartSegments": [
+                540
+            ],
+            "ShiftStopSegments": [
+                1260
+            ],
+            "PhotoFlag": false,
+            "Photo": "app/resources/EmployeePhotos/default_man.png",
+            "Username": "venturewade",
+            "LoginType": 13,
+            "Supervisors": [
+                "Employee, Menial",
+                "Venture, Admin"
+            ],
+            "SupervisorIds": [
+                5005,
+                5001
+            ],
+            "SupervisorDeptsIds": [
+                "1001",
+                "1001,1002"
+            ],
+            "SupervisorTerms": [
+                0,
+                0
+            ],
+            "SupervisedEmps": [],
+            "SupervisedEmpIds": [],
+            "SupervisedEmpDeptsIds": [],
+            "SupervisedEmpTerms": [],
+            "SupervisedDepts": [],
+            "SupervisedDeptIds": [],
+            "DeptRoles": [],
+            "DeptRoleIds": [],
+            "ViewSSN": 1,
+            "ViewComp": 1,
+            "LayoffStatus": "Active",
+            "LayoffDate": null,
+            "WorkRecords": null,
+            "shiftHours": 12,
+            "displayName": "Harkins, Wade",
+            "firstLast": "Wade Harkins",
+            "possessiveFirstLast": "Wade Harkins\u0027"
+        },
+        "punchPolicy": {
+            "__type": "Repository.Entities.Punch_Policy_Info",
+            "policy_id": 563,
+            "customer_id": 991012,
+            "policy_name": null,
+            "IsFixed": false,
+            "Ot_Opt1": true,
+            "Ot_Opt2": false,
+            "Ot_Opt3": false,
+            "Ot_Opt4": false,
+            "Ot_Day1": 36000,
+            "Ot_Day2": 0,
+            "Ot_Day3": 0,
+            "Ot_Day4": 0,
+            "Ot_Week1": 144000,
+            "Ot_Week2": 0,
+            "Ot_Week3": 0,
+            "Ot_Week4": 0,
+            "Ot_Rate1": 1.50,
+            "Ot_Rate2": 0.00,
+            "Ot_Rate3": 0.00,
+            "Ot_Rate4": 0.00,
+            "Subtract_DayOt": true,
+            "Round_Increment": 10,
+            "Round_Offset": 2,
+            "Allow_RegularPunch": true,
+            "Allow_QuickPunch": true,
+            "Auto_PunchIn": true,
+            "Auto_PunchOut": false,
+            "Auto_Close_Shift": 8,
+            "Auto_LunchPunch": false,
+            "LunchPunch_Seg": 0,
+            "LunchPunch_Hours": 8,
+            "Can_Add_Projects": true,
+            "Can_Add_Notes": true,
+            "Can_Edit_Notes": true,
+            "Can_Adjust_Punches": false,
+            "Can_Use_TimeSheets": true,
+            "InOut_Opt": false,
+            "Can_Use_InOut": true,
+            "Timesheet_Submission_Required": false
+        },
+        "employeePolicyMatches": false
+    }
+}

@@ -1,0 +1,330 @@
+{
+    "d": {
+        "ID": 5001,
+        "Name": "New Policy",
+        "recordingMode": 20,
+        "Baseline": 0,
+        "ShiftTime": 480,
+        "ShiftStartTimes": null,
+        "ShiftStopTimes": null,
+        "ShiftStartSegments": null,
+        "ShiftStopSegments": null,
+        "shifts": [
+            {
+                "StartTime": " 8:00 AM",
+                "StartSegment": 540,
+                "StopTime": " 5:00 PM",
+                "StopSegment": 1020
+            }
+        ],
+        "Categories": [
+            {
+                "categoryId": 1001,
+                "categoryName": "Illness",
+                "calendarType": 46,
+                "isAllowed": true,
+                "newTime": 5,
+                "newRate": 44,
+                "allowAccrual": true,
+                "accrualCapAmount": 10,
+                "balanceCapAmount": 24,
+                "accrualCapUnit": 49,
+                "balanceCapUnit": 48,
+                "accrualRules": [
+                    {
+                        "ruleName": "A Rule",
+                        "svcFrom": 0,
+                        "svcTo": 2,
+                        "accformInc": 0.0000,
+                        "accformUnit": 48,
+                        "accformPer": 56,
+                        "accformDay": "1",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    },
+                    {
+                        "ruleName": "A Rule",
+                        "svcFrom": 3,
+                        "svcTo": 3,
+                        "accformInc": 1.0000,
+                        "accformUnit": 48,
+                        "accformPer": 53,
+                        "accformDay": "2",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    },
+                    {
+                        "ruleName": "A Rule",
+                        "svcFrom": 4,
+                        "svcTo": 0,
+                        "accformInc": 2.0000,
+                        "accformUnit": 48,
+                        "accformPer": 52,
+                        "accformDay": "13",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    }
+                ],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    },
+                    {
+                        "svcFrom": 4,
+                        "svcTo": 5,
+                        "carryOver": 0,
+                        "allowCarry": true,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    },
+                    {
+                        "svcFrom": 6,
+                        "svcTo": 7,
+                        "carryOver": 1,
+                        "allowCarry": true,
+                        "carryMax": true,
+                        "perAmount": 2,
+                        "perUnit": 57,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1002,
+                "categoryName": "Vacation",
+                "calendarType": 45,
+                "isAllowed": true,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": true,
+                "accrualCapAmount": 1,
+                "balanceCapAmount": 2,
+                "accrualCapUnit": 59,
+                "balanceCapUnit": 50,
+                "accrualRules": [
+                    {
+                        "accformDay": "1",
+                        "accformInc": 0,
+                        "accformPer": 53,
+                        "accformUnit": 48,
+                        "accrualChanged": false,
+                        "msDay": "0",
+                        "msMonth": "0",
+                        "ruleName": "Defaults",
+                        "svcFrom": 0,
+                        "svcTo": 1
+                    },
+                    {
+                        "accformDay": "1",
+                        "accformInc": 1,
+                        "accformPer": 53,
+                        "accformUnit": 48,
+                        "accrualChanged": false,
+                        "msDay": "0",
+                        "msMonth": "0",
+                        "ruleName": "Defaults",
+                        "svcFrom": 2,
+                        "svcTo": 2
+                    },
+                    {
+                        "accformDay": "2",
+                        "accformInc": 2,
+                        "accformPer": 116,
+                        "accformUnit": 49,
+                        "accrualChanged": false,
+                        "msDay": "0",
+                        "msMonth": "0",
+                        "ruleName": "Defaults",
+                        "svcFrom": 3,
+                        "svcTo": 3
+                    },
+                    {
+                        "accformDay": "1",
+                        "accformInc": 2,
+                        "accformPer": 118,
+                        "accformUnit": 48,
+                        "accrualChanged": false,
+                        "msDay": "0",
+                        "msMonth": "0",
+                        "ruleName": "Defaults",
+                        "svcFrom": 4,
+                        "svcTo": 0
+                    }
+                ],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1003,
+                "categoryName": "Personal",
+                "calendarType": 46,
+                "isAllowed": true,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1005,
+                "categoryName": "Jury",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1010,
+                "categoryName": "Bereavement",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [
+                    {
+                        "ruleName": "A Rule",
+                        "svcFrom": 0,
+                        "svcTo": 2,
+                        "accformInc": 0.0000,
+                        "accformUnit": 48,
+                        "accformPer": 53,
+                        "accformDay": "1",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    },
+                    {
+                        "ruleName": "A Rule",
+                        "svcFrom": 3,
+                        "svcTo": 3,
+                        "accformInc": 1.0000,
+                        "accformUnit": 48,
+                        "accformPer": 53,
+                        "accformDay": "2",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    },
+                    {
+                        "ruleName": "B Rule",
+                        "svcFrom": 3,
+                        "svcTo": 4,
+                        "accformInc": 1.0000,
+                        "accformUnit": 50,
+                        "accformPer": 53,
+                        "accformDay": "2",
+                        "accrualChanged": false,
+                        "msMonth": "0",
+                        "msDay": "0"
+                    }
+                ],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1013,
+                "categoryName": "Training",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1024,
+                "categoryName": "Holiday",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1025,
+                "categoryName": "New Category",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 1,
+                        "svcTo": 0,
+                        "carryOver": 0.0000,
+                        "allowCarry": true,
+                        "carryMax": false,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "d": {
+        "__type": "Repository.Entities.InOutBoard",
+        "Customer_ID": 0,
+        "Records": [
+            {
+                "Employee_ID": 5005,
+                "Employee_Name": "Employee, Menial",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 0,
+                "StatusColor": "RED",
+                "Location": "",
+                "Notes": "",
+                "Punch_Time": "\/Date(-62135596800000)\/"
+            },
+            {
+                "Employee_ID": 5003,
+                "Employee_Name": "Harkins, Wade",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 1,
+                "StatusColor": "GREEN",
+                "Location": "199.87.198.18",
+                "Notes": null,
+                "Punch_Time": "\/Date(1530640836000)\/"
+            },
+            {
+                "Employee_ID": 5002,
+                "Employee_Name": "Thompson, Shawn",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 0,
+                "StatusColor": "RED",
+                "Location": "",
+                "Notes": "",
+                "Punch_Time": "\/Date(1530208800000)\/"
+            },
+            {
+                "Employee_ID": 5001,
+                "Employee_Name": "Venture, Admin",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 1,
+                "StatusColor": "GREEN",
+                "Location": "199.87.198.18",
+                "Notes": null,
+                "Punch_Time": "\/Date(1534784858000)\/"
+            },
+            {
+                "Employee_ID": 5006,
+                "Employee_Name": "Visor, Super D.",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 0,
+                "StatusColor": "RED",
+                "Location": "",
+                "Notes": "",
+                "Punch_Time": "\/Date(-62135596800000)\/"
+            },
+            {
+                "Employee_ID": 5004,
+                "Employee_Name": "Wszalek, Jonathan M.",
+                "Employee_Department": "Test Department",
+                "Employee_Project": "NA",
+                "Attendance_Status": 0,
+                "StatusColor": "RED",
+                "Location": "71.63.36.251",
+                "Notes": "",
+                "Punch_Time": "\/Date(1534776791000)\/"
+            }
+        ]
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "d": {
+        "Rows": [
+            {
+                "Category_Code": "65",
+                "Category_Name": "Illness",
+                "Category_Color_RGB": "rgb(255,149,149)",
+                "Category_Color_HEX": "#FF9595",
+                "Picture_Path": "app/resources/UDC/Default/1001.png",
+                "Category_ID": 1001
+            },
+            {
+                "Category_Code": "66",
+                "Category_Name": "Vacation",
+                "Category_Color_RGB": "rgb(254,203,149)",
+                "Category_Color_HEX": "#FECB95",
+                "Picture_Path": "app/resources/UDC/Default/1002.png",
+                "Category_ID": 1002
+            },
+            {
+                "Category_Code": "67",
+                "Category_Name": "Personal",
+                "Category_Color_RGB": "rgb(251,255,157)",
+                "Category_Color_HEX": "#FBFF9D",
+                "Picture_Path": "app/resources/UDC/Default/1003.png",
+                "Category_ID": 1003
+            },
+            {
+                "Category_Code": "68",
+                "Category_Name": "Jury",
+                "Category_Color_RGB": "rgb(119,185,161)",
+                "Category_Color_HEX": "#77B9A1",
+                "Picture_Path": "app/resources/UDC/Default/1005.png",
+                "Category_ID": 1005
+            },
+            {
+                "Category_Code": "69",
+                "Category_Name": "Bereavement",
+                "Category_Color_RGB": "rgb(45,136,207)",
+                "Category_Color_HEX": "#2D88CF",
+                "Picture_Path": "app/resources/UDC/Default/1010.png",
+                "Category_ID": 1010
+            },
+            {
+                "Category_Code": "70",
+                "Category_Name": "Training",
+                "Category_Color_RGB": "rgb(121,129,171)",
+                "Category_Color_HEX": "#7981AB",
+                "Picture_Path": "app/resources/UDC/Default/1013.png",
+                "Category_ID": 1013
+            },
+            {
+                "Category_Code": "90",
+                "Category_Name": "Holiday",
+                "Category_Color_RGB": "rgb(203,151,180)",
+                "Category_Color_HEX": "#CB97B4",
+                "Picture_Path": "app/resources/UDC/Default/1016.png",
+                "Category_ID": 1024
+            }
+        ]
+    }
+}

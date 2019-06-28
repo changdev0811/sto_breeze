@@ -1,0 +1,176 @@
+{
+    "d": {
+        "ID": 5003,
+        "Name": "Fresh Policy",
+        "recordingMode": 20,
+        "Baseline": 0,
+        "ShiftTime": 480,
+        "ShiftStartTimes": null,
+        "ShiftStopTimes": null,
+        "ShiftStartSegments": null,
+        "ShiftStopSegments": null,
+        "shifts": [
+            {
+                "StartTime": " 9:00 AM",
+                "StartSegment": 540,
+                "StopTime": " 5:00 PM",
+                "StopSegment": 1020
+            }
+        ],
+        "Categories": [
+            {
+                "categoryId": 1001,
+                "categoryName": "Illness",
+                "calendarType": 46,
+                "isAllowed": true,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1002,
+                "categoryName": "Vacation",
+                "calendarType": 45,
+                "isAllowed": true,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1003,
+                "categoryName": "Personal",
+                "calendarType": 46,
+                "isAllowed": true,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": [
+                    {
+                        "svcFrom": 0,
+                        "svcTo": 0,
+                        "carryOver": 0,
+                        "allowCarry": false,
+                        "carryMax": true,
+                        "perAmount": 0,
+                        "perUnit": 59,
+                        "expChanged": false
+                    }
+                ]
+            },
+            {
+                "categoryId": 1005,
+                "categoryName": "Jury",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1010,
+                "categoryName": "Bereavement",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1013,
+                "categoryName": "Training",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1024,
+                "categoryName": "Holiday",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            },
+            {
+                "categoryId": 1025,
+                "categoryName": "New Category",
+                "calendarType": 46,
+                "isAllowed": false,
+                "newTime": 0,
+                "newRate": 44,
+                "allowAccrual": false,
+                "accrualCapAmount": 0,
+                "balanceCapAmount": 0,
+                "accrualCapUnit": 0,
+                "balanceCapUnit": 0,
+                "accrualRules": [],
+                "carryOverRules": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "d": {
+        "categoryId": 1005,
+        "categoryName": "Jury",
+        "calendarType": 46,
+        "isAllowed": false,
+        "newTime": 0,
+        "newRate": 44,
+        "allowAccrual": false,
+        "accrualCapAmount": 0.0000,
+        "balanceCapAmount": 0.0000,
+        "accrualCapUnit": 49,
+        "balanceCapUnit": 49,
+        "accrualRules": [],
+        "carryOverRules": []
+    }
+}

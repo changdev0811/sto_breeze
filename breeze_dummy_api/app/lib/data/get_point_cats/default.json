@@ -1,0 +1,52 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "Arbitrary Point",
+            "PointID": 1,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 1,
+            "DurType": 60,
+            "AbsenceCats": null,
+            "PointDetails": "This is a newly generated category.",
+            "Occurences": null
+        },
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "Legal Points",
+            "PointID": 0,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 1,
+            "DurType": 60,
+            "AbsenceCats": null,
+            "PointDetails": "Points related to legal stuff",
+            "Occurences": null
+        },
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "New Point Category",
+            "PointID": 2,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 1,
+            "DurType": 60,
+            "AbsenceCats": null,
+            "PointDetails": "This is a newly generated category.",
+            "Occurences": null
+        },
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "New Point Category",
+            "PointID": 3,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 1,
+            "DurType": 60,
+            "AbsenceCats": null,
+            "PointDetails": "This is a newly generated category.",
+            "Occurences": null
+        }
+    ]
+}

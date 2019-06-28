@@ -1,0 +1,111 @@
+{
+    "d": [
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "6/29/2018 12:00:00 AM",
+            "category_name": "Personal",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [
+                {
+                    "EmpName": "Wszalek, Jonathan M",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 12.0000,
+                    "Percentage": 100.0000,
+                    "ConflictDate": "6/29/2018 12:00:00 AM",
+                    "recording_mode": 21
+                }
+            ],
+            "request_conflicts": 1,
+            "category_code": "67"
+        },
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "6/30/2018 12:00:00 AM",
+            "category_name": "Personal",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [
+                {
+                    "EmpName": "Venture, Admin ",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 5.2000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Thompson, Shawn ",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 3.6000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Harkins, Wade ",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 4.8000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Wszalek, Jonathan M",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 4.8000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Employee, Menial ",
+                    "EmpDepartment": "Test Department",
+                    "Amount": 4.8000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Visor, Super D",
+                    "EmpDepartment": "Extra Department",
+                    "Amount": 0.8000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Mason, Harry ",
+                    "EmpDepartment": "Extra Department",
+                    "Amount": 4.8000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                },
+                {
+                    "EmpName": "Deleted, Will B",
+                    "EmpDepartment": "Extra Department",
+                    "Amount": 3.2000,
+                    "Percentage": 40.0000,
+                    "ConflictDate": "6/30/2018 12:00:00 AM",
+                    "recording_mode": 21
+                }
+            ],
+            "request_conflicts": 8,
+            "category_code": "67"
+        },
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "7/6/2018 12:00:00 AM",
+            "category_name": "Holiday",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [],
+            "request_conflicts": 0,
+            "category_code": "90"
+        }
+    ]
+}

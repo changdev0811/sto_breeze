@@ -1,0 +1,88 @@
+{
+    "d": {
+        "__type": "Repository.Entities.FYI",
+        "EmployeeName": "Harkins, Wade",
+        "DepartmentName": "Test Department",
+        "HireDate": "5/29/2018",
+        "Rows": [
+            {
+                "CatID": 1001,
+                "CatColor": "rgb(255,149,149)",
+                "CatDesc": "Illness",
+                "CatAbbr": "I",
+                "CalType": "Calendar",
+                "CatRecorded": "4.50",
+                "CatAllowed": "9.00",
+                "CatRemaining": "4.50",
+                "IsAllowed": true
+            },
+            {
+                "CatID": 1002,
+                "CatColor": "rgb(254,203,149)",
+                "CatDesc": "Vacation",
+                "CatAbbr": "V",
+                "CalType": "Calendar",
+                "CatRecorded": "21.00",
+                "CatAllowed": "0.00",
+                "CatRemaining": "-21.00",
+                "IsAllowed": true
+            },
+            {
+                "CatID": 1003,
+                "CatColor": "rgb(251,255,157)",
+                "CatDesc": "Personal",
+                "CatAbbr": "P",
+                "CalType": "Calendar",
+                "CatRecorded": "0.00",
+                "CatAllowed": "0.00",
+                "CatRemaining": "0.00",
+                "IsAllowed": true
+            },
+            {
+                "CatID": 1005,
+                "CatColor": "rgb(119,185,161)",
+                "CatDesc": "Jury",
+                "CatAbbr": "J",
+                "CalType": "Calendar",
+                "CatRecorded": "24.00",
+                "CatAllowed": "--",
+                "CatRemaining": "--",
+                "IsAllowed": false
+            },
+            {
+                "CatID": 1010,
+                "CatColor": "rgb(45,136,207)",
+                "CatDesc": "Bereavement",
+                "CatAbbr": "B",
+                "CalType": "Calendar",
+                "CatRecorded": "0.00",
+                "CatAllowed": "--",
+                "CatRemaining": "--",
+                "IsAllowed": false
+            },
+            {
+                "CatID": 1013,
+                "CatColor": "rgb(121,129,171)",
+                "CatDesc": "Training",
+                "CatAbbr": "T",
+                "CalType": "Calendar",
+                "CatRecorded": "9.00",
+                "CatAllowed": "--",
+                "CatRemaining": "--",
+                "IsAllowed": false
+            },
+            {
+                "CatID": 1024,
+                "CatColor": "rgb(203,151,180)",
+                "CatDesc": "Holiday",
+                "CatAbbr": "H",
+                "CalType": "Calendar",
+                "CatRecorded": "13.50",
+                "CatAllowed": "--",
+                "CatRemaining": "--",
+                "IsAllowed": false
+            }
+        ],
+        "Points": null
+    }
+}

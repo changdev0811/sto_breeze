@@ -1,0 +1,18 @@
+{
+    "d": {
+        "Rows": [
+            {
+                "id": "124",
+                "calendarId": 66,
+                "startDate": "2018-06-19T00:00:00.000Z",
+                "endDate": "2018-06-20T00:00:00.000Z",
+                "allDay": true,
+                "dayPercent": 100,
+                "priority": 2,
+                "durationDesc": "9.00 Hours",
+                "title": "Vacation",
+                "absenceString": "Absence Information: 6/19/2018&lt;BR&gt;------------&lt;BR&gt;Vacation: 12.00 Hours&lt;BR&gt;"
+            }
+        ]
+    }
+}

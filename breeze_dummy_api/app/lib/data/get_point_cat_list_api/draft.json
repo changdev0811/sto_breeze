@@ -1,0 +1,72 @@
+{
+    "d": [
+        {
+            "AbsenceCats": "0",
+            "DurAmt": 1,
+            "DurType": 60,
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 0,
+                    "occvalue": 0.0
+                }
+            ],
+            "PointDetails": "This is a newly generated category.",
+            "PointID": 1,
+            "PointIOC": 0,
+            "PointName": "Arbitrary Point",
+            "PointVal": 0
+        },
+        {
+            "AbsenceCats": "1005",
+            "DurAmt": 1,
+            "DurType": 60,
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 0,
+                    "occvalue": 1.0
+                }
+            ],
+            "PointDetails": "Points related to legal stuff",
+            "PointID": 0,
+            "PointIOC": 0,
+            "PointName": "Legal Points",
+            "PointVal": 0
+        },
+        {
+            "AbsenceCats": "0",
+            "DurAmt": 1,
+            "DurType": 60,
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 0,
+                    "occvalue": 0.0
+                }
+            ],
+            "PointDetails": "This is a newly generated category.",
+            "PointID": 2,
+            "PointIOC": 0,
+            "PointName": "New Point Category",
+            "PointVal": 0
+        },
+        {
+            "AbsenceCats": "",
+            "DurAmt": 1,
+            "DurType": 60,
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 0,
+                    "occvalue": 0.0
+                }
+            ],
+            "PointDetails": "This is a newly generated category.",
+            "PointID": 3,
+            "PointIOC": 0,
+            "PointName": "New Point Category",
+            "PointVal": 0
+        }
+    ]
+}

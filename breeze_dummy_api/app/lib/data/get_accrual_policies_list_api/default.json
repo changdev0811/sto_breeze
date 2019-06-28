@@ -1,0 +1,26 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Default Schedule",
+            "data": "1001",
+            "type": "sus",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "New Policy",
+            "data": "5001",
+            "type": "sus",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        }
+    ]
+}

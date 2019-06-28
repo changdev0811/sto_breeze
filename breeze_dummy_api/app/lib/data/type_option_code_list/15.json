@@ -1,0 +1,27 @@
+{
+    "d": {
+        "__type": "Repository.Infrastructure.OptionList",
+        "Rows": [
+            {
+                "ID": 57,
+                "CodeTypeID": 15,
+                "Description": "Days"
+            },
+            {
+                "ID": 58,
+                "CodeTypeID": 15,
+                "Description": "Weeks"
+            },
+            {
+                "ID": 59,
+                "CodeTypeID": 15,
+                "Description": "Months"
+            },
+            {
+                "ID": 60,
+                "CodeTypeID": 15,
+                "Description": "Years"
+            }
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "d": {
+        "GoogleCal": false,
+        "ViewSupervisorDashboard": true,
+        "ShowHints": true,
+        "LeaveRequestWizard": false,
+        "ViewMessageOfTheDay": false,
+        "ViewTimeLocal": true,
+        "HHMM": true,
+        "ClockOutSignOut": false,
+        "YaagCalendarView": true,
+        "YaagCalendarType": 1
+    }
+}

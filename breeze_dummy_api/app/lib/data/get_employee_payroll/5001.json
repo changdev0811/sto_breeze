@@ -1,0 +1,190 @@
+{
+    "d": {
+        "__type": "Repository.Entities.PayRoll",
+        "records": [
+            {
+                "Customer_ID": 991012,
+                "Employee_ID": 5001,
+                "Project_ID": 0,
+                "Project_Code": null,
+                "Hour_Records": [
+                    {
+                        "Hours_Code": "REG",
+                        "Hours_Amount": 10
+                    },
+                    {
+                        "Hours_Code": "OT1",
+                        "Hours_Amount": 2
+                    }
+                ],
+                "Week_Start": "\/Date(1536451200000)\/",
+                "Week_End": "\/Date(1536969600000)\/",
+                "WorkTimeview": {
+                    "__type": "Repository.Entities.WorkTimeView",
+                    "Customer_ID": 0,
+                    "Records": [
+                        {
+                            "_Record_Date": "\/Date(1536624000000)\/",
+                            "Customer_ID": 991012,
+                            "ID": 1919223,
+                            "Employee_ID": 5001,
+                            "Employee_Name": "Harkins, Wade",
+                            "Approval_Status": -1,
+                            "Record_Date": "9/11/2018",
+                            "Start_Time": "\/Date(1536660858000)\/",
+                            "In_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 26817,
+                                "Customer_ID": 991012,
+                                "Employee_ID": 5001,
+                                "Punch_Time": "\/Date(1536660858000)\/",
+                                "Badge_Number": null,
+                                "lat": 38.44824,
+                                "lng": -78.86590,
+                                "acc": 21.00000,
+                                "TimeZone_ID": "UTC",
+                                "project_code": null,
+                                "notes": null,
+                                "location": "199.87.198.18",
+                                "processed_time": "\/Date(1536660860977)\/",
+                                "punch_type": 136
+                            },
+                            "Out_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 26818,
+                                "Customer_ID": 991012,
+                                "Employee_ID": 5001,
+                                "Punch_Time": "\/Date(1536660867000)\/",
+                                "Badge_Number": null,
+                                "lat": 38.44824,
+                                "lng": -78.86590,
+                                "acc": 21.00000,
+                                "TimeZone_ID": "UTC",
+                                "project_code": null,
+                                "notes": null,
+                                "location": "199.87.198.18",
+                                "processed_time": "\/Date(1536660869603)\/",
+                                "punch_type": 137
+                            },
+                            "Deduction": null,
+                            "End_Time": "\/Date(1536660867000)\/",
+                            "Total_Time": 0,
+                            "Project": "None",
+                            "Project_ID": 0,
+                            "RowClass": "wt-unsubmitted",
+                            "Photo": "fal fa-stopwatch fa-sm",
+                            "AbsenceCode": null,
+                            "AbsenceId": 0
+                        },
+                        {
+                            "_Record_Date": "\/Date(1536624000000)\/",
+                            "Customer_ID": 991012,
+                            "ID": 1919516,
+                            "Employee_ID": 5001,
+                            "Employee_Name": "Harkins, Wade",
+                            "Approval_Status": -1,
+                            "Record_Date": "9/11/2018",
+                            "Start_Time": "\/Date(1536688092000)\/",
+                            "In_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 27234,
+                                "Customer_ID": 991012,
+                                "Employee_ID": 5001,
+                                "Punch_Time": "\/Date(1536688092000)\/",
+                                "Badge_Number": null,
+                                "lat": 38.44824,
+                                "lng": -78.86592,
+                                "acc": 20.00000,
+                                "TimeZone_ID": "UTC",
+                                "project_code": null,
+                                "notes": null,
+                                "location": "199.87.198.18",
+                                "processed_time": "\/Date(1536688096053)\/",
+                                "punch_type": 136
+                            },
+                            "Out_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 0,
+                                "Customer_ID": null,
+                                "Employee_ID": null,
+                                "Punch_Time": null,
+                                "Badge_Number": null,
+                                "lat": 0,
+                                "lng": 0,
+                                "acc": 0,
+                                "TimeZone_ID": null,
+                                "project_code": null,
+                                "notes": null,
+                                "location": null,
+                                "processed_time": "\/Date(-62135596800000)\/",
+                                "punch_type": null
+                            },
+                            "Deduction": null,
+                            "End_Time": null,
+                            "Total_Time": 0,
+                            "Project": "None",
+                            "Project_ID": 0,
+                            "RowClass": "wt-unsubmitted",
+                            "Photo": "fal fa-stopwatch fa-sm",
+                            "AbsenceCode": null,
+                            "AbsenceId": 0
+                        },
+                        {
+                            "_Record_Date": "\/Date(1536968590000)\/",
+                            "Customer_ID": 991012,
+                            "ID": 1870827,
+                            "Employee_ID": 5001,
+                            "Employee_Name": "Harkins, Wade",
+                            "Approval_Status": -1,
+                            "Record_Date": "9/14/2018",
+                            "Start_Time": "\/Date(1536915600000)\/",
+                            "In_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 0,
+                                "Customer_ID": null,
+                                "Employee_ID": null,
+                                "Punch_Time": null,
+                                "Badge_Number": null,
+                                "lat": 0,
+                                "lng": 0,
+                                "acc": 0,
+                                "TimeZone_ID": null,
+                                "project_code": null,
+                                "notes": null,
+                                "location": null,
+                                "processed_time": "\/Date(-62135596800000)\/",
+                                "punch_type": null
+                            },
+                            "Out_Punch": {
+                                "__type": "Repository.Entities.Punch",
+                                "Id": 0,
+                                "Customer_ID": null,
+                                "Employee_ID": null,
+                                "Punch_Time": null,
+                                "Badge_Number": null,
+                                "lat": 0,
+                                "lng": 0,
+                                "acc": 0,
+                                "TimeZone_ID": null,
+                                "project_code": null,
+                                "notes": null,
+                                "location": null,
+                                "processed_time": "\/Date(-62135596800000)\/",
+                                "punch_type": null
+                            },
+                            "Deduction": null,
+                            "End_Time": "\/Date(1536958800000)\/",
+                            "Total_Time": 720,
+                            "Project": "None",
+                            "Project_ID": 0,
+                            "RowClass": "wt-unsubmitted",
+                            "Photo": "fal fa-calendar-alt fa-sm",
+                            "AbsenceCode": null,
+                            "AbsenceId": 0
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

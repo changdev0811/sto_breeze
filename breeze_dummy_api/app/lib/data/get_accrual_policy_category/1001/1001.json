@@ -1,0 +1,41 @@
+{
+    "d": {
+        "categoryId": 1001,
+        "categoryName": "Illness",
+        "calendarType": 45,
+        "isAllowed": true,
+        "newTime": 0,
+        "newRate": 44,
+        "allowAccrual": true,
+        "accrualCapAmount": 1.0000,
+        "balanceCapAmount": 0.0000,
+        "accrualCapUnit": 48,
+        "balanceCapUnit": 48,
+        "accrualRules": [
+            {
+                "ruleName": "Default",
+                "svcFrom": 0,
+                "svcTo": 0,
+                "accformInc": 0.0000,
+                "accformUnit": 48,
+                "accformPer": 117,
+                "accformDay": "1",
+                "accrualChanged": false,
+                "msMonth": "0",
+                "msDay": "0"
+            }
+        ],
+        "carryOverRules": [
+            {
+                "svcFrom": 0,
+                "svcTo": 0,
+                "carryOver": 0,
+                "allowCarry": false,
+                "carryMax": true,
+                "perAmount": 0,
+                "perUnit": 57,
+                "expChanged": false
+            }
+        ]
+    }
+}

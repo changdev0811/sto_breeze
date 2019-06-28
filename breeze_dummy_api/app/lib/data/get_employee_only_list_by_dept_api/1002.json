@@ -1,0 +1,15 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "No Employees",
+            "data": "",
+            "type": "emp",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": []
+        }
+    ]
+}

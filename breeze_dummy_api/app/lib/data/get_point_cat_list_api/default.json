@@ -1,0 +1,50 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "Arbitrary Point",
+            "PointID": 1,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 1,
+            "DurType": 60,
+            "AbsenceCats": "0",
+            "PointDetails": "This is a newly generated category.",
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 1,
+                    "occvalue": 0.00
+                }
+            ]
+        },
+        {
+            "__type": "Repository.Entities.PointCat",
+            "PointName": "Legal Points",
+            "PointID": 0,
+            "PointVal": 0,
+            "PointIOC": 0,
+            "DurAmt": 2,
+            "DurType": 59,
+            "AbsenceCats": "1005",
+            "PointDetails": "Points related to legal stuff",
+            "Occurences": [
+                {
+                    "occfrom": 1,
+                    "occto": 1,
+                    "occvalue": 2.00
+                },
+                {
+                    "occfrom": 2,
+                    "occto": 9,
+                    "occvalue": 5.00
+                },
+                {
+                    "occfrom": 10,
+                    "occto": 0,
+                    "occvalue": 0.00
+                }
+            ]
+        }
+    ]
+}

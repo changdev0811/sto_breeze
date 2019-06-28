@@ -1,0 +1,63 @@
+{
+	"d":{
+		"__type":"Repository.Infrastructure.absenceReturnJSON",
+		"Rows":[
+			{
+				"id":"69818866",
+				"calendarId":"70",
+				"startDate":"2019-02-07T00:00:00.000Z",
+				"endDate":"2019-02-08T00:00:00.000Z",
+				"allDay":false,
+				"isLeave":false,
+				"dayPercent":0.5,
+				"priority":4,
+				"durationDesc":"50 %",
+				"title":"Training",
+				"absenceString":"Training: 50 %<BR>"
+			},
+			{
+				"id":"request_755077",
+				"calendarId":"70",
+				"startDate":"2019-02-04T00:00:00.000Z",
+				"endDate":"2019-02-05T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/4/2019<br/>A<br/>------------<br/>Training: 25 %<BR>"
+			},
+			{
+				"id":"request_755091",
+				"calendarId":"70",
+				"startDate":"2019-02-14T00:00:00.000Z",
+				"endDate":"2019-02-15T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/14/2019<br/>D<br/>------------<br/>Training: 50 %<BR>"
+			},
+			{
+				"id":"request_755092",
+				"calendarId":"70",
+				"startDate":"2019-02-15T00:00:00.000Z",
+				"endDate":"2019-02-16T00:00:00.000Z",
+				"allDay":true,
+				"isLeave":true,
+				"dayPercent":0,
+				"priority":0,
+				"durationDesc":"request",
+				"title":"",
+				"absenceString":"Request Information: 2/15/2019<br/>D<br/>------------<br/>Training: 50 %<BR>"
+			}
+		],
+		"adjust":false,
+		"modify_time":false,
+		"points":false,
+		"notes":false
+	}
+}

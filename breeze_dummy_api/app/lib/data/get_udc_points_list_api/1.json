@@ -1,0 +1,81 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Illness",
+            "data": "1001",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Vacation",
+            "data": "1002",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": true,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Personal",
+            "data": "1003",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Jury",
+            "data": "1005",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Bereavement",
+            "data": "1010",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Training",
+            "data": "1013",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Holiday",
+            "data": "1024",
+            "type": "cat",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        }
+    ]
+}

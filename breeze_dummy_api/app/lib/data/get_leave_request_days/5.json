@@ -1,0 +1,26 @@
+{
+    "d": [
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "2/14/2019 12:00:00 AM",
+            "category_name": "Vacation",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [],
+            "request_conflicts": 0,
+            "category_code": "66"
+        },
+        {
+            "emp_id": "5003",
+            "cust_id": "991012",
+            "request_date": "2/15/2019 12:00:00 AM",
+            "category_name": "Training",
+            "Amount": 12.0000,
+            "recording_mode": 21,
+            "Conflicts": [],
+            "request_conflicts": 0,
+            "category_code": "70"
+        }
+    ]
+}

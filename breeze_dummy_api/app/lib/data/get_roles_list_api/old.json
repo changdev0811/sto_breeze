@@ -1,0 +1,37 @@
+{
+    "d": [
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Full Supervisor",
+            "data": "{\"Add_Employee\":true,\"Add_Notes\":true,\"Adjustments\":true,\"Customer_ID\":\"991012\",\"Deduction_Maintenance\":false,\"Delete_Employee\":true,\"Department_Reports\":true,\"Edit_Employee\":true,\"Employee_Category_Adjust\":true,\"Employee_Reports\":true,\"Export_Payroll\":false,\"Leave_Approval\":true,\"Manage_Points\":true,\"Modify_Recorded_Time\":true,\"Payroll_Template_Maintenance\":false,\"Project_Maintenance\":false,\"Role_Id\":\"1003\",\"Role_Name\":\"Full Supervisor\",\"View_Compensation\":true,\"View_SSN\":true,\"Worktime_Approval\":false,\"Worktime_Maintenance\":false}",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Limited Supervisor",
+            "data": "{\"Add_Employee\":false,\"Add_Notes\":true,\"Adjustments\":true,\"Customer_ID\":\"991012\",\"Deduction_Maintenance\":false,\"Delete_Employee\":false,\"Department_Reports\":true,\"Edit_Employee\":false,\"Employee_Category_Adjust\":false,\"Employee_Reports\":true,\"Export_Payroll\":false,\"Leave_Approval\":true,\"Manage_Points\":true,\"Modify_Recorded_Time\":true,\"Payroll_Template_Maintenance\":false,\"Project_Maintenance\":false,\"Role_Id\":\"1001\",\"Role_Name\":\"Limited Supervisor\",\"View_Compensation\":false,\"View_SSN\":false,\"Worktime_Approval\":false,\"Worktime_Maintenance\":false}",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        },
+        {
+            "__type": "Repository.Entities.infoObj",
+            "id": null,
+            "text": "Read Only Supervisor",
+            "data": "{\"Add_Employee\":false,\"Add_Notes\":true,\"Adjustments\":false,\"Customer_ID\":\"991012\",\"Deduction_Maintenance\":false,\"Delete_Employee\":false,\"Department_Reports\":true,\"Edit_Employee\":false,\"Employee_Category_Adjust\":false,\"Employee_Reports\":true,\"Export_Payroll\":false,\"Leave_Approval\":true,\"Manage_Points\":false,\"Modify_Recorded_Time\":false,\"Payroll_Template_Maintenance\":false,\"Project_Maintenance\":false,\"Role_Id\":\"1002\",\"Role_Name\":\"Read Only Supervisor\",\"View_Compensation\":false,\"View_SSN\":false,\"Worktime_Approval\":false,\"Worktime_Maintenance\":false}",
+            "type": "role",
+            "role": null,
+            "info": null,
+            "checked": false,
+            "d": null
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "d": {
+        "__type": "Repository.Entities.SecRole",
+        "Customer_ID": "991012",
+        "Role_Name": "Super Admin",
+        "Role_Id": "0",
+        "Add_Employee": true,
+        "Delete_Employee": true,
+        "Edit_Employee": true,
+        "View_SSN": true,
+        "View_Compensation": true,
+        "Employee_Category_Adjust": true,
+        "Adjustments": true,
+        "Leave_Approval": true,
+        "Modify_Recorded_Time": true,
+        "Manage_Points": true,
+        "Add_Notes": true,
+        "Employee_Reports": true,
+        "Department_Reports": true,
+        "Project_Maintenance": true,
+        "Deduction_Maintenance": true,
+        "Export_Payroll": true,
+        "Payroll_Template_Maintenance": true,
+        "Worktime_Maintenance": true,
+        "Worktime_Approval": true
+    }
+}
